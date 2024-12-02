@@ -1,0 +1,5 @@
+bin/
+obj/
+*.cs
+MinimalQt.csproj
+

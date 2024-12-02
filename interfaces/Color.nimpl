@@ -1,0 +1,39 @@
+module Color;
+
+enum Constant {
+    Black,
+    White,
+    DarkGray,
+    Gray,
+    LightGray,
+    Red,
+    Green,
+    Blue,
+    Cyan,
+    Magenta,
+    Yellow,
+    DarkRed,
+    DarkGreen,
+    DarkBlue,
+    DarkCyan,
+    DarkMagenta,
+    DarkYellow,
+    Transparent
+}
+
+@nodispose
+opaque Handle;
+
+opaque Owned extends Handle;
+
+sumtype Deferred {
+    FromHandle(Handle value),
+    FromConstant(Constant name),
+    FromRGB(int r, int g, int b),
+    FromRGBA(int r, int g, int b, int a),
+    FromFloatRGB(float r, float g, float b),
+    FromFloatRGBA(float r, float g, float b, float a)
+}
+
+// for long-lived handles:
+Owned create(Deferred deferred);

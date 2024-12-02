@@ -1,0 +1,19 @@
+module Date;
+
+struct YearMonthDay {
+    int year;
+    int month;
+    int day;
+}
+
+@nodispose
+opaque Handle {
+    // fake method for ease of conversion to DateOnly
+    YearMonthDay toYearMonthDay();
+}
+
+opaque Owned extends Handle;
+
+sumtype Deferred {
+    FromYearMonthDay(int year, int month, int day)
+}

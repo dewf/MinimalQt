@@ -1,0 +1,10 @@
+module Cursor;
+
+@nodispose
+opaque Handle;
+
+opaque Owned extends Handle;
+
+sumtype Deferred {
+    Todo
+}

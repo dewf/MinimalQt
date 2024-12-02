@@ -1,0 +1,18 @@
+module ModelIndex;
+
+import Variant;
+import Enums;
+
+@nodispose
+opaque Handle {
+    bool isValid();
+    int row();
+    int column();
+
+    Variant.Owned data();
+    Variant.Owned data(ItemDataRole role);
+}
+
+opaque Owned extends Handle;
+
+Owned create(); // empty

@@ -1,0 +1,22 @@
+module Pixmap;
+import PaintDevice;
+import Common;
+import Enums;
+import Image;
+
+@nodispose
+opaque Handle extends PaintDevice.Handle;
+
+opaque Owned extends Handle;
+
+options FilenameOptions {
+    string format;
+    ImageConversionFlags imageConversionFlags; // defaults to Qt::AutoColor
+}
+
+Owned create(int width, int height);
+Owned create(string filename, FilenameOptions opts);
+
+// static methods:
+// not sure we'd ever want this from Deferred, but ...
+Owned fromImage(Image.Handle image, Option<ImageConversionFlags> imageConversionFlags);
