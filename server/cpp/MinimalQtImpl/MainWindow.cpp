@@ -34,6 +34,16 @@ namespace MainWindow
         };
     public:
         explicit MainWindowWithHandler(std::shared_ptr<SignalHandler> handler) : handler(std::move(handler)) {}
+
+        // ~MainWindowWithHandler() override {
+        //     // we have to 'manually' invoke this ourselves, because it's not emitted until this derived class is torn down,
+        //     // but by then our signal handler is gone
+        //     if (lastMask & SignalMaskFlags::Destroyed) {
+        //         printf("\"manual\" MainWindow destroyed signal\n");
+        //         handler->destroyed(reinterpret_cast<Object::HandleRef>(this));
+        //     }
+        // }
+
         void setSignalMask(SignalMask newMask) {
             if (newMask != lastMask) {
                 processChanges(lastMask, newMask, signalMap, this);
