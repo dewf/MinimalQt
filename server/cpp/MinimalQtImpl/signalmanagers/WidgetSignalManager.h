@@ -10,9 +10,9 @@ namespace Widget {
     class WidgetSignalManager : public ObjectSignalManager {
         Q_OBJECT
     private:
-        std::shared_ptr<Widget::SignalHandler> handler;
+        std::shared_ptr<SignalHandler> handler;
         SignalMask lastMask = 0;
-        std::vector<SignalMapItem<Widget::SignalMaskFlags>> signalMap = {
+        std::vector<SignalMapItem<SignalMaskFlags>> signalMap = {
             { CustomContextMenuRequested, SIGNAL(customContextMenuRequested(QPoint)), SLOT(onCustomContextMenuRequested(QPoint)) },
             { WindowIconChanged, SIGNAL(windowIconChanged(QIcon)), SLOT(onWindowIconChanged(QIcon)) },
             { WindowTitleChanged, SIGNAL(windowTitleChanged(QString)), SLOT(onWindowTitleChanged(QString)) },
@@ -27,7 +27,6 @@ namespace Widget {
             // continue:
             if (newMask != lastMask) {
                 processChanges(lastMask, newMask, signalMap, sender, this);
-                // done
                 lastMask = newMask;
             }
         }

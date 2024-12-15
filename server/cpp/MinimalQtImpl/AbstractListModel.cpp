@@ -7,167 +7,21 @@
 
 #include <QAbstractListModel>
 #include "util/SignalStuff.h"
-#include "util/Macros.h"
 
 #define THIS ((AbstractListModelWithHandler*)_this)
+
+#include "signalmanagers/AbstractListModelSignalManager.h"
 
 namespace AbstractListModel
 {
     class AbstractListModelWithHandler : public QAbstractListModel {
         Q_OBJECT
     private:
-        std::shared_ptr<SignalHandler> handler;
-        SignalMask lastMask = 0;
-        std::vector<SignalMapItem<SignalMaskFlags>> signalMap = {
-            // Object:
-            { Destroyed, SIGNAL(destroyed(QObject)), SLOT(onDestroyed(QObject)) },
-            { ObjectNameChanged, SIGNAL(objectNameChanged(QString)), SLOT(onObjectNameChanged(QString)) },
-            // AbstractItemModel:
-            { ColumnsAboutToBeInserted, SIGNAL(columnsAboutToBeInserted(QModelIndex,int,int)), SLOT(onColumnsAboutToBeInserted(QModelIndex,int,int)) },
-            { ColumnsAboutToBeMoved, SIGNAL(columnsAboutToBeMoved(QModelIndex,int,int,QModelIndex,int)), SLOT(onColumnsAboutToBeMoved(QModelIndex,int,int,QModelIndex,int)) },
-            { ColumnsAboutToBeRemoved, SIGNAL(columnsAboutToBeRemoved(QModelIndex,int,int)), SLOT(onColumnsAboutToBeRemoved(QModelIndex,int,int)) },
-            { ColumnsInserted, SIGNAL(columnsInserted(QModelIndex,int,int)), SLOT(onColumnsInserted(QModelIndex,int,int)) },
-            { ColumnsMoved, SIGNAL(columnsMoved(QModelIndex,int,int,QModelIndex,int)), SLOT(onColumnsMoved(QModelIndex,int,int,QModelIndex,int)) },
-            { ColumnsRemoved, SIGNAL(columnsRemoved(QModelIndex,int,int)), SLOT(onColumnsRemoved(QModelIndex,int,int)) },
-            { DataChanged, SIGNAL(dataChanged(QModelIndex,QModelIndex,QList<int>)), SLOT(onDataChanged(QModelIndex,QModelIndex,QList<int>)) },
-            { HeaderDataChanged, SIGNAL(headerDataChanged(Qt::Orientation,int,int)), SLOT(onHeaderDataChanged(Qt::Orientation,int,int)) },
-            { LayoutAboutToBeChanged, SIGNAL(layoutAboutToBeChanged(QList<QPersistentModelIndex>,QAbstractItemModel::LayoutChangeHint)), SLOT(onLayoutAboutToBeChanged(QList<QPersistentModelIndex>,QAbstractItemModel::LayoutChangeHint)) },
-            { LayoutChanged, SIGNAL(layoutChanged(QList<QPersistentModelIndex>,QAbstractItemModel::LayoutChangeHint)), SLOT(onLayoutChanged(QList<QPersistentModelIndex>,QAbstractItemModel::LayoutChangeHint)) },
-            { ModelAboutToBeReset, SIGNAL(modelAboutToBeReset()), SLOT(onModelAboutToBeReset()) },
-            { ModelReset, SIGNAL(modelReset()), SLOT(onModelReset()) },
-            { RowsAboutToBeInserted, SIGNAL(rowsAboutToBeInserted(QModelIndex,int,int)), SLOT(onRowsAboutToBeInserted(QModelIndex,int,int)) },
-            { RowsAboutToBeMoved, SIGNAL(rowsAboutToBeMoved(QModelIndex,int,int,QModelIndex,int)), SLOT(onRowsAboutToBeMoved(QModelIndex,int,int,QModelIndex,int)) },
-            { RowsAboutToBeRemoved, SIGNAL(rowsAboutToBeRemoved(QModelIndex,int,int)), SLOT(onRowsAboutToBeRemoved(QModelIndex,int,int)) },
-            { RowsInserted, SIGNAL(rowsInserted(QModelIndex,int,int)), SLOT(onRowsInserted(QModelIndex,int,int)) },
-            { RowsMoved, SIGNAL(rowsMoved(QModelIndex,int,int,QModelIndex,int)), SLOT(onRowsMoved(QModelIndex,int,int,QModelIndex,int)) },
-            { RowsRemoved, SIGNAL(rowsRemoved(QModelIndex,int,int)), SLOT(onRowsRemoved(QModelIndex,int,int)) }
-            // AbstractListModel:
-            // (none)
-        };
+        AbstractListModelSignalManager signalManager;
     public:
-        explicit AbstractListModelWithHandler(std::shared_ptr<SignalHandler> handler) : handler(std::move(handler)) {}
+        explicit AbstractListModelWithHandler(const std::shared_ptr<SignalHandler>& handler) : signalManager(this, handler) {}
         void setSignalMask(SignalMask newMask) {
-            if (newMask != lastMask) {
-                processChanged_OLD(lastMask, newMask, signalMap, this);
-                lastMask = newMask;
-            }
-        }
-    public slots:
-        // Object =================
-        void onDestroyed(QObject *obj) const {
-            handler->
-                inherited_AbstractItemModel_SignalHandler()->
-                inherited_Object_SignalHandler()->
-                    destroyed(reinterpret_cast<Object::HandleRef>(obj));
-        }
-        void onObjectNameChanged(const QString &name) const {
-            handler->
-                inherited_AbstractItemModel_SignalHandler()->
-                inherited_Object_SignalHandler()->
-                    objectNameChanged(name.toStdString());
-        }
-        // AbstractItemModel ======
-        void onColumnsAboutToBeInserted(const QModelIndex &parent, int first, int last) const {
-            handler->
-                inherited_AbstractItemModel_SignalHandler()->
-                    columnsAboutToBeInserted(MODELINDEX(parent), first, last);
-        }
-        void onColumnsAboutToBeMoved(const QModelIndex &sourceParent, int sourceStart, int sourceEnd, const QModelIndex &destinationParent, int destinationColumn) const {
-            handler->
-                inherited_AbstractItemModel_SignalHandler()->
-                    columnsAboutToBeMoved(MODELINDEX(sourceParent), sourceStart, sourceEnd, MODELINDEX(destinationParent), destinationColumn);
-        }
-        void onColumnsAboutToBeRemoved(const QModelIndex &parent, int first, int last) const {
-            handler->
-                inherited_AbstractItemModel_SignalHandler()->
-                    columnsAboutToBeRemoved(MODELINDEX(parent), first, last);
-        }
-        void onColumnsInserted(const QModelIndex &parent, int first, int last) const {
-            handler->
-                inherited_AbstractItemModel_SignalHandler()->
-                    columnsInserted(MODELINDEX(parent), first, last);
-        }
-        void onColumnsMoved(const QModelIndex &sourceParent, int sourceStart, int sourceEnd, const QModelIndex &destinationParent, int destinationColumn) const {
-            handler->
-                inherited_AbstractItemModel_SignalHandler()->
-                    columnsMoved(MODELINDEX(sourceParent), sourceStart, sourceEnd, MODELINDEX(destinationParent), destinationColumn);
-        }
-        void onColumnsRemoved(const QModelIndex &parent, int first, int last) const {
-            handler->
-                inherited_AbstractItemModel_SignalHandler()->
-                    columnsRemoved(MODELINDEX(parent), first, last);
-        }
-        void onDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QList<int> &roles = QList<int>()) const {
-            std::vector<ItemDataRole> roles2;
-            for (auto &role : roles) {
-                roles2.push_back((ItemDataRole)role);
-            }
-            handler->
-                inherited_AbstractItemModel_SignalHandler()->
-                    dataChanged(MODELINDEX(topLeft), MODELINDEX(bottomRight), roles2);
-        }
-        void onHeaderDataChanged(Qt::Orientation orientation, int first, int last) const {
-            handler->
-                inherited_AbstractItemModel_SignalHandler()->
-                    headerDataChanged((Enums::Orientation)orientation, first, last);
-        }
-        void onLayoutAboutToBeChanged(const QList<QPersistentModelIndex> &parents = QList<QPersistentModelIndex>(), QAbstractItemModel::LayoutChangeHint hint = QAbstractItemModel::NoLayoutChangeHint) const {
-            std::vector<PersistentModelIndex::HandleRef> parents2;
-            for (auto &parent : parents) {
-                parents2.push_back(PMODELINDEX(parent));
-            }
-            handler->
-                inherited_AbstractItemModel_SignalHandler()->
-                    layoutAboutToBeChanged(parents2, (AbstractItemModel::LayoutChangeHint)hint);
-        }
-        void onLayoutChanged(const QList<QPersistentModelIndex> &parents = QList<QPersistentModelIndex>(), QAbstractItemModel::LayoutChangeHint hint = QAbstractItemModel::NoLayoutChangeHint) const {
-            std::vector<PersistentModelIndex::HandleRef> parents2;
-            for (auto &parent : parents) {
-                parents2.push_back(PMODELINDEX(parent));
-            }
-            handler->
-                inherited_AbstractItemModel_SignalHandler()->
-                    layoutChanged(parents2, (AbstractItemModel::LayoutChangeHint)hint);
-        }
-        void onModelAboutToBeReset() const {
-            handler->
-                inherited_AbstractItemModel_SignalHandler()->
-                    modelAboutToBeReset();
-        }
-        void onModelReset() const {
-            handler->
-                inherited_AbstractItemModel_SignalHandler()->
-                    modelReset();
-        }
-        void onRowsAboutToBeInserted(const QModelIndex &parent, int start, int end) const {
-            handler->
-                inherited_AbstractItemModel_SignalHandler()->
-                    rowsAboutToBeInserted(MODELINDEX(parent), start, end);
-        }
-        void onRowsAboutToBeMoved(const QModelIndex &sourceParent, int sourceStart, int sourceEnd, const QModelIndex &destinationParent, int destinationRow) const {
-            handler->
-                inherited_AbstractItemModel_SignalHandler()->
-                    rowsAboutToBeMoved(MODELINDEX(sourceParent), sourceStart, sourceEnd, MODELINDEX(destinationParent), destinationRow);
-        }
-        void onRowsAboutToBeRemoved(const QModelIndex &parent, int first, int last) const {
-            handler->
-                inherited_AbstractItemModel_SignalHandler()->
-                    rowsAboutToBeRemoved(MODELINDEX(parent), first, last);
-        }
-        void onRowsInserted(const QModelIndex &parent, int first, int last) const {
-            handler->
-                inherited_AbstractItemModel_SignalHandler()->
-                    rowsInserted(MODELINDEX(parent), first, last);
-        }
-        void onRowsMoved(const QModelIndex &sourceParent, int sourceStart, int sourceEnd, const QModelIndex &destinationParent, int destinationRow) const {
-            handler->
-                inherited_AbstractItemModel_SignalHandler()->
-                    rowsMoved(MODELINDEX(sourceParent), sourceStart, sourceEnd, MODELINDEX(destinationParent), destinationRow);
-        }
-        void onRowsRemoved(const QModelIndex &parent, int first, int last) const {
-            handler->
-                inherited_AbstractItemModel_SignalHandler()->
-                    rowsRemoved(MODELINDEX(parent), first, last);
+            signalManager.setSignalMask(newMask);
         }
     };
 

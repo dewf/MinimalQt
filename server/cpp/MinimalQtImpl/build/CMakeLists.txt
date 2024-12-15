@@ -29,6 +29,7 @@ add_library(MinimalQtImpl STATIC
     ../generated/AbstractItemModel.h
     ../generated/AbstractItemModel_wrappers.cpp
     ../AbstractItemModel.cpp
+    ../signalmanagers/AbstractItemModelSignalManager.h
 
     ../generated/AbstractItemView.h
     ../generated/AbstractItemView_wrappers.cpp
@@ -37,6 +38,7 @@ add_library(MinimalQtImpl STATIC
     ../generated/AbstractListModel.h
     ../generated/AbstractListModel_wrappers.cpp
     ../AbstractListModel.cpp
+    ../signalmanagers/AbstractListModelSignalManager.h
 
     ../generated/AbstractProxyModel.h
     ../generated/AbstractProxyModel_wrappers.cpp
@@ -53,6 +55,7 @@ add_library(MinimalQtImpl STATIC
     ../generated/Action.h
     ../generated/Action_wrappers.cpp
     ../Action.cpp
+    ../signalmanagers/Action.h
 
     ../generated/Application.h
     ../generated/Application_wrappers.cpp

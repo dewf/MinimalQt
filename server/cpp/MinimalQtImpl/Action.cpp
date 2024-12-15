@@ -8,6 +8,8 @@
 #include "IconInternal.h"
 #include "KeySequenceInternal.h"
 
+#include "signalmanagers/Action.h"
+
 #define THIS ((ActionWithHandler*)_this)
 
 namespace Action
@@ -15,62 +17,13 @@ namespace Action
     class ActionWithHandler : public QAction {
         Q_OBJECT
     private:
-        std::shared_ptr<SignalHandler> handler;
-        SignalMask lastMask = 0;
-        std::vector<SignalMapItem<SignalMaskFlags>> signalMap = {
-            // Object:
-            { Destroyed, SIGNAL(destroyed(QObject)), SLOT(onDestroyed(QObject)) },
-            { ObjectNameChanged, SIGNAL(objectNameChanged(QString)), SLOT(onObjectNameChanged(QString)) },
-            // Action:
-            { Changed, SIGNAL(changed()), SLOT(onChanged) },
-            { CheckableChanged, SIGNAL(checkableChanged(bool)), SLOT(onCheckableChanged(bool)) },
-            { EnabledChanged, SIGNAL(enabledChanged(bool)), SLOT(onEnabledChanged(bool) )},
-            { Hovered, SIGNAL(hovered()), SLOT(onHovered()) },
-            { Toggled, SIGNAL(toggled(bool)), SLOT(onToggled(bool)) },
-            { Triggered, SIGNAL(triggered(bool)), SLOT(onTriggered(bool)) },
-            { VisibleChanged, SIGNAL(visibleChanged()), SLOT(onVisibleChanged()) }
-        };
+        ActionSignalManager signalManager;
     public:
-        ActionWithHandler(QObject *parent, const std::shared_ptr<SignalHandler> &handler) : QAction(parent), handler(handler) {}
+        ActionWithHandler(QObject *parent, const std::shared_ptr<SignalHandler> &handler) : QAction(parent),
+            signalManager(this, handler) {
+        }
         void setSignalMask(SignalMask newMask) {
-            if (newMask != lastMask) {
-                processChanged_OLD(lastMask, newMask, signalMap, this);
-                lastMask = newMask;
-            }
-        }
-    public slots:
-        // Object =================
-        void onDestroyed(QObject *obj) const {
-            handler->
-                inherited_Object_SignalHandler()->
-                    destroyed(reinterpret_cast<Object::HandleRef>(obj));
-        }
-        void onObjectNameChanged(const QString& name) const {
-            handler->
-                inherited_Object_SignalHandler()->
-                    objectNameChanged(name.toStdString());
-        }
-        // Action =================
-        void onChanged() const {
-            handler->changed();
-        }
-        void onCheckableChanged(bool checkable) const {
-            handler->checkableChanged(checkable);
-        }
-        void onEnabledChanged(bool enabled) const {
-            handler->enabledChanged(enabled);
-        }
-        void onHovered() const {
-            handler->hovered();
-        }
-        void onToggled(bool checked_) const {
-            handler->toggled(checked_);
-        }
-        void onTriggered(bool checked_) const {
-            handler->triggered(checked_);
-        }
-        void onVisibleChanged() const {
-            handler->visibleChanged();
+            signalManager.setSignalMask(newMask);
         }
     };
 
@@ -103,11 +56,11 @@ namespace Action
     }
 
     void Handle_setMenuRole(HandleRef _this, MenuRole role) {
-        THIS->setMenuRole((QAction::MenuRole)role);
+        THIS->setMenuRole(static_cast<QAction::MenuRole>(role));
     }
 
     void Handle_setPriority(HandleRef _this, Priority priority) {
-        THIS->setPriority((QAction::Priority)priority);
+        THIS->setPriority(static_cast<QAction::Priority>(priority));
     }
 
     void Handle_setShortcut(HandleRef _this, const std::shared_ptr<Deferred::Base>& shortcut) {
@@ -115,7 +68,7 @@ namespace Action
     }
 
     void Handle_setShortcutContext(HandleRef _this, ShortcutContext context) {
-        THIS->setShortcutContext((Qt::ShortcutContext)context);
+        THIS->setShortcutContext(static_cast<Qt::ShortcutContext>(context));
     }
 
     void Handle_setShortcutVisibleInContextMenu(HandleRef _this, bool visible) {
@@ -155,7 +108,7 @@ namespace Action
     }
 
     HandleRef create(Object::HandleRef owner, const std::shared_ptr<SignalHandler>& handler) {
-        return reinterpret_cast<HandleRef>(new ActionWithHandler((QObject *) owner, handler));
+        return reinterpret_cast<HandleRef>(new ActionWithHandler(reinterpret_cast<QObject *>(owner), handler));
     }
 }
 
