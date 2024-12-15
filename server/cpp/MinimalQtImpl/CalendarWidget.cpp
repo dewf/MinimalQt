@@ -35,7 +35,7 @@ namespace CalendarWidget
         explicit CalendarWidgetWithHandler(std::shared_ptr<SignalHandler> handler) : handler(std::move(handler)) {}
         void setSignalMask(SignalMask newMask) {
             if (newMask != lastMask) {
-                processChanges(lastMask, newMask, signalMap, this);
+                processChanged_OLD(lastMask, newMask, signalMap, this);
                 lastMask = newMask;
             }
         }

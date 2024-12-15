@@ -34,7 +34,7 @@ namespace MessageBox
         MessageBoxWithHandler(QWidget *parent, const std::shared_ptr<SignalHandler> &handler) : QMessageBox(parent), handler(handler) {}
         void setSignalMask(SignalMask newMask) {
             if (newMask != lastMask) {
-                processChanges(lastMask, newMask, signalMap, this);
+                processChanged_OLD(lastMask, newMask, signalMap, this);
                 lastMask = newMask;
             }
         }

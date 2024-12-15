@@ -16,6 +16,8 @@
 #include "IconInternal.h"
 #include "SizePolicyInternal.h"
 
+#include "WidgetInternal.h"
+
 #define THIS ((WidgetWithHandler*)_this)
 
 namespace Widget
@@ -23,46 +25,11 @@ namespace Widget
     class WidgetWithHandler : public QWidget {
         Q_OBJECT
     private:
-        std::shared_ptr<SignalHandler> handler;
-        SignalMask lastMask = 0;
-        std::vector<SignalMapItem<SignalMaskFlags>> signalMap = {
-            // Object:
-            { Destroyed, SIGNAL(destroyed(QObject)), SLOT(onDestroyed(QObject)) },
-            { ObjectNameChanged, SIGNAL(objectNameChanged(QString)), SLOT(onObjectNameChanged(QString)) },
-            // Widget:
-            { CustomContextMenuRequested, SIGNAL(customContextMenuRequested(QPoint)), SLOT(onCustomContextMenuRequested(QPoint)) },
-            { WindowIconChanged, SIGNAL(windowIconChanged(QIcon)), SLOT(onWindowIconChanged(QIcon)) },
-            { WindowTitleChanged, SIGNAL(windowTitleChanged(QString)), SLOT(onWindowTitleChanged(QString)) },
-        };
+        WidgetSignalManager signalManager;
     public:
-        explicit WidgetWithHandler(std::shared_ptr<SignalHandler> handler) : handler(std::move(handler)) {}
+        explicit WidgetWithHandler(const std::shared_ptr<SignalHandler>& handler) : signalManager(this, handler) {}
         void setSignalMask(SignalMask newMask) {
-            if (newMask != lastMask) {
-                processChanges(lastMask, newMask, signalMap, this);
-                lastMask = newMask;
-            }
-        }
-    public slots:
-        // Object =================
-        void onDestroyed(QObject *obj) const {
-            handler->
-                inherited_Object_SignalHandler()->
-                    destroyed(reinterpret_cast<Object::HandleRef>(obj));
-        }
-        void onObjectNameChanged(const QString& name) const {
-            handler->
-                inherited_Object_SignalHandler()->
-                    objectNameChanged(name.toStdString());
-        }
-        // Widget =================
-        void onCustomContextMenuRequested(const QPoint& pos) const {
-            handler->customContextMenuRequested(toPoint(pos));
-        }
-        void onWindowIconChanged(const QIcon& icon) const {
-            handler->windowIconChanged((Icon::HandleRef)&icon);
-        }
-        void onWindowTitleChanged(const QString& title) const {
-            handler->windowTitleChanged(title.toStdString());
+            signalManager.setSignalMask(newMask);
         }
     };
 

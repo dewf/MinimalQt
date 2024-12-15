@@ -2,6 +2,8 @@
 
 #include <QObject>
 
+#include "util/SignalStuff.h"
+
 #define THIS ((QObject*)_this)
 
 namespace Object

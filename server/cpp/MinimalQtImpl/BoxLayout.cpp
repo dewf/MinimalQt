@@ -25,7 +25,7 @@ namespace BoxLayout
         explicit BoxLayoutWithHandler(QBoxLayout::Direction direction, std::shared_ptr<SignalHandler> handler) : QBoxLayout(direction), handler(std::move(handler)) {}
         void setSignalMask(SignalMask newMask) {
             if (newMask != lastMask) {
-                processChanges(lastMask, newMask, signalMap, this);
+                processChanged_OLD(lastMask, newMask, signalMap, this);
                 lastMask = newMask;
             }
         }

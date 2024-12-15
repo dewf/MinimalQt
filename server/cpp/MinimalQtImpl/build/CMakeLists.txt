@@ -20,6 +20,7 @@ add_library(MinimalQtImpl STATIC
     ../generated/AbstractButton.h
     ../generated/AbstractButton_wrappers.cpp
     ../AbstractButton.cpp
+    ../AbstractButtonInternal.h
 
     ../generated/AbstractItemDelegate.h
     ../generated/AbstractItemDelegate_wrappers.cpp
@@ -172,6 +173,7 @@ add_library(MinimalQtImpl STATIC
     ../generated/Object.h
     ../generated/Object_wrappers.cpp
     ../Object.cpp
+    ../ObjectInternal.h
 
     ../generated/PaintDevice.h
     ../generated/PaintDevice_wrappers.cpp
@@ -207,6 +209,7 @@ add_library(MinimalQtImpl STATIC
     ../generated/PushButton.h
     ../generated/PushButton_wrappers.cpp
     ../PushButton.cpp
+    ../PushButtonInternal.h
 
     ../generated/RadioButton.h
     ../generated/RadioButton_wrappers.cpp
@@ -287,6 +290,7 @@ add_library(MinimalQtImpl STATIC
     ../generated/Widget.h
     ../generated/Widget_wrappers.cpp
     ../Widget.cpp
+    ../WidgetInternal.h
 
     ../util/convert.h
     ../util/convert.cpp
