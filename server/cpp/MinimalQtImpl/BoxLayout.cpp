@@ -7,44 +7,20 @@
 
 #define THIS ((BoxLayoutWithHandler*)_this)
 
+#include "signalrelays/BoxLayout.h"
+
 namespace BoxLayout
 {
     class BoxLayoutWithHandler : public QBoxLayout {
         Q_OBJECT
     private:
-        std::shared_ptr<SignalHandler> handler;
-        SignalMask lastMask = 0;
-        std::vector<SignalMapItem<SignalMaskFlags>> signalMap = {
-            // Object:
-            { SignalMaskFlags::Destroyed, SIGNAL(destroyed(QObject)), SLOT(onDestroyed(QObject)) },
-            { SignalMaskFlags::ObjectNameChanged, SIGNAL(objectNameChanged(QString)), SLOT(onObjectNameChanged(QString)) },
-            // Layout: (none)
-            // BoxLayout: (none)
-        };
+        SignalRelay relay;
     public:
-        explicit BoxLayoutWithHandler(QBoxLayout::Direction direction, std::shared_ptr<SignalHandler> handler) : QBoxLayout(direction), handler(std::move(handler)) {}
+        explicit BoxLayoutWithHandler(QBoxLayout::Direction direction, const std::shared_ptr<SignalHandler>& handler)
+            : QBoxLayout(direction), relay(this, handler) {}
         void setSignalMask(SignalMask newMask) {
-            if (newMask != lastMask) {
-                processChanged_OLD(lastMask, newMask, signalMap, this);
-                lastMask = newMask;
-            }
+            relay.setSignalMask(newMask);
         }
-    public slots:
-        // Object =================
-        void onDestroyed(QObject *obj) const {
-            handler->
-                inherited_Layout_SignalHandler()->
-                inherited_Object_SignalHandler()->
-                    destroyed(reinterpret_cast<Object::HandleRef>(obj));
-        }
-        void onObjectNameChanged(const QString& name) const {
-            handler->
-                inherited_Layout_SignalHandler()->
-                inherited_Object_SignalHandler()->
-                    objectNameChanged(name.toStdString());
-        }
-        // Layout (none)
-        // BoxLayout (none)
     };
 
     void Handle_setDirection(HandleRef _this, Direction dir) {

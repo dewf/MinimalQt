@@ -64,6 +64,7 @@ add_library(MinimalQtImpl STATIC
     ../generated/BoxLayout.h
     ../generated/BoxLayout_wrappers.cpp
     ../BoxLayout.cpp
+    ../signalrelays/BoxLayout.h
 
     ../generated/CalendarWidget.h
     ../generated/CalendarWidget_wrappers.cpp
@@ -143,6 +144,7 @@ add_library(MinimalQtImpl STATIC
     ../generated/Layout.h
     ../generated/Layout_wrappers.cpp
     ../Layout.cpp
+    ../signalrelays/Layout.h
 
     ../generated/LineEdit.h
     ../generated/LineEdit_wrappers.cpp

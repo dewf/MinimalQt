@@ -3,12 +3,12 @@
 #include <QObject>
 #include <map>
 
-enum SignalState {
-    Added,
-    Removed,
-    Unchanged
-};
-
+// enum SignalState {
+//     Added,
+//     Removed,
+//     Unchanged
+// };
+//
 // template <typename T>
 // std::map<T, SignalState> getSignalChanges(int32_t oldMask, int32_t newMask, int signalCount) {
 //     std::map<T, SignalState> result;
