@@ -4,7 +4,7 @@
 #include "util/SignalStuff.h"
 #include "util/convert.h"
 
-#include "signalmanagers/PushButtonSignalManager.h"
+#include "signalrelays/PushButton.h"
 
 #define THIS ((PushButtonWithHandler*)_this)
 
@@ -13,11 +13,11 @@ namespace PushButton
     class PushButtonWithHandler : public QPushButton {
         Q_OBJECT
     private:
-        PushButtonSignalManager signalManager;
+        SignalRelay relay;
     public:
-        explicit PushButtonWithHandler(const std::shared_ptr<SignalHandler>& handler) : signalManager(this, handler) {}
+        explicit PushButtonWithHandler(const std::shared_ptr<SignalHandler>& handler) : relay(this, handler) {}
         void setSignalMask(SignalMask newMask) {
-            signalManager.setSignalMask(newMask);
+            relay.setSignalMask(newMask);
         }
     };
 

@@ -1,11 +1,11 @@
 #pragma once
 
 #include "../generated/PushButton.h"
-#include "AbstractButtonSignalManager.h"
+#include "AbstractButton.h"
 #include "../util/SignalStuff.h"
 
 namespace PushButton {
-    class PushButtonSignalManager : public AbstractButtonSignalManager {
+    class SignalRelay : public AbstractButton::SignalRelay {
         Q_OBJECT
     private:
         std::shared_ptr<SignalHandler> handler;
@@ -15,15 +15,15 @@ namespace PushButton {
             // .... (none)
         };
     public:
-        explicit PushButtonSignalManager(QObject *managerFor, const std::shared_ptr<SignalHandler> &handler) :
-            AbstractButtonSignalManager(managerFor, SignalHandler::as_AbstractButton_SignalHandler(handler)),
+        explicit SignalRelay(QObject *relayFor, const std::shared_ptr<SignalHandler> &handler) :
+            AbstractButton::SignalRelay(relayFor, SignalHandler::as_AbstractButton_SignalHandler(handler)),
             handler(handler) {}
         void setSignalMask(SignalMask newMask) {
             // update inherited signals
-            AbstractButtonSignalManager::setSignalMask(newMask);
+            AbstractButton::SignalRelay::setSignalMask(newMask);
             // continue:
             if (newMask != lastMask) {
-                processChanges(lastMask, newMask, signalMap, sender, this);
+                processChanges(lastMask, newMask, signalMap, relayFor, this);
                 lastMask = newMask;
             }
         }

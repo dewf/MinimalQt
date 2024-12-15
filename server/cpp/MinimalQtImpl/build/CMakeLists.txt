@@ -20,7 +20,7 @@ add_library(MinimalQtImpl STATIC
     ../generated/AbstractButton.h
     ../generated/AbstractButton_wrappers.cpp
     ../AbstractButton.cpp
-    ../signalmanagers/AbstractButtonSignalManager.h
+    ../signalrelays/AbstractButton.h
 
     ../generated/AbstractItemDelegate.h
     ../generated/AbstractItemDelegate_wrappers.cpp
@@ -29,7 +29,7 @@ add_library(MinimalQtImpl STATIC
     ../generated/AbstractItemModel.h
     ../generated/AbstractItemModel_wrappers.cpp
     ../AbstractItemModel.cpp
-    ../signalmanagers/AbstractItemModelSignalManager.h
+    ../signalrelays/AbstractItemModel.h
 
     ../generated/AbstractItemView.h
     ../generated/AbstractItemView_wrappers.cpp
@@ -38,7 +38,7 @@ add_library(MinimalQtImpl STATIC
     ../generated/AbstractListModel.h
     ../generated/AbstractListModel_wrappers.cpp
     ../AbstractListModel.cpp
-    ../signalmanagers/AbstractListModelSignalManager.h
+    ../signalrelays/AbstractListModel.h
 
     ../generated/AbstractProxyModel.h
     ../generated/AbstractProxyModel_wrappers.cpp
@@ -55,7 +55,7 @@ add_library(MinimalQtImpl STATIC
     ../generated/Action.h
     ../generated/Action_wrappers.cpp
     ../Action.cpp
-    ../signalmanagers/Action.h
+    ../signalrelays/Action.h
 
     ../generated/Application.h
     ../generated/Application_wrappers.cpp
@@ -176,7 +176,7 @@ add_library(MinimalQtImpl STATIC
     ../generated/Object.h
     ../generated/Object_wrappers.cpp
     ../Object.cpp
-    ../signalmanagers/ObjectSignalManager.h
+    ../signalrelays/Object.h
 
     ../generated/PaintDevice.h
     ../generated/PaintDevice_wrappers.cpp
@@ -212,7 +212,7 @@ add_library(MinimalQtImpl STATIC
     ../generated/PushButton.h
     ../generated/PushButton_wrappers.cpp
     ../PushButton.cpp
-    ../signalmanagers/PushButtonSignalManager.h
+    ../signalrelays/PushButton.h
 
     ../generated/RadioButton.h
     ../generated/RadioButton_wrappers.cpp
@@ -293,7 +293,7 @@ add_library(MinimalQtImpl STATIC
     ../generated/Widget.h
     ../generated/Widget_wrappers.cpp
     ../Widget.cpp
-    ../signalmanagers/WidgetSignalManager.h
+    ../signalrelays/Widget.h
 
     ../util/convert.h
     ../util/convert.cpp

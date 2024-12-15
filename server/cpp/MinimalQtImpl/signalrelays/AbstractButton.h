@@ -1,11 +1,12 @@
 #pragma once
 
-#include "../generated/AbstractButton.h"
-#include "WidgetSignalManager.h"
 #include "../util/SignalStuff.h"
 
+#include "../generated/AbstractButton.h"
+#include "Widget.h"
+
 namespace AbstractButton {
-    class AbstractButtonSignalManager : public WidgetSignalManager {
+    class SignalRelay : public Widget::SignalRelay {
         Q_OBJECT
     private:
         std::shared_ptr<SignalHandler> handler;
@@ -17,15 +18,15 @@ namespace AbstractButton {
             { Toggled, SIGNAL(toggled(bool)), SLOT(onToggled(bool)) }
         };
     public:
-        explicit AbstractButtonSignalManager(QObject *managerFor, const std::shared_ptr<SignalHandler> &handler) :
-            WidgetSignalManager(managerFor, SignalHandler::as_Widget_SignalHandler(handler)),
+        explicit SignalRelay(QObject *relayFor, const std::shared_ptr<SignalHandler> &handler) :
+            Widget::SignalRelay(relayFor, SignalHandler::as_Widget_SignalHandler(handler)),
             handler(handler) {}
         void setSignalMask(SignalMask newMask) {
             // update inherited signals
-            WidgetSignalManager::setSignalMask(newMask);
+            Widget::SignalRelay::setSignalMask(newMask);
             // continue:
             if (newMask != lastMask) {
-                processChanges(lastMask, newMask, signalMap, sender, this);
+                processChanges(lastMask, newMask, signalMap, relayFor, this);
                 lastMask = newMask;
             }
         }

@@ -2,10 +2,10 @@
 
 #include "../util/SignalStuff.h"
 #include "../generated/AbstractListModel.h"
-#include "AbstractItemModelSignalManager.h"
+#include "AbstractItemModel.h"
 
 namespace AbstractListModel {
-    class AbstractListModelSignalManager : public AbstractItemModelSignalManager {
+    class SignalRelay : public AbstractItemModel::SignalRelay {
         Q_OBJECT
     private:
         std::shared_ptr<SignalHandler> handler;
@@ -14,15 +14,15 @@ namespace AbstractListModel {
             // none extra
         };
     public:
-        explicit AbstractListModelSignalManager(QObject *managerFor, const std::shared_ptr<SignalHandler> &handler)
-            : AbstractItemModelSignalManager(managerFor, SignalHandler::as_AbstractItemModel_SignalHandler(handler)),
+        explicit SignalRelay(QObject *relayFor, const std::shared_ptr<SignalHandler> &handler)
+            : AbstractItemModel::SignalRelay(relayFor, SignalHandler::as_AbstractItemModel_SignalHandler(handler)),
               handler(handler) {}
         void setSignalMask(SignalMask newMask) {
             // update inherited signals
-            AbstractItemModelSignalManager::setSignalMask(newMask);
+            AbstractItemModel::SignalRelay::setSignalMask(newMask);
             // continue:
             if (newMask != lastMask) {
-                processChanges(lastMask, newMask, signalMap, sender, this);
+                processChanges(lastMask, newMask, signalMap, relayFor, this);
                 lastMask = newMask;
             }
         }

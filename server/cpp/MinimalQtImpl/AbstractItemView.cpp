@@ -20,11 +20,11 @@ namespace AbstractItemView
     }
 
     void Handle_setDefaultDropAction(HandleRef _this, DropAction action) {
-        THIS->setDefaultDropAction((Qt::DropAction)action);
+        THIS->setDefaultDropAction(static_cast<Qt::DropAction>(action));
     }
 
     void Handle_setDragDropMode(HandleRef _this, DragDropMode mode) {
-        THIS->setDragDropMode((QAbstractItemView::DragDropMode)mode);
+        THIS->setDragDropMode(static_cast<QAbstractItemView::DragDropMode>(mode));
     }
 
     void Handle_setDragDropOverwriteMode(HandleRef _this, bool mode) {
@@ -36,11 +36,11 @@ namespace AbstractItemView
     }
 
     void Handle_setEditTriggers(HandleRef _this, EditTriggers triggers) {
-        THIS->setEditTriggers((QAbstractItemView::EditTriggers)triggers);
+        THIS->setEditTriggers(static_cast<QAbstractItemView::EditTriggers>(triggers));
     }
 
     void Handle_setHorizontalScrollMode(HandleRef _this, ScrollMode mode) {
-        THIS->setHorizontalScrollMode((QAbstractItemView::ScrollMode)mode);
+        THIS->setHorizontalScrollMode(static_cast<QAbstractItemView::ScrollMode>(mode));
     }
 
     void Handle_setIconSize(HandleRef _this, Size size) {
@@ -48,11 +48,11 @@ namespace AbstractItemView
     }
 
     void Handle_setSelectionBehavior(HandleRef _this, SelectionBehavior behavior) {
-        THIS->setSelectionBehavior((QAbstractItemView::SelectionBehavior)behavior);
+        THIS->setSelectionBehavior(static_cast<QAbstractItemView::SelectionBehavior>(behavior));
     }
 
     void Handle_setSelectionMode(HandleRef _this, SelectionMode mode) {
-        THIS->setSelectionMode((QAbstractItemView::SelectionMode)mode);
+        THIS->setSelectionMode(static_cast<QAbstractItemView::SelectionMode>(mode));
     }
 
     void Handle_setDropIndicatorShown(HandleRef _this, bool state) {
@@ -64,26 +64,26 @@ namespace AbstractItemView
     }
 
     void Handle_setTextElideMode(HandleRef _this, TextElideMode mode) {
-        THIS->setTextElideMode((Qt::TextElideMode)mode);
+        THIS->setTextElideMode(static_cast<Qt::TextElideMode>(mode));
     }
 
     void Handle_setVerticalScrollMode(HandleRef _this, ScrollMode mode) {
-        THIS->setVerticalScrollMode((QAbstractItemView::ScrollMode)mode);
+        THIS->setVerticalScrollMode(static_cast<QAbstractItemView::ScrollMode>(mode));
     }
 
     void Handle_setModel(HandleRef _this, AbstractItemModel::HandleRef model) {
-        THIS->setModel((QAbstractItemModel*)model);
+        THIS->setModel(reinterpret_cast<QAbstractItemModel *>(model));
     }
 
     void Handle_setItemDelegate(HandleRef _this, AbstractItemDelegate::HandleRef itemDelegate) {
-        THIS->setItemDelegate((QAbstractItemDelegate*)itemDelegate);
+        THIS->setItemDelegate(reinterpret_cast<QAbstractItemDelegate *>(itemDelegate));
     }
 
     void Handle_setItemDelegateForColumn(HandleRef _this, int32_t column, AbstractItemDelegate::HandleRef itemDelegate) {
-        THIS->setItemDelegateForColumn(column, (QAbstractItemDelegate*)itemDelegate);
+        THIS->setItemDelegateForColumn(column, reinterpret_cast<QAbstractItemDelegate *>(itemDelegate));
     }
 
     void Handle_setItemDelegateForRow(HandleRef _this, int32_t row, AbstractItemDelegate::HandleRef itemDelegate) {
-        THIS->setItemDelegateForRow(row, (QAbstractItemDelegate*)itemDelegate);
+        THIS->setItemDelegateForRow(row, reinterpret_cast<QAbstractItemDelegate *>(itemDelegate));
     }
 }

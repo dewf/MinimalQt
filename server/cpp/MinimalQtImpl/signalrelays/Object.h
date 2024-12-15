@@ -5,10 +5,10 @@
 #include "../util/SignalStuff.h"
 
 namespace Object {
-    class ObjectSignalManager : public QObject {
+    class SignalRelay : public QObject {
         Q_OBJECT
     protected:
-        QObject *sender;
+        QObject *relayFor;
     private:
         QMetaObject::Connection destroyedConnection;
         std::shared_ptr<SignalHandler> handler;
@@ -19,7 +19,7 @@ namespace Object {
             { ObjectNameChanged, SIGNAL(objectNameChanged(QString)), SLOT(onObjectNameChanged(QString)) }
         };
     public:
-        explicit ObjectSignalManager(QObject *managerFor, const std::shared_ptr<SignalHandler> &handler) : sender(managerFor), handler(handler) {}
+        explicit SignalRelay(QObject *relayFor, const std::shared_ptr<SignalHandler> &handler) : relayFor(relayFor), handler(handler) {}
         void setSignalMask(SignalMask newMask) {
             if (newMask != lastMask) {
                 // special handling for 'destroyed'
@@ -27,8 +27,8 @@ namespace Object {
                     if (newMask & Destroyed) {
                         // added
                         destroyedConnection =
-                            connect(sender, &QObject::destroyed, [=] {
-                                handler->destroyed(reinterpret_cast<HandleRef>(sender));
+                            connect(relayFor, &QObject::destroyed, [=] {
+                                handler->destroyed(reinterpret_cast<HandleRef>(relayFor));
                             });
                     } else {
                         // removed
@@ -37,7 +37,7 @@ namespace Object {
                     }
                 }
                 // normal processing
-                processChanges(lastMask, newMask, signalMap,  sender, this);
+                processChanges(lastMask, newMask, signalMap,  relayFor, this);
                 // done
                 lastMask = newMask;
             }

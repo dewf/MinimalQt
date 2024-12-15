@@ -16,7 +16,7 @@
 #include "IconInternal.h"
 #include "SizePolicyInternal.h"
 
-#include "signalmanagers/WidgetSignalManager.h"
+#include "signalrelays/Widget.h"
 
 #define THIS ((WidgetWithHandler*)_this)
 
@@ -25,11 +25,11 @@ namespace Widget
     class WidgetWithHandler : public QWidget {
         Q_OBJECT
     private:
-        WidgetSignalManager signalManager;
+        SignalRelay relay;
     public:
-        explicit WidgetWithHandler(const std::shared_ptr<SignalHandler>& handler) : signalManager(this, handler) {}
+        explicit WidgetWithHandler(const std::shared_ptr<SignalHandler>& handler) : relay(this, handler) {}
         void setSignalMask(SignalMask newMask) {
-            signalManager.setSignalMask(newMask);
+            relay.setSignalMask(newMask);
         }
     };
 

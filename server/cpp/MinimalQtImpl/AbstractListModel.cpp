@@ -10,14 +10,14 @@
 
 #define THIS ((AbstractListModelWithHandler*)_this)
 
-#include "signalmanagers/AbstractListModelSignalManager.h"
+#include "signalrelays/AbstractListModel.h"
 
 namespace AbstractListModel
 {
     class AbstractListModelWithHandler : public QAbstractListModel {
         Q_OBJECT
     private:
-        AbstractListModelSignalManager signalManager;
+        SignalRelay signalManager;
     public:
         explicit AbstractListModelWithHandler(const std::shared_ptr<SignalHandler>& handler) : signalManager(this, handler) {}
         void setSignalMask(SignalMask newMask) {

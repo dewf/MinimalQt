@@ -8,7 +8,7 @@
 #include "IconInternal.h"
 #include "KeySequenceInternal.h"
 
-#include "signalmanagers/Action.h"
+#include "signalrelays/Action.h"
 
 #define THIS ((ActionWithHandler*)_this)
 
@@ -17,13 +17,13 @@ namespace Action
     class ActionWithHandler : public QAction {
         Q_OBJECT
     private:
-        ActionSignalManager signalManager;
+        SignalRelay relay;
     public:
         ActionWithHandler(QObject *parent, const std::shared_ptr<SignalHandler> &handler) : QAction(parent),
-            signalManager(this, handler) {
+            relay(this, handler) {
         }
         void setSignalMask(SignalMask newMask) {
-            signalManager.setSignalMask(newMask);
+            relay.setSignalMask(newMask);
         }
     };
 

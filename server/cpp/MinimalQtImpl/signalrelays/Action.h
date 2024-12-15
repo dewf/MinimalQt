@@ -1,9 +1,12 @@
 #pragma once
 
-#include "ObjectSignalManager.h"
+#include "../util/SignalStuff.h"
+
+#include "../generated/Action.h"
+#include "Object.h"
 
 namespace Action {
-    class ActionSignalManager : public ObjectSignalManager {
+    class SignalRelay : public Object::SignalRelay {
         Q_OBJECT
     private:
         std::shared_ptr<SignalHandler> handler;
@@ -18,15 +21,15 @@ namespace Action {
             { VisibleChanged, SIGNAL(visibleChanged()), SLOT(onVisibleChanged()) }
         };
     public:
-        explicit ActionSignalManager(QObject *managerFor, const std::shared_ptr<SignalHandler> &handler) :
-            ObjectSignalManager(managerFor, SignalHandler::as_Object_SignalHandler(handler)),
+        explicit SignalRelay(QObject *relayFor, const std::shared_ptr<SignalHandler> &handler) :
+            Object::SignalRelay(relayFor, SignalHandler::as_Object_SignalHandler(handler)),
             handler(handler) {}
         void setSignalMask(SignalMask newMask) {
             // update inherited signals
-            ObjectSignalManager::setSignalMask(newMask);
+            Object::SignalRelay::setSignalMask(newMask);
             // continue:
             if (newMask != lastMask) {
-                processChanges(lastMask, newMask, signalMap, sender, this);
+                processChanges(lastMask, newMask, signalMap, relayFor, this);
                 lastMask = newMask;
             }
         }

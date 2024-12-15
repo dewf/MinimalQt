@@ -4,10 +4,10 @@
 #include "../util/convert.h"
 
 #include "../generated/Widget.h"
-#include "ObjectSignalManager.h"
+#include "Object.h"
 
 namespace Widget {
-    class WidgetSignalManager : public ObjectSignalManager {
+    class SignalRelay : public Object::SignalRelay {
         Q_OBJECT
     private:
         std::shared_ptr<SignalHandler> handler;
@@ -18,15 +18,15 @@ namespace Widget {
             { WindowTitleChanged, SIGNAL(windowTitleChanged(QString)), SLOT(onWindowTitleChanged(QString)) },
         };
     public:
-        explicit WidgetSignalManager(QObject *managerFor, const std::shared_ptr<SignalHandler> &handler) :
-            ObjectSignalManager(managerFor, SignalHandler::as_Object_SignalHandler(handler)),
-            handler(handler) {}
+        explicit SignalRelay(QObject *relayFor, const std::shared_ptr<SignalHandler> &handler)
+            : Object::SignalRelay(relayFor, SignalHandler::as_Object_SignalHandler(handler)),
+              handler(handler) {}
         void setSignalMask(SignalMask newMask) {
             // update inherited signals
-            ObjectSignalManager::setSignalMask(newMask);
+            Object::SignalRelay::setSignalMask(newMask);
             // continue:
             if (newMask != lastMask) {
-                processChanges(lastMask, newMask, signalMap, sender, this);
+                processChanges(lastMask, newMask, signalMap, relayFor, this);
                 lastMask = newMask;
             }
         }
