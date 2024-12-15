@@ -1,18 +1,18 @@
 #pragma once
 
-#include "generated/Widget.h"
-#include "util/SignalStuff.h"
-#include "ObjectInternal.h"
+#include "../util/SignalStuff.h"
+#include "../util/convert.h"
 
-#include "util/convert.h"
+#include "../generated/Widget.h"
+#include "ObjectSignalManager.h"
 
 namespace Widget {
     class WidgetSignalManager : public ObjectSignalManager {
         Q_OBJECT
     private:
-        std::shared_ptr<SignalHandler> handler;
+        std::shared_ptr<Widget::SignalHandler> handler;
         SignalMask lastMask = 0;
-        std::vector<SignalMapItem<SignalMaskFlags>> signalMap = {
+        std::vector<SignalMapItem<Widget::SignalMaskFlags>> signalMap = {
             { CustomContextMenuRequested, SIGNAL(customContextMenuRequested(QPoint)), SLOT(onCustomContextMenuRequested(QPoint)) },
             { WindowIconChanged, SIGNAL(windowIconChanged(QIcon)), SLOT(onWindowIconChanged(QIcon)) },
             { WindowTitleChanged, SIGNAL(windowTitleChanged(QString)), SLOT(onWindowTitleChanged(QString)) },

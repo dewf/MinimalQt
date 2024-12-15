@@ -1,7 +1,8 @@
 #pragma once
 
-#include "generated/PushButton.h"
-#include "AbstractButtonInternal.h"
+#include "../generated/PushButton.h"
+#include "AbstractButtonSignalManager.h"
+#include "../util/SignalStuff.h"
 
 namespace PushButton {
     class PushButtonSignalManager : public AbstractButtonSignalManager {
@@ -26,5 +27,7 @@ namespace PushButton {
                 lastMask = newMask;
             }
         }
+    public slots:
+        // none
     };
 }

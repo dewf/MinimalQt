@@ -1,8 +1,8 @@
 #pragma once
 
 #include <QObject>
-#include "generated/Object.h"
-#include "util/SignalStuff.h"
+#include "../generated/Object.h"
+#include "../util/SignalStuff.h"
 
 namespace Object {
     class ObjectSignalManager : public QObject {

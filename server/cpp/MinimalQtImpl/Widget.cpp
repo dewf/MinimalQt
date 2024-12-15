@@ -16,7 +16,7 @@
 #include "IconInternal.h"
 #include "SizePolicyInternal.h"
 
-#include "WidgetInternal.h"
+#include "signalmanagers/WidgetSignalManager.h"
 
 #define THIS ((WidgetWithHandler*)_this)
 

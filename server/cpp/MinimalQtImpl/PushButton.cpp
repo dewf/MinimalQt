@@ -4,7 +4,7 @@
 #include "util/SignalStuff.h"
 #include "util/convert.h"
 
-#include "PushButtonInternal.h"
+#include "signalmanagers/PushButtonSignalManager.h"
 
 #define THIS ((PushButtonWithHandler*)_this)
 

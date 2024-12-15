@@ -1,7 +1,8 @@
 #pragma once
 
-#include "generated/AbstractButton.h"
-#include "WidgetInternal.h"
+#include "../generated/AbstractButton.h"
+#include "WidgetSignalManager.h"
+#include "../util/SignalStuff.h"
 
 namespace AbstractButton {
     class AbstractButtonSignalManager : public WidgetSignalManager {
