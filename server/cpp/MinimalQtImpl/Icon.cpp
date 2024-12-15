@@ -21,7 +21,7 @@ namespace Icon
         return ICON_HEAP_COPY(QIcon::fromTheme(qThemeIcon));
     }
 
-    OwnedRef create(std::string filename) {
+    OwnedRef create(const std::string& filename) {
         return ICON_HEAP_COPY(QString::fromStdString(filename));
     }
 

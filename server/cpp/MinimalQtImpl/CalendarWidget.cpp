@@ -19,17 +19,17 @@ namespace CalendarWidget
         SignalMask lastMask = 0;
         std::vector<SignalMapItem<SignalMaskFlags>> signalMap = {
             // Object:
-            { SignalMaskFlags::Destroyed, SIGNAL(destroyed(QObject)), SLOT(onDestroyed(QObject)) },
-            { SignalMaskFlags::ObjectNameChanged, SIGNAL(objectNameChanged(QString)), SLOT(onObjectNameChanged(QString)) },
+            { Destroyed, SIGNAL(destroyed(QObject)), SLOT(onDestroyed(QObject)) },
+            { ObjectNameChanged, SIGNAL(objectNameChanged(QString)), SLOT(onObjectNameChanged(QString)) },
             // Widget:
-            { SignalMaskFlags::CustomContextMenuRequested, SIGNAL(customContextMenuRequested(QPoint)), SLOT(onCustomContextMenuRequested(QPoint)) },
-            { SignalMaskFlags::WindowIconChanged, SIGNAL(windowIconChanged(QIcon)), SLOT(onWindowIconChanged(QIcon)) },
-            { SignalMaskFlags::WindowTitleChanged, SIGNAL(windowTitleChanged(QString)), SLOT(onWindowTitleChanged(QString)) },
+            { CustomContextMenuRequested, SIGNAL(customContextMenuRequested(QPoint)), SLOT(onCustomContextMenuRequested(QPoint)) },
+            { WindowIconChanged, SIGNAL(windowIconChanged(QIcon)), SLOT(onWindowIconChanged(QIcon)) },
+            { WindowTitleChanged, SIGNAL(windowTitleChanged(QString)), SLOT(onWindowTitleChanged(QString)) },
             // CalendarWidget:
-            { SignalMaskFlags::Activated, SIGNAL(activated(QDate)), SLOT(onActivated(QDate)) },
-            { SignalMaskFlags::Clicked, SIGNAL(clicked(QDate)), SLOT(onClicked(QDate)) },
-            { SignalMaskFlags::CurrentPageChanged, SIGNAL(currentPageChanged(int,int)), SLOT(onCurrentPageChanged(int,int)) },
-            { SignalMaskFlags::SelectionChanged, SIGNAL(selectionChanged()), SLOT(onSelectionChanged()) }
+            { Activated, SIGNAL(activated(QDate)), SLOT(onActivated(QDate)) },
+            { Clicked, SIGNAL(clicked(QDate)), SLOT(onClicked(QDate)) },
+            { CurrentPageChanged, SIGNAL(currentPageChanged(int,int)), SLOT(onCurrentPageChanged(int,int)) },
+            { SelectionChanged, SIGNAL(selectionChanged()), SLOT(onSelectionChanged()) }
         };
     public:
         explicit CalendarWidgetWithHandler(std::shared_ptr<SignalHandler> handler) : handler(std::move(handler)) {}
@@ -41,33 +41,45 @@ namespace CalendarWidget
         }
     public slots:
         // Object =================
-        void onDestroyed(QObject *obj) {
-            handler->destroyed((Object::HandleRef)obj);
+        void onDestroyed(QObject *obj) const {
+            handler->
+                inherited_Widget_SignalHandler()->
+                inherited_Object_SignalHandler()->
+                    destroyed(reinterpret_cast<Object::HandleRef>(obj));
         }
-        void onObjectNameChanged(const QString& name) {
-            handler->objectNameChanged(name.toStdString());
+        void onObjectNameChanged(const QString& name) const {
+            handler->
+                inherited_Widget_SignalHandler()->
+                inherited_Object_SignalHandler()->
+                    objectNameChanged(name.toStdString());
         }
         // Widget ==================
-        void onCustomContextMenuRequested(const QPoint& pos) {
-            handler->customContextMenuRequested(toPoint(pos));
+        void onCustomContextMenuRequested(const QPoint& pos) const {
+            handler->
+                inherited_Widget_SignalHandler()->
+                    customContextMenuRequested(toPoint(pos));
         }
-        void onWindowIconChanged(const QIcon& icon) {
-            handler->windowIconChanged((Icon::HandleRef)&icon);
+        void onWindowIconChanged(const QIcon& icon) const {
+            handler->
+                inherited_Widget_SignalHandler()->
+                    windowIconChanged((Icon::HandleRef)&icon);
         }
-        void onWindowTitleChanged(const QString& title) {
-            handler->windowTitleChanged(title.toStdString());
+        void onWindowTitleChanged(const QString& title) const {
+            handler->
+                inherited_Widget_SignalHandler()->
+                    windowTitleChanged(title.toStdString());
         }
         // CalendarWidget ===========
-        void onActivated(const QDate& date) {
+        void onActivated(const QDate& date) const {
             handler->activated((Date::HandleRef)&date);
         }
-        void onClicked(const QDate& date) {
+        void onClicked(const QDate& date) const {
             handler->clicked((Date::HandleRef)&date);
         }
-        void onCurrentPageChanged(int year, int month) {
+        void onCurrentPageChanged(int year, int month) const {
             handler->currentPageChanged(year, month);
         }
-        void onSelectionChanged() {
+        void onSelectionChanged() const {
             handler->selectionChanged();
         }
     };
@@ -81,7 +93,7 @@ namespace CalendarWidget
     }
 
     void Handle_setFirstDayOfWeek(HandleRef _this, QDayOfWeek value) {
-        THIS->setFirstDayOfWeek((Qt::DayOfWeek)value);
+        THIS->setFirstDayOfWeek(static_cast<Qt::DayOfWeek>(value));
     }
 
     void Handle_setGridVisible(HandleRef _this, bool visible) {
@@ -89,14 +101,14 @@ namespace CalendarWidget
     }
 
     void Handle_setHorizontalHeaderFormat(HandleRef _this, HorizontalHeaderFormat format) {
-        THIS->setHorizontalHeaderFormat((QCalendarWidget::HorizontalHeaderFormat)format);
+        THIS->setHorizontalHeaderFormat(static_cast<QCalendarWidget::HorizontalHeaderFormat>(format));
     }
 
-    void Handle_setMaximumDate(HandleRef _this, std::shared_ptr<Date::Deferred::Base> value) {
+    void Handle_setMaximumDate(HandleRef _this, const std::shared_ptr<Date::Deferred::Base>& value) {
         THIS->setMaximumDate(Date::fromDeferred(value));
     }
 
-    void Handle_setMinimumDate(HandleRef _this, std::shared_ptr<Date::Deferred::Base> value) {
+    void Handle_setMinimumDate(HandleRef _this, const std::shared_ptr<Date::Deferred::Base>& value) {
         THIS->setMinimumDate(Date::fromDeferred(value));
     }
 
@@ -105,19 +117,19 @@ namespace CalendarWidget
     }
 
     Date::OwnedRef Handle_selectedDate(HandleRef _this) {
-        return (Date::OwnedRef)new QDate(THIS->selectedDate());
+        return reinterpret_cast<Date::OwnedRef>(new QDate(THIS->selectedDate()));
     }
 
-    void Handle_setSelectedDate(HandleRef _this, std::shared_ptr<Date::Deferred::Base> selected) {
+    void Handle_setSelectedDate(HandleRef _this, const std::shared_ptr<Date::Deferred::Base>& selected) {
         THIS->setSelectedDate(Date::fromDeferred(selected));
     }
 
     void Handle_setSelectionMode(HandleRef _this, SelectionMode mode) {
-        THIS->setSelectionMode((QCalendarWidget::SelectionMode)mode);
+        THIS->setSelectionMode(static_cast<QCalendarWidget::SelectionMode>(mode));
     }
 
     void Handle_setVerticalHeaderFormat(HandleRef _this, VerticalHeaderFormat format) {
-        THIS->setVerticalHeaderFormat((QCalendarWidget::VerticalHeaderFormat)format);
+        THIS->setVerticalHeaderFormat(static_cast<QCalendarWidget::VerticalHeaderFormat>(format));
     }
 
     void Handle_setSignalMask(HandleRef _this, SignalMask mask) {
@@ -128,8 +140,8 @@ namespace CalendarWidget
         delete THIS;
     }
 
-    HandleRef create(std::shared_ptr<SignalHandler> handler) {
-        return (HandleRef) new CalendarWidgetWithHandler(std::move(handler));
+    HandleRef create(const std::shared_ptr<SignalHandler>& handler) {
+        return reinterpret_cast<HandleRef>(new CalendarWidgetWithHandler(handler));
     }
 }
 

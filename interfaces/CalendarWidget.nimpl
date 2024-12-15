@@ -14,17 +14,7 @@ namedbits SignalMask extends Widget.SignalMask {
     SelectionChanged
 }
 
-interface SignalHandler {
-    // from Object:
-    void destroyed(Object.Handle obj);
-    void objectNameChanged(string objectName);
-
-    // Widget:
-    void customContextMenuRequested(Point pos);
-    void windowIconChanged(Icon.Handle icon);
-    void windowTitleChanged(string title);
-
-    // CalendarWidget
+interface SignalHandler extends Widget.SignalHandler {
     void activated(Date.Handle date);
     void clicked(Date.Handle date);
     void currentPageChanged(int year, int month);

@@ -31,18 +31,24 @@ namespace BoxLayout
         }
     public slots:
         // Object =================
-        void onDestroyed(QObject *obj) {
-            handler->destroyed((Object::HandleRef)obj);
+        void onDestroyed(QObject *obj) const {
+            handler->
+                inherited_Layout_SignalHandler()->
+                inherited_Object_SignalHandler()->
+                    destroyed(reinterpret_cast<Object::HandleRef>(obj));
         }
-        void onObjectNameChanged(const QString& name) {
-            handler->objectNameChanged(name.toStdString());
+        void onObjectNameChanged(const QString& name) const {
+            handler->
+                inherited_Layout_SignalHandler()->
+                inherited_Object_SignalHandler()->
+                    objectNameChanged(name.toStdString());
         }
         // Layout (none)
         // BoxLayout (none)
     };
 
     void Handle_setDirection(HandleRef _this, Direction dir) {
-        auto qDir = (QBoxLayout::Direction)dir;
+        auto qDir = static_cast<QBoxLayout::Direction>(dir);
         THIS->setDirection(qDir);
     }
 
@@ -55,23 +61,23 @@ namespace BoxLayout
     }
 
     void Handle_addWidget(HandleRef _this, Widget::HandleRef widget) {
-        THIS->addWidget((QWidget*)widget);
+        THIS->addWidget(reinterpret_cast<QWidget *>(widget));
     }
 
     void Handle_addWidget(HandleRef _this, Widget::HandleRef widget, int32_t stretch) {
-        THIS->addWidget((QWidget*)widget, stretch);
+        THIS->addWidget(reinterpret_cast<QWidget *>(widget), stretch);
     }
 
     void Handle_addWidget(HandleRef _this, Widget::HandleRef widget, int32_t stretch, Enums::Alignment align) {
-        THIS->addWidget((QWidget*)widget, stretch, (Qt::AlignmentFlag)align);
+        THIS->addWidget(reinterpret_cast<QWidget *>(widget), stretch, static_cast<Qt::AlignmentFlag>(align));
     }
 
     void Handle_addLayout(HandleRef _this, Layout::HandleRef layout) {
-        THIS->addLayout((QLayout*)layout);
+        THIS->addLayout(reinterpret_cast<QLayout *>(layout));
     }
 
     void Handle_addLayout(HandleRef _this, Layout::HandleRef layout, int32_t stretch) {
-        THIS->addLayout((QLayout*)layout, stretch);
+        THIS->addLayout(reinterpret_cast<QLayout *>(layout), stretch);
     }
 
     void Handle_setSignalMask(HandleRef _this, SignalMask mask) {
@@ -82,13 +88,13 @@ namespace BoxLayout
         delete THIS;
     }
 
-    HandleRef create(Direction dir, std::shared_ptr<SignalHandler> handler) {
-        auto qDir = (QBoxLayout::Direction)dir;
-        return (HandleRef) new BoxLayoutWithHandler(qDir, std::move(handler));
+    HandleRef create(Direction dir, const std::shared_ptr<SignalHandler>& handler) {
+        auto qDir = static_cast<QBoxLayout::Direction>(dir);
+        return reinterpret_cast<HandleRef>(new BoxLayoutWithHandler(qDir, handler));
     }
 
     HandleRef createNoHandler(Direction dir) {
-        return (HandleRef) new QBoxLayout((QBoxLayout::Direction)dir);
+        return reinterpret_cast<HandleRef>(new QBoxLayout((QBoxLayout::Direction) dir));
     }
 }
 

@@ -7,12 +7,7 @@ namedbits SignalMask extends Object.SignalMask {
     Timeout
 }
 
-interface SignalHandler {
-    // Object:
-    void destroyed(Object.Handle obj);
-    void objectNameChanged(string objectName);
-
-    // Timer:
+interface SignalHandler extends Object.SignalHandler {
     void timeout();
 }
 

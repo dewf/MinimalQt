@@ -15,27 +15,27 @@ namespace TreeView
         SignalMask lastMask = 0;
         std::vector<SignalMapItem<SignalMaskFlags>> signalMap = {
             // Object:
-            { SignalMaskFlags::Destroyed, SIGNAL(destroyed(QObject)), SLOT(onDestroyed(QObject)) },
-            { SignalMaskFlags::ObjectNameChanged, SIGNAL(objectNameChanged(QString)), SLOT(onObjectNameChanged(QString)) },
+            { Destroyed, SIGNAL(destroyed(QObject)), SLOT(onDestroyed(QObject)) },
+            { ObjectNameChanged, SIGNAL(objectNameChanged(QString)), SLOT(onObjectNameChanged(QString)) },
             // Widget:
-            { SignalMaskFlags::CustomContextMenuRequested, SIGNAL(customContextMenuRequested(QPoint)), SLOT(onCustomContextMenuRequested(QPoint)) },
-            { SignalMaskFlags::WindowIconChanged, SIGNAL(windowIconChanged(QIcon)), SLOT(onWindowIconChanged(QIcon)) },
-            { SignalMaskFlags::WindowTitleChanged, SIGNAL(windowTitleChanged(QString)), SLOT(onWindowTitleChanged(QString)) },
+            { CustomContextMenuRequested, SIGNAL(customContextMenuRequested(QPoint)), SLOT(onCustomContextMenuRequested(QPoint)) },
+            { WindowIconChanged, SIGNAL(windowIconChanged(QIcon)), SLOT(onWindowIconChanged(QIcon)) },
+            { WindowTitleChanged, SIGNAL(windowTitleChanged(QString)), SLOT(onWindowTitleChanged(QString)) },
             // Frame:
             // ..... (none)
             // AbstractScrollArea:
             // ..... (none)
             // AbstractItemView:
-            { SignalMaskFlags::Activated, SIGNAL(activated(QModelIndex)), SLOT(onActivated(QModelIndex)) },
-            { SignalMaskFlags::Clicked, SIGNAL(clicked(QModelIndex)), SLOT(onClicked(QModelIndex)) },
-            { SignalMaskFlags::DoubleClickedBit, SIGNAL(doubleClicked(QModelIndex)), SLOT(onDoubleClicked(QModelIndex)) },
-            { SignalMaskFlags::Entered, SIGNAL(entered(QModelIndex)), SLOT(onEntered(QModelIndex)) },
-            { SignalMaskFlags::IconSizeChanged, SIGNAL(iconSizeChanged(QSize)), SLOT(onIconSizeChanged(QSize)) },
-            { SignalMaskFlags::Pressed, SIGNAL(pressed(QModelIndex)), SLOT(onPressed(QModelIndex)) },
-            { SignalMaskFlags::ViewportEntered, SIGNAL(viewportEntered()), SLOT(onViewportEntered) },
+            { Activated, SIGNAL(activated(QModelIndex)), SLOT(onActivated(QModelIndex)) },
+            { Clicked, SIGNAL(clicked(QModelIndex)), SLOT(onClicked(QModelIndex)) },
+            { DoubleClickedBit, SIGNAL(doubleClicked(QModelIndex)), SLOT(onDoubleClicked(QModelIndex)) },
+            { Entered, SIGNAL(entered(QModelIndex)), SLOT(onEntered(QModelIndex)) },
+            { IconSizeChanged, SIGNAL(iconSizeChanged(QSize)), SLOT(onIconSizeChanged(QSize)) },
+            { Pressed, SIGNAL(pressed(QModelIndex)), SLOT(onPressed(QModelIndex)) },
+            { ViewportEntered, SIGNAL(viewportEntered()), SLOT(onViewportEntered) },
             // TreeView:
-            { SignalMaskFlags::Collapsed, SIGNAL(collapsed(QModelIndex)), SLOT(onCollapsed(QModelIndex)) },
-            { SignalMaskFlags::Expanded, SIGNAL(expanded(QModelIndex)), SLOT(onExpanded(QModelIndex)) },
+            { Collapsed, SIGNAL(collapsed(QModelIndex)), SLOT(onCollapsed(QModelIndex)) },
+            { Expanded, SIGNAL(expanded(QModelIndex)), SLOT(onExpanded(QModelIndex)) },
         };
     public:
         explicit TreeViewWithHandler(std::shared_ptr<SignalHandler> handler) : handler(std::move(handler)) {}
@@ -47,21 +47,48 @@ namespace TreeView
         }
     public slots:
         // Object =================
-        void onDestroyed(QObject *obj) {
-            handler->destroyed((Object::HandleRef)obj);
+        void onDestroyed(QObject *obj) const {
+            handler->
+                inherited_AbstractItemView_SignalHandler()->
+                inherited_AbstractScrollArea_SignalHandler()->
+                inherited_Frame_SignalHandler()->
+                inherited_Widget_SignalHandler()->
+                inherited_Object_SignalHandler()->
+                    destroyed(reinterpret_cast<Object::HandleRef>(obj));
         }
-        void onObjectNameChanged(const QString& name) {
-            handler->objectNameChanged(name.toStdString());
+        void onObjectNameChanged(const QString& name) const {
+            handler->
+                inherited_AbstractItemView_SignalHandler()->
+                inherited_AbstractScrollArea_SignalHandler()->
+                inherited_Frame_SignalHandler()->
+                inherited_Widget_SignalHandler()->
+                inherited_Object_SignalHandler()->
+                    objectNameChanged(name.toStdString());
         }
         // Widget ==================
-        void onCustomContextMenuRequested(const QPoint& pos) {
-            handler->customContextMenuRequested(toPoint(pos));
+        void onCustomContextMenuRequested(const QPoint& pos) const {
+            handler->
+                inherited_AbstractItemView_SignalHandler()->
+                inherited_AbstractScrollArea_SignalHandler()->
+                inherited_Frame_SignalHandler()->
+                inherited_Widget_SignalHandler()->
+                    customContextMenuRequested(toPoint(pos));
         }
-        void onWindowIconChanged(const QIcon& icon) {
-            handler->windowIconChanged((Icon::HandleRef)&icon);
+        void onWindowIconChanged(const QIcon& icon) const {
+            handler->
+                inherited_AbstractItemView_SignalHandler()->
+                inherited_AbstractScrollArea_SignalHandler()->
+                inherited_Frame_SignalHandler()->
+                inherited_Widget_SignalHandler()->
+                    windowIconChanged((Icon::HandleRef)&icon);
         }
-        void onWindowTitleChanged(const QString& title) {
-            handler->windowTitleChanged(title.toStdString());
+        void onWindowTitleChanged(const QString& title) const {
+            handler->
+                inherited_AbstractItemView_SignalHandler()->
+                inherited_AbstractScrollArea_SignalHandler()->
+                inherited_Frame_SignalHandler()->
+                inherited_Widget_SignalHandler()->
+                    windowTitleChanged(title.toStdString());
         }
         // Frame ====================
         // .... (none)
@@ -70,32 +97,46 @@ namespace TreeView
         // .... (none)
 
         // AbstractItemView =========
-        void onActivated(const QModelIndex& index) {
-            handler->activated((ModelIndex::HandleRef)&index);
+        void onActivated(const QModelIndex& index) const {
+            handler->
+                inherited_AbstractItemView_SignalHandler()->
+                    activated((ModelIndex::HandleRef)&index);
         }
-        void onClicked(const QModelIndex& index) {
-            handler->clicked((ModelIndex::HandleRef)&index);
+        void onClicked(const QModelIndex& index) const {
+            handler->
+                inherited_AbstractItemView_SignalHandler()->
+                    clicked((ModelIndex::HandleRef)&index);
         }
-        void onDoubleClicked(const QModelIndex& index) {
-            handler->doubleClicked((ModelIndex::HandleRef)&index);
+        void onDoubleClicked(const QModelIndex& index) const {
+            handler->
+                inherited_AbstractItemView_SignalHandler()->
+                    doubleClicked((ModelIndex::HandleRef)&index);
         }
-        void onEntered(QModelIndex& index) {
-            handler->entered((ModelIndex::HandleRef)&index);
+        void onEntered(QModelIndex& index) const {
+            handler->
+                inherited_AbstractItemView_SignalHandler()->
+                    entered((ModelIndex::HandleRef)&index);
         }
-        void onIconSizeChanged(const QSize& size) {
-            handler->iconSizeChanged(toSize(size));
+        void onIconSizeChanged(const QSize& size) const {
+            handler->
+                inherited_AbstractItemView_SignalHandler()->
+                    iconSizeChanged(toSize(size));
         }
-        void onPressed(const QModelIndex& index) {
-            handler->pressed((ModelIndex::HandleRef)&index);
+        void onPressed(const QModelIndex& index) const {
+            handler->
+                inherited_AbstractItemView_SignalHandler()->
+                    pressed((ModelIndex::HandleRef)&index);
         }
-        void onViewportEntered() {
-            handler->viewportEntered();
+        void onViewportEntered() const {
+            handler->
+                inherited_AbstractItemView_SignalHandler()->
+                    viewportEntered();
         }
         // TreeView =================
-        void onCollapsed(const QModelIndex& index) {
+        void onCollapsed(const QModelIndex& index) const {
             handler->collapsed((ModelIndex::HandleRef)&index);
         }
-        void onExpanded(const QModelIndex& index) {
+        void onExpanded(const QModelIndex& index) const {
             handler->expanded((ModelIndex::HandleRef)&index);
         }
     };
@@ -156,8 +197,8 @@ namespace TreeView
         delete THIS;
     }
 
-    HandleRef create(std::shared_ptr<SignalHandler> handler) {
-        return (HandleRef) new TreeViewWithHandler(std::move(handler));
+    HandleRef create(const std::shared_ptr<SignalHandler>& handler) {
+        return reinterpret_cast<HandleRef>(new TreeViewWithHandler(handler));
     }
 }
 

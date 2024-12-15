@@ -51,7 +51,7 @@ namespace Color
         return QColorConstants::Black;
     }
 
-    class FromDeferred final : public Deferred::Visitor {
+    class FromDeferred final : public Deferred::Matcher {
     private:
         QColor &ret;
     public:
@@ -80,8 +80,8 @@ namespace Color
 
     QColor fromDeferred(const std::shared_ptr<Deferred::Base> &deferred) {
         QColor ret;
-        FromDeferred visitor(ret);
-        deferred->accept(&visitor);
+        FromDeferred matcher(ret);
+        deferred->match(&matcher);
         return ret;
     }
 
@@ -89,7 +89,7 @@ namespace Color
         delete _this;
     }
 
-    OwnedRef create(std::shared_ptr<Deferred::Base> deferred) {
+    OwnedRef create(const std::shared_ptr<Deferred::Base>& deferred) {
         return new __Owned { fromDeferred(deferred) };
     }
 }

@@ -18,17 +18,17 @@ namespace Menu
         SignalMask lastMask = 0;
         std::vector<SignalMapItem<SignalMaskFlags>> signalMap = {
             // Object:
-            { SignalMaskFlags::Destroyed, SIGNAL(destroyed(QObject)), SLOT(onDestroyed(QObject)) },
-            { SignalMaskFlags::ObjectNameChanged, SIGNAL(objectNameChanged(QString)), SLOT(onObjectNameChanged(QString)) },
+            { Destroyed, SIGNAL(destroyed(QObject)), SLOT(onDestroyed(QObject)) },
+            { ObjectNameChanged, SIGNAL(objectNameChanged(QString)), SLOT(onObjectNameChanged(QString)) },
             // Widget:
-            { SignalMaskFlags::CustomContextMenuRequested, SIGNAL(customContextMenuRequested(QPoint)), SLOT(onCustomContextMenuRequested(QPoint)) },
-            { SignalMaskFlags::WindowIconChanged, SIGNAL(windowIconChanged(QIcon)), SLOT(onWindowIconChanged(QIcon)) },
-            { SignalMaskFlags::WindowTitleChanged, SIGNAL(windowTitleChanged(QString)), SLOT(onWindowTitleChanged(QString)) },
+            { CustomContextMenuRequested, SIGNAL(customContextMenuRequested(QPoint)), SLOT(onCustomContextMenuRequested(QPoint)) },
+            { WindowIconChanged, SIGNAL(windowIconChanged(QIcon)), SLOT(onWindowIconChanged(QIcon)) },
+            { WindowTitleChanged, SIGNAL(windowTitleChanged(QString)), SLOT(onWindowTitleChanged(QString)) },
             // Menu:
-            { SignalMaskFlags::AboutToHide, SIGNAL(aboutToHide()), SLOT(onAboutToHide()) },
-            { SignalMaskFlags::AboutToShow, SIGNAL(aboutToShow()), SLOT(onAboutToShow()) },
-            { SignalMaskFlags::Hovered, SIGNAL(hovered(QAction*)), SLOT(onHovered(QAction*)) },
-            { SignalMaskFlags::Triggered, SIGNAL(triggered(QAction*)), SLOT(onTriggered(QAction*)) }
+            { AboutToHide, SIGNAL(aboutToHide()), SLOT(onAboutToHide()) },
+            { AboutToShow, SIGNAL(aboutToShow()), SLOT(onAboutToShow()) },
+            { Hovered, SIGNAL(hovered(QAction*)), SLOT(onHovered(QAction*)) },
+            { Triggered, SIGNAL(triggered(QAction*)), SLOT(onTriggered(QAction*)) }
         };
     public:
         explicit MenuWithHandler(std::shared_ptr<SignalHandler> handler) : handler(std::move(handler)) {}
@@ -40,34 +40,46 @@ namespace Menu
         }
     public slots:
         // Object =================
-        void onDestroyed(QObject *obj) {
-            handler->destroyed((Object::HandleRef)obj);
+        void onDestroyed(QObject *obj) const {
+            handler->
+                inherited_Widget_SignalHandler()->
+                inherited_Object_SignalHandler()->
+                    destroyed(reinterpret_cast<Object::HandleRef>(obj));
         }
-        void onObjectNameChanged(const QString& name) {
-            handler->objectNameChanged(name.toStdString());
+        void onObjectNameChanged(const QString& name) const {
+            handler->
+                inherited_Widget_SignalHandler()->
+                inherited_Object_SignalHandler()->
+                    objectNameChanged(name.toStdString());
         }
         // Widget ==================
-        void onCustomContextMenuRequested(const QPoint& pos) {
-            handler->customContextMenuRequested(toPoint(pos));
+        void onCustomContextMenuRequested(const QPoint& pos) const {
+            handler->
+                inherited_Widget_SignalHandler()->
+                    customContextMenuRequested(toPoint(pos));
         }
-        void onWindowIconChanged(const QIcon& icon) {
-            handler->windowIconChanged((Icon::HandleRef)&icon);
+        void onWindowIconChanged(const QIcon& icon) const {
+            handler->
+                inherited_Widget_SignalHandler()->
+                    windowIconChanged((Icon::HandleRef)&icon);
         }
-        void onWindowTitleChanged(const QString& title) {
-            handler->windowTitleChanged(title.toStdString());
+        void onWindowTitleChanged(const QString& title) const {
+            handler->
+                inherited_Widget_SignalHandler()->
+                    windowTitleChanged(title.toStdString());
         }
         // Menu ====================
-        void onAboutToHide() {
+        void onAboutToHide() const {
             handler->aboutToHide();
         }
-        void onAboutToShow() {
+        void onAboutToShow() const {
             handler->aboutToShow();
         }
-        void onHovered(QAction *action) {
-            handler->hovered((Action::HandleRef)action);
+        void onHovered(QAction *action) const {
+            handler->hovered(reinterpret_cast<Action::HandleRef>(action));
         }
-        void onTriggered(QAction *action) {
-            handler->triggered((Action::HandleRef)action);
+        void onTriggered(QAction *action) const {
+            handler->triggered(reinterpret_cast<Action::HandleRef>(action));
         }
     };
 
@@ -83,7 +95,7 @@ namespace Menu
         THIS->setTearOffEnabled(state);
     }
 
-    void Handle_setTitle(HandleRef _this, std::string title) {
+    void Handle_setTitle(HandleRef _this, const std::string& title) {
         THIS->setTitle(QString::fromStdString(title));
     }
 
@@ -96,8 +108,8 @@ namespace Menu
     }
 
     Action::HandleRef Handle_addSeparator(HandleRef _this) {
-        // should we be concerned about ownership here? I presume the Menu owns it, and we're probably not going to do anything else with it ...
-        return (Action::HandleRef) THIS->addSeparator();
+        // should we be concerned about ownership here? I presume the Menu owns it (as parent), and we're probably not going to do anything else with it ...
+        return reinterpret_cast<Action::HandleRef>(THIS->addSeparator());
     }
 
     void Handle_popup(HandleRef _this, Point p) {
@@ -112,8 +124,8 @@ namespace Menu
         delete THIS;
     }
 
-    HandleRef create(std::shared_ptr<SignalHandler> handler) {
-        return (HandleRef) new MenuWithHandler(std::move(handler));
+    HandleRef create(const std::shared_ptr<SignalHandler>& handler) {
+        return reinterpret_cast<HandleRef>(new MenuWithHandler(handler));
     }
 }
 

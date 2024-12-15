@@ -34,12 +34,7 @@ enum LayoutChangeHint
     HorizontalSortHint
 }
 
-interface SignalHandler {
-    // Object:
-    void destroyed(Object.Handle obj);
-    void objectNameChanged(string objectName);
-
-    // AbstractItemModel:
+interface SignalHandler extends Object.SignalHandler {
     void columnsAboutToBeInserted(ModelIndex.Handle parent, int first, int last);
     void columnsAboutToBeMoved(ModelIndex.Handle sourceParent, int sourceStart, int sourceEnd, ModelIndex.Handle destinationParent, int destinationColumn);
     void columnsAboutToBeRemoved(ModelIndex.Handle parent, int first, int last);

@@ -17,8 +17,4 @@ namespace AbstractScrollArea
     void Handle_setVerticalScrollBarPolicy(HandleRef _this, ScrollBarPolicy policy) {
         THIS->setVerticalScrollBarPolicy((Qt::ScrollBarPolicy)policy);
     }
-
-    void Handle_dispose(HandleRef _this) {
-        printf("AbstractScrollArea directly disposed (vs. subclass), shouldn't happen\n");
-    }
 }

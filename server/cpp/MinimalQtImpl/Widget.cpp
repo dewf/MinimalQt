@@ -27,12 +27,12 @@ namespace Widget
         SignalMask lastMask = 0;
         std::vector<SignalMapItem<SignalMaskFlags>> signalMap = {
             // Object:
-            { SignalMaskFlags::Destroyed, SIGNAL(destroyed(QObject)), SLOT(onDestroyed(QObject)) },
-            { SignalMaskFlags::ObjectNameChanged, SIGNAL(objectNameChanged(QString)), SLOT(onObjectNameChanged(QString)) },
+            { Destroyed, SIGNAL(destroyed(QObject)), SLOT(onDestroyed(QObject)) },
+            { ObjectNameChanged, SIGNAL(objectNameChanged(QString)), SLOT(onObjectNameChanged(QString)) },
             // Widget:
-            { SignalMaskFlags::CustomContextMenuRequested, SIGNAL(customContextMenuRequested(QPoint)), SLOT(onCustomContextMenuRequested(QPoint)) },
-            { SignalMaskFlags::WindowIconChanged, SIGNAL(windowIconChanged(QIcon)), SLOT(onWindowIconChanged(QIcon)) },
-            { SignalMaskFlags::WindowTitleChanged, SIGNAL(windowTitleChanged(QString)), SLOT(onWindowTitleChanged(QString)) },
+            { CustomContextMenuRequested, SIGNAL(customContextMenuRequested(QPoint)), SLOT(onCustomContextMenuRequested(QPoint)) },
+            { WindowIconChanged, SIGNAL(windowIconChanged(QIcon)), SLOT(onWindowIconChanged(QIcon)) },
+            { WindowTitleChanged, SIGNAL(windowTitleChanged(QString)), SLOT(onWindowTitleChanged(QString)) },
         };
     public:
         explicit WidgetWithHandler(std::shared_ptr<SignalHandler> handler) : handler(std::move(handler)) {}
@@ -44,20 +44,24 @@ namespace Widget
         }
     public slots:
         // Object =================
-        void onDestroyed(QObject *obj) {
-            handler->destroyed((Object::HandleRef)obj);
+        void onDestroyed(QObject *obj) const {
+            handler->
+                inherited_Object_SignalHandler()->
+                    destroyed(reinterpret_cast<Object::HandleRef>(obj));
         }
-        void onObjectNameChanged(const QString& name) {
-            handler->objectNameChanged(name.toStdString());
+        void onObjectNameChanged(const QString& name) const {
+            handler->
+                inherited_Object_SignalHandler()->
+                    objectNameChanged(name.toStdString());
         }
         // Widget =================
-        void onCustomContextMenuRequested(const QPoint& pos) {
+        void onCustomContextMenuRequested(const QPoint& pos) const {
             handler->customContextMenuRequested(toPoint(pos));
         }
-        void onWindowIconChanged(const QIcon& icon) {
+        void onWindowIconChanged(const QIcon& icon) const {
             handler->windowIconChanged((Icon::HandleRef)&icon);
         }
-        void onWindowTitleChanged(const QString& title) {
+        void onWindowTitleChanged(const QString& title) const {
             handler->windowTitleChanged(title.toStdString());
         }
     };
@@ -68,11 +72,11 @@ namespace Widget
         THIS->setAcceptDrops(state);
     }
 
-    void Handle_setAccessibleDescription(HandleRef _this, std::string desc) {
+    void Handle_setAccessibleDescription(HandleRef _this, const std::string& desc) {
         THIS->setAccessibleDescription(QString::fromStdString(desc));
     }
 
-    void Handle_setAccessibleName(HandleRef _this, std::string name) {
+    void Handle_setAccessibleName(HandleRef _this, const std::string& name) {
         THIS->setAccessibleName(QString::fromStdString(name));
     }
 
@@ -90,16 +94,16 @@ namespace Widget
 
     Region::OwnedRef Handle_childrenRegion(HandleRef _this) {
         auto ret = THIS->childrenRegion();
-        return (Region::OwnedRef)new QRegion(ret);
+        return reinterpret_cast<Region::OwnedRef>(new QRegion(ret));
     }
 
     void Handle_setContextMenuPolicy(HandleRef _this, ContextMenuPolicy policy) {
-        THIS->setContextMenuPolicy((Qt::ContextMenuPolicy)policy);
+        THIS->setContextMenuPolicy(static_cast<Qt::ContextMenuPolicy>(policy));
     }
 
     Cursor::OwnedRef Handle_getCursor(HandleRef _this) {
         auto ret = THIS->cursor();
-        return (Cursor::OwnedRef)new QCursor(ret);
+        return reinterpret_cast<Cursor::OwnedRef>(new QCursor(ret));
     }
 
     void Handle_setEnabled(HandleRef _this, bool enabled) {
@@ -111,7 +115,7 @@ namespace Widget
     }
 
     void Handle_setFocusPolicy(HandleRef _this, FocusPolicy policy) {
-        THIS->setFocusPolicy((Qt::FocusPolicy)policy);
+        THIS->setFocusPolicy(static_cast<Qt::FocusPolicy>(policy));
     }
 
     Rect Handle_frameGeometry(HandleRef _this) {
@@ -139,7 +143,7 @@ namespace Widget
     }
 
     void Handle_setInputMethodHints(HandleRef _this, InputMethodHints hints) {
-        THIS->setInputMethodHints((Qt::InputMethodHints)hints);
+        THIS->setInputMethodHints(static_cast<Qt::InputMethodHints>(hints));
     }
 
     bool Handle_isActiveWindow(HandleRef _this) {
@@ -147,7 +151,7 @@ namespace Widget
     }
 
     void Handle_setLayoutDirection(HandleRef _this, LayoutDirection direction) {
-        THIS->setLayoutDirection((Qt::LayoutDirection)direction);
+        THIS->setLayoutDirection(static_cast<Qt::LayoutDirection>(direction));
     }
 
     bool Handle_isMaximized(HandleRef _this) {
@@ -230,19 +234,19 @@ namespace Widget
         THIS->setSizeIncrement(w, h);
     }
 
-    void Handle_setSizePolicy(HandleRef _this, std::shared_ptr<SizePolicy::Deferred::Base> policy) {
+    void Handle_setSizePolicy(HandleRef _this, const std::shared_ptr<SizePolicy::Deferred::Base>& policy) {
         THIS->setSizePolicy(SizePolicy::fromDeferred(policy));
     }
 
     void Handle_setSizePolicy(HandleRef _this, Policy hPolicy, Policy vPolicy) {
-        THIS->setSizePolicy((QSizePolicy::Policy)hPolicy, (QSizePolicy::Policy)vPolicy);
+        THIS->setSizePolicy(static_cast<QSizePolicy::Policy>(hPolicy), static_cast<QSizePolicy::Policy>(vPolicy));
     }
 
-    void Handle_setStatusTip(HandleRef _this, std::string tip) {
+    void Handle_setStatusTip(HandleRef _this, const std::string& tip) {
         THIS->setStatusTip(QString::fromStdString(tip));
     }
 
-    void Handle_setStyleSheet(HandleRef _this, std::string styles) {
+    void Handle_setStyleSheet(HandleRef _this, const std::string& styles) {
         THIS->setStyleSheet(QString::fromStdString(styles));
     }
 
@@ -250,7 +254,7 @@ namespace Widget
         THIS->setTabletTracking(state);
     }
 
-    void Handle_setToolTip(HandleRef _this, std::string tip) {
+    void Handle_setToolTip(HandleRef _this, const std::string& tip) {
         THIS->setToolTip(QString::fromStdString(tip));
     }
 
@@ -266,7 +270,7 @@ namespace Widget
         THIS->setVisible(visible);
     }
 
-    void Handle_setWhatsThis(HandleRef _this, std::string text) {
+    void Handle_setWhatsThis(HandleRef _this, const std::string& text) {
         THIS->setWhatsThis(QString::fromStdString(text));
     }
 
@@ -274,12 +278,12 @@ namespace Widget
         return THIS->width();
     }
 
-    void Handle_setWindowFilePath(HandleRef _this, std::string path) {
+    void Handle_setWindowFilePath(HandleRef _this, const std::string& path) {
         THIS->setWindowFilePath(QString::fromStdString(path));
     }
 
     void Handle_setWindowFlags(HandleRef _this, WindowFlags flags_) {
-        THIS->setWindowFlags((Qt::WindowFlags)flags_);
+        THIS->setWindowFlags(static_cast<Qt::WindowFlags>(flags_));
     }
 
     void Handle_setWindowIcon(HandleRef _this, Icon::HandleRef icon) {
@@ -287,7 +291,7 @@ namespace Widget
     }
 
     void Handle_setWindowModality(HandleRef _this, WindowModality modality) {
-        THIS->setWindowModality((Qt::WindowModality)modality);
+        THIS->setWindowModality(static_cast<Qt::WindowModality>(modality));
     }
 
     void Handle_setWindowModified(HandleRef _this, bool modified) {
@@ -298,7 +302,7 @@ namespace Widget
         THIS->setWindowOpacity(opacity);
     }
 
-    void Handle_setWindowTitle(HandleRef _this, std::string title) {
+    void Handle_setWindowTitle(HandleRef _this, const std::string& title) {
         THIS->setWindowTitle(QString::fromStdString(title));
     }
 
@@ -311,15 +315,15 @@ namespace Widget
     }
 
     void Handle_addAction(HandleRef _this, Action::HandleRef action) {
-        THIS->addAction((QAction*)action);
+        THIS->addAction(reinterpret_cast<QAction *>(action));
     }
 
     void Handle_setParent(HandleRef _this, HandleRef parent) {
-        THIS->setParent((QWidget*)parent);
+        THIS->setParent(reinterpret_cast<QWidget *>(parent));
     }
 
     HandleRef Handle_getWindow(HandleRef _this) {
-        return (HandleRef)THIS->window();
+        return reinterpret_cast<HandleRef>(THIS->window());
     }
 
     void Handle_updateGeometry(HandleRef _this) {
@@ -367,11 +371,11 @@ namespace Widget
     }
 
     void Handle_setLayout(HandleRef _this, Layout::HandleRef layout) {
-        THIS->setLayout((QLayout*)layout);
+        THIS->setLayout(reinterpret_cast<QLayout *>(layout));
     }
 
     Layout::HandleRef Handle_getLayout(HandleRef _this) {
-        return (Layout::HandleRef)THIS->layout();
+        return reinterpret_cast<Layout::HandleRef>(THIS->layout());
     }
 
     Point Handle_mapToGlobal(HandleRef _this, Point p) {
@@ -387,12 +391,12 @@ namespace Widget
         delete THIS;
     }
 
-    HandleRef create(std::shared_ptr<SignalHandler> handler) {
-        return (HandleRef) new WidgetWithHandler(std::move(handler));
+    HandleRef create(const std::shared_ptr<SignalHandler>& handler) {
+        return reinterpret_cast<HandleRef>(new WidgetWithHandler(handler));
     }
 
     HandleRef createNoHandler() {
-        return (HandleRef) new QWidget();
+        return reinterpret_cast<HandleRef>(new QWidget());
     }
 
     // =========================================================================
@@ -421,7 +425,7 @@ namespace Widget
         return result;
     }
 
-    bool MimeData_hasFormat(MimeDataRef _this, std::string mimeType) {
+    bool MimeData_hasFormat(MimeDataRef _this, const std::string& mimeType) {
         return MIMETHIS->hasFormat(QString::fromStdString(mimeType));
     }
 
@@ -429,7 +433,7 @@ namespace Widget
         return MIMETHIS->text().toStdString();
     }
 
-    void MimeData_setText(MimeDataRef _this, std::string text) {
+    void MimeData_setText(MimeDataRef _this, const std::string& text) {
         MIMETHIS->setText(QString::fromStdString(text));
     }
 
@@ -441,7 +445,7 @@ namespace Widget
         return result;
     }
 
-    void MimeData_setUrls(MimeDataRef _this, std::vector<std::string> urls) {
+    void MimeData_setUrls(MimeDataRef _this, const std::vector<std::string>& urls) {
         QList<QUrl> qUrls;
         for (auto & url : urls) {
             qUrls.append(QUrl(QString::fromStdString(url)));
@@ -455,19 +459,19 @@ namespace Widget
 //    }
 
     MimeDataRef createMimeData() {
-        return (MimeDataRef) new QMimeData();
+        return reinterpret_cast<MimeDataRef>(new QMimeData());
     }
 
 #define DRAGTHIS ((QDrag*)_this)
 
     void Drag_setMimeData(DragRef _this, MimeDataRef data) {
-        DRAGTHIS->setMimeData((QMimeData*)data);
+        DRAGTHIS->setMimeData(reinterpret_cast<QMimeData *>(data));
     }
 
     DropAction Drag_exec(DragRef _this, DropActionSet supportedActions, DropAction defaultAction) {
-        auto qDefault = (Qt::DropAction)defaultAction;
+        auto qDefault = static_cast<Qt::DropAction>(defaultAction);
         auto qSupported = QFlags<Qt::DropAction>(supportedActions);
-        return (DropAction) DRAGTHIS->exec(qSupported, qDefault);
+        return static_cast<DropAction>(DRAGTHIS->exec(qSupported, qDefault));
     }
 
 //    void Drag_dispose(DragRef _this) {
@@ -475,13 +479,13 @@ namespace Widget
 //    }
 
     DragRef createDrag(HandleRef parent) {
-        return (DragRef) new QDrag((QObject*)parent);
+        return reinterpret_cast<DragRef>(new QDrag(reinterpret_cast<QObject *>(parent)));
     }
 
 #define DRAGMOVETHIS ((QDragMoveEvent*)_this)
 
     DropAction DragMoveEvent_proposedAction(DragMoveEventRef _this) {
-        return (DropAction) DRAGMOVETHIS->proposedAction();
+        return static_cast<DropAction>(DRAGMOVETHIS->proposedAction());
     }
 
     void DragMoveEvent_acceptProposedAction(DragMoveEventRef _this) {
@@ -493,7 +497,7 @@ namespace Widget
     }
 
     void DragMoveEvent_acceptDropAction(DragMoveEventRef _this, DropAction action) {
-        auto qtAction = (Qt::DropAction)action;
+        auto qtAction = static_cast<Qt::DropAction>(action);
         if (qtAction == DRAGMOVETHIS->proposedAction()) {
             DRAGMOVETHIS->acceptProposedAction();
         } else {
@@ -517,14 +521,14 @@ namespace Widget
         std::shared_ptr<MethodDelegate> methodDelegate;
         MethodMask methodMask;
     public:
-        WidgetSubclass(std::shared_ptr<MethodDelegate> &methodDelegate, MethodMask methodMask, std::shared_ptr<SignalHandler> handler) :
-            methodDelegate(methodDelegate),
+        WidgetSubclass(std::shared_ptr<MethodDelegate> methodDelegate, MethodMask methodMask, std::shared_ptr<SignalHandler> handler) :
+            methodDelegate(std::move(methodDelegate)),
             methodMask(methodMask),
             WidgetWithHandler(std::move(handler))
             {}
     protected:
         void showEvent(QShowEvent *event) override {
-            if (methodMask & MethodMaskFlags::ShowEvent) {
+            if (methodMask & ShowEvent) {
                 methodDelegate->showEvent(event->spontaneous());
                 event->accept();
             } else {
@@ -533,9 +537,9 @@ namespace Widget
         }
 
         void paintEvent(QPaintEvent *event) override {
-            if (methodMask & MethodMaskFlags::PaintEvent) {
+            if (methodMask & PaintEvent) {
                 QPainter painter(this);
-                methodDelegate->paintEvent((Painter::HandleRef)&painter, toRect(event->rect()));
+                methodDelegate->paintEvent(reinterpret_cast<Painter::HandleRef>(&painter), toRect(event->rect()));
                 // prevent it from propagating:
                 // do we allow this from the method delegate somehow?
                 event->accept();
@@ -544,9 +548,9 @@ namespace Widget
             }
         }
         void mousePressEvent(QMouseEvent *event) override {
-            if (methodMask & MethodMaskFlags::MousePressEvent) {
+            if (methodMask & MousePressEvent) {
                 auto pos = toPoint(event->pos());
-                auto button = (MouseButton)event->button();
+                auto button = static_cast<MouseButton>(event->button());
                 auto modifiers = event->modifiers();
                 methodDelegate->mousePressEvent(pos, button, modifiers);
                 // prevent from propagating, see notes above
@@ -557,7 +561,7 @@ namespace Widget
         }
 
         void mouseMoveEvent(QMouseEvent *event) override {
-            if (methodMask & MethodMaskFlags::MouseMoveEvent) {
+            if (methodMask & MouseMoveEvent) {
                 auto pos = toPoint(event->pos());
                 auto buttons = event->buttons();
                 auto modifiers = event->modifiers();
@@ -570,9 +574,9 @@ namespace Widget
         }
 
         void mouseReleaseEvent(QMouseEvent *event) override {
-            if (methodMask & MethodMaskFlags::MouseReleaseEvent) {
+            if (methodMask & MouseReleaseEvent) {
                 auto pos = toPoint(event->pos());
-                auto button = (MouseButton)event->button();
+                auto button = static_cast<MouseButton>(event->button());
                 auto modifiers = event->modifiers();
                 methodDelegate->mouseReleaseEvent(pos, button, modifiers);
                 event->accept();
@@ -582,7 +586,7 @@ namespace Widget
         }
 
         void enterEvent(QEnterEvent *event) override {
-            if (methodMask & MethodMaskFlags::EnterEvent) {
+            if (methodMask & EnterEvent) {
                 auto pos = toPoint(event->position().toPoint());
                 methodDelegate->enterEvent(pos);
                 event->accept();
@@ -592,7 +596,7 @@ namespace Widget
         }
 
         void leaveEvent(QEvent *event) override {
-            if (methodMask & MethodMaskFlags::LeaveEvent) {
+            if (methodMask & LeaveEvent) {
                 methodDelegate->leaveEvent();
                 event->accept();
             } else {
@@ -601,7 +605,7 @@ namespace Widget
         }
 
         void resizeEvent(QResizeEvent *event) override {
-            if (methodMask & MethodMaskFlags::ResizeEvent) {
+            if (methodMask & ResizeEvent) {
                 methodDelegate->resizeEvent(toSize(event->oldSize()), toSize(event->size()));
                 event->accept();
             } else {
@@ -610,11 +614,11 @@ namespace Widget
         }
 
         void dragEnterEvent(QDragEnterEvent *event) override {
-            if (methodMask & MethodMaskFlags::DropEvents) {
+            if (methodMask & DropEvents) {
                 auto pos = toPoint(event->position().toPoint());
                 auto modifiers = event->modifiers();
-                auto mimeOpaque = (MimeDataRef)event->mimeData();
-                auto moveEvent = (DragMoveEventRef)event;
+                auto mimeOpaque = MimeDataRef(event->mimeData());
+                auto moveEvent = reinterpret_cast<DragMoveEventRef>(event);
                 methodDelegate->dragMoveEvent(pos, modifiers, mimeOpaque, moveEvent, true);
                 // other side needs to call acceptProposedAction if it's OK, otherwise ... .ignore?
             } else {
@@ -623,11 +627,11 @@ namespace Widget
         }
 
         void dragMoveEvent(QDragMoveEvent *event) override {
-            if (methodMask & MethodMaskFlags::DropEvents) {
+            if (methodMask & DropEvents) {
                 auto pos = toPoint(event->position().toPoint());
                 auto modifiers = event->modifiers();
                 auto mimeOpaque = (MimeDataRef)event->mimeData();
-                auto moveEvent = (DragMoveEventRef)event;
+                auto moveEvent = reinterpret_cast<DragMoveEventRef>(event);
                 methodDelegate->dragMoveEvent(pos, modifiers, mimeOpaque, moveEvent, false);
                 // other side needs to call acceptProposedAction if it's OK, otherwise ... .ignore?
             } else {
@@ -636,7 +640,7 @@ namespace Widget
         }
 
         void dragLeaveEvent(QDragLeaveEvent *event) override {
-            if (methodMask & MethodMaskFlags::DropEvents) {
+            if (methodMask & DropEvents) {
                 methodDelegate->dragLeaveEvent();
                 event->accept();
             } else {
@@ -645,11 +649,11 @@ namespace Widget
         }
 
         void dropEvent(QDropEvent *event) override {
-            if (methodMask & MethodMaskFlags::DropEvents) {
+            if (methodMask & DropEvents) {
                 auto pos = toPoint(event->position().toPoint());
                 auto modifiers = event->modifiers();
                 auto mimeOpaque = (MimeDataRef)event->mimeData();
-                auto action = (DropAction)event->proposedAction();
+                auto action = static_cast<DropAction>(event->proposedAction());
                 methodDelegate->dropEvent(pos, modifiers, mimeOpaque, action);
                 event->acceptProposedAction();
             } else {
@@ -659,7 +663,7 @@ namespace Widget
 
     public:
         [[nodiscard]] QSize sizeHint() const override {
-            if (methodMask & MethodMaskFlags::SizeHint) {
+            if (methodMask & SizeHint) {
                 auto size = methodDelegate->sizeHint();
                 return toQSize(size);
             } else {
@@ -668,8 +672,8 @@ namespace Widget
         }
     };
 
-    HandleRef createSubclassed(std::shared_ptr<MethodDelegate> methodDelegate, MethodMask methodMask, std::shared_ptr<SignalHandler> handler) {
-        return (HandleRef) new WidgetSubclass(methodDelegate, methodMask, std::move(handler));
+    HandleRef createSubclassed(const std::shared_ptr<MethodDelegate>& methodDelegate, MethodMask methodMask, const std::shared_ptr<SignalHandler>& handler) {
+        return reinterpret_cast<HandleRef>(new WidgetSubclass(methodDelegate, methodMask, handler));
     }
 }
 

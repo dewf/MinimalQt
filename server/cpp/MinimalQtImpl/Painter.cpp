@@ -33,7 +33,7 @@ namespace Painter
         THIS->setFont(font->qFont);
     }
 
-    void Handle_drawText(HandleRef _this, Common::Rect rect, Enums::Alignment align, std::string text) {
+    void Handle_drawText(HandleRef _this, Common::Rect rect, Enums::Alignment align, const std::string& text) {
         THIS->drawText(toQRect(rect), (Qt::AlignmentFlag)align, QString::fromStdString(text));
     }
 
@@ -49,7 +49,7 @@ namespace Painter
         THIS->fillRect(toQRect(rect), brush->qBrush);
     }
 
-    void Handle_fillRect(HandleRef _this, Rect rect, std::shared_ptr<Color::Deferred::Base> color) {
+    void Handle_fillRect(HandleRef _this, Rect rect, const std::shared_ptr<Color::Deferred::Base>& color) {
         THIS->fillRect(toQRect(rect), Color::fromDeferred(color));
     }
 
@@ -89,7 +89,7 @@ namespace Painter
         THIS->drawEllipse(toQPoint(center), rx, ry);
     }
 
-    void Handle_drawPolyline(HandleRef _this, std::vector<PointF> points) {
+    void Handle_drawPolyline(HandleRef _this, const std::vector<PointF>& points) {
         std::vector<QPointF> qPoints;
         for (auto &p : points) {
             qPoints.push_back(toQPointF(p));
@@ -97,7 +97,7 @@ namespace Painter
         THIS->drawPolyline(qPoints.data(), (int)qPoints.size());
     }
 
-    void Handle_drawPolyline(HandleRef _this, std::vector<Point> points) {
+    void Handle_drawPolyline(HandleRef _this, const std::vector<Point>& points) {
         std::vector<QPoint> qPoints;
         for (auto &p : points) {
             qPoints.push_back(toQPoint(p));

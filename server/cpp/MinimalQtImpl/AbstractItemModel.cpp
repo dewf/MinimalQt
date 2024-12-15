@@ -20,12 +20,12 @@ namespace AbstractItemModel
         return MODELINDEX_HEAP_COPY(value);
     }
 
-    bool Handle_setData(HandleRef _this, ModelIndex::HandleRef index, std::shared_ptr<Variant::Deferred::Base> value) {
+    bool Handle_setData(HandleRef _this, ModelIndex::HandleRef index, const std::shared_ptr<Variant::Deferred::Base>& value) {
         auto value2 = Variant::fromDeferred(value);
         return THIS->setData(MODELINDEX_VALUE(index), value2);
     }
 
-    bool Handle_setData(HandleRef _this, ModelIndex::HandleRef index, std::shared_ptr<Variant::Deferred::Base> value, ItemDataRole role) {
+    bool Handle_setData(HandleRef _this, ModelIndex::HandleRef index, const std::shared_ptr<Variant::Deferred::Base>& value, ItemDataRole role) {
         auto value2 = Variant::fromDeferred(value);
         auto qrole = static_cast<Qt::ItemDataRole>(role);
         return THIS->setData(MODELINDEX_VALUE(index), value2, qrole);

@@ -19,21 +19,24 @@ namespace MainWindow
         SignalMask lastMask = 0;
         std::vector<SignalMapItem<SignalMaskFlags>> signalMap = {
             // Object:
-            { SignalMaskFlags::Destroyed, SIGNAL(destroyed(QObject*)), SLOT(onDestroyed(QObject*)) },
-            { SignalMaskFlags::ObjectNameChanged, SIGNAL(objectNameChanged(QString)), SLOT(onObjectNameChanged(QString)) },
+            { Destroyed, SIGNAL(destroyed(QObject*)), SLOT(onDestroyed(QObject*)) },
+            { ObjectNameChanged, SIGNAL(objectNameChanged(QString)), SLOT(onObjectNameChanged(QString)) },
             // Widget:
-            { SignalMaskFlags::CustomContextMenuRequested, SIGNAL(customContextMenuRequested(QPoint)), SLOT(onCustomContextMenuRequested(QPoint)) },
-            { SignalMaskFlags::WindowIconChanged, SIGNAL(windowIconChanged(QIcon)), SLOT(onWindowIconChanged(QIcon)) },
-            { SignalMaskFlags::WindowTitleChanged, SIGNAL(windowTitleChanged(QString)), SLOT(onWindowTitleChanged(QString)) },
+            { CustomContextMenuRequested, SIGNAL(customContextMenuRequested(QPoint)), SLOT(onCustomContextMenuRequested(QPoint)) },
+            { WindowIconChanged, SIGNAL(windowIconChanged(QIcon)), SLOT(onWindowIconChanged(QIcon)) },
+            { WindowTitleChanged, SIGNAL(windowTitleChanged(QString)), SLOT(onWindowTitleChanged(QString)) },
             // MainWindow:
-            { SignalMaskFlags::IconSizeChanged, SIGNAL(iconSizeChanged(QSize)), SLOT(onIconSizeChanged(QSize)) },
-            { SignalMaskFlags::TabifiedDockWidgetActivated, SIGNAL(tabifiedDockWidgetActivated(QDockWidget)), SLOT(onTabifiedDockWidgetActivated(QDockWidget)) },
-            { SignalMaskFlags::ToolButtonStyleChanged, SIGNAL(toolButtonStyleChanged(Qt::ToolButtonStyle)), SLOT(onToolButtonStyleChanged(Qt::ToolButtonStyle)) },
+            { IconSizeChanged, SIGNAL(iconSizeChanged(QSize)), SLOT(onIconSizeChanged(QSize)) },
+            { TabifiedDockWidgetActivated, SIGNAL(tabifiedDockWidgetActivated(QDockWidget)), SLOT(onTabifiedDockWidgetActivated(QDockWidget)) },
+            { ToolButtonStyleChanged, SIGNAL(toolButtonStyleChanged(Qt::ToolButtonStyle)), SLOT(onToolButtonStyleChanged(Qt::ToolButtonStyle)) },
             // MainWindow custom:
-            { SignalMaskFlags::WindowClosed, SIGNAL(windowClosed()), SLOT(onWindowClosed()) }
+            { WindowClosed, SIGNAL(windowClosed()), SLOT(onWindowClosed()) }
         };
     public:
         explicit MainWindowWithHandler(std::shared_ptr<SignalHandler> handler) : handler(std::move(handler)) {}
+
+        // could we just put a lambda in the ctor (capturing the handler only) which connects to Destroyed?
+        // seems like that would be potentially safer/more correct than emitting it ourselves
 
         // ~MainWindowWithHandler() override {
         //     // we have to 'manually' invoke this ourselves, because it's not emitted until this derived class is torn down,
@@ -60,38 +63,50 @@ namespace MainWindow
         }
     public slots:
         // Object =================
-        void onDestroyed(QObject *obj) {
+        void onDestroyed(QObject *obj) const {
             // this isn't firing, and I think it's because our subclass is torn down before the base dtor runs,
             // which means our 'handler' is non-existent (I guess Qt's MOC stuff is smart enough to disconnect the signal when a subclass is destructed? else why don't we crash when a connection exists?)
             // anyway, I don't think it's possible to listen to this signal internally. is that going to be a problem?
             // could we explicitly connect it with a lambda that referecnes the shared_ptr to keep the handler alive?
-            handler->destroyed((Object::HandleRef)obj);
+            handler->
+                inherited_Widget_SignalHandler()->
+                inherited_Object_SignalHandler()->
+                    destroyed(reinterpret_cast<Object::HandleRef>(obj));
         }
-        void onObjectNameChanged(const QString& name) {
-            handler->objectNameChanged(name.toStdString());
+        void onObjectNameChanged(const QString& name) const {
+            handler->
+                inherited_Widget_SignalHandler()->
+                inherited_Object_SignalHandler()->
+                    objectNameChanged(name.toStdString());
         }
         // Widget ==================
-        void onCustomContextMenuRequested(const QPoint& pos) {
-            handler->customContextMenuRequested(toPoint(pos));
+        void onCustomContextMenuRequested(const QPoint& pos) const {
+            handler->
+                inherited_Widget_SignalHandler()->
+                    customContextMenuRequested(toPoint(pos));
         }
-        void onWindowIconChanged(const QIcon& icon) {
-            handler->windowIconChanged((Icon::HandleRef)&icon);
+        void onWindowIconChanged(const QIcon& icon) const {
+            handler->
+                inherited_Widget_SignalHandler()->
+                    windowIconChanged((Icon::HandleRef)&icon);
         }
-        void onWindowTitleChanged(const QString& title) {
-            handler->windowTitleChanged(title.toStdString());
+        void onWindowTitleChanged(const QString& title) const {
+            handler->
+                inherited_Widget_SignalHandler()->
+                    windowTitleChanged(title.toStdString());
         }
         // MainWindow ===============
-        void onIconSizeChanged(const QSize& size) {
+        void onIconSizeChanged(const QSize& size) const {
             handler->iconSizeChanged(toSize(size));
         }
-        void onTabifiedDockWidgetActivated(QDockWidget* dockWidget) {
+        void onTabifiedDockWidgetActivated(QDockWidget* dockWidget) const {
             handler->tabifiedDockWidgetActivated((DockWidget::HandleRef)dockWidget);
         }
-        void onToolButtonStyleChanged(Qt::ToolButtonStyle style) {
+        void onToolButtonStyleChanged(Qt::ToolButtonStyle style) const {
             handler->toolButtonStyleChanged((Enums::ToolButtonStyle)style);
         }
         // MainWindow (custom) ======
-        void onWindowClosed() {
+        void onWindowClosed() const {
             handler->windowClosed();
         }
     };
@@ -105,7 +120,7 @@ namespace MainWindow
     }
 
     void Handle_setDockOptions(HandleRef _this, DockOptions dockOptions) {
-        THIS->setDockOptions((QMainWindow::DockOptions)dockOptions);
+        THIS->setDockOptions(static_cast<QMainWindow::DockOptions>(dockOptions));
     }
 
     void Handle_setDocumentMode(HandleRef _this, bool state) {
@@ -117,11 +132,11 @@ namespace MainWindow
     }
 
     void Handle_setTabShape(HandleRef _this, TabShape tabShape) {
-        THIS->setTabShape((QTabWidget::TabShape)tabShape);
+        THIS->setTabShape(static_cast<QTabWidget::TabShape>(tabShape));
     }
 
     void Handle_setToolButtonStyle(HandleRef _this, ToolButtonStyle style) {
-        THIS->setToolButtonStyle((Qt::ToolButtonStyle)style);
+        THIS->setToolButtonStyle(static_cast<Qt::ToolButtonStyle>(style));
     }
 
     void Handle_setUnifiedTitleAndToolBarOnMac(HandleRef _this, bool state) {
@@ -129,19 +144,19 @@ namespace MainWindow
     }
 
     void Handle_setCentralWidget(HandleRef _this, Widget::HandleRef widget) {
-        THIS->setCentralWidget((QWidget*)widget);
+        THIS->setCentralWidget(reinterpret_cast<QWidget *>(widget));
     }
 
     void Handle_setMenuBar(HandleRef _this, MenuBar::HandleRef menubar) {
-        THIS->setMenuBar((QMenuBar*)menubar);
+        THIS->setMenuBar(reinterpret_cast<QMenuBar *>(menubar));
     }
 
     void Handle_setStatusBar(HandleRef _this, StatusBar::HandleRef statusbar) {
-        THIS->setStatusBar((QStatusBar*)statusbar);
+        THIS->setStatusBar(reinterpret_cast<QStatusBar *>(statusbar));
     }
 
     void Handle_addToolBar(HandleRef _this, ToolBar::HandleRef toolbar) {
-        THIS->addToolBar((QToolBar*)toolbar);
+        THIS->addToolBar(reinterpret_cast<QToolBar *>(toolbar));
     }
 
     void Handle_setSignalMask(HandleRef _this, SignalMask mask) {
@@ -152,8 +167,8 @@ namespace MainWindow
         delete THIS;
     }
 
-    HandleRef create(std::shared_ptr<SignalHandler> handler) {
-        return (HandleRef) new MainWindowWithHandler(std::move(handler));
+    HandleRef create(const std::shared_ptr<SignalHandler>& handler) {
+        return reinterpret_cast<HandleRef>(new MainWindowWithHandler(handler));
     }
 }
 

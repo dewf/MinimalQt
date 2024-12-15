@@ -9,21 +9,8 @@ namedbits SignalMask extends Frame.SignalMask {
     // none of our own
 }
 
-interface SignalHandler {
-    // from Object:
-    void destroyed(Object.Handle obj);
-    void objectNameChanged(string objectName);
-
-    // Widget:
-    void customContextMenuRequested(Point pos);
-    void windowIconChanged(Icon.Handle icon);
-    void windowTitleChanged(string title);
-
-    // Frame:
-    // (none)
-
-    // AbstractScrollArea:
-    // (none)
+interface SignalHandler extends Frame.SignalHandler {
+    // none of our own
 }
 
 enum SizeAdjustPolicy {

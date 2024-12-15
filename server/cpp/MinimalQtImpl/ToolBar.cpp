@@ -16,21 +16,21 @@ namespace ToolBar
         SignalMask lastMask = 0;
         std::vector<SignalMapItem<SignalMaskFlags>> signalMap = {
             // Object:
-            { SignalMaskFlags::Destroyed, SIGNAL(destroyed(QObject)), SLOT(onDestroyed(QObject)) },
-            { SignalMaskFlags::ObjectNameChanged, SIGNAL(objectNameChanged(QString)), SLOT(onObjectNameChanged(QString)) },
+            { Destroyed, SIGNAL(destroyed(QObject)), SLOT(onDestroyed(QObject)) },
+            { ObjectNameChanged, SIGNAL(objectNameChanged(QString)), SLOT(onObjectNameChanged(QString)) },
             // Widget:
-            { SignalMaskFlags::CustomContextMenuRequested, SIGNAL(customContextMenuRequested(QPoint)), SLOT(onCustomContextMenuRequested(QPoint)) },
-            { SignalMaskFlags::WindowIconChanged, SIGNAL(windowIconChanged(QIcon)), SLOT(onWindowIconChanged(QIcon)) },
-            { SignalMaskFlags::WindowTitleChanged, SIGNAL(windowTitleChanged(QString)), SLOT(onWindowTitleChanged(QString)) },
+            { CustomContextMenuRequested, SIGNAL(customContextMenuRequested(QPoint)), SLOT(onCustomContextMenuRequested(QPoint)) },
+            { WindowIconChanged, SIGNAL(windowIconChanged(QIcon)), SLOT(onWindowIconChanged(QIcon)) },
+            { WindowTitleChanged, SIGNAL(windowTitleChanged(QString)), SLOT(onWindowTitleChanged(QString)) },
             // ToolBar:
-            { SignalMaskFlags::ActionTriggered, SIGNAL(actionTriggered(QAction)), SLOT(onActionTriggered(QAction)) },
-            { SignalMaskFlags::AllowedAreasChanged, SIGNAL(allowedAreasChanged(Qt::ToolBarAreas)), SLOT(onAllowedAreasChanged(Qt::ToolBarAreas)) },
-            { SignalMaskFlags::IconSizeChanged, SIGNAL(iconSizeChanged(QSize)), SLOT(onIconSizeChanged(QSize)) },
-            { SignalMaskFlags::MovableChanged, SIGNAL(movableChanged(bool)), SLOT(onMovableChanged(bool)) },
-            { SignalMaskFlags::OrientationChanged, SIGNAL(orientationChanged(Qt::Orientation)), SLOT(onOrientationChanged(Qt::Orientation)) },
-            { SignalMaskFlags::ToolButtonStyleChanged, SIGNAL(toolButtonStyleChanged(Qt::ToolButtonStyle)), SLOT(onToolButtonStyleChanged(Qt::ToolButtonStyle)) },
-            { SignalMaskFlags::TopLevelChanged, SIGNAL(topLevelChanged(bool)), SLOT(onTopLevelChanged(bool)) },
-            { SignalMaskFlags::VisibilityChanged, SIGNAL(visibilityChanged(bool)), SLOT(onVisibilityChanged(bool)) },
+            { ActionTriggered, SIGNAL(actionTriggered(QAction)), SLOT(onActionTriggered(QAction)) },
+            { AllowedAreasChanged, SIGNAL(allowedAreasChanged(Qt::ToolBarAreas)), SLOT(onAllowedAreasChanged(Qt::ToolBarAreas)) },
+            { IconSizeChanged, SIGNAL(iconSizeChanged(QSize)), SLOT(onIconSizeChanged(QSize)) },
+            { MovableChanged, SIGNAL(movableChanged(bool)), SLOT(onMovableChanged(bool)) },
+            { OrientationChanged, SIGNAL(orientationChanged(Qt::Orientation)), SLOT(onOrientationChanged(Qt::Orientation)) },
+            { ToolButtonStyleChanged, SIGNAL(toolButtonStyleChanged(Qt::ToolButtonStyle)), SLOT(onToolButtonStyleChanged(Qt::ToolButtonStyle)) },
+            { TopLevelChanged, SIGNAL(topLevelChanged(bool)), SLOT(onTopLevelChanged(bool)) },
+            { VisibilityChanged, SIGNAL(visibilityChanged(bool)), SLOT(onVisibilityChanged(bool)) },
         };
     public:
         explicit ToolBarWithHandler(std::shared_ptr<SignalHandler> handler) : handler(std::move(handler)) {}
@@ -42,51 +42,63 @@ namespace ToolBar
         }
     public slots:
         // Object =================
-        void onDestroyed(QObject *obj) {
-            handler->destroyed((Object::HandleRef)obj);
+        void onDestroyed(QObject *obj) const {
+            handler->
+                inherited_Widget_SignalHandler()->
+                inherited_Object_SignalHandler()->
+                    destroyed(reinterpret_cast<Object::HandleRef>(obj));
         }
-        void onObjectNameChanged(const QString& name) {
-            handler->objectNameChanged(name.toStdString());
+        void onObjectNameChanged(const QString& name) const {
+            handler->
+                inherited_Widget_SignalHandler()->
+                inherited_Object_SignalHandler()->
+                    objectNameChanged(name.toStdString());
         }
         // Widget ==================
-        void onCustomContextMenuRequested(const QPoint& pos) {
-            handler->customContextMenuRequested(toPoint(pos));
+        void onCustomContextMenuRequested(const QPoint& pos) const {
+            handler->
+                inherited_Widget_SignalHandler()->
+                    customContextMenuRequested(toPoint(pos));
         }
-        void onWindowIconChanged(const QIcon& icon) {
-            handler->windowIconChanged((Icon::HandleRef)&icon);
+        void onWindowIconChanged(const QIcon& icon) const {
+            handler->
+                inherited_Widget_SignalHandler()->
+                    windowIconChanged((Icon::HandleRef)&icon);
         }
-        void onWindowTitleChanged(const QString& title) {
-            handler->windowTitleChanged(title.toStdString());
+        void onWindowTitleChanged(const QString& title) const {
+            handler->
+                inherited_Widget_SignalHandler()->
+                    windowTitleChanged(title.toStdString());
         }
         // ToolBar =================
-        void onActionTriggered(QAction *action) {
-            handler->actionTriggered((Action::HandleRef)action);
+        void onActionTriggered(QAction *action) const {
+            handler->actionTriggered(reinterpret_cast<Action::HandleRef>(action));
         };
-        void onAllowedAreasChanged(Qt::ToolBarAreas allowed) {
+        void onAllowedAreasChanged(Qt::ToolBarAreas allowed) const {
             handler->allowedAreasChanged(allowed);
         }
-        void onIconSizeChanged(const QSize& size) {
+        void onIconSizeChanged(const QSize& size) const {
             handler->iconSizeChanged(toSize(size));
         }
-        void onMovableChanged(bool movable) {
+        void onMovableChanged(bool movable) const {
             handler->movableChanged(movable);
         }
-        void onOrientationChanged(Qt::Orientation value) {
-            handler->orientationChanged((Enums::Orientation)value);
+        void onOrientationChanged(Qt::Orientation value) const {
+            handler->orientationChanged(static_cast<Enums::Orientation>(value));
         }
-        void onToolButtonStyleChanged(Qt::ToolButtonStyle style) {
-            handler->toolButtonStyleChanged((ToolButtonStyle)style);
+        void onToolButtonStyleChanged(Qt::ToolButtonStyle style) const {
+            handler->toolButtonStyleChanged(static_cast<ToolButtonStyle>(style));
         }
-        void onTopLevelChanged(bool topLevel) {
+        void onTopLevelChanged(bool topLevel) const {
             handler->topLevelChanged(topLevel);
         }
-        void onVisibilityChanged(bool visible) {
+        void onVisibilityChanged(bool visible) const {
             handler->visibilityChanged(visible);
         }
     };
 
     void Handle_setAllowedAreas(HandleRef _this, Enums::ToolBarAreas allowed) {
-        THIS->setAllowedAreas((Qt::ToolBarAreas)allowed);
+        THIS->setAllowedAreas(static_cast<Qt::ToolBarAreas>(allowed));
     }
 
     void Handle_setFloatable(HandleRef _this, bool floatable) {
@@ -106,19 +118,19 @@ namespace ToolBar
     }
 
     void Handle_setOrientation(HandleRef _this, Orientation value) {
-        THIS->setOrientation((Qt::Orientation)value);
+        THIS->setOrientation(static_cast<Qt::Orientation>(value));
     }
 
     void Handle_setToolButtonStyle(HandleRef _this, ToolButtonStyle style) {
-        THIS->setToolButtonStyle((Qt::ToolButtonStyle)style);
+        THIS->setToolButtonStyle(static_cast<Qt::ToolButtonStyle>(style));
     }
 
     Action::HandleRef Handle_addSeparator(HandleRef _this) {
-        return (Action::HandleRef)THIS->addSeparator();
+        return reinterpret_cast<Action::HandleRef>(THIS->addSeparator());
     }
 
     void Handle_addWidget(HandleRef _this, Widget::HandleRef widget) {
-        THIS->addWidget((QWidget*)widget);
+        THIS->addWidget(reinterpret_cast<QWidget *>(widget));
     }
 
     void Handle_clear(HandleRef _this) {
@@ -133,8 +145,8 @@ namespace ToolBar
         delete THIS;
     }
 
-    HandleRef create(std::shared_ptr<SignalHandler> handler) {
-        return (HandleRef) new ToolBarWithHandler(std::move(handler));
+    HandleRef create(const std::shared_ptr<SignalHandler>& handler) {
+        return reinterpret_cast<HandleRef>(new ToolBarWithHandler(handler));
     }
 }
 

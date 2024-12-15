@@ -18,12 +18,7 @@ enum EndEditHint {
     RevertModelCache
 }
 
-interface SignalHandler {
-    // Object:
-    void destroyed(Object.Handle obj);
-    void objectNameChanged(string objectName);
-
-    // AbstractItemDelegate:
+interface SignalHandler extends Object.SignalHandler {
     void closeEditor(Widget.Handle editor, EndEditHint hint);
     void commitData(Widget.Handle editor);
     void sizeHintChanged(ModelIndex.Handle index);

@@ -4,7 +4,7 @@
 
 namespace Image
 {
-    OwnedRef Handle_scaled(HandleRef _this, int32_t width, int32_t height, ScaledOptions opts) {
+    OwnedRef Handle_scaled(HandleRef _this, int32_t width, int32_t height, const ScaledOptions& opts) {
         const auto qAspectMode =
             static_cast<Qt::AspectRatioMode>(
                 opts.getOrDefaultAspectMode(AspectRatioMode::IgnoreAspectRatio));
@@ -24,7 +24,7 @@ namespace Image
         return new __Owned { QImage(width, height, static_cast<QImage::Format>(format)) };
     }
 
-    OwnedRef create(std::string filename, std::optional<std::string> format) {
+    OwnedRef create(const std::string& filename, const std::optional<std::string>& format) {
         const char *qformat = nullptr;
         if (format.has_value()) {
             qformat = format->c_str();
@@ -42,7 +42,7 @@ namespace Image
         delete ptr;
     }
 
-    OwnedRef create(std::shared_ptr<NativeBuffer<uint8_t>> data, int32_t width, int32_t height, Format format, std::optional<size_t> bytesPerLine) {
+    OwnedRef create(std::shared_ptr<NativeBuffer<uint8_t>> data, int32_t width, int32_t height, Format format, const std::optional<size_t>& bytesPerLine) {
         size_t length;
         const auto qdata = data->getSpan(&length);
         const auto qformat = static_cast<QImage::Format>(format);

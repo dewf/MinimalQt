@@ -11,23 +11,7 @@ namedbits SignalMask extends AbstractScrollArea.SignalMask {
     // none extra
 }
 
-interface SignalHandler {
-    // from Object:
-    void destroyed(Object.Handle obj);
-    void objectNameChanged(string objectName);
-
-    // Widget:
-    void customContextMenuRequested(Point pos);
-    void windowIconChanged(Icon.Handle icon);
-    void windowTitleChanged(string title);
-
-    // Frame:
-    // (none)
-
-    // AbstractScrollArea:
-    // (none)
-
-    // ScrollArea:
+interface SignalHandler extends AbstractScrollArea.SignalHandler {
     // (none)
 }
 

@@ -79,11 +79,11 @@ namespace Variant
     }
 
     // deferred stuff ========================================
-    class FromDeferred : public Variant::Deferred::Visitor {
+    class FromDeferredMatcher : public Deferred::Matcher {
     private:
         QVariant &variant;
     public:
-        explicit FromDeferred(QVariant &variant) : variant(variant) {}
+        explicit FromDeferredMatcher(QVariant &variant) : variant(variant) {}
 
         void onEmpty(const Deferred::Empty *value) override {
             variant = QVariant();
@@ -124,8 +124,8 @@ namespace Variant
 
     QVariant fromDeferred(const std::shared_ptr<Deferred::Base>& deferred) {
         QVariant ret;
-        FromDeferred visitor(ret);
-        deferred->accept(&visitor);
+        FromDeferredMatcher matcher(ret);
+        deferred->match(&matcher);
         return ret;
     }
 }

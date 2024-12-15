@@ -19,16 +19,16 @@ namespace Action
         SignalMask lastMask = 0;
         std::vector<SignalMapItem<SignalMaskFlags>> signalMap = {
             // Object:
-            { SignalMaskFlags::Destroyed, SIGNAL(destroyed(QObject)), SLOT(onDestroyed(QObject)) },
-            { SignalMaskFlags::ObjectNameChanged, SIGNAL(objectNameChanged(QString)), SLOT(onObjectNameChanged(QString)) },
+            { Destroyed, SIGNAL(destroyed(QObject)), SLOT(onDestroyed(QObject)) },
+            { ObjectNameChanged, SIGNAL(objectNameChanged(QString)), SLOT(onObjectNameChanged(QString)) },
             // Action:
-            { SignalMaskFlags::Changed, SIGNAL(changed()), SLOT(onChanged) },
-            { SignalMaskFlags::CheckableChanged, SIGNAL(checkableChanged(bool)), SLOT(onCheckableChanged(bool)) },
-            { SignalMaskFlags::EnabledChanged, SIGNAL(enabledChanged(bool)), SLOT(onEnabledChanged(bool) )},
-            { SignalMaskFlags::Hovered, SIGNAL(hovered()), SLOT(onHovered()) },
-            { SignalMaskFlags::Toggled, SIGNAL(toggled(bool)), SLOT(onToggled(bool)) },
-            { SignalMaskFlags::Triggered, SIGNAL(triggered(bool)), SLOT(onTriggered(bool)) },
-            { SignalMaskFlags::VisibleChanged, SIGNAL(visibleChanged()), SLOT(onVisibleChanged()) }
+            { Changed, SIGNAL(changed()), SLOT(onChanged) },
+            { CheckableChanged, SIGNAL(checkableChanged(bool)), SLOT(onCheckableChanged(bool)) },
+            { EnabledChanged, SIGNAL(enabledChanged(bool)), SLOT(onEnabledChanged(bool) )},
+            { Hovered, SIGNAL(hovered()), SLOT(onHovered()) },
+            { Toggled, SIGNAL(toggled(bool)), SLOT(onToggled(bool)) },
+            { Triggered, SIGNAL(triggered(bool)), SLOT(onTriggered(bool)) },
+            { VisibleChanged, SIGNAL(visibleChanged()), SLOT(onVisibleChanged()) }
         };
     public:
         ActionWithHandler(QObject *parent, const std::shared_ptr<SignalHandler> &handler) : QAction(parent), handler(handler) {}
@@ -40,32 +40,36 @@ namespace Action
         }
     public slots:
         // Object =================
-        void onDestroyed(QObject *obj) {
-            handler->destroyed((Object::HandleRef)obj);
+        void onDestroyed(QObject *obj) const {
+            handler->
+                inherited_Object_SignalHandler()->
+                    destroyed(reinterpret_cast<Object::HandleRef>(obj));
         }
-        void onObjectNameChanged(const QString& name) {
-            handler->objectNameChanged(name.toStdString());
+        void onObjectNameChanged(const QString& name) const {
+            handler->
+                inherited_Object_SignalHandler()->
+                    objectNameChanged(name.toStdString());
         }
         // Action =================
-        void onChanged() {
+        void onChanged() const {
             handler->changed();
         }
-        void onCheckableChanged(bool checkable) {
+        void onCheckableChanged(bool checkable) const {
             handler->checkableChanged(checkable);
         }
-        void onEnabledChanged(bool enabled) {
+        void onEnabledChanged(bool enabled) const {
             handler->enabledChanged(enabled);
         }
-        void onHovered() {
+        void onHovered() const {
             handler->hovered();
         }
-        void onToggled(bool checked_) {
+        void onToggled(bool checked_) const {
             handler->toggled(checked_);
         }
-        void onTriggered(bool checked_) {
+        void onTriggered(bool checked_) const {
             handler->triggered(checked_);
         }
-        void onVisibleChanged() {
+        void onVisibleChanged() const {
             handler->visibleChanged();
         }
     };
@@ -90,7 +94,7 @@ namespace Action
         THIS->setIcon(ICON_VALUE(icon));
     }
 
-    void Handle_setIconText(HandleRef _this, std::string text) {
+    void Handle_setIconText(HandleRef _this, const std::string& text) {
         THIS->setIconText(QString::fromStdString(text));
     }
 
@@ -106,8 +110,8 @@ namespace Action
         THIS->setPriority((QAction::Priority)priority);
     }
 
-    void Handle_setShortcut(HandleRef _this, std::shared_ptr<KeySequence::Deferred::Base> seq) {
-        THIS->setShortcut(KeySequence::fromDeferred(seq));
+    void Handle_setShortcut(HandleRef _this, const std::shared_ptr<Deferred::Base>& shortcut) {
+        THIS->setShortcut(fromDeferred(shortcut));
     }
 
     void Handle_setShortcutContext(HandleRef _this, ShortcutContext context) {
@@ -118,15 +122,15 @@ namespace Action
         THIS->setShortcutVisibleInContextMenu(visible);
     }
 
-    void Handle_setStatusTip(HandleRef _this, std::string tip) {
+    void Handle_setStatusTip(HandleRef _this, const std::string& tip) {
         THIS->setStatusTip(QString::fromStdString(tip));
     }
 
-    void Handle_setText(HandleRef _this, std::string text) {
+    void Handle_setText(HandleRef _this, const std::string& text) {
         THIS->setText(QString::fromStdString(text));
     }
 
-    void Handle_setToolTip(HandleRef _this, std::string tip) {
+    void Handle_setToolTip(HandleRef _this, const std::string& tip) {
         THIS->setToolTip(QString::fromStdString(tip));
     }
 
@@ -134,7 +138,7 @@ namespace Action
         THIS->setVisible(visible);
     }
 
-    void Handle_setWhatsThis(HandleRef _this, std::string text) {
+    void Handle_setWhatsThis(HandleRef _this, const std::string& text) {
         THIS->setWhatsThis(QString::fromStdString(text));
     }
 
@@ -150,8 +154,8 @@ namespace Action
         delete THIS;
     }
 
-    HandleRef create(Object::HandleRef owner, std::shared_ptr<SignalHandler> handler) {
-        return (HandleRef) new ActionWithHandler((QObject*)owner, handler);
+    HandleRef create(Object::HandleRef owner, const std::shared_ptr<SignalHandler>& handler) {
+        return reinterpret_cast<HandleRef>(new ActionWithHandler((QObject *) owner, handler));
     }
 }
 

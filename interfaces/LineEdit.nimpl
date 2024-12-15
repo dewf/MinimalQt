@@ -16,17 +16,7 @@ namedbits SignalMask extends Widget.SignalMask {
     TextEdited
 }
 
-interface SignalHandler {
-    // Object:
-    void destroyed(Object.Handle obj);
-    void objectNameChanged(string objectName);
-
-    // Widget:
-    void customContextMenuRequested(Point pos);
-    void windowIconChanged(Icon.Handle icon);
-    void windowTitleChanged(string title);
-
-    // LineEdit:
+interface SignalHandler extends Widget.SignalHandler {
     void cursorPositionChanged(int oldPos, int newPos);
     void editingFinished();
     void inputRejected();

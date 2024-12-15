@@ -46,11 +46,11 @@ namespace AbstractButton
         THIS->setIconSize(toQSize(size));
     }
 
-    void Handle_setShortcut(HandleRef _this, std::shared_ptr<KeySequence::Deferred::Base> seq) {
+    void Handle_setShortcut(HandleRef _this, const std::shared_ptr<KeySequence::Deferred::Base>& seq) {
         THIS->setShortcut(KeySequence::fromDeferred(seq));
     }
 
-    void Handle_setText(HandleRef _this, std::string text) {
+    void Handle_setText(HandleRef _this, const std::string& text) {
         THIS->setText(QString::fromStdString(text));
     }
 }

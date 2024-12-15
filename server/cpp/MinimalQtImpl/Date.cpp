@@ -7,11 +7,11 @@
 
 namespace Date
 {
-    class FromDeferred : public Deferred::Visitor {
+    class FromDeferredMatcher : public Deferred::Matcher {
     private:
         QDate &date;
     public:
-        explicit FromDeferred(QDate &date) : date(date) {}
+        explicit FromDeferredMatcher(QDate &date) : date(date) {}
 
         void onFromYearMonthDay(const Deferred::FromYearMonthDay *fromYearMonthDay) override {
             date = QDate(fromYearMonthDay->year, fromYearMonthDay->month, fromYearMonthDay->day);
@@ -20,8 +20,8 @@ namespace Date
 
     QDate fromDeferred(const std::shared_ptr<Deferred::Base>& deferred) {
         QDate result;
-        FromDeferred visitor(result);
-        deferred->accept(&visitor);
+        FromDeferredMatcher matcher(result);
+        deferred->match(&matcher);
         return result;
     }
 

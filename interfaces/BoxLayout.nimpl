@@ -10,14 +10,7 @@ namedbits SignalMask extends Layout.SignalMask {
     // none extra
 }
 
-interface SignalHandler {
-    // Object:
-    void destroyed(Object.Handle obj);
-    void objectNameChanged(string objectName);
-
-    // Layout:
-    // (none)
-
+interface SignalHandler extends Layout.SignalHandler {
     // none of our own
 }
 

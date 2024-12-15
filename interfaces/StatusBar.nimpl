@@ -9,17 +9,7 @@ namedbits SignalMask extends Widget.SignalMask {
     MessageChanged
 }
 
-interface SignalHandler {
-    // Object:
-    void destroyed(Object.Handle obj);
-    void objectNameChanged(string objectName);
-
-    // Widget:
-    void customContextMenuRequested(Point pos);
-    void windowIconChanged(Icon.Handle icon);
-    void windowTitleChanged(string title);
-
-    // StatusBar:
+interface SignalHandler extends Widget.SignalHandler {
     void messageChanged(string message);
 }
 

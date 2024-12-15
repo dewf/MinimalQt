@@ -12,17 +12,7 @@ namedbits SignalMask extends AbstractItemDelegate.SignalMask {
     // no extra signals
 }
 
-interface SignalHandler {
-    // Object:
-    void destroyed(Object.Handle obj);
-    void objectNameChanged(string objectName);
-
-    // AbstractItemDelegate:
-    void closeEditor(Widget.Handle editor, EndEditHint hint);
-    void commitData(Widget.Handle editor);
-    void sizeHintChanged(ModelIndex.Handle index);
-
-    // StyledItemDelegate:
+interface SignalHandler extends AbstractItemDelegate.SignalHandler {
     // (none)
 }
 

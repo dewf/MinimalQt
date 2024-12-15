@@ -23,7 +23,7 @@ namespace Pixmap
         return new __Owned { QPixmap(width, height) };
     }
 
-    OwnedRef create(std::string filename, FilenameOptions opts) {
+    OwnedRef create(const std::string& filename, const FilenameOptions& opts) {
         const char *qFormat = nullptr;
         std::string format;
         if (opts.hasFormat(&format)) {
@@ -33,7 +33,7 @@ namespace Pixmap
         return new __Owned { QPixmap(filename.c_str(), qFormat, qImageConversionFlags) };
     }
 
-    OwnedRef fromImage(Image::HandleRef image, std::optional<ImageConversionFlags> imageConversionFlags) {
+    OwnedRef fromImage(Image::HandleRef image, const std::optional<ImageConversionFlags>& imageConversionFlags) {
         const auto qFlags = static_cast<Qt::ImageConversionFlags>(imageConversionFlags.value_or(AutoColor));
         return new __Owned { QPixmap::fromImage(image->qImage, qFlags) };
     }

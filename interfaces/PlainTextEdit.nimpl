@@ -19,23 +19,7 @@ namedbits SignalMask extends AbstractScrollArea.SignalMask {
     UpdateRequest
 }
 
-interface SignalHandler {
-    // from Object:
-    void destroyed(Object.Handle obj);
-    void objectNameChanged(string objectName);
-
-    // Widget:
-    void customContextMenuRequested(Point pos);
-    void windowIconChanged(Icon.Handle icon);
-    void windowTitleChanged(string title);
-
-    // Frame:
-    // (none)
-
-    // AbstractScrollArea:
-    // (none)
-
-    // PlainTextEdit:
+interface SignalHandler extends AbstractScrollArea.SignalHandler {
     void blockCountChanged(int newBlockCount);
     void copyAvailable(bool yes);
     void cursorPositionChanged();

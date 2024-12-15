@@ -39,7 +39,6 @@ struct SignalMapItem {
 template <typename T>
 void processChanges(int32_t lastMask, int32_t newMask, std::vector<SignalMapItem<T>> mapItems, QObject* thisPtr) {
     auto changes = getSignalChanges<T>(lastMask, newMask, (int)mapItems.size());
-
     for (auto item : mapItems) {
         auto change = changes[item.sig];
         if (change == Added) {

@@ -14,17 +14,7 @@ namedbits SignalMask extends Widget.SignalMask {
     TabMoved
 }
 
-interface SignalHandler {
-    // Object:
-    void destroyed(Object.Handle obj);
-    void objectNameChanged(string objectName);
-
-    // Widget:
-    void customContextMenuRequested(Point pos);
-    void windowIconChanged(Icon.Handle icon);
-    void windowTitleChanged(string title);
-
-    // TabBar:
+interface SignalHandler extends Widget.SignalHandler {
     void currentChanged(int index);
     void tabBarClicked(int index);
     void tabBarDoubleClicked(int index);

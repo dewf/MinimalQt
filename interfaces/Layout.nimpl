@@ -6,11 +6,7 @@ namedbits SignalMask extends Object.SignalMask {
     // none extra
 }
 
-interface SignalHandler {
-    // Object:
-    void destroyed(Handle obj);
-    void objectNameChanged(string objectName);
-
+interface SignalHandler extends Object.SignalHandler {
     // none of our own
 }
 

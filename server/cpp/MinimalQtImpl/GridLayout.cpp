@@ -31,11 +31,17 @@ namespace GridLayout {
         }
     public slots:
         // Object =================
-        void onDestroyed(QObject *obj) {
-            handler->destroyed((Object::HandleRef) obj);
+        void onDestroyed(QObject *obj) const {
+            handler->
+                inherited_Layout_SignalHandler()->
+                inherited_Object_SignalHandler()->
+                    destroyed(reinterpret_cast<Object::HandleRef>(obj));
         }
-        void onObjectNameChanged(const QString &name) {
-            handler->objectNameChanged(name.toStdString());
+        void onObjectNameChanged(const QString &name) const {
+            handler->
+                inherited_Layout_SignalHandler()->
+                inherited_Object_SignalHandler()->
+                    objectNameChanged(name.toStdString());
         }
         // Layout (none)
         // GridLayout (none)
@@ -50,35 +56,35 @@ namespace GridLayout {
     }
 
     void Handle_addWidget(HandleRef _this, Widget::HandleRef widget, int32_t row, int32_t col) {
-        THIS->addWidget((QWidget *) widget, row, col);
+        THIS->addWidget(reinterpret_cast<QWidget *>(widget), row, col);
     }
 
     void Handle_addWidget(HandleRef _this, Widget::HandleRef widget, int32_t row, int32_t col, Alignment align) {
-        THIS->addWidget((QWidget *) widget, row, col, (Qt::AlignmentFlag) align);
+        THIS->addWidget(reinterpret_cast<QWidget *>(widget), row, col, (Qt::AlignmentFlag) align);
     }
 
     void Handle_addWidget(HandleRef _this, Widget::HandleRef widget, int32_t row, int32_t col, int32_t rowSpan, int32_t colSpan) {
-        THIS->addWidget((QWidget *) widget, row, col, rowSpan, colSpan);
+        THIS->addWidget(reinterpret_cast<QWidget *>(widget), row, col, rowSpan, colSpan);
     }
 
     void Handle_addWidget(HandleRef _this, Widget::HandleRef widget, int32_t row, int32_t col, int32_t rowSpan, int32_t colSpan, Enums::Alignment align) {
-        THIS->addWidget((QWidget *) widget, row, col, rowSpan, colSpan, (Qt::AlignmentFlag) align);
+        THIS->addWidget(reinterpret_cast<QWidget *>(widget), row, col, rowSpan, colSpan, (Qt::AlignmentFlag) align);
     }
 
     void Handle_addLayout(HandleRef _this, Layout::HandleRef layout, int32_t row, int32_t col) {
-        THIS->addLayout((QLayout *) layout, row, col);
+        THIS->addLayout(reinterpret_cast<QLayout *>(layout), row, col);
     }
 
     void Handle_addLayout(HandleRef _this, Layout::HandleRef layout, int32_t row, int32_t col, Enums::Alignment align) {
-        THIS->addLayout((QLayout *) layout, row, col, (Qt::AlignmentFlag) align);
+        THIS->addLayout(reinterpret_cast<QLayout *>(layout), row, col, (Qt::AlignmentFlag) align);
     }
 
     void Handle_addLayout(HandleRef _this, Layout::HandleRef layout, int32_t row, int32_t col, int32_t rowSpan, int32_t colSpan) {
-        THIS->addLayout((QLayout *) layout, row, col, rowSpan, colSpan);
+        THIS->addLayout(reinterpret_cast<QLayout *>(layout), row, col, rowSpan, colSpan);
     }
 
     void Handle_addLayout(HandleRef _this, Layout::HandleRef layout, int32_t row, int32_t col, int32_t rowSpan, int32_t colSpan, Enums::Alignment align) {
-        THIS->addLayout((QLayout *) layout, row, col, rowSpan, colSpan, (Qt::AlignmentFlag) align);
+        THIS->addLayout(reinterpret_cast<QLayout *>(layout), row, col, rowSpan, colSpan, (Qt::AlignmentFlag) align);
     }
 
     void Handle_setRowMinimumHeight(HandleRef _this, int32_t row, int32_t minHeight) {
@@ -105,8 +111,8 @@ namespace GridLayout {
         delete THIS;
     }
 
-    HandleRef create(std::shared_ptr<SignalHandler> handler) {
-        return (HandleRef) new GridLayoutWithHandler(std::move(handler));
+    HandleRef create(const std::shared_ptr<SignalHandler>& handler) {
+        return reinterpret_cast<HandleRef>(new GridLayoutWithHandler(handler));
     }
 }
 

@@ -8,7 +8,7 @@
 namespace PaintResources
 {
     // gradient ====================
-    void Gradient_setColorAt(GradientRef _this, double location, std::shared_ptr<Deferred::Base> color) {
+    void Gradient_setColorAt(GradientRef _this, double location, const std::shared_ptr<Deferred::Base>& color) {
         _this->qGradPtr.setColorAt(location, Color::fromDeferred(color));
     }
 
@@ -95,7 +95,7 @@ namespace PaintResources
         _this->qStroker.setDashPattern(Pen::toQtStyle(style));
     }
 
-    void PainterPathStroker_setDashPattern(PainterPathStrokerRef _this, std::vector<double> dashPattern) {
+    void PainterPathStroker_setDashPattern(PainterPathStrokerRef _this, const std::vector<double>& dashPattern) {
         QList<qreal> qPattern;
         for (auto &x : dashPattern) {
             qPattern.push_back(x);
@@ -172,7 +172,7 @@ namespace PaintResources
         return ret;
     }
 
-    BrushRef Handle_createBrush(HandleRef _this, std::shared_ptr<Deferred::Base> color) {
+    BrushRef Handle_createBrush(HandleRef _this, const std::shared_ptr<Deferred::Base>& color) {
         auto ret = new __Brush { Color::fromDeferred(color) };
         _this->items.push_back(ret);
         return ret;
@@ -196,7 +196,7 @@ namespace PaintResources
         return ret;
     }
 
-    PenRef Handle_createPen(HandleRef _this, std::shared_ptr<Color::Deferred::Base> color) {
+    PenRef Handle_createPen(HandleRef _this, const std::shared_ptr<Color::Deferred::Base>& color) {
         auto ret = new __Pen { Color::fromDeferred(color) };
         _this->items.push_back(ret);
         return ret;
@@ -208,19 +208,19 @@ namespace PaintResources
         return ret;
     }
 
-    FontRef Handle_createFont(HandleRef _this, std::string family, int32_t pointSize) {
+    FontRef Handle_createFont(HandleRef _this, const std::string& family, int32_t pointSize) {
         auto ret = new __Font { QFont(QString::fromStdString(family), pointSize) };
         _this->items.push_back(ret);
         return ret;
     }
 
-    FontRef Handle_createFont(HandleRef _this, std::string family, int32_t pointSize, Font::Weight weight) {
+    FontRef Handle_createFont(HandleRef _this, const std::string& family, int32_t pointSize, Font::Weight weight) {
         auto ret = new __Font { QFont(QString::fromStdString(family), pointSize, Font::toQtWeight(weight)) };
         _this->items.push_back(ret);
         return ret;
     }
 
-    FontRef Handle_createFont(HandleRef _this, std::string family, int32_t pointSize, Font::Weight weight, bool italic) {
+    FontRef Handle_createFont(HandleRef _this, const std::string& family, int32_t pointSize, Font::Weight weight, bool italic) {
         auto ret = new __Font { QFont(QString::fromStdString(family), pointSize, Font::toQtWeight(weight), italic) };
         _this->items.push_back(ret);
         return ret;

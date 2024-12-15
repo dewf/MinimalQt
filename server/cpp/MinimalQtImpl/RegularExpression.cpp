@@ -6,8 +6,8 @@ namespace RegularExpression
 {
     QRegularExpression fromDeferred(const std::shared_ptr<Deferred::Base>& deferred) {
         QRegularExpression ret;
-        FromDeferred visitor(ret);
-        deferred->accept(&visitor);
+        FromDeferredMatcher matcher(ret);
+        deferred->match(&matcher);
         return ret;
     }
 }

@@ -54,8 +54,4 @@ namespace AbstractSlider
     void Handle_setRange(HandleRef _this, int32_t min, int32_t max) {
         THIS->setRange(min, max);
     }
-
-    void Handle_dispose(HandleRef _this) {
-        printf("AbstractSlider::Handle_dispose called - shouldn't happen\n");
-    }
 }

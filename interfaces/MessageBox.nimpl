@@ -12,22 +12,7 @@ namedbits SignalMask extends Dialog.SignalMask {
     ButtonClicked
 }
 
-interface SignalHandler {
-    // Object:
-    void destroyed(Object.Handle obj);
-    void objectNameChanged(string objectName);
-
-    // Widget:
-    void customContextMenuRequested(Point pos);
-    void windowIconChanged(Icon.Handle icon);
-    void windowTitleChanged(string title);
-
-    // Dialog:
-    void accepted();
-    void finished(int result);
-    void rejected();
-
-    // MessageBox:
+interface SignalHandler extends Dialog.SignalHandler {
     void buttonClicked(AbstractButton.Handle button);
 }
 

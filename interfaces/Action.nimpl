@@ -15,12 +15,7 @@ namedbits SignalMask extends Object.SignalMask {
     VisibleChanged
 }
 
-interface SignalHandler {
-    // from Object:
-    void destroyed(Object.Handle obj);
-    void objectNameChanged(string objectName);
-
-    // Action:
+interface SignalHandler extends Object.SignalHandler {
     void changed();
     void checkableChanged(bool checkable);
     void enabledChanged(bool enabled);

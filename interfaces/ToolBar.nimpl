@@ -18,17 +18,7 @@ namedbits SignalMask extends Widget.SignalMask {
     VisibilityChanged
 }
 
-interface SignalHandler {
-    // Object:
-    void destroyed(Object.Handle obj);
-    void objectNameChanged(string objectName);
-
-    // Widget:
-    void customContextMenuRequested(Point pos);
-    void windowIconChanged(Icon.Handle icon);
-    void windowTitleChanged(string title);
-
-    // ToolBar:
+interface SignalHandler extends Widget.SignalHandler {
     void actionTriggered(Action.Handle action);
     void allowedAreasChanged(ToolBarAreas allowed);
     void iconSizeChanged(Size size);

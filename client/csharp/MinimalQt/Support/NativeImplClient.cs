@@ -1,5 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 using System.Text;
+using Org.Whatever.MinimalQt.Support;
 
 namespace Org.Whatever.MinimalQt.Support
 {

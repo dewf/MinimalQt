@@ -19,18 +19,18 @@ namespace TabBar
         SignalMask lastMask = 0;
         std::vector<SignalMapItem<SignalMaskFlags>> signalMap = {
             // Object:
-            { SignalMaskFlags::Destroyed, SIGNAL(destroyed(QObject)), SLOT(onDestroyed(QObject)) },
-            { SignalMaskFlags::ObjectNameChanged, SIGNAL(objectNameChanged(QString)), SLOT(onObjectNameChanged(QString)) },
+            { Destroyed, SIGNAL(destroyed(QObject)), SLOT(onDestroyed(QObject)) },
+            { ObjectNameChanged, SIGNAL(objectNameChanged(QString)), SLOT(onObjectNameChanged(QString)) },
             // Widget:
-            { SignalMaskFlags::CustomContextMenuRequested, SIGNAL(customContextMenuRequested(QPoint)), SLOT(onCustomContextMenuRequested(QPoint)) },
-            { SignalMaskFlags::WindowIconChanged, SIGNAL(windowIconChanged(QIcon)), SLOT(onWindowIconChanged(QIcon)) },
-            { SignalMaskFlags::WindowTitleChanged, SIGNAL(windowTitleChanged(QString)), SLOT(onWindowTitleChanged(QString)) },
+            { CustomContextMenuRequested, SIGNAL(customContextMenuRequested(QPoint)), SLOT(onCustomContextMenuRequested(QPoint)) },
+            { WindowIconChanged, SIGNAL(windowIconChanged(QIcon)), SLOT(onWindowIconChanged(QIcon)) },
+            { WindowTitleChanged, SIGNAL(windowTitleChanged(QString)), SLOT(onWindowTitleChanged(QString)) },
             // TabBar:
-            { SignalMaskFlags::CurrentChanged, SIGNAL(currentChanged(int)), SLOT(onCurrentChanged(int)) },
-            { SignalMaskFlags::TabBarClicked, SIGNAL(tabBarClicked(int)), SLOT(onTabBarClicked(int)) },
-            { SignalMaskFlags::TabBarDoubleClicked, SIGNAL(tabBarDoubleClicked(int)), SLOT(onTabBarDoubleClicked(int)) },
-            { SignalMaskFlags::TabCloseRequested, SIGNAL(tabCloseRequested(int)), SLOT(onTabCloseRequested(int)) },
-            { SignalMaskFlags::TabMoved, SIGNAL(tabMoved(int,int)), SLOT(onTabMoved(int,int)) }
+            { CurrentChanged, SIGNAL(currentChanged(int)), SLOT(onCurrentChanged(int)) },
+            { TabBarClicked, SIGNAL(tabBarClicked(int)), SLOT(onTabBarClicked(int)) },
+            { TabBarDoubleClicked, SIGNAL(tabBarDoubleClicked(int)), SLOT(onTabBarDoubleClicked(int)) },
+            { TabCloseRequested, SIGNAL(tabCloseRequested(int)), SLOT(onTabCloseRequested(int)) },
+            { TabMoved, SIGNAL(tabMoved(int,int)), SLOT(onTabMoved(int,int)) }
         };
     public:
         explicit TabBarWithHandler(std::shared_ptr<SignalHandler> handler) : handler(std::move(handler)) {}
@@ -42,36 +42,48 @@ namespace TabBar
         }
     public slots:
         // Object =================
-        void onDestroyed(QObject *obj) {
-            handler->destroyed((Object::HandleRef)obj);
+        void onDestroyed(QObject *obj) const {
+            handler->
+                inherited_Widget_SignalHandler()->
+                inherited_Object_SignalHandler()->
+                    destroyed(reinterpret_cast<Object::HandleRef>(obj));
         }
-        void onObjectNameChanged(const QString& name) {
-            handler->objectNameChanged(name.toStdString());
+        void onObjectNameChanged(const QString& name) const {
+            handler->
+                inherited_Widget_SignalHandler()->
+                inherited_Object_SignalHandler()->
+                    objectNameChanged(name.toStdString());
         }
         // Widget ==================
-        void onCustomContextMenuRequested(const QPoint& pos) {
-            handler->customContextMenuRequested(toPoint(pos));
+        void onCustomContextMenuRequested(const QPoint& pos) const {
+            handler->
+                inherited_Widget_SignalHandler()->
+                    customContextMenuRequested(toPoint(pos));
         }
-        void onWindowIconChanged(const QIcon& icon) {
-            handler->windowIconChanged((Icon::HandleRef)&icon);
+        void onWindowIconChanged(const QIcon& icon) const {
+            handler->
+                inherited_Widget_SignalHandler()->
+                    windowIconChanged((Icon::HandleRef)&icon);
         }
-        void onWindowTitleChanged(const QString& title) {
-            handler->windowTitleChanged(title.toStdString());
+        void onWindowTitleChanged(const QString& title) const {
+            handler->
+                inherited_Widget_SignalHandler()->
+                    windowTitleChanged(title.toStdString());
         }
         // TabBar ==================
-        void onCurrentChanged(int index) {
+        void onCurrentChanged(int index) const {
             handler->currentChanged(index);
         }
-        void onTabBarClicked(int index) {
+        void onTabBarClicked(int index) const {
             handler->tabBarClicked(index);
         }
-        void onTabBarDoubleClicked(int index) {
+        void onTabBarDoubleClicked(int index) const {
             handler->tabBarDoubleClicked(index);
         }
-        void onTabCloseRequested(int index) {
+        void onTabCloseRequested(int index) const {
             handler->tabCloseRequested(index);
         }
-        void onTabMoved(int fromIndex, int toIndex) {
+        void onTabMoved(int fromIndex, int toIndex) const {
             handler->tabMoved(fromIndex, toIndex);
         }
     };
@@ -105,7 +117,7 @@ namespace TabBar
     }
 
     void Handle_setElideMode(HandleRef _this, TextElideMode mode) {
-        THIS->setElideMode((Qt::TextElideMode)mode);
+        THIS->setElideMode(static_cast<Qt::TextElideMode>(mode));
     }
 
     void Handle_setExpanding(HandleRef _this, bool value) {
@@ -121,11 +133,11 @@ namespace TabBar
     }
 
     void Handle_setSelectionBehaviorOnRemove(HandleRef _this, SelectionBehavior value) {
-        THIS->setSelectionBehaviorOnRemove((QTabBar::SelectionBehavior)value);
+        THIS->setSelectionBehaviorOnRemove(static_cast<QTabBar::SelectionBehavior>(value));
     }
 
     void Handle_setShape(HandleRef _this, Shape shape) {
-        THIS->setShape((QTabBar::Shape)shape);
+        THIS->setShape(static_cast<QTabBar::Shape>(shape));
     }
 
     void Handle_setTabsClosable(HandleRef _this, bool value) {
@@ -143,11 +155,11 @@ namespace TabBar
         }
     }
 
-    int32_t Handle_addTab(HandleRef _this, std::string text) {
+    int32_t Handle_addTab(HandleRef _this, const std::string& text) {
         return THIS->addTab(QString::fromStdString(text));
     }
 
-    int32_t Handle_addTab(HandleRef _this, Icon::HandleRef icon, std::string text) {
+    int32_t Handle_addTab(HandleRef _this, Icon::HandleRef icon, const std::string& text) {
         return THIS->addTab(ICON_VALUE(icon), QString::fromStdString(text));
     }
 
@@ -159,8 +171,8 @@ namespace TabBar
         delete THIS;
     }
 
-    HandleRef create(std::shared_ptr<SignalHandler> handler) {
-        return (HandleRef) new TabBarWithHandler(std::move(handler));
+    HandleRef create(const std::shared_ptr<SignalHandler>& handler) {
+        return reinterpret_cast<HandleRef>(new TabBarWithHandler(handler));
     }
 }
 

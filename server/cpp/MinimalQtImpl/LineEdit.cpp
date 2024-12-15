@@ -17,20 +17,20 @@ namespace LineEdit
         SignalMask lastMask = 0;
         std::vector<SignalMapItem<SignalMaskFlags>> signalMap = {
             // Object:
-            { SignalMaskFlags::Destroyed, SIGNAL(destroyed(QObject)), SLOT(onDestroyed(QObject)) },
-            { SignalMaskFlags::ObjectNameChanged, SIGNAL(objectNameChanged(QString)), SLOT(onObjectNameChanged(QString)) },
+            { Destroyed, SIGNAL(destroyed(QObject)), SLOT(onDestroyed(QObject)) },
+            { ObjectNameChanged, SIGNAL(objectNameChanged(QString)), SLOT(onObjectNameChanged(QString)) },
             // Widget:
-            { SignalMaskFlags::CustomContextMenuRequested, SIGNAL(customContextMenuRequested(QPoint)), SLOT(onCustomContextMenuRequested(QPoint)) },
-            { SignalMaskFlags::WindowIconChanged, SIGNAL(windowIconChanged(QIcon)), SLOT(onWindowIconChanged(QIcon)) },
-            { SignalMaskFlags::WindowTitleChanged, SIGNAL(windowTitleChanged(QString)), SLOT(onWindowTitleChanged(QString)) },
+            { CustomContextMenuRequested, SIGNAL(customContextMenuRequested(QPoint)), SLOT(onCustomContextMenuRequested(QPoint)) },
+            { WindowIconChanged, SIGNAL(windowIconChanged(QIcon)), SLOT(onWindowIconChanged(QIcon)) },
+            { WindowTitleChanged, SIGNAL(windowTitleChanged(QString)), SLOT(onWindowTitleChanged(QString)) },
             // LineEdit
-            { SignalMaskFlags::CursorPositionChanged, SIGNAL(cursorPositionChanged(int, int)), SLOT(onCursorPositionChanged(int,int)) },
-            { SignalMaskFlags::EditingFinished, SIGNAL(editingFinished()), SLOT(onEditingFinished()) },
-            { SignalMaskFlags::InputRejected, SIGNAL(inputRejected()), SLOT(onInputRejected()) },
-            { SignalMaskFlags::ReturnPressed, SIGNAL(returnPressed()), SLOT(onReturnPressed()) },
-            { SignalMaskFlags::SelectionChanged, SIGNAL(selectionChanged()), SLOT(onSelectionChanged()) },
-            { SignalMaskFlags::TextChanged, SIGNAL(textChanged(QString)), SLOT(onTextChanged(QString)) },
-            { SignalMaskFlags::TextEdited, SIGNAL(textEdited(QString)), SLOT(onTextEdited(QString)) }
+            { CursorPositionChanged, SIGNAL(cursorPositionChanged(int, int)), SLOT(onCursorPositionChanged(int,int)) },
+            { EditingFinished, SIGNAL(editingFinished()), SLOT(onEditingFinished()) },
+            { InputRejected, SIGNAL(inputRejected()), SLOT(onInputRejected()) },
+            { ReturnPressed, SIGNAL(returnPressed()), SLOT(onReturnPressed()) },
+            { SelectionChanged, SIGNAL(selectionChanged()), SLOT(onSelectionChanged()) },
+            { TextChanged, SIGNAL(textChanged(QString)), SLOT(onTextChanged(QString)) },
+            { TextEdited, SIGNAL(textEdited(QString)), SLOT(onTextEdited(QString)) }
         };
     public:
         explicit LineEditWithHandler(std::shared_ptr<SignalHandler> handler) : handler(std::move(handler)) {}
@@ -42,42 +42,54 @@ namespace LineEdit
         }
     public slots:
         // Object =================
-        void onDestroyed(QObject *obj) {
-            handler->destroyed((Object::HandleRef)obj);
+        void onDestroyed(QObject *obj) const {
+            handler->
+                inherited_Widget_SignalHandler()->
+                inherited_Object_SignalHandler()->
+                    destroyed(reinterpret_cast<Object::HandleRef>(obj));
         }
-        void onObjectNameChanged(const QString& name) {
-            handler->objectNameChanged(name.toStdString());
+        void onObjectNameChanged(const QString& name) const {
+            handler->
+                inherited_Widget_SignalHandler()->
+                inherited_Object_SignalHandler()->
+                    objectNameChanged(name.toStdString());
         }
         // Widget ==================
-        void onCustomContextMenuRequested(const QPoint& pos) {
-            handler->customContextMenuRequested(toPoint(pos));
+        void onCustomContextMenuRequested(const QPoint& pos) const {
+            handler->
+                inherited_Widget_SignalHandler()->
+                    customContextMenuRequested(toPoint(pos));
         }
-        void onWindowIconChanged(const QIcon& icon) {
-            handler->windowIconChanged((Icon::HandleRef)&icon);
+        void onWindowIconChanged(const QIcon& icon) const {
+            handler->
+                inherited_Widget_SignalHandler()->
+                    windowIconChanged((Icon::HandleRef)&icon);
         }
-        void onWindowTitleChanged(const QString& title) {
-            handler->windowTitleChanged(title.toStdString());
+        void onWindowTitleChanged(const QString& title) const {
+            handler->
+                inherited_Widget_SignalHandler()->
+                    windowTitleChanged(title.toStdString());
         }
         // LineEdit =================
-        void onCursorPositionChanged(int oldPos, int newPos) {
+        void onCursorPositionChanged(int oldPos, int newPos) const {
             handler->cursorPositionChanged(oldPos, newPos);
         };
-        void onEditingFinished() {
+        void onEditingFinished() const {
             handler->editingFinished();
         }
-        void onInputRejected() {
+        void onInputRejected() const {
             handler->inputRejected();
         }
-        void onReturnPressed() {
+        void onReturnPressed() const {
             handler->returnPressed();
         }
-        void onSelectionChanged() {
+        void onSelectionChanged() const {
             handler->selectionChanged();
         }
-        void onTextChanged(const QString& text) {
+        void onTextChanged(const QString& text) const {
             handler->textChanged(text.toStdString());
         }
-        void onTextEdited(const QString& text) {
+        void onTextEdited(const QString& text) const {
             handler->textEdited(text.toStdString());
         }
     };
@@ -87,7 +99,7 @@ namespace LineEdit
     }
 
     void Handle_setAlignment(HandleRef _this, Enums::Alignment align) {
-        THIS->setAlignment((Qt::Alignment)align);
+        THIS->setAlignment(static_cast<Qt::Alignment>(align));
     }
 
     void Handle_setClearButtonEnabled(HandleRef _this, bool enabled) {
@@ -95,7 +107,7 @@ namespace LineEdit
     }
 
     void Handle_setCursorMoveStyle(HandleRef _this, CursorMoveStyle style) {
-        THIS->setCursorMoveStyle((Qt::CursorMoveStyle)style);
+        THIS->setCursorMoveStyle(static_cast<Qt::CursorMoveStyle>(style));
     }
 
     void Handle_setCursorPosition(HandleRef _this, int32_t pos) {
@@ -111,7 +123,7 @@ namespace LineEdit
     }
 
     void Handle_setEchoMode(HandleRef _this, EchoMode mode) {
-        THIS->setEchoMode((QLineEdit::EchoMode)mode);
+        THIS->setEchoMode(static_cast<QLineEdit::EchoMode>(mode));
     }
 
     void Handle_setFrame(HandleRef _this, bool enabled) {
@@ -122,7 +134,7 @@ namespace LineEdit
         return THIS->hasSelectedText();
     }
 
-    void Handle_setInputMask(HandleRef _this, std::string mask) {
+    void Handle_setInputMask(HandleRef _this, const std::string& mask) {
         return THIS->setInputMask(QString::fromStdString(mask));
     }
 
@@ -138,7 +150,7 @@ namespace LineEdit
         THIS->setModified(modified);
     }
 
-    void Handle_setPlaceholderText(HandleRef _this, std::string text) {
+    void Handle_setPlaceholderText(HandleRef _this, const std::string& text) {
         THIS->setPlaceholderText(QString::fromStdString(text));
     }
 
@@ -154,7 +166,7 @@ namespace LineEdit
         return THIS->selectedText().toStdString();
     }
 
-    void Handle_setText(HandleRef _this, std::string text) {
+    void Handle_setText(HandleRef _this, const std::string& text) {
         THIS->setText(QString::fromStdString(text));
     }
 
@@ -202,8 +214,8 @@ namespace LineEdit
         delete THIS;
     }
 
-    HandleRef create(std::shared_ptr<SignalHandler> handler) {
-        return (HandleRef) new LineEditWithHandler(std::move(handler));
+    HandleRef create(const std::shared_ptr<SignalHandler>& handler) {
+        return reinterpret_cast<HandleRef>(new LineEditWithHandler(handler));
     }
 }
 

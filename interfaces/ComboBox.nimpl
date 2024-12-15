@@ -18,17 +18,7 @@ namedbits SignalMask extends Widget.SignalMask {
     TextHighlighted
 }
 
-interface SignalHandler {
-    // from Object:
-    void destroyed(Object.Handle obj);
-    void objectNameChanged(string objectName);
-
-    // Widget:
-    void customContextMenuRequested(Point pos);
-    void windowIconChanged(Icon.Handle icon);
-    void windowTitleChanged(string title);
-
-    // ComboBox:
+interface SignalHandler extends Widget.SignalHandler {
     void activated(int index);
     void currentIndexChanged(int index);
     void currentTextChanged(string text);

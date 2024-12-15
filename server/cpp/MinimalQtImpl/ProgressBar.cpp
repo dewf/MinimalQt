@@ -17,14 +17,14 @@ namespace ProgressBar
         SignalMask lastMask = 0;
         std::vector<SignalMapItem<SignalMaskFlags>> signalMap = {
             // Object:
-            { SignalMaskFlags::Destroyed, SIGNAL(destroyed(QObject)), SLOT(onDestroyed(QObject)) },
-            { SignalMaskFlags::ObjectNameChanged, SIGNAL(objectNameChanged(QString)), SLOT(onObjectNameChanged(QString)) },
+            { Destroyed, SIGNAL(destroyed(QObject)), SLOT(onDestroyed(QObject)) },
+            { ObjectNameChanged, SIGNAL(objectNameChanged(QString)), SLOT(onObjectNameChanged(QString)) },
             // Widget:
-            { SignalMaskFlags::CustomContextMenuRequested, SIGNAL(customContextMenuRequested(QPoint)), SLOT(onCustomContextMenuRequested(QPoint)) },
-            { SignalMaskFlags::WindowIconChanged, SIGNAL(windowIconChanged(QIcon)), SLOT(onWindowIconChanged(QIcon)) },
-            { SignalMaskFlags::WindowTitleChanged, SIGNAL(windowTitleChanged(QString)), SLOT(onWindowTitleChanged(QString)) },
+            { CustomContextMenuRequested, SIGNAL(customContextMenuRequested(QPoint)), SLOT(onCustomContextMenuRequested(QPoint)) },
+            { WindowIconChanged, SIGNAL(windowIconChanged(QIcon)), SLOT(onWindowIconChanged(QIcon)) },
+            { WindowTitleChanged, SIGNAL(windowTitleChanged(QString)), SLOT(onWindowTitleChanged(QString)) },
             // ProgressBar:
-            { SignalMaskFlags::ValueChanged, SIGNAL(valueChanged(int)), SLOT(onValueChanged(int)) },
+            { ValueChanged, SIGNAL(valueChanged(int)), SLOT(onValueChanged(int)) },
         };
     public:
         explicit ProgressBarWithHandler(std::shared_ptr<SignalHandler> handler) : handler(std::move(handler)) {}
@@ -36,33 +36,45 @@ namespace ProgressBar
         }
     public slots:
         // Object =================
-        void onDestroyed(QObject *obj) {
-            handler->destroyed((Object::HandleRef)obj);
+        void onDestroyed(QObject *obj) const {
+            handler->
+                inherited_Widget_SignalHandler()->
+                inherited_Object_SignalHandler()->
+                    destroyed(reinterpret_cast<Object::HandleRef>(obj));
         }
-        void onObjectNameChanged(const QString& name) {
-            handler->objectNameChanged(name.toStdString());
+        void onObjectNameChanged(const QString& name) const {
+            handler->
+                inherited_Widget_SignalHandler()->
+                inherited_Object_SignalHandler()->
+                    objectNameChanged(name.toStdString());
         }
         // Widget ==================
-        void onCustomContextMenuRequested(const QPoint& pos) {
-            handler->customContextMenuRequested(toPoint(pos));
+        void onCustomContextMenuRequested(const QPoint& pos) const {
+            handler->
+                inherited_Widget_SignalHandler()->
+                    customContextMenuRequested(toPoint(pos));
         }
-        void onWindowIconChanged(const QIcon& icon) {
-            handler->windowIconChanged((Icon::HandleRef)&icon);
+        void onWindowIconChanged(const QIcon& icon) const {
+            handler->
+                inherited_Widget_SignalHandler()->
+                    windowIconChanged((Icon::HandleRef)&icon);
         }
-        void onWindowTitleChanged(const QString& title) {
-            handler->windowTitleChanged(title.toStdString());
+        void onWindowTitleChanged(const QString& title) const {
+            handler->
+                inherited_Widget_SignalHandler()->
+                    windowTitleChanged(title.toStdString());
         }
         // ProgressBar =============
-        void onValueChanged(int value) {
+        void onValueChanged(int value) const {
             handler->valueChanged(value);
         }
     };
 
     void Handle_setAlignment(HandleRef _this, Alignment align) {
-        THIS->setAlignment((Qt::Alignment)align);
+        THIS->setAlignment(static_cast<Qt::Alignment>(align));
     }
 
-    void Handle_setFormat(HandleRef _this, std::string format) {
+    void Handle_setFormat(HandleRef _this, const std::string& format) {
         THIS->setFormat(QString::fromStdString(format));
     }
 
@@ -79,7 +91,7 @@ namespace ProgressBar
     }
 
     void Handle_setOrientation(HandleRef _this, Orientation orient) {
-        THIS->setOrientation((Qt::Orientation)orient);
+        THIS->setOrientation(static_cast<Qt::Orientation>(orient));
     }
 
     std::string Handle_text(HandleRef _this) {
@@ -87,7 +99,7 @@ namespace ProgressBar
     }
 
     void Handle_setTextDirection(HandleRef _this, Direction direction) {
-        THIS->setTextDirection((QProgressBar::Direction)direction);
+        THIS->setTextDirection(static_cast<QProgressBar::Direction>(direction));
     }
 
     void Handle_setTextVisible(HandleRef _this, bool visible) {
@@ -110,8 +122,8 @@ namespace ProgressBar
         delete THIS;
     }
 
-    HandleRef create(std::shared_ptr<SignalHandler> handler) {
-        return (HandleRef) new ProgressBarWithHandler(std::move(handler));
+    HandleRef create(const std::shared_ptr<SignalHandler>& handler) {
+        return reinterpret_cast<HandleRef>(new ProgressBarWithHandler(handler));
     }
 }
 

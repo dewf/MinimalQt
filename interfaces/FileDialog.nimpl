@@ -18,22 +18,7 @@ namedbits SignalMask extends Dialog.SignalMask {
     UrlsSelected
 }
 
-interface SignalHandler {
-    // Object:
-    void destroyed(Object.Handle obj);
-    void objectNameChanged(string objectName);
-
-    // Widget:
-    void customContextMenuRequested(Point pos);
-    void windowIconChanged(Icon.Handle icon);
-    void windowTitleChanged(string title);
-
-    // Dialog:
-    void accepted();
-    void finished(int result);
-    void rejected();
-
-    // FileDialog:
+interface SignalHandler extends Dialog.SignalHandler {
     void currentChanged(string path);
     void currentUrlChanged(string url);
     void directoryEntered(string dir);

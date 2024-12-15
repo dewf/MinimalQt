@@ -9,25 +9,7 @@ namedbits SignalMask extends AbstractSlider.SignalMask {
     // no extra signals
 }
 
-interface SignalHandler {
-    // Object:
-    void destroyed(Object.Handle obj);
-    void objectNameChanged(string objectName);
-
-    // Widget:
-    void customContextMenuRequested(Point pos);
-    void windowIconChanged(Icon.Handle icon);
-    void windowTitleChanged(string title);
-
-    // AbstractSlider:
-    void actionTriggered(SliderAction action);
-    void rangeChanged(int min, int max);
-    void sliderMoved(int value);
-    void sliderPressed();
-    void sliderReleased();
-    void valueChanged(int value);
-
-    // Slider:
+interface SignalHandler extends AbstractSlider.SignalHandler {
     // (none)
 }
 

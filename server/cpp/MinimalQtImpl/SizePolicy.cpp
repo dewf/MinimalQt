@@ -12,7 +12,9 @@ namespace SizePolicy
     }
 
     QSizePolicy fromDeferred(const std::shared_ptr<Deferred::Base>& deferred) {
-        // TODO
-        return {};
+        printf("SizePolicy::fromDeferred not yet implemented, exiting\n");
+        exit(-100);
+        // // TODO
+        // return {};
     }
 }

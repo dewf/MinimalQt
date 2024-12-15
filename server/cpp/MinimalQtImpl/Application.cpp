@@ -15,7 +15,7 @@ namespace Application
         delete THIS;
     }
 
-    void setStyle(std::string name) {
+    void setStyle(const std::string& name) {
         QApplication::setStyle(QString::fromStdString(name));
     }
 
@@ -35,7 +35,7 @@ namespace Application
         return result;
     }
 
-    HandleRef create(std::vector<std::string> args) {
+    HandleRef create(const std::vector<std::string>& args) {
         auto argc = (int)args.size();
         auto argv = new char*[argc];
         for (int i = 0; i< argc; i++) {
@@ -74,7 +74,7 @@ namespace Application
 
     MainThreadRunner* runnerInstance = new MainThreadRunner(); // just being superstitious about heap-allocating this, would probably be fine anyway
 
-    void executeOnMainThread(std::function<MainThreadFunc> func) {
+    void executeOnMainThread(const std::function<MainThreadFunc>& func) {
         // must be heap-allocated, owned by Qt after posting
         auto event = new MainThreadRunEvent(func);
         QCoreApplication::postEvent(runnerInstance, event);

@@ -17,10 +17,10 @@ namespace Timer
         SignalMask lastMask = 0;
         std::vector<SignalMapItem<SignalMaskFlags>> signalMap = {
             // Object:
-            { SignalMaskFlags::Destroyed, SIGNAL(destroyed(QObject)), SLOT(onDestroyed(QObject)) },
-            { SignalMaskFlags::ObjectNameChanged, SIGNAL(objectNameChanged(QString)), SLOT(onObjectNameChanged(QString)) },
+            { Destroyed, SIGNAL(destroyed(QObject)), SLOT(onDestroyed(QObject)) },
+            { ObjectNameChanged, SIGNAL(objectNameChanged(QString)), SLOT(onObjectNameChanged(QString)) },
             // Timer:
-            { SignalMaskFlags::Timeout, SIGNAL(timeout()), SLOT(onTimeout()) },
+            { Timeout, SIGNAL(timeout()), SLOT(onTimeout()) },
         };
     public:
         explicit TimerWithHandler(std::shared_ptr<SignalHandler> handler) : handler(std::move(handler)) {}
@@ -32,14 +32,18 @@ namespace Timer
         }
     public slots:
         // Object =================
-        void onDestroyed(QObject *obj) {
-            handler->destroyed((Object::HandleRef)obj);
+        void onDestroyed(QObject *obj) const {
+            handler->
+                inherited_Object_SignalHandler()->
+                    destroyed(reinterpret_cast<Object::HandleRef>(obj));
         }
-        void onObjectNameChanged(const QString& name) {
-            handler->objectNameChanged(name.toStdString());
+        void onObjectNameChanged(const QString& name) const {
+            handler->
+                inherited_Object_SignalHandler()->
+                    objectNameChanged(name.toStdString());
         }
         // Timer ==================
-        void onTimeout() {
+        void onTimeout() const {
             handler->timeout();
         };
     };
@@ -61,7 +65,7 @@ namespace Timer
     }
 
     void Handle_setTimerType(HandleRef _this, TimerType type_) {
-        THIS->setTimerType((Qt::TimerType)type_);
+        THIS->setTimerType(static_cast<Qt::TimerType>(type_));
     }
 
     void Handle_start(HandleRef _this, int32_t msec) {
@@ -84,8 +88,8 @@ namespace Timer
         delete THIS;
     }
 
-    HandleRef create(std::shared_ptr<SignalHandler> handler) {
-        return (HandleRef) new TimerWithHandler(std::move(handler));
+    HandleRef create(const std::shared_ptr<SignalHandler>& handler) {
+        return reinterpret_cast<HandleRef>(new TimerWithHandler(handler));
     }
 }
 
