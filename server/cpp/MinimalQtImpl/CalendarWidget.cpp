@@ -5,8 +5,9 @@
 
 #include "util/SignalStuff.h"
 #include "util/convert.h"
-#include "IconInternal.h"
 #include "DateInternal.h"
+
+#include "signalrelays/CalendarWidget.h"
 
 #define THIS ((CalendarWidgetWithHandler*)_this)
 
@@ -15,72 +16,11 @@ namespace CalendarWidget
     class CalendarWidgetWithHandler : public QCalendarWidget {
         Q_OBJECT
     private:
-        std::shared_ptr<SignalHandler> handler;
-        SignalMask lastMask = 0;
-        std::vector<SignalMapItem<SignalMaskFlags>> signalMap = {
-            // Object:
-            { Destroyed, SIGNAL(destroyed(QObject)), SLOT(onDestroyed(QObject)) },
-            { ObjectNameChanged, SIGNAL(objectNameChanged(QString)), SLOT(onObjectNameChanged(QString)) },
-            // Widget:
-            { CustomContextMenuRequested, SIGNAL(customContextMenuRequested(QPoint)), SLOT(onCustomContextMenuRequested(QPoint)) },
-            { WindowIconChanged, SIGNAL(windowIconChanged(QIcon)), SLOT(onWindowIconChanged(QIcon)) },
-            { WindowTitleChanged, SIGNAL(windowTitleChanged(QString)), SLOT(onWindowTitleChanged(QString)) },
-            // CalendarWidget:
-            { Activated, SIGNAL(activated(QDate)), SLOT(onActivated(QDate)) },
-            { Clicked, SIGNAL(clicked(QDate)), SLOT(onClicked(QDate)) },
-            { CurrentPageChanged, SIGNAL(currentPageChanged(int,int)), SLOT(onCurrentPageChanged(int,int)) },
-            { SelectionChanged, SIGNAL(selectionChanged()), SLOT(onSelectionChanged()) }
-        };
+        SignalRelay relay;
     public:
-        explicit CalendarWidgetWithHandler(std::shared_ptr<SignalHandler> handler) : handler(std::move(handler)) {}
+        explicit CalendarWidgetWithHandler(const std::shared_ptr<SignalHandler>& handler) : relay(this, handler) {}
         void setSignalMask(SignalMask newMask) {
-            if (newMask != lastMask) {
-                processChanged_OLD(lastMask, newMask, signalMap, this);
-                lastMask = newMask;
-            }
-        }
-    public slots:
-        // Object =================
-        void onDestroyed(QObject *obj) const {
-            handler->
-                inherited_Widget_SignalHandler()->
-                inherited_Object_SignalHandler()->
-                    destroyed(reinterpret_cast<Object::HandleRef>(obj));
-        }
-        void onObjectNameChanged(const QString& name) const {
-            handler->
-                inherited_Widget_SignalHandler()->
-                inherited_Object_SignalHandler()->
-                    objectNameChanged(name.toStdString());
-        }
-        // Widget ==================
-        void onCustomContextMenuRequested(const QPoint& pos) const {
-            handler->
-                inherited_Widget_SignalHandler()->
-                    customContextMenuRequested(toPoint(pos));
-        }
-        void onWindowIconChanged(const QIcon& icon) const {
-            handler->
-                inherited_Widget_SignalHandler()->
-                    windowIconChanged((Icon::HandleRef)&icon);
-        }
-        void onWindowTitleChanged(const QString& title) const {
-            handler->
-                inherited_Widget_SignalHandler()->
-                    windowTitleChanged(title.toStdString());
-        }
-        // CalendarWidget ===========
-        void onActivated(const QDate& date) const {
-            handler->activated((Date::HandleRef)&date);
-        }
-        void onClicked(const QDate& date) const {
-            handler->clicked((Date::HandleRef)&date);
-        }
-        void onCurrentPageChanged(int year, int month) const {
-            handler->currentPageChanged(year, month);
-        }
-        void onSelectionChanged() const {
-            handler->selectionChanged();
+            relay.setSignalMask(newMask);
         }
     };
 

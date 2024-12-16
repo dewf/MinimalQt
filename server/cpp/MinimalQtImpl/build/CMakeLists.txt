@@ -69,6 +69,7 @@ add_library(MinimalQtImpl STATIC
     ../generated/CalendarWidget.h
     ../generated/CalendarWidget_wrappers.cpp
     ../CalendarWidget.cpp
+    ../signalrelays/CalendarWidget.h
 
     ../generated/Color.h
     ../generated/Color_wrappers.cpp
