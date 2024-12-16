@@ -8,43 +8,18 @@
 
 #define THIS ((GridLayoutWithHandler*)_this)
 
+#include "signalrelays/GridLayout.h"
+
 namespace GridLayout {
     class GridLayoutWithHandler : public QGridLayout {
         Q_OBJECT
     private:
-        std::shared_ptr<SignalHandler> handler;
-        SignalMask lastMask = 0;
-        std::vector<SignalMapItem<SignalMaskFlags>> signalMap = {
-            // Object:
-            { SignalMaskFlags::Destroyed, SIGNAL(destroyed(QObject)), SLOT(onDestroyed(QObject)) },
-            { SignalMaskFlags::ObjectNameChanged, SIGNAL(objectNameChanged(QString)), SLOT(onObjectNameChanged(QString)) },
-            // Layout: (none)
-            // GridLayout: (none)
-        };
+        SignalRelay relay;
     public:
-        explicit GridLayoutWithHandler(std::shared_ptr<SignalHandler> handler) : handler(std::move(handler)) {}
+        explicit GridLayoutWithHandler(const std::shared_ptr<SignalHandler>& handler) : relay(this, handler) {}
         void setSignalMask(SignalMask newMask) {
-            if (newMask != lastMask) {
-                processChanged_OLD(lastMask, newMask, signalMap, this);
-                lastMask = newMask;
-            }
+            relay.setSignalMask(newMask);
         }
-    public slots:
-        // Object =================
-        void onDestroyed(QObject *obj) const {
-            handler->
-                inherited_Layout_SignalHandler()->
-                inherited_Object_SignalHandler()->
-                    destroyed(reinterpret_cast<Object::HandleRef>(obj));
-        }
-        void onObjectNameChanged(const QString &name) const {
-            handler->
-                inherited_Layout_SignalHandler()->
-                inherited_Object_SignalHandler()->
-                    objectNameChanged(name.toStdString());
-        }
-        // Layout (none)
-        // GridLayout (none)
     };
 
     void Handle_setHorizontalSpacing(HandleRef _this, int32_t value) {

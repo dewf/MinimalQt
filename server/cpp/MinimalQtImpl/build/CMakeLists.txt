@@ -122,6 +122,7 @@ add_library(MinimalQtImpl STATIC
     ../generated/GridLayout.h
     ../generated/GridLayout_wrappers.cpp
     ../GridLayout.cpp
+    ../signalrelays/GridLayout.h
 
     ../generated/GroupBox.h
     ../generated/GroupBox_wrappers.cpp
