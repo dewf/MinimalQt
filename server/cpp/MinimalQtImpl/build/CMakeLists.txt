@@ -157,6 +157,7 @@ add_library(MinimalQtImpl STATIC
     ../generated/LineEdit.h
     ../generated/LineEdit_wrappers.cpp
     ../LineEdit.cpp
+    ../signalrelays/LineEdit.h
 
     ../generated/ListView.h
     ../generated/ListView_wrappers.cpp

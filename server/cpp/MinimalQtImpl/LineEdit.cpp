@@ -8,89 +8,18 @@
 
 #define THIS ((LineEditWithHandler*)_this)
 
+#include "signalrelays/LineEdit.h"
+
 namespace LineEdit
 {
     class LineEditWithHandler : public QLineEdit {
         Q_OBJECT
     private:
-        std::shared_ptr<SignalHandler> handler;
-        SignalMask lastMask = 0;
-        std::vector<SignalMapItem<SignalMaskFlags>> signalMap = {
-            // Object:
-            { Destroyed, SIGNAL(destroyed(QObject)), SLOT(onDestroyed(QObject)) },
-            { ObjectNameChanged, SIGNAL(objectNameChanged(QString)), SLOT(onObjectNameChanged(QString)) },
-            // Widget:
-            { CustomContextMenuRequested, SIGNAL(customContextMenuRequested(QPoint)), SLOT(onCustomContextMenuRequested(QPoint)) },
-            { WindowIconChanged, SIGNAL(windowIconChanged(QIcon)), SLOT(onWindowIconChanged(QIcon)) },
-            { WindowTitleChanged, SIGNAL(windowTitleChanged(QString)), SLOT(onWindowTitleChanged(QString)) },
-            // LineEdit
-            { CursorPositionChanged, SIGNAL(cursorPositionChanged(int, int)), SLOT(onCursorPositionChanged(int,int)) },
-            { EditingFinished, SIGNAL(editingFinished()), SLOT(onEditingFinished()) },
-            { InputRejected, SIGNAL(inputRejected()), SLOT(onInputRejected()) },
-            { ReturnPressed, SIGNAL(returnPressed()), SLOT(onReturnPressed()) },
-            { SelectionChanged, SIGNAL(selectionChanged()), SLOT(onSelectionChanged()) },
-            { TextChanged, SIGNAL(textChanged(QString)), SLOT(onTextChanged(QString)) },
-            { TextEdited, SIGNAL(textEdited(QString)), SLOT(onTextEdited(QString)) }
-        };
+        SignalRelay relay;
     public:
-        explicit LineEditWithHandler(std::shared_ptr<SignalHandler> handler) : handler(std::move(handler)) {}
+        explicit LineEditWithHandler(const std::shared_ptr<SignalHandler>& handler) : relay(this, handler) {}
         void setSignalMask(SignalMask newMask) {
-            if (newMask != lastMask) {
-                processChanged_OLD(lastMask, newMask, signalMap, this);
-                lastMask = newMask;
-            }
-        }
-    public slots:
-        // Object =================
-        void onDestroyed(QObject *obj) const {
-            handler->
-                inherited_Widget_SignalHandler()->
-                inherited_Object_SignalHandler()->
-                    destroyed(reinterpret_cast<Object::HandleRef>(obj));
-        }
-        void onObjectNameChanged(const QString& name) const {
-            handler->
-                inherited_Widget_SignalHandler()->
-                inherited_Object_SignalHandler()->
-                    objectNameChanged(name.toStdString());
-        }
-        // Widget ==================
-        void onCustomContextMenuRequested(const QPoint& pos) const {
-            handler->
-                inherited_Widget_SignalHandler()->
-                    customContextMenuRequested(toPoint(pos));
-        }
-        void onWindowIconChanged(const QIcon& icon) const {
-            handler->
-                inherited_Widget_SignalHandler()->
-                    windowIconChanged((Icon::HandleRef)&icon);
-        }
-        void onWindowTitleChanged(const QString& title) const {
-            handler->
-                inherited_Widget_SignalHandler()->
-                    windowTitleChanged(title.toStdString());
-        }
-        // LineEdit =================
-        void onCursorPositionChanged(int oldPos, int newPos) const {
-            handler->cursorPositionChanged(oldPos, newPos);
-        };
-        void onEditingFinished() const {
-            handler->editingFinished();
-        }
-        void onInputRejected() const {
-            handler->inputRejected();
-        }
-        void onReturnPressed() const {
-            handler->returnPressed();
-        }
-        void onSelectionChanged() const {
-            handler->selectionChanged();
-        }
-        void onTextChanged(const QString& text) const {
-            handler->textChanged(text.toStdString());
-        }
-        void onTextEdited(const QString& text) const {
-            handler->textEdited(text.toStdString());
+            relay.setSignalMask(newMask);
         }
     };
 
