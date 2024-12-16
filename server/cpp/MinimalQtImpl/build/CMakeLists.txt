@@ -53,6 +53,7 @@ add_library(MinimalQtImpl STATIC
     ../generated/AbstractSlider.h
     ../generated/AbstractSlider_wrappers.cpp
     ../AbstractSlider.cpp
+    ../signalrelays/AbstractSlider.h
 
     ../generated/Action.h
     ../generated/Action_wrappers.cpp
@@ -262,6 +263,7 @@ add_library(MinimalQtImpl STATIC
     ../generated/Slider.h
     ../generated/Slider_wrappers.cpp
     ../Slider.cpp
+    ../signalrelays/Slider.h
 
     ../generated/SortFilterProxyModel.h
     ../generated/SortFilterProxyModel_wrappers.cpp
