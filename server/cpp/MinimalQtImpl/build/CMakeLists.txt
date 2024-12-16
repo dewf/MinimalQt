@@ -307,10 +307,12 @@ add_library(MinimalQtImpl STATIC
     ../generated/Timer.h
     ../generated/Timer_wrappers.cpp
     ../Timer.cpp
+    ../signalrelays/Timer.h
 
     ../generated/ToolBar.h
     ../generated/ToolBar_wrappers.cpp
     ../ToolBar.cpp
+    ../signalrelays/ToolBar.h
 
     ../generated/TreeView.h
     ../generated/TreeView_wrappers.cpp

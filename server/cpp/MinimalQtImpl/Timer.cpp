@@ -8,44 +8,19 @@
 
 #define THIS ((TimerWithHandler*)_this)
 
+#include "signalrelays/Timer.h"
+
 namespace Timer
 {
     class TimerWithHandler : public QTimer {
         Q_OBJECT
     private:
-        std::shared_ptr<SignalHandler> handler;
-        SignalMask lastMask = 0;
-        std::vector<SignalMapItem<SignalMaskFlags>> signalMap = {
-            // Object:
-            { Destroyed, SIGNAL(destroyed(QObject)), SLOT(onDestroyed(QObject)) },
-            { ObjectNameChanged, SIGNAL(objectNameChanged(QString)), SLOT(onObjectNameChanged(QString)) },
-            // Timer:
-            { Timeout, SIGNAL(timeout()), SLOT(onTimeout()) },
-        };
+        SignalRelay relay;
     public:
-        explicit TimerWithHandler(std::shared_ptr<SignalHandler> handler) : handler(std::move(handler)) {}
+        explicit TimerWithHandler(const std::shared_ptr<SignalHandler>& handler) : relay(this, handler) {}
         void setSignalMask(SignalMask newMask) {
-            if (newMask != lastMask) {
-                processChanged_OLD(lastMask, newMask, signalMap, this);
-                lastMask = newMask;
-            }
+            relay.setSignalMask(newMask);
         }
-    public slots:
-        // Object =================
-        void onDestroyed(QObject *obj) const {
-            handler->
-                inherited_Object_SignalHandler()->
-                    destroyed(reinterpret_cast<Object::HandleRef>(obj));
-        }
-        void onObjectNameChanged(const QString& name) const {
-            handler->
-                inherited_Object_SignalHandler()->
-                    objectNameChanged(name.toStdString());
-        }
-        // Timer ==================
-        void onTimeout() const {
-            handler->timeout();
-        };
     };
 
     bool Handle_isActive(HandleRef _this) {
