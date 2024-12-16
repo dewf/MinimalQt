@@ -237,6 +237,7 @@ add_library(MinimalQtImpl STATIC
     ../generated/RadioButton.h
     ../generated/RadioButton_wrappers.cpp
     ../RadioButton.cpp
+    ../signalrelays/RadioButton.h
 
     ../generated/Region.h
     ../generated/Region_wrappers.cpp
