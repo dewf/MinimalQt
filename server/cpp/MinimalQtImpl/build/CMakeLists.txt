@@ -317,6 +317,7 @@ add_library(MinimalQtImpl STATIC
     ../generated/TreeView.h
     ../generated/TreeView_wrappers.cpp
     ../TreeView.cpp
+    ../signalrelays/TreeView.h
 
     ../generated/Variant.h
     ../generated/Variant_wrappers.cpp
