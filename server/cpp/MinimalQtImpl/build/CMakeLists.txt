@@ -179,6 +179,7 @@ add_library(MinimalQtImpl STATIC
     ../generated/MenuBar.h
     ../generated/MenuBar_wrappers.cpp
     ../MenuBar.cpp
+    ../signalrelays/MenuBar.h
 
     ../generated/MessageBox.h
     ../generated/MessageBox_wrappers.cpp
