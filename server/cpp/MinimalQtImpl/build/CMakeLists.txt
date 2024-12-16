@@ -127,6 +127,7 @@ add_library(MinimalQtImpl STATIC
     ../generated/GroupBox.h
     ../generated/GroupBox_wrappers.cpp
     ../GroupBox.cpp
+    ../signalrelays/GroupBox.h
 
     ../generated/Icon.h
     ../generated/Icon_wrappers.cpp
