@@ -25,6 +25,7 @@ add_library(MinimalQtImpl STATIC
     ../generated/AbstractItemDelegate.h
     ../generated/AbstractItemDelegate_wrappers.cpp
     ../AbstractItemDelegate.cpp
+    ../signalrelays/AbstractItemDelegate.h
 
     ../generated/AbstractItemModel.h
     ../generated/AbstractItemModel_wrappers.cpp
@@ -279,6 +280,7 @@ add_library(MinimalQtImpl STATIC
     ../generated/StyledItemDelegate.h
     ../generated/StyledItemDelegate_wrappers.cpp
     ../StyledItemDelegate.cpp
+    ../signalrelays/StyledItemDelegate.h
 
     ../generated/StyleOption.h
     ../generated/StyleOption_wrappers.cpp

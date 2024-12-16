@@ -5,64 +5,19 @@
 
 #define THIS ((StyledItemDelegateWithHandler*)_this)
 
+#include "signalrelays/StyledItemDelegate.h"
+
 namespace StyledItemDelegate
 {
     class StyledItemDelegateWithHandler : public QStyledItemDelegate {
         Q_OBJECT
     private:
-        std::shared_ptr<SignalHandler> handler;
-        SignalMask lastMask = 0;
-        std::vector<SignalMapItem<SignalMaskFlags>> signalMap = {
-            // Object:
-            { Destroyed, SIGNAL(destroyed(QObject)), SLOT(onDestroyed(QObject)) },
-            { ObjectNameChanged, SIGNAL(objectNameChanged(QString)), SLOT(onObjectNameChanged(QString)) },
-            // AbstractItemDelegate:
-            { CloseEditor, SIGNAL(closeEditor(QWidget, EndEditHint)), SLOT(onCloseEditor(QWidget,EndEditHint)) },
-            { CommitData, SIGNAL(commitData(QWidget)), SLOT(onCommitData(QWidget)) },
-            { SizeHintChanged, SIGNAL(sizeHintChanged(QModelIndex)), SLOT(onSizeHintChanged(QModelIndex)) }
-            // StyledItemDelegateWithHandler:
-            // (none)
-        };
+        SignalRelay relay;
     public:
-        explicit StyledItemDelegateWithHandler(std::shared_ptr<SignalHandler> handler) : handler(std::move(handler)) {}
+        explicit StyledItemDelegateWithHandler(const std::shared_ptr<SignalHandler>& handler) : relay(this, handler) {}
         void setSignalMask(SignalMask newMask) {
-            if (newMask != lastMask) {
-                processChanged_OLD(lastMask, newMask, signalMap, this);
-                lastMask = newMask;
-            }
+            relay.setSignalMask(newMask);
         }
-    public slots:
-        // Object =================
-        void onDestroyed(QObject *obj) const {
-            handler->
-                inherited_AbstractItemDelegate_SignalHandler()->
-                inherited_Object_SignalHandler()->
-                    destroyed(reinterpret_cast<Object::HandleRef>(obj));
-        }
-        void onObjectNameChanged(const QString& name) const {
-            handler->
-                inherited_AbstractItemDelegate_SignalHandler()->
-                inherited_Object_SignalHandler()->
-                    objectNameChanged(name.toStdString());
-        }
-        // AbstractItemDelegate =================
-        void onCloseEditor(QWidget *editor, QAbstractItemDelegate::EndEditHint hint = NoHint) const {
-            handler->
-                inherited_AbstractItemDelegate_SignalHandler()->
-                    closeEditor(reinterpret_cast<Widget::HandleRef>(editor), static_cast<AbstractItemDelegate::EndEditHint>(hint));
-        }
-        void onCommitData(QWidget *editor) const {
-            handler->
-                inherited_AbstractItemDelegate_SignalHandler()->
-                    commitData(reinterpret_cast<Widget::HandleRef>(editor));
-        }
-        void onSizeHintChanged(const QModelIndex &index) const {
-            handler->
-                inherited_AbstractItemDelegate_SignalHandler()->
-                    sizeHintChanged((ModelIndex::HandleRef)&index);
-        }
-        // StyledItemDelegate ===================
-        // (none)
     };
 
     void Handle_setSignalMask(HandleRef _this, SignalMask mask) {
