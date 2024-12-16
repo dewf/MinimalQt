@@ -8,65 +8,18 @@
 
 #define THIS ((ProgressBarWithHandler*)_this)
 
+#include "signalrelays/ProgressBar.h"
+
 namespace ProgressBar
 {
     class ProgressBarWithHandler : public QProgressBar {
     Q_OBJECT
     private:
-        std::shared_ptr<SignalHandler> handler;
-        SignalMask lastMask = 0;
-        std::vector<SignalMapItem<SignalMaskFlags>> signalMap = {
-            // Object:
-            { Destroyed, SIGNAL(destroyed(QObject)), SLOT(onDestroyed(QObject)) },
-            { ObjectNameChanged, SIGNAL(objectNameChanged(QString)), SLOT(onObjectNameChanged(QString)) },
-            // Widget:
-            { CustomContextMenuRequested, SIGNAL(customContextMenuRequested(QPoint)), SLOT(onCustomContextMenuRequested(QPoint)) },
-            { WindowIconChanged, SIGNAL(windowIconChanged(QIcon)), SLOT(onWindowIconChanged(QIcon)) },
-            { WindowTitleChanged, SIGNAL(windowTitleChanged(QString)), SLOT(onWindowTitleChanged(QString)) },
-            // ProgressBar:
-            { ValueChanged, SIGNAL(valueChanged(int)), SLOT(onValueChanged(int)) },
-        };
+        SignalRelay relay;
     public:
-        explicit ProgressBarWithHandler(std::shared_ptr<SignalHandler> handler) : handler(std::move(handler)) {}
+        explicit ProgressBarWithHandler(const std::shared_ptr<SignalHandler>& handler) : relay(this, handler) {}
         void setSignalMask(SignalMask newMask) {
-            if (newMask != lastMask) {
-                processChanged_OLD(lastMask, newMask, signalMap, this);
-                lastMask = newMask;
-            }
-        }
-    public slots:
-        // Object =================
-        void onDestroyed(QObject *obj) const {
-            handler->
-                inherited_Widget_SignalHandler()->
-                inherited_Object_SignalHandler()->
-                    destroyed(reinterpret_cast<Object::HandleRef>(obj));
-        }
-        void onObjectNameChanged(const QString& name) const {
-            handler->
-                inherited_Widget_SignalHandler()->
-                inherited_Object_SignalHandler()->
-                    objectNameChanged(name.toStdString());
-        }
-        // Widget ==================
-        void onCustomContextMenuRequested(const QPoint& pos) const {
-            handler->
-                inherited_Widget_SignalHandler()->
-                    customContextMenuRequested(toPoint(pos));
-        }
-        void onWindowIconChanged(const QIcon& icon) const {
-            handler->
-                inherited_Widget_SignalHandler()->
-                    windowIconChanged((Icon::HandleRef)&icon);
-        }
-        void onWindowTitleChanged(const QString& title) const {
-            handler->
-                inherited_Widget_SignalHandler()->
-                    windowTitleChanged(title.toStdString());
-        }
-        // ProgressBar =============
-        void onValueChanged(int value) const {
-            handler->valueChanged(value);
+            relay.setSignalMask(newMask);
         }
     };
 

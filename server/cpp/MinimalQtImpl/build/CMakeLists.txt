@@ -227,6 +227,7 @@ add_library(MinimalQtImpl STATIC
     ../generated/ProgressBar.h
     ../generated/ProgressBar_wrappers.cpp
     ../ProgressBar.cpp
+    ../signalrelays/ProgressBar.h
 
     ../generated/PushButton.h
     ../generated/PushButton_wrappers.cpp
