@@ -222,6 +222,7 @@ add_library(MinimalQtImpl STATIC
     ../generated/PlainTextEdit.h
     ../generated/PlainTextEdit_wrappers.cpp
     ../PlainTextEdit.cpp
+    ../signalrelays/PlainTextEdit.h
 
     ../generated/ProgressBar.h
     ../generated/ProgressBar_wrappers.cpp
