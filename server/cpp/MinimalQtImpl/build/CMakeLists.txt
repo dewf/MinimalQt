@@ -34,6 +34,7 @@ add_library(MinimalQtImpl STATIC
     ../generated/AbstractItemView.h
     ../generated/AbstractItemView_wrappers.cpp
     ../AbstractItemView.cpp
+    ../signalrelays/AbstractItemView.h
 
     ../generated/AbstractListModel.h
     ../generated/AbstractListModel_wrappers.cpp
@@ -47,6 +48,7 @@ add_library(MinimalQtImpl STATIC
     ../generated/AbstractScrollArea.h
     ../generated/AbstractScrollArea_wrappers.cpp
     ../AbstractScrollArea.cpp
+    ../signalrelays/AbstractScrollArea.h
 
     ../generated/AbstractSlider.h
     ../generated/AbstractSlider_wrappers.cpp
@@ -162,6 +164,7 @@ add_library(MinimalQtImpl STATIC
     ../generated/ListView.h
     ../generated/ListView_wrappers.cpp
     ../ListView.cpp
+    ../signalrelays/ListView.h
 
     ../generated/MainWindow.h
     ../generated/MainWindow_wrappers.cpp

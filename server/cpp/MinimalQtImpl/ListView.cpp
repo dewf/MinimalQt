@@ -7,139 +7,18 @@
 
 #define THIS ((ListViewWithHandler*)_this)
 
+#include "signalrelays/ListView.h"
+
 namespace ListView
 {
     class ListViewWithHandler : public QListView {
         Q_OBJECT
     private:
-        std::shared_ptr<SignalHandler> handler;
-        SignalMask lastMask = 0;
-        std::vector<SignalMapItem<SignalMaskFlags>> signalMap = {
-            // Object:
-            { Destroyed, SIGNAL(destroyed(QObject)), SLOT(onDestroyed(QObject)) },
-            { ObjectNameChanged, SIGNAL(objectNameChanged(QString)), SLOT(onObjectNameChanged(QString)) },
-            // Widget:
-            { CustomContextMenuRequested, SIGNAL(customContextMenuRequested(QPoint)), SLOT(onCustomContextMenuRequested(QPoint)) },
-            { WindowIconChanged, SIGNAL(windowIconChanged(QIcon)), SLOT(onWindowIconChanged(QIcon)) },
-            { WindowTitleChanged, SIGNAL(windowTitleChanged(QString)), SLOT(onWindowTitleChanged(QString)) },
-            // Frame:
-            // ..... (none)
-            // AbstractScrollArea:
-            // ..... (none)
-            // AbstractItemView:
-            { Activated, SIGNAL(activated(QModelIndex)), SLOT(onActivated(QModelIndex)) },
-            { Clicked, SIGNAL(clicked(QModelIndex)), SLOT(onClicked(QModelIndex)) },
-            { DoubleClickedBit, SIGNAL(doubleClicked(QModelIndex)), SLOT(onDoubleClicked(QModelIndex)) },
-            { Entered, SIGNAL(entered(QModelIndex)), SLOT(onEntered(QModelIndex)) },
-            { IconSizeChanged, SIGNAL(iconSizeChanged(QSize)), SLOT(onIconSizeChanged(QSize)) },
-            { Pressed, SIGNAL(pressed(QModelIndex)), SLOT(onPressed(QModelIndex)) },
-            { ViewportEntered, SIGNAL(viewportEntered()), SLOT(onViewportEntered) },
-            // ListView:
-            { IndexesMoved, SIGNAL(indexesMoved(QModelIndexList)), SLOT(onIndexesMoved(QModelIndexList)) },
-        };
+        SignalRelay relay;
     public:
-        explicit ListViewWithHandler(std::shared_ptr<SignalHandler> handler) : handler(std::move(handler)) {}
+        explicit ListViewWithHandler(const std::shared_ptr<SignalHandler>& handler) : relay(this, handler) {}
         void setSignalMask(SignalMask newMask) {
-            if (newMask != lastMask) {
-                processChanged_OLD(lastMask, newMask, signalMap, this);
-                lastMask = newMask;
-            }
-        }
-    public slots:
-        // Object =================
-        void onDestroyed(QObject *obj) const {
-            handler->
-                inherited_AbstractItemView_SignalHandler()->
-                inherited_AbstractScrollArea_SignalHandler()->
-                inherited_Frame_SignalHandler()->
-                inherited_Widget_SignalHandler()->
-                inherited_Object_SignalHandler()->
-                    destroyed(reinterpret_cast<Object::HandleRef>(obj));
-        }
-        void onObjectNameChanged(const QString& name) const {
-            handler->
-                inherited_AbstractItemView_SignalHandler()->
-                inherited_AbstractScrollArea_SignalHandler()->
-                inherited_Frame_SignalHandler()->
-                inherited_Widget_SignalHandler()->
-                inherited_Object_SignalHandler()->
-                    objectNameChanged(name.toStdString());
-        }
-        // Widget ==================
-        void onCustomContextMenuRequested(const QPoint& pos) const {
-            handler->
-                inherited_AbstractItemView_SignalHandler()->
-                inherited_AbstractScrollArea_SignalHandler()->
-                inherited_Frame_SignalHandler()->
-                inherited_Widget_SignalHandler()->
-                    customContextMenuRequested(toPoint(pos));
-        }
-        void onWindowIconChanged(const QIcon& icon) const {
-            handler->
-                inherited_AbstractItemView_SignalHandler()->
-                inherited_AbstractScrollArea_SignalHandler()->
-                inherited_Frame_SignalHandler()->
-                inherited_Widget_SignalHandler()->
-                    windowIconChanged((Icon::HandleRef)&icon);
-        }
-        void onWindowTitleChanged(const QString& title) const {
-            handler->
-                inherited_AbstractItemView_SignalHandler()->
-                inherited_AbstractScrollArea_SignalHandler()->
-                inherited_Frame_SignalHandler()->
-                inherited_Widget_SignalHandler()->
-                    windowTitleChanged(title.toStdString());
-        }
-        // Frame ====================
-        // .... (none)
-
-        // AbstractScrollArea =======
-        // .... (none)
-
-        // AbstractItemView =========
-        void onActivated(const QModelIndex& index) const {
-            handler->
-                inherited_AbstractItemView_SignalHandler()->
-                    activated((ModelIndex::HandleRef)&index);
-        }
-        void onClicked(const QModelIndex& index) const {
-            handler->
-                inherited_AbstractItemView_SignalHandler()->
-                    clicked((ModelIndex::HandleRef)&index);
-        }
-        void onDoubleClicked(const QModelIndex& index) const {
-            handler->
-                inherited_AbstractItemView_SignalHandler()->
-                    doubleClicked((ModelIndex::HandleRef)&index);
-        }
-        void onEntered(QModelIndex& index) const {
-            handler->
-                inherited_AbstractItemView_SignalHandler()->
-                    entered((ModelIndex::HandleRef)&index);
-        }
-        void onIconSizeChanged(const QSize& size) const {
-            handler->
-                inherited_AbstractItemView_SignalHandler()->
-                    iconSizeChanged(toSize(size));
-        }
-        void onPressed(const QModelIndex& index) const {
-            handler->
-                inherited_AbstractItemView_SignalHandler()->
-                    pressed((ModelIndex::HandleRef)&index);
-        }
-        void onViewportEntered() const {
-            handler->
-                inherited_AbstractItemView_SignalHandler()->
-                    viewportEntered();
-        }
-        // ListView ========================
-        void onIndexesMoved(const QModelIndexList &indexes) const {
-            std::vector<ModelIndex::HandleRef> indexes2;
-            for (auto &index : indexes) {
-                // will this work? seems sketchy
-                indexes2.push_back((ModelIndex::HandleRef)&index);
-            }
-            handler->indexesMoved(indexes2);
+            relay.setSignalMask(newMask);
         }
     };
 
