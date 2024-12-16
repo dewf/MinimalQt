@@ -79,6 +79,7 @@ add_library(MinimalQtImpl STATIC
     ../generated/ComboBox.h
     ../generated/ComboBox_wrappers.cpp
     ../ComboBox.cpp
+    ../signalrelays/ComboBox.h
 
     ../generated/Common.h
     ../generated/Common_wrappers.cpp

@@ -1,6 +1,5 @@
 #include "generated/ComboBox.h"
 
-#include <QObject>
 #include <QComboBox>
 #include <QStringList>
 
@@ -9,6 +8,8 @@
 #include "VariantInternal.h"
 #include "IconInternal.h"
 
+#include "signalrelays/ComboBox.h"
+
 #define THIS ((ComboBoxWithHandler*)_this)
 
 namespace ComboBox
@@ -16,84 +17,11 @@ namespace ComboBox
     class ComboBoxWithHandler : public QComboBox {
         Q_OBJECT
     private:
-        std::shared_ptr<SignalHandler> handler;
-        SignalMask lastMask = 0;
-        std::vector<SignalMapItem<SignalMaskFlags>> signalMap = {
-            // Object:
-            { Destroyed, SIGNAL(destroyed(QObject)), SLOT(onDestroyed(QObject)) },
-            { ObjectNameChanged, SIGNAL(objectNameChanged(QString)), SLOT(onObjectNameChanged(QString)) },
-            // Widget:
-            { CustomContextMenuRequested, SIGNAL(customContextMenuRequested(QPoint)), SLOT(onCustomContextMenuRequested(QPoint)) },
-            { WindowIconChanged, SIGNAL(windowIconChanged(QIcon)), SLOT(onWindowIconChanged(QIcon)) },
-            { WindowTitleChanged, SIGNAL(windowTitleChanged(QString)), SLOT(onWindowTitleChanged(QString)) },
-            // ComboBox:
-            { Activated, SIGNAL(activated(int)), SLOT(onActivated(int)) },
-            { CurrentIndexChanged, SIGNAL(currentIndexChanged(int)), SLOT(onCurrentIndexChanged(int)) },
-            { CurrentTextChanged, SIGNAL(currentTextChanged(QString)), SLOT(onCurrentTextChanged(QString)) },
-            { EditTextChanged, SIGNAL(editTextChanged(QString)), SLOT(onEditTextChanged(QString)) },
-            { Highlighted, SIGNAL(highlighted(int)), SLOT(onHighlighted(int)) },
-            { TextActivated, SIGNAL(textActivated(QString)), SLOT(onTextActivated(QString)) },
-            { TextHighlighted, SIGNAL(textHighlighted(QString)), SLOT(onTextHighlighted(QString)) },
-        };
+        SignalRelay relay;
     public:
-        explicit ComboBoxWithHandler(std::shared_ptr<SignalHandler> handler) : handler(std::move(handler)) {}
+        explicit ComboBoxWithHandler(const std::shared_ptr<SignalHandler>& handler) : relay(this, handler) {}
         void setSignalMask(SignalMask newMask) {
-            if (newMask != lastMask) {
-                processChanged_OLD(lastMask, newMask, signalMap, this);
-                lastMask = newMask;
-            }
-        }
-    public slots:
-        // Object =================
-        void onDestroyed(QObject *obj) const {
-            handler->
-                inherited_Widget_SignalHandler()->
-                inherited_Object_SignalHandler()->
-                    destroyed(reinterpret_cast<Object::HandleRef>(obj));
-        }
-        void onObjectNameChanged(const QString& name) const {
-            handler->
-                inherited_Widget_SignalHandler()->
-                inherited_Object_SignalHandler()->
-                    objectNameChanged(name.toStdString());
-        }
-        // Widget ==================
-        void onCustomContextMenuRequested(const QPoint& pos) const {
-            handler->
-                inherited_Widget_SignalHandler()->
-                    customContextMenuRequested(toPoint(pos));
-        }
-        void onWindowIconChanged(const QIcon& icon) const {
-            handler->
-                inherited_Widget_SignalHandler()->
-                    windowIconChanged((Icon::HandleRef)&icon);
-        }
-        void onWindowTitleChanged(const QString& title) const {
-            handler->
-                inherited_Widget_SignalHandler()->
-                    windowTitleChanged(title.toStdString());
-        }
-        // ComboBox ================
-        void onActivated(int index) const {
-            handler->activated(index);
-        }
-        void onCurrentIndexChanged(int index) const {
-            handler->currentIndexChanged(index);
-        }
-        void onCurrentTextChanged(const QString& text) const {
-            handler->currentTextChanged(text.toStdString());
-        }
-        void onEditTextChanged(const QString& text) const {
-            handler->editTextChanged(text.toStdString());
-        }
-        void onHighlighted(int index) const {
-            handler->highlighted(index);
-        }
-        void onTextActivated(const QString& text) const {
-            handler->textActivated(text.toStdString());
-        }
-        void onTextHighlighted(const QString& text) const {
-            handler->textHighlighted(text.toStdString());
+            relay.setSignalMask(newMask);
         }
     };
 
