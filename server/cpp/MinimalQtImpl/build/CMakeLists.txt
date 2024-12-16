@@ -147,6 +147,7 @@ add_library(MinimalQtImpl STATIC
     ../generated/Label.h
     ../generated/Label_wrappers.cpp
     ../Label.cpp
+    ../signalrelays/Label.h
 
     ../generated/Layout.h
     ../generated/Layout_wrappers.cpp
