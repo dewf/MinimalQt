@@ -112,6 +112,7 @@ add_library(MinimalQtImpl STATIC
     ../generated/FileDialog.h
     ../generated/FileDialog_wrappers.cpp
     ../FileDialog.cpp
+    ../signalrelays/FileDialog.h
 
     ../generated/Frame.h
     ../generated/Frame_wrappers.cpp
