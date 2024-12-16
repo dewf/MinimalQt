@@ -184,6 +184,7 @@ add_library(MinimalQtImpl STATIC
     ../generated/MessageBox.h
     ../generated/MessageBox_wrappers.cpp
     ../MessageBox.cpp
+    ../signalrelays/MessageBox.h
 
     ../generated/ModelIndex.h
     ../generated/ModelIndex_wrappers.cpp
