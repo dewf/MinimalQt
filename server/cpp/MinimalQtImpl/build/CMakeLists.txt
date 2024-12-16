@@ -44,6 +44,7 @@ add_library(MinimalQtImpl STATIC
     ../generated/AbstractProxyModel.h
     ../generated/AbstractProxyModel_wrappers.cpp
     ../AbstractProxyModel.cpp
+    ../signalrelays/AbstractProxyModel.h
 
     ../generated/AbstractScrollArea.h
     ../generated/AbstractScrollArea_wrappers.cpp
@@ -268,6 +269,7 @@ add_library(MinimalQtImpl STATIC
     ../generated/SortFilterProxyModel.h
     ../generated/SortFilterProxyModel_wrappers.cpp
     ../SortFilterProxyModel.cpp
+    ../signalrelays/SortFilterProxyModel.h
 
     ../generated/StatusBar.h
     ../generated/StatusBar_wrappers.cpp
