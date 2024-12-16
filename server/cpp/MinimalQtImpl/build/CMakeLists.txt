@@ -99,6 +99,7 @@ add_library(MinimalQtImpl STATIC
     ../generated/Dialog.h
     ../generated/Dialog_wrappers.cpp
     ../Dialog.cpp
+    ../signalrelays/Dialog.h
 
     ../generated/DockWidget.h
     ../generated/DockWidget_wrappers.cpp
