@@ -117,6 +117,7 @@ add_library(MinimalQtImpl STATIC
     ../generated/Frame.h
     ../generated/Frame_wrappers.cpp
     ../Frame.cpp
+    ../signalrelays/Frame.h
 
     ../generated/GridLayout.h
     ../generated/GridLayout_wrappers.cpp
