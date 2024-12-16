@@ -293,10 +293,12 @@ add_library(MinimalQtImpl STATIC
     ../generated/TabBar.h
     ../generated/TabBar_wrappers.cpp
     ../TabBar.cpp
+    ../signalrelays/TabBar.h
 
     ../generated/TabWidget.h
     ../generated/TabWidget_wrappers.cpp
     ../TabWidget.cpp
+    ../signalrelays/TabWidget.h
 
     ../generated/TextOption.h
     ../generated/TextOption_wrappers.cpp
