@@ -274,6 +274,7 @@ add_library(MinimalQtImpl STATIC
     ../generated/StatusBar.h
     ../generated/StatusBar_wrappers.cpp
     ../StatusBar.cpp
+    ../signalrelays/StatusBar.h
 
     ../generated/StyledItemDelegate.h
     ../generated/StyledItemDelegate_wrappers.cpp
