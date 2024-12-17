@@ -205,4 +205,8 @@ interface MethodDelegate {
     void dropEvent(Point pos, Modifiers modifiers, MimeData mimeData, DropAction action);
 }
 
-Handle createSubclassed(MethodDelegate methodDelegate, MethodMask methodMask, SignalHandler handler);
+opaque Delegated extends Handle {
+    void setDelegate(MethodDelegate methodDelegate, MethodMask methodMask);
+}
+
+Delegated createDelegated(SignalHandler handler);

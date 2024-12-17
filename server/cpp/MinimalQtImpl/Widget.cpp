@@ -481,18 +481,18 @@ namespace Widget
 //        // not owned
 //    }
 
-    // subclass stuff ==========================================================
+    // subclass/delegated stuff ==========================================================
 
-    class WidgetSubclass : public WidgetWithHandler {
+    class DelegatedWidget : public WidgetWithHandler {
     private:
         std::shared_ptr<MethodDelegate> methodDelegate;
-        MethodMask methodMask;
+        MethodMask methodMask = 0;
     public:
-        WidgetSubclass(std::shared_ptr<MethodDelegate> methodDelegate, MethodMask methodMask, std::shared_ptr<SignalHandler> handler) :
-            methodDelegate(std::move(methodDelegate)),
-            methodMask(methodMask),
-            WidgetWithHandler(std::move(handler))
-            {}
+        explicit DelegatedWidget(const std::shared_ptr<SignalHandler>& handler) : WidgetWithHandler(handler) {}
+        void setDelegate(const std::shared_ptr<MethodDelegate>& methodDelegate, const MethodMask methodMask) {
+            this->methodDelegate = methodDelegate;
+            this->methodMask = methodMask;
+        }
     protected:
         void showEvent(QShowEvent *event) override {
             if (methodMask & ShowEvent) {
@@ -514,6 +514,7 @@ namespace Widget
                 QWidget::paintEvent(event);
             }
         }
+
         void mousePressEvent(QMouseEvent *event) override {
             if (methodMask & MousePressEvent) {
                 auto pos = toPoint(event->pos());
@@ -639,8 +640,18 @@ namespace Widget
         }
     };
 
-    HandleRef createSubclassed(const std::shared_ptr<MethodDelegate>& methodDelegate, MethodMask methodMask, const std::shared_ptr<SignalHandler>& handler) {
-        return reinterpret_cast<HandleRef>(new WidgetSubclass(methodDelegate, methodMask, handler));
+#define DELEGATED_THIS (reinterpret_cast<DelegatedWidget*>(_this))
+
+    void Delegated_setDelegate(DelegatedRef _this, const std::shared_ptr<MethodDelegate>& methodDelegate, MethodMask methodMask) {
+        DELEGATED_THIS->setDelegate(methodDelegate, methodMask);
+    }
+
+    void Delegated_dispose(DelegatedRef _this) {
+        delete DELEGATED_THIS;
+    }
+
+    DelegatedRef createDelegated(const std::shared_ptr<SignalHandler>& handler) {
+        return reinterpret_cast<DelegatedRef>(new DelegatedWidget(handler));
     }
 }
 
