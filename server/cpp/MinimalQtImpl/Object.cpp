@@ -8,6 +8,10 @@
 
 namespace Object
 {
+    std::string Handle_objectName(HandleRef _this) {
+        return THIS->objectName().toStdString();
+    }
+
     void Handle_setObjectName(HandleRef _this, const std::string& name) {
         THIS->setObjectName(QString::fromStdString(name));
     }

@@ -12,6 +12,7 @@ interface SignalHandler {
 
 @nodispose
 opaque Handle {
+    string objectName();
     void setObjectName(string name);
 
     void dumpObjectTree();
