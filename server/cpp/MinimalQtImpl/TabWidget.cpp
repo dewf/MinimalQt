@@ -98,6 +98,50 @@ namespace TabWidget
     HandleRef create(const std::shared_ptr<SignalHandler>& handler) {
         return reinterpret_cast<HandleRef>(new TabWidgetWithHandler(handler));
     }
+
+    // Subclassing stuff =====================================================================================
+
+#define DELEGATED_THIS (reinterpret_cast<DelegatedTabWidget*>(_this))
+
+    class DelegatedTabWidget : public TabWidgetWithHandler {
+    private:
+        std::shared_ptr<MethodDelegate> methodDelegate;
+        MethodMask methodMask = 0;
+    public:
+        explicit DelegatedTabWidget(const std::shared_ptr<SignalHandler> &handler) : TabWidgetWithHandler(handler) {
+        }
+        void setDelegate(const std::shared_ptr<MethodDelegate>& methodDelegate, MethodMask methodMask) {
+            this->methodDelegate = methodDelegate;
+            this->methodMask = methodMask;
+        }
+    protected:
+        void tabInserted(int index) override {
+            if (methodMask & TabInserted) {
+                methodDelegate->tabInserted(index);
+            } else {
+                QTabWidget::tabInserted(index);
+            }
+        }
+        void tabRemoved(int index) override {
+            if (methodMask & TabRemoved) {
+                methodDelegate->tabRemoved(index);
+            } else {
+                QTabWidget::tabRemoved(index);
+            }
+        }
+    };
+
+    void Delegated_setDelegate(DelegatedRef _this, const std::shared_ptr<MethodDelegate>& methodDelegate, MethodMask methodMask) {
+        DELEGATED_THIS->setDelegate(methodDelegate, methodMask);
+    }
+
+    void Delegated_dispose(DelegatedRef _this) {
+        delete DELEGATED_THIS;
+    }
+
+    DelegatedRef createDelegated(const std::shared_ptr<SignalHandler>& handler) {
+        return reinterpret_cast<DelegatedRef>(new DelegatedTabWidget(handler));
+    }
 }
 
 #include "TabWidget.moc"

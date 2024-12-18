@@ -46,3 +46,23 @@ opaque Handle extends Widget.Handle {
 }
 
 Handle create(SignalHandler handler);
+
+// SUBCLASSING ===========================================================
+
+namedbits MethodMask {
+    // InitStyleOption,
+    // SetTabBar,
+    TabInserted,
+    TabRemoved
+}
+
+interface MethodDelegate {
+    void tabInserted(int index);
+    void tabRemoved(int index);
+}
+
+opaque Delegated extends Handle {
+    void setDelegate(MethodDelegate methodDelegate, MethodMask methodMask);
+}
+
+Delegated createDelegated(SignalHandler handler);
