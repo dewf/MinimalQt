@@ -8,7 +8,7 @@
 
 #define THIS ((DialogWithHandler*)_this)
 
-#include "signalrelays/Dialog.h"
+#include "DialogInternal.h"
 
 namespace Dialog
 {

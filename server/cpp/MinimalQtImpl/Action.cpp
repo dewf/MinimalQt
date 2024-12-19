@@ -1,14 +1,11 @@
 #include "generated/Action.h"
+#include "ActionInternal.h"
 
 #include <QObject>
 #include <QAction>
 
-#include "util/SignalStuff.h"
-
 #include "IconInternal.h"
 #include "KeySequenceInternal.h"
-
-#include "signalrelays/Action.h"
 
 #define THIS ((ActionWithHandler*)_this)
 

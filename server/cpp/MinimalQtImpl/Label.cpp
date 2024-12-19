@@ -1,15 +1,13 @@
 #include "generated/Label.h"
+#include "LabelInternal.h"
 
 #include <QLabel>
 #include <utility>
 #include "util/convert.h"
 
-#include "util/SignalStuff.h"
 #include "PixmapInternal.h"
 
 #define THIS ((LabelWithHandler*)_this)
-
-#include "signalrelays/Label.h"
 
 namespace Label
 {

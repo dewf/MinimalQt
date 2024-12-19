@@ -1,15 +1,13 @@
 #include "generated/Menu.h"
+#include "MenuInternal.h"
 
 #include <QObject>
 #include <QMenu>
 
 #include "util/convert.h"
-#include "util/SignalStuff.h"
 #include "IconInternal.h"
 
 #define THIS ((MenuWithHandler*)_this)
-
-#include "signalrelays/Menu.h"
 
 namespace Menu
 {

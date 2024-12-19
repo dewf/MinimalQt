@@ -20,47 +20,47 @@ add_library(MinimalQtImpl STATIC
     ../generated/AbstractButton.h
     ../generated/AbstractButton_wrappers.cpp
     ../AbstractButton.cpp
-    ../signalrelays/AbstractButton.h
+    ../AbstractButtonInternal.h
 
     ../generated/AbstractItemDelegate.h
     ../generated/AbstractItemDelegate_wrappers.cpp
     ../AbstractItemDelegate.cpp
-    ../signalrelays/AbstractItemDelegate.h
+    ../AbstractItemDelegateInternal.h
 
     ../generated/AbstractItemModel.h
     ../generated/AbstractItemModel_wrappers.cpp
     ../AbstractItemModel.cpp
-    ../signalrelays/AbstractItemModel.h
+    ../AbstractItemModelInternal.h
 
     ../generated/AbstractItemView.h
     ../generated/AbstractItemView_wrappers.cpp
     ../AbstractItemView.cpp
-    ../signalrelays/AbstractItemView.h
+    ../AbstractItemViewInternal.h
 
     ../generated/AbstractListModel.h
     ../generated/AbstractListModel_wrappers.cpp
     ../AbstractListModel.cpp
-    ../signalrelays/AbstractListModel.h
+    ../AbstractListModelInternal.h
 
     ../generated/AbstractProxyModel.h
     ../generated/AbstractProxyModel_wrappers.cpp
     ../AbstractProxyModel.cpp
-    ../signalrelays/AbstractProxyModel.h
+    ../AbstractProxyModelInternal.h
 
     ../generated/AbstractScrollArea.h
     ../generated/AbstractScrollArea_wrappers.cpp
     ../AbstractScrollArea.cpp
-    ../signalrelays/AbstractScrollArea.h
+    ../AbstractScrollAreaInternal.h
 
     ../generated/AbstractSlider.h
     ../generated/AbstractSlider_wrappers.cpp
     ../AbstractSlider.cpp
-    ../signalrelays/AbstractSlider.h
+    ../AbstractSliderInternal.h
 
     ../generated/Action.h
     ../generated/Action_wrappers.cpp
     ../Action.cpp
-    ../signalrelays/Action.h
+    ../ActionInternal.h
 
     ../generated/Application.h
     ../generated/Application_wrappers.cpp
@@ -69,12 +69,12 @@ add_library(MinimalQtImpl STATIC
     ../generated/BoxLayout.h
     ../generated/BoxLayout_wrappers.cpp
     ../BoxLayout.cpp
-    ../signalrelays/BoxLayout.h
+    ../BoxLayoutInternal.h
 
     ../generated/CalendarWidget.h
     ../generated/CalendarWidget_wrappers.cpp
     ../CalendarWidget.cpp
-    ../signalrelays/CalendarWidget.h
+    ../CalendarWidgetInternal.h
 
     ../generated/Color.h
     ../generated/Color_wrappers.cpp
@@ -84,7 +84,7 @@ add_library(MinimalQtImpl STATIC
     ../generated/ComboBox.h
     ../generated/ComboBox_wrappers.cpp
     ../ComboBox.cpp
-    ../signalrelays/ComboBox.h
+    ../ComboBoxInternal.h
 
     ../generated/Common.h
     ../generated/Common_wrappers.cpp
@@ -104,7 +104,7 @@ add_library(MinimalQtImpl STATIC
     ../generated/Dialog.h
     ../generated/Dialog_wrappers.cpp
     ../Dialog.cpp
-    ../signalrelays/Dialog.h
+    ../DialogInternal.h
 
     ../generated/DockWidget.h
     ../generated/DockWidget_wrappers.cpp
@@ -117,22 +117,22 @@ add_library(MinimalQtImpl STATIC
     ../generated/FileDialog.h
     ../generated/FileDialog_wrappers.cpp
     ../FileDialog.cpp
-    ../signalrelays/FileDialog.h
+    ../FileDialogInternal.h
 
     ../generated/Frame.h
     ../generated/Frame_wrappers.cpp
     ../Frame.cpp
-    ../signalrelays/Frame.h
+    ../FrameInternal.h
 
     ../generated/GridLayout.h
     ../generated/GridLayout_wrappers.cpp
     ../GridLayout.cpp
-    ../signalrelays/GridLayout.h
+    ../GridLayoutInternal.h
 
     ../generated/GroupBox.h
     ../generated/GroupBox_wrappers.cpp
     ../GroupBox.cpp
-    ../signalrelays/GroupBox.h
+    ../GroupBoxInternal.h
 
     ../generated/Icon.h
     ../generated/Icon_wrappers.cpp
@@ -152,42 +152,42 @@ add_library(MinimalQtImpl STATIC
     ../generated/Label.h
     ../generated/Label_wrappers.cpp
     ../Label.cpp
-    ../signalrelays/Label.h
+    ../LabelInternal.h
 
     ../generated/Layout.h
     ../generated/Layout_wrappers.cpp
     ../Layout.cpp
-    ../signalrelays/Layout.h
+    ../LayoutInternal.h
 
     ../generated/LineEdit.h
     ../generated/LineEdit_wrappers.cpp
     ../LineEdit.cpp
-    ../signalrelays/LineEdit.h
+    ../LineEditInternal.h
 
     ../generated/ListView.h
     ../generated/ListView_wrappers.cpp
     ../ListView.cpp
-    ../signalrelays/ListView.h
+    ../ListViewInternal.h
 
     ../generated/MainWindow.h
     ../generated/MainWindow_wrappers.cpp
     ../MainWindow.cpp
-    ../signalrelays/MainWindow.h
+    ../MainWindowInternal.h
 
     ../generated/Menu.h
     ../generated/Menu_wrappers.cpp
     ../Menu.cpp
-    ../signalrelays/Menu.h
+    ../MenuInternal.h
 
     ../generated/MenuBar.h
     ../generated/MenuBar_wrappers.cpp
     ../MenuBar.cpp
-    ../signalrelays/MenuBar.h
+    ../MenuBarInternal.h
 
     ../generated/MessageBox.h
     ../generated/MessageBox_wrappers.cpp
     ../MessageBox.cpp
-    ../signalrelays/MessageBox.h
+    ../MessageBoxInternal.h
 
     ../generated/ModelIndex.h
     ../generated/ModelIndex_wrappers.cpp
@@ -197,7 +197,7 @@ add_library(MinimalQtImpl STATIC
     ../generated/Object.h
     ../generated/Object_wrappers.cpp
     ../Object.cpp
-    ../signalrelays/Object.h
+    ../ObjectInternal.h
 
     ../generated/PaintDevice.h
     ../generated/PaintDevice_wrappers.cpp
@@ -225,22 +225,22 @@ add_library(MinimalQtImpl STATIC
     ../generated/PlainTextEdit.h
     ../generated/PlainTextEdit_wrappers.cpp
     ../PlainTextEdit.cpp
-    ../signalrelays/PlainTextEdit.h
+    ../PlainTextEditInternal.h
 
     ../generated/ProgressBar.h
     ../generated/ProgressBar_wrappers.cpp
     ../ProgressBar.cpp
-    ../signalrelays/ProgressBar.h
+    ../ProgressBarInternal.h
 
     ../generated/PushButton.h
     ../generated/PushButton_wrappers.cpp
     ../PushButton.cpp
-    ../signalrelays/PushButton.h
+    ../PushButtonInternal.h
 
     ../generated/RadioButton.h
     ../generated/RadioButton_wrappers.cpp
     ../RadioButton.cpp
-    ../signalrelays/RadioButton.h
+    ../RadioButtonInternal.h
 
     ../generated/Region.h
     ../generated/Region_wrappers.cpp
@@ -255,7 +255,7 @@ add_library(MinimalQtImpl STATIC
     ../generated/ScrollArea.h
     ../generated/ScrollArea_wrappers.cpp
     ../ScrollArea.cpp
-    ../signalrelays/ScrollArea.h
+    ../ScrollAreaInternal.h
 
     ../generated/SizePolicy.h
     ../generated/SizePolicy_wrappers.cpp
@@ -265,22 +265,22 @@ add_library(MinimalQtImpl STATIC
     ../generated/Slider.h
     ../generated/Slider_wrappers.cpp
     ../Slider.cpp
-    ../signalrelays/Slider.h
+    ../SliderInternal.h
 
     ../generated/SortFilterProxyModel.h
     ../generated/SortFilterProxyModel_wrappers.cpp
     ../SortFilterProxyModel.cpp
-    ../signalrelays/SortFilterProxyModel.h
+    ../SortFilterProxyModelInternal.h
 
     ../generated/StatusBar.h
     ../generated/StatusBar_wrappers.cpp
     ../StatusBar.cpp
-    ../signalrelays/StatusBar.h
+    ../StatusBarInternal.h
 
     ../generated/StyledItemDelegate.h
     ../generated/StyledItemDelegate_wrappers.cpp
     ../StyledItemDelegate.cpp
-    ../signalrelays/StyledItemDelegate.h
+    ../StyledItemDelegateInternal.h
 
     ../generated/StyleOption.h
     ../generated/StyleOption_wrappers.cpp
@@ -293,12 +293,12 @@ add_library(MinimalQtImpl STATIC
     ../generated/TabBar.h
     ../generated/TabBar_wrappers.cpp
     ../TabBar.cpp
-    ../signalrelays/TabBar.h
+    ../TabBarInternal.h
 
     ../generated/TabWidget.h
     ../generated/TabWidget_wrappers.cpp
     ../TabWidget.cpp
-    ../signalrelays/TabWidget.h
+    ../TabWidgetInternal.h
 
     ../generated/TextOption.h
     ../generated/TextOption_wrappers.cpp
@@ -307,17 +307,17 @@ add_library(MinimalQtImpl STATIC
     ../generated/Timer.h
     ../generated/Timer_wrappers.cpp
     ../Timer.cpp
-    ../signalrelays/Timer.h
+    ../TimerInternal.h
 
     ../generated/ToolBar.h
     ../generated/ToolBar_wrappers.cpp
     ../ToolBar.cpp
-    ../signalrelays/ToolBar.h
+    ../ToolBarInternal.h
 
     ../generated/TreeView.h
     ../generated/TreeView_wrappers.cpp
     ../TreeView.cpp
-    ../signalrelays/TreeView.h
+    ../TreeViewInternal.h
 
     ../generated/Variant.h
     ../generated/Variant_wrappers.cpp
@@ -327,7 +327,7 @@ add_library(MinimalQtImpl STATIC
     ../generated/Widget.h
     ../generated/Widget_wrappers.cpp
     ../Widget.cpp
-    ../signalrelays/Widget.h
+    ../WidgetInternal.h
 
     ../util/convert.h
     ../util/convert.cpp

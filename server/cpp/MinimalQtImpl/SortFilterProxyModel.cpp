@@ -1,15 +1,13 @@
 #include "generated/SortFilterProxyModel.h"
+#include "SortFilterProxyModelInternal.h"
 
 #include <QSortFilterProxyModel>
 #include <utility>
-#include "util/SignalStuff.h"
 #include "util/Macros.h"
 
 #include "RegularExpressionInternal.h"
 
 #define THIS ((SortFilterProxyModelWithHandler*)_this)
-
-#include "signalrelays/SortFilterProxyModel.h"
 
 namespace SortFilterProxyModel
 {

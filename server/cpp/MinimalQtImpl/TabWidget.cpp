@@ -1,14 +1,11 @@
 #include "generated/TabWidget.h"
+#include "TabWidgetInternal.h"
 
 #include <QObject>
 #include <QTabWidget>
-
-#include "util/SignalStuff.h"
 #include "util/convert.h"
 
 #define THIS ((TabWidgetWithHandler*)_this)
-
-#include "signalrelays/TabWidget.h"
 
 namespace TabWidget
 {

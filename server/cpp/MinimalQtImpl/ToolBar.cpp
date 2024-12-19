@@ -1,13 +1,11 @@
 #include "generated/ToolBar.h"
+#include "ToolBarInternal.h"
 
 #include <QToolBar>
 #include <utility>
-#include "util/SignalStuff.h"
 #include "util/convert.h"
 
 #define THIS ((ToolBarWithHandler*)_this)
-
-#include "signalrelays/ToolBar.h"
 
 namespace ToolBar
 {

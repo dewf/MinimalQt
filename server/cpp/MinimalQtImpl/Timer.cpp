@@ -1,14 +1,11 @@
 #include "generated/Timer.h"
+#include "TimerInternal.h"
 
 #include <QTimer>
 #include <QObject>
 #include <utility>
 
-#include "util/SignalStuff.h"
-
 #define THIS ((TimerWithHandler*)_this)
-
-#include "signalrelays/Timer.h"
 
 namespace Timer
 {

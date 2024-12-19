@@ -1,12 +1,10 @@
 #include "generated/GroupBox.h"
+#include "GroupBoxInternal.h"
 
 #include <QGroupBox>
-#include "util/SignalStuff.h"
 #include "util/convert.h"
 
 #define THIS ((GroupBoxWithHandler*)_this)
-
-#include "signalrelays/GroupBox.h"
 
 namespace GroupBox {
     class GroupBoxWithHandler : public QGroupBox {

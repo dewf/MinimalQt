@@ -8,7 +8,7 @@
 
 #define THIS ((MessageBoxWithHandler*)_this)
 
-#include "signalrelays/MessageBox.h"
+#include "MessageBoxInternal.h"
 
 namespace MessageBox
 {

@@ -1,13 +1,9 @@
 #include "generated/PlainTextEdit.h"
+#include "PlainTextEditInternal.h"
 
 #include <QPlainTextEdit>
 
-#include "util/SignalStuff.h"
-#include "util/convert.h"
-
 #define THIS ((PlainTextEditWithHandler*)_this)
-
-#include "signalrelays/PlainTextEdit.h"
 
 namespace PlainTextEdit
 {

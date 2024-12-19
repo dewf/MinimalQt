@@ -1,14 +1,11 @@
 #include "generated/ProgressBar.h"
+#include "ProgressBarInternal.h"
 
 #include <QProgressBar>
 
-#include "util/SignalStuff.h"
 #include "util/convert.h"
-#include "IconInternal.h"
 
 #define THIS ((ProgressBarWithHandler*)_this)
-
-#include "signalrelays/ProgressBar.h"
 
 namespace ProgressBar
 {

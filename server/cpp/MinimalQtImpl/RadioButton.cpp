@@ -1,12 +1,10 @@
 #include "generated/RadioButton.h"
+#include "RadioButtonInternal.h"
 
 #include <QRadioButton>
-#include "util/SignalStuff.h"
 #include "util/convert.h"
 
 #define THIS ((RadioButtonWithHandler*)_this)
-
-#include "signalrelays/RadioButton.h"
 
 namespace RadioButton
 {

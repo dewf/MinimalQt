@@ -1,10 +1,8 @@
 #include "generated/PushButton.h"
+#include "PushButtonInternal.h"
 
 #include <QPushButton>
-#include "util/SignalStuff.h"
 #include "util/convert.h"
-
-#include "signalrelays/PushButton.h"
 
 #define THIS ((PushButtonWithHandler*)_this)
 

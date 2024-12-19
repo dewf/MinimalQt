@@ -1,13 +1,11 @@
 #include "generated/ListView.h"
+#include "ListViewInternal.h"
 
 #include <QListView>
 #include <utility>
-#include "util/SignalStuff.h"
 #include "util/convert.h"
 
 #define THIS ((ListViewWithHandler*)_this)
-
-#include "signalrelays/ListView.h"
 
 namespace ListView
 {

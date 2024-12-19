@@ -6,7 +6,7 @@
 
 #define THIS ((ScrollAreaWithHandler*)_this)
 
-#include "signalrelays/ScrollArea.h"
+#include "ScrollAreaInternal.h"
 
 namespace ScrollArea
 {

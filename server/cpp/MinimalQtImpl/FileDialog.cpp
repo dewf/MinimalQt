@@ -1,13 +1,11 @@
 #include "generated/FileDialog.h"
+#include "FileDialogInternal.h"
 
 #include <QFileDialog>
 
-#include "util/SignalStuff.h"
 #include "util/convert.h"
 
 #define THIS ((FileDialogWithHandler*)_this)
-
-#include "signalrelays/FileDialog.h"
 
 namespace FileDialog
 {

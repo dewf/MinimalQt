@@ -1,14 +1,12 @@
 #include "generated/GridLayout.h"
+#include "GridLayoutInternal.h"
 
 #include <QGridLayout>
 #include <utility>
 
-#include "util/SignalStuff.h"
 #include "util/convert.h"
 
 #define THIS ((GridLayoutWithHandler*)_this)
-
-#include "signalrelays/GridLayout.h"
 
 namespace GridLayout {
     class GridLayoutWithHandler : public QGridLayout {

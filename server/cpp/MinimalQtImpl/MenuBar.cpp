@@ -1,14 +1,10 @@
 #include "generated/MenuBar.h"
+#include "MenuBarInternal.h"
 
 #include <QObject>
 #include <QMenuBar>
 
-#include "util/SignalStuff.h"
-#include "util/convert.h"
-
 #define THIS ((MenuBarWithHandler*)_this)
-
-#include "signalrelays/MenuBar.h"
 
 namespace MenuBar
 {

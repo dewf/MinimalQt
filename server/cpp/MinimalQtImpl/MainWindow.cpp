@@ -1,4 +1,5 @@
 #include "generated/MainWindow.h"
+#include "MainWindowInternal.h"
 
 #include <QMainWindow>
 #include <utility>
@@ -6,8 +7,6 @@
 #include "util/convert.h"
 
 #define THIS ((MainWindowWithHandler*)_this)
-
-#include "signalrelays/MainWindow.h"
 
 namespace MainWindow
 {

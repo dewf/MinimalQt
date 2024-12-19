@@ -10,7 +10,7 @@
 
 #define THIS ((AbstractListModelWithHandler*)_this)
 
-#include "signalrelays/AbstractListModel.h"
+#include "AbstractListModelInternal.h"
 
 namespace AbstractListModel
 {

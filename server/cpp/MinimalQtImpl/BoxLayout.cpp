@@ -7,7 +7,7 @@
 
 #define THIS ((BoxLayoutWithHandler*)_this)
 
-#include "signalrelays/BoxLayout.h"
+#include "BoxLayoutInternal.h"
 
 namespace BoxLayout
 {

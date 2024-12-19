@@ -6,7 +6,7 @@
 
 #define THIS ((TreeViewWithHandler*)_this)
 
-#include "signalrelays/TreeView.h"
+#include "TreeViewInternal.h"
 
 namespace TreeView
 {

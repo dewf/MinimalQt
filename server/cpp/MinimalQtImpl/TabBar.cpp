@@ -1,16 +1,14 @@
 #include "generated/TabBar.h"
+#include "TabBarInternal.h"
 
 #include <QObject>
 #include <QTabBar>
 #include <utility>
 
-#include "util/SignalStuff.h"
 #include "util/convert.h"
 #include "IconInternal.h"
 
 #define THIS ((TabBarWithHandler*)_this)
-
-#include "signalrelays/TabBar.h"
 
 namespace TabBar
 {

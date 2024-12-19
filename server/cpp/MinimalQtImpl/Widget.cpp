@@ -1,4 +1,5 @@
 #include "generated/Widget.h"
+#include "WidgetInternal.h"
 
 #include <QObject>
 #include <QWidget>
@@ -11,12 +12,9 @@
 #include <QDrag>
 #include <utility>
 
-#include "util/SignalStuff.h"
 #include "util/convert.h"
 #include "IconInternal.h"
 #include "SizePolicyInternal.h"
-
-#include "signalrelays/Widget.h"
 
 #define THIS ((WidgetWithHandler*)_this)
 

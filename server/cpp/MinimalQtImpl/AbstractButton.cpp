@@ -1,4 +1,5 @@
 #include "generated/AbstractButton.h"
+#include "AbstractButtonInternal.h"
 
 #include <QAbstractButton>
 

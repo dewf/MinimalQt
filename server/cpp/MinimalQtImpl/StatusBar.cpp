@@ -1,14 +1,10 @@
 #include "generated/StatusBar.h"
+#include "StatusBarInternal.h"
 
 #include <QStatusBar>
 #include <utility>
 
-#include "util/SignalStuff.h"
-#include "util/convert.h"
-
 #define THIS ((StatusBarWithHandler*)_this)
-
-#include "signalrelays/StatusBar.h"
 
 namespace StatusBar
 {

@@ -1,14 +1,12 @@
 #include "generated/LineEdit.h"
+#include "LineEditInternal.h"
 
 #include <QObject>
 #include <QLineEdit>
 
-#include "util/SignalStuff.h"
 #include "util/convert.h"
 
 #define THIS ((LineEditWithHandler*)_this)
-
-#include "signalrelays/LineEdit.h"
 
 namespace LineEdit
 {

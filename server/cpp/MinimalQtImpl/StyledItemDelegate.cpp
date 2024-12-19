@@ -1,11 +1,9 @@
 #include "generated/StyledItemDelegate.h"
+#include "StyledItemDelegateInternal.h"
 
 #include <QStyledItemDelegate>
-#include "util/SignalStuff.h"
 
 #define THIS ((StyledItemDelegateWithHandler*)_this)
-
-#include "signalrelays/StyledItemDelegate.h"
 
 namespace StyledItemDelegate
 {

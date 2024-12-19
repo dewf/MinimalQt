@@ -1,14 +1,11 @@
 #include "generated/Frame.h"
+#include "FrameInternal.h"
 
 #include <QFrame>
 
-#include "util/SignalStuff.h"
 #include "util/convert.h"
-#include "IconInternal.h"
 
 #define THIS ((FrameWithHandler*)_this)
-
-#include "signalrelays/Frame.h"
 
 namespace Frame
 {

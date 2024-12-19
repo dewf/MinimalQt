@@ -1,14 +1,12 @@
 #include "generated/ComboBox.h"
+#include "ComboBoxInternal.h"
 
 #include <QComboBox>
 #include <QStringList>
 
-#include "util/SignalStuff.h"
 #include "util/convert.h"
 #include "VariantInternal.h"
 #include "IconInternal.h"
-
-#include "signalrelays/ComboBox.h"
 
 #define THIS ((ComboBoxWithHandler*)_this)
 

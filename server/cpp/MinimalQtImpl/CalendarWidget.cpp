@@ -1,13 +1,10 @@
 #include "generated/CalendarWidget.h"
+#include "CalendarWidgetInternal.h"
 
 #include <QCalendarWidget>
 #include <utility>
 
-#include "util/SignalStuff.h"
-#include "util/convert.h"
 #include "DateInternal.h"
-
-#include "signalrelays/CalendarWidget.h"
 
 #define THIS ((CalendarWidgetWithHandler*)_this)
 

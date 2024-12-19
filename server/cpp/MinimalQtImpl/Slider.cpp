@@ -1,13 +1,9 @@
 #include "generated/Slider.h"
+#include "SliderInternal.h"
 
 #include <QSlider>
 
-#include "util/SignalStuff.h"
-#include "util/convert.h"
-
 #define THIS ((SliderWithHandler*)_this)
-
-#include "signalrelays/Slider.h"
 
 namespace Slider
 {
