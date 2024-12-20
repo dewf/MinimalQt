@@ -483,18 +483,18 @@ namespace Widget
 
     class DelegatedWidget : public WidgetWithHandler {
     private:
-        std::shared_ptr<MethodDelegate> methodDelegate;
+        std::shared_ptr<DelegateMethods> methods;
         MethodMask methodMask = 0;
     public:
         explicit DelegatedWidget(const std::shared_ptr<SignalHandler>& handler) : WidgetWithHandler(handler) {}
-        void setDelegate(const std::shared_ptr<MethodDelegate>& methodDelegate, const MethodMask methodMask) {
-            this->methodDelegate = methodDelegate;
+        void setDelegate(const std::shared_ptr<DelegateMethods>& methods, const MethodMask methodMask) {
+            this->methods = methods;
             this->methodMask = methodMask;
         }
     protected:
         void showEvent(QShowEvent *event) override {
             if (methodMask & ShowEvent) {
-                methodDelegate->showEvent(event->spontaneous());
+                methods->showEvent(event->spontaneous());
                 event->accept();
             } else {
                 QWidget::showEvent(event);
@@ -504,7 +504,7 @@ namespace Widget
         void paintEvent(QPaintEvent *event) override {
             if (methodMask & PaintEvent) {
                 QPainter painter(this);
-                methodDelegate->paintEvent(reinterpret_cast<Painter::HandleRef>(&painter), toRect(event->rect()));
+                methods->paintEvent(reinterpret_cast<Painter::HandleRef>(&painter), toRect(event->rect()));
                 // prevent it from propagating:
                 // do we allow this from the method delegate somehow?
                 event->accept();
@@ -518,7 +518,7 @@ namespace Widget
                 auto pos = toPoint(event->pos());
                 auto button = static_cast<MouseButton>(event->button());
                 auto modifiers = event->modifiers();
-                methodDelegate->mousePressEvent(pos, button, modifiers);
+                methods->mousePressEvent(pos, button, modifiers);
                 // prevent from propagating, see notes above
                 event->accept();
             } else {
@@ -531,7 +531,7 @@ namespace Widget
                 auto pos = toPoint(event->pos());
                 auto buttons = event->buttons();
                 auto modifiers = event->modifiers();
-                methodDelegate->mouseMoveEvent(pos, buttons, modifiers);
+                methods->mouseMoveEvent(pos, buttons, modifiers);
                 // prevent from propagating, see notes above
                 event->accept();
             } else {
@@ -544,7 +544,7 @@ namespace Widget
                 auto pos = toPoint(event->pos());
                 auto button = static_cast<MouseButton>(event->button());
                 auto modifiers = event->modifiers();
-                methodDelegate->mouseReleaseEvent(pos, button, modifiers);
+                methods->mouseReleaseEvent(pos, button, modifiers);
                 event->accept();
             } else {
                 QWidget::mouseReleaseEvent(event);
@@ -554,7 +554,7 @@ namespace Widget
         void enterEvent(QEnterEvent *event) override {
             if (methodMask & EnterEvent) {
                 auto pos = toPoint(event->position().toPoint());
-                methodDelegate->enterEvent(pos);
+                methods->enterEvent(pos);
                 event->accept();
             } else {
                 QWidget::enterEvent(event);
@@ -563,7 +563,7 @@ namespace Widget
 
         void leaveEvent(QEvent *event) override {
             if (methodMask & LeaveEvent) {
-                methodDelegate->leaveEvent();
+                methods->leaveEvent();
                 event->accept();
             } else {
                 QWidget::leaveEvent(event);
@@ -572,7 +572,7 @@ namespace Widget
 
         void resizeEvent(QResizeEvent *event) override {
             if (methodMask & ResizeEvent) {
-                methodDelegate->resizeEvent(toSize(event->oldSize()), toSize(event->size()));
+                methods->resizeEvent(toSize(event->oldSize()), toSize(event->size()));
                 event->accept();
             } else {
                 QWidget::resizeEvent(event);
@@ -585,7 +585,7 @@ namespace Widget
                 auto modifiers = event->modifiers();
                 auto mimeOpaque = MimeDataRef(event->mimeData());
                 auto moveEvent = reinterpret_cast<DragMoveEventRef>(event);
-                methodDelegate->dragMoveEvent(pos, modifiers, mimeOpaque, moveEvent, true);
+                methods->dragMoveEvent(pos, modifiers, mimeOpaque, moveEvent, true);
                 // other side needs to call acceptProposedAction if it's OK, otherwise ... .ignore?
             } else {
                 QWidget::dragEnterEvent(event);
@@ -598,7 +598,7 @@ namespace Widget
                 auto modifiers = event->modifiers();
                 auto mimeOpaque = (MimeDataRef)event->mimeData();
                 auto moveEvent = reinterpret_cast<DragMoveEventRef>(event);
-                methodDelegate->dragMoveEvent(pos, modifiers, mimeOpaque, moveEvent, false);
+                methods->dragMoveEvent(pos, modifiers, mimeOpaque, moveEvent, false);
                 // other side needs to call acceptProposedAction if it's OK, otherwise ... .ignore?
             } else {
                 QWidget::dragMoveEvent(event);
@@ -607,7 +607,7 @@ namespace Widget
 
         void dragLeaveEvent(QDragLeaveEvent *event) override {
             if (methodMask & DropEvents) {
-                methodDelegate->dragLeaveEvent();
+                methods->dragLeaveEvent();
                 event->accept();
             } else {
                 QWidget::dragLeaveEvent(event);
@@ -620,7 +620,7 @@ namespace Widget
                 auto modifiers = event->modifiers();
                 auto mimeOpaque = (MimeDataRef)event->mimeData();
                 auto action = static_cast<DropAction>(event->proposedAction());
-                methodDelegate->dropEvent(pos, modifiers, mimeOpaque, action);
+                methods->dropEvent(pos, modifiers, mimeOpaque, action);
                 event->acceptProposedAction();
             } else {
                 QWidget::dropEvent(event);
@@ -630,7 +630,7 @@ namespace Widget
     public:
         [[nodiscard]] QSize sizeHint() const override {
             if (methodMask & SizeHint) {
-                auto size = methodDelegate->sizeHint();
+                auto size = methods->sizeHint();
                 return toQSize(size);
             } else {
                 return QWidget::sizeHint();
@@ -640,8 +640,8 @@ namespace Widget
 
 #define DELEGATED_THIS (reinterpret_cast<DelegatedWidget*>(_this))
 
-    void Delegated_setDelegate(DelegatedRef _this, const std::shared_ptr<MethodDelegate>& methodDelegate, MethodMask methodMask) {
-        DELEGATED_THIS->setDelegate(methodDelegate, methodMask);
+    void Delegated_setDelegate(DelegatedRef _this, const std::shared_ptr<DelegateMethods>& methods, MethodMask methodMask) {
+        DELEGATED_THIS->setDelegate(methods, methodMask);
     }
 
     void Delegated_dispose(DelegatedRef _this) {

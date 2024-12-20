@@ -3,6 +3,8 @@
 #include "generated/TabWidget.h"
 #include "WidgetInternal.h"
 
+#include <QTabWidget>
+
 namespace TabWidget {
     class SignalRelay : public Widget::SignalRelay {
         Q_OBJECT

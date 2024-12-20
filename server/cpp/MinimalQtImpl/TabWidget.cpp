@@ -64,12 +64,12 @@ namespace TabWidget
         THIS->setUsesScrollButtons(state);
     }
 
-    void Handle_addTab(HandleRef _this, Widget::HandleRef page, const std::string& label) {
-        THIS->addTab(reinterpret_cast<QWidget *>(page), QString::fromStdString(label));
+    int Handle_addTab(HandleRef _this, Widget::HandleRef page, const std::string& label) {
+        return THIS->addTab(reinterpret_cast<QWidget *>(page), QString::fromStdString(label));
     }
 
-    void Handle_insertTab(HandleRef _this, int32_t index, Widget::HandleRef page, const std::string& label) {
-        THIS->insertTab(index, reinterpret_cast<QWidget *>(page), QString::fromStdString(label));
+    int Handle_insertTab(HandleRef _this, int32_t index, Widget::HandleRef page, const std::string& label) {
+        return THIS->insertTab(index, reinterpret_cast<QWidget *>(page), QString::fromStdString(label));
     }
 
     Widget::HandleRef Handle_widgetAt(HandleRef _this, int32_t index) {
@@ -94,50 +94,6 @@ namespace TabWidget
 
     HandleRef create(const std::shared_ptr<SignalHandler>& handler) {
         return reinterpret_cast<HandleRef>(new TabWidgetWithHandler(handler));
-    }
-
-    // Subclassing stuff =====================================================================================
-
-#define DELEGATED_THIS (reinterpret_cast<DelegatedTabWidget*>(_this))
-
-    class DelegatedTabWidget : public TabWidgetWithHandler {
-    private:
-        std::shared_ptr<MethodDelegate> methodDelegate;
-        MethodMask methodMask = 0;
-    public:
-        explicit DelegatedTabWidget(const std::shared_ptr<SignalHandler> &handler) : TabWidgetWithHandler(handler) {
-        }
-        void setDelegate(const std::shared_ptr<MethodDelegate>& methodDelegate, MethodMask methodMask) {
-            this->methodDelegate = methodDelegate;
-            this->methodMask = methodMask;
-        }
-    protected:
-        void tabInserted(int index) override {
-            if (methodMask & TabInserted) {
-                methodDelegate->tabInserted(index);
-            } else {
-                QTabWidget::tabInserted(index);
-            }
-        }
-        void tabRemoved(int index) override {
-            if (methodMask & TabRemoved) {
-                methodDelegate->tabRemoved(index);
-            } else {
-                QTabWidget::tabRemoved(index);
-            }
-        }
-    };
-
-    void Delegated_setDelegate(DelegatedRef _this, const std::shared_ptr<MethodDelegate>& methodDelegate, MethodMask methodMask) {
-        DELEGATED_THIS->setDelegate(methodDelegate, methodMask);
-    }
-
-    void Delegated_dispose(DelegatedRef _this) {
-        delete DELEGATED_THIS;
-    }
-
-    DelegatedRef createDelegated(const std::shared_ptr<SignalHandler>& handler) {
-        return reinterpret_cast<DelegatedRef>(new DelegatedTabWidget(handler));
     }
 }
 
