@@ -102,7 +102,7 @@ namespace ComboBox
     }
 
     void Handle_addItem(HandleRef _this, Icon::HandleRef icon, const std::string& text, const std::shared_ptr<Variant::Deferred::Base>& userData) {
-        THIS->addItem(ICON_VALUE(icon), QString::fromStdString(text), fromDeferred(userData));
+        THIS->addItem(QICON_VALUE(icon), QString::fromStdString(text), fromDeferred(userData));
     }
 
     void Handle_addItems(HandleRef _this, const std::vector<std::string>& texts) {

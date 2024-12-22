@@ -4,6 +4,7 @@ import Object;
 import KeySequence;
 import Icon;
 import Enums;
+import Font;
 
 namedbits SignalMask extends Object.SignalMask {
     Changed,
@@ -35,35 +36,72 @@ enum MenuRole {
     QuitRole
 }
 
-enum Priority { 
+enum Priority {
     LowPriority = 0, 
-    NormalPriority = 128, 
+    NormalPriority = 128,
     HighPriority = 256
 }
 
 opaque Handle extends Object.Handle {
+    // properties
+    bool autoRepeat();
     void setAutoRepeat(bool state);
+    
+    bool isCheckable();
     void setCheckable(bool checkable);
-    void setChecked(bool checked_);
-    void setEnabled(bool enabled);
-    // void setFont(Font.Deferred font); // TODO
-    void setIcon(Icon.Handle icon);
-    void setIconText(string text);
-    void setIconVisibleInMenu(bool visible);
-    void setMenuRole(MenuRole role);
-    void setPriority(Priority priority);
-    void setShortcut(KeySequence.Deferred shortcut);
-    void setShortcutContext(Enums.ShortcutContext context);
-    void setShortcutVisibleInContextMenu(bool visible);
-    void setStatusTip(string tip);
-    void setText(string text);
-    void setToolTip(string tip);
-    void setVisible(bool visible);
-    void setWhatsThis(string text);
-    // end properties
 
+    bool isChecked();
+    void setChecked(bool checked_);
+
+    bool isEnabled();
+    void setEnabled(bool enabled);
+
+    Font.Owned font();
+    void setFont(Font.Handle font); // needs to be Deferred if we go back to F# ...
+
+    Icon.Owned icon();
+    void setIcon(Icon.Handle icon);
+
+    string iconText();
+    void setIconText(string text);
+
+    bool isIconVisibleInMenu();
+    void setIconVisibleInMenu(bool visible);
+
+    MenuRole menuRole();
+    void setMenuRole(MenuRole role);
+
+    Priority priority();
+    void setPriority(Priority priority);
+
+    KeySequence.Owned shortcut();
+    void setShortcut(KeySequence.Deferred shortcut);
+
+    Enums.ShortcutContext shortcutContext();
+    void setShortcutContext(Enums.ShortcutContext context);
+
+    bool isShortcutVisibleInContextMenu();
+    void setShortcutVisibleInContextMenu(bool visible);
+
+    string statusTip();
+    void setStatusTip(string tip);
+
+    string text();
+    void setText(string text);
+
+    string toolTip();
+    void setToolTip(string tip);
+
+    bool isVisible();
+    void setVisible(bool visible);
+
+    string whatsThis();
+    void setWhatsThis(string text);
+
+    // methods:
     void setSeparator(bool state);
 
+    // signal mask:
     void setSignalMask(SignalMask mask);
 }
 

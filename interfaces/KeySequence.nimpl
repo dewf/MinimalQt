@@ -76,7 +76,17 @@ enum StandardKey {
     Cancel
 }
 
+@nodispose
+opaque Handle;
+
+opaque Owned extends Handle;
+
+Owned create(string s);
+Owned create(StandardKey key);
+Owned create(Key key, Modifiers modifiers);
+
 sumtype Deferred {
+    FromHandle(Handle handle),
     FromString(string s),               // eg "Ctrl+P"
     FromStandard(StandardKey key),
     FromKey(Key key, Modifiers modifiers)

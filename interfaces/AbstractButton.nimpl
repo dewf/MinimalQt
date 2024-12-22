@@ -22,16 +22,37 @@ interface SignalHandler extends Widget.SignalHandler {
 
 @nodispose
 opaque Handle extends Widget.Handle {
+    bool autoExclusive();
     void setAutoExclusive(bool state);
+
+    bool autoRepeat();
     void setAutoRepeat(bool state);
+
+    int autoRepeatDelay();
     void setAutoRepeatDelay(int delay);
+
+    int autoRepeatInterval();
     void setAutoRepeatInterval(int interval);
+
+    bool isCheckable();
     void setCheckable(bool state);
+
+    bool isChecked();  // 'checked' reserved in some languages
     void setChecked(bool state);
+
+    bool isDown();
     void setDown(bool state);
-    void setIcon(Icon.Handle icon);
+
+    Icon.Owned getIcon();               // 'get' to avoid conflict with Icon namespace
+    void setIcon(Icon.Deferred icon);
+
+    Size iconSize();
     void setIconSize(Size size);
+
+    KeySequence.Owned shortcut();
     void setShortcut(KeySequence.Deferred seq);
+
+    string text();
     void setText(string text);
 }
 

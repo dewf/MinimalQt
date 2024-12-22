@@ -47,10 +47,10 @@ namespace PaintResources
         explicit __Pen(QPen qPen) : qPen(std::move(qPen)) {}
     };
 
-    struct __Font : public PaintStackItem {
-        QFont qFont;
-        explicit __Font(const QFont& qFont) : qFont(qFont) {}
-    };
+    // struct __Font : public PaintStackItem {
+    //     QFont qFont;
+    //     explicit __Font(const QFont& qFont) : qFont(qFont) {}
+    // };
 
     struct __PainterPath : public PaintStackItem {
         QPainterPath qPath;

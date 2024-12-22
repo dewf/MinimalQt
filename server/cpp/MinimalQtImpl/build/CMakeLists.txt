@@ -119,6 +119,11 @@ add_library(MinimalQtImpl STATIC
     ../FileDialog.cpp
     ../FileDialogInternal.h
 
+    ../generated/Font.h
+    ../generated/Font_wrappers.cpp
+    ../Font.cpp
+    ../FontInternal.h
+
     ../generated/Frame.h
     ../generated/Frame_wrappers.cpp
     ../Frame.cpp

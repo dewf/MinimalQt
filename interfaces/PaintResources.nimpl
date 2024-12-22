@@ -2,6 +2,7 @@ module PaintResources;
 
 import Common;
 import Color;
+import Font;
 
 @nodispose
 opaque Gradient {
@@ -71,23 +72,6 @@ opaque Pen {
 }
 
 @nodispose
-opaque Font {
-    static {
-        enum Weight {
-            Thin = 100,
-            ExtraLight = 200,
-            Light = 300,
-            Normal = 400,
-            Medium = 500,
-            DemiBold = 600,
-            Bold = 700,
-            ExtraBold = 800,
-            Black = 900
-        }
-    }
-}
-
-@nodispose
 opaque PainterPath {
     void moveTo(PointF p);
     void moveTo(double x, double y);
@@ -131,9 +115,7 @@ opaque Handle {
     Pen createPen(Color.Deferred color);
     Pen createPen(Brush brush, double width, Pen.Style style, Pen.CapStyle cap, Pen.JoinStyle join);
 
-    Font createFont(string family, int pointSize);
-    Font createFont(string family, int pointSize, Font.Weight weight);
-    Font createFont(string family, int pointSize, Font.Weight weight, bool italic);
+    // Font.Handle createFont(string family, Font.CreateOptions opts);
 
     PainterPath createPainterPath();
     PainterPathStroker createPainterPathStroker();

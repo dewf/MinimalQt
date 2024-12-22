@@ -1,0 +1,28 @@
+module Font;
+
+@nodispose
+opaque Handle;
+
+opaque Owned extends Handle;
+
+enum Weight {
+    Thin = 100,
+    ExtraLight = 200,
+    Light = 300,
+    Normal = 400,
+    Medium = 500,
+    DemiBold = 600,
+    Bold = 700,
+    ExtraBold = 800,
+    Black = 900
+}
+
+options CreateOptions {
+    int pointSize;
+    int weight;
+    bool italic;
+}
+
+Owned create();
+Owned create(string family, CreateOptions opts);
+Owned create(Array<string> families, CreateOptions opts);

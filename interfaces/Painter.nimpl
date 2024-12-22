@@ -5,6 +5,7 @@ import PaintResources;
 import Enums;
 import Color;
 import Pixmap;
+import Font;
 
 enum RenderHint {
     Antialiasing = 0x01,
@@ -31,7 +32,7 @@ opaque Handle {
 
     void setPen(Pen pen);
     void setBrush(Brush brush);
-    void setFont(Font font);
+    void setFont(Font.Handle font);
     void drawText(Rect rect, Alignment align, string text);
 
     void fillPath(PainterPath path, Brush brush);

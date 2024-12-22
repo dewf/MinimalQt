@@ -170,3 +170,11 @@ Owned create();                     // why?
 Owned create(ThemeIcon themeIcon);
 Owned create(string filename);
 Owned create(Pixmap.Handle pixmap);
+
+sumtype Deferred {
+    Empty,
+    FromHandle(Handle handle),
+    FromThemeIcon(ThemeIcon themeIcon),
+    FromFilename(string filename),
+    FromPixmap(Pixmap.Handle pixmap_) // TODO: deferred
+}

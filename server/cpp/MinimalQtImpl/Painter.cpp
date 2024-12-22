@@ -6,6 +6,7 @@
 
 #include "PaintResourcesInternal.h" // for struct definitions
 #include "ColorInternal.h"
+#include "FontInternal.h"
 #include "PixmapInternal.h"
 
 #define THIS ((QPainter*)_this)
@@ -29,8 +30,12 @@ namespace Painter
         THIS->setBrush(brush->qBrush);
     }
 
-    void Handle_setFont(HandleRef _this, FontRef font) {
-        THIS->setFont(font->qFont);
+    // void Handle_setFont(HandleRef _this, FontRef font) {
+    //     THIS->setFont(font->qFont);
+    // }
+
+    void Handle_setFont(HandleRef _this, Font::HandleRef font) {
+        THIS->setFont(QFONT_VALUE(font));
     }
 
     void Handle_drawText(HandleRef _this, Common::Rect rect, Enums::Alignment align, const std::string& text) {

@@ -23,7 +23,7 @@ namespace Menu
     };
 
     void Handle_setIcon(HandleRef _this, Icon::HandleRef icon) {
-        THIS->setIcon(ICON_VALUE(icon));
+        THIS->setIcon(QICON_VALUE(icon));
     }
 
     void Handle_setSeparatorsCollapsible(HandleRef _this, bool state) {

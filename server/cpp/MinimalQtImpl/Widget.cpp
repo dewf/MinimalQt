@@ -252,7 +252,7 @@ namespace Widget
     }
 
     void Handle_setWindowIcon(HandleRef _this, Icon::HandleRef icon) {
-        THIS->setWindowIcon(ICON_VALUE(icon));
+        THIS->setWindowIcon(QICON_VALUE(icon));
     }
 
     void Handle_setWindowModality(HandleRef _this, WindowModality modality) {
