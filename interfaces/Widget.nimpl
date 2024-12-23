@@ -10,6 +10,7 @@ import Action;
 import Region;
 import Cursor;
 import SizePolicy;
+import Font;
 
 int WIDGET_SIZE_MAX;   // pass-through of QWIDGETSIZE_MAX
 
@@ -26,81 +27,190 @@ interface SignalHandler extends Object.SignalHandler {
 }
 
 opaque Handle extends Object.Handle {
-    // properties
+    // properties ==================================
+    bool acceptDrops();
     void setAcceptDrops(bool state);
+
+    string accessibleDescription();
     void setAccessibleDescription(string desc);
+
+    string accessibleName();
     void setAccessibleName(string name);
+
+    bool autoFillBackground();
     void setAutoFillBackground(bool state);
+
+    Size baseSize();
     void setBaseSize(Size size);
+    
     Rect childrenRect();
+    // no setter
+
     Region.Owned childrenRegion();
+    // no setter
+    
+    ContextMenuPolicy contextMenuPolicy();
     void setContextMenuPolicy(ContextMenuPolicy policy);
+
     Cursor.Owned getCursor();
+    void setCursor(Cursor.Handle cursor);
+
+    bool isEnabled();
     void setEnabled(bool enabled);
+
     bool hasFocus();
+    // no setter
+
+    FocusPolicy getFocusPolicy();
     void setFocusPolicy(FocusPolicy policy);
 
-    // TODO: need to fix the PaintResources font stuff so it doesn't collide, and then they need to be merged in the future
-    // void setFont(Font.Deferred font);
+    Font.Owned getFont();
+    void setFont(Font.Handle font);
 
     Rect frameGeometry();
+    // no setter
+
     Size frameSize();
+    // no setter
+    
     bool isFullscreen();
+    // no setter
+
+    Rect geometry();
     void setGeometry(Rect rect);
     void setGeometry(int x, int y, int width, int height);
+
     int height();
+    // no setter
+
+    InputMethodHints getInputMethodHints();
     void setInputMethodHints(InputMethodHints hints);
+
     bool isActiveWindow();
+    // no setter
+
+    LayoutDirection getLayoutDirection();
     void setLayoutDirection(LayoutDirection direction);
 
     // TODO:
     // locale : QLocale
 
     bool isMaximized();
+    // no setter
+
+    int maximumHeight();
     void setMaximumHeight(int height);
-    void setMaximumWidth(int width);
+
+    Size maximumSize();
     void setMaximumSize(Size size);
+
+    int maximumWidth();
+    void setMaximumWidth(int width);
+    
     bool isMinimized();
+    // no setter
+
+    int minimumHeight();
     void setMinimumHeight(int height);
+
+    Size minimumSize();
     void setMinimumSize(Size size);
+
     Size minimumSizeHint();
+    // no setter
+
+    int minimumWidth();
     void setMinimumWidth(int width);
+
     bool isModal();
+    // no setter
+
+    bool hasMouseTracking();
     void setMouseTracking(bool state);
+
     Rect normalGeometry();
+    // no setter
 
     // TODO:
     // palette : QPalette
 
-    void move(Point p);
+    Point pos();
     void move(int x, int y);
+    void move(Point p);
+
     Rect rect();
-    void resize(Size size);
+    // no setter
+
+    Size getSize();
     void resize(int width, int height);
+    void resize(Size size);
+
     Size sizeHint();
-    void setSizeIncrement(Size size);
+    // no setter
+
+    Size sizeIncrement();
     void setSizeIncrement(int w, int h);
-    void setSizePolicy(SizePolicy.Deferred policy);
+    void setSizeIncrement(Size size);
+
+    SizePolicy.Owned getSizePolicy();
+    void setSizePolicy(SizePolicy.Handle policy);
     void setSizePolicy(SizePolicy.Policy hPolicy, SizePolicy.Policy vPolicy);
+
+    string statusTip();
     void setStatusTip(string tip);
+
+    string styleSheet();
     void setStyleSheet(string styles);
+
+    bool hasTabletTracking();
     void setTabletTracking(bool state);
+
+    string toolTip();
     void setToolTip(string tip);
+
+    int toolTipDuration();
     void setToolTipDuration(int duration);
+
+    bool updatesEnabled();
     void setUpdatesEnabled(bool enabled);
+
+    bool isVisible();
     void setVisible(bool visible);
+
+    string whatsThis();
     void setWhatsThis(string text);
+
     int width();
+    // readonly
+
+    string windowFilePath();
     void setWindowFilePath(string path);
+
+    WindowFlags getWindowFlags();
     void setWindowFlags(WindowFlags flags_);
+
+    Icon.Owned windowIcon();
     void setWindowIcon(Icon.Handle icon);
+
+    WindowModality getWindowModality();
     void setWindowModality(WindowModality modality);
+
+    bool isWindowModified();
     void setWindowModified(bool modified);
+
+    double windowOpacity();
     void setWindowOpacity(double opacity);
+
+    string windowTitle();
     void setWindowTitle(string title);
+
     int x();
+    // readonly
+
     int y();
-    // end properties
+    // readonly
+
+    // methods =====================================
 
     void addAction(Action.Handle action);
     
@@ -127,6 +237,7 @@ opaque Handle extends Object.Handle {
 
     Point mapToGlobal(Point p);
 
+    // signal mask ==================================
     void setSignalMask(SignalMask mask);
 }
 

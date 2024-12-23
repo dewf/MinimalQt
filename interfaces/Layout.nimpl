@@ -10,7 +10,6 @@ interface SignalHandler extends Object.SignalHandler {
     // none of our own
 }
 
-
 enum SizeConstraint {
     SetDefaultConstraint,
     SetNoConstraint,
@@ -23,10 +22,19 @@ enum SizeConstraint {
 // TODO: inherit from LayoutItem instead? an issue since we can't do multiple inheritance, and IIRC LayoutItem doesn't inherit QObject
 @nodispose
 opaque Handle extends Object.Handle {
+    // properties =============================
+    bool isEnabled();
     void setEnabled(bool enabled);
-    void setSpacing(int spacing);
-    void setContentsMargins(int left, int top, int right, int bottom);
+
+    SizeConstraint getSizeConstraint();
     void setSizeConstraint(SizeConstraint constraint);
+
+    int spacing();
+    void setSpacing(int spacing);
+
+    // methods =================================
+    Tuple<int,int,int,int> getContentsMargins();
+    void setContentsMargins(int left, int top, int right, int bottom);
 
     // custom to remove all widgets
     void removeAll();
