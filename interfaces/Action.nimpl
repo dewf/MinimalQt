@@ -56,10 +56,10 @@ opaque Handle extends Object.Handle {
     bool isEnabled();
     void setEnabled(bool enabled);
 
-    Font.Owned font();
-    void setFont(Font.Handle font); // needs to be Deferred if we go back to F# ...
+    Font.Owned getFont();              // CHANGEME: altered because of collision with Icon type when rendering push/pop stuff, codegen needs fixing
+    void setFont(Font.Handle font);
 
-    Icon.Owned icon();
+    Icon.Owned getIcon();              // CHANGEME: see above
     void setIcon(Icon.Handle icon);
 
     string iconText();

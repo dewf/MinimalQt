@@ -59,7 +59,7 @@ namespace Action
         THIS->setEnabled(state);
     }
 
-    Font::OwnedRef Handle_font(HandleRef _this) {
+    Font::OwnedRef Handle_getFont(HandleRef _this) {
         return FONT_HEAP_NEW(THIS->font());
     }
 
@@ -67,7 +67,7 @@ namespace Action
         THIS->setFont(QFONT_VALUE(font));
     }
 
-    Icon::OwnedRef Handle_icon(HandleRef _this) {
+    Icon::OwnedRef Handle_getIcon(HandleRef _this) {
         return ICON_HEAP_NEW(THIS->icon());
     }
 
