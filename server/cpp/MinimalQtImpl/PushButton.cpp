@@ -19,12 +19,24 @@ namespace PushButton
         }
     };
 
+    bool Handle_autoDefault(HandleRef _this) {
+        return THIS->autoDefault();
+    }
+
     void Handle_setAutoDefault(HandleRef _this, bool value) {
         THIS->setAutoDefault(value);
     }
 
+    bool Handle_isDefault(HandleRef _this) {
+        return THIS->isDefault();
+    }
+
     void Handle_setDefault(HandleRef _this, bool value) {
         THIS->setDefault(value);
+    }
+
+    bool Handle_isFlat(HandleRef _this) {
+        return THIS->isFlat();
     }
 
     void Handle_setFlat(HandleRef _this, bool value) {
