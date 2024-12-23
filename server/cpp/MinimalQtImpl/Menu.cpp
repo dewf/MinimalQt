@@ -22,20 +22,40 @@ namespace Menu
         }
     };
 
+    Icon::OwnedRef Handle_getIcon(HandleRef _this) {
+        return ICON_HEAP_NEW(THIS->icon());
+    }
+
     void Handle_setIcon(HandleRef _this, Icon::HandleRef icon) {
         THIS->setIcon(QICON_VALUE(icon));
+    }
+
+    bool Handle_separatorsCollasible(HandleRef _this) {
+        return THIS->separatorsCollapsible();
     }
 
     void Handle_setSeparatorsCollapsible(HandleRef _this, bool state) {
         THIS->setSeparatorsCollapsible(state);
     }
 
+    bool Handle_isTearOffEnabled(HandleRef _this) {
+        return THIS->isTearOffEnabled();
+    }
+
     void Handle_setTearOffEnabled(HandleRef _this, bool state) {
         THIS->setTearOffEnabled(state);
     }
 
+    std::string Handle_title(HandleRef _this) {
+        return THIS->title().toStdString();
+    }
+
     void Handle_setTitle(HandleRef _this, const std::string& title) {
         THIS->setTitle(QString::fromStdString(title));
+    }
+
+    bool Handle_toolTipsVisible(HandleRef _this) {
+        return THIS->toolTipsVisible();
     }
 
     void Handle_setToolTipsVisible(HandleRef _this, bool visible) {
@@ -47,7 +67,7 @@ namespace Menu
     }
 
     Action::HandleRef Handle_addSeparator(HandleRef _this) {
-        // should we be concerned about ownership here? I presume the Menu owns it (as parent), and we're probably not going to do anything else with it ...
+        // Menu has ownership, hence Handle (vs. Owned)
         return reinterpret_cast<Action::HandleRef>(THIS->addSeparator());
     }
 

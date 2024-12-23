@@ -21,16 +21,28 @@ interface SignalHandler extends Widget.SignalHandler {
 }
 
 opaque Handle extends Widget.Handle {
+    // properties ==============================
+    Icon.Owned getIcon();
     void setIcon(Icon.Handle icon);
+
+    bool separatorsCollasible();
     void setSeparatorsCollapsible(bool state);
+
+    bool isTearOffEnabled();
     void setTearOffEnabled(bool state);
+
+    string title();
     void setTitle(string title);
+
+    bool toolTipsVisible();
     void setToolTipsVisible(bool visible);
 
+    // methods =================================
     void clear();
     Action.Handle addSeparator();
     void popup(Point p);
 
+    // signalmask ==============================
     void setSignalMask(SignalMask mask);
 }
 
