@@ -19,8 +19,16 @@ namespace MenuBar
         }
     };
 
+    bool Handle_isDefaultUp(HandleRef _this) {
+        return THIS->isDefaultUp();
+    }
+
     void Handle_setDefaultUp(HandleRef _this, bool state) {
         THIS->setDefaultUp(state);
+    }
+
+    bool Handle_isNativeMenuBar(HandleRef _this) {
+        return THIS->isNativeMenuBar();
     }
 
     void Handle_setNativeMenuBar(HandleRef _this, bool state) {
@@ -32,7 +40,11 @@ namespace MenuBar
     }
 
     void Handle_addMenu(HandleRef _this, Menu::HandleRef menu) {
-        THIS->addMenu(reinterpret_cast<QMenu *>(menu));
+        THIS->addMenu(reinterpret_cast<QMenu*>(menu));
+    }
+
+    Action::HandleRef Handle_addSeparator(HandleRef _this) {
+        return reinterpret_cast<Action::HandleRef>(THIS->addSeparator());
     }
 
     void Handle_setSignalMask(HandleRef _this, SignalMask mask) {

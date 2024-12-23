@@ -18,11 +18,15 @@ interface SignalHandler extends Widget.SignalHandler {
 }
 
 opaque Handle extends Widget.Handle {
+    bool isDefaultUp();
     void setDefaultUp(bool state);
+
+    bool isNativeMenuBar();
     void setNativeMenuBar(bool state);
 
     void clear();
     void addMenu(Menu.Handle menu);
+    Action.Handle addSeparator();
 
     void setSignalMask(SignalMask mask);
 }
