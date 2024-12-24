@@ -39,8 +39,9 @@ namespace MenuBar
         THIS->clear();
     }
 
-    void Handle_addMenu(HandleRef _this, Menu::HandleRef menu) {
-        THIS->addMenu(reinterpret_cast<QMenu*>(menu));
+    Action::HandleRef Handle_addMenu(HandleRef _this, Menu::HandleRef menu) {
+        const auto ret = THIS->addMenu(reinterpret_cast<QMenu*>(menu));
+        return reinterpret_cast<Action::HandleRef>(ret);
     }
 
     Action::HandleRef Handle_addSeparator(HandleRef _this) {

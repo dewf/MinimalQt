@@ -25,7 +25,7 @@ opaque Handle extends Widget.Handle {
     void setNativeMenuBar(bool state);
 
     void clear();
-    void addMenu(Menu.Handle menu);
+    Action.Handle addMenu(Menu.Handle menu);
     Action.Handle addSeparator();
 
     void setSignalMask(SignalMask mask);
