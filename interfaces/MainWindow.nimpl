@@ -40,20 +40,40 @@ flags DockOptions {
 }
 
 opaque Handle extends Widget.Handle {
+    // fields ==========================================
+    bool isAnimated();
     void setAnimated(bool state);
+
+    bool isDockNestingEnabled();
     void setDockNestingEnabled(bool state);
+
+    DockOptions getDockOptions();
     void setDockOptions(DockOptions dockOptions);
+
+    bool documentMode();
     void setDocumentMode(bool state);
+
+    Size iconSize();
     void setIconSize(Size size);
+
+    TabShape getTabShape();
     void setTabShape(TabShape tabShape);
+
+    ToolButtonStyle getToolButtonStyle();
     void setToolButtonStyle(ToolButtonStyle style);
+
+    bool unifiedTitleAndToolBarOnMac();
     void setUnifiedTitleAndToolBarOnMac(bool state);
 
+    // methods =========================================
     void setCentralWidget(Widget.Handle widget);
     void setMenuBar(MenuBar.Handle menubar);
     void setStatusBar(StatusBar.Handle statusbar);
-    void addToolBar(ToolBar.Handle toolbar); // TODO: area to add
+    
+    void addToolBar(ToolBar.Handle toolbar);
+    void addToolBar(ToolBarArea area, ToolBar.Handle toolbar);
 
+    // signalmask ======================================
     void setSignalMask(SignalMask mask);
 }
 
