@@ -214,7 +214,6 @@ opaque Handle extends Object.Handle {
 
     void addAction(Action.Handle action);
     
-    void setParent(Handle parent);
     Handle getWindow();
 
     void updateGeometry();
