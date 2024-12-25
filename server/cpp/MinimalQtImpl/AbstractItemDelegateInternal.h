@@ -6,9 +6,10 @@
 #include <QAbstractItemDelegate>
 
 namespace AbstractItemDelegate {
-    class SignalRelay : public Object::SignalRelay {
+    class SignalWrapper : public Object::SignalWrapper {
         Q_OBJECT
     private:
+        QAbstractItemDelegate *actual;
         std::shared_ptr<SignalHandler> handler;
         SignalMask lastMask = 0;
         std::vector<SignalMapItem<SignalMaskFlags>> signalMap = {
@@ -17,15 +18,19 @@ namespace AbstractItemDelegate {
             { SizeHintChanged, SIGNAL(sizeHintChanged(QModelIndex)), SLOT(onSizeHintChanged(QModelIndex)) }
         };
     public:
-        explicit SignalRelay(QObject *relayFor, const std::shared_ptr<SignalHandler> &handler) :
-            Object::SignalRelay(relayFor, SignalHandler::as_Object_SignalHandler(handler)),
-            handler(handler) {}
+        QAbstractItemDelegate *getActual() const {
+            return actual;
+        }
+        SignalWrapper(QAbstractItemDelegate *existing, const std::shared_ptr<SignalHandler>& handler)
+            : Object::SignalWrapper(existing, SignalHandler::as_Object_SignalHandler(handler)),
+              actual(existing),
+              handler(handler) {}
         void setSignalMask(SignalMask newMask) {
             // update inherited signals
-            Object::SignalRelay::setSignalMask(newMask);
+            Object::SignalWrapper::setSignalMask(newMask);
             // continue:
             if (newMask != lastMask) {
-                processChanges(lastMask, newMask, signalMap, relayFor, this);
+                processChanges(lastMask, newMask, signalMap, actual, this);
                 lastMask = newMask;
             }
         }

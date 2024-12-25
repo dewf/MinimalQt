@@ -6,7 +6,7 @@
 #include "util/SignalStuff.h"
 
 namespace Layout {
-    class SignalRelay : public Object::SignalRelay {
+    class SignalRelay : public Object::SignalWrapper {
         Q_OBJECT
     private:
         std::shared_ptr<SignalHandler> handler;
@@ -16,14 +16,14 @@ namespace Layout {
         };
     public:
         explicit SignalRelay(QObject *relayFor, const std::shared_ptr<SignalHandler> &handler)
-            : Object::SignalRelay(relayFor, SignalHandler::as_Object_SignalHandler(handler)),
+            : Object::SignalWrapper(relayFor, SignalHandler::as_Object_SignalHandler(handler)),
               handler(handler) {}
         void setSignalMask(SignalMask newMask) {
             // update inherited signals
-            Object::SignalRelay::setSignalMask(newMask);
+            Object::SignalWrapper::setSignalMask(newMask);
             // ours:
             if (newMask != lastMask) {
-                processChanges(lastMask, newMask, signalMap, relayFor, this);
+                processChanges(lastMask, newMask, signalMap, actual, this);
                 lastMask = newMask;
             }
         }

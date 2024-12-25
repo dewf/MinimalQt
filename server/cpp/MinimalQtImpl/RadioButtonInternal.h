@@ -21,7 +21,7 @@ namespace RadioButton {
             AbstractButton::SignalRelay::setSignalMask(newMask);
             // continue:
             if (newMask != lastMask) {
-                processChanges(lastMask, newMask, signalMap, relayFor, this);
+                processChanges(lastMask, newMask, signalMap, actual, this);
                 lastMask = newMask;
             }
         }

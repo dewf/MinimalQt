@@ -3,10 +3,13 @@
 #include "generated/CalendarWidget.h"
 #include "WidgetInternal.h"
 
+#include <QCalendarWidget>
+
 namespace CalendarWidget {
-    class SignalRelay : public Widget::SignalRelay {
+    class SignalWrapper : public Widget::SignalWrapper {
         Q_OBJECT
     private:
+        QCalendarWidget *actual;
         std::shared_ptr<SignalHandler> handler;
         SignalMask lastMask = 0;
         std::vector<SignalMapItem<SignalMaskFlags>> signalMap = {
@@ -16,15 +19,19 @@ namespace CalendarWidget {
             { SelectionChanged, SIGNAL(selectionChanged()), SLOT(onSelectionChanged()) }
         };
     public:
-        explicit SignalRelay(QObject *relayFor, const std::shared_ptr<SignalHandler> &handler) :
-            Widget::SignalRelay(relayFor, SignalHandler::as_Widget_SignalHandler(handler)),
-            handler(handler) {}
+        QCalendarWidget *getActual() {
+            return actual;
+        }
+        SignalWrapper(QCalendarWidget *existing, const std::shared_ptr<SignalHandler>& handler)
+            : Widget::SignalWrapper(existing, SignalHandler::as_Widget_SignalHandler(handler)),
+              actual(existing),
+              handler(handler) {}
         void setSignalMask(SignalMask newMask) {
             // update inherited signals
-            Widget::SignalRelay::setSignalMask(newMask);
+            Widget::SignalWrapper::setSignalMask(newMask);
             // ours:
             if (newMask != lastMask) {
-                processChanges(lastMask, newMask, signalMap, relayFor, this);
+                processChanges(lastMask, newMask, signalMap, actual, this);
                 lastMask = newMask;
             }
         }

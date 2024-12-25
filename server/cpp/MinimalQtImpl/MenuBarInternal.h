@@ -6,7 +6,7 @@
 #include <QAction>
 
 namespace MenuBar {
-    class SignalRelay : public Widget::SignalRelay {
+    class SignalRelay : public Widget::SignalWrapper {
         Q_OBJECT
     private:
         std::shared_ptr<SignalHandler> handler;
@@ -17,14 +17,14 @@ namespace MenuBar {
         };
     public:
         explicit SignalRelay(QObject *relayFor, const std::shared_ptr<SignalHandler> &handler) :
-            Widget::SignalRelay(relayFor, SignalHandler::as_Widget_SignalHandler(handler)),
+            Widget::SignalWrapper(relayFor, SignalHandler::as_Widget_SignalHandler(handler)),
             handler(handler) {}
         void setSignalMask(SignalMask newMask) {
             // update inherited signals
-            Widget::SignalRelay::setSignalMask(newMask);
+            Widget::SignalWrapper::setSignalMask(newMask);
             // ours:
             if (newMask != lastMask) {
-                processChanges(lastMask, newMask, signalMap, relayFor, this);
+                processChanges(lastMask, newMask, signalMap, actual, this);
                 lastMask = newMask;
             }
         }

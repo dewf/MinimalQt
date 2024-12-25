@@ -3,25 +3,32 @@
 #include "generated/AbstractProxyModel.h"
 #include "AbstractItemModelInternal.h"
 
+#include <QAbstractProxyModel>
+
 namespace AbstractProxyModel {
-    class SignalRelay : public AbstractItemModel::SignalRelay {
+    class SignalWrapper : public AbstractItemModel::SignalWrapper {
         Q_OBJECT
     private:
+        QAbstractProxyModel *actual;
         std::shared_ptr<SignalHandler> handler;
         SignalMask lastMask = 0;
         std::vector<SignalMapItem<SignalMaskFlags>> signalMap = {
             { SourceModelChanged, SIGNAL(sourceModelChanged()), SLOT(onSourceModelChanged()) },
         };
     public:
-        explicit SignalRelay(QObject *relayFor, const std::shared_ptr<SignalHandler> &handler)
-            : AbstractItemModel::SignalRelay(relayFor, SignalHandler::as_AbstractItemModel_SignalHandler(handler)),
+        QAbstractProxyModel *getActual() const {
+            return actual;
+        }
+        SignalWrapper(QAbstractProxyModel *existing, const std::shared_ptr<SignalHandler>& handler)
+            : AbstractItemModel::SignalWrapper(existing, SignalHandler::as_AbstractItemModel_SignalHandler(handler)),
+              actual(existing),
               handler(handler) {}
         void setSignalMask(SignalMask newMask) {
             // update inherited signals
-            AbstractItemModel::SignalRelay::setSignalMask(newMask);
+            AbstractItemModel::SignalWrapper::setSignalMask(newMask);
             // continue:
             if (newMask != lastMask) {
-                processChanges(lastMask, newMask, signalMap, relayFor, this);
+                processChanges(lastMask, newMask, signalMap, actual, this);
                 lastMask = newMask;
             }
         }

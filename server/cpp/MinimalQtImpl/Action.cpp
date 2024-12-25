@@ -8,187 +8,178 @@
 #include "KeySequenceInternal.h"
 #include "FontInternal.h"
 
-#define THIS ((ActionWithHandler*)_this)
+#define WRAPPER (reinterpret_cast<SignalWrapper*>(_this))
+#define ACTION_THIS (WRAPPER->getActual())
 
 namespace Action
 {
-    class ActionWithHandler : public QAction {
-        Q_OBJECT
-    private:
-        SignalRelay relay;
-    public:
-        ActionWithHandler(QObject *parent, const std::shared_ptr<SignalHandler> &handler) : QAction(parent),
-            relay(this, handler) {
-        }
-        void setSignalMask(SignalMask newMask) {
-            relay.setSignalMask(newMask);
-        }
-    };
-
     // properties ==========================================
 
     bool Handle_autoRepeat(HandleRef _this) {
-        return THIS->autoRepeat();
+        return ACTION_THIS->autoRepeat();
     }
 
     void Handle_setAutoRepeat(HandleRef _this, bool state) {
-        THIS->setAutoRepeat(state);
+        ACTION_THIS->setAutoRepeat(state);
     }
 
     bool Handle_isCheckable(HandleRef _this) {
-        return THIS->isCheckable();
+        return ACTION_THIS->isCheckable();
     }
 
     void Handle_setCheckable(HandleRef _this, bool state) {
-        THIS->setCheckable(state);
+        ACTION_THIS->setCheckable(state);
     }
 
     bool Handle_isChecked(HandleRef _this) {
-        return THIS->isChecked();
+        return ACTION_THIS->isChecked();
     }
 
     void Handle_setChecked(HandleRef _this, bool state) {
-        THIS->setChecked(state);
+        ACTION_THIS->setChecked(state);
     }
 
     bool Handle_isEnabled(HandleRef _this) {
-        return THIS->isEnabled();
+        return ACTION_THIS->isEnabled();
     }
 
     void Handle_setEnabled(HandleRef _this, bool state) {
-        THIS->setEnabled(state);
+        ACTION_THIS->setEnabled(state);
     }
 
     Font::OwnedRef Handle_getFont(HandleRef _this) {
-        return FONT_HEAP_NEW(THIS->font());
+        return FONT_HEAP_NEW(ACTION_THIS->font());
     }
 
     void Handle_setFont(HandleRef _this, Font::HandleRef font) {
-        THIS->setFont(QFONT_VALUE(font));
+        ACTION_THIS->setFont(QFONT_VALUE(font));
     }
 
     Icon::OwnedRef Handle_getIcon(HandleRef _this) {
-        return ICON_HEAP_NEW(THIS->icon());
+        return ICON_HEAP_NEW(ACTION_THIS->icon());
     }
 
     void Handle_setIcon(HandleRef _this, Icon::HandleRef icon) {
-        THIS->setIcon(QICON_VALUE(icon));
+        ACTION_THIS->setIcon(QICON_VALUE(icon));
     }
 
     std::string Handle_iconText(HandleRef _this) {
-        return THIS->iconText().toStdString();
+        return ACTION_THIS->iconText().toStdString();
     }
 
     void Handle_setIconText(HandleRef _this, const std::string& text) {
-        THIS->setIconText(QString::fromStdString(text));
+        ACTION_THIS->setIconText(QString::fromStdString(text));
     }
 
     bool Handle_isIconVisibleInMenu(HandleRef _this) {
-        return THIS->isIconVisibleInMenu();
+        return ACTION_THIS->isIconVisibleInMenu();
     }
 
     void Handle_setIconVisibleInMenu(HandleRef _this, bool visible) {
-        THIS->setIconVisibleInMenu(visible);
+        ACTION_THIS->setIconVisibleInMenu(visible);
     }
 
     MenuRole Handle_menuRole(HandleRef _this) {
-        return static_cast<MenuRole>(THIS->menuRole());
+        return static_cast<MenuRole>(ACTION_THIS->menuRole());
     }
 
     void Handle_setMenuRole(HandleRef _this, MenuRole role) {
-        THIS->setMenuRole(static_cast<QAction::MenuRole>(role));
+        ACTION_THIS->setMenuRole(static_cast<QAction::MenuRole>(role));
     }
 
     Priority Handle_priority(HandleRef _this) {
-        return static_cast<Priority>(THIS->priority());
+        return static_cast<Priority>(ACTION_THIS->priority());
     }
 
     void Handle_setPriority(HandleRef _this, Priority priority) {
-        THIS->setPriority(static_cast<QAction::Priority>(priority));
+        ACTION_THIS->setPriority(static_cast<QAction::Priority>(priority));
     }
 
     KeySequence::OwnedRef Handle_shortcut(HandleRef _this) {
-        return KEYSEQ_HEAP_NEW(THIS->shortcut());
+        return KEYSEQ_HEAP_NEW(ACTION_THIS->shortcut());
     }
 
     void Handle_setShortcut(HandleRef _this, const std::shared_ptr<KeySequence::Deferred::Base>& shortcut) {
-        THIS->setShortcut(fromDeferred(shortcut));
+        ACTION_THIS->setShortcut(fromDeferred(shortcut));
     }
 
     ShortcutContext Handle_shortcutContext(HandleRef _this) {
-        return static_cast<ShortcutContext>(THIS->shortcutContext());
+        return static_cast<ShortcutContext>(ACTION_THIS->shortcutContext());
     }
 
     void Handle_setShortcutContext(HandleRef _this, ShortcutContext context) {
-        THIS->setShortcutContext(static_cast<Qt::ShortcutContext>(context));
+        ACTION_THIS->setShortcutContext(static_cast<Qt::ShortcutContext>(context));
     }
 
     bool Handle_isShortcutVisibleInContextMenu(HandleRef _this) {
-        return THIS->isShortcutVisibleInContextMenu();
+        return ACTION_THIS->isShortcutVisibleInContextMenu();
     }
 
     void Handle_setShortcutVisibleInContextMenu(HandleRef _this, bool visible) {
-        THIS->setShortcutVisibleInContextMenu(visible);
+        ACTION_THIS->setShortcutVisibleInContextMenu(visible);
     }
 
     std::string Handle_statusTip(HandleRef _this) {
-        return THIS->statusTip().toStdString();
+        return ACTION_THIS->statusTip().toStdString();
     }
 
     void Handle_setStatusTip(HandleRef _this, const std::string& tip) {
-        THIS->setStatusTip(QString::fromStdString(tip));
+        ACTION_THIS->setStatusTip(QString::fromStdString(tip));
     }
 
     std::string Handle_text(HandleRef _this) {
-        return THIS->text().toStdString();
+        return ACTION_THIS->text().toStdString();
     }
 
     void Handle_setText(HandleRef _this, const std::string& text) {
-        THIS->setText(QString::fromStdString(text));
+        ACTION_THIS->setText(QString::fromStdString(text));
     }
 
     std::string Handle_toolTip(HandleRef _this) {
-        return THIS->toolTip().toStdString();
+        return ACTION_THIS->toolTip().toStdString();
     }
 
     void Handle_setToolTip(HandleRef _this, const std::string& tip) {
-        THIS->setToolTip(QString::fromStdString(tip));
+        ACTION_THIS->setToolTip(QString::fromStdString(tip));
     }
 
     bool Handle_isVisible(HandleRef _this) {
-        return THIS->isVisible();
+        return ACTION_THIS->isVisible();
     }
 
     void Handle_setVisible(HandleRef _this, bool visible) {
-        THIS->setVisible(visible);
+        ACTION_THIS->setVisible(visible);
     }
 
     std::string Handle_whatsThis(HandleRef _this) {
-        return THIS->whatsThis().toStdString();
+        return ACTION_THIS->whatsThis().toStdString();
     }
 
     void Handle_setWhatsThis(HandleRef _this, const std::string& text) {
-        THIS->setWhatsThis(QString::fromStdString(text));
+        ACTION_THIS->setWhatsThis(QString::fromStdString(text));
     }
 
     // methods ==================================================
 
     void Handle_setSeparator(HandleRef _this, bool state) {
-        THIS->setSeparator(state);
+        ACTION_THIS->setSeparator(state);
     }
 
     // signal mask ==============================================
 
     void Handle_setSignalMask(HandleRef _this, SignalMask mask) {
-        THIS->setSignalMask(mask);
+        WRAPPER->setSignalMask(mask);
     }
 
     void Handle_dispose(HandleRef _this) {
-        delete THIS;
+        delete WRAPPER;
     }
 
     HandleRef create(Object::HandleRef owner, const std::shared_ptr<SignalHandler>& handler) {
-        return reinterpret_cast<HandleRef>(new ActionWithHandler(reinterpret_cast<QObject *>(owner), handler));
+        const auto ownerWrapper = reinterpret_cast<Object::SignalWrapper*>(owner);
+        const auto action = new QAction(ownerWrapper->getActual());
+        const auto wrapper = new SignalWrapper(action, handler);
+        return reinterpret_cast<HandleRef>(wrapper);
     }
 }
 

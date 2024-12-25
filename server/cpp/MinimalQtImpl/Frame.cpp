@@ -1,63 +1,52 @@
 #include "generated/Frame.h"
 #include "FrameInternal.h"
 
-#include <QFrame>
-
 #include "util/convert.h"
 
-#define THIS ((FrameWithHandler*)_this)
+#define WRAPPER (reinterpret_cast<SignalWrapper*>(_this))
+#define FRAME_THIS (WRAPPER->getActual())
 
 namespace Frame
 {
-    class FrameWithHandler : public QFrame {
-        Q_OBJECT
-    private:
-        SignalRelay relay;
-    public:
-        explicit FrameWithHandler(const std::shared_ptr<SignalHandler>& handler) : relay(this, handler) {}
-        void setSignalMask(SignalMask newMask) {
-            relay.setSignalMask(newMask);
-        }
-    };
-
     void Handle_setFrameRect(HandleRef _this, Rect rect) {
-        THIS->setFrameRect(toQRect(rect));
+        FRAME_THIS->setFrameRect(toQRect(rect));
     }
 
     void Handle_setFrameShadow(HandleRef _this, Shadow shadow) {
-        THIS->setFrameShadow(static_cast<QFrame::Shadow>(shadow));
+        FRAME_THIS->setFrameShadow(static_cast<QFrame::Shadow>(shadow));
     }
 
     void Handle_setFrameShape(HandleRef _this, Shape shape) {
-        THIS->setFrameShape(static_cast<QFrame::Shape>(shape));
+        FRAME_THIS->setFrameShape(static_cast<QFrame::Shape>(shape));
     }
 
     int32_t Handle_frameWidth(HandleRef _this) {
-        return THIS->frameWidth();
+        return FRAME_THIS->frameWidth();
     }
 
     void Handle_setLineWidth(HandleRef _this, int32_t width) {
-        THIS->setLineWidth(width);
+        FRAME_THIS->setLineWidth(width);
     }
 
     void Handle_setMidLineWidth(HandleRef _this, int32_t width) {
-        THIS->setMidLineWidth(width);
+        FRAME_THIS->setMidLineWidth(width);
     }
 
     void Handle_setFrameStyle(HandleRef _this, Shape shape, Shadow shadow) {
-        THIS->setFrameStyle(static_cast<QFrame::Shape>(shape) | static_cast<QFrame::Shadow>(shadow));
+        FRAME_THIS->setFrameStyle(static_cast<QFrame::Shape>(shape) | static_cast<QFrame::Shadow>(shadow));
     }
 
     void Handle_setSignalMask(HandleRef _this, SignalMask mask) {
-        THIS->setSignalMask(mask);
+        WRAPPER->setSignalMask(mask);
     }
 
     void Handle_dispose(HandleRef _this) {
-        delete THIS;
+        delete WRAPPER;
     }
 
     HandleRef create(const std::shared_ptr<SignalHandler>& handler) {
-        return reinterpret_cast<HandleRef>(new FrameWithHandler(handler));
+        const auto wrapper = new SignalWrapper(new QFrame(), handler);
+        return reinterpret_cast<HandleRef>(wrapper);
     }
 }
 

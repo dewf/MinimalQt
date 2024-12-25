@@ -3,12 +3,13 @@
 #include "generated/FileDialog.h"
 #include "DialogInternal.h"
 
-#include <QUrl>
+#include <QFileDialog>
 
 namespace FileDialog {
-    class SignalRelay : public Dialog::SignalRelay {
+    class SignalWrapper : public Dialog::SignalWrapper {
         Q_OBJECT
     private:
+        QFileDialog *actual;
         std::shared_ptr<SignalHandler> handler;
         SignalMask lastMask = 0;
         std::vector<SignalMapItem<SignalMaskFlags>> signalMap = {
@@ -23,15 +24,19 @@ namespace FileDialog {
             { UrlsSelected, SIGNAL(urlsSelected(QList<QUrl>)), SLOT(onUrlsSelected(QList<QUrl>)) },
         };
     public:
-        explicit SignalRelay(QObject *relayFor, const std::shared_ptr<SignalHandler> &handler) :
-            Dialog::SignalRelay(relayFor, SignalHandler::as_Dialog_SignalHandler(handler)),
-            handler(handler) {}
+        QFileDialog *getActual() const {
+            return actual;
+        }
+        SignalWrapper(QFileDialog *existing, const std::shared_ptr<SignalHandler>& handler)
+            : Dialog::SignalWrapper(existing, SignalHandler::as_Dialog_SignalHandler(handler)),
+              actual(existing),
+              handler(handler) {}
         void setSignalMask(SignalMask newMask) {
             // update inherited signals
-            Dialog::SignalRelay::setSignalMask(newMask);
+            Dialog::SignalWrapper::setSignalMask(newMask);
             // ours:
             if (newMask != lastMask) {
-                processChanges(lastMask, newMask, signalMap, relayFor, this);
+                processChanges(lastMask, newMask, signalMap, actual, this);
                 lastMask = newMask;
             }
         }

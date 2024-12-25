@@ -21,7 +21,7 @@ namespace ScrollArea {
             AbstractScrollArea::SignalRelay::setSignalMask(newMask);
             // ours:
             if (newMask != lastMask) {
-                processChanges(lastMask, newMask, signalMap, relayFor, this);
+                processChanges(lastMask, newMask, signalMap, actual, this);
                 lastMask = newMask;
             }
         }

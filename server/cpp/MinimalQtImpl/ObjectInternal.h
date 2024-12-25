@@ -6,34 +6,53 @@
 #include <QObject>
 
 namespace Object {
-    class SignalRelay : public QObject {
+    class SignalWrapper : public QObject { // for signal-related stuff, this is not a QObject subclass per se
         Q_OBJECT
     protected:
-        QObject *relayFor;
+        bool qtDestroyed = false;
     private:
+        QObject *actual = nullptr;
         QMetaObject::Connection destroyedConnection;
         std::shared_ptr<SignalHandler> handler;
         SignalMask lastMask = 0;
         std::vector<SignalMapItem<SignalMaskFlags>> signalMap = {
-            // 'destroyed' signal requires manual handling, because this signal manager won't be around to handle it normally! (this torn down prior to <relayFor>'s QObject destructor being called)
             // { Destroyed, SIGNAL(destroyed(QObject)), SLOT(onDestroyed(QObject)) },
             { ObjectNameChanged, SIGNAL(objectNameChanged(QString)), SLOT(onObjectNameChanged(QString)) }
         };
     public:
-        explicit SignalRelay(QObject *relayFor, const std::shared_ptr<SignalHandler> &handler) : relayFor(relayFor), handler(handler) {}
-        ~SignalRelay() override {
-            // manual sending of 'Destroyed' signal, see note in signalMap above
-            if (lastMask & Destroyed) {
-                handler->destroyed(reinterpret_cast<HandleRef>(relayFor));
+        ~SignalWrapper() override {
+            if (!qtDestroyed) {
+                printf("C++ Object::SignalWrapper destroying QObject\n");
+                delete actual;
+                qtDestroyed = true;
+            } else {
+                printf("C++ Object::SignalWrapper - qt object was already destroyed\n");
             }
         }
+        QObject *getActual() const {
+            return actual;
+        }
+        // wrap existing:
+        SignalWrapper(QObject *existing, const std::shared_ptr<SignalHandler> &handler) : actual(existing), handler(handler) {
+            // we MUST connect the 'Destroyed' signal, so we know when to self-delete
+            // but it will be manually checked in the handler before invoking the handler
+        }
+        // purposely NOT virtual:
         void setSignalMask(SignalMask newMask) {
             if (newMask != lastMask) {
-                processChanges(lastMask, newMask, signalMap,  relayFor, this);
+                processChanges(lastMask, newMask, signalMap,  actual, this);
                 lastMask = newMask;
             }
         }
     public slots:
+        void onDestroyed(QObject *obj) {
+            handler->destroyed((HandleRef)this);
+            qtDestroyed = true;
+            // in the case the QObject gets deleted out from under us, no reason to continue to exist!
+            // hopefully the client side is not confused about this!
+            printf("QObject::SignalWrapper - 'delete this'\n");
+            delete this;
+        }
         void onObjectNameChanged(const QString& name) const {
             handler->objectNameChanged(name.toStdString());
         }

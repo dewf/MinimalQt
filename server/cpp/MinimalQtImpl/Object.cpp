@@ -1,22 +1,20 @@
 #include "generated/Object.h"
+#include "ObjectInternal.h"
 
-#include <QObject>
-
-#include "util/SignalStuff.h"
-
-#define THIS ((QObject*)_this)
+#define WRAPPER (reinterpret_cast<SignalWrapper*>(_this))
+#define OBJECT_THIS (WRAPPER->getActual())
 
 namespace Object
 {
     std::string Handle_objectName(HandleRef _this) {
-        return THIS->objectName().toStdString();
+        return OBJECT_THIS->objectName().toStdString();
     }
 
     void Handle_setObjectName(HandleRef _this, const std::string& name) {
-        THIS->setObjectName(QString::fromStdString(name));
+        OBJECT_THIS->setObjectName(QString::fromStdString(name));
     }
 
     void Handle_dumpObjectTree(HandleRef _this) {
-        THIS->dumpObjectTree();
+        OBJECT_THIS->dumpObjectTree();
     }
 }

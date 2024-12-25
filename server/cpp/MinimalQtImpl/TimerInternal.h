@@ -4,7 +4,7 @@
 #include "ObjectInternal.h"
 
 namespace Timer {
-    class SignalRelay : public Object::SignalRelay {
+    class SignalRelay : public Object::SignalWrapper {
         Q_OBJECT
     private:
         std::shared_ptr<SignalHandler> handler;
@@ -14,14 +14,14 @@ namespace Timer {
         };
     public:
         explicit SignalRelay(QObject *relayFor, const std::shared_ptr<SignalHandler> &handler) :
-            Object::SignalRelay(relayFor, SignalHandler::as_Object_SignalHandler(handler)),
+            Object::SignalWrapper(relayFor, SignalHandler::as_Object_SignalHandler(handler)),
             handler(handler) {}
         void setSignalMask(SignalMask newMask) {
             // update inherited signals
-            Object::SignalRelay::setSignalMask(newMask);
+            Object::SignalWrapper::setSignalMask(newMask);
             // continue:
             if (newMask != lastMask) {
-                processChanges(lastMask, newMask, signalMap, relayFor, this);
+                processChanges(lastMask, newMask, signalMap, actual, this);
                 lastMask = newMask;
             }
         }

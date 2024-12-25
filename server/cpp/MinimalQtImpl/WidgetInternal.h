@@ -2,14 +2,16 @@
 
 #include "generated/Widget.h"
 #include "ObjectInternal.h"
-
 #include "util/SignalStuff.h"
 #include "util/convert.h"
 
+#include <QWidget>
+
 namespace Widget {
-    class SignalRelay : public Object::SignalRelay {
+    class SignalWrapper : public Object::SignalWrapper {
         Q_OBJECT
     private:
+        QWidget *actual;
         std::shared_ptr<SignalHandler> handler;
         SignalMask lastMask = 0;
         std::vector<SignalMapItem<SignalMaskFlags>> signalMap = {
@@ -18,15 +20,20 @@ namespace Widget {
             { WindowTitleChanged, SIGNAL(windowTitleChanged(QString)), SLOT(onWindowTitleChanged(QString)) },
         };
     public:
-        explicit SignalRelay(QObject *relayFor, const std::shared_ptr<SignalHandler> &handler)
-            : Object::SignalRelay(relayFor, SignalHandler::as_Object_SignalHandler(handler)),
+        QWidget *getActual() const {
+            return actual;
+        }
+        // wrap existing (could be a delegated QWidget subclass)
+        SignalWrapper(QWidget *existing, const std::shared_ptr<SignalHandler> &handler)
+            : Object::SignalWrapper(existing, SignalHandler::as_Object_SignalHandler(handler)),
+              actual(existing),
               handler(handler) {}
         void setSignalMask(SignalMask newMask) {
             // update inherited signals
-            Object::SignalRelay::setSignalMask(newMask);
+            Object::SignalWrapper::setSignalMask(newMask);
             // ours:
             if (newMask != lastMask) {
-                processChanges(lastMask, newMask, signalMap, relayFor, this);
+                processChanges(lastMask, newMask, signalMap, actual, this);
                 lastMask = newMask;
             }
         }
