@@ -25,8 +25,12 @@ opaque Handle extends Widget.Handle {
     void setNativeMenuBar(bool state);
 
     void clear();
-    Action.Handle addMenu(Menu.Handle menu);
-    Action.Handle addSeparator();
+    Action.Handle addMenu(Menu.Handle menu, Action.SignalHandler handler); // add existing menu, DOESN'T take ownership
+
+    Menu.Handle addMenu(string title, Menu.SignalHandler handler);                   // creates and adds a new menu, IS owned
+    Menu.Handle addMenu(Icon.Handle icon, string title, Menu.SignalHandler handler); // same
+
+    Action.Handle addSeparator(Action.SignalHandler handler); // does this work outside of Motif?
 
     void setSignalMask(SignalMask mask);
 }

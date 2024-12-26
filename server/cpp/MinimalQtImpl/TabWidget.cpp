@@ -53,11 +53,13 @@ namespace TabWidget
     }
 
     int Handle_addTab(HandleRef _this, Widget::HandleRef page, const std::string& label) {
-        return TABWIDGET_THIS->addTab(reinterpret_cast<QWidget *>(page), QString::fromStdString(label));
+        auto pageWrapper = reinterpret_cast<Widget::SignalWrapper*>(page);
+        return TABWIDGET_THIS->addTab(pageWrapper->getActual(), QString::fromStdString(label));
     }
 
     int Handle_insertTab(HandleRef _this, int32_t index, Widget::HandleRef page, const std::string& label) {
-        return TABWIDGET_THIS->insertTab(index, reinterpret_cast<QWidget *>(page), QString::fromStdString(label));
+        auto pageWrapper = reinterpret_cast<Widget::SignalWrapper*>(page);
+        return TABWIDGET_THIS->insertTab(index, pageWrapper->getActual(), QString::fromStdString(label));
     }
 
     Widget::HandleRef Handle_widgetAt(HandleRef _this, int32_t index, const std::shared_ptr<Widget::SignalHandler>& handler) {

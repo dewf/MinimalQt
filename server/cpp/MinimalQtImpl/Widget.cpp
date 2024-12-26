@@ -12,6 +12,7 @@
 #include <QDrag>
 #include <utility>
 
+#include "ActionInternal.h"
 #include "FontInternal.h"
 #include "util/convert.h"
 #include "IconInternal.h"
@@ -433,7 +434,8 @@ namespace Widget
     // methods ====================================================
 
     void Handle_addAction(HandleRef _this, Action::HandleRef action) {
-        WIDGET_THIS->addAction(reinterpret_cast<QAction *>(action));
+        const auto actionWrapper = reinterpret_cast<Action::SignalWrapper*>(action);
+        WIDGET_THIS->addAction(actionWrapper->getActual());
     }
 
     HandleRef Handle_getWindow(HandleRef _this) {

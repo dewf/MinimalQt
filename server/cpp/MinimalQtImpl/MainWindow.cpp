@@ -1,5 +1,6 @@
 #include "generated/MainWindow.h"
 #include "MainWindowInternal.h"
+#include "MenuBarInternal.h"
 
 #include "util/convert.h"
 
@@ -75,11 +76,13 @@ namespace MainWindow
     // methods =================================
 
     void Handle_setCentralWidget(HandleRef _this, Widget::HandleRef widget) {
-        MAINWINDOW_THIS->setCentralWidget(reinterpret_cast<QWidget *>(widget));
+        const auto widgetWrapper = reinterpret_cast<Widget::SignalWrapper*>(widget);
+        MAINWINDOW_THIS->setCentralWidget(widgetWrapper->getActual());
     }
 
     void Handle_setMenuBar(HandleRef _this, MenuBar::HandleRef menubar) {
-        MAINWINDOW_THIS->setMenuBar(reinterpret_cast<QMenuBar *>(menubar));
+        const auto menuBarWrapper = reinterpret_cast<MenuBar::SignalWrapper*>(menubar);
+        MAINWINDOW_THIS->setMenuBar(menuBarWrapper->getActual());
     }
 
     void Handle_setStatusBar(HandleRef _this, StatusBar::HandleRef statusbar) {

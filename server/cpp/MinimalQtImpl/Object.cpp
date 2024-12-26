@@ -15,7 +15,8 @@ namespace Object
     }
 
     void Handle_setParent(HandleRef _this, HandleRef parent) {
-        OBJECT_THIS->setParent(reinterpret_cast<QObject*>(parent));
+        const auto parentWrapper = reinterpret_cast<SignalWrapper*>(parent);
+        OBJECT_THIS->setParent(parentWrapper->getActual());
     }
 
     void Handle_dumpObjectTree(HandleRef _this) {
