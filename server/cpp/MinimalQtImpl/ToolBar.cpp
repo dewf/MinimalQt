@@ -1,76 +1,63 @@
 #include "generated/ToolBar.h"
 #include "ToolBarInternal.h"
 
-#include <QToolBar>
-#include <utility>
 #include "util/convert.h"
 
-#define THIS ((ToolBarWithHandler*)_this)
+#define WRAPPER (reinterpret_cast<SignalWrapper*>(_this))
+#define TOOLBAR_THIS (WRAPPER->getActual())
 
 namespace ToolBar
 {
-    class ToolBarWithHandler : public QToolBar {
-        Q_OBJECT
-    private:
-        SignalRelay relay;
-    public:
-        explicit ToolBarWithHandler(const std::shared_ptr<SignalHandler>& handler) : relay(this, handler) {}
-        void setSignalMask(SignalMask newMask) {
-            relay.setSignalMask(newMask);
-        }
-    };
-
     void Handle_setAllowedAreas(HandleRef _this, Enums::ToolBarAreas allowed) {
-        THIS->setAllowedAreas(static_cast<Qt::ToolBarAreas>(allowed));
+        TOOLBAR_THIS->setAllowedAreas(static_cast<Qt::ToolBarAreas>(allowed));
     }
 
     void Handle_setFloatable(HandleRef _this, bool floatable) {
-        THIS->setFloatable(floatable);
+        TOOLBAR_THIS->setFloatable(floatable);
     }
 
     bool Handle_isFloating(HandleRef _this) {
-        return THIS->isFloating();
+        return TOOLBAR_THIS->isFloating();
     }
 
     void Handle_setIconSize(HandleRef _this, Size size) {
-        THIS->setIconSize(toQSize(size));
+        TOOLBAR_THIS->setIconSize(toQSize(size));
     }
 
     void Handle_setMovable(HandleRef _this, bool value) {
-        THIS->setMovable(value);
+        TOOLBAR_THIS->setMovable(value);
     }
 
     void Handle_setOrientation(HandleRef _this, Orientation value) {
-        THIS->setOrientation(static_cast<Qt::Orientation>(value));
+        TOOLBAR_THIS->setOrientation(static_cast<Qt::Orientation>(value));
     }
 
     void Handle_setToolButtonStyle(HandleRef _this, ToolButtonStyle style) {
-        THIS->setToolButtonStyle(static_cast<Qt::ToolButtonStyle>(style));
+        TOOLBAR_THIS->setToolButtonStyle(static_cast<Qt::ToolButtonStyle>(style));
     }
 
     Action::HandleRef Handle_addSeparator(HandleRef _this) {
-        return reinterpret_cast<Action::HandleRef>(THIS->addSeparator());
+        return reinterpret_cast<Action::HandleRef>(TOOLBAR_THIS->addSeparator());
     }
 
     void Handle_addWidget(HandleRef _this, Widget::HandleRef widget) {
-        THIS->addWidget(reinterpret_cast<QWidget *>(widget));
+        TOOLBAR_THIS->addWidget(reinterpret_cast<QWidget *>(widget));
     }
 
     void Handle_clear(HandleRef _this) {
-        THIS->clear();
+        TOOLBAR_THIS->clear();
     }
 
     void Handle_setSignalMask(HandleRef _this, SignalMask mask) {
-        THIS->setSignalMask(mask);
+        WRAPPER->setSignalMask(mask);
     }
 
     void Handle_dispose(HandleRef _this) {
-        delete THIS;
+        delete WRAPPER;
     }
 
     HandleRef create(const std::shared_ptr<SignalHandler>& handler) {
-        return reinterpret_cast<HandleRef>(new ToolBarWithHandler(handler));
+        const auto wrapper = new SignalWrapper(new QToolBar(), handler);
+        return reinterpret_cast<HandleRef>(wrapper);
     }
 }
-
-#include "ToolBar.moc"

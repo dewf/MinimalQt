@@ -122,5 +122,3 @@ namespace ComboBox
         return reinterpret_cast<HandleRef>(comboWrapper);
     }
 }
-
-#include "ComboBox.moc"

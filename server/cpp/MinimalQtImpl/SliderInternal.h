@@ -3,22 +3,29 @@
 #include "generated/Slider.h"
 #include "AbstractSliderInternal.h"
 
+#include <QSlider>
+
 namespace Slider {
-    class SignalRelay : public AbstractSlider::SignalRelay {
+    class SignalWrapper : public AbstractSlider::SignalWrapper {
         Q_OBJECT
     private:
+        QSlider *actual;
         std::shared_ptr<SignalHandler> handler;
         SignalMask lastMask = 0;
         std::vector<SignalMapItem<SignalMaskFlags>> signalMap = {
             // none
         };
     public:
-        explicit SignalRelay(QObject *relayFor, const std::shared_ptr<SignalHandler> &handler) :
-            AbstractSlider::SignalRelay(relayFor, SignalHandler::as_AbstractSlider_SignalHandler(handler)),
-            handler(handler) {}
+        QSlider *getActual() const {
+            return actual;
+        }
+        SignalWrapper(QSlider *existing, const std::shared_ptr<SignalHandler> &handler)
+            : AbstractSlider::SignalWrapper(existing, SignalHandler::as_AbstractSlider_SignalHandler(handler)),
+              actual(existing),
+              handler(handler) {}
         void setSignalMask(SignalMask newMask) {
             // update inherited signals
-            AbstractSlider::SignalRelay::setSignalMask(newMask);
+            AbstractSlider::SignalWrapper::setSignalMask(newMask);
             // ours:
             if (newMask != lastMask) {
                 processChanges(lastMask, newMask, signalMap, actual, this);

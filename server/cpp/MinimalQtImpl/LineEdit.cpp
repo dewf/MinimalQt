@@ -1,149 +1,135 @@
 #include "generated/LineEdit.h"
 #include "LineEditInternal.h"
 
-#include <QObject>
-#include <QLineEdit>
-
 #include "util/convert.h"
 
-#define THIS ((LineEditWithHandler*)_this)
+#define WRAPPER (reinterpret_cast<SignalWrapper*>(_this))
+#define LINEEDIT_THIS (WRAPPER->getActual())
 
 namespace LineEdit
 {
-    class LineEditWithHandler : public QLineEdit {
-        Q_OBJECT
-    private:
-        SignalRelay relay;
-    public:
-        explicit LineEditWithHandler(const std::shared_ptr<SignalHandler>& handler) : relay(this, handler) {}
-        void setSignalMask(SignalMask newMask) {
-            relay.setSignalMask(newMask);
-        }
-    };
-
     bool Handle_hasAcceptableInput(HandleRef _this) {
-        return THIS->hasAcceptableInput();
+        return LINEEDIT_THIS->hasAcceptableInput();
     }
 
     void Handle_setAlignment(HandleRef _this, Enums::Alignment align) {
-        THIS->setAlignment(static_cast<Qt::Alignment>(align));
+        LINEEDIT_THIS->setAlignment(static_cast<Qt::Alignment>(align));
     }
 
     void Handle_setClearButtonEnabled(HandleRef _this, bool enabled) {
-        THIS->setClearButtonEnabled(enabled);
+        LINEEDIT_THIS->setClearButtonEnabled(enabled);
     }
 
     void Handle_setCursorMoveStyle(HandleRef _this, CursorMoveStyle style) {
-        THIS->setCursorMoveStyle(static_cast<Qt::CursorMoveStyle>(style));
+        LINEEDIT_THIS->setCursorMoveStyle(static_cast<Qt::CursorMoveStyle>(style));
     }
 
     void Handle_setCursorPosition(HandleRef _this, int32_t pos) {
-        THIS->setCursorPosition(pos);
+        LINEEDIT_THIS->setCursorPosition(pos);
     }
 
     std::string Handle_displayText(HandleRef _this) {
-        return THIS->displayText().toStdString();
+        return LINEEDIT_THIS->displayText().toStdString();
     }
 
     void Handle_setDragEnabled(HandleRef _this, bool enabled) {
-        THIS->setDragEnabled(enabled);
+        LINEEDIT_THIS->setDragEnabled(enabled);
     }
 
     void Handle_setEchoMode(HandleRef _this, EchoMode mode) {
-        THIS->setEchoMode(static_cast<QLineEdit::EchoMode>(mode));
+        LINEEDIT_THIS->setEchoMode(static_cast<QLineEdit::EchoMode>(mode));
     }
 
     void Handle_setFrame(HandleRef _this, bool enabled) {
-        THIS->setFrame(enabled);
+        LINEEDIT_THIS->setFrame(enabled);
     }
 
     bool Handle_hasSelectedText(HandleRef _this) {
-        return THIS->hasSelectedText();
+        return LINEEDIT_THIS->hasSelectedText();
     }
 
     void Handle_setInputMask(HandleRef _this, const std::string& mask) {
-        return THIS->setInputMask(QString::fromStdString(mask));
+        return LINEEDIT_THIS->setInputMask(QString::fromStdString(mask));
     }
 
     void Handle_setMaxLength(HandleRef _this, int32_t length) {
-        THIS->setMaxLength(length);
+        LINEEDIT_THIS->setMaxLength(length);
     }
 
     bool Handle_isModified(HandleRef _this) {
-        return THIS->isModified();
+        return LINEEDIT_THIS->isModified();
     }
 
     void Handle_setModified(HandleRef _this, bool modified) {
-        THIS->setModified(modified);
+        LINEEDIT_THIS->setModified(modified);
     }
 
     void Handle_setPlaceholderText(HandleRef _this, const std::string& text) {
-        THIS->setPlaceholderText(QString::fromStdString(text));
+        LINEEDIT_THIS->setPlaceholderText(QString::fromStdString(text));
     }
 
     void Handle_setReadOnly(HandleRef _this, bool value) {
-        THIS->setReadOnly(value);
+        LINEEDIT_THIS->setReadOnly(value);
     }
 
     bool Handle_isRedoAvailable(HandleRef _this) {
-        return THIS->isRedoAvailable();
+        return LINEEDIT_THIS->isRedoAvailable();
     }
 
     std::string Handle_selectedText(HandleRef _this) {
-        return THIS->selectedText().toStdString();
+        return LINEEDIT_THIS->selectedText().toStdString();
     }
 
     void Handle_setText(HandleRef _this, const std::string& text) {
-        THIS->setText(QString::fromStdString(text));
+        LINEEDIT_THIS->setText(QString::fromStdString(text));
     }
 
     std::string Handle_text(HandleRef _this) {
-        return THIS->text().toStdString();
+        return LINEEDIT_THIS->text().toStdString();
     }
 
     bool Handle_isUndoAvailable(HandleRef _this) {
-        return THIS->isUndoAvailable();
+        return LINEEDIT_THIS->isUndoAvailable();
     }
 
     void Handle_clear(HandleRef _this) {
-        THIS->clear();
+        LINEEDIT_THIS->clear();
     }
 
     void Handle_copy(HandleRef _this) {
-        THIS->copy();
+        LINEEDIT_THIS->copy();
     }
 
     void Handle_cut(HandleRef _this) {
-        THIS->cut();
+        LINEEDIT_THIS->cut();
     }
 
     void Handle_paste(HandleRef _this) {
-        THIS->paste();
+        LINEEDIT_THIS->paste();
     }
 
     void Handle_redo(HandleRef _this) {
-        THIS->redo();
+        LINEEDIT_THIS->redo();
     }
 
     void Handle_selectAll(HandleRef _this) {
-        THIS->selectAll();
+        LINEEDIT_THIS->selectAll();
     }
 
     void Handle_undo(HandleRef _this) {
-        THIS->undo();
+        LINEEDIT_THIS->undo();
     }
 
     void Handle_setSignalMask(HandleRef _this, SignalMask mask) {
-        THIS->setSignalMask(mask);
+        WRAPPER->setSignalMask(mask);
     }
 
     void Handle_dispose(HandleRef _this) {
-        delete THIS;
+        delete WRAPPER;
     }
 
     HandleRef create(const std::shared_ptr<SignalHandler>& handler) {
-        return reinterpret_cast<HandleRef>(new LineEditWithHandler(handler));
+        const auto wrapper = new SignalWrapper(new QLineEdit(), handler);
+        return reinterpret_cast<HandleRef>(wrapper);
     }
 }
-
-#include "LineEdit.moc"

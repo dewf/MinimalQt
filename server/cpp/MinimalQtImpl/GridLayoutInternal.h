@@ -3,22 +3,29 @@
 #include "generated/GridLayout.h"
 #include "LayoutInternal.h"
 
+#include <QGridLayout>
+
 namespace GridLayout {
-    class SignalRelay : public Layout::SignalRelay {
+    class SignalWrapper : public Layout::SignalWrapper {
         Q_OBJECT
     private:
+        QGridLayout *actual;
         std::shared_ptr<SignalHandler> handler;
         SignalMask lastMask = 0;
         std::vector<SignalMapItem<SignalMaskFlags>> signalMap = {
             // none
         };
     public:
-        explicit SignalRelay(QObject *relayFor, const std::shared_ptr<SignalHandler> &handler)
-            : Layout::SignalRelay(relayFor, SignalHandler::as_Layout_SignalHandler(handler)),
+        QGridLayout *getActual() const {
+            return actual;
+        }
+        SignalWrapper(QGridLayout *existing, const std::shared_ptr<SignalHandler> &handler)
+            : Layout::SignalWrapper(existing, SignalHandler::as_Layout_SignalHandler(handler)),
+              actual(existing),
               handler(handler) {}
         void setSignalMask(SignalMask newMask) {
             // update inherited signals
-            Layout::SignalRelay::setSignalMask(newMask);
+            Layout::SignalWrapper::setSignalMask(newMask);
             // ours:
             if (newMask != lastMask) {
                 processChanges(lastMask, newMask, signalMap, actual, this);

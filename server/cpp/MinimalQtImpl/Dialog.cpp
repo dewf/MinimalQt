@@ -47,5 +47,3 @@ namespace Dialog
         return reinterpret_cast<HandleRef>(wrapper);
     }
 }
-
-#include "Dialog.moc"

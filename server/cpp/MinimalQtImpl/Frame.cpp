@@ -49,5 +49,3 @@ namespace Frame
         return reinterpret_cast<HandleRef>(wrapper);
     }
 }
-
-#include "Frame.moc"

@@ -1,68 +1,53 @@
 #include "generated/Timer.h"
 #include "TimerInternal.h"
 
-#include <QTimer>
-#include <QObject>
-#include <utility>
-
-#define THIS ((TimerWithHandler*)_this)
+#define WRAPPER (reinterpret_cast<SignalWrapper*>(_this))
+#define TIMER_THIS (WRAPPER->getActual())
 
 namespace Timer
 {
-    class TimerWithHandler : public QTimer {
-        Q_OBJECT
-    private:
-        SignalRelay relay;
-    public:
-        explicit TimerWithHandler(const std::shared_ptr<SignalHandler>& handler) : relay(this, handler) {}
-        void setSignalMask(SignalMask newMask) {
-            relay.setSignalMask(newMask);
-        }
-    };
-
     bool Handle_isActive(HandleRef _this) {
-        return THIS->isActive();
+        return TIMER_THIS->isActive();
     }
 
     void Handle_setInterval(HandleRef _this, int32_t msec) {
-        THIS->setInterval(msec);
+        TIMER_THIS->setInterval(msec);
     }
 
     int32_t Handle_remainingTime(HandleRef _this) {
-        return THIS->remainingTime();
+        return TIMER_THIS->remainingTime();
     }
 
     void Handle_setSingleShot(HandleRef _this, bool state) {
-        THIS->setSingleShot(state);
+        TIMER_THIS->setSingleShot(state);
     }
 
     void Handle_setTimerType(HandleRef _this, TimerType type_) {
-        THIS->setTimerType(static_cast<Qt::TimerType>(type_));
+        TIMER_THIS->setTimerType(static_cast<Qt::TimerType>(type_));
     }
 
     void Handle_start(HandleRef _this, int32_t msec) {
-        THIS->start(msec);
+        TIMER_THIS->start(msec);
     }
 
     void Handle_start(HandleRef _this) {
-        THIS->start();
+        TIMER_THIS->start();
     }
 
     void Handle_stop(HandleRef _this) {
-        THIS->stop();
+        TIMER_THIS->stop();
     }
 
     void Handle_setSignalMask(HandleRef _this, SignalMask mask) {
-        THIS->setSignalMask(mask);
+        WRAPPER->setSignalMask(mask);
     }
 
     void Handle_dispose(HandleRef _this) {
-        delete THIS;
+        delete WRAPPER;
     }
 
     HandleRef create(const std::shared_ptr<SignalHandler>& handler) {
-        return reinterpret_cast<HandleRef>(new TimerWithHandler(handler));
+        const auto wrapper = new SignalWrapper(new QTimer(), handler);
+        return reinterpret_cast<HandleRef>(wrapper);
     }
 }
-
-#include "Timer.moc"

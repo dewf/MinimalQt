@@ -3,19 +3,26 @@
 #include "generated/StatusBar.h"
 #include "WidgetInternal.h"
 
+#include <QStatusBar>
+
 namespace StatusBar {
-    class SignalRelay : public Widget::SignalWrapper {
+    class SignalWrapper : public Widget::SignalWrapper {
         Q_OBJECT
     private:
+        QStatusBar *actual;
         std::shared_ptr<SignalHandler> handler;
         SignalMask lastMask = 0;
         std::vector<SignalMapItem<SignalMaskFlags>> signalMap = {
             { MessageChanged, SIGNAL(messageChanged(QString)), SLOT(onMessageChanged(QString)) },
         };
     public:
-        explicit SignalRelay(QObject *relayFor, const std::shared_ptr<SignalHandler> &handler) :
-            Widget::SignalWrapper(relayFor, SignalHandler::as_Widget_SignalHandler(handler)),
-            handler(handler) {}
+        QStatusBar *getActual() const {
+            return actual;
+        }
+        SignalWrapper(QStatusBar *existing, const std::shared_ptr<SignalHandler> &handler)
+            : Widget::SignalWrapper(existing, SignalHandler::as_Widget_SignalHandler(handler)),
+              actual(existing),
+              handler(handler) {}
         void setSignalMask(SignalMask newMask) {
             // update inherited signals
             Widget::SignalWrapper::setSignalMask(newMask);

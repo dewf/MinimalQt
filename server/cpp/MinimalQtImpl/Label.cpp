@@ -1,90 +1,97 @@
 #include "generated/Label.h"
 #include "LabelInternal.h"
 
-#include <QLabel>
 #include <utility>
 #include "util/convert.h"
 
 #include "PixmapInternal.h"
 
-#define THIS ((LabelWithHandler*)_this)
+#define WRAPPER (reinterpret_cast<SignalWrapper*>(_this))
+#define LABEL_THIS (WRAPPER->getActual())
 
 namespace Label
 {
-    class LabelWithHandler : public QLabel {
-        Q_OBJECT
-    private:
-        SignalRelay relay;
-    public:
-        explicit LabelWithHandler(const std::shared_ptr<SignalHandler>& handler) : relay(this, handler) {}
-        void setSignalMask(SignalMask newMask) {
-            relay.setSignalMask(newMask);
-        }
-    };
-
     void Handle_setAlignment(HandleRef _this, Alignment align) {
-        THIS->setAlignment(static_cast<Qt::AlignmentFlag>(align));
+        LABEL_THIS->setAlignment(static_cast<Qt::AlignmentFlag>(align));
     }
 
     bool Handle_hasSelectedText(HandleRef _this) {
-        return THIS->hasSelectedText();
+        return LABEL_THIS->hasSelectedText();
     }
 
     void Handle_setIndent(HandleRef _this, int32_t indent) {
-        THIS->setIndent(indent);
+        LABEL_THIS->setIndent(indent);
     }
 
     void Handle_setMargin(HandleRef _this, int32_t margin) {
-        THIS->setMargin(margin);
+        LABEL_THIS->setMargin(margin);
     }
 
     void Handle_setOpenExternalLinks(HandleRef _this, bool state) {
-        THIS->setOpenExternalLinks(state);
+        LABEL_THIS->setOpenExternalLinks(state);
     }
 
     void Handle_setPixmap(HandleRef _this, Pixmap::HandleRef pixmap) {
-        THIS->setPixmap(pixmap->qPixmap);
+        LABEL_THIS->setPixmap(pixmap->qPixmap);
     }
 
     void Handle_setScaledContents(HandleRef _this, bool state) {
-        THIS->setScaledContents(state);
+        LABEL_THIS->setScaledContents(state);
     }
 
     std::string Handle_selectedText(HandleRef _this) {
-        return THIS->selectedText().toStdString();
+        return LABEL_THIS->selectedText().toStdString();
     }
 
     void Handle_setText(HandleRef _this, const std::string& text) {
-        THIS->setText(QString::fromStdString(text));
+        LABEL_THIS->setText(QString::fromStdString(text));
     }
 
     void Handle_setTextFormat(HandleRef _this, TextFormat format) {
-        THIS->setTextFormat(static_cast<Qt::TextFormat>(format));
+        LABEL_THIS->setTextFormat(static_cast<Qt::TextFormat>(format));
     }
 
     void Handle_setTextInteractionFlags(HandleRef _this, TextInteractionFlags interactionFlags) {
-        THIS->setTextInteractionFlags(static_cast<Qt::TextInteractionFlags>(interactionFlags));
+        LABEL_THIS->setTextInteractionFlags(static_cast<Qt::TextInteractionFlags>(interactionFlags));
     }
 
     void Handle_setWordWrap(HandleRef _this, bool state) {
-        THIS->setWordWrap(state);
+        LABEL_THIS->setWordWrap(state);
     }
 
     void Handle_setSignalMask(HandleRef _this, SignalMask mask) {
-        THIS->setSignalMask(mask);
+        WRAPPER->setSignalMask(mask);
     }
 
     void Handle_dispose(HandleRef _this) {
-        delete THIS;
+        delete WRAPPER;
     }
 
     HandleRef create(const std::shared_ptr<SignalHandler>& handler) {
-        return reinterpret_cast<HandleRef>(new LabelWithHandler(handler));
+        const auto wrapper = new SignalWrapper(new QLabel(), handler);
+        return reinterpret_cast<HandleRef>(wrapper);
     }
+
+    class NullSignalHandler : public ServerObject, public SignalHandler, public Frame::SignalHandler, public Widget::SignalHandler, public Object::SignalHandler {
+    public:
+        // object
+        void destroyed(Object::HandleRef obj) override {}
+        void objectNameChanged(const std::string &objectName) override {}
+        // widget
+        Object::SignalHandler * inherited_Object_SignalHandler() override { return this; }
+        void customContextMenuRequested(Point pos) override {}
+        void windowIconChanged(Icon::HandleRef icon) override {}
+        void windowTitleChanged(const std::string &title) override {}
+        // frame
+        Widget::SignalHandler * inherited_Widget_SignalHandler() override { return this; }
+        // label
+        Frame::SignalHandler * inherited_Frame_SignalHandler() override { return this; }
+        void linkActivated(const std::string &link) override {}
+        void linkHovered(const std::string &link) override {}
+    };
 
     HandleRef createNoHandler() {
-        return reinterpret_cast<HandleRef>(new QLabel());
+        const auto wrapper = new SignalWrapper(new QLabel(), std::make_shared<NullSignalHandler>());
+        return reinterpret_cast<HandleRef>(wrapper);
     }
 }
-
-#include "Label.moc"

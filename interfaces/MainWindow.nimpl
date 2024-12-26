@@ -15,19 +15,13 @@ import TabWidget;
 namedbits SignalMask extends Widget.SignalMask {
     IconSizeChanged,
     TabifiedDockWidgetActivated,
-    ToolButtonStyleChanged,
-
-    // custom:
-    WindowClosed
+    ToolButtonStyleChanged
 }
 
 interface SignalHandler extends Widget.SignalHandler {
     void iconSizeChanged(Size iconSize);
     void tabifiedDockWidgetActivated(DockWidget.Handle dockWidget);
     void toolButtonStyleChanged(ToolButtonStyle style);
-    
-    // MainWindow (custom):
-    void windowClosed();
 }
 
 flags DockOptions {

@@ -83,5 +83,3 @@ namespace FileDialog
         return reinterpret_cast<HandleRef>(wrapper);
     }
 }
-
-#include "FileDialog.moc"

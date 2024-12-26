@@ -3,22 +3,29 @@
 #include "generated/StyledItemDelegate.h"
 #include "AbstractItemDelegateInternal.h"
 
+#include <QStyledItemDelegate>
+
 namespace StyledItemDelegate {
-    class SignalRelay : public AbstractItemDelegate::SignalRelay {
+    class SignalWrapper : public AbstractItemDelegate::SignalWrapper {
         Q_OBJECT
     private:
+        QStyledItemDelegate *actual;
         std::shared_ptr<SignalHandler> handler;
         SignalMask lastMask = 0;
         std::vector<SignalMapItem<SignalMaskFlags>> signalMap = {
             // none
         };
     public:
-        explicit SignalRelay(QObject *relayFor, const std::shared_ptr<SignalHandler> &handler) :
-            AbstractItemDelegate::SignalRelay(relayFor, SignalHandler::as_AbstractItemDelegate_SignalHandler(handler)),
-            handler(handler) {}
+        QStyledItemDelegate *getActual() const {
+            return actual;
+        }
+        SignalWrapper(QStyledItemDelegate *existing, const std::shared_ptr<SignalHandler> &handler)
+            : AbstractItemDelegate::SignalWrapper(existing, SignalHandler::as_AbstractItemDelegate_SignalHandler(handler)),
+              actual(existing),
+              handler(handler) {}
         void setSignalMask(SignalMask newMask) {
             // update inherited signals
-            AbstractItemDelegate::SignalRelay::setSignalMask(newMask);
+            AbstractItemDelegate::SignalWrapper::setSignalMask(newMask);
             // continue:
             if (newMask != lastMask) {
                 processChanges(lastMask, newMask, signalMap, actual, this);

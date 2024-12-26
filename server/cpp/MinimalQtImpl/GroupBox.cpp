@@ -38,5 +38,3 @@ namespace GroupBox {
         return reinterpret_cast<HandleRef>(wrapper);
     }
 }
-
-#include "GroupBox.moc"

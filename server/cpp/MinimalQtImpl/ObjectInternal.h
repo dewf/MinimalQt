@@ -16,15 +16,22 @@ namespace Object {
         std::shared_ptr<SignalHandler> handler;
         SignalMask lastMask = 0;
         std::vector<SignalMapItem<SignalMaskFlags>> signalMap = {
+            // see note in ctor
             // { Destroyed, SIGNAL(destroyed(QObject)), SLOT(onDestroyed(QObject)) },
             { ObjectNameChanged, SIGNAL(objectNameChanged(QString)), SLOT(onObjectNameChanged(QString)) }
         };
     public:
         ~SignalWrapper() override {
             if (!qtDestroyed) {
-                printf("C++ Object::SignalWrapper destroying QObject\n");
+                printf("C++ Object::SignalWrapper destroying contained QObject\n");
+                // disconnect signal first, so we don't create a loop
+                disconnect(destroyedConnection);
                 delete actual;
-                qtDestroyed = true;
+                qtDestroyed = true; // just being extra cautious since this is getting hairy ...
+                // but still fulfill our responsibilities to anybody who wanted it:
+                if (lastMask & Destroyed) {
+                    handler->destroyed(reinterpret_cast<HandleRef>(this));
+                }
             } else {
                 printf("C++ Object::SignalWrapper - qt object was already destroyed\n");
             }
@@ -35,7 +42,8 @@ namespace Object {
         // wrap existing:
         SignalWrapper(QObject *existing, const std::shared_ptr<SignalHandler> &handler) : actual(existing), handler(handler) {
             // we MUST connect the 'Destroyed' signal, so we know when to self-delete
-            // but it will be manually checked in the handler before invoking the handler
+            // but handler mask will be manually checked in our slot before invoking the supplied handler
+            destroyedConnection = connect(existing, SIGNAL(destroyed(QObject)), this, SLOT(onDestroyed(QObject)));
         }
         // purposely NOT virtual:
         void setSignalMask(SignalMask newMask) {
@@ -46,7 +54,11 @@ namespace Object {
         }
     public slots:
         void onDestroyed(QObject *obj) {
-            handler->destroyed((HandleRef)this);
+            // we always handle this signal, see note in ctor
+            if (lastMask & Destroyed) {
+                // but only pass along to handler if mask permits
+                handler->destroyed(reinterpret_cast<HandleRef>(this));
+            }
             qtDestroyed = true;
             // in the case the QObject gets deleted out from under us, no reason to continue to exist!
             // hopefully the client side is not confused about this!

@@ -182,5 +182,3 @@ namespace Action
         return reinterpret_cast<HandleRef>(wrapper);
     }
 }
-
-#include "Action.moc"

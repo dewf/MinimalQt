@@ -1,49 +1,35 @@
 #include "generated/ScrollArea.h"
+#include "ScrollAreaInternal.h"
 
-#include <QScrollArea>
-#include "util/SignalStuff.h"
 #include "util/convert.h"
 
-#define THIS ((ScrollAreaWithHandler*)_this)
-
-#include "ScrollAreaInternal.h"
+#define WRAPPER (reinterpret_cast<SignalWrapper*>(_this))
+#define SCROLLAREA_THIS (WRAPPER->getActual())
 
 namespace ScrollArea
 {
-    class ScrollAreaWithHandler : public QScrollArea {
-        Q_OBJECT
-    private:
-        SignalRelay relay;
-    public:
-        explicit ScrollAreaWithHandler(const std::shared_ptr<SignalHandler>& handler) : relay(this, handler) {}
-        void setSignalMask(SignalMask newMask) {
-            relay.setSignalMask(newMask);
-        }
-    };
-
     void Handle_setAlignment(HandleRef _this, Alignment align) {
-        THIS->setAlignment(static_cast<Qt::Alignment>(align));
+        SCROLLAREA_THIS->setAlignment(static_cast<Qt::Alignment>(align));
     }
 
     void Handle_setWidgetResizable(HandleRef _this, bool resizable) {
-        THIS->setWidgetResizable(resizable);
+        SCROLLAREA_THIS->setWidgetResizable(resizable);
     }
 
     void Handle_setWidget(HandleRef _this, Widget::HandleRef widget) {
-        THIS->setWidget(reinterpret_cast<QWidget *>(widget));
+        SCROLLAREA_THIS->setWidget(reinterpret_cast<QWidget *>(widget));
     }
 
     void Handle_setSignalMask(HandleRef _this, SignalMask mask) {
-        THIS->setSignalMask(mask);
+        WRAPPER->setSignalMask(mask);
     }
 
     void Handle_dispose(HandleRef _this) {
-        delete THIS;
+        delete WRAPPER;
     }
 
     HandleRef create(const std::shared_ptr<SignalHandler>& handler) {
-        return reinterpret_cast<HandleRef>(new ScrollAreaWithHandler(handler));
+        const auto wrapper = new SignalWrapper(new QScrollArea(), handler);
+        return reinterpret_cast<HandleRef>(wrapper);
     }
 }
-
-#include "ScrollArea.moc"

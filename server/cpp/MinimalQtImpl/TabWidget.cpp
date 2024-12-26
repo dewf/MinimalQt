@@ -1,100 +1,91 @@
 #include "generated/TabWidget.h"
 #include "TabWidgetInternal.h"
 
-#include <QObject>
-#include <QTabWidget>
 #include "util/convert.h"
 
-#define THIS ((TabWidgetWithHandler*)_this)
+#define WRAPPER (reinterpret_cast<SignalWrapper*>(_this))
+#define TABWIDGET_THIS (WRAPPER->getActual())
 
 namespace TabWidget
 {
-    class TabWidgetWithHandler : public QTabWidget {
-        Q_OBJECT
-    private:
-        SignalRelay relay;
-    public:
-        explicit TabWidgetWithHandler(const std::shared_ptr<SignalHandler>& handler) : relay(this, handler) {}
-        void setSignalMask(SignalMask newMask) {
-            relay.setSignalMask(newMask);
-        }
-    };
-
     int32_t Handle_count(HandleRef _this) {
-        return THIS->count();
+        return TABWIDGET_THIS->count();
     }
 
     void Handle_setCurrentIndex(HandleRef _this, int32_t index) {
-        THIS->setCurrentIndex(index);
+        TABWIDGET_THIS->setCurrentIndex(index);
     }
 
     void Handle_setDocumentMode(HandleRef _this, bool state) {
-        THIS->setDocumentMode(state);
+        TABWIDGET_THIS->setDocumentMode(state);
     }
 
     void Handle_setElideMode(HandleRef _this, TextElideMode mode) {
-        THIS->setElideMode(static_cast<Qt::TextElideMode>(mode));
+        TABWIDGET_THIS->setElideMode(static_cast<Qt::TextElideMode>(mode));
     }
 
     void Handle_setIconSize(HandleRef _this, Size size) {
-        THIS->setIconSize(toQSize(size));
+        TABWIDGET_THIS->setIconSize(toQSize(size));
     }
 
     void Handle_setMovable(HandleRef _this, bool state) {
-        THIS->setMovable(state);
+        TABWIDGET_THIS->setMovable(state);
     }
 
     void Handle_setTabBarAutoHide(HandleRef _this, bool state) {
-        THIS->setTabBarAutoHide(state);
+        TABWIDGET_THIS->setTabBarAutoHide(state);
     }
 
     void Handle_setTabPosition(HandleRef _this, TabPosition position) {
-        THIS->setTabPosition(static_cast<QTabWidget::TabPosition>(position));
+        TABWIDGET_THIS->setTabPosition(static_cast<QTabWidget::TabPosition>(position));
     }
 
     void Handle_setTabShape(HandleRef _this, TabShape shape) {
-        THIS->setTabShape(static_cast<QTabWidget::TabShape>(shape));
+        TABWIDGET_THIS->setTabShape(static_cast<QTabWidget::TabShape>(shape));
     }
 
     void Handle_setTabsClosable(HandleRef _this, bool state) {
-        THIS->setTabsClosable(state);
+        TABWIDGET_THIS->setTabsClosable(state);
     }
 
     void Handle_setUsesScrollButtons(HandleRef _this, bool state) {
-        THIS->setUsesScrollButtons(state);
+        TABWIDGET_THIS->setUsesScrollButtons(state);
     }
 
     int Handle_addTab(HandleRef _this, Widget::HandleRef page, const std::string& label) {
-        return THIS->addTab(reinterpret_cast<QWidget *>(page), QString::fromStdString(label));
+        return TABWIDGET_THIS->addTab(reinterpret_cast<QWidget *>(page), QString::fromStdString(label));
     }
 
     int Handle_insertTab(HandleRef _this, int32_t index, Widget::HandleRef page, const std::string& label) {
-        return THIS->insertTab(index, reinterpret_cast<QWidget *>(page), QString::fromStdString(label));
+        return TABWIDGET_THIS->insertTab(index, reinterpret_cast<QWidget *>(page), QString::fromStdString(label));
     }
 
-    Widget::HandleRef Handle_widgetAt(HandleRef _this, int32_t index) {
-        return reinterpret_cast<Widget::HandleRef>(THIS->widget(index));
+    Widget::HandleRef Handle_widgetAt(HandleRef _this, int32_t index, const std::shared_ptr<Widget::SignalHandler>& handler) {
+        // hmm, how would this work?
+        // like the C# problem, we'll need a global lookup table of wrappers, so we can look them up by internal qobject *?
+        // I guess for now we'll re-wrap it, but it seems very wrong:
+        const auto wrapper = new Widget::SignalWrapper(TABWIDGET_THIS->widget(index), handler);
+        return reinterpret_cast<Widget::HandleRef>(wrapper);
     }
 
     void Handle_clear(HandleRef _this) {
-        THIS->clear();
+        TABWIDGET_THIS->clear();
     }
 
     void Handle_removeTab(HandleRef _this, int32_t index) {
-        THIS->removeTab(index);
+        TABWIDGET_THIS->removeTab(index);
     }
 
     void Handle_setSignalMask(HandleRef _this, SignalMask mask) {
-        THIS->setSignalMask(mask);
+        WRAPPER->setSignalMask(mask);
     }
 
     void Handle_dispose(HandleRef _this) {
-        delete THIS;
+        delete WRAPPER;
     }
 
     HandleRef create(const std::shared_ptr<SignalHandler>& handler) {
-        return reinterpret_cast<HandleRef>(new TabWidgetWithHandler(handler));
+        const auto wrapper = new SignalWrapper(new QTabWidget(), handler);
+        return reinterpret_cast<HandleRef>(wrapper);
     }
 }
-
-#include "TabWidget.moc"

@@ -3,24 +3,30 @@
 #include "generated/MessageBox.h"
 #include "DialogInternal.h"
 
+#include <QMessageBox>
 #include <QAbstractButton>
 
 namespace MessageBox {
-    class SignalRelay : public Dialog::SignalRelay {
+    class SignalWrapper : public Dialog::SignalWrapper {
         Q_OBJECT
     private:
+        QMessageBox *actual;
         std::shared_ptr<SignalHandler> handler;
         SignalMask lastMask = 0;
         std::vector<SignalMapItem<SignalMaskFlags>> signalMap = {
             { ButtonClicked, SIGNAL(buttonClicked(QAbstractButton)), SLOT(onButtonClicked(QAbstractButton)) }
         };
     public:
-        explicit SignalRelay(QObject *relayFor, const std::shared_ptr<SignalHandler> &handler) :
-            Dialog::SignalRelay(relayFor, SignalHandler::as_Dialog_SignalHandler(handler)),
-            handler(handler) {}
+        QMessageBox *getActual() const {
+            return actual;
+        }
+        SignalWrapper(QMessageBox *existing, const std::shared_ptr<SignalHandler>& handler)
+            : Dialog::SignalWrapper(existing, SignalHandler::as_Dialog_SignalHandler(handler)),
+              actual(existing),
+              handler(handler) {}
         void setSignalMask(SignalMask newMask) {
             // update inherited signals
-            Dialog::SignalRelay::setSignalMask(newMask);
+            Dialog::SignalWrapper::setSignalMask(newMask);
             // ours:
             if (newMask != lastMask) {
                 processChanges(lastMask, newMask, signalMap, actual, this);

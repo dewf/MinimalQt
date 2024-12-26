@@ -72,5 +72,3 @@ namespace CalendarWidget
         return reinterpret_cast<HandleRef>(wrapper);
     }
 }
-
-#include "CalendarWidget.moc"

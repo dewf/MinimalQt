@@ -39,7 +39,7 @@ opaque Handle extends Widget.Handle {
 
     // methods =================================
     void clear();
-    Action.Handle addSeparator();
+    Action.Handle addSeparator(Action.SignalHandler handler);
     void popup(Point p);
 
     // signalmask ==============================

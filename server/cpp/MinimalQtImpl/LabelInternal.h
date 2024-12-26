@@ -3,10 +3,13 @@
 #include "generated/Label.h"
 #include "FrameInternal.h"
 
+#include <QLabel>
+
 namespace Label {
-    class SignalRelay : public Frame::SignalRelay {
+    class SignalWrapper : public Frame::SignalWrapper {
         Q_OBJECT
     private:
+        QLabel *actual;
         std::shared_ptr<SignalHandler> handler;
         SignalMask lastMask = 0;
         std::vector<SignalMapItem<SignalMaskFlags>> signalMap = {
@@ -14,12 +17,16 @@ namespace Label {
             { LinkHovered, SIGNAL(linkHovered(QString)), SLOT(onLinkHovered(QString)) },
         };
     public:
-        explicit SignalRelay(QObject *relayFor, const std::shared_ptr<SignalHandler> &handler) :
-            Frame::SignalRelay(relayFor, SignalHandler::as_Frame_SignalHandler(handler)),
-            handler(handler) {}
+        QLabel *getActual() const {
+            return actual;
+        }
+        SignalWrapper(QLabel *existing, const std::shared_ptr<SignalHandler>& handler)
+            : Frame::SignalWrapper(existing, SignalHandler::as_Frame_SignalHandler(handler)),
+              actual(existing),
+              handler(handler) {}
         void setSignalMask(SignalMask newMask) {
             // update inherited signals
-            Frame::SignalRelay::setSignalMask(newMask);
+            Frame::SignalWrapper::setSignalMask(newMask);
             // ours:
             if (newMask != lastMask) {
                 processChanges(lastMask, newMask, signalMap, actual, this);

@@ -47,12 +47,6 @@ Handle create(SignalHandler handler);
 
 // subclassing ==============================================
 
-opaque Interior extends Handle {
-    void invalidateColumnsFilter();
-    void invalidateRowsFilter();
-    void invalidateFilter();
-}
-
 namedbits MethodMask {
     FilterAcceptsColumn,
     FilterAcceptsRow,
@@ -65,4 +59,12 @@ interface MethodDelegate {
     bool lessThan(ModelIndex.Handle sourceLeft, ModelIndex.Handle sourceRight);
 }
 
-Interior createSubclassed(SignalHandler handler, MethodDelegate methodDelegate, MethodMask methodMask);
+opaque Delegated extends Handle {
+    void invalidateColumnsFilter();
+    void invalidateRowsFilter();
+    void invalidateFilter();
+
+    void setDelegate(MethodDelegate methodDelegate, MethodMask methodMask);
+}
+
+Delegated createDelegated(SignalHandler handler);

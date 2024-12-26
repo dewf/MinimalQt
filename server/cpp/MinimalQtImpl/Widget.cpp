@@ -819,5 +819,3 @@ namespace Widget
         return reinterpret_cast<DelegatedRef>(wrapper);
     }
 }
-
-#include "Widget.moc"

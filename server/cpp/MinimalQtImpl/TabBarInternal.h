@@ -3,10 +3,13 @@
 #include "generated/TabBar.h"
 #include "WidgetInternal.h"
 
+#include <QTabBar>
+
 namespace TabBar {
-    class SignalRelay : public Widget::SignalWrapper {
+    class SignalWrapper : public Widget::SignalWrapper {
         Q_OBJECT
     private:
+        QTabBar *actual;
         std::shared_ptr<SignalHandler> handler;
         SignalMask lastMask = 0;
         std::vector<SignalMapItem<SignalMaskFlags>> signalMap = {
@@ -17,9 +20,13 @@ namespace TabBar {
             { TabMoved, SIGNAL(tabMoved(int,int)), SLOT(onTabMoved(int,int)) }
         };
     public:
-        explicit SignalRelay(QObject *relayFor, const std::shared_ptr<SignalHandler> &handler) :
-            Widget::SignalWrapper(relayFor, SignalHandler::as_Widget_SignalHandler(handler)),
-            handler(handler) {}
+        QTabBar *getActual() const {
+            return actual;
+        }
+        SignalWrapper(QTabBar *existing, const std::shared_ptr<SignalHandler> &handler)
+            : Widget::SignalWrapper(existing, SignalHandler::as_Widget_SignalHandler(handler)),
+              actual(existing),
+              handler(handler) {}
         void setSignalMask(SignalMask newMask) {
             // update inherited signals
             Widget::SignalWrapper::setSignalMask(newMask);

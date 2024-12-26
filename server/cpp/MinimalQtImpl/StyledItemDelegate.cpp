@@ -1,45 +1,28 @@
 #include "generated/StyledItemDelegate.h"
 #include "StyledItemDelegateInternal.h"
 
-#include <QStyledItemDelegate>
-
-#define THIS ((StyledItemDelegateWithHandler*)_this)
+#define WRAPPER (reinterpret_cast<SignalWrapper*>(_this))
+#define ITEMDELEGATE_THIS (WRAPPER->getActual())
 
 namespace StyledItemDelegate
 {
-    class StyledItemDelegateWithHandler : public QStyledItemDelegate {
-        Q_OBJECT
-    private:
-        SignalRelay relay;
-    public:
-        explicit StyledItemDelegateWithHandler(const std::shared_ptr<SignalHandler>& handler) : relay(this, handler) {}
-        void setSignalMask(SignalMask newMask) {
-            relay.setSignalMask(newMask);
-        }
-    };
-
     void Handle_setSignalMask(HandleRef _this, SignalMask mask) {
-        THIS->setSignalMask(mask);
+        WRAPPER->setSignalMask(mask);
     }
 
     void Handle_dispose(HandleRef _this) {
-        delete THIS;
+        delete WRAPPER;
     }
 
     // subclass stuff ============================================
 
-    class StyledItemDelegateSubclass : public StyledItemDelegateWithHandler {
+    class Delegated : public QStyledItemDelegate {
     private:
         std::shared_ptr<MethodDelegate> methodDelegate;
         MethodMask methodMask;
     public:
-        StyledItemDelegateSubclass(
-                const std::shared_ptr<MethodDelegate> &methodDelegate,
-                MethodMask methodMask,
-                const std::shared_ptr<SignalHandler> &handler)
-                : StyledItemDelegateWithHandler(handler),
-                  methodDelegate(methodDelegate),
-                  methodMask(methodMask) {}
+        Delegated(const std::shared_ptr<MethodDelegate> &methodDelegate, MethodMask methodMask)
+            : methodDelegate(methodDelegate), methodMask(methodMask) {}
     protected:
         QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const override {
             if (methodMask & CreateEditor) {
@@ -79,8 +62,8 @@ namespace StyledItemDelegate
     };
 
     HandleRef createdSubclassed(const std::shared_ptr<MethodDelegate>& methodDelegate, MethodMask methodMask, const std::shared_ptr<SignalHandler>& handler) {
-        return reinterpret_cast<HandleRef>(new StyledItemDelegateSubclass(methodDelegate, methodMask, handler));
+        const auto delegated = new Delegated(methodDelegate, methodMask);
+        const auto wrapper = new SignalWrapper(delegated, handler);
+        return reinterpret_cast<HandleRef>(wrapper);
     }
 }
-
-#include "StyledItemDelegate.moc"

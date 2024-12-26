@@ -3,10 +3,13 @@
 #include "generated/SortFilterProxyModel.h"
 #include "AbstractProxyModelInternal.h"
 
+#include <QSortFilterProxyModel>
+
 namespace SortFilterProxyModel {
-    class SignalRelay : public AbstractProxyModel::SignalRelay {
+    class SignalWrapper : public AbstractProxyModel::SignalWrapper {
         Q_OBJECT
     private:
+        QSortFilterProxyModel *actual;
         std::shared_ptr<SignalHandler> handler;
         SignalMask lastMask = 0;
         std::vector<SignalMapItem<SignalMaskFlags>> signalMap = {
@@ -19,12 +22,16 @@ namespace SortFilterProxyModel {
             { SortRoleChanged, SIGNAL(sortRoleChanged(int)), SLOT(onSortRoleChanged(int)) },
         };
     public:
-        explicit SignalRelay(QObject *relayFor, const std::shared_ptr<SignalHandler> &handler)
-            : AbstractProxyModel::SignalRelay(relayFor, SignalHandler::as_AbstractProxyModel_SignalHandler(handler)),
+        QSortFilterProxyModel *getActual() const {
+            return actual;
+        }
+        SignalWrapper(QSortFilterProxyModel *existing, const std::shared_ptr<SignalHandler> &handler)
+            : AbstractProxyModel::SignalWrapper(existing, SignalHandler::as_AbstractProxyModel_SignalHandler(handler)),
+              actual(existing),
               handler(handler) {}
         void setSignalMask(SignalMask newMask) {
             // update inherited signals
-            AbstractProxyModel::SignalRelay::setSignalMask(newMask);
+            AbstractProxyModel::SignalWrapper::setSignalMask(newMask);
             // continue:
             if (newMask != lastMask) {
                 processChanges(lastMask, newMask, signalMap, actual, this);

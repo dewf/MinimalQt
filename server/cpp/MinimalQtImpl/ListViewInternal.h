@@ -3,24 +3,29 @@
 #include "generated/ListView.h"
 #include "AbstractItemViewInternal.h"
 
-#include <QModelIndex>
+#include <QListView>
 
 namespace ListView {
-    class SignalRelay : public AbstractItemView::SignalRelay {
+    class SignalWrapper : public AbstractItemView::SignalWrapper {
         Q_OBJECT
     private:
+        QListView *actual;
         std::shared_ptr<SignalHandler> handler;
         SignalMask lastMask = 0;
         std::vector<SignalMapItem<SignalMaskFlags>> signalMap = {
             { IndexesMoved, SIGNAL(indexesMoved(QModelIndexList)), SLOT(onIndexesMoved(QModelIndexList)) },
         };
     public:
-        explicit SignalRelay(QObject *relayFor, const std::shared_ptr<SignalHandler> &handler)
-            : AbstractItemView::SignalRelay(relayFor, SignalHandler::as_AbstractItemView_SignalHandler(handler)),
+        QListView *getActual() const {
+            return actual;
+        }
+        SignalWrapper(QListView *existing, const std::shared_ptr<SignalHandler> &handler)
+            : AbstractItemView::SignalWrapper(existing, SignalHandler::as_AbstractItemView_SignalHandler(handler)),
+              actual(existing),
               handler(handler) {}
         void setSignalMask(SignalMask newMask) {
             // update inherited signals
-            AbstractItemView::SignalRelay::setSignalMask(newMask);
+            AbstractItemView::SignalWrapper::setSignalMask(newMask);
             // ours:
             if (newMask != lastMask) {
                 processChanges(lastMask, newMask, signalMap, actual, this);

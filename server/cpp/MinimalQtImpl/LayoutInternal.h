@@ -5,18 +5,25 @@
 
 #include "util/SignalStuff.h"
 
+#include <QLayout>
+
 namespace Layout {
-    class SignalRelay : public Object::SignalWrapper {
+    class SignalWrapper : public Object::SignalWrapper {
         Q_OBJECT
     private:
+        QLayout *actual;
         std::shared_ptr<SignalHandler> handler;
         SignalMask lastMask = 0;
         std::vector<SignalMapItem<SignalMaskFlags>> signalMap = {
             // none
         };
     public:
-        explicit SignalRelay(QObject *relayFor, const std::shared_ptr<SignalHandler> &handler)
-            : Object::SignalWrapper(relayFor, SignalHandler::as_Object_SignalHandler(handler)),
+        QLayout *getActual() const {
+            return actual;
+        }
+        SignalWrapper(QLayout *existing, const std::shared_ptr<SignalHandler>& handler)
+            : Object::SignalWrapper(existing, SignalHandler::as_Object_SignalHandler(handler)),
+              actual(existing),
               handler(handler) {}
         void setSignalMask(SignalMask newMask) {
             // update inherited signals

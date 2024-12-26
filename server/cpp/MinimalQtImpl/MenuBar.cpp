@@ -1,64 +1,52 @@
 #include "generated/MenuBar.h"
 #include "MenuBarInternal.h"
 
-#include <QObject>
 #include <QMenuBar>
 
-#define THIS ((MenuBarWithHandler*)_this)
+#define WRAPPER (reinterpret_cast<SignalWrapper*>(_this))
+#define MENUBAR_THIS (WRAPPER->getActual())
 
 namespace MenuBar
 {
-    class MenuBarWithHandler : public QMenuBar {
-        Q_OBJECT
-    private:
-        SignalRelay relay;
-    public:
-        explicit MenuBarWithHandler(const std::shared_ptr<SignalHandler>& handler) : relay(this, handler) {}
-        void setSignalMask(SignalMask newMask) {
-            relay.setSignalMask(newMask);
-        }
-    };
-
     bool Handle_isDefaultUp(HandleRef _this) {
-        return THIS->isDefaultUp();
+        return MENUBAR_THIS->isDefaultUp();
     }
 
     void Handle_setDefaultUp(HandleRef _this, bool state) {
-        THIS->setDefaultUp(state);
+        MENUBAR_THIS->setDefaultUp(state);
     }
 
     bool Handle_isNativeMenuBar(HandleRef _this) {
-        return THIS->isNativeMenuBar();
+        return MENUBAR_THIS->isNativeMenuBar();
     }
 
     void Handle_setNativeMenuBar(HandleRef _this, bool state) {
-        THIS->setNativeMenuBar(state);
+        MENUBAR_THIS->setNativeMenuBar(state);
     }
 
     void Handle_clear(HandleRef _this) {
-        THIS->clear();
+        MENUBAR_THIS->clear();
     }
 
     Action::HandleRef Handle_addMenu(HandleRef _this, Menu::HandleRef menu) {
-        const auto ret = THIS->addMenu(reinterpret_cast<QMenu*>(menu));
+        const auto ret = MENUBAR_THIS->addMenu(reinterpret_cast<QMenu*>(menu));
         return reinterpret_cast<Action::HandleRef>(ret);
     }
 
     Action::HandleRef Handle_addSeparator(HandleRef _this) {
-        return reinterpret_cast<Action::HandleRef>(THIS->addSeparator());
+        return reinterpret_cast<Action::HandleRef>(MENUBAR_THIS->addSeparator());
     }
 
     void Handle_setSignalMask(HandleRef _this, SignalMask mask) {
-        THIS->setSignalMask(mask);
+        WRAPPER->setSignalMask(mask);
     }
 
     void Handle_dispose(HandleRef _this) {
-        delete THIS;
+        delete WRAPPER;
     }
 
     HandleRef create(const std::shared_ptr<SignalHandler>& handler) {
-        return reinterpret_cast<HandleRef>(new MenuBarWithHandler(handler));
+        const auto wrapper = new SignalWrapper(new QMenuBar(), handler);
+        return reinterpret_cast<HandleRef>(wrapper);
     }
 }
-
-#include "MenuBar.moc"

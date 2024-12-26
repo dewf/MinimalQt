@@ -3,10 +3,13 @@
 #include "generated/TreeView.h"
 #include "AbstractItemViewInternal.h"
 
+#include <QTreeView>
+
 namespace TreeView {
-    class SignalRelay : public AbstractItemView::SignalRelay {
+    class SignalWrapper : public AbstractItemView::SignalWrapper {
         Q_OBJECT
     private:
+        QTreeView *actual;
         std::shared_ptr<SignalHandler> handler;
         SignalMask lastMask = 0;
         std::vector<SignalMapItem<SignalMaskFlags>> signalMap = {
@@ -14,12 +17,16 @@ namespace TreeView {
             { Expanded, SIGNAL(expanded(QModelIndex)), SLOT(onExpanded(QModelIndex)) },
         };
     public:
-        explicit SignalRelay(QObject *relayFor, const std::shared_ptr<SignalHandler> &handler)
-            : AbstractItemView::SignalRelay(relayFor, SignalHandler::as_AbstractItemView_SignalHandler(handler)),
+        QTreeView *getActual() const {
+            return actual;
+        }
+        SignalWrapper(QTreeView *existing, const std::shared_ptr<SignalHandler> &handler)
+            : AbstractItemView::SignalWrapper(existing, SignalHandler::as_AbstractItemView_SignalHandler(handler)),
+              actual(existing),
               handler(handler) {}
         void setSignalMask(SignalMask newMask) {
             // update inherited signals
-            AbstractItemView::SignalRelay::setSignalMask(newMask);
+            AbstractItemView::SignalWrapper::setSignalMask(newMask);
             // ours:
             if (newMask != lastMask) {
                 processChanges(lastMask, newMask, signalMap, actual, this);

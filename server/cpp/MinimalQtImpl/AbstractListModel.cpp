@@ -15,25 +15,9 @@
 
 namespace AbstractListModel
 {
-    // class AbstractListModelWithHandler : public QAbstractListModel {
-    //     Q_OBJECT
-    // private:
-    //     SignalRelay signalManager;
-    // public:
-    //     explicit AbstractListModelWithHandler(const std::shared_ptr<SignalHandler>& handler) : signalManager(this, handler) {}
-    //     void setSignalMask(SignalMask newMask) {
-    //         signalManager.setSignalMask(newMask);
-    //     }
-    // };
-    //
-    // void Handle_setSignalMask(HandleRef _this, SignalMask mask) {
-    //     THIS->setSignalMask(mask);
-    // }
-    //
-    // void Handle_dispose(HandleRef _this) {
-    //     printf("AbstractListModel::Handle_dispose() called (vs. subclass dispose) ... honoring for now, but this might be a bug\n");
-    //     delete THIS;
-    // }
+    void Handle_setSignalMask(HandleRef _this, SignalMask mask) {
+        WRAPPER->setSignalMask(mask);
+    }
 
     // subclass stuff =========================================================
 
@@ -167,10 +151,9 @@ namespace AbstractListModel
     }
 
     InteriorRef createSubclassed(const std::shared_ptr<SignalHandler>& handler, const std::shared_ptr<MethodDelegate>& methodDelegate, MethodMask methodMask) {
-        const auto wrapper = new Delegated(methodDelegate, methodMask);
-        return reinterpret_cast<InteriorRef>(new SignalWrapper(wrapper, handler));
+        const auto model = new Delegated(methodDelegate, methodMask);
+        const auto wrapper = new SignalWrapper(model, handler);
+        return reinterpret_cast<InteriorRef>(wrapper);
     }
 }
 #pragma clang diagnostic pop
-
-#include "AbstractListModel.moc"

@@ -4,11 +4,13 @@
 #include "AbstractButtonInternal.h"
 
 #include "util/SignalStuff.h"
+#include <QPushButton>
 
 namespace PushButton {
-    class SignalRelay : public AbstractButton::SignalRelay {
+    class SignalWrapper : public AbstractButton::SignalWrapper {
         Q_OBJECT
     private:
+        QPushButton *actual;
         std::shared_ptr<SignalHandler> handler;
         SignalMask lastMask = 0;
         std::vector<SignalMapItem<SignalMaskFlags>> signalMap = {
@@ -16,12 +18,16 @@ namespace PushButton {
             // .... (none)
         };
     public:
-        explicit SignalRelay(QObject *relayFor, const std::shared_ptr<SignalHandler> &handler) :
-            AbstractButton::SignalRelay(relayFor, SignalHandler::as_AbstractButton_SignalHandler(handler)),
-            handler(handler) {}
+        QPushButton *getActual() const {
+            return actual;
+        }
+        SignalWrapper(QPushButton *existing, const std::shared_ptr<SignalHandler> &handler)
+            : AbstractButton::SignalWrapper(existing, SignalHandler::as_AbstractButton_SignalHandler(handler)),
+              actual(existing),
+              handler(handler) {}
         void setSignalMask(SignalMask newMask) {
             // update inherited signals
-            AbstractButton::SignalRelay::setSignalMask(newMask);
+            AbstractButton::SignalWrapper::setSignalMask(newMask);
             // continue:
             if (newMask != lastMask) {
                 processChanges(lastMask, newMask, signalMap, actual, this);
