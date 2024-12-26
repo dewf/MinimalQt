@@ -12,10 +12,14 @@ interface SignalHandler {
 
 @nodispose
 opaque Handle {
+    // properties =======================
     string objectName();
     void setObjectName(string name);
 
+    // methods ==========================
+    void setParent(Handle parent);
     void dumpObjectTree();
+
     // no setSignalMask because abstract
 }
 

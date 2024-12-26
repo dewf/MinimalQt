@@ -14,6 +14,10 @@ namespace Object
         OBJECT_THIS->setObjectName(QString::fromStdString(name));
     }
 
+    void Handle_setParent(HandleRef _this, HandleRef parent) {
+        OBJECT_THIS->setParent(reinterpret_cast<QObject*>(parent));
+    }
+
     void Handle_dumpObjectTree(HandleRef _this) {
         OBJECT_THIS->dumpObjectTree();
     }

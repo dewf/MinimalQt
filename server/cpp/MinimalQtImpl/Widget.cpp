@@ -436,10 +436,6 @@ namespace Widget
         WIDGET_THIS->addAction(reinterpret_cast<QAction *>(action));
     }
 
-    void Handle_setParent(HandleRef _this, HandleRef parent) {
-        WIDGET_THIS->setParent(reinterpret_cast<QWidget *>(parent));
-    }
-
     HandleRef Handle_getWindow(HandleRef _this) {
         return reinterpret_cast<HandleRef>(WIDGET_THIS->window());
     }
