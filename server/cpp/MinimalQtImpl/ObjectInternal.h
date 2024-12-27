@@ -3,11 +3,14 @@
 #include "generated/Object.h"
 #include "util/SignalStuff.h"
 
+#include <map>
 #include <QObject>
 
 namespace Object {
     class SignalWrapper : public QObject { // for signal-related stuff, this is not a QObject subclass per se
         Q_OBJECT
+    private:
+        static std::map<QObject*, SignalWrapper*> objectToWrapperMap; // so we can easily fetch the wrapper when a Qt method returns its bare QObject-derived pointers
     protected:
         bool qtDestroyed = false;
     private:
@@ -28,8 +31,14 @@ namespace Object {
             // we MUST connect the 'Destroyed' signal, so we know when to self-delete
             // but handler mask will be manually checked in our slot before invoking the supplied handler
             destroyedConnection = connect(existing, SIGNAL(destroyed(QObject*)), this, SLOT(onDestroyed(QObject*)));
+
+            // add the mapping so we can lookup wrappers by QObject*
+            objectToWrapperMap[existing] = this;
         }
         ~SignalWrapper() override {
+            // remove mapping ASAP, in case the 'destroyed' handler tries to do something silly?
+            objectToWrapperMap.erase(actual);
+            // etc
             if (!qtDestroyed) {
                 // printf("C++ Object::SignalWrapper destroying contained QObject\n");
                 // disconnect signal first, so we don't create a loop
@@ -67,5 +76,10 @@ namespace Object {
         void onObjectNameChanged(const QString& name) const {
             handler->objectNameChanged(name.toStdString());
         }
+
+    // friend funcs:
+        friend SignalWrapper *wrapperForQObject(QObject *obj);
     };
+
+    SignalWrapper *wrapperForQObject(QObject *obj);
 }

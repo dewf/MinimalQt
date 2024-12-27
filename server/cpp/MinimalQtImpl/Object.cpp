@@ -6,6 +6,15 @@
 
 namespace Object
 {
+    std::map<QObject*, SignalWrapper*> SignalWrapper::objectToWrapperMap;
+
+    SignalWrapper *wrapperForQObject(QObject *obj) {
+        if (SignalWrapper::objectToWrapperMap.contains(obj)) {
+            return SignalWrapper::objectToWrapperMap[obj];
+        }
+        return nullptr;
+    }
+
     std::string Handle_objectName(HandleRef _this) {
         return OBJECT_THIS->objectName().toStdString();
     }

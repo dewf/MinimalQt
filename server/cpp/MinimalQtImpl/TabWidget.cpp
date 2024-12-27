@@ -62,11 +62,12 @@ namespace TabWidget
         return TABWIDGET_THIS->insertTab(index, pageWrapper->getActual(), QString::fromStdString(label));
     }
 
-    Widget::HandleRef Handle_widgetAt(HandleRef _this, int32_t index, const std::shared_ptr<Widget::SignalHandler>& handler) {
-        // hmm, how would this work?
-        // like the C# problem, we'll need a global lookup table of wrappers, so we can look them up by internal qobject *?
-        // I guess for now we'll re-wrap it, but it seems very wrong:
-        const auto wrapper = new Widget::SignalWrapper(TABWIDGET_THIS->widget(index), handler);
+    Widget::HandleRef Handle_widgetAt(HandleRef _this, int32_t index) {
+        const auto wrapper = wrapperForQObject(TABWIDGET_THIS->widget(index));
+        // technically the wrapper is only guaranteed to be an Object::SignalWrapper, but how could it be in the tabwidget if not a Widget wrapper?
+        if (wrapper == nullptr) {
+            printf("warning: TabWidget::Handle_widgetAt - couldn't find wrapper for [%p], wat do?\n", wrapper);
+        }
         return reinterpret_cast<Widget::HandleRef>(wrapper);
     }
 
