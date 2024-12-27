@@ -232,6 +232,10 @@ opaque Handle extends Object.Handle {
     void update(Rect rect);
 
     void setLayout(Layout.Handle layout);
+
+    // as of right now this will technically be broken, if Qt internally creates a layout we don't know about (eg for QMainWindow)
+    // if that ends up being a problem, we'll have to do some fancy footwork around this to create a client-side wrapper on demand
+    // maybe a function like layoutHasWrapper() to be called first, before calling getLayout()?
     Layout.Handle getLayout();
 
     Point mapToGlobal(Point p);

@@ -492,7 +492,11 @@ namespace Widget
     }
 
     Layout::HandleRef Handle_getLayout(HandleRef _this) {
-        return reinterpret_cast<Layout::HandleRef>(WIDGET_THIS->layout());
+        const auto wrapper = wrapperForQObject(WIDGET_THIS->layout());
+        if (!wrapper) {
+            printf("warning: Layout::Handle_getLayout() could not find a wrapper - this is a layout the client side does not know about. returning null!\n");
+        }
+        return reinterpret_cast<Layout::HandleRef>(wrapper);
     }
 
     Point Handle_mapToGlobal(HandleRef _this, Point p) {
