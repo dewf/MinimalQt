@@ -1,4 +1,7 @@
 #include "generated/MainWindow.h"
+
+#include <qevent.h>
+
 #include "MainWindowInternal.h"
 #include "MenuBarInternal.h"
 
@@ -110,5 +113,50 @@ namespace MainWindow
     HandleRef create(const std::shared_ptr<SignalHandler>& handler) {
         const auto wrapper = new SignalWrapper(new QMainWindow(), handler);
         return reinterpret_cast<HandleRef>(wrapper);
+    }
+
+    // delegated =============================================
+    class Delegated : public QMainWindow {
+    private:
+        std::shared_ptr<DelegatedMethods> methods;
+        DelegatedMethodMask mask = 0;
+    public:
+        void setDelegate(const std::shared_ptr<DelegatedMethods>& methods, DelegatedMethodMask mask) {
+            this->methods = methods;
+            this->mask = mask;
+        }
+    protected:
+        void closeEvent(QCloseEvent *event) override {
+            bool canClose = true;
+            if (mask & CanClose) {
+                canClose = methods->canClose();
+            }
+            if (canClose) {
+                // definitely going to close
+                if (mask & Closed) {
+                    methods->closed();
+                }
+            } else {
+                // ignore close event
+                event->ignore();
+            }
+        }
+    };
+
+    void Delegated_setDelegate(DelegatedRef _this, const std::shared_ptr<DelegatedMethods>& methods, DelegatedMethodMask mask) {
+        if (const auto delegated = dynamic_cast<Delegated*>(WRAPPER->getActual()); delegated != nullptr) {
+            delegated->setDelegate(methods, mask);
+        } else {
+            printf("warning: MainWindow::Delegated_setDelegate: dynamic cast failed\n");
+        }
+    }
+
+    void Delegated_dispose(DelegatedRef _this) {
+        delete WRAPPER;
+    }
+
+    DelegatedRef createDelegated(const std::shared_ptr<SignalHandler>& handler) {
+        const auto wrapper = new SignalWrapper(new Delegated(), handler);
+        return reinterpret_cast<DelegatedRef>(wrapper);
     }
 }

@@ -72,3 +72,21 @@ opaque Handle extends Widget.Handle {
 }
 
 Handle create(SignalHandler handler);
+
+// delegated ==========================================================
+
+namedbits DelegatedMethodMask {
+    CanClose,
+    Closed
+}
+
+interface DelegatedMethods {
+    bool canClose();
+    void closed();
+}
+
+opaque Delegated extends Handle {
+    void setDelegate(DelegatedMethods methods, DelegatedMethodMask mask);
+}
+
+Delegated createDelegated(SignalHandler handler);
