@@ -23,16 +23,22 @@ enum Direction {
 }
 
 opaque Handle extends Layout.Handle {
+    static {
+        options AddWidgetOptions {
+            int stretch;
+            Alignment align;
+        }
+        options AddLayoutOptions {
+            int stretch;
+        }
+    }
     void setDirection(Direction dir);
 
     // item adding:
     void addSpacing(int size);
     void addStretch(int stretch);
-    void addWidget(Widget.Handle widget);
-    void addWidget(Widget.Handle widget, int stretch);
-    void addWidget(Widget.Handle widget, int stretch, Alignment align);
-    void addLayout(Layout.Handle layout);
-    void addLayout(Layout.Handle layout, int stretch);
+    void addWidget(Widget.Handle widget, AddWidgetOptions opts);
+    void addLayout(Layout.Handle layout, AddLayoutOptions opts);
 
     void setSignalMask(SignalMask mask);
 }

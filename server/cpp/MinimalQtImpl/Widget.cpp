@@ -3,7 +3,6 @@
 
 #include <QObject>
 #include <QWidget>
-#include <QLayout>
 
 #include <QPainter>
 #include <QPaintEvent>
@@ -18,6 +17,7 @@
 #include "IconInternal.h"
 #include "SizePolicyInternal.h"
 #include "CursorInternal.h"
+#include "LayoutInternal.h"
 
 #define WRAPPER (reinterpret_cast<SignalWrapper*>(_this))
 #define WIDGET_THIS (WRAPPER->getActual())
@@ -488,7 +488,8 @@ namespace Widget
     }
 
     void Handle_setLayout(HandleRef _this, Layout::HandleRef layout) {
-        WIDGET_THIS->setLayout(reinterpret_cast<QLayout *>(layout));
+        const auto layoutWrapper = reinterpret_cast<Layout::SignalWrapper*>(layout);
+        WIDGET_THIS->setLayout(layoutWrapper->getActual());
     }
 
     Layout::HandleRef Handle_getLayout(HandleRef _this) {

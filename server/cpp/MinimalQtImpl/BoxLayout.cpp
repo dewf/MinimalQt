@@ -1,5 +1,6 @@
 #include "generated/BoxLayout.h"
 #include "BoxLayoutInternal.h"
+#include "WidgetInternal.h"
 
 #include "util/convert.h"
 
@@ -19,6 +20,19 @@ namespace BoxLayout
 
     void Handle_addStretch(HandleRef _this, int32_t stretch) {
         BOXLAYOUT_THIS->addStretch(stretch);
+    }
+
+    void Handle_addWidget(HandleRef _this, Widget::HandleRef widget, const Handle::AddWidgetOptions& opts) {
+        const auto widgetWrapper = reinterpret_cast<Widget::SignalWrapper*>(widget);
+        const auto stretch = opts.getOrDefaultStretch(0);
+        const auto align = static_cast<Qt::Alignment>(opts.getOrDefaultAlign(0));
+        BOXLAYOUT_THIS->addWidget(widgetWrapper->getActual(), stretch, align);
+    }
+
+    void Handle_addLayout(HandleRef _this, Layout::HandleRef layout, const Handle::AddLayoutOptions& opts) {
+        const auto layoutWrapper = reinterpret_cast<Layout::SignalWrapper*>(layout);
+        const auto stretch = opts.getOrDefaultStretch(0);
+        BOXLAYOUT_THIS->addLayout(layoutWrapper->getActual(), stretch);
     }
 
     void Handle_addWidget(HandleRef _this, Widget::HandleRef widget) {
