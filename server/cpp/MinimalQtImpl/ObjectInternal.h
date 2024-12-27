@@ -50,7 +50,10 @@ namespace Object {
                     handler->destroyed(reinterpret_cast<HandleRef>(this));
                 }
             } else {
-                // printf("C++ Object::SignalWrapper - qt object was already destroyed\n");
+                // dtor was called in response to Qt-initiated object destruction
+                // (vs. client-invoked .Dispose() of signal wrapper)
+                // so let's notify the client that this happened
+                handler->destroyedByQt();
             }
         }
         // purposely NOT virtual:
@@ -62,7 +65,7 @@ namespace Object {
         }
     public slots:
         void onDestroyed(QObject *obj) {
-            // we always handle this signal, see note in ctor
+            // we always handle this signal (unless disconnected in dtor), see note in ctor
             if (lastMask & Destroyed) {
                 // but only pass along to handler if mask permits
                 handler->destroyed(reinterpret_cast<HandleRef>(this));

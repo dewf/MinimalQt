@@ -514,6 +514,7 @@ namespace Widget
 
     class NullWidgetSignalHandler : public ServerObject, public SignalHandler, public Object::SignalHandler { // don't think it even needs to be a ServerObject since it's never going anywhere, but whatever
     public:
+        void destroyedByQt() override {}
         void destroyed(Object::HandleRef obj) override {}
         void objectNameChanged(const std::string &objectName) override {}
         Object::SignalHandler * inherited_Object_SignalHandler() override { return this; }

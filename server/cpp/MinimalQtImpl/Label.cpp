@@ -75,6 +75,7 @@ namespace Label
     class NullSignalHandler : public ServerObject, public SignalHandler, public Frame::SignalHandler, public Widget::SignalHandler, public Object::SignalHandler {
     public:
         // object
+        void destroyedByQt() override {}
         void destroyed(Object::HandleRef obj) override {}
         void objectNameChanged(const std::string &objectName) override {}
         // widget

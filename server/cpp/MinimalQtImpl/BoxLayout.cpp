@@ -57,6 +57,7 @@ namespace BoxLayout
 
     class NullBoxLayoutHandler : public ServerObject, public SignalHandler, public Layout::SignalHandler, public Object::SignalHandler {
     public:
+        void destroyedByQt() override {}
         void destroyed(Object::HandleRef obj) override {}
         void objectNameChanged(const std::string &objectName) override {}
         Object::SignalHandler * inherited_Object_SignalHandler() override { return this; }

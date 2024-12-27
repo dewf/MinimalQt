@@ -6,6 +6,10 @@ namedbits SignalMask {
 }
 
 interface SignalHandler {
+    // internal use (always on)
+    void destroyedByQt();
+
+    // Qt stuff (masked)
     void destroyed(Handle obj);
     void objectNameChanged(string objectName);
 }
