@@ -7,7 +7,10 @@
 #include <QObject>
 
 namespace Object {
-    class SignalWrapper : public QObject { // for signal-related stuff, this is not a QObject subclass per se
+    class SignalWrapper;
+    SignalWrapper *wrapperForQObject(QObject *obj);
+
+    class SignalWrapper : public QObject { // for signal-related stuff, this is not a QObject subclass per se! don't confuse wrapper with 'actual'!!!
         Q_OBJECT
     private:
         static std::map<QObject*, SignalWrapper*> objectToWrapperMap; // so we can easily fetch the wrapper when a Qt method returns its bare QObject-derived pointers
@@ -36,19 +39,19 @@ namespace Object {
             objectToWrapperMap[existing] = this;
         }
         ~SignalWrapper() override {
-            // remove mapping ASAP, in case the 'destroyed' handler tries to do something silly?
+            // always send conventional destroyed signal if requested
+            // 'actual' should always still be live at this point ... I think
+            if (lastMask & Destroyed) {
+                const auto wrapper = wrapperForQObject(actual);
+                handler->destroyed(reinterpret_cast<HandleRef>(wrapper));
+            }
             objectToWrapperMap.erase(actual);
-            // etc
+
+            // depending on whether we got deleted, or Qt object was deleted:
             if (!qtDestroyed) {
-                // printf("C++ Object::SignalWrapper destroying contained QObject\n");
                 // disconnect signal first, so we don't create a loop
                 disconnect(destroyedConnection);
                 delete actual;
-                qtDestroyed = true; // just being extra cautious since this is getting hairy ...
-                // but still fulfill our responsibilities to anybody who wanted it:
-                if (lastMask & Destroyed) {
-                    handler->destroyed(reinterpret_cast<HandleRef>(this));
-                }
             } else {
                 // dtor was called in response to Qt-initiated object destruction
                 // (vs. client-invoked .Dispose() of signal wrapper)
@@ -64,16 +67,10 @@ namespace Object {
             }
         }
     public slots:
+        // note, this indicates 'actual' got destroyed, not us (the wrapper). easy to get confused since we're also a QObject of necessaity (to connect signals at all)
         void onDestroyed(QObject *obj) {
             // we always handle this signal (unless disconnected in dtor), see note in ctor
-            if (lastMask & Destroyed) {
-                // but only pass along to handler if mask permits
-                handler->destroyed(reinterpret_cast<HandleRef>(this));
-            }
             qtDestroyed = true;
-            // in the case the QObject gets deleted out from under us, no reason to continue to exist!
-            // hopefully the client side is not confused about this!
-            // printf("QObject::SignalWrapper - 'delete this'\n");
             delete this;
         }
         void onObjectNameChanged(const QString& name) const {
@@ -83,6 +80,4 @@ namespace Object {
     // friend funcs:
         friend SignalWrapper *wrapperForQObject(QObject *obj);
     };
-
-    SignalWrapper *wrapperForQObject(QObject *obj);
 }
