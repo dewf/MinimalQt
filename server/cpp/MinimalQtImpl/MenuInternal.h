@@ -44,10 +44,12 @@ namespace Menu {
             handler->aboutToShow();
         }
         void onHovered(QAction *action) const {
-            handler->hovered(reinterpret_cast<Action::HandleRef>(action));
+            const auto wrapper = wrapperForQObject(action);
+            handler->hovered(reinterpret_cast<Action::HandleRef>(wrapper));
         }
         void onTriggered(QAction *action) const {
-            handler->triggered(reinterpret_cast<Action::HandleRef>(action));
+            const auto wrapper = wrapperForQObject(action);
+            handler->triggered(reinterpret_cast<Action::HandleRef>(wrapper));
         }
     };
 }

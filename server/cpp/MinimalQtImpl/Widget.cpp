@@ -439,7 +439,8 @@ namespace Widget
     }
 
     HandleRef Handle_getWindow(HandleRef _this) {
-        return reinterpret_cast<HandleRef>(WIDGET_THIS->window());
+        const auto wrapper = wrapperForQObject(WIDGET_THIS->window());
+        return reinterpret_cast<HandleRef>(wrapper);
     }
 
     void Handle_updateGeometry(HandleRef _this) {
