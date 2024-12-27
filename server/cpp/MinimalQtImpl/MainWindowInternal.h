@@ -21,8 +21,6 @@ namespace MainWindow {
             { IconSizeChanged, SIGNAL(iconSizeChanged(QSize)), SLOT(onIconSizeChanged(QSize)) },
             { TabifiedDockWidgetActivated, SIGNAL(tabifiedDockWidgetActivated(QDockWidget)), SLOT(onTabifiedDockWidgetActivated(QDockWidget)) },
             { ToolButtonStyleChanged, SIGNAL(toolButtonStyleChanged(Qt::ToolButtonStyle)), SLOT(onToolButtonStyleChanged(Qt::ToolButtonStyle)) },
-            // // MainWindow custom:
-            // { WindowClosed, SIGNAL(windowClosed()), SLOT(onWindowClosed()) }
         };
     public:
         QMainWindow *getActual() const {
@@ -47,14 +45,11 @@ namespace MainWindow {
             handler->iconSizeChanged(toSize(size));
         }
         void onTabifiedDockWidgetActivated(QDockWidget* dockWidget) const {
-            handler->tabifiedDockWidgetActivated(reinterpret_cast<DockWidget::HandleRef>(dockWidget));
+            const auto wrapper = wrapperForQObject(dockWidget);
+            handler->tabifiedDockWidgetActivated(reinterpret_cast<DockWidget::HandleRef>(wrapper));
         }
         void onToolButtonStyleChanged(Qt::ToolButtonStyle style) const {
             handler->toolButtonStyleChanged(static_cast<ToolButtonStyle>(style));
         }
-        // // MainWindow (custom) ======
-        // void onWindowClosed() const {
-        //     handler->windowClosed();
-        // }
     };
 }
