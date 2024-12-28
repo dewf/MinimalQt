@@ -9,7 +9,7 @@
 #define QFONT_VALUE(x) (*AS_QFONT_PTR(x))
 
 // create an owned, heap-allocated copy of existing QFont value
-#define FONT_HEAP_NEW(x) (reinterpret_cast<Font::OwnedRef>(new QFont(x)))
+#define FONT_HEAP_NEW(...) (reinterpret_cast<Font::OwnedRef>(new QFont(__VA_ARGS__)))
 
 namespace Font {
     // nothing yet

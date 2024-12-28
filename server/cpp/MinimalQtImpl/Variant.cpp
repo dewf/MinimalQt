@@ -46,36 +46,62 @@ namespace Variant
         return CheckState::Unchecked;
     }
 
+    Icon::OwnedRef Handle_toIcon(HandleRef _this) { // throws VariantConversionFailure
+        if (THIS->canConvert<QIcon>()) {
+            return ICON_HEAP_NEW(THIS->value<QIcon>());
+        }
+        // else
+        throw VariantConversionFailure();
+    }
+
     Color::OwnedRef Handle_toColor(HandleRef _this) {
         if (THIS->isValid() && THIS->canConvert<QColor>()) {
             auto value = THIS->value<QColor>();
             return new Color::__Owned { value };
-        } else {
-            throw VariantConversionFailure();
         }
-    }
-
-    std::shared_ptr<ServerValue::Base> Handle_toServerValue(HandleRef _this) {
-        ServerValue::Base *value;
-        switch((QMetaType::Type)THIS->typeId()) {
-            case QMetaType::Bool:
-                value = new ServerValue::Bool(THIS->toBool());
-                break;
-            case QMetaType::Int:
-                value = new ServerValue::Int(THIS->toInt());
-                break;
-            case QMetaType::QString:
-                value = new ServerValue::String(THIS->toString().toStdString());
-                break;
-            default:
-                value = new ServerValue::Unknown();
-                break;
-        }
-        return std::shared_ptr<ServerValue::Base>(value);
+        // else
+        throw VariantConversionFailure();
     }
 
     void Owned_dispose(OwnedRef _this) {
         delete THIS;
+    }
+
+    // ctors =================================================
+    OwnedRef create() {
+        return VARIANT_HEAP_NEW();
+    }
+
+    OwnedRef create(bool value) {
+        return VARIANT_HEAP_NEW(value);
+    }
+
+    OwnedRef create(const std::string& value) {
+        return VARIANT_HEAP_NEW(QString::fromStdString(value));
+    }
+
+    OwnedRef create(int32_t value) {
+        return VARIANT_HEAP_NEW(value);
+    }
+
+    OwnedRef create(CheckState value) {
+        return VARIANT_HEAP_NEW(static_cast<int>(value));
+    }
+
+    OwnedRef create(Size size) {
+        return VARIANT_HEAP_NEW(toQSize(size));
+    }
+
+    OwnedRef create(Icon::HandleRef icon) {
+        return VARIANT_HEAP_NEW(QICON_VALUE(icon));
+    }
+
+    OwnedRef create(Color::HandleRef color) {
+        return VARIANT_HEAP_NEW(color->qColor);
+    }
+
+    OwnedRef createAlign(Alignment align) {
+        return VARIANT_HEAP_NEW(static_cast<Qt::Alignment>(align));
     }
 
     // deferred stuff ========================================
@@ -84,41 +110,8 @@ namespace Variant
         QVariant &variant;
     public:
         explicit FromDeferredMatcher(QVariant &variant) : variant(variant) {}
-
         void onEmpty(const Deferred::Empty *value) override {
             variant = QVariant();
-        }
-
-        void onFromBool(const Deferred::FromBool *value) override {
-            variant = value->value;
-        }
-
-        void onFromString(const Deferred::FromString *value) override {
-            variant = QString::fromStdString(value->value);
-        }
-
-        void onFromInt(const Deferred::FromInt *value) override {
-            variant = value->value;
-        }
-
-        void onFromSize(const Deferred::FromSize *value) override {
-            variant = toQSize(value->size);
-        }
-
-        void onFromCheckState(const Deferred::FromCheckState *value) override {
-            variant = (int)value->value;
-        }
-
-        void onFromIcon(const Deferred::FromIcon *value) override {
-            variant = QICON_VALUE(value->value);
-        }
-
-        void onFromColor(const Deferred::FromColor *value) override {
-            variant = Color::fromDeferred(value->value);
-        }
-
-        void onFromAligment(const Deferred::FromAligment *value) override {
-            variant = value->value;
         }
     };
 

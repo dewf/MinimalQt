@@ -9,7 +9,7 @@
 #define QICON_VALUE(x) (*AS_QICON_PTR(x))
 
 // create an owned heap-allocated copy of an existing QIcon value
-#define ICON_HEAP_NEW(x) (reinterpret_cast<Icon::OwnedRef>(new QIcon(x)))
+#define ICON_HEAP_NEW(...) (reinterpret_cast<Icon::OwnedRef>(new QIcon(__VA_ARGS__)))
 
 namespace Icon {
     // no inner structure, we are just casting QIcon* directly

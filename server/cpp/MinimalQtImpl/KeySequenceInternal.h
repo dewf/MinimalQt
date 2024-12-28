@@ -9,7 +9,7 @@
 #define KEYSEQ_VALUE(x) (*AS_KEYSEQ_PTR(x))
 
 // create an owned heap-allocated copy of an existing QKeySequence value
-#define KEYSEQ_HEAP_NEW(x) (reinterpret_cast<KeySequence::OwnedRef>(new QKeySequence(x)))
+#define KEYSEQ_HEAP_NEW(...) (reinterpret_cast<KeySequence::OwnedRef>(new QKeySequence(__VA_ARGS__)))
 
 namespace KeySequence {
     // struct __Handle {

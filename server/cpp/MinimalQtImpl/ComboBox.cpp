@@ -152,6 +152,18 @@ namespace ComboBox
         COMBO_THIS->addItems(qStrings);
     }
 
+    void Handle_setItemData(HandleRef _this, int32_t index, Variant::HandleRef value, ItemDataRole role) {
+        COMBO_THIS->setItemData(index, QVARIANT_VALUE(value), static_cast<Qt::ItemDataRole>(role));
+    }
+
+    void Handle_setItemIcon(HandleRef _this, int32_t index, Icon::HandleRef icon) {
+        COMBO_THIS->setItemIcon(index, QICON_VALUE(icon));
+    }
+
+    void Handle_setItemText(HandleRef _this, int32_t index, const std::string& text) {
+        COMBO_THIS->setItemText(index, QString::fromStdString(text));
+    }
+
     void Handle_setModel(HandleRef _this, AbstractItemModel::HandleRef model) {
         const auto modelWrapper = reinterpret_cast<AbstractItemModel::SignalWrapper*>(model);
         COMBO_THIS->setModel(modelWrapper->getActual());

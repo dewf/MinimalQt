@@ -5,23 +5,6 @@ import Common;
 import Enums;
 import Color;
 
-// todo, replace with individual modules? (color, brush, font, etc)
-// import PaintResources; // for color, brush, etc (deferred)
-
-sumtype ServerValue {
-    Bool(bool value),
-    String(string value),
-    Int(int value),
-
-    // for other things (Icon, Color, etc), we need:
-    // 1) Owned-handle versions of these
-    // 2) virtual dtors perhaps? in any case, all cases of a sumtype must fully dispose when disposed from the base type
-    // alternatively we could use refcounted interfaces, but seeing as we've been avoiding those everywhere else ...
-    
-    // as-yet-unsupported:
-    Unknown
-}
-
 exception VariantConversionFailure; // no message for now, we need to figure out how to integrate with std::exception and C# Exception cleanly
 
 @nodispose
@@ -36,22 +19,23 @@ opaque Handle {
     // convenience function, special values for toInt()
     CheckState toCheckState();
 
-    // Icon.Owned toIcon();
-    Color.Owned toColor();
-
-    ServerValue toServerValue();
+    Icon.Owned toIcon() throws VariantConversionFailure;
+    Color.Owned toColor() throws VariantConversionFailure;
 }
 
 opaque Owned extends Handle;
 
+Owned create();
+Owned create(bool value);
+Owned create(string value);
+Owned create(int value);
+Owned create(CheckState value); // convenience for int 0/1/2
+Owned create(Size size);
+Owned create(Icon.Handle icon);
+Owned create(Color.Handle color);
+Owned createAlign(Alignment align); // different name because just an int32_t typedef
+
+// for AbstractListModel etc return values, but we'll figure out a way around this
 sumtype Deferred {
-    Empty,
-    FromBool(bool value),
-    FromString(string value),
-    FromInt(int value),
-    FromCheckState(CheckState value), // convenience for int 0/1/2
-    FromSize(Size size),
-    FromIcon(Icon.Handle value),
-    FromColor(Color.Deferred value),
-    FromAligment(Alignment value)
+    Empty
 }

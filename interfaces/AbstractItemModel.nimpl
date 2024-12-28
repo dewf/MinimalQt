@@ -61,8 +61,8 @@ opaque Handle extends Object.Handle {
     ModelIndex.Owned index(int row, int column);
     ModelIndex.Owned index(int row, int column, ModelIndex.Handle parent);
 
-    bool setData(ModelIndex.Handle index, Variant.Deferred value);
-    bool setData(ModelIndex.Handle index, Variant.Deferred value, ItemDataRole role);
+    bool setData(ModelIndex.Handle index, Variant.Handle value);
+    bool setData(ModelIndex.Handle index, Variant.Handle value, ItemDataRole role);
 
     Variant.Owned data(ModelIndex.Handle index);
     Variant.Owned data(ModelIndex.Handle index, ItemDataRole role);

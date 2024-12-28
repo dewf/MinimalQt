@@ -41,7 +41,7 @@ namespace Icon
     }
 
     OwnedRef create() {
-        return ICON_HEAP_NEW(QIcon());
+        return ICON_HEAP_NEW();
     }
 
     OwnedRef create(ThemeIcon themeIcon) {
