@@ -29,33 +29,66 @@ interface SignalHandler extends Widget.SignalHandler {
 enum EchoMode { Normal, NoEcho, Password, PasswordEchoOnEdit }
 
 opaque Handle extends Widget.Handle {
-    // properties:
-    bool hasAcceptableInput();          // read-only
+    // properties ==================================
+    bool hasAcceptableInput();
+    // read-only
+
+    Alignment getAlignment();
     void setAlignment(Alignment align);
+
+    bool isClearButtonEnabled();
     void setClearButtonEnabled(bool enabled);
+
+    CursorMoveStyle getCursorMoveStyle();
     void setCursorMoveStyle(CursorMoveStyle style);
+
+    int cursorPosition();
     void setCursorPosition(int pos);
-    string displayText();               // read-only
+
+    string displayText();
+    // read-only
+
+    bool dragEnabled();
     void setDragEnabled(bool enabled);
+
+    EchoMode getEchoMode();
     void setEchoMode(EchoMode mode);
+
+    bool hasFrame();
     void setFrame(bool enabled);
-    bool hasSelectedText();             // read-only
+
+    bool hasSelectedText();
+    // read-only
+
+    string inputMask();
     void setInputMask(string mask);
+
+    int maxLength();
     void setMaxLength(int length);
 
-    // not sure about these two, might not need the setter?
-    bool isModified();                  
+    // not sure about these two, might not need the setter? read docs
+    bool isModified();
     void setModified(bool modified);
 
+    string placeholderText();
     void setPlaceholderText(string text);
-    void setReadOnly(bool value);
-    bool isRedoAvailable();             // read-only
-    string selectedText();              // read-only
-    void setText(string text);
-    string text();
-    bool isUndoAvailable();             // read-only
 
-    // slots:
+    bool isReadOnly();
+    void setReadOnly(bool value);
+
+    bool isRedoAvailable();
+    // read-only
+
+    string selectedText();
+    // read-only
+
+    string text();
+    void setText(string text);
+
+    bool isUndoAvailable();
+    // read-only
+
+    // methods =================================
     void clear();
     void copy();
     void cut();
@@ -63,7 +96,8 @@ opaque Handle extends Widget.Handle {
     void redo();
     void selectAll();
     void undo();
-    
+
+    // etc =====================================
     void setSignalMask(SignalMask mask);
 }
 

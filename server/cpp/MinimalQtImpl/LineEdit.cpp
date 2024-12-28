@@ -12,16 +12,32 @@ namespace LineEdit
         return LINEEDIT_THIS->hasAcceptableInput();
     }
 
+    Alignment Handle_getAlignment(HandleRef _this) {
+        return LINEEDIT_THIS->alignment();
+    }
+
     void Handle_setAlignment(HandleRef _this, Enums::Alignment align) {
         LINEEDIT_THIS->setAlignment(static_cast<Qt::Alignment>(align));
+    }
+
+    bool Handle_isClearButtonEnabled(HandleRef _this) {
+        return LINEEDIT_THIS->isClearButtonEnabled();
     }
 
     void Handle_setClearButtonEnabled(HandleRef _this, bool enabled) {
         LINEEDIT_THIS->setClearButtonEnabled(enabled);
     }
 
+    CursorMoveStyle Handle_getCursorMoveStyle(HandleRef _this) {
+        return static_cast<CursorMoveStyle>(LINEEDIT_THIS->cursorMoveStyle());
+    }
+
     void Handle_setCursorMoveStyle(HandleRef _this, CursorMoveStyle style) {
         LINEEDIT_THIS->setCursorMoveStyle(static_cast<Qt::CursorMoveStyle>(style));
+    }
+
+    int32_t Handle_cursorPosition(HandleRef _this) {
+        return LINEEDIT_THIS->cursorPosition();
     }
 
     void Handle_setCursorPosition(HandleRef _this, int32_t pos) {
@@ -32,12 +48,24 @@ namespace LineEdit
         return LINEEDIT_THIS->displayText().toStdString();
     }
 
+    bool Handle_dragEnabled(HandleRef _this) {
+        return LINEEDIT_THIS->dragEnabled();
+    }
+
     void Handle_setDragEnabled(HandleRef _this, bool enabled) {
         LINEEDIT_THIS->setDragEnabled(enabled);
     }
 
+    EchoMode Handle_getEchoMode(HandleRef _this) {
+        return static_cast<EchoMode>(LINEEDIT_THIS->echoMode());
+    }
+
     void Handle_setEchoMode(HandleRef _this, EchoMode mode) {
         LINEEDIT_THIS->setEchoMode(static_cast<QLineEdit::EchoMode>(mode));
+    }
+
+    bool Handle_hasFrame(HandleRef _this) {
+        return LINEEDIT_THIS->hasFrame();
     }
 
     void Handle_setFrame(HandleRef _this, bool enabled) {
@@ -48,8 +76,16 @@ namespace LineEdit
         return LINEEDIT_THIS->hasSelectedText();
     }
 
+    std::string Handle_inputMask(HandleRef _this) {
+        return LINEEDIT_THIS->inputMask().toStdString();
+    }
+
     void Handle_setInputMask(HandleRef _this, const std::string& mask) {
         return LINEEDIT_THIS->setInputMask(QString::fromStdString(mask));
+    }
+
+    int32_t Handle_maxLength(HandleRef _this) {
+        return LINEEDIT_THIS->maxLength();
     }
 
     void Handle_setMaxLength(HandleRef _this, int32_t length) {
@@ -64,8 +100,16 @@ namespace LineEdit
         LINEEDIT_THIS->setModified(modified);
     }
 
+    std::string Handle_placeholderText(HandleRef _this) {
+        return LINEEDIT_THIS->placeholderText().toStdString();
+    }
+
     void Handle_setPlaceholderText(HandleRef _this, const std::string& text) {
         LINEEDIT_THIS->setPlaceholderText(QString::fromStdString(text));
+    }
+
+    bool Handle_isReadOnly(HandleRef _this) {
+        return LINEEDIT_THIS->isReadOnly();
     }
 
     void Handle_setReadOnly(HandleRef _this, bool value) {
@@ -80,12 +124,12 @@ namespace LineEdit
         return LINEEDIT_THIS->selectedText().toStdString();
     }
 
-    void Handle_setText(HandleRef _this, const std::string& text) {
-        LINEEDIT_THIS->setText(QString::fromStdString(text));
-    }
-
     std::string Handle_text(HandleRef _this) {
         return LINEEDIT_THIS->text().toStdString();
+    }
+
+    void Handle_setText(HandleRef _this, const std::string& text) {
+        LINEEDIT_THIS->setText(QString::fromStdString(text));
     }
 
     bool Handle_isUndoAvailable(HandleRef _this) {
