@@ -45,30 +45,61 @@ enum SizeAdjustPolicy {
 }
 
 opaque Handle extends Widget.Handle {
-    int count();                                  // read-only
-    Variant.Owned currentData();                  // read-only
-    Variant.Owned currentData(ItemDataRole role); // read-only
+    // properties ========================
+    int count();
+    // read-only
+
+    Variant.Owned currentData();
+    Variant.Owned currentData(ItemDataRole role);
+    // read-only
+
     int currentIndex();
     void setCurrentIndex(int index);
+
+    string currentText();
     void setCurrentText(string text);
+
+    bool duplicatesEnabled();
     void setDuplicatesEnabled(bool enabled);
+
+    bool isEditable();
     void setEditable(bool editable);
+    
+    bool hasFrame();
     void setFrame(bool hasFrame);
+
+    Size iconSize();
     void setIconSize(Size size);
+
+    InsertPolicy getInsertPolicy();
     void setInsertPolicy(InsertPolicy policy);
+
+    int maxCount();
     void setMaxCount(int count);
+
+    int maxVisibleItems();
     void setMaxVisibleItems(int count);
+
+    int minimumContentsLength();
     void setMinimumContentsLength(int length);
+    
+    int modelColumn();
     void setModelColumn(int column);
+
+    string placeholderText();
     void setPlaceholderText(string text);
+
+    SizeAdjustPolicy getSizeAdjustPolicy();
     void setSizeAdjustPolicy(SizeAdjustPolicy policy);
 
+    // methods =============================
     void clear();
-    void addItem(string text, Variant.Deferred userData);
-    void addItem(Icon.Handle icon, string text, Variant.Deferred userData);
+    void addItem(string text, Variant.Handle userData);
+    void addItem(Icon.Handle icon, string text, Variant.Handle userData);
     void addItems(Array<string> texts);
     void setModel(AbstractItemModel.Handle model);
 
+    // etc
     void setSignalMask(SignalMask mask);
 }
 

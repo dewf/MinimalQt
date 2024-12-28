@@ -4,8 +4,11 @@
 #include <QVariant>
 #include "IconInternal.h"
 
-// create an owned heap-allocated copy of an existing QVariant value
-#define VARIANT_HEAP_COPY(x) (reinterpret_cast<Variant::OwnedRef>(new QVariant(x)))
+#define AS_QVARIANT_PTR(x) (reinterpret_cast<QVariant*>(x))
+
+#define QVARIANT_VALUE(x) (*AS_QVARIANT_PTR(x))
+
+#define VARIANT_HEAP_NEW(x) (reinterpret_cast<Variant::OwnedRef>(new QVariant(x)))
 
 namespace Variant {
     QVariant fromDeferred(const std::shared_ptr<Deferred::Base>& deferred);

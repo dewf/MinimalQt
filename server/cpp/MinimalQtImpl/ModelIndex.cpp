@@ -4,7 +4,7 @@
 #include "ModelIndexInternal.h"
 #include "VariantInternal.h"
 
-#define THIS ((QModelIndex*)_this) // save a bit of typing
+#define THIS (AS_MODELINDEX_PTR(_this))
 
 namespace ModelIndex
 {
@@ -21,14 +21,12 @@ namespace ModelIndex
     }
 
     Variant::OwnedRef Handle_data(HandleRef _this) {
-        auto value = THIS->data();
-        return VARIANT_HEAP_COPY(value);
+        return VARIANT_HEAP_NEW(THIS->data());
     }
 
     Variant::OwnedRef Handle_data(HandleRef _this, ItemDataRole role) {
         auto qrole = static_cast<Qt::ItemDataRole>(role);
-        auto value = THIS->data(qrole);
-        return VARIANT_HEAP_COPY(value);
+        return VARIANT_HEAP_NEW(THIS->data(qrole));
     }
 
     void Owned_dispose(OwnedRef _this) {

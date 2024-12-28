@@ -34,13 +34,13 @@ namespace AbstractItemModel
 
     Variant::OwnedRef Handle_data(HandleRef _this, ModelIndex::HandleRef index) {
         auto value = ABSITEMMODEL_THIS->data(MODELINDEX_VALUE(index));
-        return VARIANT_HEAP_COPY(value);
+        return VARIANT_HEAP_NEW(value);
     }
 
     Variant::OwnedRef Handle_data(HandleRef _this, ModelIndex::HandleRef index, ItemDataRole role) {
         auto qrole = static_cast<Qt::ItemDataRole>(role);
         auto value = ABSITEMMODEL_THIS->data(MODELINDEX_VALUE(index), qrole);
-        return VARIANT_HEAP_COPY(value);
+        return VARIANT_HEAP_NEW(value);
     }
 
     void Handle_sort(HandleRef _this, int32_t column) {
