@@ -10,23 +10,20 @@
 
 #define WRAPPER (reinterpret_cast<SignalWrapper*>(_this))
 #define ABSLISTMODEL_THIS (WRAPPER->getActual())
+#define SUBCLASSED_THIS (static_cast<Implementation*>(WRAPPER->getActual()))
 
 #include "AbstractListModelInternal.h"
 
 namespace AbstractListModel
 {
-    void Handle_setSignalMask(HandleRef _this, SignalMask mask) {
-        WRAPPER->setSignalMask(mask);
-    }
-
     // subclass stuff =========================================================
 
-    class Delegated : public QAbstractListModel {
+    class Implementation : public QAbstractListModel {
     private:
-        std::shared_ptr<MethodDelegate> methodDelegate;
-        MethodMask methodMask;
+        std::shared_ptr<ImplementationMethods> methodDelegate;
+        ImplementedMethodMask methodMask;
     public:
-        Delegated(const std::shared_ptr<MethodDelegate> &methodDelegate, MethodMask methodMask)
+        Implementation(const std::shared_ptr<ImplementationMethods> &methodDelegate, ImplementedMethodMask methodMask)
             : methodDelegate(methodDelegate), methodMask(methodMask) {}
 
         // ==== must-implement abstract methods ===========================
@@ -41,7 +38,7 @@ namespace AbstractListModel
 
         // ==== optional methods ==========================================
         QVariant headerData(int section, Qt::Orientation orientation, int role) const override {
-            if (methodMask & MethodMaskFlags::HeaderData) {
+            if (methodMask & HeaderData) {
                 const auto variant = methodDelegate->headerData(section, static_cast<Enums::Orientation>(orientation), static_cast<ItemDataRole>(role));
                 return AS_QVARIANT_PTR(variant)->consume();
             } else {
@@ -51,7 +48,7 @@ namespace AbstractListModel
 
         Qt::ItemFlags flags(const QModelIndex &index) const override {
             auto baseFlags = QAbstractListModel::flags(index);
-            if (methodMask & MethodMaskFlags::Flags) {
+            if (methodMask & Flags) {
                 auto raw = (int)methodDelegate->getFlags((ModelIndex::HandleRef)&index, baseFlags);
                 return (Qt::ItemFlags) raw;
             } else {
@@ -60,7 +57,7 @@ namespace AbstractListModel
         }
 
         bool setData(const QModelIndex &index, const QVariant &value, int role) override {
-            if (methodMask & MethodMaskFlags::SetData) {
+            if (methodMask & SetData) {
                 return methodDelegate->setData((ModelIndex::HandleRef)&index, (Variant::HandleRef)&value, (ItemDataRole)role);
             } else {
                 return QAbstractListModel::setData(index, value, role);
@@ -68,7 +65,7 @@ namespace AbstractListModel
         }
 
         int columnCount(const QModelIndex &parent) const override {
-            if (methodMask & MethodMaskFlags::ColumnCount) {
+            if (methodMask & ColumnCount) {
                 return methodDelegate->columnCount((ModelIndex::HandleRef)&parent);
             } else {
                 // QAbstractListModel::columnCount() is private, we're technically not supposed to be doing this in AbstractListModel
@@ -99,59 +96,49 @@ namespace AbstractListModel
         for (auto role : roles) {
             qRoles.push_back((int)role);
         }
-        if (const auto delegated = dynamic_cast<Delegated*>(ABSLISTMODEL_THIS); delegated != nullptr) {
-            delegated->emitDataChanged(MODELINDEX_VALUE(topLeft), MODELINDEX_VALUE(bottomRight), qRoles);
-        }
+        SUBCLASSED_THIS->emitDataChanged(MODELINDEX_VALUE(topLeft), MODELINDEX_VALUE(bottomRight), qRoles);
+        // if (const auto delegated = dynamic_cast<Delegated*>(ABSLISTMODEL_THIS); delegated != nullptr) {
+        // }
     }
 
     void Interior_emitHeaderDataChanged(InteriorRef _this, Orientation orientation, int32_t first, int32_t last) {
-        if (const auto delegated = dynamic_cast<Delegated*>(ABSLISTMODEL_THIS); delegated != nullptr) {
-            delegated->emitHeaderDataChanged(static_cast<Qt::Orientation>(orientation), first, last);
-        }
+        SUBCLASSED_THIS->emitHeaderDataChanged(static_cast<Qt::Orientation>(orientation), first, last);
     }
 
     void Interior_beginInsertRows(InteriorRef _this, ModelIndex::HandleRef parent, int32_t first, int32_t last) {
-        if (const auto delegated = dynamic_cast<Delegated*>(ABSLISTMODEL_THIS); delegated != nullptr) {
-            delegated->beginInsertRows(MODELINDEX_VALUE(parent), first, last);
-        }
+        SUBCLASSED_THIS->beginInsertRows(MODELINDEX_VALUE(parent), first, last);
     }
 
     void Interior_endInsertRows(InteriorRef _this) {
-        if (const auto delegated = dynamic_cast<Delegated*>(ABSLISTMODEL_THIS); delegated != nullptr) {
-            delegated->endInsertRows();
-        }
+        SUBCLASSED_THIS->endInsertRows();
     }
 
     void Interior_beginRemoveRows(InteriorRef _this, ModelIndex::HandleRef parent, int32_t first, int32_t last) {
-        if (const auto delegated = dynamic_cast<Delegated*>(ABSLISTMODEL_THIS); delegated != nullptr) {
-            delegated->beginRemoveRows(MODELINDEX_VALUE(parent), first, last);
-        }
+        SUBCLASSED_THIS->beginRemoveRows(MODELINDEX_VALUE(parent), first, last);
     }
 
     void Interior_endRemoveRows(InteriorRef _this) {
-        if (const auto delegated = dynamic_cast<Delegated*>(ABSLISTMODEL_THIS); delegated != nullptr) {
-            delegated->endRemoveRows();
-        }
+        SUBCLASSED_THIS->endRemoveRows();
     }
 
     void Interior_beginResetModel(InteriorRef _this) {
-        if (const auto delegated = dynamic_cast<Delegated*>(ABSLISTMODEL_THIS); delegated != nullptr) {
-            delegated->beginResetModel();
-        }
+        SUBCLASSED_THIS->beginResetModel();
     }
 
     void Interior_endResetModel(InteriorRef _this) {
-        if (const auto delegated = dynamic_cast<Delegated*>(ABSLISTMODEL_THIS); delegated != nullptr) {
-            delegated->endResetModel();
-        }
+        SUBCLASSED_THIS->endResetModel();
+    }
+
+    void Interior_setSignalMask(InteriorRef _this, SignalMask mask) {
+        WRAPPER->setSignalMask(mask);
     }
 
     void Interior_dispose(InteriorRef _this) {
         delete WRAPPER;
     }
 
-    InteriorRef createSubclassed(const std::shared_ptr<SignalHandler>& handler, const std::shared_ptr<MethodDelegate>& methodDelegate, MethodMask methodMask) {
-        const auto model = new Delegated(methodDelegate, methodMask);
+    InteriorRef createImplementation(const std::shared_ptr<SignalHandler>& handler, const std::shared_ptr<ImplementationMethods>& methods, ImplementedMethodMask mask) {
+        const auto model = new Implementation(methods, mask);
         const auto wrapper = new SignalWrapper(model, handler);
         return reinterpret_cast<InteriorRef>(wrapper);
     }

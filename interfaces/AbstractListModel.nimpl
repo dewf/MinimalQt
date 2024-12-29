@@ -16,27 +16,9 @@ interface SignalHandler extends AbstractItemModel.SignalHandler {
 }
 
 @nodispose
-opaque Handle extends AbstractItemModel.Handle {
-    void setSignalMask(SignalMask mask);
-}
+opaque Handle extends AbstractItemModel.Handle;
 
-// subclass stuff ==========================================================
-
-opaque Interior extends Handle { // this opaque allows the method delegate to call internal methods as if it's a direct subclass
-    // signal emission
-    void emitDataChanged(ModelIndex.Handle topLeft, ModelIndex.Handle bottomRight, Array<ItemDataRole> roles);
-    void emitHeaderDataChanged(Orientation orientation, int first, int last);
-
-    // for access to protected stuff from MethodDelegate
-    void beginInsertRows(ModelIndex.Handle parent, int first, int last);
-    void endInsertRows();
-
-    void beginRemoveRows(ModelIndex.Handle parent, int first, int last);
-    void endRemoveRows();
-
-    void beginResetModel();
-    void endResetModel();
-}
+// subclass (implementation) stuff ==========================================================
 
 flags ItemFlags {
     NoItemFlags = 0,
@@ -51,19 +33,19 @@ flags ItemFlags {
     ItemIsUserTristate = 256
 }
 
-flags MethodMask {
+namedbits ImplementedMethodMask { // TODO: inherit from AbstractItemModel DelegatedMethodMask?
     // required, so not in mask:
     // RowCount
     // Data
 
     // optional:
-    HeaderData = 1,
-    Flags = 1 << 1,
-    SetData = 1 << 2,
-    ColumnCount = 1 << 3    // from the docs it seems like AbstractListModel is not supposed to do multi-column stuff, but why not? seems to work (with a tree view)
+    HeaderData,
+    Flags,
+    SetData,
+    ColumnCount    // from the docs it seems like AbstractListModel is not supposed to do multi-column stuff, but why not? seems to work (with a tree view)
 }
 
-interface MethodDelegate {
+interface ImplementationMethods {
     int rowCount(ModelIndex.Handle parent);
     Variant.Owned data(ModelIndex.Handle index, ItemDataRole role);
     
@@ -74,4 +56,25 @@ interface MethodDelegate {
     int columnCount(ModelIndex.Handle parent);
 }
 
-Interior createSubclassed(SignalHandler handler, MethodDelegate methodDelegate, MethodMask methodMask);
+opaque Interior extends Handle {
+    // "interior" methods, to call as if we're the C++ subclass:
+
+    // signal emission
+    void emitDataChanged(ModelIndex.Handle topLeft, ModelIndex.Handle bottomRight, Array<ItemDataRole> roles);
+    void emitHeaderDataChanged(Orientation orientation, int first, int last);
+
+    // for access to protected stuff from MethodDelegate
+    void beginInsertRows(ModelIndex.Handle parent, int first, int last);
+    void endInsertRows();
+
+    void beginRemoveRows(ModelIndex.Handle parent, int first, int last);
+    void endRemoveRows();
+
+    void beginResetModel();
+    void endResetModel();
+
+    // etc:
+    void setSignalMask(SignalMask mask); // here because Handle is abstract!
+}
+
+Interior createImplementation(SignalHandler handler, ImplementationMethods methods, ImplementedMethodMask mask);
