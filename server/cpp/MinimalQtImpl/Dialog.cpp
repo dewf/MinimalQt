@@ -8,8 +8,16 @@
 
 namespace Dialog
 {
+    bool Handle_isModal(HandleRef _this) {
+        return DIALOG_THIS->isModal();
+    }
+
     void Handle_setModal(HandleRef _this, bool state) {
         DIALOG_THIS->setModal(state);
+    }
+
+    bool Handle_isSizeGripEnabled(HandleRef _this) {
+        return DIALOG_THIS->isSizeGripEnabled();
     }
 
     void Handle_setSizeGripEnabled(HandleRef _this, bool enabled) {
@@ -17,11 +25,24 @@ namespace Dialog
     }
 
     void Handle_setParentDialogFlags(HandleRef _this, Widget::HandleRef parent) {
-        DIALOG_THIS->setParent(reinterpret_cast<QWidget *>(parent), Qt::Dialog);
+        const auto parentWrapper = reinterpret_cast<Widget::SignalWrapper*>(parent);
+        DIALOG_THIS->setParent(parentWrapper->getActual(), Qt::Dialog);
+    }
+
+    int32_t Handle_result(HandleRef _this) {
+        return DIALOG_THIS->result();
+    }
+
+    void Handle_setResult(HandleRef _this, int32_t result) {
+        DIALOG_THIS->setResult(result);
     }
 
     void Handle_accept(HandleRef _this) {
         DIALOG_THIS->accept();
+    }
+
+    void Handle_done(HandleRef _this, int32_t result) {
+        DIALOG_THIS->done(result);
     }
 
     void Handle_reject(HandleRef _this) {

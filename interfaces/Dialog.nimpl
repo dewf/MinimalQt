@@ -17,13 +17,26 @@ interface SignalHandler extends Widget.SignalHandler {
     void rejected();
 }
 
+enum DialogCode {
+    Accepted = 1,
+    Rejected = 0
+}
+
 opaque Handle extends Widget.Handle {
+    bool isModal();
     void setModal(bool state);
+
+    bool isSizeGripEnabled();
     void setSizeGripEnabled(bool enabled);
 
-    void setParentDialogFlags(Widget.Handle parent); // a version where we're setting WindowFlags (Qt::Dialog) - otherwise it won't work
+    // a version where we're setting WindowFlags (Qt::Dialog) - otherwise it won't work
+    // ?? forget what this was for. nested dialogs I think?
+    void setParentDialogFlags(Widget.Handle parent);
 
+    int result();
+    void setResult(int result);
     void accept();
+    void done(int result);
     void reject();
     int exec();
 
