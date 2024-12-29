@@ -23,7 +23,7 @@ enum DialogCode {
 }
 
 opaque Handle extends Widget.Handle {
-    bool isModal();
+    // isModal in Widget
     void setModal(bool state);
 
     bool isSizeGripEnabled();

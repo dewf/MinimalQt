@@ -1,3 +1,6 @@
 module PersistentModelIndex;
 
+@nodispose
 opaque Handle;
+
+opaque Owned extends Handle;

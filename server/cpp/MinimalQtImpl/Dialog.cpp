@@ -8,10 +8,6 @@
 
 namespace Dialog
 {
-    bool Handle_isModal(HandleRef _this) {
-        return DIALOG_THIS->isModal();
-    }
-
     void Handle_setModal(HandleRef _this, bool state) {
         DIALOG_THIS->setModal(state);
     }
