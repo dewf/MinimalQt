@@ -8,32 +8,33 @@
 #include "ColorInternal.h"
 #include "util/convert.h"
 
-#define THIS ((QVariant*)_this)
+#define WRAPPER (AS_QVARIANT_PTR(_this)) // RefCountedWrapper<QVariant>*
+#define VALUE (WRAPPER->value)
 
 namespace Variant
 {
     bool Handle_isValid(HandleRef _this) {
-        return THIS->isValid();
+        return VALUE.isValid();
     }
 
     bool Handle_toBool(HandleRef _this) {
-        return THIS->toBool();
+        return VALUE.toBool();
     }
 
     std::string Handle_toString2(HandleRef _this) {
-        return THIS->toString().toStdString();
+        return VALUE.toString().toStdString();
     }
 
     int32_t Handle_toInt(HandleRef _this) {
-        return THIS->toInt();
+        return VALUE.toInt();
     }
 
     Size Handle_toSize(HandleRef _this) {
-        return toSize(THIS->toSize());
+        return toSize(VALUE.toSize());
     }
 
     CheckState Handle_toCheckState(HandleRef _this) {
-        switch ((Qt::CheckState)THIS->toInt()) {
+        switch (static_cast<Qt::CheckState>(VALUE.toInt())) {
             case Qt::Unchecked:
                 return CheckState::Unchecked;
             case Qt::PartiallyChecked:
@@ -41,30 +42,35 @@ namespace Variant
             case Qt::Checked:
                 return CheckState::Checked;
             default:
-                printf("Variant::Handle_toCheckState - unknown input value %d\n", THIS->toInt());
+                printf("Variant::Handle_toCheckState - unknown input value %d\n", VALUE.toInt());
         }
         return CheckState::Unchecked;
     }
 
     Icon::OwnedRef Handle_toIcon(HandleRef _this) { // throws VariantConversionFailure
-        if (THIS->canConvert<QIcon>()) {
-            return ICON_HEAP_NEW(THIS->value<QIcon>());
+        if (VALUE.isValid() && VALUE.canConvert<QIcon>()) {
+            const auto icon = VALUE.value<QIcon>();
+            return ICON_HEAP_NEW(icon);
         }
         // else
         throw VariantConversionFailure();
     }
 
     Color::OwnedRef Handle_toColor(HandleRef _this) {
-        if (THIS->isValid() && THIS->canConvert<QColor>()) {
-            auto value = THIS->value<QColor>();
-            return new Color::__Owned { value };
+        if (VALUE.isValid() && VALUE.canConvert<QColor>()) {
+            const auto color = VALUE.value<QColor>();
+            return new Color::__Owned { color };
         }
         // else
         throw VariantConversionFailure();
     }
 
+    void Owned_markForReturn(OwnedRef _this) {
+        WRAPPER->addRef();
+    }
+
     void Owned_dispose(OwnedRef _this) {
-        delete THIS;
+        WRAPPER->release();
     }
 
     // ctors =================================================
