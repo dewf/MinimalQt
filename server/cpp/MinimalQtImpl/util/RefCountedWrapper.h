@@ -16,4 +16,9 @@ public:
             delete this;
         }
     }
+    T consume() {
+        const auto ret = value;
+        release();
+        return ret;
+    }
 };

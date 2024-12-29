@@ -17,5 +17,4 @@ typedef RefCountedWrapper<QVariant> RefCountedVariant;
 #define VARIANT_HEAP_NEW(...) (reinterpret_cast<Variant::OwnedRef>(new RefCountedVariant(QVariant(__VA_ARGS__))))
 
 namespace Variant {
-    QVariant fromDeferred(const std::shared_ptr<Deferred::Base>& deferred);
 }

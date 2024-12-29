@@ -40,8 +40,3 @@ Owned create(Size size);
 Owned create(Icon.Handle icon);
 Owned create(Color.Handle color);
 Owned createAlign(Alignment align); // different name because just an int32_t typedef
-
-// for AbstractListModel etc return values, but we'll figure out a way around this
-sumtype Deferred {
-    Empty
-}

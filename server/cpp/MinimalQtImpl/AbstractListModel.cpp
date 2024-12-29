@@ -35,15 +35,15 @@ namespace AbstractListModel
         }
 
         QVariant data(const QModelIndex &index, int role) const override {
-            auto deferred = methodDelegate->data((ModelIndex::HandleRef)&index, (ItemDataRole)role);
-            return Variant::fromDeferred(deferred);
+            const auto variant = methodDelegate->data((ModelIndex::HandleRef)&index, (ItemDataRole)role);
+            return AS_QVARIANT_PTR(variant)->consume();
         }
 
         // ==== optional methods ==========================================
         QVariant headerData(int section, Qt::Orientation orientation, int role) const override {
             if (methodMask & MethodMaskFlags::HeaderData) {
-                auto deferred = methodDelegate->headerData(section, (Enums::Orientation)orientation, (ItemDataRole)role);
-                return Variant::fromDeferred(deferred);
+                const auto variant = methodDelegate->headerData(section, static_cast<Enums::Orientation>(orientation), static_cast<ItemDataRole>(role));
+                return AS_QVARIANT_PTR(variant)->consume();
             } else {
                 return QAbstractListModel::headerData(section, orientation, role);
             }

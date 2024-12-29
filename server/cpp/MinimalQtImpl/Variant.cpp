@@ -109,22 +109,4 @@ namespace Variant
     OwnedRef createAlign(Alignment align) {
         return VARIANT_HEAP_NEW(static_cast<Qt::Alignment>(align));
     }
-
-    // deferred stuff ========================================
-    class FromDeferredMatcher : public Deferred::Matcher {
-    private:
-        QVariant &variant;
-    public:
-        explicit FromDeferredMatcher(QVariant &variant) : variant(variant) {}
-        void onEmpty(const Deferred::Empty *value) override {
-            variant = QVariant();
-        }
-    };
-
-    QVariant fromDeferred(const std::shared_ptr<Deferred::Base>& deferred) {
-        QVariant ret;
-        FromDeferredMatcher matcher(ret);
-        deferred->match(&matcher);
-        return ret;
-    }
 }

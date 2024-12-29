@@ -65,10 +65,10 @@ flags MethodMask {
 
 interface MethodDelegate {
     int rowCount(ModelIndex.Handle parent);
-    Variant.Deferred data(ModelIndex.Handle index, ItemDataRole role);
+    Variant.Owned data(ModelIndex.Handle index, ItemDataRole role);
     
     // "optional" (we still have to implement, but only active if mask flag is set)
-    Variant.Deferred headerData(int section, Orientation orientation, ItemDataRole role);
+    Variant.Owned headerData(int section, Orientation orientation, ItemDataRole role);
     ItemFlags getFlags(ModelIndex.Handle index, ItemFlags baseFlags);
     bool setData(ModelIndex.Handle index, Variant.Handle value, ItemDataRole role);
     int columnCount(ModelIndex.Handle parent);
