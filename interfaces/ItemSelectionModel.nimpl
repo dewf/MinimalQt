@@ -21,12 +21,59 @@ interface SignalHandler extends Object.SignalHandler {
     void selectionChanged(ItemSelection.Handle selected, ItemSelection.Handle deselected);
 }
 
+enum SelectionFlag {
+    NoUpdate       = 0x0000,
+    Clear          = 0x0001,
+    Select         = 0x0002,
+    Deselect       = 0x0004,
+    Toggle         = 0x0008,
+    Current        = 0x0010,
+    Rows           = 0x0020,
+    Columns        = 0x0040,
+    SelectCurrent  = Select | Current,
+    ToggleCurrent  = Toggle | Current,
+    ClearAndSelect = Clear | Select
+}
+
+flags SelectionFlags {
+    NoUpdate       = 0x0000,
+    Clear          = 0x0001,
+    Select         = 0x0002,
+    Deselect       = 0x0004,
+    Toggle         = 0x0008,
+    Current        = 0x0010,
+    Rows           = 0x0020,
+    Columns        = 0x0040,
+    SelectCurrent  = Select | Current,
+    ToggleCurrent  = Toggle | Current,
+    ClearAndSelect = Clear | Select
+}
+
 opaque Handle extends Object.Handle {
     // properties:
-    // TODO: need to figure out what to do about ModelIndexList
+    
+    Array<ModelIndex.Owned> selectedIndexes();
+    // readonly
 
     // methods:
-    // see TODO above
+    bool columnIntersectsSelection(int column, Option<ModelIndex.Handle> parent);
+    ModelIndex.Owned currentIndex();
+    bool hasSelection();
+    bool isColumnSelected(int column, Option<ModelIndex.Handle> parent);
+    bool isRowSelected(int row, Option<ModelIndex.Handle> parent);
+    bool isSelected(ModelIndex.Handle index);
+    bool rowIntersectsSelection(int row, Option<ModelIndex.Handle> parent);
+    Array<ModelIndex.Owned> selectedColumns(Option<int> row);
+    Array<ModelIndex.Owned> selectedRows(Option<int> column);
+    ItemSelection.Owned selection();
+
+    void clear();
+    void clearCurrentIndex();
+    void clearSelection();
+    void reset();
+    void select(ItemSelection.Handle selection, SelectionFlags command);
+    void select(ModelIndex.Handle index, SelectionFlags command);
+    void setCurrentIndex(ModelIndex.Handle index, SelectionFlags command);
 
     // etc
     void setSignalMask(SignalMask signalMask);
