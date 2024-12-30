@@ -43,21 +43,50 @@ enum ViewMode {
 }
 
 opaque Handle extends AbstractItemView.Handle {
+    // properties:
+    int batchSize();
     void setBatchSize(int size);
+
+    Flow getFlow();
     void setFlow(Flow flow);
+
+    Size gridSize();
     void setGridSize(Size size);
+
+    bool isWrapping();
     void setWrapping(bool wrapping);
+
+    Alignment itemAlignment();
     void setItemAlignment(Alignment align);
+
+    LayoutMode getLayoutMode();
     void setLayoutMode(LayoutMode mode);
+
+    int modelColumn();
     void setModelColumn(int column);
+
+    Movement getMovement();
     void setMovement(Movement value);
+
+    ResizeMode getResizeMode();
     void setResizeMode(ResizeMode mode);
+
+    bool isSelectionRectVisible();
     void setSelectionRectVisible(bool visible);
+    
+    int spacing();
     void setSpacing(int spacing);
+
+    bool uniformItemSizes();
     void setUniformItemSizes(bool state);
+
+    ViewMode getViewMode();
     void setViewMode(ViewMode mode);
+
+    bool wordWrap();
     void setWordWrap(bool state);
 
+    // etc
     void setSignalMask(SignalMask mask);
 }
 
