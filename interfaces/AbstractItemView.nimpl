@@ -82,7 +82,7 @@ delegate ItemSelectionModel.SignalHandler CreateSelectionModelHandlerFunc();
 
 @nodispose
 opaque Handle extends AbstractScrollArea.Handle {
-    // properties
+    // properties =======================
     bool alternatingRowColors();
     void setAlternatingRowColors(bool state);
 
@@ -133,8 +133,18 @@ opaque Handle extends AbstractScrollArea.Handle {
     void setVerticalScrollMode(ScrollMode mode);
     void resetVerticalScrollMode();
 
-    // methods:
+    // methods ==========================
     void setModel(AbstractItemModel.Handle model);
+
+    void clearSelection();
+    void edit(ModelIndex.Handle index);
+    void reset();
+    void scrollToBottom();
+    void scrollToTop();
+    void selectAll();
+    void setCurrentIndex(ModelIndex.Handle index);
+    void setRootIndex(ModelIndex.Handle index);
+    void update(ModelIndex.Handle index);
 
     ItemSelectionModel.Handle selectionModel(CreateSelectionModelHandlerFunc createHandlerFunc);
     // no setter yet

@@ -4,6 +4,7 @@
 #include "AbstractItemModelInternal.h"
 #include "AbstractItemViewInternal.h"
 #include "ItemSelectionModelInternal.h"
+#include "ModelIndexInternal.h"
 
 #include "util/convert.h"
 
@@ -151,6 +152,42 @@ namespace AbstractItemView
     void Handle_setModel(HandleRef _this, AbstractItemModel::HandleRef model) {
         const auto modelWrapper = reinterpret_cast<AbstractItemModel::SignalWrapper*>(model);
         ABSITEMVIEW_THIS->setModel(modelWrapper->getActual());
+    }
+
+    void Handle_clearSelection(HandleRef _this) {
+        ABSITEMVIEW_THIS->clearSelection();
+    }
+
+    void Handle_edit(HandleRef _this, ModelIndex::HandleRef index) {
+        ABSITEMVIEW_THIS->edit(QMODELINDEX_VALUE(index));
+    }
+
+    void Handle_reset(HandleRef _this) {
+        ABSITEMVIEW_THIS->reset();
+    }
+
+    void Handle_scrollToBottom(HandleRef _this) {
+        ABSITEMVIEW_THIS->scrollToBottom();
+    }
+
+    void Handle_scrollToTop(HandleRef _this) {
+        ABSITEMVIEW_THIS->scrollToTop();
+    }
+
+    void Handle_selectAll(HandleRef _this) {
+        ABSITEMVIEW_THIS->selectAll();
+    }
+
+    void Handle_setCurrentIndex(HandleRef _this, ModelIndex::HandleRef index) {
+        ABSITEMVIEW_THIS->setCurrentIndex(QMODELINDEX_VALUE(index));
+    }
+
+    void Handle_setRootIndex(HandleRef _this, ModelIndex::HandleRef index) {
+        ABSITEMVIEW_THIS->setRootIndex(QMODELINDEX_VALUE(index));
+    }
+
+    void Handle_update(HandleRef _this, ModelIndex::HandleRef index) {
+        ABSITEMVIEW_THIS->update(QMODELINDEX_VALUE(index));
     }
 
     ItemSelectionModel::HandleRef Handle_selectionModel(HandleRef _this, const std::function<CreateSelectionModelHandlerFunc>& createHandlerFunc) {
