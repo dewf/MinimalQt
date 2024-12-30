@@ -19,7 +19,7 @@ namespace AbstractProxyModel
     }
 
     ModelIndex::OwnedRef Handle_mapToSource(HandleRef _this, ModelIndex::HandleRef proxyIndex) {
-        auto retValue = ABSPROXYMODEL_THIS->mapToSource(MODELINDEX_VALUE(proxyIndex));
+        auto retValue = ABSPROXYMODEL_THIS->mapToSource(QMODELINDEX_VALUE(proxyIndex));
         return MODELINDEX_HEAP_COPY(retValue);
     }
 }

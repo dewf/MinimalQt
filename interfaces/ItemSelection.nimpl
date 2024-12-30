@@ -1,0 +1,12 @@
+module ItemSelection;
+
+import ModelIndex;
+
+@nodispose
+opaque Handle { // TODO: extends List?
+    bool contains(ModelIndex.Handle index);
+    void select(ModelIndex.Handle topLeft, ModelIndex.Handle bottomRight);
+    // and some more ...
+}
+
+opaque Owned extends Handle;

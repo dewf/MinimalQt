@@ -1,0 +1,35 @@
+module ItemSelectionModel;
+
+import Object;
+import ModelIndex;
+import AbstractItemModel;
+import ItemSelection;
+
+namedbits SignalMask extends Object.SignalMask {
+    CurrentChanged,
+    CurrentColumnChanged,
+    CurrentRowChanged,
+    ModelChanged,
+    SelectionChanged
+}
+
+interface SignalHandler extends Object.SignalHandler {
+    void currentChanged(ModelIndex.Handle current, ModelIndex.Handle previous);
+    void currentColumnChanged(ModelIndex.Handle current, ModelIndex.Handle previous);
+    void currentRowChanged(ModelIndex.Handle current, ModelIndex.Handle previous);
+    void modelChanged(AbstractItemModel.Handle model);
+    void selectionChanged(ItemSelection.Handle selected, ItemSelection.Handle deselected);
+}
+
+opaque Handle extends Object.Handle {
+    // properties:
+    // TODO: need to figure out what to do about ModelIndexList
+
+    // methods:
+    // see TODO above
+
+    // etc
+    void setSignalMask(SignalMask signalMask);
+}
+
+// can't create these for the moment, we just get them from AbstractItemView->selectionModel

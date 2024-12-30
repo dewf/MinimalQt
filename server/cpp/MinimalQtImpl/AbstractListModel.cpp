@@ -96,7 +96,7 @@ namespace AbstractListModel
         for (auto role : roles) {
             qRoles.push_back((int)role);
         }
-        SUBCLASSED_THIS->emitDataChanged(MODELINDEX_VALUE(topLeft), MODELINDEX_VALUE(bottomRight), qRoles);
+        SUBCLASSED_THIS->emitDataChanged(QMODELINDEX_VALUE(topLeft), QMODELINDEX_VALUE(bottomRight), qRoles);
         // if (const auto delegated = dynamic_cast<Delegated*>(ABSLISTMODEL_THIS); delegated != nullptr) {
         // }
     }
@@ -106,7 +106,7 @@ namespace AbstractListModel
     }
 
     void Interior_beginInsertRows(InteriorRef _this, ModelIndex::HandleRef parent, int32_t first, int32_t last) {
-        SUBCLASSED_THIS->beginInsertRows(MODELINDEX_VALUE(parent), first, last);
+        SUBCLASSED_THIS->beginInsertRows(QMODELINDEX_VALUE(parent), first, last);
     }
 
     void Interior_endInsertRows(InteriorRef _this) {
@@ -114,7 +114,7 @@ namespace AbstractListModel
     }
 
     void Interior_beginRemoveRows(InteriorRef _this, ModelIndex::HandleRef parent, int32_t first, int32_t last) {
-        SUBCLASSED_THIS->beginRemoveRows(MODELINDEX_VALUE(parent), first, last);
+        SUBCLASSED_THIS->beginRemoveRows(QMODELINDEX_VALUE(parent), first, last);
     }
 
     void Interior_endRemoveRows(InteriorRef _this) {

@@ -8,6 +8,7 @@ import AbstractScrollArea;
 import AbstractItemModel;
 import ModelIndex;
 import AbstractItemDelegate;
+import ItemSelectionModel;
 
 namedbits SignalMask extends AbstractScrollArea.SignalMask {
     Activated,
@@ -76,6 +77,9 @@ enum SelectionMode {
     ContiguousSelection
 }
 
+// used for creating a signal handler on demand, if the selection model isn't already wrapped
+delegate ItemSelectionModel.SignalHandler CreateSelectionModelHandlerFunc();
+
 @nodispose
 opaque Handle extends AbstractScrollArea.Handle {
     // properties
@@ -131,6 +135,9 @@ opaque Handle extends AbstractScrollArea.Handle {
 
     // methods:
     void setModel(AbstractItemModel.Handle model);
+
+    ItemSelectionModel.Handle selectionModel(CreateSelectionModelHandlerFunc createHandlerFunc);
+    // no setter yet
 
     void setItemDelegate(AbstractItemDelegate.Handle itemDelegate);
     void setItemDelegateForColumn(int column, AbstractItemDelegate.Handle itemDelegate);

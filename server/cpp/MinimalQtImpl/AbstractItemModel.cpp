@@ -17,27 +17,27 @@ namespace AbstractItemModel
     }
 
     ModelIndex::OwnedRef Handle_index(HandleRef _this, int32_t row, int32_t column, ModelIndex::HandleRef parent) {
-        auto value = ABSITEMMODEL_THIS->index(row, column, MODELINDEX_VALUE(parent));
+        auto value = ABSITEMMODEL_THIS->index(row, column, QMODELINDEX_VALUE(parent));
         return MODELINDEX_HEAP_COPY(value);
     }
 
     bool Handle_setData(HandleRef _this, ModelIndex::HandleRef index, Variant::HandleRef value) {
-        return ABSITEMMODEL_THIS->setData(MODELINDEX_VALUE(index), QVARIANT_VALUE(value));
+        return ABSITEMMODEL_THIS->setData(QMODELINDEX_VALUE(index), QVARIANT_VALUE(value));
     }
 
     bool Handle_setData(HandleRef _this, ModelIndex::HandleRef index, Variant::HandleRef value, ItemDataRole role) {
         auto qrole = static_cast<Qt::ItemDataRole>(role);
-        return ABSITEMMODEL_THIS->setData(MODELINDEX_VALUE(index), QVARIANT_VALUE(value), qrole);
+        return ABSITEMMODEL_THIS->setData(QMODELINDEX_VALUE(index), QVARIANT_VALUE(value), qrole);
     }
 
     Variant::OwnedRef Handle_data(HandleRef _this, ModelIndex::HandleRef index) {
-        auto value = ABSITEMMODEL_THIS->data(MODELINDEX_VALUE(index));
+        auto value = ABSITEMMODEL_THIS->data(QMODELINDEX_VALUE(index));
         return VARIANT_HEAP_NEW(value);
     }
 
     Variant::OwnedRef Handle_data(HandleRef _this, ModelIndex::HandleRef index, ItemDataRole role) {
         auto qrole = static_cast<Qt::ItemDataRole>(role);
-        auto value = ABSITEMMODEL_THIS->data(MODELINDEX_VALUE(index), qrole);
+        auto value = ABSITEMMODEL_THIS->data(QMODELINDEX_VALUE(index), qrole);
         return VARIANT_HEAP_NEW(value);
     }
 

@@ -4,7 +4,7 @@
 #include "ModelIndexInternal.h"
 #include "VariantInternal.h"
 
-#define THIS (AS_MODELINDEX_PTR(_this))
+#define THIS (AS_QMODELINDEX_PTR(_this))
 
 namespace ModelIndex
 {

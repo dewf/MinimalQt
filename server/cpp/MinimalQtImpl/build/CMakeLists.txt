@@ -149,6 +149,16 @@ add_library(MinimalQtImpl STATIC
     ../Image.cpp
     ../ImageInternal.h                          # for deferred etc
 
+    ../generated/ItemSelection.h
+    ../generated/ItemSelection_wrappers.cpp
+    ../ItemSelection.cpp
+    ../ItemSelectionInternal.h
+
+    ../generated/ItemSelectionModel.h
+    ../generated/ItemSelectionModel_wrappers.cpp
+    ../ItemSelectionModel.cpp
+    ../ItemSelectionModelInternal.h
+
     ../generated/KeySequence.h
     ../generated/KeySequence_wrappers.cpp
     ../KeySequenceInternal.h

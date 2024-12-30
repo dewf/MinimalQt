@@ -3,6 +3,7 @@
 #include "AbstractItemDelegateInternal.h"
 #include "AbstractItemModelInternal.h"
 #include "AbstractItemViewInternal.h"
+#include "ItemSelectionModelInternal.h"
 
 #include "util/convert.h"
 
@@ -150,6 +151,20 @@ namespace AbstractItemView
     void Handle_setModel(HandleRef _this, AbstractItemModel::HandleRef model) {
         const auto modelWrapper = reinterpret_cast<AbstractItemModel::SignalWrapper*>(model);
         ABSITEMVIEW_THIS->setModel(modelWrapper->getActual());
+    }
+
+    ItemSelectionModel::HandleRef Handle_selectionModel(HandleRef _this, const std::function<CreateSelectionModelHandlerFunc>& createHandlerFunc) {
+        if (const auto model = ABSITEMVIEW_THIS->selectionModel(); model != nullptr) {
+            // check for existing wrapper (ie, did we originally create/supply the selectionModel?)
+            if (const auto existing = wrapperForQObject(model); existing != nullptr) {
+                return reinterpret_cast<ItemSelectionModel::HandleRef>(existing);
+            }
+            // else, need to create a new one
+            const auto wrapper = new ItemSelectionModel::SignalWrapper(model, createHandlerFunc());
+            return reinterpret_cast<ItemSelectionModel::HandleRef>(wrapper);
+        }
+        // else
+        return nullptr;
     }
 
     void Handle_setItemDelegate(HandleRef _this, AbstractItemDelegate::HandleRef itemDelegate) {

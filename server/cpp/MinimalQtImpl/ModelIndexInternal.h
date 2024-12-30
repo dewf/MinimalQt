@@ -4,13 +4,13 @@
 #include <QModelIndex>
 
 // from a ModelIndex::Handle to a QModelIndex*
-#define AS_MODELINDEX_PTR(x) (reinterpret_cast<QModelIndex*>(x))
+#define AS_QMODELINDEX_PTR(x) (reinterpret_cast<QModelIndex*>(x))
 
 // from a ModelIndex::Handle to a QModelIndex value
-#define MODELINDEX_VALUE(x) (*AS_MODELINDEX_PTR(x))
+#define QMODELINDEX_VALUE(x) (*AS_QMODELINDEX_PTR(x))
 
 // create an owned heap-allocated copy of an existing QModelIndex value
-#define MODELINDEX_HEAP_COPY(x) (reinterpret_cast<ModelIndex::OwnedRef>(new QModelIndex(x)))
+#define MODELINDEX_HEAP_COPY(...) (reinterpret_cast<ModelIndex::OwnedRef>(new QModelIndex(__VA_ARGS__)))
 
 namespace ModelIndex {
     // as of now we're just wrapping raw QModelIndex pointers
