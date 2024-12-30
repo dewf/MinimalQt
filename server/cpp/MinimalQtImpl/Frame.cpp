@@ -8,12 +8,24 @@
 
 namespace Frame
 {
+    Rect Handle_frameRect(HandleRef _this) {
+        return toRect(FRAME_THIS->frameRect());
+    }
+
     void Handle_setFrameRect(HandleRef _this, Rect rect) {
         FRAME_THIS->setFrameRect(toQRect(rect));
     }
 
+    Shadow Handle_frameShadow(HandleRef _this) {
+        return static_cast<Shadow>(FRAME_THIS->frameShadow());
+    }
+
     void Handle_setFrameShadow(HandleRef _this, Shadow shadow) {
         FRAME_THIS->setFrameShadow(static_cast<QFrame::Shadow>(shadow));
+    }
+
+    Shape Handle_frameShape(HandleRef _this) {
+        return static_cast<Shape>(FRAME_THIS->frameShape());
     }
 
     void Handle_setFrameShape(HandleRef _this, Shape shape) {
@@ -24,8 +36,16 @@ namespace Frame
         return FRAME_THIS->frameWidth();
     }
 
+    int32_t Handle_lineWidth(HandleRef _this) {
+        return FRAME_THIS->lineWidth();
+    }
+
     void Handle_setLineWidth(HandleRef _this, int32_t width) {
         FRAME_THIS->setLineWidth(width);
+    }
+
+    int32_t Handle_midLineWidth(HandleRef _this) {
+        return FRAME_THIS->midLineWidth();
     }
 
     void Handle_setMidLineWidth(HandleRef _this, int32_t width) {

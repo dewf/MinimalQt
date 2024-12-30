@@ -366,6 +366,12 @@ enum TransformationMode {
     SmoothTransformation
 }
 
+enum ScrollBarPolicy {
+    ScrollBarAsNeeded,
+    ScrollBarAlwaysOff,
+    ScrollBarAlwaysOn
+}
+
 enum Key {
     // Unicode Basic Latin block (0x00-0x7f)
     Key_Space = 0x20,

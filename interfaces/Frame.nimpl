@@ -33,15 +33,29 @@ enum Shadow {
 // Qt's frame style is just a bitwise-OR between shape and shadow
 
 opaque Handle extends Widget.Handle {
+    // properties:
+    Rect frameRect();
     void setFrameRect(Rect rect);
+
+    Shadow frameShadow();
     void setFrameShadow(Shadow shadow);
+
+    Shape frameShape();
     void setFrameShape(Shape shape);
+    
     int frameWidth();
+    // read-only
+
+    int lineWidth();
     void setLineWidth(int width);
+
+    int midLineWidth();
     void setMidLineWidth(int width);
 
+    // methods:
     void setFrameStyle(Shape shape, Shadow shadow);
 
+    // etc:
     void setSignalMask(SignalMask mask);
 }
 

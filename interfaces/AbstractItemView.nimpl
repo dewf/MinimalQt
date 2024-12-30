@@ -37,6 +37,16 @@ enum DragDropMode {
     InternalMove
 }
 
+enum EditTrigger {
+    NoEditTriggers = 0,
+    CurrentChanged = 1,
+    DoubleClicked = 2,
+    SelectedClicked = 4,
+    EditKeyPressed = 8,
+    AnyKeyPressed = 16,
+    AllEditTriggers = 31
+}
+
 flags EditTriggers {
     NoEditTriggers = 0,
     CurrentChanged = 1,
@@ -68,23 +78,58 @@ enum SelectionMode {
 
 @nodispose
 opaque Handle extends AbstractScrollArea.Handle {
+    // properties
+    bool alternatingRowColors();
     void setAlternatingRowColors(bool state);
-    void setAutoScroll(bool state);
-    void setAutoScrollMargin(int margin);
-    void setDefaultDropAction(DropAction action);
-    void setDragDropMode(DragDropMode mode);
-    void setDragDropOverwriteMode(bool mode);
-    void setDragEnabled(bool enabled);
-    void setEditTriggers(EditTriggers triggers);
-    void setHorizontalScrollMode(ScrollMode mode);
-    void setIconSize(Size size);
-    void setSelectionBehavior(SelectionBehavior behavior);
-    void setSelectionMode(SelectionMode mode);
-    void setDropIndicatorShown(bool state);
-    void setTabKeyNavigation(bool state);
-    void setTextElideMode(TextElideMode mode);
-    void setVerticalScrollMode(ScrollMode mode);
 
+    bool hasAutoScroll();
+    void setAutoScroll(bool state);
+
+    int autoScrollMargin();
+    void setAutoScrollMargin(int margin);
+
+    DropAction defaultDropAction();
+    void setDefaultDropAction(DropAction action);
+
+    DragDropMode getDragDropMode();
+    void setDragDropMode(DragDropMode mode);
+
+    bool dragDropOverwriteMode();
+    void setDragDropOverwriteMode(bool mode);
+
+    bool dragEnabled();
+    void setDragEnabled(bool enabled);
+
+    EditTriggers getEditTriggers();
+    void setEditTriggers(EditTriggers triggers);
+    
+    ScrollMode horizontalScrollMode();
+    void setHorizontalScrollMode(ScrollMode mode);
+    void resetHorizontalScrollMode();
+
+    Size iconSize();
+    void setIconSize(Size size);
+
+    SelectionBehavior getSelectionBehavior();
+    void setSelectionBehavior(SelectionBehavior behavior);
+
+    SelectionMode getSelectionMode();
+    void setSelectionMode(SelectionMode mode);
+
+    bool showDropIndicator();
+    void setDropIndicatorShown(bool state);
+
+    bool tabKeyNavigation();
+    void setTabKeyNavigation(bool state);
+
+    TextElideMode getTextElideMode();
+    void setTextElideMode(TextElideMode mode);
+
+    ScrollMode verticalScrollMode();
+    void setVerticalScrollMode(ScrollMode mode);
+    void resetVerticalScrollMode();
+
+    // methods:
     void setModel(AbstractItemModel.Handle model);
 
     void setItemDelegate(AbstractItemDelegate.Handle itemDelegate);

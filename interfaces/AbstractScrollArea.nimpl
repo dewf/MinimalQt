@@ -4,6 +4,7 @@ import Object;
 import Common;
 import Icon;
 import Frame;
+import Enums;
 
 namedbits SignalMask extends Frame.SignalMask {
     // none of our own
@@ -19,16 +20,15 @@ enum SizeAdjustPolicy {
     AdjustToContents
 }
 
-enum ScrollBarPolicy {
-    ScrollBarAsNeeded,
-    ScrollBarAlwaysOff,
-    ScrollBarAlwaysOn
-}
-
 @nodispose
 opaque Handle extends Frame.Handle {
+    ScrollBarPolicy horizontalScrollBarPolicy();
     void setHorizontalScrollBarPolicy(ScrollBarPolicy policy);
+
+    SizeAdjustPolicy getSizeAdjustPolicy();
     void setSizeAdjustPolicy(SizeAdjustPolicy policy);
+
+    ScrollBarPolicy verticalScrollBarPolicy();
     void setVerticalScrollBarPolicy(ScrollBarPolicy policy);
 
     // abstract class, so no signal mask setter
