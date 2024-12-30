@@ -24,24 +24,48 @@ enum TabShape { Rounded, Triangular }
 enum TabPosition { North, South, West, East }
 
 opaque Handle extends Widget.Handle {
-    int count();                        // readonly
+    // properties ==========================
+    int count();
+    // readonly
+
+    int currentIndex();
     void setCurrentIndex(int index);
+
+    bool documentMode();
     void setDocumentMode(bool state);
+
+    TextElideMode elideMode();
     void setElideMode(TextElideMode mode);
+
+    Size iconSize();
     void setIconSize(Size size);
+
+    bool isMovable();
     void setMovable(bool state);
+
+    bool tabBarAutoHide();
     void setTabBarAutoHide(bool state);
+
+    TabPosition getTabPosition();
     void setTabPosition(TabPosition position);
+
+    TabShape getTabShape();
     void setTabShape(TabShape shape);
+
+    bool tabsClosable();
     void setTabsClosable(bool state);
+
+    bool usesScrollButtons();
     void setUsesScrollButtons(bool state);
 
+    // methods =============================
     int addTab(Widget.Handle page, string label);
     int insertTab(int index, Widget.Handle page, string label);
     Widget.Handle widgetAt(int index);                          // get page @ position (note: Qt method "widget", but that causes a C# name collision, hence "widgetAt")
     void clear();                                               // remove all widgets without destroying
     void removeTab(int index);
 
+    // etc =================================
     void setSignalMask(SignalMask mask);
 }
 
