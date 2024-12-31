@@ -19,16 +19,38 @@ interface SignalHandler extends AbstractItemView.SignalHandler {
 
 opaque Handle extends AbstractItemView.Handle {
     // properties:
+    bool allColumnsShowFocus();
     void setAllColumnsShowFocus(bool value);
+
+    bool isAnimated();
     void setAnimated(bool value);
+
+    int autoExpandDelay();
     void setAutoExpandDelay(int value);
+
+    bool expandsOnDoubleClick();
     void setExpandsOnDoubleClick(bool value);
+
+    bool isHeaderHidden();
     void setHeaderHidden(bool value);
+
+    int indentation();
     void setIndentation(int value);
+    void resetIndentation();
+
+    bool itemsExpandable();
     void setItemsExpandable(bool value);
+
+    bool rootIsDecorated();
     void setRootIsDecorated(bool value);
+
+    bool isSortingEnabled();
     void setSortingEnabled(bool value);
+
+    bool uniformRowHeights();
     void setUniformRowHeights(bool value);
+
+    bool wordWrap();
     void setWordWrap(bool value);
 
     // methods:

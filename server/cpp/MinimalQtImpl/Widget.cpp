@@ -492,12 +492,23 @@ namespace Widget
         WIDGET_THIS->setLayout(layoutWrapper->getActual());
     }
 
-    Layout::HandleRef Handle_getLayout(HandleRef _this) {
-        const auto wrapper = wrapperForQObject(WIDGET_THIS->layout());
-        if (!wrapper) {
-            printf("warning: Layout::Handle_getLayout() could not find a wrapper - this is a layout the client side does not know about. returning null!\n");
+    std::shared_ptr<LayoutResult::Base> Handle_getLayout(HandleRef _this) {
+        if (const auto layout = WIDGET_THIS->layout(); layout != nullptr) {
+            // check for existing wrapper (ie, did we originally set the layout ourselves?)
+            if (const auto existing = wrapperForQObject(layout); existing != nullptr) {
+                const auto handleRef = reinterpret_cast<Layout::HandleRef>(existing);
+                return std::make_shared<LayoutResult::AlreadyExists>(handleRef);
+            }
+            // else, unknown (Qt-supplied) default, need to create a new wrapper
+            // return a function which can create one on-demand
+            const auto func = [layout](const std::shared_ptr<Layout::SignalHandler>& handler) {
+                const auto wrapper = new Layout::SignalWrapper(layout, handler);
+                return reinterpret_cast<Layout::HandleRef>(wrapper);
+            };
+            return std::make_shared<LayoutResult::NeedsWrapper>(func);
         }
-        return reinterpret_cast<Layout::HandleRef>(wrapper);
+        // else
+        return std::make_shared<LayoutResult::NoLayout>();
     }
 
     Point Handle_mapToGlobal(HandleRef _this, Point p) {

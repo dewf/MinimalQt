@@ -26,6 +26,14 @@ interface SignalHandler extends Object.SignalHandler {
     void windowTitleChanged(string title);
 }
 
+// some fancy stuff for the Layout getter:
+delegate Layout.Handle LayoutWrapperCreateFunc(Layout.SignalHandler handler);
+sumtype LayoutResult {
+    NoLayout,
+    AlreadyExists(Layout.Handle handle),             // something we (C#) created/assigned previously
+    NeedsWrapper(LayoutWrapperCreateFunc createFunc) // Qt-created default: using the function, provide a SignalHandler, receive the Layout.Handle
+}
+
 opaque Handle extends Object.Handle {
     // properties ==================================
     bool acceptDrops();
@@ -232,11 +240,7 @@ opaque Handle extends Object.Handle {
     void update(Rect rect);
 
     void setLayout(Layout.Handle layout);
-
-    // as of right now this will technically be broken, if Qt internally creates a layout we don't know about (eg for QMainWindow)
-    // if that ends up being a problem, we'll have to do some fancy footwork around this to create a client-side wrapper on demand
-    // maybe a function like layoutHasWrapper() to be called first, before calling getLayout()?
-    Layout.Handle getLayout();
+    LayoutResult getLayout();
 
     Point mapToGlobal(Point p);
 

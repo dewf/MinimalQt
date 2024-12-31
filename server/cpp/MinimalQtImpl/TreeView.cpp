@@ -6,44 +6,92 @@
 
 namespace TreeView
 {
+    bool Handle_allColumnsShowFocus(HandleRef _this) {
+        return TREEVIEW_THIS->allColumnsShowFocus();
+    }
+
     void Handle_setAllColumnsShowFocus(HandleRef _this, bool value) {
         TREEVIEW_THIS->setAllColumnsShowFocus(value);
+    }
+
+    bool Handle_isAnimated(HandleRef _this) {
+        return TREEVIEW_THIS->isAnimated();
     }
 
     void Handle_setAnimated(HandleRef _this, bool value) {
         TREEVIEW_THIS->setAnimated(value);
     }
 
+    int32_t Handle_autoExpandDelay(HandleRef _this) {
+        return TREEVIEW_THIS->autoExpandDelay();
+    }
+
     void Handle_setAutoExpandDelay(HandleRef _this, int32_t value) {
         TREEVIEW_THIS->setAutoExpandDelay(value);
+    }
+
+    bool Handle_expandsOnDoubleClick(HandleRef _this) {
+        return TREEVIEW_THIS->expandsOnDoubleClick();
     }
 
     void Handle_setExpandsOnDoubleClick(HandleRef _this, bool value) {
         TREEVIEW_THIS->setExpandsOnDoubleClick(value);
     }
 
+    bool Handle_isHeaderHidden(HandleRef _this) {
+        return TREEVIEW_THIS->isHeaderHidden();
+    }
+
     void Handle_setHeaderHidden(HandleRef _this, bool value) {
         TREEVIEW_THIS->setHeaderHidden(value);
+    }
+
+    int32_t Handle_indentation(HandleRef _this) {
+        return TREEVIEW_THIS->indentation();
     }
 
     void Handle_setIndentation(HandleRef _this, int32_t value) {
         TREEVIEW_THIS->setIndentation(value);
     }
 
+    void Handle_resetIndentation(HandleRef _this) {
+        return TREEVIEW_THIS->resetIndentation();
+    }
+
+    bool Handle_itemsExpandable(HandleRef _this) {
+        return TREEVIEW_THIS->itemsExpandable();
+    }
+
     void Handle_setItemsExpandable(HandleRef _this, bool value) {
         TREEVIEW_THIS->setItemsExpandable(value);
+    }
+
+    bool Handle_rootIsDecorated(HandleRef _this) {
+        return TREEVIEW_THIS->rootIsDecorated();
     }
 
     void Handle_setRootIsDecorated(HandleRef _this, bool value) {
         TREEVIEW_THIS->setRootIsDecorated(value);
     }
 
+    bool Handle_isSortingEnabled(HandleRef _this) {
+        return TREEVIEW_THIS->isSortingEnabled();
+    }
+
     void Handle_setSortingEnabled(HandleRef _this, bool value) {
         TREEVIEW_THIS->setSortingEnabled(value);
     }
 
+    bool Handle_uniformRowHeights(HandleRef _this) {
+        return TREEVIEW_THIS->uniformRowHeights();
+    }
+
     void Handle_setUniformRowHeights(HandleRef _this, bool value) {
         TREEVIEW_THIS->setUniformRowHeights(value);
+    }
+
+    bool Handle_wordWrap(HandleRef _this) {
+        return TREEVIEW_THIS->wordWrap();
     }
 
     void Handle_setWordWrap(HandleRef _this, bool value) {
