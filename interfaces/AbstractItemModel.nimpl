@@ -82,7 +82,8 @@ namedbits ImplementationMask {
     SetData,
     Flags,
     HeaderData,
-    SetHeaderData
+    SetHeaderData,
+    Sort
 }
 
 interface ImplementationMethods {
@@ -99,6 +100,7 @@ interface ImplementationMethods {
     ItemFlags getFlags(ModelIndex.Handle index, ItemFlags baseFlags);
     Variant.SafeReturn headerData(int section, Orientation orientation, int role);
     bool setHeaderData(int section, Orientation orientation, Variant.Handle value, int role);
+    void sort(int column, SortOrder order);
 }
 
 opaque Interior extends Handle {

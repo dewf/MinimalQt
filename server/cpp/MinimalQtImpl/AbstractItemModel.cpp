@@ -137,6 +137,14 @@ namespace AbstractItemModel
             }
         }
 
+        void sort(int column, Qt::SortOrder order) override {
+            if (methodMask & Sort) {
+                return methodDelegate->sort(column, static_cast<SortOrder>(order));
+            } else {
+                return QAbstractItemModel::sort(column, order);
+            }
+        }
+
         // signal emission wrappers
         void emitDataChanged(const QModelIndex& topLeft, const QModelIndex& bottomRight, const QList<int>& roles) {
             emit dataChanged(topLeft, bottomRight, roles);
