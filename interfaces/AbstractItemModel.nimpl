@@ -73,7 +73,7 @@ opaque Handle extends Object.Handle {
 
 // subclass (implementation) stuff ================================================================================
 
-namedbits ImplementedMask {
+namedbits ImplementationMask {
     // required, so not in mask:
     // index, parent, rowCount, columnCount, data
 
@@ -85,7 +85,7 @@ namedbits ImplementedMask {
     SetHeaderData
 }
 
-interface ImplementedMethods {
+interface ImplementationMethods {
     // required:
     ModelIndex.SafeReturn index(int row, int column, ModelIndex.Handle parent);
     ModelIndex.SafeReturn parent(ModelIndex.Handle index);
@@ -124,4 +124,4 @@ opaque Interior extends Handle {
     void setSignalMask(SignalMask mask); // here because Handle is abstract!
 }
 
-Interior createImplementation(SignalHandler handler, ImplementedMethods methods, ImplementedMask mask);
+Interior createImplementation(SignalHandler handler, ImplementationMethods methods, ImplementationMask mask);

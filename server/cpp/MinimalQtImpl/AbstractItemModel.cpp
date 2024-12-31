@@ -54,10 +54,10 @@ namespace AbstractItemModel
     // subclassing stuff ===============================================================
     class Implementation : public QAbstractItemModel {
     private:
-        std::shared_ptr<ImplementedMethods> methodDelegate;
-        ImplementedMask methodMask;
+        std::shared_ptr<ImplementationMethods> methodDelegate;
+        ImplementationMask methodMask;
     public:
-        Implementation(const std::shared_ptr<ImplementedMethods> &methods, ImplementedMask method_mask)
+        Implementation(const std::shared_ptr<ImplementationMethods> &methods, ImplementationMask method_mask)
             : methodDelegate(methods), methodMask(method_mask) {}
 
         // ===== must-implement abstract methods ================================
@@ -206,7 +206,7 @@ namespace AbstractItemModel
         delete WRAPPER;
     }
 
-    InteriorRef createImplementation(const std::shared_ptr<SignalHandler>& handler, const std::shared_ptr<ImplementedMethods>& methods, ImplementedMask mask) {
+    InteriorRef createImplementation(const std::shared_ptr<SignalHandler>& handler, const std::shared_ptr<ImplementationMethods>& methods, ImplementationMask mask) {
         const auto model = new Implementation(methods, mask);
         const auto wrapper = new SignalWrapper(model, handler);
         return reinterpret_cast<InteriorRef>(wrapper);
