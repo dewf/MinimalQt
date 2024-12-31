@@ -77,8 +77,13 @@ enum SelectionMode {
     ContiguousSelection
 }
 
-// used for creating a signal handler on demand, if the selection model isn't already wrapped
-delegate ItemSelectionModel.SignalHandler CreateSelectionModelHandlerFunc();
+// some fancy stuff for the SelectionModel getter:
+delegate ItemSelectionModel.Handle WrapperCreationFunc(ItemSelectionModel.SignalHandler handler);
+sumtype SelectionModelResult {
+    NoSelectionModel,
+    AlreadyExists(ItemSelectionModel.Handle handle),
+    NeedsWrapper(WrapperCreationFunc createFunc) // using the function, provide a SignalHandler, receive the SelectionModel.Handle
+}
 
 @nodispose
 opaque Handle extends AbstractScrollArea.Handle {
@@ -146,7 +151,7 @@ opaque Handle extends AbstractScrollArea.Handle {
     void setRootIndex(ModelIndex.Handle index);
     void update(ModelIndex.Handle index);
 
-    ItemSelectionModel.Handle selectionModel(CreateSelectionModelHandlerFunc createHandlerFunc);
+    SelectionModelResult selectionModel();
     // no setter yet
 
     void setItemDelegate(AbstractItemDelegate.Handle itemDelegate);

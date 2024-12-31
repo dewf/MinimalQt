@@ -190,18 +190,23 @@ namespace AbstractItemView
         ABSITEMVIEW_THIS->update(QMODELINDEX_VALUE(index));
     }
 
-    ItemSelectionModel::HandleRef Handle_selectionModel(HandleRef _this, const std::function<CreateSelectionModelHandlerFunc>& createHandlerFunc) {
+    std::shared_ptr<SelectionModelResult::Base> Handle_selectionModel(HandleRef _this) {
         if (const auto model = ABSITEMVIEW_THIS->selectionModel(); model != nullptr) {
-            // check for existing wrapper (ie, did we originally create/supply the selectionModel?)
+            // check for existing wrapper (ie, did we originally set the selectionModel ourselves?)
             if (const auto existing = wrapperForQObject(model); existing != nullptr) {
-                return reinterpret_cast<ItemSelectionModel::HandleRef>(existing);
+                const auto handleRef = reinterpret_cast<ItemSelectionModel::HandleRef>(existing);
+                return std::make_shared<SelectionModelResult::AlreadyExists>(handleRef);
             }
-            // else, need to create a new one
-            const auto wrapper = new ItemSelectionModel::SignalWrapper(model, createHandlerFunc());
-            return reinterpret_cast<ItemSelectionModel::HandleRef>(wrapper);
+            // else, unknown (Qt-supplied) model, need to create a new wrapper
+            // return a function which can create one on-demand
+            const auto func = [model](const std::shared_ptr<ItemSelectionModel::SignalHandler>& handler) {
+                const auto wrapper = new ItemSelectionModel::SignalWrapper(model, handler);
+                return reinterpret_cast<ItemSelectionModel::HandleRef>(wrapper);
+            };
+            return std::make_shared<SelectionModelResult::NeedsWrapper>(func);
         }
         // else
-        return nullptr;
+        return std::make_shared<SelectionModelResult::NoSelectionModel>();
     }
 
     void Handle_setItemDelegate(HandleRef _this, AbstractItemDelegate::HandleRef itemDelegate) {
