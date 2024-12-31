@@ -9,14 +9,6 @@
 
 namespace ModelIndex
 {
-    bool Handle_isValid(HandleRef _this) {
-        return VALUE.isValid();
-   }
-
-    int32_t Handle_row(HandleRef _this) {
-        return VALUE.row();
-    }
-
     int32_t Handle_column(HandleRef _this) {
         return VALUE.column();
     }
@@ -28,6 +20,38 @@ namespace ModelIndex
     Variant::OwnedRef Handle_data(HandleRef _this, ItemDataRole role) {
         auto qRole = static_cast<Qt::ItemDataRole>(role);
         return new Variant::__Owned(VALUE.data(qRole));
+    }
+
+    ItemFlags Handle_getFlags(HandleRef _this) {
+        return VALUE.flags();
+    }
+
+    size_t Handle_internalId(HandleRef _this) {
+        return VALUE.internalId();
+    }
+
+    bool Handle_isValid(HandleRef _this) {
+        return VALUE.isValid();
+    }
+
+    OwnedRef Handle_parent(HandleRef _this) {
+        return new __Owned(VALUE.parent());
+    }
+
+    int32_t Handle_row(HandleRef _this) {
+        return VALUE.row();
+    }
+
+    OwnedRef Handle_sibling(HandleRef _this, int32_t row, int32_t column) {
+        return new __Owned(VALUE.sibling(row, column));
+    }
+
+    OwnedRef Handle_siblingAtColumn(HandleRef _this, int32_t column) {
+        return new __Owned(VALUE.siblingAtColumn(column));
+    }
+
+    OwnedRef Handle_siblingAtRow(HandleRef _this, int32_t row) {
+        return new __Owned(VALUE.siblingAtRow(row));
     }
 
     SafeReturnRef Owned_getSafeReturn(OwnedRef _this) {

@@ -3,14 +3,26 @@ module ModelIndex;
 import Variant;
 import Enums;
 
+
 @nodispose
 opaque Handle {
-    bool isValid();
-    int row();
     int column();
-
     Variant.Owned data();
     Variant.Owned data(ItemDataRole role);
+    ItemFlags getFlags();
+    size_t internalId(); // is there any real difference between this and internalPointer?
+    bool isValid();
+    
+    // how could we import QAbstractItemModel, which depends on ModelIndex? hmmm
+    // AbstractItemModel.Handle model();
+
+    // void multiData(...) TODO
+    
+    Owned parent();
+    int row();
+    Owned sibling(int row, int column);
+    Owned siblingAtColumn(int column);
+    Owned siblingAtRow(int row);
 }
 
 opaque Owned extends Handle {
