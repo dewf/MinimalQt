@@ -24,12 +24,13 @@ opaque Handle {
 }
 
 opaque Owned extends Handle {
-    // +1 internal reference count, so that even if the C# side disposes, it's always safe to use as a return value
-    // (normally opaques aren't safe to use as return values from the client side, unless we can guarantee they can't accidentally be GC'ed going out of scope etc)
-    // we only need to do this for types like Variant and probably ModelIndex that are likely to be returned from client callbacks to server
-    // could have also gone with a system that simply copies them to another type (eg 'ServerOwned'), but this seemed more fun and slightly more efficient
-    void markForReturn();
+    SafeReturn getSafeReturn(); // see note below
 }
+
+// for safely returning from client interface methods
+// (internally addref'ed via an Owned method)
+// (normally opaques aren't safe to use as return values from the client side, unless we can guarantee they can't accidentally be GC'ed going out of scope etc)
+opaque SafeReturn extends Owned;
 
 Owned create();
 Owned create(bool value);

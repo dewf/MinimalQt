@@ -159,7 +159,7 @@ namespace AbstractItemView
     }
 
     void Handle_edit(HandleRef _this, ModelIndex::HandleRef index) {
-        ABSITEMVIEW_THIS->edit(QMODELINDEX_VALUE(index));
+        ABSITEMVIEW_THIS->edit(index->value);
     }
 
     void Handle_reset(HandleRef _this) {
@@ -179,15 +179,15 @@ namespace AbstractItemView
     }
 
     void Handle_setCurrentIndex(HandleRef _this, ModelIndex::HandleRef index) {
-        ABSITEMVIEW_THIS->setCurrentIndex(QMODELINDEX_VALUE(index));
+        ABSITEMVIEW_THIS->setCurrentIndex(index->value);
     }
 
     void Handle_setRootIndex(HandleRef _this, ModelIndex::HandleRef index) {
-        ABSITEMVIEW_THIS->setRootIndex(QMODELINDEX_VALUE(index));
+        ABSITEMVIEW_THIS->setRootIndex(index->value);
     }
 
     void Handle_update(HandleRef _this, ModelIndex::HandleRef index) {
-        ABSITEMVIEW_THIS->update(QMODELINDEX_VALUE(index));
+        ABSITEMVIEW_THIS->update(index->value);
     }
 
     std::shared_ptr<SelectionModelResult::Base> Handle_selectionModel(HandleRef _this) {

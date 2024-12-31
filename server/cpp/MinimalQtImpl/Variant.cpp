@@ -6,9 +6,10 @@
 #include <QVariant>
 
 #include "ColorInternal.h"
+#include "IconInternal.h"
 #include "util/convert.h"
 
-#define WRAPPER (AS_QVARIANT_PTR(_this)) // RefCountedWrapper<QVariant>*
+#define WRAPPER (_this) // RefCountedWrapper<QVariant>*
 #define VALUE (WRAPPER->value)
 
 namespace Variant
@@ -65,48 +66,55 @@ namespace Variant
         throw VariantConversionFailure();
     }
 
-    void Owned_markForReturn(OwnedRef _this) {
+    SafeReturnRef Owned_getSafeReturn(OwnedRef _this) {
         WRAPPER->addRef();
+        // return "as" a different type, but not really - this is just to enforce API safety requiring us to call this method to safely return the opaques from a client interface (which is normally unsafe)
+        return reinterpret_cast<SafeReturnRef>(_this);
     }
 
     void Owned_dispose(OwnedRef _this) {
         WRAPPER->release();
     }
 
+    void SafeReturn_dispose(SafeReturnRef _this) {
+        WRAPPER->release();
+    }
+
     // ctors =================================================
     OwnedRef create() {
-        return VARIANT_HEAP_NEW();
+        return new __Owned(QVariant());
     }
 
     OwnedRef create(bool value) {
-        return VARIANT_HEAP_NEW(value);
+        return new __Owned(value);
     }
 
     OwnedRef create(const std::string& value) {
-        return VARIANT_HEAP_NEW(QString::fromStdString(value));
+        return new __Owned(QString::fromStdString(value));
     }
 
     OwnedRef create(int32_t value) {
-        return VARIANT_HEAP_NEW(value);
+        return new __Owned(value);
     }
 
     OwnedRef create(CheckState value) {
-        return VARIANT_HEAP_NEW(static_cast<int>(value));
+        return new __Owned(static_cast<int>(value));
     }
 
     OwnedRef create(Size size) {
-        return VARIANT_HEAP_NEW(toQSize(size));
+        return new __Owned(toQSize(size));
     }
 
     OwnedRef create(Icon::HandleRef icon) {
-        return VARIANT_HEAP_NEW(QICON_VALUE(icon));
+        return new __Owned(QICON_VALUE(icon));
     }
 
     OwnedRef create(Color::HandleRef color) {
-        return VARIANT_HEAP_NEW(color->qColor);
+        return new __Owned(color->qColor);
     }
 
     OwnedRef createAlign(Alignment align) {
-        return VARIANT_HEAP_NEW(static_cast<Qt::Alignment>(align));
+        const auto qAlign = static_cast<Qt::Alignment>(align);
+        return new __Owned(QVariant(qAlign));
     }
 }

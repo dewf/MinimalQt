@@ -19,13 +19,13 @@ namespace ComboBox
     }
 
     Variant::OwnedRef Handle_currentData(HandleRef _this) {
-        auto ret = COMBO_THIS->currentData();
-        return VARIANT_HEAP_NEW(ret);
+        const auto ret = COMBO_THIS->currentData();
+        return new Variant::__Owned(ret);
     }
 
     Variant::OwnedRef Handle_currentData(HandleRef _this, ItemDataRole role) {
-        auto ret = COMBO_THIS->currentData(static_cast<Qt::ItemDataRole>(role));
-        return VARIANT_HEAP_NEW(ret);
+        const auto ret = COMBO_THIS->currentData(static_cast<Qt::ItemDataRole>(role));
+        return new Variant::__Owned(ret);
     }
 
     int32_t Handle_currentIndex(HandleRef _this) {
@@ -137,11 +137,11 @@ namespace ComboBox
     }
 
     void Handle_addItem(HandleRef _this, const std::string& text, Variant::HandleRef userData) {
-        COMBO_THIS->addItem(QString::fromStdString(text), QVARIANT_VALUE(userData));
+        COMBO_THIS->addItem(QString::fromStdString(text), userData->value);
     }
 
     void Handle_addItem(HandleRef _this, Icon::HandleRef icon, const std::string& text, Variant::HandleRef userData) {
-        COMBO_THIS->addItem(QICON_VALUE(icon), QString::fromStdString(text), QVARIANT_VALUE(userData));
+        COMBO_THIS->addItem(QICON_VALUE(icon), QString::fromStdString(text), userData->value);
     }
 
     void Handle_addItems(HandleRef _this, const std::vector<std::string>& texts) {
@@ -153,7 +153,7 @@ namespace ComboBox
     }
 
     void Handle_setItemData(HandleRef _this, int32_t index, Variant::HandleRef value, ItemDataRole role) {
-        COMBO_THIS->setItemData(index, QVARIANT_VALUE(value), static_cast<Qt::ItemDataRole>(role));
+        COMBO_THIS->setItemData(index, value->value, static_cast<Qt::ItemDataRole>(role));
     }
 
     void Handle_setItemIcon(HandleRef _this, int32_t index, Icon::HandleRef icon) {

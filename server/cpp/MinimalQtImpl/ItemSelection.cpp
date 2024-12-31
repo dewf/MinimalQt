@@ -7,11 +7,11 @@
 
 namespace ItemSelection {
     bool Handle_contains(HandleRef _this, ModelIndex::HandleRef index) {
-        return THIS->contains(QMODELINDEX_VALUE(index));
+        return THIS->contains(index->value);
     }
 
     void Handle_select(HandleRef _this, ModelIndex::HandleRef topLeft, ModelIndex::HandleRef bottomRight) {
-        THIS->select(QMODELINDEX_VALUE(topLeft), QMODELINDEX_VALUE(bottomRight));
+        THIS->select(topLeft->value, bottomRight->value);
     }
 
     void Owned_dispose(OwnedRef _this) {

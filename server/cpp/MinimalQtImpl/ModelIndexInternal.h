@@ -3,17 +3,15 @@
 #include "generated/ModelIndex.h"
 #include <QModelIndex>
 
-// from a ModelIndex::Handle to a QModelIndex*
-#define AS_QMODELINDEX_PTR(x) (reinterpret_cast<QModelIndex*>(x))
-
-// from a ModelIndex::Handle to a QModelIndex value
-#define QMODELINDEX_VALUE(x) (*AS_QMODELINDEX_PTR(x))
-
-// create an owned heap-allocated copy of an existing QModelIndex value
-#define MODELINDEX_HEAP_COPY(...) (reinterpret_cast<ModelIndex::OwnedRef>(new QModelIndex(__VA_ARGS__)))
+#include "util/RefCountedWrapper.h"
 
 namespace ModelIndex {
-    // as of now we're just wrapping raw QModelIndex pointers
-    // because it's easier just to send pointers back to the C# side for callbacks etc
-    // saves unnecessary copying in places like AbstractListModel
+    struct __Handle : RefCountedWrapper<QModelIndex> {
+        explicit __Handle(const QModelIndex &init) : RefCountedWrapper(init) {}
+    };
+    struct __Owned : __Handle {
+        explicit __Owned(const QModelIndex &init) : __Handle(init) {}
+    };
+    // note: these are never actually created/instantiated, we just reinterpret OwnedRef as SafeReturnRef for API purposes
+    struct __SafeReturn : __Owned {};
 }

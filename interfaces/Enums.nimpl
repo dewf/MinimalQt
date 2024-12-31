@@ -372,6 +372,19 @@ enum ScrollBarPolicy {
     ScrollBarAlwaysOn
 }
 
+flags ItemFlags {
+    NoItemFlags = 0,
+    ItemIsSelectable = 1,
+    ItemIsEditable = 2,
+    ItemIsDragEnabled = 4,
+    ItemIsDropEnabled = 8,
+    ItemIsUserCheckable = 16,
+    ItemIsEnabled = 32,
+    ItemIsAutoTristate = 64,
+    ItemNeverHasChildren = 128,
+    ItemIsUserTristate = 256
+}
+
 enum Key {
     // Unicode Basic Latin block (0x00-0x7f)
     Key_Space = 0x20,

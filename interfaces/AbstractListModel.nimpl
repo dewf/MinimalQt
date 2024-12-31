@@ -20,19 +20,6 @@ opaque Handle extends AbstractItemModel.Handle;
 
 // subclass (implementation) stuff ==========================================================
 
-flags ItemFlags {
-    NoItemFlags = 0,
-    ItemIsSelectable = 1,
-    ItemIsEditable = 2,
-    ItemIsDragEnabled = 4,
-    ItemIsDropEnabled = 8,
-    ItemIsUserCheckable = 16,
-    ItemIsEnabled = 32,
-    ItemIsAutoTristate = 64,
-    ItemNeverHasChildren = 128,
-    ItemIsUserTristate = 256
-}
-
 namedbits ImplementedMethodMask { // TODO: inherit from AbstractItemModel DelegatedMethodMask?
     // required, so not in mask:
     // RowCount
@@ -46,16 +33,22 @@ namedbits ImplementedMethodMask { // TODO: inherit from AbstractItemModel Delega
 }
 
 interface ImplementationMethods {
+    // required:
     int rowCount(ModelIndex.Handle parent);
-    Variant.Owned data(ModelIndex.Handle index, ItemDataRole role);
+    Variant.SafeReturn data(ModelIndex.Handle index, ItemDataRole role);
     
-    // "optional" (we still have to implement, but only active if mask flag is set)
-    Variant.Owned headerData(int section, Orientation orientation, ItemDataRole role);
+    // optional (mask-activated):
+    Variant.SafeReturn headerData(int section, Orientation orientation, ItemDataRole role);
     ItemFlags getFlags(ModelIndex.Handle index, ItemFlags baseFlags);
     bool setData(ModelIndex.Handle index, Variant.Handle value, ItemDataRole role);
+    
+    // technically supposed to use AbstractItemModel for multi-column stuff, 
+    // but subclassing AbstractListModel and implementing columnCount() is a nice little shortcut
     int columnCount(ModelIndex.Handle parent);
 }
 
+// TODO: should we just re-use the Interior from AbstractItemModel?
+// any reason for AbstractListModel to have a different/limited version?
 opaque Interior extends Handle {
     // "interior" methods, to call as if we're the C++ subclass:
 

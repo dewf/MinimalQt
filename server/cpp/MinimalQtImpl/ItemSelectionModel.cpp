@@ -13,13 +13,13 @@ namespace ItemSelectionModel
     std::vector<ModelIndex::OwnedRef> Handle_selectedIndexes(HandleRef _this) {
         std::vector<ModelIndex::OwnedRef> result;
         for (const auto &index : ITEMSELMODEL_THIS->selectedIndexes()) {
-            result.push_back(MODELINDEX_HEAP_COPY(index));
+            result.push_back(new ModelIndex::__Owned(index));
         }
         return result;
     }
 
     inline QModelIndex getOrInvalid(const std::optional<ModelIndex::HandleRef>& parent) {
-        if (parent.has_value()) return QMODELINDEX_VALUE(parent.value());
+        if (parent.has_value()) return parent.value()->value;
         return QModelIndex();
     }
 
@@ -28,7 +28,7 @@ namespace ItemSelectionModel
     }
 
     ModelIndex::OwnedRef Handle_currentIndex(HandleRef _this) {
-        return MODELINDEX_HEAP_COPY(ITEMSELMODEL_THIS->currentIndex());
+        return new ModelIndex::__Owned(ITEMSELMODEL_THIS->currentIndex());
     }
 
     bool Handle_hasSelection(HandleRef _this) {
@@ -44,7 +44,7 @@ namespace ItemSelectionModel
     }
 
     bool Handle_isSelected(HandleRef _this, ModelIndex::HandleRef index) {
-        return ITEMSELMODEL_THIS->isSelected(QMODELINDEX_VALUE(index));
+        return ITEMSELMODEL_THIS->isSelected(index->value);
     }
 
     bool Handle_rowIntersectsSelection(HandleRef _this, int32_t row, const std::optional<ModelIndex::HandleRef>& parent) {
@@ -54,7 +54,7 @@ namespace ItemSelectionModel
     std::vector<ModelIndex::OwnedRef> Handle_selectedColumns(HandleRef _this, const std::optional<int32_t>& row) {
         std::vector<ModelIndex::OwnedRef> result;
         for (const auto &index : ITEMSELMODEL_THIS->selectedColumns(row.value_or(0))) {
-            result.push_back(MODELINDEX_HEAP_COPY(index));
+            result.push_back(new ModelIndex::__Owned(index));
         }
         return result;
     }
@@ -62,7 +62,7 @@ namespace ItemSelectionModel
     std::vector<ModelIndex::OwnedRef> Handle_selectedRows(HandleRef _this, const std::optional<int32_t>& column) {
         std::vector<ModelIndex::OwnedRef> result;
         for (const auto &index : ITEMSELMODEL_THIS->selectedRows(column.value_or(0))) {
-            result.push_back(MODELINDEX_HEAP_COPY(index));
+            result.push_back(new ModelIndex::__Owned(index));
         }
         return result;
     }
@@ -92,11 +92,11 @@ namespace ItemSelectionModel
     }
 
     void Handle_select(HandleRef _this, ModelIndex::HandleRef index, SelectionFlags command) {
-        ITEMSELMODEL_THIS->select(QMODELINDEX_VALUE(index), static_cast<QItemSelectionModel::SelectionFlags>(command));
+        ITEMSELMODEL_THIS->select(index->value, static_cast<QItemSelectionModel::SelectionFlags>(command));
     }
 
     void Handle_setCurrentIndex(HandleRef _this, ModelIndex::HandleRef index, SelectionFlags command) {
-        ITEMSELMODEL_THIS->setCurrentIndex(QMODELINDEX_VALUE(index), static_cast<QItemSelectionModel::SelectionFlags>(command));
+        ITEMSELMODEL_THIS->setCurrentIndex(index->value, static_cast<QItemSelectionModel::SelectionFlags>(command));
     }
 
     void Handle_setSignalMask(HandleRef _this, SignalMask signalMask) {

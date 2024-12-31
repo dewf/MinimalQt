@@ -13,6 +13,11 @@ opaque Handle {
     Variant.Owned data(ItemDataRole role);
 }
 
-opaque Owned extends Handle;
+opaque Owned extends Handle {
+    SafeReturn getSafeReturn(); // see note below / or in Variant module
+}
 
-Owned create(); // empty
+// really just an addRef'ed version of an existing Owned, but nice to document in the API to prevent mishaps
+opaque SafeReturn extends Owned;
+
+Owned create(); // empty/invalid

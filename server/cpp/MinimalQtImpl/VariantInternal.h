@@ -2,19 +2,16 @@
 
 #include "generated/Variant.h"
 #include <QVariant>
-#include "IconInternal.h"
 
 #include "util/RefCountedWrapper.h"
 
-// #define AS_QVARIANT_PTR(x) (reinterpret_cast<QVariant*>(x))
-// #define QVARIANT_VALUE(x) (*AS_QVARIANT_PTR(x))
-// #define VARIANT_HEAP_NEW(...) (reinterpret_cast<Variant::OwnedRef>(new QVariant(__VA_ARGS__)))
-
-typedef RefCountedWrapper<QVariant> RefCountedVariant;
-
-#define AS_QVARIANT_PTR(x) (reinterpret_cast<RefCountedVariant*>(x))
-#define QVARIANT_VALUE(x) (AS_QVARIANT_PTR(x)->value)
-#define VARIANT_HEAP_NEW(...) (reinterpret_cast<Variant::OwnedRef>(new RefCountedVariant(QVariant(__VA_ARGS__))))
-
 namespace Variant {
+    struct __Handle : RefCountedWrapper<QVariant> {
+        explicit __Handle(const QVariant &init) : RefCountedWrapper(init) {}
+    };
+    struct __Owned : __Handle {
+        explicit __Owned(const QVariant &init) : __Handle(init) {}
+    };
+    // note: these are never actually created/instantiated, we just reinterpret OwnedRef as SafeReturnRef for API purposes
+    struct __SafeReturn : __Owned {};
 }

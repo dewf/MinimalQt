@@ -70,3 +70,58 @@ opaque Handle extends Object.Handle {
     void sort(int column);
     void sort(int column, SortOrder order);
 }
+
+// subclass (implementation) stuff ================================================================================
+
+namedbits ImplementedMask {
+    // required, so not in mask:
+    // index, parent, rowCount, columnCount, data
+
+    // optional:
+    HasChildren,
+    SetData,
+    Flags,
+    HeaderData,
+    SetHeaderData
+}
+
+interface ImplementedMethods {
+    // required:
+    ModelIndex.SafeReturn index(int row, int column, ModelIndex.Handle parent);
+    ModelIndex.SafeReturn parent(ModelIndex.Handle index);
+    int rowCount(ModelIndex.Handle parent);
+    int columnCount(ModelIndex.Handle parent);
+    Variant.SafeReturn data(ModelIndex.Handle index, int role);
+
+    // optional (mask-activated):
+    bool hasChildren(ModelIndex.Handle parent);
+    bool setData(ModelIndex.Handle index, Variant.Handle value, int role);
+    ItemFlags getFlags(ModelIndex.Handle index, ItemFlags baseFlags);
+    Variant.SafeReturn headerData(int section, Orientation orientation, int role);
+    bool setHeaderData(int section, Orientation orientation, Variant.Handle value, int role);
+}
+
+opaque Interior extends Handle {
+    // "interior" methods, to call as if we're the C++ subclass:
+
+    // signal emission
+    void emitDataChanged(ModelIndex.Handle topLeft, ModelIndex.Handle bottomRight, Array<ItemDataRole> roles);
+    void emitHeaderDataChanged(Orientation orientation, int first, int last);
+
+    // for access to protected stuff from MethodDelegate
+    void beginInsertRows(ModelIndex.Handle parent, int first, int last);
+    void endInsertRows();
+
+    void beginRemoveRows(ModelIndex.Handle parent, int first, int last);
+    void endRemoveRows();
+
+    void beginResetModel();
+    void endResetModel();
+
+    ModelIndex.Owned createIndex(int row, int column, size_t ptr);
+
+    // etc:
+    void setSignalMask(SignalMask mask); // here because Handle is abstract!
+}
+
+Interior createImplementation(SignalHandler handler, ImplementedMethods methods, ImplementedMask mask);
