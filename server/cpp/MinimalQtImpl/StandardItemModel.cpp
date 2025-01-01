@@ -74,8 +74,8 @@ namespace StandardItemModel
         return reinterpret_cast<StandardItem::HandleRef>(MODEL_THIS->invisibleRootItem());
     }
 
-    StandardItem::HandleRef Handle_item(HandleRef _this, int32_t row, int32_t column) {
-        return reinterpret_cast<StandardItem::HandleRef>(MODEL_THIS->item(row, column));
+    StandardItem::HandleRef Handle_item(HandleRef _this, int32_t row, const std::optional<int32_t>& column) {
+        return reinterpret_cast<StandardItem::HandleRef>(MODEL_THIS->item(row, column.value_or(0)));
     }
 
     StandardItem::HandleRef Handle_itemFromIndex(HandleRef _this, ModelIndex::HandleRef index) {
@@ -130,8 +130,8 @@ namespace StandardItemModel
         return reinterpret_cast<StandardItem::HandleRef>(MODEL_THIS->takeHorizontalHeaderItem(column));
     }
 
-    StandardItem::HandleRef Handle_takeItem(HandleRef _this, int32_t row, int32_t column) {
-        return reinterpret_cast<StandardItem::HandleRef>(MODEL_THIS->takeItem(row, column));
+    StandardItem::HandleRef Handle_takeItem(HandleRef _this, int32_t row, const std::optional<int32_t>& column) {
+        return reinterpret_cast<StandardItem::HandleRef>(MODEL_THIS->takeItem(row, column.value_or(0)));
     }
 
     std::vector<StandardItem::HandleRef> Handle_takeRow(HandleRef _this, int32_t row) {
