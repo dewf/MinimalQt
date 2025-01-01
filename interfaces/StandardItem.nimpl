@@ -28,6 +28,9 @@ opaque Handle {
     bool isCheckable();
     void setCheckable(bool checkable);
 
+    int column();
+    // read-only
+
     int columnCount();
     void setColumnCount(int columns);
 
@@ -43,6 +46,9 @@ opaque Handle {
     bool isEnabled();
     void setEnabled(bool enabled);
 
+    bool hasChildren();
+    // read-only
+
     ItemFlags getFlags();
     void setFlags(ItemFlags flags_);
 
@@ -54,6 +60,12 @@ opaque Handle {
 
     Icon.Owned getIcon();
     void setIcon(Icon.Handle icon);
+
+    Handle parent();
+    // read-only
+
+    int row();
+    // read-only
 
     int rowCount();
     void setRowCount(int rows);
@@ -90,13 +102,13 @@ opaque Handle {
     void appendRow(Array<Handle> items);
     void appendRow(Handle item);
     void appendRows(Array<Handle> items);
+
     Handle child(int row, Option<int> column);
     void clearData();
     Handle clone();
-    int column();
     Variant.Owned data(Option<int> role);
-    bool hasChildren();
     ModelIndex.Owned index();
+
     void insertColumn(int column, Array<Handle> items);
     void insertColumns(int column, int count);
     void insertRow(int row, Array<Handle> items);
@@ -107,14 +119,14 @@ opaque Handle {
     // StandardItemModel model()
     // multiData(...)
 
-    Handle parent();
     void removeColumn(int column);
     void removeColumns(int column, int count);
     void removeRow(int row);
     void removeRows(int row, int count);
-    int row();
+
     void setChild(int row, int column, Handle item);
     void setChild(int row, Handle item);
+
     void setData(Variant.Handle value, Option<int> role);
     void sortChildren(int column, Option<SortOrder> order);
     Handle takeChild(int row, Option<int> column);
