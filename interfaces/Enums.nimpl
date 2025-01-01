@@ -430,6 +430,20 @@ enum GlobalColor {
     transparent
 }
 
+flags MatchFlags {
+    MatchExactly = 0,
+    MatchContains = 1,
+    MatchStartsWith = 2,
+    MatchEndsWith = 3,
+    MatchRegularExpression = 4,
+    MatchWildcard = 5,
+    MatchFixedString = 8,
+    MatchTypeMask = 0x0F,
+    MatchCaseSensitive = 16,
+    MatchWrap = 32,
+    MatchRecursive = 64
+}
+
 enum Key {
     // Unicode Basic Latin block (0x00-0x7f)
     Key_Space = 0x20,

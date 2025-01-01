@@ -307,6 +307,11 @@ add_library(MinimalQtImpl STATIC
     ../StandardItem.cpp
     ../StandardItemInternal.h
 
+    ../generated/StandardItemModel.h
+    ../generated/StandardItemModel_wrappers.cpp
+    ../StandardItemModel.cpp
+    ../StandardItemModelInternal.h
+
     ../generated/StatusBar.h
     ../generated/StatusBar_wrappers.cpp
     ../StatusBar.cpp

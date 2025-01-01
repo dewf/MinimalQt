@@ -14,4 +14,11 @@ namespace ModelIndex {
     };
     // note: these are never actually created/instantiated, we just reinterpret OwnedRef as SafeReturnRef for API purposes
     struct __SafeReturn : __Owned {};
+
+    inline QModelIndex fromOptionalIndex(const std::optional<HandleRef>& maybeValue) {
+        if (maybeValue.has_value()) {
+            return maybeValue.value()->value;
+        }
+        return {};
+    }
 }

@@ -1,0 +1,67 @@
+module StandardItemModel;
+
+import AbstractItemModel;
+import StandardItem;
+import Enums;
+import ModelIndex;
+
+namedbits SignalMask extends AbstractItemModel.SignalMask {
+    ItemChanged
+}
+
+interface SignalHandler extends AbstractItemModel.SignalHandler {
+    void ItemChanged(StandardItem.Handle item);
+}
+
+opaque Handle extends AbstractItemModel.Handle {
+    static {
+        options FindItemsArgs {
+            MatchFlags flags_;
+            int column;
+        }
+    }
+    // properties:
+    int sortRole();
+    void setSortRole(int role);
+
+    // methods:
+    void appendColumn(Array<StandardItem.Handle> items);
+    void appendRow(Array<StandardItem.Handle> items);
+    void appendRow(StandardItem.Handle item);
+    void clear();
+    Array<StandardItem.Handle> findItems(string text, FindItemsArgs args);
+    StandardItem.Handle horizontalHeaderItem(int column);
+    ModelIndex.Owned indexFromItem(StandardItem.Handle item);
+    void insertColumn(int column, Array<StandardItem.Handle> items);
+    bool insertColumn(int column, Option<ModelIndex.Handle> parent);
+    void insertRow(int row, Array<StandardItem.Handle> items);
+    bool insertRow(int row, Option<ModelIndex.Handle> parent);
+    void insertRow(int row, StandardItem.Handle item);
+    StandardItem.Handle invisibleRootItem();
+    StandardItem.Handle item(int row, int column); // column = 0
+    StandardItem.Handle itemFromIndex(ModelIndex.Handle index);
+    StandardItem.Handle itemPrototype();
+    void setColumnCount(int columns);
+    void setHorizontalHeaderItem(int column, StandardItem.Handle item);
+    void setHorizontalHeaderLabels(Array<string> labels);
+    void setItem(int row, int column, StandardItem.Handle item);
+    void setItem(int row, StandardItem.Handle item);
+    void setItemPrototype(StandardItem.Handle item);
+
+    // what does this do? would help to know, to know what to do about the byte arrays
+    // void setItemRoleNames(QHash<int, QByteArray> &roleNames);
+
+    void setRowCount(int rows);
+    void setVerticalHeaderItem(int row, StandardItem.Handle item);
+    void setVerticalHeaderLabels(Array<string> labels);
+
+    Array<StandardItem.Handle> takeColumn(int column);
+    StandardItem.Handle takeHorizontalHeaderItem(int column);
+    StandardItem.Handle takeItem(int row, int column); // column = 0
+    Array<StandardItem.Handle> takeRow(int row);
+    StandardItem.Handle takeVerticalHeaderItem(int row);
+    StandardItem.Handle verticalHeaderItem(int row);
+}
+
+Handle create(SignalHandler handler);
+Handle create(int rows, int columns, SignalHandler handler);

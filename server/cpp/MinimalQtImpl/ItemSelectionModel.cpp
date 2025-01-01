@@ -18,13 +18,8 @@ namespace ItemSelectionModel
         return result;
     }
 
-    inline QModelIndex getOrInvalid(const std::optional<ModelIndex::HandleRef>& parent) {
-        if (parent.has_value()) return parent.value()->value;
-        return QModelIndex();
-    }
-
     bool Handle_columnIntersectsSelection(HandleRef _this, int32_t column, const std::optional<ModelIndex::HandleRef>& parent) {
-        return ITEMSELMODEL_THIS->columnIntersectsSelection(column, getOrInvalid(parent));
+        return ITEMSELMODEL_THIS->columnIntersectsSelection(column, fromOptionalIndex(parent));
     }
 
     ModelIndex::OwnedRef Handle_currentIndex(HandleRef _this) {
@@ -36,11 +31,11 @@ namespace ItemSelectionModel
     }
 
     bool Handle_isColumnSelected(HandleRef _this, int32_t column, const std::optional<ModelIndex::HandleRef>& parent) {
-        return ITEMSELMODEL_THIS->isColumnSelected(column, getOrInvalid(parent));
+        return ITEMSELMODEL_THIS->isColumnSelected(column, fromOptionalIndex(parent));
     }
 
     bool Handle_isRowSelected(HandleRef _this, int32_t row, const std::optional<ModelIndex::HandleRef>& parent) {
-        return ITEMSELMODEL_THIS->isRowSelected(row, getOrInvalid(parent));
+        return ITEMSELMODEL_THIS->isRowSelected(row, fromOptionalIndex(parent));
     }
 
     bool Handle_isSelected(HandleRef _this, ModelIndex::HandleRef index) {
@@ -48,7 +43,7 @@ namespace ItemSelectionModel
     }
 
     bool Handle_rowIntersectsSelection(HandleRef _this, int32_t row, const std::optional<ModelIndex::HandleRef>& parent) {
-        return ITEMSELMODEL_THIS->rowIntersectsSelection(row, getOrInvalid(parent));
+        return ITEMSELMODEL_THIS->rowIntersectsSelection(row, fromOptionalIndex(parent));
     }
 
     std::vector<ModelIndex::OwnedRef> Handle_selectedColumns(HandleRef _this, const std::optional<int32_t>& row) {

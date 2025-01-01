@@ -210,22 +210,6 @@ namespace StandardItem
         THIS->setWhatsThis(QString::fromStdString(whatsThis));
     }
 
-    inline QList<QStandardItem*> arrayToList(const std::vector<HandleRef>& input) {
-        QList<QStandardItem*> ret;
-        for (const auto item : input) {
-            ret.append(AS_ITEM(item));
-        }
-        return ret;
-    }
-
-    inline std::vector<HandleRef> listToArray(const QList<QStandardItem*>& items) {
-        std::vector<HandleRef> ret;
-        for (const auto item : items) {
-            ret.push_back(reinterpret_cast<HandleRef>(item));
-        }
-        return ret;
-    }
-
     void Handle_appendColumn(HandleRef _this, const std::vector<HandleRef>& items) {
         THIS->appendColumn(arrayToList(items));
     }
