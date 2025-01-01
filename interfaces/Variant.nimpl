@@ -4,6 +4,7 @@ import Icon;
 import Common;
 import Enums;
 import Color;
+import DateTime;
 
 exception VariantConversionFailure; // no message for now, we need to figure out how to integrate with std::exception and C# Exception cleanly
 
@@ -14,6 +15,7 @@ opaque Handle {
     bool toBool();
     string toString2(); // toString() is a C# thing
     int toInt();
+    DateTime.Owned toDateTime();
     Size toSize();
 
     // convenience function, special values for toInt()
@@ -36,6 +38,7 @@ Owned create();
 Owned create(bool value);
 Owned create(string value);
 Owned create(int value);
+Owned create(DateTime.Handle value);
 Owned create(CheckState value); // convenience for int 0/1/2
 Owned create(Size size);
 Owned create(Icon.Handle icon);

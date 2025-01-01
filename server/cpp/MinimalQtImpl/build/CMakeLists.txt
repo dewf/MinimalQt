@@ -101,6 +101,11 @@ add_library(MinimalQtImpl STATIC
     ../DateInternal.h
     ../Date.cpp
 
+    ../generated/DateTime.h
+    ../generated/DateTime_wrappers.cpp
+    ../DateTimeInternal.h
+    ../DateTime.cpp
+
     ../generated/Dialog.h
     ../generated/Dialog_wrappers.cpp
     ../Dialog.cpp

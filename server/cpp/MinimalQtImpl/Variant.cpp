@@ -5,6 +5,7 @@
 
 #include <QVariant>
 
+#include "DateTimeInternal.h"
 #include "ColorInternal.h"
 #include "IconInternal.h"
 #include "util/convert.h"
@@ -28,6 +29,10 @@ namespace Variant
 
     int32_t Handle_toInt(HandleRef _this) {
         return VALUE.toInt();
+    }
+
+    DateTime::OwnedRef Handle_toDateTime(HandleRef _this) {
+        return DATETIME_HEAP_NEW(VALUE.toDateTime());
     }
 
     Size Handle_toSize(HandleRef _this) {
@@ -95,6 +100,10 @@ namespace Variant
 
     OwnedRef create(int32_t value) {
         return new __Owned(value);
+    }
+
+    OwnedRef create(DateTime::HandleRef value) {
+        return new __Owned(QDATETIME_VALUE(value));
     }
 
     OwnedRef create(CheckState value) {
