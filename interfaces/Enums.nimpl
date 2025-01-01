@@ -385,6 +385,51 @@ flags ItemFlags {
     ItemIsUserTristate = 256
 }
 
+enum BrushStyle { // brush style
+    NoBrush,
+    SolidPattern,
+    Dense1Pattern,
+    Dense2Pattern,
+    Dense3Pattern,
+    Dense4Pattern,
+    Dense5Pattern,
+    Dense6Pattern,
+    Dense7Pattern,
+    HorPattern,
+    VerPattern,
+    CrossPattern,
+    BDiagPattern,
+    FDiagPattern,
+    DiagCrossPattern,
+    LinearGradientPattern,
+    RadialGradientPattern,
+    ConicalGradientPattern,
+    TexturePattern = 24
+}
+
+enum GlobalColor {
+    color0,
+    color1,
+    black,
+    white,
+    darkGray,
+    gray,
+    lightGray,
+    red,
+    green,
+    blue,
+    cyan,
+    magenta,
+    yellow,
+    darkRed,
+    darkGreen,
+    darkBlue,
+    darkCyan,
+    darkMagenta,
+    darkYellow,
+    transparent
+}
+
 enum Key {
     // Unicode Basic Latin block (0x00-0x7f)
     Key_Space = 0x20,

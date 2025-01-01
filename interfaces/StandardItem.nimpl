@@ -1,0 +1,128 @@
+module StandardItem;
+
+import Icon;
+import Enums;
+import Variant;
+import ModelIndex;
+import Brush;
+import Font;
+import Common;
+
+opaque Handle {
+    // properties
+    string accessibleDescription();
+    void setAccessibleDescription(string description);
+
+    string accessibleText();
+    void setAccessibleText(string accessibleText);
+
+    bool isAutoTristate();
+    void setAutoTristate(bool tristate);
+
+    Brush.Owned background();
+    void setBackground(Brush.Handle brush);
+
+    CheckState checkState();
+    void setCheckState(CheckState state);
+
+    bool isCheckable();
+    void setCheckable(bool checkable);
+
+    int columnCount();
+    void setColumnCount(int columns);
+
+    bool isDragEnabled();
+    void setDragEnabled(bool dragEnabled);
+
+    bool isDropEnabled();
+    void setDropEnabled(bool dropEnabled);
+
+    bool isEditable();
+    void setEditable(bool editable);
+
+    bool isEnabled();
+    void setEnabled(bool enabled);
+
+    ItemFlags getFlags();
+    void setFlags(ItemFlags flags_);
+
+    Font.Owned getFont();
+    void setFont(Font.Handle font);
+
+    Brush.Owned foreground();
+    void setForeground(Brush.Handle brush);
+
+    Icon.Owned getIcon();
+    void setIcon(Icon.Handle icon);
+
+    int rowCount();
+    void setRowCount(int rows);
+
+    bool isSelectable();
+    void setSelectable(bool selectable);
+
+    Size sizeHint();
+    void setSizeHint(Size size);
+
+    string statusTip();
+    void setStatusTip(string statusTip);
+
+    string text();
+    void setText(string text);
+
+    Alignment textAlignment();
+    void setTextAlignment(Alignment alignment);
+
+    string toolTip();
+    void setToolTip(string toolTip);
+
+    int type_();
+    // read-only
+
+    bool isUserTristate();
+    void setUserTristate(bool tristate);
+
+    string whatsThis();
+    void setWhatsThis(string whatsThis);
+
+    // methods
+    void appendColumn(Array<Handle> items);
+    void appendRow(Array<Handle> items);
+    void appendRow(Handle item);
+    void appendRows(Array<Handle> items);
+    Handle child(int row, Option<int> column);
+    void clearData();
+    Handle clone();
+    int column();
+    Variant.Owned data(Option<int> role);
+    bool hasChildren();
+    ModelIndex.Owned index();
+    void insertColumn(int column, Array<Handle> items);
+    void insertColumns(int column, int count);
+    void insertRow(int row, Array<Handle> items);
+    void insertRow(int row, Handle item);
+    void insertRows(int row, Array<Handle> items);
+    void insertRows(int row, int count);
+
+    // StandardItemModel model()
+    // multiData(...)
+
+    Handle parent();
+    void removeColumn(int column);
+    void removeColumns(int column, int count);
+    void removeRow(int row);
+    void removeRows(int row, int count);
+    int row();
+    void setChild(int row, int column, Handle item);
+    void setChild(int row, Handle item);
+    void setData(Variant.Handle value, Option<int> role);
+    void sortChildren(int column, Option<SortOrder> order);
+    Handle takeChild(int row, Option<int> column);
+    Array<Handle> takeColumn(int column);
+    Array<Handle> takeRow(int row);
+}
+
+Handle create();
+Handle create(string text);
+Handle create(Icon.Handle icon, string text);
+Handle create(int rows, int columns); // columns = 1

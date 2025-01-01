@@ -37,10 +37,10 @@ namespace PaintResources
             : __Gradient(qLinear) {}
     };
 
-    struct __Brush : public PaintStackItem {
-        QBrush qBrush;
-        explicit __Brush(const QBrush& qBrush) : qBrush(qBrush) {}
-    };
+    // struct __Brush : public PaintStackItem {
+    //     QBrush qBrush;
+    //     explicit __Brush(const QBrush& qBrush) : qBrush(qBrush) {}
+    // };
 
     struct __Pen : public PaintStackItem {
         QPen qPen;

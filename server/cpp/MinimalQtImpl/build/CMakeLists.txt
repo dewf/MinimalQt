@@ -71,6 +71,11 @@ add_library(MinimalQtImpl STATIC
     ../BoxLayout.cpp
     ../BoxLayoutInternal.h
 
+    ../generated/Brush.h
+    ../generated/Brush_wrappers.cpp
+    ../Brush.cpp
+    ../BrushInternal.h
+
     ../generated/CalendarWidget.h
     ../generated/CalendarWidget_wrappers.cpp
     ../CalendarWidget.cpp
@@ -296,6 +301,11 @@ add_library(MinimalQtImpl STATIC
     ../generated/SortFilterProxyModel_wrappers.cpp
     ../SortFilterProxyModel.cpp
     ../SortFilterProxyModelInternal.h
+
+    ../generated/StandardItem.h
+    ../generated/StandardItem_wrappers.cpp
+    ../StandardItem.cpp
+    ../StandardItemInternal.h
 
     ../generated/StatusBar.h
     ../generated/StatusBar_wrappers.cpp

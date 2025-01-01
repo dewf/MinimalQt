@@ -2,6 +2,7 @@
 
 #include <QPainter>
 
+#include "BrushInternal.h"
 #include "util/convert.h"
 
 #include "PaintResourcesInternal.h" // for struct definitions
@@ -14,7 +15,7 @@
 namespace Painter
 {
     void Handle_setRenderHint(HandleRef _this, RenderHint hint, bool on) {
-        THIS->setRenderHint((QPainter::RenderHint)hint, on);
+        THIS->setRenderHint(static_cast<QPainter::RenderHint>(hint), on);
     }
 
     void Handle_setRenderHints(HandleRef _this, RenderHintSet hints, bool on) {
@@ -26,23 +27,19 @@ namespace Painter
         THIS->setPen(pen->qPen);
     }
 
-    void Handle_setBrush(HandleRef _this, BrushRef brush) {
+    void Handle_setBrush(HandleRef _this, Brush::HandleRef brush) {
         THIS->setBrush(brush->qBrush);
     }
-
-    // void Handle_setFont(HandleRef _this, FontRef font) {
-    //     THIS->setFont(font->qFont);
-    // }
 
     void Handle_setFont(HandleRef _this, Font::HandleRef font) {
         THIS->setFont(QFONT_VALUE(font));
     }
 
-    void Handle_drawText(HandleRef _this, Common::Rect rect, Enums::Alignment align, const std::string& text) {
-        THIS->drawText(toQRect(rect), (Qt::AlignmentFlag)align, QString::fromStdString(text));
+    void Handle_drawText(HandleRef _this, Rect rect, Alignment align, const std::string& text) {
+        THIS->drawText(toQRect(rect), align, QString::fromStdString(text));
     }
 
-    void Handle_fillPath(HandleRef _this, PainterPathRef path, BrushRef brush) {
+    void Handle_fillPath(HandleRef _this, PainterPathRef path, Brush::HandleRef brush) {
         THIS->fillPath(path->qPath, brush->qBrush);
     }
 
@@ -50,7 +47,7 @@ namespace Painter
         THIS->strokePath(path->qPath, pen->qPen);
     }
 
-    void Handle_fillRect(HandleRef _this, Rect rect, BrushRef brush) {
+    void Handle_fillRect(HandleRef _this, Rect rect, Brush::HandleRef brush) {
         THIS->fillRect(toQRect(rect), brush->qBrush);
     }
 

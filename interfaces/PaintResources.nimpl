@@ -3,6 +3,8 @@ module PaintResources;
 import Common;
 import Color;
 import Font;
+import Brush;
+import Enums;
 
 @nodispose
 opaque Gradient {
@@ -14,33 +16,6 @@ opaque RadialGradient extends Gradient;
 
 @nodispose
 opaque LinearGradient extends Gradient;
-
-@nodispose
-opaque Brush {
-    static {
-        enum Style {
-            NoBrush = 0,
-            SolidPattern = 1,
-            Dense1Pattern = 2,
-            Dense2Pattern = 3,
-            Dense3Pattern = 4,
-            Dense4Pattern = 5,
-            Dense5Pattern = 6,
-            Dense6Pattern = 7,
-            Dense7Pattern = 8,
-            HorPattern = 9,
-            VerPattern = 10,
-            CrossPattern = 11,
-            BDiagPattern = 12,
-            FDiagPattern = 13,
-            DiagCrossPattern = 14,
-            LinearGradientPattern = 15,
-            ConicalGradientPattern = 17,
-            RadialGradientPattern = 16,
-            TexturePattern = 24
-        }
-    }
-}
 
 @nodispose
 opaque Pen {
@@ -66,7 +41,7 @@ opaque Pen {
             SvgMiter
         }
     }
-    void setBrush(Brush brush);
+    void setBrush(Brush.Handle brush);
     void setWidth(int width);
     void setWidth(double width);
 }
@@ -106,14 +81,14 @@ opaque Handle {
     LinearGradient createLinearGradient(Common.PointF start, Common.PointF stop);
     LinearGradient createLinearGradient(double x1, double y1, double x2, double y2);
 
-    Brush createBrush(Brush.Style style);
-    Brush createBrush(Color.Handle color); // + BrushStyle in the future
-    Brush createBrush(Gradient gradient);
+    Brush.Handle createBrush(BrushStyle style);
+    Brush.Handle createBrush(Color.Handle color); // + BrushStyle in the future
+    Brush.Handle createBrush(Gradient gradient);
 
     Pen createPen();
     Pen createPen(Pen.Style style);
     Pen createPen(Color.Handle color);
-    Pen createPen(Brush brush, double width, Pen.Style style, Pen.CapStyle cap, Pen.JoinStyle join);
+    Pen createPen(Brush.Handle brush, double width, Pen.Style style, Pen.CapStyle cap, Pen.JoinStyle join);
 
     // Font.Handle createFont(string family, Font.CreateOptions opts);
 

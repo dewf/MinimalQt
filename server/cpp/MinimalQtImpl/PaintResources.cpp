@@ -1,5 +1,6 @@
 #include "generated/PaintResources.h"
 
+#include "BrushInternal.h"
 #include "PaintResourcesInternal.h"
 #include "ColorInternal.h"
 
@@ -21,19 +22,19 @@ namespace PaintResources
     // pen =========================
     namespace Pen {
         inline Qt::PenStyle toQtStyle(Style style) {
-            return (Qt::PenStyle)style;
+            return static_cast<Qt::PenStyle>(style);
         }
 
         inline Qt::PenCapStyle toQtCapStyle(CapStyle capStyle) {
-            return (Qt::PenCapStyle)capStyle;
+            return static_cast<Qt::PenCapStyle>(capStyle);
         }
 
         inline Qt::PenJoinStyle toQtJoinStyle(JoinStyle joinStyle) {
-            return (Qt::PenJoinStyle)joinStyle;
+            return static_cast<Qt::PenJoinStyle>(joinStyle);
         }
     }
 
-    void Pen_setBrush(PenRef _this, BrushRef brush) {
+    void Pen_setBrush(PenRef _this, Brush::HandleRef brush) {
         _this->qPen.setBrush(brush->qBrush);
     }
 
@@ -166,20 +167,20 @@ namespace PaintResources
         return ret;
     }
 
-    BrushRef Handle_createBrush(HandleRef _this, Brush::Style style) {
-        auto ret = new __Brush { QBrush((Qt::BrushStyle)style) };
+    Brush::HandleRef Handle_createBrush(HandleRef _this, BrushStyle style) {
+        const auto ret = new Brush::__Owned { QBrush(static_cast<Qt::BrushStyle>(style)) };
         _this->items.push_back(ret);
         return ret;
     }
 
-    BrushRef Handle_createBrush(HandleRef _this, Color::HandleRef color) {
-        auto ret = new __Brush { color->qColor };
+    Brush::HandleRef Handle_createBrush(HandleRef _this, Color::HandleRef color) {
+        const auto ret = new Brush::__Owned { color->qColor };
         _this->items.push_back(ret);
         return ret;
     }
 
-    BrushRef Handle_createBrush(HandleRef _this, GradientRef gradient) {
-        auto ret = new __Brush { QBrush(gradient->qGradPtr) };
+    Brush::HandleRef Handle_createBrush(HandleRef _this, GradientRef gradient) {
+        const auto ret = new Brush::__Owned { QBrush(gradient->qGradPtr) };
         _this->items.push_back(ret);
         return ret;
     }
@@ -202,7 +203,7 @@ namespace PaintResources
         return ret;
     }
 
-    PenRef Handle_createPen(HandleRef _this, BrushRef brush, double width, Pen::Style style, Pen::CapStyle cap, Pen::JoinStyle join) {
+    PenRef Handle_createPen(HandleRef _this, Brush::HandleRef brush, double width, Pen::Style style, Pen::CapStyle cap, Pen::JoinStyle join) {
         auto ret = new __Pen { QPen(brush->qBrush, width, Pen::toQtStyle(style), Pen::toQtCapStyle(cap), Pen::toQtJoinStyle(join)) };
         _this->items.push_back(ret);
         return ret;

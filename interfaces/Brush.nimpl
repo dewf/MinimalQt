@@ -1,0 +1,27 @@
+module Brush;
+
+import Enums;
+import Image;
+import Pixmap;
+import Color;
+
+@nodispose
+opaque Handle;
+
+opaque Owned extends Handle;
+
+Owned create();
+Owned create(BrushStyle style);
+
+// Owned create(Gradient gradient);
+
+Owned create(Image.Handle image);
+Owned create(Pixmap.Handle pixmap);
+
+Owned create(GlobalColor color);
+Owned create(GlobalColor color, BrushStyle style);
+Owned create(GlobalColor color, Pixmap.Handle pixmap);
+
+Owned create(Color.Handle color);
+Owned create(Color.Handle color, BrushStyle style);
+Owned create(Color.Handle color, Pixmap.Handle pixmap);
