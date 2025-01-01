@@ -139,7 +139,9 @@ public:
 		block = malloc(totalSize);
 	}
 	T* getSpan(size_t* length) override {
-		*length = totalCount;
+		if (length != nullptr) {
+			*length = totalCount;
+		}
 		return (T*)block;
 	}
 	static std::shared_ptr<ServerBuffer<T>> getByID(int id) {

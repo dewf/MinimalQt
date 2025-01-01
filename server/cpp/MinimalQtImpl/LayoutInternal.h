@@ -3,8 +3,6 @@
 #include "generated/Layout.h"
 #include "ObjectInternal.h"
 
-#include "util/SignalStuff.h"
-
 #include <QLayout>
 
 namespace Layout {
@@ -15,7 +13,7 @@ namespace Layout {
         std::shared_ptr<SignalHandler> handler;
         SignalMask lastMask = 0;
         std::vector<SignalMapItem<SignalMaskFlags>> signalMap = {
-            // none
+            // none extra
         };
     public:
         QLayout *getActual() const {

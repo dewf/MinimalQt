@@ -7,7 +7,6 @@
 #include <QPainter>
 #include <QPaintEvent>
 
-#include <QMimeData>
 #include <QDrag>
 #include <utility>
 
@@ -18,6 +17,7 @@
 #include "SizePolicyInternal.h"
 #include "CursorInternal.h"
 #include "LayoutInternal.h"
+#include "MimeDataInternal.h"
 
 #define WRAPPER (reinterpret_cast<SignalWrapper*>(_this))
 #define WIDGET_THIS (WRAPPER->getActual())
@@ -561,57 +561,10 @@ namespace Widget
 //        // not owned, do nothing
 //    }
 
-#define MIMETHIS ((QMimeData*)_this)
-
-    std::vector<std::string> MimeData_formats(MimeDataRef _this) {
-        std::vector<std::string> result;
-        for (auto & fmt : MIMETHIS->formats()) {
-            result.push_back(fmt.toStdString());
-        }
-        return result;
-    }
-
-    bool MimeData_hasFormat(MimeDataRef _this, const std::string& mimeType) {
-        return MIMETHIS->hasFormat(QString::fromStdString(mimeType));
-    }
-
-    std::string MimeData_text(MimeDataRef _this) {
-        return MIMETHIS->text().toStdString();
-    }
-
-    void MimeData_setText(MimeDataRef _this, const std::string& text) {
-        MIMETHIS->setText(QString::fromStdString(text));
-    }
-
-    std::vector<std::string> MimeData_urls(MimeDataRef _this) {
-        std::vector<std::string> result;
-        for (auto & url : MIMETHIS->urls()) {
-            result.push_back(url.toString().toStdString());
-        }
-        return result;
-    }
-
-    void MimeData_setUrls(MimeDataRef _this, const std::vector<std::string>& urls) {
-        QList<QUrl> qUrls;
-        for (auto & url : urls) {
-            qUrls.append(QUrl(QString::fromStdString(url)));
-        }
-        MIMETHIS->setUrls(qUrls);
-    }
-
-//    void MimeData_dispose(MimeDataRef _this) {
-//        // if it was created on a drop, we're not responsible for it
-//        // if we created it for a drag, we're also not responsible for releasing it
-//    }
-
-    MimeDataRef createMimeData() {
-        return reinterpret_cast<MimeDataRef>(new QMimeData());
-    }
-
 #define DRAGTHIS ((QDrag*)_this)
 
-    void Drag_setMimeData(DragRef _this, MimeDataRef data) {
-        DRAGTHIS->setMimeData(reinterpret_cast<QMimeData *>(data));
+    void Drag_setMimeData(DragRef _this, MimeData::HandleRef data) {
+        DRAGTHIS->setMimeData(AS_QMIMEDATA_PTR(data));
     }
 
     DropAction Drag_exec(DragRef _this, DropActionSet supportedActions, DropAction defaultAction) {
@@ -763,7 +716,7 @@ namespace Widget
             if (methodMask & DropEvents) {
                 auto pos = toPoint(event->position().toPoint());
                 auto modifiers = event->modifiers();
-                auto mimeOpaque = MimeDataRef(event->mimeData());
+                auto mimeOpaque = (MimeData::HandleRef)event->mimeData();
                 auto moveEvent = reinterpret_cast<DragMoveEventRef>(event);
                 methods->dragMoveEvent(pos, modifiers, mimeOpaque, moveEvent, true);
                 // other side needs to call acceptProposedAction if it's OK, otherwise ... .ignore?
@@ -776,7 +729,7 @@ namespace Widget
             if (methodMask & DropEvents) {
                 auto pos = toPoint(event->position().toPoint());
                 auto modifiers = event->modifiers();
-                auto mimeOpaque = (MimeDataRef)event->mimeData();
+                auto mimeOpaque = (MimeData::HandleRef)event->mimeData();
                 auto moveEvent = reinterpret_cast<DragMoveEventRef>(event);
                 methods->dragMoveEvent(pos, modifiers, mimeOpaque, moveEvent, false);
                 // other side needs to call acceptProposedAction if it's OK, otherwise ... .ignore?
@@ -798,7 +751,7 @@ namespace Widget
             if (methodMask & DropEvents) {
                 auto pos = toPoint(event->position().toPoint());
                 auto modifiers = event->modifiers();
-                auto mimeOpaque = (MimeDataRef)event->mimeData();
+                auto mimeOpaque = (MimeData::HandleRef)event->mimeData();
                 auto action = static_cast<DropAction>(event->proposedAction());
                 methods->dropEvent(pos, modifiers, mimeOpaque, action);
                 event->acceptProposedAction();

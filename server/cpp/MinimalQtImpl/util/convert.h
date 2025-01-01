@@ -1,6 +1,5 @@
 #pragma once
 
-#include <Qt>
 #include <QRect>
 #include <QKeySequence>
 #include <QStringList>
@@ -12,10 +11,18 @@ using namespace Enums;
 
 #define STRUCT_CAST(b,a) *((b*)&a)
 
+inline std::vector<std::string> toVectorStrings(const QStringList& qStrings) {
+    std::vector<std::string> ret;
+    for (auto & qStr : qStrings) {
+        ret.push_back(qStr.toStdString());
+    }
+    return ret;
+}
+
 inline QStringList toQStringList(const std::vector<std::string>& strings) {
     QStringList ret;
     for (auto & str : strings) {
-        ret.push_back(QString::fromStdString(str));
+        ret.append(QString::fromStdString(str));
     }
     return ret;
 }

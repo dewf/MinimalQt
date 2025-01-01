@@ -1,6 +1,3 @@
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "modernize-use-nodiscard"
-
 #include "generated/AbstractListModel.h"
 #include "VariantInternal.h"
 #include "ModelIndexInternal.h"
@@ -10,7 +7,7 @@
 
 #define WRAPPER (reinterpret_cast<SignalWrapper*>(_this))
 #define ABSLISTMODEL_THIS (WRAPPER->getActual())
-#define SUBCLASSED_THIS (static_cast<Implementation*>(WRAPPER->getActual()))
+#define SUBCLASSED_THIS (dynamic_cast<Implementation*>(WRAPPER->getActual()))
 
 #include "AbstractListModelInternal.h"
 
@@ -27,11 +24,13 @@ namespace AbstractListModel
             : methodDelegate(methodDelegate), methodMask(methodMask) {}
 
         // ==== must-implement abstract methods ===========================
+        [[nodiscard]]
         int rowCount(const QModelIndex &parent) const override {
             ModelIndex::__Handle parent2(parent);
             return methodDelegate->rowCount(&parent2);
         }
 
+        [[nodiscard]]
         QVariant data(const QModelIndex &index, int role) const override {
             ModelIndex::__Handle index2(index);
             const auto variant = methodDelegate->data(&index2, static_cast<ItemDataRole>(role));
@@ -39,6 +38,7 @@ namespace AbstractListModel
         }
 
         // ==== optional methods ==========================================
+        [[nodiscard]]
         QVariant headerData(int section, Qt::Orientation orientation, int role) const override {
             if (methodMask & HeaderData) {
                 const auto variant = methodDelegate->headerData(section, static_cast<Orientation>(orientation), static_cast<ItemDataRole>(role));
@@ -48,6 +48,7 @@ namespace AbstractListModel
             }
         }
 
+        [[nodiscard]]
         Qt::ItemFlags flags(const QModelIndex &index) const override {
             auto baseFlags = QAbstractListModel::flags(index);
             if (methodMask & Flags) {
@@ -68,6 +69,7 @@ namespace AbstractListModel
             }
         }
 
+        [[nodiscard]]
         int columnCount(const QModelIndex &parent) const override {
             if (methodMask & ColumnCount) {
                 ModelIndex::__Handle parent2(parent);
@@ -146,4 +148,3 @@ namespace AbstractListModel
         return reinterpret_cast<InteriorRef>(wrapper);
     }
 }
-#pragma clang diagnostic pop

@@ -42,7 +42,7 @@ namespace Image
         delete ptr;
     }
 
-    OwnedRef create(std::shared_ptr<NativeBuffer<uint8_t>> data, int32_t width, int32_t height, Format format, const std::optional<size_t>& bytesPerLine) {
+    OwnedRef create(const std::shared_ptr<NativeBuffer<uint8_t>>& data, int32_t width, int32_t height, Format format, const std::optional<size_t>& bytesPerLine) {
         size_t length;
         const auto qdata = data->getSpan(&length);
         const auto qformat = static_cast<QImage::Format>(format);

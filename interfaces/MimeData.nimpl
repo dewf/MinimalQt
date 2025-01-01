@@ -1,0 +1,33 @@
+module MimeData;
+
+import Variant;
+
+// we're ignoring the QObject inheritance for now,
+// it needlessly complicates our API (particularly in subclassed Widget events),
+// and I doubt seriously we would care about attaching signals to it in C#
+
+opaque Handle {
+    void clear();
+    Variant.Owned colorData();
+    Buffer<byte> data(string mimeType);
+    Array<string> formats();
+    bool hasColor();
+    bool hasFormat(string mimeType);
+    bool hasHtml();
+    bool hasImage();
+    bool hasText();
+    bool hasUrls();
+    string html();
+    Variant.Owned imageData();
+    void removeFormat(string mimeType);
+    void setColorData(Variant.Handle color);
+    void setData(string mimeType, Buffer<byte> data);
+    void setHtml(string html);
+    void setImageData(Variant.Handle image);
+    void setText(string text);
+    void setUrls(Array<string> urls);
+    string text();
+    Array<string> urls();
+}
+
+Handle create();

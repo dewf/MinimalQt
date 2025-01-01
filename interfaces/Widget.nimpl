@@ -11,6 +11,7 @@ import Region;
 import Cursor;
 import SizePolicy;
 import Font;
+import MimeData;
 
 int WIDGET_SIZE_MAX;   // pass-through of QWIDGETSIZE_MAX
 
@@ -260,21 +261,8 @@ opaque Event {
 }
 
 @nodispose // owned by Qt once used
-opaque MimeData {
-    Array<string> formats();
-    bool hasFormat(string mimeType);
-    
-    string text();
-    void setText(string text);
-
-    Array<string> urls();
-    void setUrls(Array<string> urls);
-}
-MimeData createMimeData();
-
-@nodispose // owned by Qt once used
 opaque Drag {
-    void setMimeData(MimeData data);
+    void setMimeData(MimeData.Handle data);
     DropAction exec(DropActionSet supportedActions, DropAction defaultAction);
 }
 Drag createDrag(Handle parent);  // the parent will be responsible for cleanup (and neither do we own the MimeData assigned)
@@ -318,9 +306,9 @@ interface DelegateMethods {
     void resizeEvent(Size oldSize, Size newSize);
 
     // dragMove does double duty, also an 'enter' event - check isEnterEvent flag
-    void dragMoveEvent(Point pos, Modifiers modifiers, MimeData mimeData, DragMoveEvent moveEvent, bool isEnterEvent);
+    void dragMoveEvent(Point pos, Modifiers modifiers, MimeData.Handle mimeData, DragMoveEvent moveEvent, bool isEnterEvent);
     void dragLeaveEvent();
-    void dropEvent(Point pos, Modifiers modifiers, MimeData mimeData, DropAction action);
+    void dropEvent(Point pos, Modifiers modifiers, MimeData.Handle mimeData, DropAction action);
 }
 
 opaque Delegated extends Handle {

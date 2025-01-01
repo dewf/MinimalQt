@@ -219,6 +219,11 @@ add_library(MinimalQtImpl STATIC
     ../MessageBox.cpp
     ../MessageBoxInternal.h
 
+    ../generated/MimeData.h
+    ../generated/MimeData_wrappers.cpp
+    ../MimeData.cpp
+    ../MimeDataInternal.h
+
     ../generated/ModelIndex.h
     ../generated/ModelIndex_wrappers.cpp
     ../ModelIndexInternal.h
