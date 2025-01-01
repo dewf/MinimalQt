@@ -1,0 +1,81 @@
+module HeaderView;
+
+import AbstractItemView;
+import Enums;
+
+namedbits SignalMask extends AbstractItemView.SignalMask {
+    GeometriesChanged,
+    SectionClicked,
+    SectionCountChanged,
+    SectionDoubleClicked,
+    SectionEntered,
+    SectionHandleDoubleClicked,
+    SectionMoved,
+    SectionPressed,
+    SectionResized,
+    SortIndicatorChanged,
+    SortIndicatorClearableChanged
+}
+
+interface SignalHandler extends AbstractItemView.SignalHandler {
+    void geometriesChanged();
+    void sectionClicked(int logicalIndex);
+    void sectionCountChanged(int oldCount, int newCount);
+    void sectionDoubleClicked(int logicalIndex);
+    void sectionEntered(int logicalIndex);
+    void sectionHandleDoubleClicked(int logicalIndex);
+    void sectionMoved(int logicalIndex, int oldVisualIndex, int newVisualIndex);
+    void sectionPressed(int logicalIndex);
+    void sectionResized(int logicalIndex, int oldSize, int newSize);
+    void sortIndicatorChanged(int logicalIndex, SortOrder order);
+    void sortIndicatorClearableChanged(bool clearable);
+}
+
+opaque Handle extends AbstractItemView.Handle {
+    // properties
+
+    bool cascadingSectionResizes();
+    void setCascadingSectionResizes(bool enable);
+
+    Alignment defaultAlignment();
+    void setDefaultAlignment(Alignment align);
+
+    int defaultSectionSize();
+    void setDefaultSectionSize(int size);
+    void resetDefaultSectionSize();
+
+    bool isFirstSectionMovable();
+    void setFirstSectionMovable(bool movable);
+
+    bool highlightSections();
+    void setHighlightSections(bool highlight);
+
+    int maximumSectionSize();
+    void setMaximumSectionSize(int size);
+
+    int minimumSectionSize();
+    void setMinimumSectionSize(int size);
+
+    bool sectionsClickable();
+    void setSectionsClickable(bool clickable);
+
+    bool sectionsMovable();
+    void setSectionsMovable(bool movable);
+
+    bool isSortIndicatorShown();
+    void setSortIndicatorShown(bool show);
+
+    bool isSortIndicatorClearable();
+    void setSortIndicatorClearable(bool clearable);
+
+    bool stretchLastSection();
+    void setStretchLastSection(bool stretch);
+
+    // methods
+    void resizeSection(int logicalIndex, int size);
+
+    // etc:
+    void setSignalMask(SignalMask mask);
+}
+
+Handle create(Orientation orientation, SignalHandler handler);

@@ -1,6 +1,8 @@
 #include "generated/TreeView.h"
 #include "TreeViewInternal.h"
 
+#include "HeaderViewInternal.h"
+
 #define WRAPPER (reinterpret_cast<SignalWrapper*>(_this))
 #define TREEVIEW_THIS (WRAPPER->getActual())
 
@@ -96,6 +98,25 @@ namespace TreeView
 
     void Handle_setWordWrap(HandleRef _this, bool value) {
         TREEVIEW_THIS->setWordWrap(value);
+    }
+
+    std::shared_ptr<HeaderViewResult::Base> Handle_header(HandleRef _this) {
+        if (const auto header = TREEVIEW_THIS->header(); header != nullptr) {
+            // check for existing wrapper (ie, did we originally set the header ourselves?)
+            if (const auto existing = wrapperForQObject(header); existing != nullptr) {
+                const auto handleRef = reinterpret_cast<HeaderView::HandleRef>(existing);
+                return std::make_shared<HeaderViewResult::AlreadyExists>(handleRef);
+            }
+            // else, unknown (Qt-supplied) default, need to create a new wrapper
+            // return a function which can create one on-demand
+            const auto func = [header](const std::shared_ptr<HeaderView::SignalHandler>& handler) {
+                const auto wrapper = new HeaderView::SignalWrapper(header, handler);
+                return reinterpret_cast<HeaderView::HandleRef>(wrapper);
+            };
+            return std::make_shared<HeaderViewResult::NeedsWrapper>(func);
+        }
+        // else
+        return std::make_shared<HeaderViewResult::NoHeaderView>();
     }
 
     void Handle_resizeColumnToContents(HandleRef _this, int32_t column) {

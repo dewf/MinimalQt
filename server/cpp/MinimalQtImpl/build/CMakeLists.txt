@@ -144,6 +144,11 @@ add_library(MinimalQtImpl STATIC
     ../GroupBox.cpp
     ../GroupBoxInternal.h
 
+    ../generated/HeaderView.h
+    ../generated/HeaderView_wrappers.cpp
+    ../HeaderView.cpp
+    ../HeaderViewInternal.h
+
     ../generated/Icon.h
     ../generated/Icon_wrappers.cpp
     ../Icon.cpp
