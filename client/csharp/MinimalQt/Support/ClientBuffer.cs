@@ -20,6 +20,16 @@ namespace Org.Whatever.MinimalQt.Support
             GC.AddMemoryPressure(_totalSize);
             Console.WriteLine("ClientBuffer {0} allocated", _block);
         }
+        public ClientBuffer(T[] data)
+        {
+            _dims = [data.Length];
+            _elementSize = Marshal.SizeOf<T>();
+            _totalCount = data.Length;
+            _totalSize = _totalCount * _elementSize;
+            _block = Marshal.AllocHGlobal((IntPtr)_totalSize);
+            GC.AddMemoryPressure(_totalSize);
+            Console.WriteLine("ClientBuffer {0} allocated", _block);
+        }
         
         // // currently this just makes a copy
         // // but would we ever want to wrap+pin an existing memory array? so that it's always current on the native side?
