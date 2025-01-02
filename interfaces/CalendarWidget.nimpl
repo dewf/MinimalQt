@@ -39,19 +39,59 @@ enum SelectionMode {
 }
 
 opaque Handle extends Widget.Handle {
+    // properties
+    int dateEditAcceptDelay();
     void setDateEditAcceptDelay(int value);
+
+    bool isDateEditEnabled();
     void setDateEditEnabled(bool enabled);
+
+    QDayOfWeek firstDayOfWeek();
     void setFirstDayOfWeek(QDayOfWeek value);
+
+    bool isGridVisible();
     void setGridVisible(bool visible);
+
+    // TextCharFormat headerTextFormat();
+    // void setHeaderTextFormat(TextCharFormat format);
+
+    HorizontalHeaderFormat getHorizontalHeaderFormat();
     void setHorizontalHeaderFormat(HorizontalHeaderFormat format);
-    void setMaximumDate(Date.Deferred value);
-    void setMinimumDate(Date.Deferred value);
+
+    Date.Owned maximumDate();
+    void setMaximumDate(Date.Handle value);
+    void clearMaximumDate();
+
+    Date.Owned minimumDate();
+    void setMinimumDate(Date.Handle value);
+    void clearMinimumDate();
+
+    int monthShown();
+    // read-only
+
+    bool isNavigationBarVisible();
     void setNavigationBarVisible(bool visible);
+
     Date.Owned selectedDate();
-    void setSelectedDate(Date.Deferred selected);
+    void setSelectedDate(Date.Handle selected);
+
+    SelectionMode getSelectionMode();
     void setSelectionMode(SelectionMode mode);
+
+    VerticalHeaderFormat getVerticalHeaderFormat();
     void setVerticalHeaderFormat(VerticalHeaderFormat format);
 
+    int yearShown();
+    // read-only
+
+    // methods
+    // Map<Date, TextCharFormat> dateTextFormat();
+    // TextCharFormat dateTextFormat(Date date);
+    // void setDateTextFormat(Date date, TextCharFormat format);
+    // void setWeekdayTextFormat(QDayOfWeek dayOfWeek, TextCharFormat format);
+    // TextCharFormat weekdayTextFormat(QDayOfWeek dayOfWeek);
+
+    // etc
     void setSignalMask(SignalMask mask);
 }
 

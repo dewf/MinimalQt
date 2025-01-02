@@ -7,4 +7,4 @@ opaque Handle {
 
 opaque Owned extends Handle;
 
-Owned createFromISO8601(string value);
+Owned createFromISO8601(string text);

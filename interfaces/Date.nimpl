@@ -1,19 +1,10 @@
 module Date;
 
-struct YearMonthDay {
-    int year;
-    int month;
-    int day;
-}
-
 @nodispose
 opaque Handle {
-    // fake method for ease of conversion to DateOnly
-    YearMonthDay toYearMonthDay();
+    string toISO8601();
 }
 
 opaque Owned extends Handle;
 
-sumtype Deferred {
-    FromYearMonthDay(int year, int month, int day)
-}
+Owned createFromISO8601(string text);
