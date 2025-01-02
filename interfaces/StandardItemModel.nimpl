@@ -61,6 +61,9 @@ opaque Handle extends AbstractItemModel.Handle {
     Array<StandardItem.Handle> takeRow(int row);
     StandardItem.Handle takeVerticalHeaderItem(int row);
     StandardItem.Handle verticalHeaderItem(int row);
+
+    // etc
+    void setSignalMask(SignalMask mask);
 }
 
 Handle create(SignalHandler handler);

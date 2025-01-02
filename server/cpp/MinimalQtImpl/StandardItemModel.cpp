@@ -146,6 +146,10 @@ namespace StandardItemModel
         return reinterpret_cast<StandardItem::HandleRef>(MODEL_THIS->verticalHeaderItem(row));
     }
 
+    void Handle_setSignalMask(HandleRef _this, SignalMask mask) {
+        WRAPPER->setSignalMask(mask);
+    }
+
     void Handle_dispose(HandleRef _this) {
         delete WRAPPER;
     }
