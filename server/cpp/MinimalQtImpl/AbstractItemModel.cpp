@@ -3,52 +3,199 @@
 
 #include <QModelIndex>
 
+#include "MimeDataInternal.h"
 #include "ModelIndexInternal.h"
 #include "VariantInternal.h"
+#include "util/convert.h"
 
 #define WRAPPER (reinterpret_cast<SignalWrapper*>(_this))
 #define ABSITEMMODEL_THIS (WRAPPER->getActual())
-#define SUBCLASSED_THIS (static_cast<Implementation*>(WRAPPER->getActual()))
+#define SUBCLASSED_THIS (dynamic_cast<Implementation*>(WRAPPER->getActual()))
 
 namespace AbstractItemModel
 {
-    ModelIndex::OwnedRef Handle_index(HandleRef _this, int32_t row, int32_t column) {
-        const auto value = ABSITEMMODEL_THIS->index(row, column);
-        return new ModelIndex::__Owned(value);
+    ModelIndex::OwnedRef Handle_buddy(HandleRef _this, ModelIndex::HandleRef index) {
+        return new ModelIndex::__Owned { ABSITEMMODEL_THIS->buddy(index->value) };
     }
 
-    ModelIndex::OwnedRef Handle_index(HandleRef _this, int32_t row, int32_t column, ModelIndex::HandleRef parent) {
-        const auto value = ABSITEMMODEL_THIS->index(row, column, parent->value);
-        return new ModelIndex::__Owned(value);
+    bool Handle_canDropMimeData(HandleRef _this, MimeData::HandleRef data, DropAction action, int32_t row, int32_t column, ModelIndex::HandleRef parent) {
+        return ABSITEMMODEL_THIS->canDropMimeData(AS_QMIMEDATA_PTR(data), static_cast<Qt::DropAction>(action), row, column, parent->value);
     }
 
-    bool Handle_setData(HandleRef _this, ModelIndex::HandleRef index, Variant::HandleRef value) {
-        return ABSITEMMODEL_THIS->setData(index->value, value->value);
+    bool Handle_canFetchMore(HandleRef _this, ModelIndex::HandleRef parent) {
+        return ABSITEMMODEL_THIS->canFetchMore(parent->value);
     }
 
-    bool Handle_setData(HandleRef _this, ModelIndex::HandleRef index, Variant::HandleRef value, ItemDataRole role) {
-        const auto qrole = static_cast<Qt::ItemDataRole>(role);
-        return ABSITEMMODEL_THIS->setData(index->value, value->value, qrole);
+    bool Handle_checkIndex(HandleRef _this, ModelIndex::HandleRef index, const std::optional<CheckIndexOptions>& options_) {
+        CheckIndexOptions optionsArg = options_.value_or(NoOption);
+        return ABSITEMMODEL_THIS->checkIndex(index->value, static_cast<QAbstractItemModel::CheckIndexOption>(optionsArg));
     }
 
-    Variant::OwnedRef Handle_data(HandleRef _this, ModelIndex::HandleRef index) {
-        const auto value = ABSITEMMODEL_THIS->data(index->value);
-        return new Variant::__Owned(value);
+    bool Handle_clearItemData(HandleRef _this, ModelIndex::HandleRef index) {
+        return ABSITEMMODEL_THIS->clearItemData(index->value);
     }
 
-    Variant::OwnedRef Handle_data(HandleRef _this, ModelIndex::HandleRef index, ItemDataRole role) {
-        const auto qrole = static_cast<Qt::ItemDataRole>(role);
-        const auto value = ABSITEMMODEL_THIS->data(index->value, qrole);
-        return new Variant::__Owned(value);
+    int32_t Handle_columnCount(HandleRef _this, const std::optional<ModelIndex::HandleRef>& parent) {
+        return ABSITEMMODEL_THIS->columnCount(fromOptionalIndex(parent));
     }
 
-    void Handle_sort(HandleRef _this, int32_t column) {
-        ABSITEMMODEL_THIS->sort(column);
+    Variant::OwnedRef Handle_data(HandleRef _this, ModelIndex::HandleRef index, const std::optional<int32_t>& role) {
+        return new Variant::__Owned { ABSITEMMODEL_THIS->data(index->value, role.value_or(Qt::DisplayRole))};
     }
 
-    void Handle_sort(HandleRef _this, int32_t column, SortOrder order) {
-        auto qorder = static_cast<Qt::SortOrder>(order);
-        ABSITEMMODEL_THIS->sort(column, qorder);
+    bool Handle_dropMimeData(HandleRef _this, MimeData::HandleRef data, DropAction action, int32_t row, int32_t column, ModelIndex::HandleRef parent) {
+        return ABSITEMMODEL_THIS->dropMimeData(AS_QMIMEDATA_PTR(data), static_cast<Qt::DropAction>(action), row, column, parent->value);
+    }
+
+    void Handle_fetchMore(HandleRef _this, ModelIndex::HandleRef parent) {
+        ABSITEMMODEL_THIS->fetchMore(parent->value);
+    }
+
+    ItemFlags Handle_flags_(HandleRef _this, ModelIndex::HandleRef index) {
+        return ABSITEMMODEL_THIS->flags(index->value);
+    }
+
+    bool Handle_hasChildren(HandleRef _this, const std::optional<ModelIndex::HandleRef>& parent) {
+        return ABSITEMMODEL_THIS->hasChildren(fromOptionalIndex(parent));
+    }
+
+    bool Handle_hasIndex(HandleRef _this, int32_t row, int32_t column, const std::optional<ModelIndex::HandleRef>& parent) {
+        return ABSITEMMODEL_THIS->hasIndex(row, column, fromOptionalIndex(parent));
+    }
+
+    Variant::OwnedRef Handle_headerData(HandleRef _this, int32_t section, Orientation orientation, const std::optional<int32_t>& role) {
+        return new Variant::__Owned { ABSITEMMODEL_THIS->headerData(section, static_cast<Qt::Orientation>(orientation), role.value_or(Qt::DisplayRole)) };
+    }
+
+    ModelIndex::OwnedRef Handle_index(HandleRef _this, int32_t row, int32_t column, const std::optional<ModelIndex::HandleRef>& parent) {
+        return new ModelIndex::__Owned { ABSITEMMODEL_THIS->index(row, column, fromOptionalIndex(parent)) };
+    }
+
+    bool Handle_insertColumn(HandleRef _this, int32_t column, const std::optional<ModelIndex::HandleRef>& parent) {
+        return ABSITEMMODEL_THIS->insertColumn(column, fromOptionalIndex(parent));
+    }
+
+    bool Handle_insertColumns(HandleRef _this, int32_t column, int32_t count, const std::optional<ModelIndex::HandleRef>& parent) {
+        return ABSITEMMODEL_THIS->insertColumns(column, count, fromOptionalIndex(parent));
+    }
+
+    bool Handle_insertRow(HandleRef _this, int32_t row, const std::optional<ModelIndex::HandleRef>& parent) {
+        return ABSITEMMODEL_THIS->insertRow(row, fromOptionalIndex(parent));
+    }
+
+    bool Handle_insertRows(HandleRef _this, int32_t row, int32_t count, const std::optional<ModelIndex::HandleRef>& parent) {
+        return ABSITEMMODEL_THIS->insertRows(row, count, fromOptionalIndex(parent));
+    }
+
+    std::map<int32_t,Variant::OwnedRef> Handle_itemData(HandleRef _this, ModelIndex::HandleRef index) {
+        const auto result = ABSITEMMODEL_THIS->itemData(index->value);
+        std::map<int32_t, Variant::OwnedRef> retMap;
+        for (auto i = result.cbegin(), end = result.cend(); i != end; ++i) {
+            retMap[i.key()] = new Variant::__Owned { i.value() };
+        }
+        return retMap;
+    }
+
+    std::vector<ModelIndex::OwnedRef> Handle_match(HandleRef _this, ModelIndex::HandleRef start, int32_t role, Variant::HandleRef value, const Handle::MatchArgs& args) {
+        std::vector<ModelIndex::OwnedRef> ret;
+        const auto hits = args.getOrDefaultHits(1);
+        const auto flags_ = args.getOrDefaultFlags_(MatchStartsWith | MatchWrap);
+        const auto result = ABSITEMMODEL_THIS->match(start->value, role, value->value, hits, static_cast<Qt::MatchFlags>(flags_));
+        return fromQList<QModelIndex,ModelIndex::OwnedRef>(result, [](const QModelIndex &index) { return new ModelIndex::__Owned(index); });
+    }
+
+    MimeData::HandleRef Handle_getMimeData(HandleRef _this, const std::vector<ModelIndex::HandleRef>& indexes) {
+        const auto qIndexes = toQList<ModelIndex::HandleRef,QModelIndex>(indexes, [](const ModelIndex::HandleRef& ref) { return ref->value; });
+        return reinterpret_cast<MimeData::HandleRef>(ABSITEMMODEL_THIS->mimeData(qIndexes));
+    }
+
+    std::vector<std::string> Handle_mimeTypes(HandleRef _this) {
+        return toVectorStrings(ABSITEMMODEL_THIS->mimeTypes());
+    }
+
+    bool Handle_moveColumn(HandleRef _this, ModelIndex::HandleRef sourceParent, int32_t sourceColumn, ModelIndex::HandleRef destinationParent, int32_t destinationChild) {
+        return ABSITEMMODEL_THIS->moveColumn(sourceParent->value, sourceColumn, destinationParent->value, destinationChild);
+    }
+
+    bool Handle_moveColumns(HandleRef _this, ModelIndex::HandleRef sourceParent, int32_t sourceColumn, int32_t count, ModelIndex::HandleRef destinationParent, int32_t destinationChild) {
+        return ABSITEMMODEL_THIS->moveColumns(sourceParent->value, sourceColumn, count, destinationParent->value, destinationChild);
+    }
+
+    bool Handle_moveRow(HandleRef _this, ModelIndex::HandleRef sourceParent, int32_t sourceRow, ModelIndex::HandleRef destinationParent, int32_t destinationChild) {
+        return ABSITEMMODEL_THIS->moveRow(sourceParent->value, sourceRow, destinationParent->value, destinationChild);
+    }
+
+    bool Handle_moveRows(HandleRef _this, ModelIndex::HandleRef sourceParent, int32_t sourceRow, int32_t count, ModelIndex::HandleRef destinationParent, int32_t destinationChild) {
+        return ABSITEMMODEL_THIS->moveRows(sourceParent->value, sourceRow, count, destinationParent->value, destinationChild);
+    }
+
+    ModelIndex::OwnedRef Handle_parent(HandleRef _this, ModelIndex::HandleRef index) {
+        return new ModelIndex::__Owned { ABSITEMMODEL_THIS->parent(index->value) };
+    }
+
+    bool Handle_removeColumn(HandleRef _this, int32_t column, const std::optional<ModelIndex::HandleRef>& parent) {
+        return ABSITEMMODEL_THIS->removeColumn(column, fromOptionalIndex(parent));
+    }
+
+    bool Handle_removeColumns(HandleRef _this, int32_t column, int32_t count, const std::optional<ModelIndex::HandleRef>& parent) {
+        return ABSITEMMODEL_THIS->removeColumns(column, count, fromOptionalIndex(parent));
+    }
+
+    bool Handle_removeRow(HandleRef _this, int32_t row, const std::optional<ModelIndex::HandleRef>& parent) {
+        return ABSITEMMODEL_THIS->removeRow(row, fromOptionalIndex(parent));
+    }
+
+    bool Handle_removeRows(HandleRef _this, int32_t row, int32_t count, const std::optional<ModelIndex::HandleRef>& parent) {
+        return ABSITEMMODEL_THIS->removeRows(row, count, fromOptionalIndex(parent));
+    }
+
+    int32_t Handle_rowCount(HandleRef _this, const std::optional<ModelIndex::HandleRef>& parent) {
+        return ABSITEMMODEL_THIS->rowCount(fromOptionalIndex(parent));
+    }
+
+    bool Handle_setData(HandleRef _this, ModelIndex::HandleRef index, Variant::HandleRef value, const std::optional<int32_t>& role) {
+        return ABSITEMMODEL_THIS->setData(index->value, value->value, role.value_or(Qt::EditRole));
+    }
+
+    bool Handle_setHeaderData(HandleRef _this, int32_t section, Orientation orientation, Variant::HandleRef value, const std::optional<int32_t>& role) {
+        return ABSITEMMODEL_THIS->setHeaderData(section, static_cast<Qt::Orientation>(orientation), value->value, role.value_or(Qt::EditRole));
+    }
+
+    bool Handle_setItemData(HandleRef _this, ModelIndex::HandleRef index, std::map<int32_t,Variant::HandleRef> roles) {
+        const QMap<int, QVariant> qRoles;
+        for (auto i = roles.begin(); i != roles.end(); ++i) {
+            qRoles[i->first] = i->second->value;
+        }
+        return ABSITEMMODEL_THIS->setItemData(index->value, qRoles);
+    }
+
+    ModelIndex::OwnedRef Handle_sibling(HandleRef _this, int32_t row, int32_t column, ModelIndex::HandleRef index) {
+        return new ModelIndex::__Owned { ABSITEMMODEL_THIS->sibling(row, column, index->value) };
+    }
+
+    void Handle_sort(HandleRef _this, int32_t column, const std::optional<SortOrder>& order) {
+        const auto order2 = order.value_or(SortOrder::AscendingOrder);
+        ABSITEMMODEL_THIS->sort(column, static_cast<Qt::SortOrder>(order2));
+    }
+
+    Size Handle_span(HandleRef _this, ModelIndex::HandleRef index) {
+        return toSize(ABSITEMMODEL_THIS->span(index->value));
+    }
+
+    DropActionSet Handle_supportedDragActions(HandleRef _this) {
+        return ABSITEMMODEL_THIS->supportedDragActions();
+    }
+
+    DropActionSet Handle_supportedDropActions(HandleRef _this) {
+        return ABSITEMMODEL_THIS->supportedDropActions();
+    }
+
+    void Handle_revert(HandleRef _this) {
+        ABSITEMMODEL_THIS->revert();
+    }
+
+    void Handle_submit(HandleRef _this) {
+        ABSITEMMODEL_THIS->submit();
     }
 
     // subclassing stuff ===============================================================
@@ -61,28 +208,33 @@ namespace AbstractItemModel
             : methodDelegate(methods), methodMask(method_mask) {}
 
         // ===== must-implement abstract methods ================================
+        [[nodiscard]]
         QModelIndex index(int row, int column, const QModelIndex &parent) const override {
             ModelIndex::__Handle parent2(parent);
             const auto result = methodDelegate->index(row, column, &parent2);
             return result->consume();
         }
 
+        [[nodiscard]]
         QModelIndex parent(const QModelIndex &child) const override {
             ModelIndex::__Handle child2(child);
             const auto result = methodDelegate->parent(&child2);
             return result->consume();
         }
 
+        [[nodiscard]]
         int rowCount(const QModelIndex &parent) const override {
             ModelIndex::__Handle parent2(parent);
             return methodDelegate->rowCount(&parent2);
         }
 
+        [[nodiscard]]
         int columnCount(const QModelIndex &parent) const override {
             ModelIndex::__Handle parent2(parent);
             return methodDelegate->columnCount(&parent2);
         }
 
+        [[nodiscard]]
         QVariant data(const QModelIndex &index, int role) const override {
             ModelIndex::__Handle index2(index);
             const auto result = methodDelegate->data(&index2, role);
@@ -90,6 +242,7 @@ namespace AbstractItemModel
         }
 
         // ===== optional methods ==================================================
+        [[nodiscard]]
         bool hasChildren(const QModelIndex &parent) const override {
             if (methodMask & HasChildren) {
                 ModelIndex::__Handle parent2(parent);
@@ -109,6 +262,7 @@ namespace AbstractItemModel
             }
         }
 
+        [[nodiscard]]
         Qt::ItemFlags flags(const QModelIndex &index) const override {
             auto baseFlags = QAbstractItemModel::flags(index);
             if (methodMask & Flags) {
@@ -119,6 +273,7 @@ namespace AbstractItemModel
             }
         }
 
+        [[nodiscard]]
         QVariant headerData(int section, Qt::Orientation orientation, int role) const override {
             if (methodMask & HeaderData) {
                 const auto variant = methodDelegate->headerData(section, static_cast<Orientation>(orientation), role);

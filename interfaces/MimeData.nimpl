@@ -6,6 +6,8 @@ import Variant;
 // it needlessly complicates our API (particularly in subclassed Widget events),
 // and I doubt seriously we would care about attaching signals to it in C#
 
+// however the ownership is not clear, we probably need to address that ...
+
 opaque Handle {
     void clear();
     Variant.Owned colorData();

@@ -1,6 +1,7 @@
 module AbstractItemModel;
 
 import Object;
+import Common;
 import Enums;
 import ModelIndex;
 import PersistentModelIndex;
@@ -65,93 +66,64 @@ interface SignalHandler extends Object.SignalHandler {
 
 @nodispose
 opaque Handle extends Object.Handle {
-
-    // QModelIndex buddy(const QModelIndex &index)
-    // ModelIndex.Owned buddy(ModelIndex.Handle index);
-
-    // bool canDropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
-    // bool canDropMimeData(MimeData.Handle data, DropAction action, int row, int column, ModelIndex.Handle parent);
-
-    // bool canFetchMore(const QModelIndex &parent)
-
-    // bool checkIndex(const QModelIndex &index, QAbstractItemModel::CheckIndexOptions options = CheckIndexOption::NoOption)
-
-    // bool clearItemData(const QModelIndex &index)
-
-    // int columnCount(const QModelIndex &parent = QModelIndex())
-
-    // QVariant data(const QModelIndex &index, int role = Qt::DisplayRole)
-
-    // bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent)
-
-    // void fetchMore(const QModelIndex &parent)
-
-    // Qt::ItemFlags flags(const QModelIndex &index)
-
-    // bool hasChildren(const QModelIndex &parent = QModelIndex())
-
-    // bool hasIndex(int row, int column, const QModelIndex &parent = QModelIndex())
-
-    // QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole)
-
-    // QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex())
-
-    // bool insertColumn(int column, const QModelIndex &parent = QModelIndex())
-
-    // bool insertColumns(int column, int count, const QModelIndex &parent = QModelIndex())
-
-    // bool insertRow(int row, const QModelIndex &parent = QModelIndex())
-
-    // bool insertRows(int row, int count, const QModelIndex &parent = QModelIndex())
-
-    // QMap<int, QVariant> itemData(const QModelIndex &index)
-
-    // QModelIndexList match(const QModelIndex &start, int role, const QVariant &value, int hits = 1, Qt::MatchFlags flags = Qt::MatchFlags(Qt::MatchStartsWith|Qt::MatchWrap))
-
-    // QMimeData * mimeData(const QModelIndexList &indexes)
-
-    // QStringList mimeTypes()
-
-    // bool moveColumn(const QModelIndex &sourceParent, int sourceColumn, const QModelIndex &destinationParent, int destinationChild)
-
-    // bool moveColumns(const QModelIndex &sourceParent, int sourceColumn, int count, const QModelIndex &destinationParent, int destinationChild)
-
-    // bool moveRow(const QModelIndex &sourceParent, int sourceRow, const QModelIndex &destinationParent, int destinationChild)
-
-    // bool moveRows(const QModelIndex &sourceParent, int sourceRow, int count, const QModelIndex &destinationParent, int destinationChild)
+    static {
+        options MatchArgs {
+            int hits;
+            MatchFlags flags_;
+        }
+    }
+    ModelIndex.Owned buddy(ModelIndex.Handle index);
+    bool canDropMimeData(MimeData.Handle data, DropAction action, int row, int column, ModelIndex.Handle parent);
+    bool canFetchMore(ModelIndex.Handle parent);
+    bool checkIndex(ModelIndex.Handle index, Option<CheckIndexOptions> options_);
+    bool clearItemData(ModelIndex.Handle index);
+    int columnCount(Option<ModelIndex.Handle> parent);
+    Variant.Owned data(ModelIndex.Handle index, Option<int> role);
+    bool dropMimeData(MimeData.Handle data, DropAction action, int row, int column, ModelIndex.Handle parent);
+    void fetchMore(ModelIndex.Handle parent);
+    ItemFlags flags_(ModelIndex.Handle index);
+    bool hasChildren(Option<ModelIndex.Handle> parent);
+    bool hasIndex(int row, int column, Option<ModelIndex.Handle> parent);
+    Variant.Owned headerData(int section, Orientation orientation, Option<int> role);
+    ModelIndex.Owned index(int row, int column, Option<ModelIndex.Handle> parent);
+    bool insertColumn(int column, Option<ModelIndex.Handle> parent);
+    bool insertColumns(int column, int count, Option<ModelIndex.Handle> parent);
+    bool insertRow(int row, Option<ModelIndex.Handle> parent);
+    bool insertRows(int row, int count, Option<ModelIndex.Handle> parent);
+    Map<int, Variant.Owned> itemData(ModelIndex.Handle index);
+    Array<ModelIndex.Owned> match(ModelIndex.Handle start, int role, Variant.Handle value, MatchArgs args);
+    MimeData.Handle getMimeData(Array<ModelIndex.Handle> indexes);
+    Array<string> mimeTypes();
+    bool moveColumn(ModelIndex.Handle sourceParent, int sourceColumn, ModelIndex.Handle destinationParent, int destinationChild);
+    bool moveColumns(ModelIndex.Handle sourceParent, int sourceColumn, int count, ModelIndex.Handle destinationParent, int destinationChild);
+    bool moveRow(ModelIndex.Handle sourceParent, int sourceRow, ModelIndex.Handle destinationParent, int destinationChild);
+    bool moveRows(ModelIndex.Handle sourceParent, int sourceRow, int count, ModelIndex.Handle destinationParent, int destinationChild);
 
     // void multiData(const QModelIndex &index, QModelRoleDataSpan roleDataSpan)
+    // TODO
 
-    // QModelIndex parent(const QModelIndex &index)
-
-    // bool removeColumn(int column, const QModelIndex &parent = QModelIndex())
-
-    // bool removeColumns(int column, int count, const QModelIndex &parent = QModelIndex())
-
-    // bool removeRow(int row, const QModelIndex &parent = QModelIndex())
-
-    // bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex())
+    ModelIndex.Owned parent(ModelIndex.Handle index);
+    bool removeColumn(int column, Option<ModelIndex.Handle> parent);
+    bool removeColumns(int column, int count, Option<ModelIndex.Handle> parent);
+    bool removeRow(int row, Option<ModelIndex.Handle> parent);
+    bool removeRows(int row, int count, Option<ModelIndex.Handle> parent);
 
     // QHash<int, QByteArray> roleNames()
+    // for what?
+    // Map<int, Array<byte>> roleNames();
 
-    // int rowCount(const QModelIndex &parent = QModelIndex())
+    int rowCount(Option<ModelIndex.Handle> parent);
+    bool setData(ModelIndex.Handle index, Variant.Handle value, Option<int> role);
+    bool setHeaderData(int section, Orientation orientation, Variant.Handle value, Option<int> role);
+    bool setItemData(ModelIndex.Handle index, Map<int, Variant.Handle> roles);
+    ModelIndex.Owned sibling(int row, int column, ModelIndex.Handle index);
+    void sort(int column, Option<SortOrder> order);
+    Size span(ModelIndex.Handle index);
+    DropActionSet supportedDragActions();
+    DropActionSet supportedDropActions();
 
-    // bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole)
-
-    // bool setHeaderData(int section, Qt::Orientation orientation, const QVariant &value, int role = Qt::EditRole)
-
-    // bool setItemData(const QModelIndex &index, const QMap<int, QVariant> &roles)
-
-    // QModelIndex sibling(int row, int column, const QModelIndex &index)
-
-    // void sort(int column, Qt::SortOrder order = Qt::AscendingOrder)
-
-    // QSize span(const QModelIndex &index)
-
-    // Qt::DropActions supportedDragActions()
-
-    // Qt::DropActions supportedDropActions()
-
+    void revert();
+    void submit();
 }
 
 // subclass (implementation) stuff ================================================================================
