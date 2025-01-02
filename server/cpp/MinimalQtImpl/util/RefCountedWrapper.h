@@ -7,18 +7,21 @@ private:
 public:
     T value;
     explicit RefCountedWrapper(T init) : value(init) {}
-    void addRef() {
+protected:
+    // publicly expose addRef() and release() on 'Owned'
+    void addRefInternal() {
         refCount += 1;
     }
-    void release() {
+    void releaseInternal() {
         refCount -= 1;
         if (refCount == 0) {
             delete this;
         }
     }
-    T consume() {
+    // publicly expose consume() on 'SafeReturn'
+    T consumeInternal() {
         const auto ret = value;
-        release();
+        releaseInternal();
         return ret;
     }
 };

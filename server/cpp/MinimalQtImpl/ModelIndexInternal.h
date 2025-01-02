@@ -11,9 +11,19 @@ namespace ModelIndex {
     };
     struct __Owned : __Handle {
         explicit __Owned(const QModelIndex &init) : __Handle(init) {}
+        void addRef() {
+            addRefInternal();
+        }
+        void release() {
+            releaseInternal();
+        }
     };
     // note: these are never actually created/instantiated, we just reinterpret OwnedRef as SafeReturnRef for API purposes
-    struct __SafeReturn : __Owned {};
+    struct __SafeReturn : __Owned {
+        QModelIndex consume() {
+            return consumeInternal();
+        }
+    };
 
     inline QModelIndex fromOptionalIndex(const std::optional<HandleRef>& maybeValue) {
         if (maybeValue.has_value()) {
