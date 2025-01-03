@@ -35,8 +35,7 @@ interface SignalHandler extends Widget.SignalHandler {
 // some fancy stuff for the ToggleViewAction getter:
 delegate Action.Handle WrapperCreationFunc(Action.SignalHandler handler);
 sumtype ToggleViewActionResult {
-    NoAction,                            // I don't think this can actually happen
-    AlreadyExists(Action.Handle handle), // wrapper already existed on C++ side
+    AlreadyExists(Action.Handle handle),              // wrapper already existed on C++ side
     NeedsWrapper(WrapperCreationFunc createFunc)      // apply function to receive the handle
 }
 

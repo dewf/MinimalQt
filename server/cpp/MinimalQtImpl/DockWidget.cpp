@@ -67,22 +67,20 @@ namespace DockWidget
     }
 
     std::shared_ptr<ToggleViewActionResult::Base> Handle_toggleViewAction(HandleRef _this) {
-        if (const auto action = DOCKWIDGET_THIS->toggleViewAction(); action != nullptr) {
-            // check for existing wrapper
-            if (const auto existing = wrapperForQObject(action); existing != nullptr) {
-                const auto handleRef = reinterpret_cast<Action::HandleRef>(existing);
-                return std::make_shared<ToggleViewActionResult::AlreadyExists>(handleRef);
-            }
-            // action exists but lacks wrapper
-            // return a function which can create one on-demand
-            const auto func = [action](const std::shared_ptr<Action::SignalHandler>& handler) {
-                const auto wrapper = new Action::SignalWrapper(action, handler);
-                return reinterpret_cast<Action::HandleRef>(wrapper);
-            };
-            return std::make_shared<ToggleViewActionResult::NeedsWrapper>(func);
+        const auto action = DOCKWIDGET_THIS->toggleViewAction();
+        assert(action != nullptr); // AFAIK action will always exist ...
+        // check for existing wrapper
+        if (const auto existing = wrapperForQObject(action); existing != nullptr) {
+            const auto handleRef = reinterpret_cast<Action::HandleRef>(existing);
+            return std::make_shared<ToggleViewActionResult::AlreadyExists>(handleRef);
         }
-        // else (according to docs, I don't think this can happen)
-        return std::make_shared<ToggleViewActionResult::NoAction>();
+        // action exists but lacks wrapper
+        // return a function which can create one on-demand
+        const auto func = [action](const std::shared_ptr<Action::SignalHandler>& handler) {
+            const auto wrapper = new Action::SignalWrapper(action, handler);
+            return reinterpret_cast<Action::HandleRef>(wrapper);
+        };
+        return std::make_shared<ToggleViewActionResult::NeedsWrapper>(func);
     }
 
     void Handle_setSignalMask(HandleRef _this, SignalMask mask) {
