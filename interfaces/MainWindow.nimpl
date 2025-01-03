@@ -60,6 +60,7 @@ opaque Handle extends Widget.Handle {
     void setUnifiedTitleAndToolBarOnMac(bool state);
 
     // methods =========================================
+    void addDockWidget(DockWidgetArea area, DockWidget.Handle dockWidget, Option<Orientation> orientation);
     void setCentralWidget(Widget.Handle widget);
     void setMenuBar(MenuBar.Handle menubar);
     void setStatusBar(StatusBar.Handle statusbar);

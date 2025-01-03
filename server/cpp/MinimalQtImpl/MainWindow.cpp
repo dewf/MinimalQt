@@ -2,6 +2,7 @@
 
 #include <qevent.h>
 
+#include "DockWidgetInternal.h"
 #include "MainWindowInternal.h"
 #include "MenuBarInternal.h"
 
@@ -77,6 +78,16 @@ namespace MainWindow
     }
 
     // methods =================================
+
+    void Handle_addDockWidget(HandleRef _this, DockWidgetArea area, DockWidget::HandleRef dockWidget, const std::optional<Orientation>& orientation) {
+        const auto dockWrapper = reinterpret_cast<DockWidget::SignalWrapper*>(dockWidget);
+        if (orientation.has_value()) {
+            const auto qOrientation = static_cast<Qt::Orientation>(orientation.value());
+            MAINWINDOW_THIS->addDockWidget(static_cast<Qt::DockWidgetArea>(area), dockWrapper->getActual(), qOrientation);
+        } else {
+            MAINWINDOW_THIS->addDockWidget(static_cast<Qt::DockWidgetArea>(area), dockWrapper->getActual()); // weird that Qt has 2 different methods, vs. one with an optional param ...
+        }
+    }
 
     void Handle_setCentralWidget(HandleRef _this, Widget::HandleRef widget) {
         const auto widgetWrapper = reinterpret_cast<Widget::SignalWrapper*>(widget);
