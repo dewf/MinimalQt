@@ -444,6 +444,28 @@ flags MatchFlags {
     MatchRecursive = 64
 }
 
+enum DockWidgetArea {
+    LeftDockWidgetArea = 0x1,
+    RightDockWidgetArea = 0x2,
+    TopDockWidgetArea = 0x4,
+    BottomDockWidgetArea = 0x8,
+
+    DockWidgetArea_Mask = 0xf,
+    AllDockWidgetAreas = DockWidgetArea_Mask,
+    NoDockWidgetArea = 0
+}
+
+flags DockWidgetAreas {
+    LeftDockWidgetArea = 0x1,
+    RightDockWidgetArea = 0x2,
+    TopDockWidgetArea = 0x4,
+    BottomDockWidgetArea = 0x8,
+
+    DockWidgetArea_Mask = 0xf,
+    AllDockWidgetAreas = DockWidgetArea_Mask,
+    NoDockWidgetArea = 0
+}
+
 enum Key {
     // Unicode Basic Latin block (0x00-0x7f)
     Key_Space = 0x20,
