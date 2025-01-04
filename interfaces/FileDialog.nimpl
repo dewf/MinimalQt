@@ -5,6 +5,9 @@ import Common;
 import Icon;
 import Dialog;
 import Widget;
+import Enums;
+import Dir;
+import Url;
 
 namedbits SignalMask extends Dialog.SignalMask {
     CurrentChanged,
@@ -20,14 +23,14 @@ namedbits SignalMask extends Dialog.SignalMask {
 
 interface SignalHandler extends Dialog.SignalHandler {
     void currentChanged(string path);
-    void currentUrlChanged(string url);
-    void directoryEntered(string dir);
-    void directoryUrlEntered(string url);
+    void currentUrlChanged(Url.Handle url);
+    void directoryEntered(string directory);
+    void directoryUrlEntered(Url.Handle directory);
     void fileSelected(string file);
     void filesSelected(Array<string> selected);
     void filterSelected(string filter);
-    void urlSelected(string url);
-    void urlsSelected(Array<string> urls);
+    void urlSelected(Url.Handle url);
+    void urlsSelected(Array<Url.Handle> urls);
 }
 
 enum FileMode {
@@ -59,22 +62,173 @@ flags Options {
 
 opaque Handle extends Dialog.Handle {
     // properties
+    AcceptMode getAcceptMode();
     void setAcceptMode(AcceptMode mode);
+
+    string defaultSuffix();
     void setDefaultSuffix(string suffix);
+
+    FileMode getFileMode();
     void setFileMode(FileMode mode);
-    void setOptions(Options opts);
-    void setSupportedSchemes(Array<string> schemes);
-    void setViewMode(ViewMode mode);
     
+    Options getOptions();
+    void setOptions(Options opts);
+
+    Array<string> supportedSchemes();
+    void setSupportedSchemes(Array<string> schemes);
+
+    ViewMode getViewMode();
+    void setViewMode(ViewMode mode);
+        
     // others:
-    void setNameFilter(string filter);
-    void setNameFilters(Array<string> filters);
-    void setMimeTypeFilters(Array<string> filters);
+    Dir.Owned directory();
+    Url.Owned directoryUrl();
+    Array<string> mimeTypeFilters();
+    Array<string> nameFilters();
     void setDirectory(string dir);
+    void setDirectory(Dir.Handle dir);
+    void setDirectoryUrl(Url.Handle url);
+    void setMimeTypeFilters(Array<string> filters);
+    void setNameFilter(string filter); // no corresponding getter?
+    void setNameFilters(Array<string> filters);
     void selectFile(string file);
     Array<string> selectedFiles();
-    
+
+    // etc:
     void setSignalMask(SignalMask mask);
 }
 
-Handle create(Widget.Handle parent, SignalHandler handler);
+// ctors
+Handle create(Widget.Handle parent, WindowFlags flags_, SignalHandler handler);
+options CreateOpts {
+    Widget.Handle parent;
+    string caption;
+    string directory;
+    string filter;
+}
+Handle create(SignalHandler handler, CreateOpts opts);
+
+// static methods
+
+// getExistingDirectory ========================================================
+options GetExistingDirectoryOpts {
+    Widget.Handle parent;
+    string caption;
+    string dir;
+    Options options_;
+}
+string getExistingDirectory(GetExistingDirectoryOpts opts);
+
+// getExistingDirectoryUrl =====================================================
+options GetExistingDirectoryUrlOpts {
+    Widget.Handle parent;
+    string caption;
+    Url.Handle dir;
+    Options options_;
+    Array<string> supportedSchemes;
+}
+Url.Owned getExistingDirectoryUrl(GetExistingDirectoryUrlOpts opts);
+
+// getOpenFileContent ==========================================================
+sumtype FileContentResult {
+    NoFileSelected,
+    ContentReady(string filename, Array<byte> fileContent)
+}
+delegate void FileOpenCompletedFunc(FileContentResult result);
+void getOpenFileContent(string nameFilter, FileOpenCompletedFunc completedFunc, Option<Widget.Handle> parent);
+
+// getOpenFileName =============================================================
+options GetOpenFileNameOpts {
+    Widget.Handle parent;
+    string caption;
+    string dir;
+    string filter;
+    string selectedFilterInput;
+    Options options_;
+}
+struct GetOpenFileNameResult {
+    string filename;
+    string selectedFilterOutput;
+}
+GetOpenFileNameResult getOpenFileName(GetOpenFileNameOpts opts);
+
+// getOpenFileNames ============================================================
+options GetOpenFileNamesOpts {
+    Widget.Handle parent;
+    string caption;
+    string dir;
+    string filter;
+    string selectedFilterInput;
+    Options options_;
+}
+struct GetOpenFileNamesResult {
+    Array<string> filenames;
+    string selectedFilterOutput;
+}
+GetOpenFileNamesResult getOpenFileNames(GetOpenFileNamesOpts opts);
+
+// getOpenFileUrl ==============================================================
+options GetOpenFileUrlOpts {
+    Widget.Handle parent;
+    string caption;
+    Url.Handle dir;
+    string filter;
+    string selectedFilterInput;
+    Options options_;
+    Array<string> supportedSchemes;
+}
+struct GetOpenFileUrlResult {
+    Url.Owned url;
+    string selectedFilterOutput;
+}
+GetOpenFileUrlResult getOpenFileUrl(GetOpenFileUrlOpts opts);
+
+// getOpenFileUrls ==============================================================
+options GetOpenFileUrlsOpts {
+    Widget.Handle parent;
+    string caption;
+    Url.Handle dir;
+    string filter;
+    string selectedFilterInput;
+    Options options_;
+    Array<string> supportedSchemes;
+}
+struct GetOpenFileUrlsResult {
+    Array<Url.Owned> urls;
+    string selectedFilterOutput;
+}
+GetOpenFileUrlsResult getOpenFileUrls(GetOpenFileUrlsOpts opts);
+
+// getSaveFileName ==============================================================
+options GetSaveFileNameOpts {
+    Widget.Handle parent;
+    string caption;
+    string dir;
+    string filter;
+    string selectedFilterInput;
+    Options options_;
+}
+struct GetSaveFileNameResult {
+    string filename;
+    string selectedFilterOutput;
+}
+GetSaveFileNameResult getSaveFileName(GetSaveFileNameOpts opts);
+
+// getSaveFileUrl ===============================================================
+options GetSaveFileUrlOpts {
+    Widget.Handle parent;
+    string caption;
+    Url.Handle dir;
+    string filter;
+    string selectedFilterInput;
+    Options options_;
+    Array<string> supportedSchemes;
+}
+struct GetSaveFileUrlResult {
+    Url.Owned url;
+    string selectedFilterOutput;
+}
+GetSaveFileUrlResult getSaveFileUrl(GetSaveFileUrlOpts opts);
+
+// saveFileContent ==============================================================
+void saveFileContent(Array<byte> fileContent, string fileNameHint, Option<Widget.Handle> parent);

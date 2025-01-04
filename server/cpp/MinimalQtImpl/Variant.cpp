@@ -8,6 +8,7 @@
 #include "DateTimeInternal.h"
 #include "ColorInternal.h"
 #include "IconInternal.h"
+#include "UrlInternal.h"
 #include "util/convert.h"
 
 #define WRAPPER (_this) // RefCountedWrapper<QVariant>*
@@ -125,5 +126,9 @@ namespace Variant
     OwnedRef createAlign(Alignment align) {
         const auto qAlign = static_cast<Qt::Alignment>(align);
         return new __Owned(QVariant(qAlign));
+    }
+
+    OwnedRef create(Url::HandleRef url) {
+        return new __Owned(QURL_VALUE(url));
     }
 }

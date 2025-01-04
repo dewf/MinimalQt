@@ -1,0 +1,10 @@
+module Url;
+
+@nodispose
+opaque Handle {
+    string toAbsoluteInternal();
+}
+
+opaque Owned extends Handle;
+
+Owned createFromAbsolute(string absoluteUrl);

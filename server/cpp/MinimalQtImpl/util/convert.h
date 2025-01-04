@@ -12,7 +12,7 @@ using namespace Enums;
 #define STRUCT_CAST(b,a) *((b*)&a)
 
 template <typename T, typename U>
-std::vector<U> fromQList(const QList<T>& source, const std::function<U(T)>& func) {
+std::vector<U> fromQList(const QList<T>& source, auto func) { // const std::function<U(T)>&
     std::vector<U> result;
     for (auto &elem : source) {
         result.push_back(func(elem));
@@ -21,7 +21,7 @@ std::vector<U> fromQList(const QList<T>& source, const std::function<U(T)>& func
 }
 
 template <typename T, typename U>
-QList<U> toQList(const std::vector<T>& source, const std::function<U(T)>& func) {
+QList<U> toQList(const std::vector<T>& source, auto func) { // const std::function<U(T)>&
     QList<U> result;
     for (auto &elem : source) {
         result.append(func(elem));
@@ -31,20 +31,10 @@ QList<U> toQList(const std::vector<T>& source, const std::function<U(T)>& func) 
 
 inline std::vector<std::string> toVectorStrings(const QStringList& qStrings) {
     return fromQList<QString,std::string>(qStrings, [](const QString& qStr) { return qStr.toStdString(); });
-    // std::vector<std::string> ret;
-    // for (auto & qStr : qStrings) {
-    //     ret.push_back(qStr.toStdString());
-    // }
-    // return ret;
 }
 
 inline QStringList toQStringList(const std::vector<std::string>& strings) {
     return toQList<std::string,QString>(strings, [](const std::string& str) { return QString::fromStdString(str); });
-    // QStringList ret;
-    // for (auto & str : strings) {
-    //     ret.append(QString::fromStdString(str));
-    // }
-    // return ret;
 }
 
 inline QSize toQSize(const Size& sz) {

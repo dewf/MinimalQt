@@ -1,6 +1,7 @@
 module MimeData;
 
 import Variant;
+import Url;
 
 // we're ignoring the QObject inheritance for now,
 // it needlessly complicates our API (particularly in subclassed Widget events),
@@ -27,9 +28,9 @@ opaque Handle {
     void setHtml(string html);
     void setImageData(Variant.Handle image);
     void setText(string text);
-    void setUrls(Array<string> urls);
+    void setUrls(Array<Url.Handle> urls);
     string text();
-    Array<string> urls();
+    Array<Url.Owned> urls();
 }
 
 Handle create();

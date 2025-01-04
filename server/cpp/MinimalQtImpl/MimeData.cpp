@@ -3,6 +3,7 @@
 #include <QUrl>
 
 #include "MimeDataInternal.h"
+#include "UrlInternal.h"
 #include "VariantInternal.h"
 
 #include "util/convert.h"
@@ -95,24 +96,17 @@ namespace MimeData
         return THIS->setText(QString::fromStdString(text));
     }
 
-    void Handle_setUrls(HandleRef _this, const std::vector<std::string>& urls) {
-        QList<QUrl> qUrls;
-        for (auto & str : urls) {
-            qUrls.append(QString::fromStdString(str));
-        }
-        THIS->setUrls(qUrls);
+    void Handle_setUrls(HandleRef _this, const std::vector<Url::HandleRef>& urls) {
+        const auto urlList = toQList<Url::HandleRef,QUrl>(urls, [](auto url) { return QURL_VALUE(url); });
+        THIS->setUrls(urlList);
     }
 
     std::string Handle_text(HandleRef _this) {
         return THIS->text().toStdString();
     }
 
-    std::vector<std::string> Handle_urls(HandleRef _this) {
-        std::vector<std::string> ret;
-        for (auto & url : THIS->urls()) {
-            ret.push_back(url.toString().toStdString());
-        }
-        return ret;
+    std::vector<Url::OwnedRef> Handle_urls(HandleRef _this) {
+        return fromQList<QUrl,Url::OwnedRef>(THIS->urls(), [](auto url) { return URL_HEAP_NEW(url); });
     }
 
     void Handle_dispose(HandleRef _this) {

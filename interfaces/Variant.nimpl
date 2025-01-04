@@ -5,6 +5,7 @@ import Common;
 import Enums;
 import Color;
 import DateTime;
+import Url;
 
 exception VariantConversionFailure; // no message for now, we need to figure out how to integrate with std::exception and C# Exception cleanly
 
@@ -44,3 +45,4 @@ Owned create(Size size);
 Owned create(Icon.Handle icon);
 Owned create(Color.Handle color);
 Owned createAlign(Alignment align); // different name because just an int32_t typedef
+Owned create(Url.Handle url);

@@ -5,6 +5,8 @@
 
 #include <QFileDialog>
 
+#include "UrlInternal.h"
+
 namespace FileDialog {
     class SignalWrapper : public Dialog::SignalWrapper {
         Q_OBJECT
@@ -45,13 +47,13 @@ namespace FileDialog {
             handler->currentChanged(path.toStdString());
         }
         void onCurrentUrlChanged(const QUrl &url) const {
-            handler->currentUrlChanged(url.toString().toStdString());
+            handler->currentUrlChanged((Url::HandleRef)&url);
         }
         void onDirectoryEntered(const QString &directory) const {
             handler->directoryEntered(directory.toStdString());
         }
         void onDirectoryUrlEntered(const QUrl &directory) const {
-            handler->directoryUrlEntered(directory.toString().toStdString());
+            handler->directoryUrlEntered((Url::HandleRef)&directory);
         }
         void onFileSelected(const QString &file) const {
             handler->fileSelected(file.toStdString());
@@ -67,12 +69,12 @@ namespace FileDialog {
             handler->filterSelected(filter.toStdString());
         }
         void onUrlSelected(const QUrl &url) const {
-            handler->urlSelected(url.toString().toStdString());
+            handler->urlSelected((Url::HandleRef)&url);
         }
         void onUrlsSelected(const QList<QUrl> &urls) const {
-            std::vector<std::string> urls2;
+            std::vector<Url::HandleRef> urls2;
             for (auto &url: urls) {
-                urls2.push_back(url.toString().toStdString());
+                urls2.push_back((Url::HandleRef)&url);
             }
             handler->urlsSelected(urls2);
         }

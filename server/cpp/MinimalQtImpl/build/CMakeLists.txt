@@ -116,6 +116,11 @@ add_library(MinimalQtImpl STATIC
     ../Dialog.cpp
     ../DialogInternal.h
 
+    ../generated/Dir.h
+    ../generated/Dir_wrappers.cpp
+    ../Dir.cpp
+    ../DirInternal.h
+
     ../generated/DockWidget.h
     ../generated/DockWidget_wrappers.cpp
     ../DockWidget.cpp
@@ -364,6 +369,11 @@ add_library(MinimalQtImpl STATIC
     ../generated/TreeView_wrappers.cpp
     ../TreeView.cpp
     ../TreeViewInternal.h
+
+    ../generated/Url.h
+    ../generated/Url_wrappers.cpp
+    ../Url.cpp
+    ../UrlInternal.h
 
     ../generated/Variant.h
     ../generated/Variant_wrappers.cpp
