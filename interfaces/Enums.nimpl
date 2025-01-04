@@ -466,6 +466,13 @@ flags DockWidgetAreas {
     NoDockWidgetArea = 0
 }
 
+enum Corner {
+    TopLeftCorner = 0x00000,
+    TopRightCorner = 0x00001,
+    BottomLeftCorner = 0x00002,
+    BottomRightCorner = 0x00003
+}
+
 enum Key {
     // Unicode Basic Latin block (0x00-0x7f)
     Key_Space = 0x20,

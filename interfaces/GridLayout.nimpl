@@ -14,26 +14,52 @@ interface SignalHandler extends Layout.SignalHandler {
     // none of our own
 }
 
-
 opaque Handle extends Layout.Handle {
+    static {
+        struct ItemPositionResult {
+            int row;
+            int column;
+            int rowSpan;
+            int columnSpan;
+        }
+    }
+
+    // properties:
+    int horizontalSpacing();
     void setHorizontalSpacing(int value);
+
+    int verticalSpacing();
     void setVerticalSpacing(int value);
 
-    void addWidget(Widget.Handle widget, int row, int col);
-    void addWidget(Widget.Handle widget, int row, int col, Alignment align);
-    void addWidget(Widget.Handle widget, int row, int col, int rowSpan, int colSpan);
-    void addWidget(Widget.Handle widget, int row, int col, int rowSpan, int colSpan, Alignment align);
-    void addLayout(Layout.Handle layout, int row, int col);
-    void addLayout(Layout.Handle layout, int row, int col, Alignment align);
-    void addLayout(Layout.Handle layout, int row, int col, int rowSpan, int colSpan);
-    void addLayout(Layout.Handle layout, int row, int col, int rowSpan, int colSpan, Alignment align);
+    // methods:
+    // void addItem(QLayoutItem *item, int row, int column, int rowSpan = 1, int columnSpan = 1, Qt::Alignment alignment = Qt::Alignment());
+    // TODO: need to figure out layout items
+    
+    void addLayout(Layout.Handle layout, int row, int column, Option<Alignment> alignment);
+    void addLayout(Layout.Handle layout, int row, int column, int rowSpan, int columnSpan, Option<Alignment> alignment);
+    void addWidget(Widget.Handle widget, int row, int column, Option<Alignment> alignment);
+    void addWidget(Widget.Handle widget, int fromRow, int fromColumn, int rowSpan, int columnSpan, Option<Alignment> alignment);
+    Rect cellRect(int row, int column);
+    int columnCount();
+    int columnMinimumWidth(int column);
+    int columnStretch(int column);
+    ItemPositionResult getItemPosition(int index);
 
-    void setRowMinimumHeight(int row, int minHeight);
-    void setRowStretch(int row, int stretch);
-    void setColumnMinimumWidth(int column, int minWidth);
+    // QLayoutItem * itemAtPosition(int row, int column);
+    // TODO: need to figure out layout items, because of multiple inheritance issues
+
+    Corner originCorner();
+    int rowCount();
+    int rowMinimumHeight(int row);
+    int rowStretch(int row);
+    void setColumnMinimumWidth(int column, int minSize);
     void setColumnStretch(int column, int stretch);
+    void setOriginCorner(Corner corner);
+    void setRowMinimumHeight(int row, int minSize);
+    void setRowStretch(int row, int stretch);
 
+    // etc:
     void setSignalMask(SignalMask mask);
 }
 
-Handle create(SignalHandler handler);
+Handle create(SignalHandler handler, Option<Widget.Handle> parent);

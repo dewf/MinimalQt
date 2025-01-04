@@ -148,7 +148,7 @@ opaque Handle {
     string styleName();
     StyleStrategy styleStrategy();
     void swap(Handle other);
-    string toString();
+    string toString2(); // +2 to avoid conflict with built-in .NET (we'd need to add 'new' or 'override', but the codegen doesn't do that presently)
     bool underline();
     void unsetFeature(Tag.Handle tag);
     void unsetVariableAxis(Tag.Handle tag);

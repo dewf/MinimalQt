@@ -243,7 +243,7 @@ namespace Font
         THIS->swap(QFONT_VALUE(other));
     }
 
-    std::string Handle_toString(HandleRef _this) {
+    std::string Handle_toString2(HandleRef _this) {
         return THIS->toString().toStdString();
     }
 

@@ -12,6 +12,14 @@ using namespace Enums;
 #define STRUCT_CAST(b,a) *((b*)&a)
 
 template <typename T, typename U>
+std::optional<U> optionalMap(const std::optional<T>& input, auto mapFunc) {
+    if (input.has_value()) {
+        return mapFunc(input.value());
+    }
+    return std::optional<U>();
+}
+
+template <typename T, typename U>
 std::vector<U> fromQList(const QList<T>& source, auto func) { // const std::function<U(T)>&
     std::vector<U> result;
     for (auto &elem : source) {
