@@ -197,7 +197,7 @@ opaque Owned extends Handle;
 Owned create();
 Owned create(Pixmap.Handle pixmap);
 Owned create(string filename);
-// Owned create(Handle other); // disable for now, do to wrapper generation conflicts (Variant ctor is conflicting with this)
+Owned create(Handle other);
 // QIcon(QIconEngine *engine)
 
 
