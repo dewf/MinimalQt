@@ -12,6 +12,4 @@
 #define ICON_HEAP_NEW(...) (reinterpret_cast<Icon::OwnedRef>(new QIcon(__VA_ARGS__)))
 
 namespace Icon {
-    // no inner structure, we are just casting QIcon* directly
-    QIcon fromDeferred(const std::shared_ptr<Deferred::Base>& deferred);
 }

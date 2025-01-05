@@ -57,8 +57,8 @@ namespace AbstractButton
     Icon::OwnedRef Handle_getIcon(HandleRef _this) {
         return ICON_HEAP_NEW(ABSBUTTON_THIS->icon());
     }
-    void Handle_setIcon(HandleRef _this, const std::shared_ptr<Icon::Deferred::Base>& icon) {
-        ABSBUTTON_THIS->setIcon(Icon::fromDeferred(icon));
+    void Handle_setIcon(HandleRef _this, Icon::HandleRef icon) {
+        ABSBUTTON_THIS->setIcon(QICON_VALUE(icon));
     }
     Size Handle_iconSize(HandleRef _this) {
         return toSize(ABSBUTTON_THIS->iconSize());

@@ -1,6 +1,5 @@
 #include "generated/Painter.h"
-
-#include <QPainter>
+#include "PainterInternal.h"
 
 #include "BrushInternal.h"
 #include "util/convert.h"
@@ -10,7 +9,8 @@
 #include "FontInternal.h"
 #include "PixmapInternal.h"
 
-#define THIS ((QPainter*)_this)
+// NOTE! if this ever changes, we need to change in other files (eg Icon.cpp) as well!
+#define THIS (AS_QPAINTER_PTR(_this))
 
 namespace Painter
 {

@@ -44,7 +44,7 @@ opaque Handle extends Widget.Handle {
     void setDown(bool state);
 
     Icon.Owned getIcon();               // 'get' to avoid conflict with Icon namespace
-    void setIcon(Icon.Deferred icon);
+    void setIcon(Icon.Handle icon);
 
     Size iconSize();
     void setIconSize(Size size);

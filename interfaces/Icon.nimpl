@@ -1,5 +1,9 @@
 module Icon;
+
 import Pixmap;
+import Common;
+import Painter;
+import Enums;
 
 enum Mode { Normal, Disabled, Active, Selected }
 enum State { On, Off }
@@ -162,19 +166,53 @@ enum ThemeIcon {
 }
 
 @nodispose
-opaque Handle;
+opaque Handle {
+    static {
+        options ModeStateOpts {
+            Mode mode;
+            State state;
+        }
+    }
+    Size actualSize(Size size, ModeStateOpts opts);
+    void addFile(string fileName, Option<Size> size, ModeStateOpts opts);
+    void addPixmap(Pixmap.Handle pixmap, ModeStateOpts opts);
+    Array<Size> availableSizes(ModeStateOpts opts);
+    int64 cacheKey();
+    bool isMask();
+    bool isNull();
+    string name();
+    void paint(Painter.Handle painter, Rect rect, Option<Alignment> alignment, ModeStateOpts opts);
+    void paint(Painter.Handle painter, int x, int y, int w, int h, Option<Alignment> alignment, ModeStateOpts opts);
+    Pixmap.Owned pixmap(Size size, ModeStateOpts opts);
+    Pixmap.Owned pixmap(int extent, ModeStateOpts opts);
+    Pixmap.Owned pixmap(Size size, double devicePixelRatio, ModeStateOpts opts);
+    Pixmap.Owned pixmap(int w, int h, ModeStateOpts opts);
+    void setIsMask(bool isMask);
+    void swap(Handle other);
+}
 
 opaque Owned extends Handle;
 
-Owned create();                     // why?
-Owned create(ThemeIcon themeIcon);
-Owned create(string filename);
+// constructors:
+Owned create();
 Owned create(Pixmap.Handle pixmap);
+Owned create(string filename);
+// Owned create(Handle other); // disable for now, do to wrapper generation conflicts (Variant ctor is conflicting with this)
+// QIcon(QIconEngine *engine)
 
-sumtype Deferred {
-    Empty,
-    FromHandle(Handle handle),
-    FromThemeIcon(ThemeIcon themeIcon),
-    FromFilename(string filename),
-    FromPixmap(Pixmap.Handle pixmap_) // TODO: deferred
-}
+
+// static methods:
+Array<string> fallbackSearchPaths();
+string fallbackThemeName();
+Owned fromTheme(string name);
+Owned fromTheme(ThemeIcon icon);
+Owned fromTheme(ThemeIcon icon, Handle fallback);
+Owned fromTheme(string name, Handle fallback);
+bool hasThemeIcon(string name);
+bool hasThemeIcon(ThemeIcon icon);
+void setFallbackSearchPaths(Array<string> paths);
+void setFallbackThemeName(string name);
+void setThemeName(string name);
+void setThemeSearchPaths(Array<string> paths);
+string themeName();
+Array<string> themeSearchPaths();

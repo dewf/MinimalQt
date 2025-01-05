@@ -248,6 +248,7 @@ add_library(MinimalQtImpl STATIC
     ../generated/Painter.h
     ../generated/Painter_wrappers.cpp
     ../Painter.cpp
+    ../PainterInternal.h
 
     ../generated/PaintResources.h
     ../generated/PaintResources_wrappers.cpp
