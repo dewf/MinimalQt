@@ -17,13 +17,25 @@ interface SignalHandler extends Widget.SignalHandler {
 }
 
 opaque Handle extends Widget.Handle {
+    // properties:
+    Alignment getAlignment();
     void setAlignment(Alignment align);
+
+    bool isCheckable();
     void setCheckable(bool state);
+
+    bool isChecked();
     void setChecked(bool state);
+
+    bool isFlat();
     void setFlat(bool state);
+
+    string title();
     void setTitle(string title);
 
+    // etc:
     void setSignalMask(SignalMask mask);
 }
 
-Handle create(SignalHandler handler);
+Handle create(SignalHandler handler, Option<Widget.Handle> parent);
+Handle create(string title, SignalHandler handler, Option<Widget.Handle> parent);

@@ -1,11 +1,12 @@
 #pragma once
 
 #include <QRect>
-#include <QKeySequence>
-#include <QStringList>
+#include <QPoint>
+#include <QList>
 
 #include "../generated/Common.h"
 using namespace Common;
+
 #include "../generated/Enums.h"
 using namespace Enums;
 

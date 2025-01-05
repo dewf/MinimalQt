@@ -48,4 +48,13 @@ namespace Widget {
             handler->windowTitleChanged(title.toStdString());
         }
     };
+
+    inline QWidget *fromOptionalHandle(const std::optional<HandleRef>& handle) {
+        QWidget *qParent = nullptr;
+        if (handle.has_value()) {
+            const auto parentWrapper = reinterpret_cast<SignalWrapper*>(handle.value());
+            qParent = parentWrapper->getActual();
+        }
+        return qParent;
+    }
 }

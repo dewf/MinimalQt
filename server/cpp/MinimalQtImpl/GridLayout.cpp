@@ -117,11 +117,7 @@ namespace GridLayout {
     }
 
     HandleRef create(const std::shared_ptr<SignalHandler>& handler, const std::optional<Widget::HandleRef>& parent) {
-        QWidget *qParent = nullptr;
-        if (parent.has_value()) {
-            const auto parentWrapper = reinterpret_cast<Widget::SignalWrapper*>(parent.value());
-            qParent = parentWrapper->getActual();
-        }
+        const auto qParent = Widget::fromOptionalHandle(parent);
         const auto wrapper = new SignalWrapper(new QGridLayout(qParent), handler);
         return reinterpret_cast<HandleRef>(wrapper);
     }
