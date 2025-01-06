@@ -3,6 +3,7 @@ module ItemSelectionModel;
 import Object;
 import ModelIndex;
 import AbstractItemModel;
+import ItemSelectionCommon;
 import ItemSelection;
 
 namedbits SignalMask extends Object.SignalMask {
@@ -19,34 +20,6 @@ interface SignalHandler extends Object.SignalHandler {
     void currentRowChanged(ModelIndex.Handle current, ModelIndex.Handle previous);
     void modelChanged(AbstractItemModel.Handle model);
     void selectionChanged(ItemSelection.Handle selected, ItemSelection.Handle deselected);
-}
-
-enum SelectionFlag {
-    NoUpdate       = 0x0000,
-    Clear          = 0x0001,
-    Select         = 0x0002,
-    Deselect       = 0x0004,
-    Toggle         = 0x0008,
-    Current        = 0x0010,
-    Rows           = 0x0020,
-    Columns        = 0x0040,
-    SelectCurrent  = Select | Current,
-    ToggleCurrent  = Toggle | Current,
-    ClearAndSelect = Clear | Select
-}
-
-flags SelectionFlags {
-    NoUpdate       = 0x0000,
-    Clear          = 0x0001,
-    Select         = 0x0002,
-    Deselect       = 0x0004,
-    Toggle         = 0x0008,
-    Current        = 0x0010,
-    Rows           = 0x0020,
-    Columns        = 0x0040,
-    SelectCurrent  = Select | Current,
-    ToggleCurrent  = Toggle | Current,
-    ClearAndSelect = Clear | Select
 }
 
 opaque Handle extends Object.Handle {

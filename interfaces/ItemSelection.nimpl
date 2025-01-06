@@ -1,12 +1,17 @@
 module ItemSelection;
 
 import ModelIndex;
+import ItemSelectionCommon;
 
 @nodispose
-opaque Handle { // TODO: extends List?
+opaque Handle {
     bool contains(ModelIndex.Handle index);
+    Array<ModelIndex.Owned> indexes();
+    void merge(Handle other, SelectionFlags command);
     void select(ModelIndex.Handle topLeft, ModelIndex.Handle bottomRight);
-    // and some more ...
 }
 
 opaque Owned extends Handle;
+
+Owned create();
+Owned create(ModelIndex.Handle topLeft, ModelIndex.Handle bottomRight);

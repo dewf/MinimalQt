@@ -175,6 +175,10 @@ add_library(MinimalQtImpl STATIC
     ../ItemSelection.cpp
     ../ItemSelectionInternal.h
 
+    ../generated/ItemSelectionCommon.h
+    ../generated/ItemSelectionCommon_wrappers.cpp
+    ../ItemSelectionCommon.cpp
+
     ../generated/ItemSelectionModel.h
     ../generated/ItemSelectionModel_wrappers.cpp
     ../ItemSelectionModel.cpp
