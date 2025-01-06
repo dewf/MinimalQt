@@ -289,7 +289,7 @@ namespace Image
         THIS->setPixelColor(toQPoint(position), color->qColor);
     }
 
-    void Handle_setPixelCOlor(HandleRef _this, int32_t x, int32_t y, Color::HandleRef color) {
+    void Handle_setPixelColor(HandleRef _this, int32_t x, int32_t y, Color::HandleRef color) {
         THIS->setPixelColor(x, y, color->qColor);
     }
 

@@ -159,7 +159,7 @@ opaque Handle extends PaintDevice.Handle {
     void setPixel(Point position, uint32 index_or_rgb);
     void setPixel(int x, int y, uint32 index_or_rgb);
     void setPixelColor(Point position, Color.Handle color);
-    void setPixelCOlor(int x, int y, Color.Handle color);
+    void setPixelColor(int x, int y, Color.Handle color);
     void setText(string key, string text);
     Size size();
     size_t sizeInBytes();
