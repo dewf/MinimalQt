@@ -35,6 +35,6 @@ namespace Pixmap
 
     OwnedRef fromImage(Image::HandleRef image, const std::optional<ImageConversionFlags>& imageConversionFlags) {
         const auto qFlags = static_cast<Qt::ImageConversionFlags>(imageConversionFlags.value_or(AutoColor));
-        return new __Owned { QPixmap::fromImage(image->qImage, qFlags) };
+        return new __Owned { QPixmap::fromImage(QIMAGE_VALUE(image), qFlags) };
     }
 }

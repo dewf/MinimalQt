@@ -1,0 +1,10 @@
+module Transform;
+
+@nodispose
+opaque Handle {
+    double m11();
+}
+
+opaque Owned extends Handle;
+
+// TODO: ctors etc

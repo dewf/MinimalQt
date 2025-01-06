@@ -2,6 +2,10 @@ module Image;
 import PaintDevice;
 import Common;
 import Enums;
+import Color;
+import Transform;
+
+enum InvertMode { InvertRgb, InvertRgba }
 
 enum Format {
     Invalid,
@@ -51,11 +55,135 @@ options ScaledOptions {
 
 @nodispose
 opaque Handle extends PaintDevice.Handle {
-    Owned scaled(int width, int height, ScaledOptions opts);
+    bool allGray();
+
+    // void applyColorTransform(QColorTransform &transform);
+    // void applyColorTransform(QColorTransform &transform, QImage::Format toFormat, Qt::ImageConversionFlags flags = Qt::AutoColor);
+
+    int bitPlaneCount();
+    Buffer<byte> bits();
+    size_t bytesPerLine();
+    int64 cacheKey();
+    Rgb color(int i);
+    int colorCount();
+
+    // QColorSpace colorSpace();
+
+    Array<Rgb> colorTable();
+    
+    // QImage colorTransformed(QColorTransform &transform) &
+    // QImage colorTransformed(QColorTransform &transform, QImage::Format toFormat, Qt::ImageConversionFlags flags = Qt::AutoColor) &
+    // QImage colorTransformed(QColorTransform &transform) &&
+    // QImage colorTransformed(QColorTransform &transform, QImage::Format format, Qt::ImageConversionFlags flags = Qt::AutoColor) &&
+
+    // do we need a "ConstBuffer" or otherwise unchangeable type? C# has immutable arrays, I think ...
+    // const uchar *constBits();
+    // const uchar *constScanLine(int i);
+
+    void convertTo(Format format, Option<ImageConversionFlags> flags_);
+
+    // void convertToColorSpace(QColorSpace &colorSpace);
+    // void convertToColorSpace(QColorSpace &colorSpace, QImage::Format format, Qt::ImageConversionFlags flags = Qt::AutoColor);
+
+    Owned convertToFormat(Format format, Option<ImageConversionFlags> flags_);
+    Owned convertToFormat(Format format, Array<Rgb> colorTable, Option<ImageConversionFlags> flags_);
+    Owned convertedTo(Format format, Option<ImageConversionFlags> flags_);
+
+    // QImage convertedToColorSpace(const QColorSpace &colorSpace) const
+    // QImage convertedToColorSpace(const QColorSpace &colorSpace, QImage::Format format, Qt::ImageConversionFlags flags = Qt::AutoColor) &&
+    // QImage convertedToColorSpace(const QColorSpace &colorSpace, QImage::Format format, Qt::ImageConversionFlags flags = Qt::AutoColor) const &
+
+    Owned copy(Option<Rect> rectangle);
+    Owned copy(int x, int y, int width, int height);
+    Owned createAlphaMask(Option<ImageConversionFlags> flags_);
+    Owned createHeuristicMask(Option<bool> clipTight);
+    Owned createMaskFromColor(Rgb color, Option<MaskMode> mode);
+    int depth();
+    SizeF deviceIndependentSize();
+    double devicePixelRatio();
+    int dotsPerMeterX();
+    int dotsPerMeterY();
+    void fill(uint32 pixelValue);
+    void fill(GlobalColor color);
+    void fill(Color.Handle color);
+    Format format();
+    bool hasAlphaChannel();
+    int height();
+    void invertPixels(Option<InvertMode> mode);
+    bool isGrayscale();
+    bool isNull();
+    bool load(string filename, Option<string> format);
+
+    // bool load(QIODevice *device, const char *format)
+
+    bool loadFromData(Buffer<byte> data, Option<string> format);
+    void mirror(Option<bool> horizontal, Option<bool> vertical);
+    Owned mirrored(Option<bool> horizontal, Option<bool> vertical);
+    Point offset();
+    Rgb pixel(Point position);
+    Rgb pixel(int x, int y);
+    Color.Owned pixelColor(Point position);
+    Color.Owned pixelColor(int x, int y);
+
+    // QPixelFormat pixelFormat() const
+
+    int pixelIndex(Point position);
+    int pixelIndex(int x, int y);
+    Rect rect();
+    bool reinterpretAsFormat(Format format);
+    void rgbSwap();
+    Owned rgbSwapped();
+    bool save(string fileName, Option<string> format, Option<int> quality);
+
+    // bool save(QIODevice *device, const char *format = nullptr, int quality = -1) const
+
+    Owned scaled(Size size, Option<AspectRatioMode> aspectRatioMode, Option<TransformationMode> transformMode);
+    Owned scaled(int width, int height, Option<AspectRatioMode> aspectRatioMode, Option<TransformationMode> transformMode);
+    Owned scaledToHeight(int height, Option<TransformationMode> mode);
+    Owned scaledToWidth(int width, Option<TransformationMode> mode);
+
+    Buffer<uint32> scanLine32(int i);             // currently Buffers can't use typedefs, so no Rgb
+    Buffer<uint64> scanLine64(int i);
+
+    void setAlphaChannel(Handle alphaChannel);
+    void setColor(int index, Rgb colorValue);
+    void setColorCount(int colorCount);
+
+    // void setColorSpace(const QColorSpace &colorSpace)
+
+    void setColorTable(Array<Rgb> colors);
+    void setDevicePixelRatio(double scaleFactor);
+    void setDotsPerMeterX(int x);
+    void setDotsPerMeterY(int y);
+    void setOffset(Point offset);
+    void setPixel(Point position, uint32 index_or_rgb);
+    void setPixel(int x, int y, uint32 index_or_rgb);
+    void setPixelColor(Point position, Color.Handle color);
+    void setPixelCOlor(int x, int y, Color.Handle color);
+    void setText(string key, string text);
+    Size size();
+    size_t sizeInBytes();
+    void swap(Handle other);
+    string text(Option<string> key);
+    Array<string> textKeys();
+
+    // CGImageRef toCGImage() const
+    // HBITMAP toHBITMAP() const
+    // HICON toHICON(const QImage &mask = {}) const
+    
+    Owned transformed(Transform.Handle matrix, Option<TransformationMode> mode);
+    bool valid(Point pos);
+    bool valid(int x, int y);
+    int width();
 }
 
 opaque Owned extends Handle;
 
-Owned create(int width, int height, Format format);
+// ctors:
+Owned create();
+Owned create(Array<byte> xpm);
+Owned create(Size size, Format format);
 Owned create(string filename, Option<string> format);
+Owned create(int width, int height, Format format);
 Owned create(Buffer<byte> data, int width, int height, Format format, Option<size_t> bytesPerLine);
+Owned create(Handle other);

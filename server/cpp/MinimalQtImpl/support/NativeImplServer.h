@@ -127,7 +127,7 @@ protected:
 		block = nullptr;
 	}
 public:
-	ServerBuffer(std::vector<int> dims)
+	explicit ServerBuffer(std::vector<int> dims)
 		: ServerResource("buffer")
 	{
 		elementSize = sizeof(T);
@@ -136,6 +136,14 @@ public:
 			totalCount *= *i;
 		}
 		totalSize = totalCount * elementSize;
+		block = malloc(totalSize);
+	}
+	ServerBuffer(void *data, size_t count)
+		: ServerResource("buffer")
+	{
+		elementSize = sizeof(T);
+		totalCount = count;
+		totalSize = count * elementSize;
 		block = malloc(totalSize);
 	}
 	T* getSpan(size_t* length) override {

@@ -366,6 +366,11 @@ add_library(MinimalQtImpl STATIC
     ../ToolBar.cpp
     ../ToolBarInternal.h
 
+    ../generated/Transform.h
+    ../generated/Transform_wrappers.cpp
+    ../Transform.cpp
+    ../TransformInternal.h
+
     ../generated/TreeView.h
     ../generated/TreeView_wrappers.cpp
     ../TreeView.cpp

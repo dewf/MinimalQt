@@ -355,6 +355,11 @@ flags ImageConversionFlags {
     NoFormatConversion      = 0x00000200
 }
 
+enum MaskMode {
+    MaskInColor,
+    MaskOutColor
+}
+
 enum AspectRatioMode {
     IgnoreAspectRatio,
     KeepAspectRatio,

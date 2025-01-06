@@ -15,6 +15,11 @@ struct Size {
     int height;
 }
 
+struct SizeF {
+    double width;
+    double height;
+}
+
 struct Rect {
     int x;
     int y;
@@ -28,3 +33,5 @@ struct RectF {
     double width;
     double height;
 }
+
+typedef uint32 Rgb;

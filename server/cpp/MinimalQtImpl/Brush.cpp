@@ -20,7 +20,7 @@ namespace Brush
     }
 
     OwnedRef create(Image::HandleRef image) {
-        return new __Owned { image->qImage };
+        return new __Owned { QIMAGE_VALUE(image) };
     }
 
     OwnedRef create(Pixmap::HandleRef pixmap) {
