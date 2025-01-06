@@ -50,7 +50,7 @@ opaque Handle extends Widget.Handle {
     void setIconSize(Size size);
 
     KeySequence.Owned shortcut();
-    void setShortcut(KeySequence.Deferred seq);
+    void setShortcut(KeySequence.Handle seq);
 
     string text();
     void setText(string text);

@@ -2,6 +2,17 @@ module KeySequence;
 
 import Enums;
 
+enum SequenceFormat {
+    NativeText,
+    PortableText
+}
+
+enum SequenceMatch {
+    NoMatch,
+    PartialMatch,
+    ExactMatch
+}
+
 enum StandardKey {
     UnknownKey,
     HelpContents,
@@ -77,17 +88,22 @@ enum StandardKey {
 }
 
 @nodispose
-opaque Handle;
+opaque Handle {
+    int count();
+    bool isEmpty();
+    SequenceMatch matches(Handle seq);
+    void swap(Handle other);
+    string toString2(Option<SequenceFormat> format);
+}
 
 opaque Owned extends Handle;
 
-Owned create(string s);
+Owned create();
 Owned create(StandardKey key);
+Owned create(string key, Option<SequenceFormat> format);
+
+// QKeySequence(QKeyCombination k1, QKeyCombination k2 = QKeyCombination::fromCombined(0), QKeyCombination k3 = QKeyCombination::fromCombined(0), QKeyCombination k4 = QKeyCombination::fromCombined(0))
 Owned create(Key key, Modifiers modifiers);
 
-sumtype Deferred {
-    FromHandle(Handle handle),
-    FromString(string s),               // eg "Ctrl+P"
-    FromStandard(StandardKey key),
-    FromKey(Key key, Modifiers modifiers)
-}
+//QKeySequence(int k1, int k2 = 0, int k3 = 0, int k4 = 0)
+Owned create(Handle other);

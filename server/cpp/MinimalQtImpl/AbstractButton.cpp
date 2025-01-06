@@ -69,8 +69,8 @@ namespace AbstractButton
     KeySequence::OwnedRef Handle_shortcut(HandleRef _this) {
         return KEYSEQ_HEAP_NEW(ABSBUTTON_THIS->shortcut());
     }
-    void Handle_setShortcut(HandleRef _this, const std::shared_ptr<KeySequence::Deferred::Base>& seq) {
-        ABSBUTTON_THIS->setShortcut(KeySequence::fromDeferred(seq));
+    void Handle_setShortcut(HandleRef _this, KeySequence::HandleRef seq) {
+        ABSBUTTON_THIS->setShortcut(QKEYSEQ_VALUE(seq));
     }
     std::string Handle_text(HandleRef _this) {
         return ABSBUTTON_THIS->text().toStdString();

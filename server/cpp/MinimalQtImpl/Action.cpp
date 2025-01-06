@@ -99,8 +99,8 @@ namespace Action
         return KEYSEQ_HEAP_NEW(ACTION_THIS->shortcut());
     }
 
-    void Handle_setShortcut(HandleRef _this, const std::shared_ptr<KeySequence::Deferred::Base>& shortcut) {
-        ACTION_THIS->setShortcut(fromDeferred(shortcut));
+    void Handle_setShortcut(HandleRef _this, KeySequence::HandleRef shortcut) {
+        ACTION_THIS->setShortcut(QKEYSEQ_VALUE(shortcut));
     }
 
     ShortcutContext Handle_shortcutContext(HandleRef _this) {

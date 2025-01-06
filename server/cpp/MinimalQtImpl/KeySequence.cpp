@@ -1,55 +1,55 @@
 #include "generated/KeySequence.h"
-
 #include "KeySequenceInternal.h"
 
-#define THIS ((QKeySequence*)_this)
+#define THIS (AS_QKEYSEQ_PTR(_this))
 
 namespace KeySequence
 {
-    class FromDeferredMatcher : public Deferred::Matcher {
-    private:
-        QKeySequence &seq;
-    public:
-        explicit FromDeferredMatcher(QKeySequence &seq) : seq(seq) {}
-        void onFromString(const Deferred::FromString *fromString) override {
-            seq = { QString::fromStdString(fromString->s) };
-        }
-        void onFromStandard(const Deferred::FromStandard *fromStandard) override {
-            seq = { (QKeySequence::StandardKey)fromStandard->key };
-        }
-        void onFromKey(const Deferred::FromKey *fromKey) override {
-            // could have also used a QKeyCombination instead of 'key | mods'
-            auto key = static_cast<Qt::Key>(fromKey->key);
-            auto mods = static_cast<Qt::Modifiers>(fromKey->modifiers);
-            seq = { key | mods };
-        }
-        void onFromHandle(const Deferred::FromHandle *value) override {
-            seq = KEYSEQ_VALUE(value->handle);
-        }
-    };
+    int32_t Handle_count(HandleRef _this) {
+        return THIS->count();
+    }
 
-    QKeySequence fromDeferred(const std::shared_ptr<Deferred::Base>& deferred) {
-        QKeySequence seq;
-        FromDeferredMatcher matcher(seq);
-        deferred->match(&matcher);
-        return seq;
+    bool Handle_isEmpty(HandleRef _this) {
+        return THIS->isEmpty();
+    }
+
+    SequenceMatch Handle_matches(HandleRef _this, HandleRef seq) {
+        return static_cast<SequenceMatch>(THIS->matches(QKEYSEQ_VALUE(seq)));
+    }
+
+    void Handle_swap(HandleRef _this, HandleRef other) {
+        THIS->swap(QKEYSEQ_VALUE(other));
+    }
+
+    std::string Handle_toString2(HandleRef _this, const std::optional<SequenceFormat>& format) {
+        const auto qFormat = static_cast<QKeySequence::SequenceFormat>(format.value_or(SequenceFormat::PortableText));
+        return THIS->toString(qFormat).toStdString();
     }
 
     void Owned_dispose(OwnedRef _this) {
         delete THIS;
     }
 
-    OwnedRef create(const std::string& s) {
-        return KEYSEQ_HEAP_NEW(QString::fromStdString(s));
+    OwnedRef create() {
+        return KEYSEQ_HEAP_NEW();
     }
 
     OwnedRef create(StandardKey key) {
         return KEYSEQ_HEAP_NEW(static_cast<QKeySequence::StandardKey>(key));
     }
 
+    OwnedRef create(const std::string& key, const std::optional<SequenceFormat>& format) {
+        const auto qFormat = static_cast<QKeySequence::SequenceFormat>(format.value_or(SequenceFormat::NativeText));
+        return KEYSEQ_HEAP_NEW(QString::fromStdString(key), qFormat);
+    }
+
     OwnedRef create(Key key, Modifiers modifiers) {
         auto key2 = static_cast<Qt::Key>(key);
         auto mods2 = static_cast<Qt::Modifiers>(modifiers);
         return KEYSEQ_HEAP_NEW(key2 | mods2);
+    }
+
+    OwnedRef create(HandleRef other) {
+        return KEYSEQ_HEAP_NEW(QKEYSEQ_VALUE(other));
     }
 }

@@ -75,7 +75,7 @@ opaque Handle extends Object.Handle {
     void setPriority(Priority priority);
 
     KeySequence.Owned shortcut();
-    void setShortcut(KeySequence.Deferred shortcut);
+    void setShortcut(KeySequence.Handle shortcut);
 
     Enums.ShortcutContext shortcutContext();
     void setShortcutContext(Enums.ShortcutContext context);
