@@ -5,6 +5,8 @@ import Widget;
 import Common;
 import Icon;
 import Enums;
+import Action;
+import Menu;
 
 namedbits SignalMask extends Widget.SignalMask {
     CursorPositionChanged,
@@ -27,6 +29,11 @@ interface SignalHandler extends Widget.SignalHandler {
 }
 
 enum EchoMode { Normal, NoEcho, Password, PasswordEchoOnEdit }
+
+enum ActionPosition {
+    LeadingPosition,
+    TrailingPosition
+}
 
 opaque Handle extends Widget.Handle {
     // properties ==================================
@@ -89,6 +96,42 @@ opaque Handle extends Widget.Handle {
     // read-only
 
     // methods =================================
+
+    void addAction(Action.Handle action, ActionPosition position);
+    void addAction(Icon.Handle icon, ActionPosition position);
+    void backspace();
+
+    // QCompleter * completer() const
+
+    Menu.Handle createStandardContextMenu(Menu.SignalHandler handler); // what happens if this is called more than once?
+    void cursorBackward(bool mark, Option<int> steps);
+    void cursorForward(bool mark, Option<int> steps);
+    int cursorPositionAt(Point pos);
+    void cursorWordBackward(bool mark);
+    void cursorWordForward(bool mark);
+    void del();
+    void deselect();
+    void end(bool mark);
+    void home(bool mark);
+    void insert(string newText);
+    int selectionEnd();
+    int selectionLength();
+    int selectionStart();
+
+    // void setCompleter(QCompleter *c)
+    
+    void setSelection(int start, int length);
+    void setTextMargins(Margins margins);
+    void setTextMargins(int left, int top, int right, int bottom);
+
+    // void setValidator(const QValidator *v)
+
+    Margins textMargins();
+
+    // const QValidator * validator() const
+
+    // slots ===================================
+    
     void clear();
     void copy();
     void cut();
@@ -101,4 +144,5 @@ opaque Handle extends Widget.Handle {
     void setSignalMask(SignalMask mask);
 }
 
-Handle create(SignalHandler handler);
+Handle create(SignalHandler handler, Option<Widget.Handle> parent);
+Handle create(SignalHandler handler, string contents, Option<Widget.Handle> parent);

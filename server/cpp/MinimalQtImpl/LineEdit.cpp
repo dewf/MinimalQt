@@ -1,5 +1,9 @@
 #include "generated/LineEdit.h"
+
+#include "ActionInternal.h"
 #include "LineEditInternal.h"
+#include "IconInternal.h"
+#include "MenuInternal.h"
 
 #include "util/convert.h"
 
@@ -136,6 +140,93 @@ namespace LineEdit
         return LINEEDIT_THIS->isUndoAvailable();
     }
 
+    void Handle_addAction(HandleRef _this, Action::HandleRef action, ActionPosition position) {
+        const auto wrapper = reinterpret_cast<Action::SignalWrapper*>(action);
+        LINEEDIT_THIS->addAction(wrapper->getActual(), static_cast<QLineEdit::ActionPosition>(position));
+    }
+
+    void Handle_addAction(HandleRef _this, Icon::HandleRef icon, ActionPosition position) {
+        LINEEDIT_THIS->addAction(QICON_VALUE(icon), static_cast<QLineEdit::ActionPosition>(position));
+    }
+
+    void Handle_backspace(HandleRef _this) {
+        LINEEDIT_THIS->backspace();
+    }
+
+    Menu::HandleRef Handle_createStandardContextMenu(HandleRef _this, const std::shared_ptr<Menu::SignalHandler>& handler) {
+        const auto menu = LINEEDIT_THIS->createStandardContextMenu();
+        const auto wrapper = new Menu::SignalWrapper(menu, handler);
+        return reinterpret_cast<Menu::HandleRef>(wrapper);
+    }
+
+    void Handle_cursorBackward(HandleRef _this, bool mark, const std::optional<int32_t>& steps) {
+        LINEEDIT_THIS->cursorBackward(mark, steps.value_or(1));
+    }
+
+    void Handle_cursorForward(HandleRef _this, bool mark, const std::optional<int32_t>& steps) {
+        LINEEDIT_THIS->cursorForward(mark, steps.value_or(1));
+    }
+
+    int32_t Handle_cursorPositionAt(HandleRef _this, Point pos) {
+        return LINEEDIT_THIS->cursorPositionAt(toQPoint(pos));
+    }
+
+    void Handle_cursorWordBackward(HandleRef _this, bool mark) {
+        LINEEDIT_THIS->cursorWordBackward(mark);
+    }
+
+    void Handle_cursorWordForward(HandleRef _this, bool mark) {
+        LINEEDIT_THIS->cursorWordForward(mark);
+    }
+
+    void Handle_del(HandleRef _this) {
+        LINEEDIT_THIS->del();
+    }
+
+    void Handle_deselect(HandleRef _this) {
+        LINEEDIT_THIS->deselect();
+    }
+
+    void Handle_end(HandleRef _this, bool mark) {
+        LINEEDIT_THIS->end(mark);
+    }
+
+    void Handle_home(HandleRef _this, bool mark) {
+        LINEEDIT_THIS->home(mark);
+    }
+
+    void Handle_insert(HandleRef _this, const std::string& newText) {
+        LINEEDIT_THIS->insert(QString::fromStdString(newText));
+    }
+
+    int32_t Handle_selectionEnd(HandleRef _this) {
+        return LINEEDIT_THIS->selectionEnd();
+    }
+
+    int32_t Handle_selectionLength(HandleRef _this) {
+        return LINEEDIT_THIS->selectionLength();
+    }
+
+    int32_t Handle_selectionStart(HandleRef _this) {
+        return LINEEDIT_THIS->selectionStart();
+    }
+
+    void Handle_setSelection(HandleRef _this, int32_t start, int32_t length) {
+        LINEEDIT_THIS->setSelection(start, length);
+    }
+
+    void Handle_setTextMargins(HandleRef _this, Margins margins) {
+        LINEEDIT_THIS->setTextMargins(toQMargins(margins));
+    }
+
+    void Handle_setTextMargins(HandleRef _this, int32_t left, int32_t top, int32_t right, int32_t bottom) {
+        LINEEDIT_THIS->setTextMargins(left, top, right, bottom);
+    }
+
+    Margins Handle_textMargins(HandleRef _this) {
+        return toMargins(LINEEDIT_THIS->textMargins());
+    }
+
     void Handle_clear(HandleRef _this) {
         LINEEDIT_THIS->clear();
     }
@@ -172,8 +263,15 @@ namespace LineEdit
         delete WRAPPER;
     }
 
-    HandleRef create(const std::shared_ptr<SignalHandler>& handler) {
-        const auto wrapper = new SignalWrapper(new QLineEdit(), handler);
+    HandleRef create(const std::shared_ptr<SignalHandler>& handler, const std::optional<Widget::HandleRef>& parent) {
+        const auto qParent = Widget::fromOptionalHandle(parent);
+        const auto wrapper = new SignalWrapper(new QLineEdit(qParent), handler);
+        return reinterpret_cast<HandleRef>(wrapper);
+    }
+
+    HandleRef create(const std::shared_ptr<SignalHandler>& handler, const std::string& contents, const std::optional<Widget::HandleRef>& parent) {
+        const auto qParent = Widget::fromOptionalHandle(parent);
+        const auto wrapper = new SignalWrapper(new QLineEdit(QString::fromStdString(contents), qParent), handler);
         return reinterpret_cast<HandleRef>(wrapper);
     }
 }
