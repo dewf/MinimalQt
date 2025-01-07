@@ -21,6 +21,18 @@ std::optional<U> optionalMap(const std::optional<T>& input, const std::function<
 }
 
 template <typename T, typename U>
+U optionOrDefaultStaticCast(const std::optional<T>& input, U defaultValue) {
+    auto ret = defaultValue;
+    if (input.has_value()) ret = static_cast<U>(input.value());
+    return ret;
+}
+
+template <typename T>
+T idFunc(T input) {
+    return input;
+}
+
+template <typename T, typename U>
 std::vector<U> fromQList(const QList<T>& source, const std::function<U(T)>& func) {
     std::vector<U> result;
     for (auto &elem : source) {

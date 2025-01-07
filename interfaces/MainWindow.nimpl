@@ -2,12 +2,13 @@ module MainWindow;
 
 import Object;
 import Common;
+import Enums;
 import Widget;
 import Layout;
+import Menu;
 import MenuBar;
 import Icon;
 import DockWidget;
-import Enums;
 import ToolBar;
 import StatusBar;
 import TabWidget;
@@ -31,6 +32,25 @@ flags DockOptions {
     ForceTabbedDocks = 0x08,  // implies AllowTabbedDocks, !AllowNestedDocks
     VerticalTabs = 0x10,      // implies AllowTabbedDocks
     GroupedDragging = 0x20    // implies AllowTabbedDocks
+}
+
+delegate Menu.Handle CreateMenuWrapperFunc(Menu.SignalHandler handler);
+sumtype PopupMenuResult {
+    NotRequired,                                    // none, no toolbars / dock widgets present
+    AlreadyExists(Menu.Handle handle),
+    NeedsWrapper(CreateMenuWrapperFunc createFunc)
+}
+
+delegate MenuBar.Handle CreateMenuBarWrapperFunc(MenuBar.SignalHandler handler);
+sumtype MenuBarResult {
+    AlreadyExists(MenuBar.Handle handle),
+    NeedsWrapper(CreateMenuBarWrapperFunc createFunc)
+}
+
+delegate StatusBar.Handle CreateStatusBarWrapperFunc(StatusBar.SignalHandler handler);
+sumtype StatusBarResult {
+    AlreadyExists(StatusBar.Handle handle),
+    NeedsWrapper(CreateStatusBarWrapperFunc createFunc)
 }
 
 opaque Handle extends Widget.Handle {
@@ -60,25 +80,54 @@ opaque Handle extends Widget.Handle {
     void setUnifiedTitleAndToolBarOnMac(bool state);
 
     // methods =========================================
+
     void addDockWidget(DockWidgetArea area, DockWidget.Handle dockWidget, Option<Orientation> orientation);
-    void setCentralWidget(Widget.Handle widget);
-    void setMenuBar(MenuBar.Handle menubar);
-    void setStatusBar(StatusBar.Handle statusbar);
-    
-    void addToolBar(ToolBar.Handle toolbar);
     void addToolBar(ToolBarArea area, ToolBar.Handle toolbar);
+    void addToolBar(ToolBar.Handle toolbar);
+    ToolBar.Handle addToolBar(string title, ToolBar.SignalHandler handler);
+    void addToolBarBreak(Option<ToolBarArea> area);
+    Widget.Handle centralWidget();
+    DockWidgetArea corner(Corner corner);
+    PopupMenuResult createPopupMenu();
+    DockWidgetArea getDockWidgetArea(DockWidget.Handle dockwidget);
+    void insertToolBar(ToolBar.Handle before, ToolBar.Handle toolbar);
+    void insertToolBarBreak(ToolBar.Handle before);
+    MenuBarResult menuBar();                                // creates empty menubar if it doesn't yet exist 
+    Widget.Handle menuWidget();                             // doesn't create, only returns existing
+    void removeDockWidget(DockWidget.Handle dockwidget);
+    void removeToolBar(ToolBar.Handle toolbar);
+    void removeToolBarBreak(ToolBar.Handle before);
+    void resizeDocks(Array<DockWidget.Handle> docks, Array<int> sizes, Orientation orientation);
+    bool restoreDockWidget(DockWidget.Handle dockwidget);
+    bool restoreState(Array<byte> state, Option<int> version);
+    Array<byte> saveState(Option<int> version);
+    void setCentralWidget(Widget.Handle widget);
+    void setCorner(Corner corner, DockWidgetArea area);
+    void setMenuBar(MenuBar.Handle menubar);
+    void setMenuWidget(Widget.Handle menubar);
+    void setStatusBar(StatusBar.Handle statusbar);
+    void setTabPosition(DockWidgetAreas areas, TabPosition tabPosition);
+    void splitDockWidget(DockWidget.Handle first, DockWidget.Handle second, Orientation orientation);
+    StatusBarResult statusBar();                            // create if it doesn't exist yet
+    TabPosition tabPosition(DockWidgetArea area);
+    Array<DockWidget.Handle> tabifiedDockWidgets(DockWidget.Handle dockwidget);
+    void tabifyDockWidget(DockWidget.Handle first, DockWidget.Handle second);
+    Widget.Handle takeCentralWidget(); // removes ownership
+    ToolBarArea toolBarArea(ToolBar.Handle toolbar);
+    bool toolBarBreak(ToolBar.Handle toolbar);
 
     // signalmask ======================================
     void setSignalMask(SignalMask mask);
 }
 
-Handle create(SignalHandler handler);
+Handle create(SignalHandler handler, Option<Widget.Handle> parent, Option<WindowFlags> flags_);
 
 // delegated ==========================================================
 
 namedbits DelegatedMethodMask {
     CanClose,
     Closed
+    // TODO: CreatePopupMenu
 }
 
 interface DelegatedMethods {
