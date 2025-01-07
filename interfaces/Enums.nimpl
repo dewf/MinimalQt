@@ -73,6 +73,11 @@ enum Orientation {
     Vertical = 0x2
 }
 
+flags Orientations {
+    Horizontal = 0x1,
+    Vertical = 0x2
+}
+
 enum ToolBarArea {
     LeftToolBarArea = 0x1,
     RightToolBarArea = 0x2,

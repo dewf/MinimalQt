@@ -10,11 +10,4 @@ namespace SizePolicy
     void Owned_dispose(OwnedRef _this) {
         delete THIS;
     }
-
-    QSizePolicy fromDeferred(const std::shared_ptr<Deferred::Base>& deferred) {
-        printf("SizePolicy::fromDeferred not yet implemented, exiting\n");
-        exit(-100);
-        // // TODO
-        // return {};
-    }
 }

@@ -46,6 +46,14 @@ inline QStringList toQStringList(const std::vector<std::string>& strings) {
     return toQList<std::string,QString>(strings, [](const std::string& str) { return QString::fromStdString(str); });
 }
 
+inline QMargins toQMargins(const Margins& margins) {
+    return QMargins(margins.left, margins.top, margins.right, margins.bottom);
+}
+
+inline Margins toMargins(const QMargins& qm) {
+    return Margins { qm.left(), qm.top(), qm.right(), qm.bottom() };
+}
+
 inline QSize toQSize(const Size& sz) {
     return {sz.width, sz.height };
 }

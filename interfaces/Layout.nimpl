@@ -1,6 +1,8 @@
 module Layout;
 
 import Object;
+import Common;
+import Enums;
 
 namedbits SignalMask extends Object.SignalMask {
     // none extra
@@ -19,12 +21,12 @@ enum SizeConstraint {
     SetMinAndMaxSize
 }
 
+fwdopaque WidgetHandle = Widget.Handle;
+
 // TODO: inherit from LayoutItem instead? an issue since we can't do multiple inheritance, and IIRC LayoutItem doesn't inherit QObject
 @nodispose
 opaque Handle extends Object.Handle {
     // properties =============================
-    bool isEnabled();
-    void setEnabled(bool enabled);
 
     SizeConstraint getSizeConstraint();
     void setSizeConstraint(SizeConstraint constraint);
@@ -32,15 +34,46 @@ opaque Handle extends Object.Handle {
     int spacing();
     void setSpacing(int spacing);
 
+    // pseudo-properties ======================
+    bool isEnabled();
+    void setEnabled(bool enabled);
+
     // methods =================================
-    Tuple<int,int,int,int> getContentsMargins();
+
+    bool activate();
+
+    // virtual void addItem(QLayoutItem *item) = 0
+
+    void addWidget(WidgetHandle widget);
+    Margins contentsMargins();
+    Rect contentsRect();
+    int count();
+
+    // void getContentsMargins(int *left, int *top, int *right, int *bottom) const
+    // virtual int indexOf(const QLayoutItem *layoutItem) const
+
+    int indexOf(WidgetHandle widget);
+
+    // virtual QLayoutItem * itemAt(int index) const = 0
+
+    WidgetHandle menuBar();
+    WidgetHandle parentWidget();
+
+    // void removeItem(QLayoutItem *item)
+    
+    void removeWidget(WidgetHandle widget);
+
+    // virtual QLayoutItem * replaceWidget(QWidget *from, QWidget *to, Qt::FindChildOptions options = Qt::FindChildrenRecursively)
+
+    void setAlignment(WidgetHandle widget, Alignment alignment);
+    void setAlignment(Handle layout, Alignment alignment);
+    void setContentsMargins(Margins margins);
     void setContentsMargins(int left, int top, int right, int bottom);
+    void setMenuBar(WidgetHandle widget);
 
-    // custom to remove all widgets
-    void removeAll();
+    // virtual QLayoutItem * takeAt(int index) = 0
 
-    // not really sure what these do yet ...
-    void activate();
+    void unsetContentsMargins();
     void update();
 
     // no setsignalmask because abstract

@@ -35,3 +35,10 @@ struct RectF {
 }
 
 typedef uint32 Rgb;
+
+struct Margins {
+    int left;
+    int top;
+    int right;
+    int bottom;
+}
