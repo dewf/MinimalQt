@@ -2,12 +2,13 @@
 #include "SortFilterProxyModelInternal.h"
 
 #include <utility>
-#include "util/Macros.h"
 
 #include "RegularExpressionInternal.h"
 
 #define WRAPPER (reinterpret_cast<SignalWrapper*>(_this))
 #define PROXYMODEL_THIS (WRAPPER->getActual())
+
+#define BROKEN_MODELINDEX(x) ((ModelIndex::HandleRef)&x) // BAD DON'T USE
 
 namespace SortFilterProxyModel
 {
@@ -79,7 +80,7 @@ namespace SortFilterProxyModel
         [[nodiscard]]
         bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override {
             if (methodMask & FilterAcceptsRow) {
-                return methodDelegate->filterAcceptsRow(source_row, MODELINDEX(source_parent));
+                return methodDelegate->filterAcceptsRow(source_row, BROKEN_MODELINDEX(source_parent));
             } else {
                 return QSortFilterProxyModel::filterAcceptsRow(source_row, source_parent);
             }
@@ -87,7 +88,7 @@ namespace SortFilterProxyModel
         [[nodiscard]]
         bool filterAcceptsColumn(int source_column, const QModelIndex &source_parent) const override {
             if (methodMask & FilterAcceptsColumn) {
-                return methodDelegate->filterAcceptsColumn(source_column,MODELINDEX(source_parent));
+                return methodDelegate->filterAcceptsColumn(source_column,BROKEN_MODELINDEX(source_parent));
             } else {
                 return QSortFilterProxyModel::filterAcceptsColumn(source_column, source_parent);
             }
@@ -95,7 +96,7 @@ namespace SortFilterProxyModel
         [[nodiscard]]
         bool lessThan(const QModelIndex &source_left, const QModelIndex &source_right) const override {
             if (methodMask & LessThan) {
-                return methodDelegate->lessThan(MODELINDEX(source_left), MODELINDEX(source_right));
+                return methodDelegate->lessThan(BROKEN_MODELINDEX(source_left), BROKEN_MODELINDEX(source_right));
             } else {
                 return QSortFilterProxyModel::lessThan(source_left, source_right);
             }

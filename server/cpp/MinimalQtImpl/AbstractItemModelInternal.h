@@ -2,11 +2,12 @@
 
 #include "generated/AbstractItemModel.h"
 #include "ObjectInternal.h"
-
-#include "util/SignalStuff.h"
-#include "util/Macros.h"
+#include "ModelIndexInternal.h"
 
 #include <QAbstractItemModel>
+
+// #define MODELINDEX(x) (reinterpret_cast<ModelIndex::HandleRef>(&x))
+#define PMODELINDEX(x) ((PersistentModelIndex::HandleRef)&x)
 
 namespace AbstractItemModel {
     class SignalWrapper : public Object::SignalWrapper {
@@ -54,29 +55,39 @@ namespace AbstractItemModel {
         }
     public slots:
         void onColumnsAboutToBeInserted(const QModelIndex &parent, int first, int last) const {
-            handler->columnsAboutToBeInserted(MODELINDEX(parent), first, last);
+            ModelIndex::__Handle parent2(parent);
+            handler->columnsAboutToBeInserted(&parent2, first, last);
         }
         void onColumnsAboutToBeMoved(const QModelIndex &sourceParent, int sourceStart, int sourceEnd, const QModelIndex &destinationParent, int destinationColumn) const {
-            handler->columnsAboutToBeMoved(MODELINDEX(sourceParent), sourceStart, sourceEnd, MODELINDEX(destinationParent), destinationColumn);
+            ModelIndex::__Handle src2(sourceParent);
+            ModelIndex::__Handle dest2(destinationParent);
+            handler->columnsAboutToBeMoved(&src2, sourceStart, sourceEnd, &dest2, destinationColumn);
         }
         void onColumnsAboutToBeRemoved(const QModelIndex &parent, int first, int last) const {
-            handler->columnsAboutToBeRemoved(MODELINDEX(parent), first, last);
+            ModelIndex::__Handle parent2(parent);
+            handler->columnsAboutToBeRemoved(&parent2, first, last);
         }
         void onColumnsInserted(const QModelIndex &parent, int first, int last) const {
-            handler->columnsInserted(MODELINDEX(parent), first, last);
+            ModelIndex::__Handle parent2(parent);
+            handler->columnsInserted(&parent2, first, last);
         }
         void onColumnsMoved(const QModelIndex &sourceParent, int sourceStart, int sourceEnd, const QModelIndex &destinationParent, int destinationColumn) const {
-            handler->columnsMoved(MODELINDEX(sourceParent), sourceStart, sourceEnd, MODELINDEX(destinationParent), destinationColumn);
+            ModelIndex::__Handle src2(sourceParent);
+            ModelIndex::__Handle dest2(destinationParent);
+            handler->columnsMoved(&src2, sourceStart, sourceEnd, &dest2, destinationColumn);
         }
         void onColumnsRemoved(const QModelIndex &parent, int first, int last) const {
-            handler->columnsRemoved(MODELINDEX(parent), first, last);
+            ModelIndex::__Handle parent2(parent);
+            handler->columnsRemoved(&parent2, first, last);
         }
         void onDataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight, const QList<int> &roles = QList<int>()) const {
             std::vector<ItemDataRole> roles2;
             for (auto &role : roles) {
                 roles2.push_back(static_cast<ItemDataRole>(role));
             }
-            handler->dataChanged(MODELINDEX(topLeft), MODELINDEX(bottomRight), roles2);
+            ModelIndex::__Handle topLeft2(topLeft);
+            ModelIndex::__Handle bottomRight2(bottomRight);
+            handler->dataChanged(&topLeft2, &bottomRight2, roles2);
         }
         void onHeaderDataChanged(Qt::Orientation orientation, int first, int last) const {
             handler->headerDataChanged(static_cast<Orientation>(orientation), first, last);
@@ -102,22 +113,30 @@ namespace AbstractItemModel {
             handler->modelReset();
         }
         void onRowsAboutToBeInserted(const QModelIndex &parent, int start, int end) const {
-            handler->rowsAboutToBeInserted(MODELINDEX(parent), start, end);
+            ModelIndex::__Handle parent2(parent);
+            handler->rowsAboutToBeInserted(&parent2, start, end);
         }
         void onRowsAboutToBeMoved(const QModelIndex &sourceParent, int sourceStart, int sourceEnd, const QModelIndex &destinationParent, int destinationRow) const {
-            handler->rowsAboutToBeMoved(MODELINDEX(sourceParent), sourceStart, sourceEnd, MODELINDEX(destinationParent), destinationRow);
+            ModelIndex::__Handle src2(sourceParent);
+            ModelIndex::__Handle dest2(destinationParent);
+            handler->rowsAboutToBeMoved(&src2, sourceStart, sourceEnd, &dest2, destinationRow);
         }
         void onRowsAboutToBeRemoved(const QModelIndex &parent, int first, int last) const {
-            handler->rowsAboutToBeRemoved(MODELINDEX(parent), first, last);
+            ModelIndex::__Handle parent2(parent);
+            handler->rowsAboutToBeRemoved(&parent2, first, last);
         }
         void onRowsInserted(const QModelIndex &parent, int first, int last) const {
-            handler->rowsInserted(MODELINDEX(parent), first, last);
+            ModelIndex::__Handle parent2(parent);
+            handler->rowsInserted(&parent2, first, last);
         }
         void onRowsMoved(const QModelIndex &sourceParent, int sourceStart, int sourceEnd, const QModelIndex &destinationParent, int destinationRow) const {
-            handler->rowsMoved(MODELINDEX(sourceParent), sourceStart, sourceEnd, MODELINDEX(destinationParent), destinationRow);
+            ModelIndex::__Handle src2(sourceParent);
+            ModelIndex::__Handle dest2(destinationParent);
+            handler->rowsMoved(&src2, sourceStart, sourceEnd, &dest2, destinationRow);
         }
         void onRowsRemoved(const QModelIndex &parent, int first, int last) const {
-            handler->rowsRemoved(MODELINDEX(parent), first, last);
+            ModelIndex::__Handle parent2(parent);
+            handler->rowsRemoved(&parent2, first, last);
         }
     };
 }

@@ -2,6 +2,7 @@
 
 #include "generated/AbstractItemView.h"
 #include "AbstractScrollAreaInternal.h"
+#include "ModelIndexInternal.h"
 
 #include <QAbstractItemView>
 
@@ -40,22 +41,27 @@ namespace AbstractItemView {
         }
     public slots:
         void onActivated(const QModelIndex& index) const {
-            handler->activated((ModelIndex::HandleRef)&index);
+            ModelIndex::__Handle index2(index);
+            handler->activated(&index2);
         }
         void onClicked(const QModelIndex& index) const {
-            handler->clicked((ModelIndex::HandleRef)&index);
+            ModelIndex::__Handle index2(index);
+            handler->clicked(&index2);
         }
         void onDoubleClicked(const QModelIndex& index) const {
-            handler->doubleClicked((ModelIndex::HandleRef)&index);
+            ModelIndex::__Handle index2(index);
+            handler->doubleClicked(&index2);
         }
         void onEntered(QModelIndex& index) const {
-            handler->entered((ModelIndex::HandleRef)&index);
+            ModelIndex::__Handle index2(index);
+            handler->entered(&index2);
         }
         void onIconSizeChanged(const QSize& size) const {
             handler->iconSizeChanged(toSize(size));
         }
         void onPressed(const QModelIndex& index) const {
-            handler->pressed((ModelIndex::HandleRef)&index);
+            ModelIndex::__Handle index2(index);
+            handler->pressed(&index2);
         }
         void onViewportEntered() const {
             handler->viewportEntered();
