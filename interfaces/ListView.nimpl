@@ -7,6 +7,7 @@ import Icon;
 import AbstractListModel;
 import ModelIndex;
 import AbstractItemView;
+import Widget;
 
 namedbits SignalMask extends AbstractItemView.SignalMask {
     IndexesMoved
@@ -43,7 +44,8 @@ enum ViewMode {
 }
 
 opaque Handle extends AbstractItemView.Handle {
-    // properties:
+    // properties =============
+
     int batchSize();
     void setBatchSize(int size);
 
@@ -52,9 +54,6 @@ opaque Handle extends AbstractItemView.Handle {
 
     Size gridSize();
     void setGridSize(Size size);
-
-    bool isWrapping();
-    void setWrapping(bool wrapping);
 
     Alignment itemAlignment();
     void setItemAlignment(Alignment align);
@@ -86,8 +85,17 @@ opaque Handle extends AbstractItemView.Handle {
     bool wordWrap();
     void setWordWrap(bool state);
 
-    // etc
+    bool isWrapping();
+    void setWrapping(bool wrapping);
+
+    // methods ================
+
+    void clearPropertyFlags();
+    bool isRowHidden(int row);
+    void setRowHidden(int row, bool hide);
+
+    // etc ====================
     void setSignalMask(SignalMask mask);
 }
 
-Handle create(SignalHandler handler);
+Handle create(SignalHandler handler, Option<Widget.Handle> parent);

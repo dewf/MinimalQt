@@ -32,14 +32,6 @@ namespace ListView
         LISTVIEW_THIS->setGridSize(toQSize(size));
     }
 
-    bool Handle_isWrapping(HandleRef _this) {
-        return LISTVIEW_THIS->isWrapping();
-    }
-
-    void Handle_setWrapping(HandleRef _this, bool wrapping) {
-        LISTVIEW_THIS->setWrapping(wrapping);
-    }
-
     Alignment Handle_itemAlignment(HandleRef _this) {
         return LISTVIEW_THIS->itemAlignment();
     }
@@ -120,6 +112,26 @@ namespace ListView
         LISTVIEW_THIS->setWordWrap(state);
     }
 
+    bool Handle_isWrapping(HandleRef _this) {
+        return LISTVIEW_THIS->isWrapping();
+    }
+
+    void Handle_setWrapping(HandleRef _this, bool wrapping) {
+        LISTVIEW_THIS->setWrapping(wrapping);
+    }
+
+    void Handle_clearPropertyFlags(HandleRef _this) {
+        LISTVIEW_THIS->clearPropertyFlags();
+    }
+
+    bool Handle_isRowHidden(HandleRef _this, int32_t row) {
+        return LISTVIEW_THIS->isRowHidden(row);
+    }
+
+    void Handle_setRowHidden(HandleRef _this, int32_t row, bool hide) {
+        LISTVIEW_THIS->setRowHidden(row, hide);
+    }
+
     void Handle_setSignalMask(HandleRef _this, SignalMask mask) {
         WRAPPER->setSignalMask(mask);
     }
@@ -128,8 +140,9 @@ namespace ListView
         delete WRAPPER;
     }
 
-    HandleRef create(const std::shared_ptr<SignalHandler>& handler) {
-        const auto wrapper = new SignalWrapper(new QListView(), handler);
+    HandleRef create(const std::shared_ptr<SignalHandler>& handler, const std::optional<Widget::HandleRef>& parent) {
+        const auto qParent = Widget::fromOptionalHandle(parent);
+        const auto wrapper = new SignalWrapper(new QListView(qParent), handler);
         return reinterpret_cast<HandleRef>(wrapper);
     }
 }
