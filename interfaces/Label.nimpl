@@ -6,6 +6,7 @@ import Frame;
 import Icon;
 import Enums;
 import Pixmap;
+import Widget;
 
 namedbits SignalMask extends Frame.SignalMask {
     LinkActivated,
@@ -18,21 +19,74 @@ interface SignalHandler extends Frame.SignalHandler {
 }
 
 opaque Handle extends Frame.Handle {
+    // properties =================
+    Alignment alignment();
     void setAlignment(Alignment align);
+    
     bool hasSelectedText();
+    // read-only
+
+    int indent();
     void setIndent(int indent);
+    
+    int margin();
     void setMargin(int margin);
+
+    bool openExternalLinks();
     void setOpenExternalLinks(bool state);
+
+    Pixmap.Owned getPixmap();
     void setPixmap(Pixmap.Handle pixmap);
+
+    bool hasScaledContents();
     void setScaledContents(bool state);
+    
     string selectedText();
+    // read-only
+
+    string text();
     void setText(string text);
+
+    TextFormat getTextFormat();
     void setTextFormat(TextFormat format);
+
+    TextInteractionFlags getTextInteractionFlags();
     void setTextInteractionFlags(TextInteractionFlags interactionFlags);
+
+    bool wordWrap();
     void setWordWrap(bool state);
 
+    // quasi-properties ===========
+    Widget.Handle buddy();
+    void setBuddy(Widget.Handle buddy);
+
+    // QMovie * movie() const
+    // void setMovie(QMovie *movie)
+
+    // QPicture picture() const
+    // void setPicture(const QPicture &picture)
+
+    // QTextDocument::ResourceProvider resourceProvider() const
+    // void setResourceProvider(const QTextDocument::ResourceProvider &provider)
+
+    int selectionStart();
+    // read-only
+
+    // methods ====================
+    void clear();
+    void setSelection(int start, int length);
+    void setNum(int num);
+    void setNum(double num);
+
+    // etc:
     void setSignalMask(SignalMask mask);
 }
 
-Handle create(SignalHandler handler);
+options CreateOptions {
+    Widget.Handle parent;
+    WindowFlags flags_;
+}
+
 Handle createNoHandler();
+Handle create(SignalHandler handler, CreateOptions opts);
+Handle create(string text, SignalHandler handler, CreateOptions opts);
