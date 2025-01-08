@@ -36,10 +36,14 @@ namespace MenuBar {
         }
     public slots:
         void onHovered(QAction* action) const {
-            handler->hovered(reinterpret_cast<Action::HandleRef>(action));
+            const auto wrapper = wrapperForQObject(action);
+            assert(wrapper != nullptr);
+            handler->hovered(reinterpret_cast<Action::HandleRef>(wrapper));
         }
         void onTriggered(QAction* action) const {
-            handler->triggered(reinterpret_cast<Action::HandleRef>(action));
+            const auto wrapper = wrapperForQObject(action);
+            assert(wrapper != nullptr);
+            handler->triggered(reinterpret_cast<Action::HandleRef>(wrapper));
         }
     };
 }
