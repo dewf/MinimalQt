@@ -22,6 +22,7 @@ interface SignalHandler extends Widget.SignalHandler {
 
 opaque Handle extends Widget.Handle {
     // properties ==============================
+
     Icon.Owned getIcon();
     void setIcon(Icon.Handle icon);
 
@@ -38,12 +39,38 @@ opaque Handle extends Widget.Handle {
     void setToolTipsVisible(bool visible);
 
     // methods =================================
+
+    Action.Handle actionAt(Point pos);
+    Rect actionGeometry(Action.Handle act);
+    Action.Handle activeAction();
+    Action.Handle addMenu(Handle menu, Action.SignalHandler actionHandler);
+    Handle addMenu(string title, SignalHandler handler);
+    Handle addMenu(Icon.Handle icon, string title, SignalHandler handler);
+    Action.Handle addSection(string text, Option<Icon.Handle> icon, Action.SignalHandler actionHandler);
+    Action.Handle addSeparator(Action.SignalHandler actionHandler);
     void clear();
-    Action.Handle addSeparator(Action.SignalHandler handler);
-    void popup(Point p);
+    Action.Handle defaultAction(); // I believe this must already be known to client side ...
+    Action.Handle exec();
+    Action.Handle exec(Point p, Option<Action.Handle> action);
+    void hideTearOffMenu();
+    Action.Handle insertMenu(Action.Handle before, Handle menu, Action.SignalHandler actionHandler);
+    Action.Handle insertSection(Action.Handle before, string text, Option<Icon.Handle> icon, Action.SignalHandler actionHandler);
+    Action.Handle insertSeparator(Action.Handle before, Action.SignalHandler actionHandler);
+    bool isEmpty();
+    bool isTearOffMenuVisible();
+    Action.Handle menuAction();     // not sure how this one works, could it be null?
+    void popup(Point p, Option<Action.Handle> atAction);
+    void setActiveAction(Action.Handle act);
+    void setAsDockMenu();
+    void setDefaultAction(Action.Handle act);
+    void showTearOffMenu(Option<Point> pos);
 
     // signalmask ==============================
     void setSignalMask(SignalMask mask);
 }
 
-Handle create(SignalHandler handler);
+Handle create(SignalHandler handler, Option<Widget.Handle> parent);
+Handle create(SignalHandler handler, string title, Option<Widget.Handle> parent);
+
+Action.Handle exec(Array<Action.Handle> actions, Point pos, Option<Action.Handle> at, Option<Widget.Handle> parent);
+Handle menuInAction(Action.Handle action);
