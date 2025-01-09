@@ -101,4 +101,6 @@ opaque Handle extends Object.Handle {
     SignalConnection connect_VisibleChanged(SignalHandler handler);
 }
 
-Handle create(Object.Handle owner);
+Handle create(Option<Object.Handle> parent);
+Handle create(string text, Option<Object.Handle> parent);
+Handle create(Icon.Handle icon, string text, Option<Object.Handle> parent);

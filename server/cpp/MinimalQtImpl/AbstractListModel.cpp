@@ -1,15 +1,11 @@
 #include "generated/AbstractListModel.h"
+#include "AbstractListModelInternal.h"
+
 #include "VariantInternal.h"
 #include "ModelIndexInternal.h"
 
-#include <QAbstractListModel>
-#include "util/SignalStuff.h"
-
-#define WRAPPER (reinterpret_cast<SignalWrapper*>(_this))
-#define ABSLISTMODEL_THIS (WRAPPER->getActual())
-#define SUBCLASSED_THIS (dynamic_cast<Implementation*>(WRAPPER->getActual()))
-
-#include "AbstractListModelInternal.h"
+#define ABSLISTMODEL_THIS (reinterpret_cast<QAbstractListModel*>(_this))
+#define SUBCLASSED_THIS (reinterpret_cast<Implementation*>(_this))
 
 namespace AbstractListModel
 {
@@ -134,17 +130,11 @@ namespace AbstractListModel
         SUBCLASSED_THIS->endResetModel();
     }
 
-    void Interior_setSignalMask(InteriorRef _this, SignalMask mask) {
-        WRAPPER->setSignalMask(mask);
-    }
-
     void Interior_dispose(InteriorRef _this) {
-        delete WRAPPER;
+        delete SUBCLASSED_THIS;
     }
 
-    InteriorRef createImplementation(const std::shared_ptr<SignalHandler>& handler, const std::shared_ptr<ImplementationMethods>& methods, ImplementedMethodMask mask) {
-        const auto model = new Implementation(methods, mask);
-        const auto wrapper = new SignalWrapper(model, handler);
-        return reinterpret_cast<InteriorRef>(wrapper);
+    InteriorRef createImplementation(const std::shared_ptr<ImplementationMethods>& methods, ImplementedMethodMask mask) {
+        return reinterpret_cast<InteriorRef>(new Implementation(methods, mask));
     }
 }

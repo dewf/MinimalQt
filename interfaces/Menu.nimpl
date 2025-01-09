@@ -36,19 +36,19 @@ opaque Handle extends Widget.Handle {
     Action.Handle actionAt(Point pos);
     Rect actionGeometry(Action.Handle act);
     Action.Handle activeAction();
-    Action.Handle addMenu(Handle menu, Action.SignalHandler actionHandler);
-    Handle addMenu(string title, SignalHandler handler);
-    Handle addMenu(Icon.Handle icon, string title, SignalHandler handler);
-    Action.Handle addSection(string text, Option<Icon.Handle> icon, Action.SignalHandler actionHandler);
-    Action.Handle addSeparator(Action.SignalHandler actionHandler);
+    Action.Handle addMenu(Handle menu);
+    Handle addMenu(string title);
+    Handle addMenu(Icon.Handle icon, string title);
+    Action.Handle addSection(string text, Option<Icon.Handle> icon);
+    Action.Handle addSeparator();
     void clear();
     Action.Handle defaultAction(); // I believe this must already be known to client side ...
     Action.Handle exec();
     Action.Handle exec(Point p, Option<Action.Handle> action);
     void hideTearOffMenu();
-    Action.Handle insertMenu(Action.Handle before, Handle menu, Action.SignalHandler actionHandler);
-    Action.Handle insertSection(Action.Handle before, string text, Option<Icon.Handle> icon, Action.SignalHandler actionHandler);
-    Action.Handle insertSeparator(Action.Handle before, Action.SignalHandler actionHandler);
+    Action.Handle insertMenu(Action.Handle before, Handle menu);
+    Action.Handle insertSection(Action.Handle before, string text, Option<Icon.Handle> icon);
+    Action.Handle insertSeparator(Action.Handle before);
     bool isEmpty();
     bool isTearOffMenuVisible();
     Action.Handle menuAction();     // not sure how this one works, could it be null?

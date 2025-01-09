@@ -37,4 +37,3 @@ opaque Handle extends Layout.Handle {
 }
 
 Handle create(Direction dir);
-Handle createNoHandler(Direction dir);

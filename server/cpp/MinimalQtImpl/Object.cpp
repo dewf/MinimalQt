@@ -1,34 +1,28 @@
 #include "generated/Object.h"
 #include "ObjectInternal.h"
 
-#define WRAPPER (reinterpret_cast<SignalWrapper*>(_this))
-#define OBJECT_THIS (WRAPPER->getActual())
+#define THIS (reinterpret_cast<QObject*>(_this))
 
 namespace Object
 {
-    std::map<QObject*, SignalWrapper*> SignalWrapper::objectToWrapperMap;
-
-    SignalWrapper *wrapperForQObject(QObject *obj) {
-        if (SignalWrapper::objectToWrapperMap.contains(obj)) {
-            return SignalWrapper::objectToWrapperMap[obj];
-        }
-        return nullptr;
+    void SignalConnection_dispose(SignalConnectionRef _this) {
+        delete _this;
     }
 
     std::string Handle_objectName(HandleRef _this) {
-        return OBJECT_THIS->objectName().toStdString();
+        return THIS->objectName().toStdString();
     }
 
     void Handle_setObjectName(HandleRef _this, const std::string& name) {
-        OBJECT_THIS->setObjectName(QString::fromStdString(name));
+        THIS->setObjectName(QString::fromStdString(name));
     }
 
     void Handle_setParent(HandleRef _this, HandleRef parent) {
-        const auto parentWrapper = reinterpret_cast<SignalWrapper*>(parent);
-        OBJECT_THIS->setParent(parentWrapper->getActual());
+        const auto qParent = reinterpret_cast<QObject*>(parent);
+        THIS->setParent(qParent);
     }
 
     void Handle_dumpObjectTree(HandleRef _this) {
-        OBJECT_THIS->dumpObjectTree();
+        THIS->dumpObjectTree();
     }
 }

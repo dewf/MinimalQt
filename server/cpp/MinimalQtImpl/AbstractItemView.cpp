@@ -1,226 +1,261 @@
 #include "generated/AbstractItemView.h"
+#include "AbstractItemViewInternal.h"
 
+#include "ObjectInternal.h"
 #include "AbstractItemDelegateInternal.h"
 #include "AbstractItemModelInternal.h"
-#include "AbstractItemViewInternal.h"
 #include "ItemSelectionModelInternal.h"
 #include "ModelIndexInternal.h"
 
 #include "util/convert.h"
 
-#define WRAPPER (reinterpret_cast<SignalWrapper*>(_this))
-#define ABSITEMVIEW_THIS (WRAPPER->getActual())
+#define THIS (reinterpret_cast<QAbstractItemView*>(_this))
 
 namespace AbstractItemView
 {
     bool Handle_alternatingRowColors(HandleRef _this) {
-        return ABSITEMVIEW_THIS->alternatingRowColors();
+        return THIS->alternatingRowColors();
     }
 
     void Handle_setAlternatingRowColors(HandleRef _this, bool state) {
-        ABSITEMVIEW_THIS->setAlternatingRowColors(state);
+        THIS->setAlternatingRowColors(state);
     }
 
     bool Handle_hasAutoScroll(HandleRef _this) {
-        return ABSITEMVIEW_THIS->hasAutoScroll();
+        return THIS->hasAutoScroll();
     }
 
     void Handle_setAutoScroll(HandleRef _this, bool state) {
-        ABSITEMVIEW_THIS->setAutoScroll(state);
+        THIS->setAutoScroll(state);
     }
 
     int32_t Handle_autoScrollMargin(HandleRef _this) {
-        return ABSITEMVIEW_THIS->autoScrollMargin();
+        return THIS->autoScrollMargin();
     }
 
     void Handle_setAutoScrollMargin(HandleRef _this, int32_t margin) {
-        ABSITEMVIEW_THIS->setAutoScrollMargin(margin);
+        THIS->setAutoScrollMargin(margin);
     }
 
     DropAction Handle_defaultDropAction(HandleRef _this) {
-        return static_cast<DropAction>(ABSITEMVIEW_THIS->defaultDropAction());
+        return static_cast<DropAction>(THIS->defaultDropAction());
     }
 
     void Handle_setDefaultDropAction(HandleRef _this, DropAction action) {
-        ABSITEMVIEW_THIS->setDefaultDropAction(static_cast<Qt::DropAction>(action));
+        THIS->setDefaultDropAction(static_cast<Qt::DropAction>(action));
     }
 
     DragDropMode Handle_getDragDropMode(HandleRef _this) {
-        return static_cast<DragDropMode>(ABSITEMVIEW_THIS->dragDropMode());
+        return static_cast<DragDropMode>(THIS->dragDropMode());
     }
 
     void Handle_setDragDropMode(HandleRef _this, DragDropMode mode) {
-        ABSITEMVIEW_THIS->setDragDropMode(static_cast<QAbstractItemView::DragDropMode>(mode));
+        THIS->setDragDropMode(static_cast<QAbstractItemView::DragDropMode>(mode));
     }
 
     bool Handle_dragDropOverwriteMode(HandleRef _this) {
-        return ABSITEMVIEW_THIS->dragDropOverwriteMode();
+        return THIS->dragDropOverwriteMode();
     }
 
     void Handle_setDragDropOverwriteMode(HandleRef _this, bool mode) {
-        ABSITEMVIEW_THIS->setDragDropOverwriteMode(mode);
+        THIS->setDragDropOverwriteMode(mode);
     }
 
     bool Handle_dragEnabled(HandleRef _this) {
-        return ABSITEMVIEW_THIS->dragEnabled();
+        return THIS->dragEnabled();
     }
 
     void Handle_setDragEnabled(HandleRef _this, bool enabled) {
-        ABSITEMVIEW_THIS->setDragEnabled(enabled);
+        THIS->setDragEnabled(enabled);
     }
 
     EditTriggers Handle_getEditTriggers(HandleRef _this) {
-        return ABSITEMVIEW_THIS->editTriggers();
+        return THIS->editTriggers();
     }
 
     void Handle_setEditTriggers(HandleRef _this, EditTriggers triggers) {
-        ABSITEMVIEW_THIS->setEditTriggers(static_cast<QAbstractItemView::EditTriggers>(triggers));
+        THIS->setEditTriggers(static_cast<QAbstractItemView::EditTriggers>(triggers));
     }
 
     ScrollMode Handle_horizontalScrollMode(HandleRef _this) {
-        return static_cast<ScrollMode>(ABSITEMVIEW_THIS->horizontalScrollMode());
+        return static_cast<ScrollMode>(THIS->horizontalScrollMode());
     }
 
     void Handle_setHorizontalScrollMode(HandleRef _this, ScrollMode mode) {
-        ABSITEMVIEW_THIS->setHorizontalScrollMode(static_cast<QAbstractItemView::ScrollMode>(mode));
+        THIS->setHorizontalScrollMode(static_cast<QAbstractItemView::ScrollMode>(mode));
     }
 
     void Handle_resetHorizontalScrollMode(HandleRef _this) {
-        ABSITEMVIEW_THIS->resetHorizontalScrollMode();
+        THIS->resetHorizontalScrollMode();
     }
 
     Size Handle_iconSize(HandleRef _this) {
-        return toSize(ABSITEMVIEW_THIS->iconSize());
+        return toSize(THIS->iconSize());
     }
 
     void Handle_setIconSize(HandleRef _this, Size size) {
-        ABSITEMVIEW_THIS->setIconSize(toQSize(size));
+        THIS->setIconSize(toQSize(size));
     }
 
     SelectionBehavior Handle_getSelectionBehavior(HandleRef _this) {
-        return static_cast<SelectionBehavior>(ABSITEMVIEW_THIS->selectionBehavior());
+        return static_cast<SelectionBehavior>(THIS->selectionBehavior());
     }
 
     void Handle_setSelectionBehavior(HandleRef _this, SelectionBehavior behavior) {
-        ABSITEMVIEW_THIS->setSelectionBehavior(static_cast<QAbstractItemView::SelectionBehavior>(behavior));
+        THIS->setSelectionBehavior(static_cast<QAbstractItemView::SelectionBehavior>(behavior));
     }
 
     SelectionMode Handle_getSelectionMode(HandleRef _this) {
-        return static_cast<SelectionMode>(ABSITEMVIEW_THIS->selectionMode());
+        return static_cast<SelectionMode>(THIS->selectionMode());
     }
 
     void Handle_setSelectionMode(HandleRef _this, SelectionMode mode) {
-        ABSITEMVIEW_THIS->setSelectionMode(static_cast<QAbstractItemView::SelectionMode>(mode));
+        THIS->setSelectionMode(static_cast<QAbstractItemView::SelectionMode>(mode));
     }
 
     bool Handle_showDropIndicator(HandleRef _this) {
-        return ABSITEMVIEW_THIS->showDropIndicator();
+        return THIS->showDropIndicator();
     }
 
     void Handle_setDropIndicatorShown(HandleRef _this, bool state) {
-        ABSITEMVIEW_THIS->setDropIndicatorShown(state);
+        THIS->setDropIndicatorShown(state);
     }
 
     bool Handle_tabKeyNavigation(HandleRef _this) {
-        return ABSITEMVIEW_THIS->tabKeyNavigation();
+        return THIS->tabKeyNavigation();
     }
 
     void Handle_setTabKeyNavigation(HandleRef _this, bool state) {
-        ABSITEMVIEW_THIS->setTabKeyNavigation(state);
+        THIS->setTabKeyNavigation(state);
     }
 
     TextElideMode Handle_getTextElideMode(HandleRef _this) {
-        return static_cast<TextElideMode>(ABSITEMVIEW_THIS->textElideMode());
+        return static_cast<TextElideMode>(THIS->textElideMode());
     }
 
     void Handle_setTextElideMode(HandleRef _this, TextElideMode mode) {
-        ABSITEMVIEW_THIS->setTextElideMode(static_cast<Qt::TextElideMode>(mode));
+        THIS->setTextElideMode(static_cast<Qt::TextElideMode>(mode));
     }
 
     ScrollMode Handle_verticalScrollMode(HandleRef _this) {
-        return static_cast<ScrollMode>(ABSITEMVIEW_THIS->verticalScrollMode());
+        return static_cast<ScrollMode>(THIS->verticalScrollMode());
     }
 
     void Handle_setVerticalScrollMode(HandleRef _this, ScrollMode mode) {
-        ABSITEMVIEW_THIS->setVerticalScrollMode(static_cast<QAbstractItemView::ScrollMode>(mode));
+        THIS->setVerticalScrollMode(static_cast<QAbstractItemView::ScrollMode>(mode));
     }
 
     void Handle_resetVerticalScrollMode(HandleRef _this) {
-        ABSITEMVIEW_THIS->resetVerticalScrollMode();
+        THIS->resetVerticalScrollMode();
     }
 
     void Handle_setModel(HandleRef _this, AbstractItemModel::HandleRef model) {
-        const auto modelWrapper = reinterpret_cast<AbstractItemModel::SignalWrapper*>(model);
-        ABSITEMVIEW_THIS->setModel(modelWrapper->getActual());
+        THIS->setModel(reinterpret_cast<QAbstractItemModel*>(model));
     }
 
     void Handle_clearSelection(HandleRef _this) {
-        ABSITEMVIEW_THIS->clearSelection();
+        THIS->clearSelection();
     }
 
     void Handle_edit(HandleRef _this, ModelIndex::HandleRef index) {
-        ABSITEMVIEW_THIS->edit(index->value);
+        THIS->edit(index->value);
     }
 
     void Handle_reset(HandleRef _this) {
-        ABSITEMVIEW_THIS->reset();
+        THIS->reset();
     }
 
     void Handle_scrollToBottom(HandleRef _this) {
-        ABSITEMVIEW_THIS->scrollToBottom();
+        THIS->scrollToBottom();
     }
 
     void Handle_scrollToTop(HandleRef _this) {
-        ABSITEMVIEW_THIS->scrollToTop();
+        THIS->scrollToTop();
     }
 
     void Handle_selectAll(HandleRef _this) {
-        ABSITEMVIEW_THIS->selectAll();
+        THIS->selectAll();
     }
 
     void Handle_setCurrentIndex(HandleRef _this, ModelIndex::HandleRef index) {
-        ABSITEMVIEW_THIS->setCurrentIndex(index->value);
+        THIS->setCurrentIndex(index->value);
     }
 
     void Handle_setRootIndex(HandleRef _this, ModelIndex::HandleRef index) {
-        ABSITEMVIEW_THIS->setRootIndex(index->value);
+        THIS->setRootIndex(index->value);
     }
 
     void Handle_update(HandleRef _this, ModelIndex::HandleRef index) {
-        ABSITEMVIEW_THIS->update(index->value);
+        THIS->update(index->value);
     }
 
-    std::shared_ptr<SelectionModelResult::Base> Handle_selectionModel(HandleRef _this) {
-        if (const auto model = ABSITEMVIEW_THIS->selectionModel(); model != nullptr) {
-            // check for existing wrapper (ie, did we originally set the selectionModel ourselves?)
-            if (const auto existing = wrapperForQObject(model); existing != nullptr) {
-                const auto handleRef = reinterpret_cast<ItemSelectionModel::HandleRef>(existing);
-                return std::make_shared<SelectionModelResult::AlreadyExists>(handleRef);
-            }
-            // else, unknown (Qt-supplied) model, need to create a new wrapper
-            // return a function which can create one on-demand
-            const auto func = [model](const std::shared_ptr<ItemSelectionModel::SignalHandler>& handler) {
-                const auto wrapper = new ItemSelectionModel::SignalWrapper(model, handler);
-                return reinterpret_cast<ItemSelectionModel::HandleRef>(wrapper);
-            };
-            return std::make_shared<SelectionModelResult::NeedsWrapper>(func);
-        }
-        // else
-        return std::make_shared<SelectionModelResult::NoSelectionModel>();
+    ItemSelectionModel::HandleRef Handle_selectionModel(HandleRef _this) {
+        return reinterpret_cast<ItemSelectionModel::HandleRef>(THIS->selectionModel());
     }
 
     void Handle_setItemDelegate(HandleRef _this, AbstractItemDelegate::HandleRef itemDelegate) {
-        const auto delegateWrapper = reinterpret_cast<AbstractItemDelegate::SignalWrapper*>(itemDelegate);
-        ABSITEMVIEW_THIS->setItemDelegate(delegateWrapper->getActual());
+        THIS->setItemDelegate(reinterpret_cast<QAbstractItemDelegate*>(itemDelegate));
     }
 
     void Handle_setItemDelegateForColumn(HandleRef _this, int32_t column, AbstractItemDelegate::HandleRef itemDelegate) {
-        const auto delegateWrapper = reinterpret_cast<AbstractItemDelegate::SignalWrapper*>(itemDelegate);
-        ABSITEMVIEW_THIS->setItemDelegateForColumn(column, delegateWrapper->getActual());
+        THIS->setItemDelegateForColumn(column, reinterpret_cast<QAbstractItemDelegate*>(itemDelegate));
     }
 
     void Handle_setItemDelegateForRow(HandleRef _this, int32_t row, AbstractItemDelegate::HandleRef itemDelegate) {
-        const auto delegateWrapper = reinterpret_cast<AbstractItemDelegate::SignalWrapper*>(itemDelegate);
-        ABSITEMVIEW_THIS->setItemDelegateForRow(row, delegateWrapper->getActual());
+        THIS->setItemDelegateForRow(row, reinterpret_cast<QAbstractItemDelegate*>(itemDelegate));
+    }
+
+    SignalConnectionRef Handle_connect_Activated(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
+        const auto connection = QObject::connect(THIS, &QAbstractItemView::activated, [handler](const QModelIndex& index) {
+            ModelIndex::__Handle index2(index);
+            handler->activated(&index2);
+        });
+        return new __SignalConnection { connection };
+    }
+
+    SignalConnectionRef Handle_connect_Clicked(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
+        const auto connection = QObject::connect(THIS, &QAbstractItemView::clicked, [handler](const QModelIndex& index) {
+            ModelIndex::__Handle index2(index);
+            handler->clicked(&index2);
+        });
+        return new __SignalConnection { connection };
+    }
+
+    SignalConnectionRef Handle_connect_DoubleClicked(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
+        const auto connection = QObject::connect(THIS, &QAbstractItemView::doubleClicked, [handler](const QModelIndex& index) {
+            ModelIndex::__Handle index2(index);
+            handler->doubleClicked(&index2);
+        });
+        return new __SignalConnection { connection };
+    }
+
+    SignalConnectionRef Handle_connect_Entered(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
+        const auto connection = QObject::connect(THIS, &QAbstractItemView::entered, [handler](const QModelIndex &index) {
+            ModelIndex::__Handle index2(index);
+            handler->entered(&index2);
+        });
+        return new __SignalConnection { connection };
+    }
+
+    SignalConnectionRef Handle_connect_IconSizeChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
+        const auto connection = QObject::connect(THIS, &QAbstractItemView::iconSizeChanged, [handler](const QSize &size) {
+            handler->iconSizeChanged(toSize(size));
+        });
+        return new __SignalConnection { connection };
+    }
+
+    SignalConnectionRef Handle_connect_Pressed(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
+        const auto connection = QObject::connect(THIS, &QAbstractItemView::pressed, [handler](const QModelIndex &index) {
+            ModelIndex::__Handle index2(index);
+            handler->pressed(&index2);
+        });
+        return new __SignalConnection { connection };
+    }
+
+    SignalConnectionRef Handle_connect_ViewportEntered(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
+        const auto connection = QObject::connect(THIS, &QAbstractItemView::viewportEntered, [handler] {
+            handler->viewportEntered();
+        });
+        return new __SignalConnection { connection };
     }
 }

@@ -1,86 +1,61 @@
 #include "generated/BoxLayout.h"
 #include "BoxLayoutInternal.h"
+
 #include "WidgetInternal.h"
 
-#include "util/convert.h"
-
-#define WRAPPER (reinterpret_cast<SignalWrapper*>(_this))
-#define BOXLAYOUT_THIS (WRAPPER->getActual())
+#define THIS (reinterpret_cast<QBoxLayout*>(_this))
 
 namespace BoxLayout
 {
     void Handle_setDirection(HandleRef _this, Direction dir) {
-        auto qDir = static_cast<QBoxLayout::Direction>(dir);
-        BOXLAYOUT_THIS->setDirection(qDir);
+        const auto qDir = static_cast<QBoxLayout::Direction>(dir);
+        THIS->setDirection(qDir);
     }
 
     void Handle_addSpacing(HandleRef _this, int32_t size) {
-        BOXLAYOUT_THIS->addSpacing(size);
+        THIS->addSpacing(size);
     }
 
     void Handle_addStretch(HandleRef _this, int32_t stretch) {
-        BOXLAYOUT_THIS->addStretch(stretch);
+        THIS->addStretch(stretch);
     }
 
     void Handle_addWidget(HandleRef _this, Widget::HandleRef widget, const Handle::AddWidgetOptions& opts) {
-        const auto widgetWrapper = reinterpret_cast<Widget::SignalWrapper*>(widget);
         const auto stretch = opts.getOrDefaultStretch(0);
         const auto align = static_cast<Qt::Alignment>(opts.getOrDefaultAlign(0));
-        BOXLAYOUT_THIS->addWidget(widgetWrapper->getActual(), stretch, align);
+        THIS->addWidget(AS_QWIDGET_PTR(widget), stretch, align);
     }
 
     void Handle_addLayout(HandleRef _this, Layout::HandleRef layout, const Handle::AddLayoutOptions& opts) {
-        const auto layoutWrapper = reinterpret_cast<Layout::SignalWrapper*>(layout);
-        const auto stretch = opts.getOrDefaultStretch(0);
-        BOXLAYOUT_THIS->addLayout(layoutWrapper->getActual(), stretch);
+        THIS->addLayout(AS_QLAYOUT_PTR(layout), opts.getOrDefaultStretch(0));
     }
 
     void Handle_addWidget(HandleRef _this, Widget::HandleRef widget) {
-        BOXLAYOUT_THIS->addWidget(reinterpret_cast<QWidget *>(widget));
+        THIS->addWidget(AS_QWIDGET_PTR(widget));
     }
 
     void Handle_addWidget(HandleRef _this, Widget::HandleRef widget, int32_t stretch) {
-        BOXLAYOUT_THIS->addWidget(reinterpret_cast<QWidget *>(widget), stretch);
+        THIS->addWidget(AS_QWIDGET_PTR(widget), stretch);
     }
 
     void Handle_addWidget(HandleRef _this, Widget::HandleRef widget, int32_t stretch, Enums::Alignment align) {
-        BOXLAYOUT_THIS->addWidget(reinterpret_cast<QWidget *>(widget), stretch, static_cast<Qt::AlignmentFlag>(align));
+        THIS->addWidget(AS_QWIDGET_PTR(widget), stretch, static_cast<Qt::AlignmentFlag>(align));
     }
 
     void Handle_addLayout(HandleRef _this, Layout::HandleRef layout) {
-        BOXLAYOUT_THIS->addLayout(reinterpret_cast<QLayout *>(layout));
+        THIS->addLayout(AS_QLAYOUT_PTR(layout));
     }
 
     void Handle_addLayout(HandleRef _this, Layout::HandleRef layout, int32_t stretch) {
-        BOXLAYOUT_THIS->addLayout(reinterpret_cast<QLayout *>(layout), stretch);
-    }
-
-    void Handle_setSignalMask(HandleRef _this, SignalMask mask) {
-        WRAPPER->setSignalMask(mask);
+        THIS->addLayout(AS_QLAYOUT_PTR(layout), stretch);
     }
 
     void Handle_dispose(HandleRef _this) {
-        delete WRAPPER;
+        delete THIS;
     }
 
     HandleRef create(Direction dir, const std::shared_ptr<SignalHandler>& handler) {
-        auto qDir = static_cast<QBoxLayout::Direction>(dir);
-        const auto wrapper = new SignalWrapper(new QBoxLayout(qDir), handler);
-        return reinterpret_cast<HandleRef>(wrapper);
-    }
-
-    class NullBoxLayoutHandler : public ServerObject, public SignalHandler, public Layout::SignalHandler, public Object::SignalHandler {
-    public:
-        void destroyedByQt() override {}
-        void destroyed(Object::HandleRef obj) override {}
-        void objectNameChanged(const std::string &objectName) override {}
-        Object::SignalHandler * inherited_Object_SignalHandler() override { return this; }
-        Layout::SignalHandler * inherited_Layout_SignalHandler() override { return this; }
-    };
-
-    HandleRef createNoHandler(Direction dir) {
-        auto qDir = static_cast<QBoxLayout::Direction>(dir);
-        const auto wrapper = new SignalWrapper(new QBoxLayout(qDir), std::make_shared<NullBoxLayoutHandler>());
-        return reinterpret_cast<HandleRef>(wrapper);
+        const auto qDir = static_cast<QBoxLayout::Direction>(dir);
+        return reinterpret_cast<HandleRef>(new QBoxLayout(qDir));
     }
 }

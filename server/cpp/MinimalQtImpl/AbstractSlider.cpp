@@ -1,56 +1,97 @@
 #include "generated/AbstractSlider.h"
 #include "AbstractSliderInternal.h"
 
-#define WRAPPER (reinterpret_cast<SignalWrapper*>(_this))
-#define ABSLIDER_THIS (WRAPPER->getActual())
+#define THIS (reinterpret_cast<QAbstractSlider*>(_this))
 
 namespace AbstractSlider
 {
     void Handle_setInvertedAppearance(HandleRef _this, bool state) {
-        ABSLIDER_THIS->setInvertedAppearance(state);
+        THIS->setInvertedAppearance(state);
     }
 
     void Handle_setInvertedControls(HandleRef _this, bool state) {
-        ABSLIDER_THIS->setInvertedControls(state);
+        THIS->setInvertedControls(state);
     }
 
     void Handle_setMaximum(HandleRef _this, int32_t value) {
-        ABSLIDER_THIS->setMaximum(value);
+        THIS->setMaximum(value);
     }
 
     void Handle_setMinimum(HandleRef _this, int32_t value) {
-        ABSLIDER_THIS->setMinimum(value);
+        THIS->setMinimum(value);
     }
 
     void Handle_setOrientation(HandleRef _this, Orientation orient) {
-        ABSLIDER_THIS->setOrientation((Qt::Orientation)orient);
+        THIS->setOrientation((Qt::Orientation)orient);
     }
 
     void Handle_setPageStep(HandleRef _this, int32_t pageStep) {
-        ABSLIDER_THIS->setPageStep(pageStep);
+        THIS->setPageStep(pageStep);
     }
 
     void Handle_setSingleStep(HandleRef _this, int32_t step) {
-        ABSLIDER_THIS->setSingleStep(step);
+        THIS->setSingleStep(step);
     }
 
     void Handle_setSliderDown(HandleRef _this, bool state) {
-        ABSLIDER_THIS->setSliderDown(state);
+        THIS->setSliderDown(state);
     }
 
     void Handle_setSliderPosition(HandleRef _this, int32_t pos) {
-        ABSLIDER_THIS->setSliderPosition(pos);
+        THIS->setSliderPosition(pos);
     }
 
     void Handle_setTracking(HandleRef _this, bool value) {
-        ABSLIDER_THIS->setTracking(value);
+        THIS->setTracking(value);
     }
 
     void Handle_setValue(HandleRef _this, int32_t value) {
-        ABSLIDER_THIS->setValue(value);
+        THIS->setValue(value);
     }
 
     void Handle_setRange(HandleRef _this, int32_t min, int32_t max) {
-        ABSLIDER_THIS->setRange(min, max);
+        THIS->setRange(min, max);
+    }
+
+    SignalConnectionRef Handle_connect_ActionTriggered(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
+        const auto connection = QObject::connect(THIS, &QAbstractSlider::actionTriggered, [handler](int action) {
+            handler->actionTriggered(static_cast<SliderAction>(action));
+        });
+        return new __SignalConnection { connection };
+    }
+
+    SignalConnectionRef Handle_connect_RangeChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
+        const auto connection = QObject::connect(THIS, &QAbstractSlider::rangeChanged, [handler](int min, int max) {
+            handler->rangeChanged(min, max);
+        });
+        return new __SignalConnection { connection };
+    }
+
+    SignalConnectionRef Handle_connect_SliderMoved(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
+        const auto connection = QObject::connect(THIS, &QAbstractSlider::sliderMoved, [handler](int value) {
+            handler->sliderMoved(value);
+        });
+        return new __SignalConnection { connection };
+    }
+
+    SignalConnectionRef Handle_connect_SliderPressed(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
+        const auto connection = QObject::connect(THIS, &QAbstractSlider::sliderPressed, [handler] {
+            handler->sliderPressed();
+        });
+        return new __SignalConnection { connection };
+    }
+
+    SignalConnectionRef Handle_connect_SliderReleased(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
+        const auto connection = QObject::connect(THIS, &QAbstractSlider::sliderReleased, [handler] {
+            handler->sliderReleased();
+        });
+        return new __SignalConnection { connection };
+    }
+
+    SignalConnectionRef Handle_connect_ValueChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
+        const auto connection = QObject::connect(THIS, &QAbstractSlider::valueChanged, [handler](int value) {
+            handler->valueChanged(value);
+        });
+        return new __SignalConnection { connection };
     }
 }

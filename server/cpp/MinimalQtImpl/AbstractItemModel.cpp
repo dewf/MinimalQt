@@ -1,94 +1,96 @@
 #include "generated/AbstractItemModel.h"
 #include "AbstractItemModelInternal.h"
 
-#include <QModelIndex>
+#include <QAbstractItemModel>
 
+#include "ObjectInternal.h"
 #include "MimeDataInternal.h"
 #include "ModelIndexInternal.h"
 #include "VariantInternal.h"
 #include "util/convert.h"
 
-#define WRAPPER (reinterpret_cast<SignalWrapper*>(_this))
-#define ABSITEMMODEL_THIS (WRAPPER->getActual())
-#define SUBCLASSED_THIS (dynamic_cast<Implementation*>(WRAPPER->getActual()))
+#define THIS (reinterpret_cast<QAbstractItemModel*>(_this))
+#define SUBCLASSED_THIS (reinterpret_cast<Implementation*>(_this))
+
+#define PMODELINDEX(x) ((PersistentModelIndex::HandleRef)&x)
 
 namespace AbstractItemModel
 {
     ModelIndex::OwnedRef Handle_buddy(HandleRef _this, ModelIndex::HandleRef index) {
-        return new ModelIndex::__Owned { ABSITEMMODEL_THIS->buddy(index->value) };
+        return new ModelIndex::__Owned { THIS->buddy(index->value) };
     }
 
     bool Handle_canDropMimeData(HandleRef _this, MimeData::HandleRef data, DropAction action, int32_t row, int32_t column, ModelIndex::HandleRef parent) {
-        return ABSITEMMODEL_THIS->canDropMimeData(AS_QMIMEDATA_PTR(data), static_cast<Qt::DropAction>(action), row, column, parent->value);
+        return THIS->canDropMimeData(AS_QMIMEDATA_PTR(data), static_cast<Qt::DropAction>(action), row, column, parent->value);
     }
 
     bool Handle_canFetchMore(HandleRef _this, ModelIndex::HandleRef parent) {
-        return ABSITEMMODEL_THIS->canFetchMore(parent->value);
+        return THIS->canFetchMore(parent->value);
     }
 
     bool Handle_checkIndex(HandleRef _this, ModelIndex::HandleRef index, const std::optional<CheckIndexOptions>& options_) {
         CheckIndexOptions optionsArg = options_.value_or(NoOption);
-        return ABSITEMMODEL_THIS->checkIndex(index->value, static_cast<QAbstractItemModel::CheckIndexOption>(optionsArg));
+        return THIS->checkIndex(index->value, static_cast<QAbstractItemModel::CheckIndexOption>(optionsArg));
     }
 
     bool Handle_clearItemData(HandleRef _this, ModelIndex::HandleRef index) {
-        return ABSITEMMODEL_THIS->clearItemData(index->value);
+        return THIS->clearItemData(index->value);
     }
 
     int32_t Handle_columnCount(HandleRef _this, const std::optional<ModelIndex::HandleRef>& parent) {
-        return ABSITEMMODEL_THIS->columnCount(fromOptionalIndex(parent));
+        return THIS->columnCount(fromOptionalIndex(parent));
     }
 
     Variant::OwnedRef Handle_data(HandleRef _this, ModelIndex::HandleRef index, const std::optional<int32_t>& role) {
-        return new Variant::__Owned { ABSITEMMODEL_THIS->data(index->value, role.value_or(Qt::DisplayRole))};
+        return new Variant::__Owned { THIS->data(index->value, role.value_or(Qt::DisplayRole))};
     }
 
     bool Handle_dropMimeData(HandleRef _this, MimeData::HandleRef data, DropAction action, int32_t row, int32_t column, ModelIndex::HandleRef parent) {
-        return ABSITEMMODEL_THIS->dropMimeData(AS_QMIMEDATA_PTR(data), static_cast<Qt::DropAction>(action), row, column, parent->value);
+        return THIS->dropMimeData(AS_QMIMEDATA_PTR(data), static_cast<Qt::DropAction>(action), row, column, parent->value);
     }
 
     void Handle_fetchMore(HandleRef _this, ModelIndex::HandleRef parent) {
-        ABSITEMMODEL_THIS->fetchMore(parent->value);
+        THIS->fetchMore(parent->value);
     }
 
     ItemFlags Handle_flags_(HandleRef _this, ModelIndex::HandleRef index) {
-        return ABSITEMMODEL_THIS->flags(index->value);
+        return THIS->flags(index->value);
     }
 
     bool Handle_hasChildren(HandleRef _this, const std::optional<ModelIndex::HandleRef>& parent) {
-        return ABSITEMMODEL_THIS->hasChildren(fromOptionalIndex(parent));
+        return THIS->hasChildren(fromOptionalIndex(parent));
     }
 
     bool Handle_hasIndex(HandleRef _this, int32_t row, int32_t column, const std::optional<ModelIndex::HandleRef>& parent) {
-        return ABSITEMMODEL_THIS->hasIndex(row, column, fromOptionalIndex(parent));
+        return THIS->hasIndex(row, column, fromOptionalIndex(parent));
     }
 
     Variant::OwnedRef Handle_headerData(HandleRef _this, int32_t section, Orientation orientation, const std::optional<int32_t>& role) {
-        return new Variant::__Owned { ABSITEMMODEL_THIS->headerData(section, static_cast<Qt::Orientation>(orientation), role.value_or(Qt::DisplayRole)) };
+        return new Variant::__Owned { THIS->headerData(section, static_cast<Qt::Orientation>(orientation), role.value_or(Qt::DisplayRole)) };
     }
 
     ModelIndex::OwnedRef Handle_index(HandleRef _this, int32_t row, int32_t column, const std::optional<ModelIndex::HandleRef>& parent) {
-        return new ModelIndex::__Owned { ABSITEMMODEL_THIS->index(row, column, fromOptionalIndex(parent)) };
+        return new ModelIndex::__Owned { THIS->index(row, column, fromOptionalIndex(parent)) };
     }
 
     bool Handle_insertColumn(HandleRef _this, int32_t column, const std::optional<ModelIndex::HandleRef>& parent) {
-        return ABSITEMMODEL_THIS->insertColumn(column, fromOptionalIndex(parent));
+        return THIS->insertColumn(column, fromOptionalIndex(parent));
     }
 
     bool Handle_insertColumns(HandleRef _this, int32_t column, int32_t count, const std::optional<ModelIndex::HandleRef>& parent) {
-        return ABSITEMMODEL_THIS->insertColumns(column, count, fromOptionalIndex(parent));
+        return THIS->insertColumns(column, count, fromOptionalIndex(parent));
     }
 
     bool Handle_insertRow(HandleRef _this, int32_t row, const std::optional<ModelIndex::HandleRef>& parent) {
-        return ABSITEMMODEL_THIS->insertRow(row, fromOptionalIndex(parent));
+        return THIS->insertRow(row, fromOptionalIndex(parent));
     }
 
     bool Handle_insertRows(HandleRef _this, int32_t row, int32_t count, const std::optional<ModelIndex::HandleRef>& parent) {
-        return ABSITEMMODEL_THIS->insertRows(row, count, fromOptionalIndex(parent));
+        return THIS->insertRows(row, count, fromOptionalIndex(parent));
     }
 
     std::map<int32_t,Variant::OwnedRef> Handle_itemData(HandleRef _this, ModelIndex::HandleRef index) {
-        const auto result = ABSITEMMODEL_THIS->itemData(index->value);
+        const auto result = THIS->itemData(index->value);
         std::map<int32_t, Variant::OwnedRef> retMap;
         for (auto i = result.cbegin(), end = result.cend(); i != end; ++i) {
             retMap[i.key()] = new Variant::__Owned { i.value() };
@@ -100,65 +102,65 @@ namespace AbstractItemModel
         std::vector<ModelIndex::OwnedRef> ret;
         const auto hits = args.getOrDefaultHits(1);
         const auto flags_ = args.getOrDefaultFlags_(MatchStartsWith | MatchWrap);
-        const auto result = ABSITEMMODEL_THIS->match(start->value, role, value->value, hits, static_cast<Qt::MatchFlags>(flags_));
+        const auto result = THIS->match(start->value, role, value->value, hits, static_cast<Qt::MatchFlags>(flags_));
         return fromQList<QModelIndex,ModelIndex::OwnedRef>(result, [](const QModelIndex &index) { return new ModelIndex::__Owned(index); });
     }
 
     MimeData::HandleRef Handle_getMimeData(HandleRef _this, const std::vector<ModelIndex::HandleRef>& indexes) {
         const auto qIndexes = toQList<ModelIndex::HandleRef,QModelIndex>(indexes, [](const ModelIndex::HandleRef& ref) { return ref->value; });
-        return reinterpret_cast<MimeData::HandleRef>(ABSITEMMODEL_THIS->mimeData(qIndexes));
+        return reinterpret_cast<MimeData::HandleRef>(THIS->mimeData(qIndexes));
     }
 
     std::vector<std::string> Handle_mimeTypes(HandleRef _this) {
-        return toVectorStrings(ABSITEMMODEL_THIS->mimeTypes());
+        return toVectorStrings(THIS->mimeTypes());
     }
 
     bool Handle_moveColumn(HandleRef _this, ModelIndex::HandleRef sourceParent, int32_t sourceColumn, ModelIndex::HandleRef destinationParent, int32_t destinationChild) {
-        return ABSITEMMODEL_THIS->moveColumn(sourceParent->value, sourceColumn, destinationParent->value, destinationChild);
+        return THIS->moveColumn(sourceParent->value, sourceColumn, destinationParent->value, destinationChild);
     }
 
     bool Handle_moveColumns(HandleRef _this, ModelIndex::HandleRef sourceParent, int32_t sourceColumn, int32_t count, ModelIndex::HandleRef destinationParent, int32_t destinationChild) {
-        return ABSITEMMODEL_THIS->moveColumns(sourceParent->value, sourceColumn, count, destinationParent->value, destinationChild);
+        return THIS->moveColumns(sourceParent->value, sourceColumn, count, destinationParent->value, destinationChild);
     }
 
     bool Handle_moveRow(HandleRef _this, ModelIndex::HandleRef sourceParent, int32_t sourceRow, ModelIndex::HandleRef destinationParent, int32_t destinationChild) {
-        return ABSITEMMODEL_THIS->moveRow(sourceParent->value, sourceRow, destinationParent->value, destinationChild);
+        return THIS->moveRow(sourceParent->value, sourceRow, destinationParent->value, destinationChild);
     }
 
     bool Handle_moveRows(HandleRef _this, ModelIndex::HandleRef sourceParent, int32_t sourceRow, int32_t count, ModelIndex::HandleRef destinationParent, int32_t destinationChild) {
-        return ABSITEMMODEL_THIS->moveRows(sourceParent->value, sourceRow, count, destinationParent->value, destinationChild);
+        return THIS->moveRows(sourceParent->value, sourceRow, count, destinationParent->value, destinationChild);
     }
 
     ModelIndex::OwnedRef Handle_parent(HandleRef _this, ModelIndex::HandleRef index) {
-        return new ModelIndex::__Owned { ABSITEMMODEL_THIS->parent(index->value) };
+        return new ModelIndex::__Owned { THIS->parent(index->value) };
     }
 
     bool Handle_removeColumn(HandleRef _this, int32_t column, const std::optional<ModelIndex::HandleRef>& parent) {
-        return ABSITEMMODEL_THIS->removeColumn(column, fromOptionalIndex(parent));
+        return THIS->removeColumn(column, fromOptionalIndex(parent));
     }
 
     bool Handle_removeColumns(HandleRef _this, int32_t column, int32_t count, const std::optional<ModelIndex::HandleRef>& parent) {
-        return ABSITEMMODEL_THIS->removeColumns(column, count, fromOptionalIndex(parent));
+        return THIS->removeColumns(column, count, fromOptionalIndex(parent));
     }
 
     bool Handle_removeRow(HandleRef _this, int32_t row, const std::optional<ModelIndex::HandleRef>& parent) {
-        return ABSITEMMODEL_THIS->removeRow(row, fromOptionalIndex(parent));
+        return THIS->removeRow(row, fromOptionalIndex(parent));
     }
 
     bool Handle_removeRows(HandleRef _this, int32_t row, int32_t count, const std::optional<ModelIndex::HandleRef>& parent) {
-        return ABSITEMMODEL_THIS->removeRows(row, count, fromOptionalIndex(parent));
+        return THIS->removeRows(row, count, fromOptionalIndex(parent));
     }
 
     int32_t Handle_rowCount(HandleRef _this, const std::optional<ModelIndex::HandleRef>& parent) {
-        return ABSITEMMODEL_THIS->rowCount(fromOptionalIndex(parent));
+        return THIS->rowCount(fromOptionalIndex(parent));
     }
 
     bool Handle_setData(HandleRef _this, ModelIndex::HandleRef index, Variant::HandleRef value, const std::optional<int32_t>& role) {
-        return ABSITEMMODEL_THIS->setData(index->value, value->value, role.value_or(Qt::EditRole));
+        return THIS->setData(index->value, value->value, role.value_or(Qt::EditRole));
     }
 
     bool Handle_setHeaderData(HandleRef _this, int32_t section, Orientation orientation, Variant::HandleRef value, const std::optional<int32_t>& role) {
-        return ABSITEMMODEL_THIS->setHeaderData(section, static_cast<Qt::Orientation>(orientation), value->value, role.value_or(Qt::EditRole));
+        return THIS->setHeaderData(section, static_cast<Qt::Orientation>(orientation), value->value, role.value_or(Qt::EditRole));
     }
 
     bool Handle_setItemData(HandleRef _this, ModelIndex::HandleRef index, std::map<int32_t,Variant::HandleRef> roles) {
@@ -166,36 +168,189 @@ namespace AbstractItemModel
         for (auto i = roles.begin(); i != roles.end(); ++i) {
             qRoles[i->first] = i->second->value;
         }
-        return ABSITEMMODEL_THIS->setItemData(index->value, qRoles);
+        return THIS->setItemData(index->value, qRoles);
     }
 
     ModelIndex::OwnedRef Handle_sibling(HandleRef _this, int32_t row, int32_t column, ModelIndex::HandleRef index) {
-        return new ModelIndex::__Owned { ABSITEMMODEL_THIS->sibling(row, column, index->value) };
+        return new ModelIndex::__Owned { THIS->sibling(row, column, index->value) };
     }
 
     void Handle_sort(HandleRef _this, int32_t column, const std::optional<SortOrder>& order) {
         const auto order2 = order.value_or(SortOrder::AscendingOrder);
-        ABSITEMMODEL_THIS->sort(column, static_cast<Qt::SortOrder>(order2));
+        THIS->sort(column, static_cast<Qt::SortOrder>(order2));
     }
 
     Size Handle_span(HandleRef _this, ModelIndex::HandleRef index) {
-        return toSize(ABSITEMMODEL_THIS->span(index->value));
+        return toSize(THIS->span(index->value));
     }
 
     DropActionSet Handle_supportedDragActions(HandleRef _this) {
-        return ABSITEMMODEL_THIS->supportedDragActions();
+        return THIS->supportedDragActions();
     }
 
     DropActionSet Handle_supportedDropActions(HandleRef _this) {
-        return ABSITEMMODEL_THIS->supportedDropActions();
+        return THIS->supportedDropActions();
     }
 
     void Handle_revert(HandleRef _this) {
-        ABSITEMMODEL_THIS->revert();
+        THIS->revert();
     }
 
     void Handle_submit(HandleRef _this) {
-        ABSITEMMODEL_THIS->submit();
+        THIS->submit();
+    }
+
+    SignalConnectionRef Handle_connect_ColumnsAboutToBeInserted(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
+        const auto connection = QObject::connect(THIS, &QAbstractItemModel::columnsAboutToBeInserted, [handler](const QModelIndex &parent, int first, int last) {
+            ModelIndex::__Handle parent2(parent);
+            handler->columnsAboutToBeInserted(&parent2, first, last);
+        });
+        return new __SignalConnection { connection };
+    }
+
+    SignalConnectionRef Handle_connect_ColumnsAboutToBeMoved(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
+        const auto connection = QObject::connect(THIS, &QAbstractItemModel::columnsAboutToBeMoved, [handler](const QModelIndex &sourceParent, int sourceStart, int sourceEnd, const QModelIndex &destinationParent, int destinationColumn) {
+            ModelIndex::__Handle src2(sourceParent);
+            ModelIndex::__Handle dest2(destinationParent);
+            handler->columnsAboutToBeMoved(&src2, sourceStart, sourceEnd, &dest2, destinationColumn);
+        });
+        return new __SignalConnection { connection };
+    }
+
+    SignalConnectionRef Handle_connect_ColumnsAboutToBeRemoved(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
+        const auto connection = QObject::connect(THIS, &QAbstractItemModel::columnsAboutToBeRemoved, [handler](const QModelIndex &parent, int first, int last) {
+            ModelIndex::__Handle parent2(parent);
+            handler->columnsAboutToBeRemoved(&parent2, first, last);
+        });
+        return new __SignalConnection { connection };
+    }
+
+    SignalConnectionRef Handle_connect_ColumnsInserted(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
+        const auto connection = QObject::connect(THIS, &QAbstractItemModel::columnsInserted, [handler](const QModelIndex &parent, int first, int last) {
+            ModelIndex::__Handle parent2(parent);
+            handler->columnsInserted(&parent2, first, last);
+        });
+        return new __SignalConnection { connection };
+    }
+
+    SignalConnectionRef Handle_connect_ColumnsMoved(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
+        const auto connection = QObject::connect(THIS, &QAbstractItemModel::columnsMoved, [handler](const QModelIndex &sourceParent, int sourceStart, int sourceEnd, const QModelIndex &destinationParent, int destinationColumn) {
+            ModelIndex::__Handle src2(sourceParent);
+            ModelIndex::__Handle dest2(destinationParent);
+            handler->columnsMoved(&src2, sourceStart, sourceEnd, &dest2, destinationColumn);
+        });
+        return new __SignalConnection { connection };
+    }
+
+    SignalConnectionRef Handle_connect_ColumnsRemoved(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
+        const auto connection = QObject::connect(THIS, &QAbstractItemModel::columnsRemoved, [handler](const QModelIndex &parent, int first, int last) {
+            ModelIndex::__Handle parent2(parent);
+            handler->columnsRemoved(&parent2, first, last);
+        });
+        return new __SignalConnection { connection };
+    }
+
+    SignalConnectionRef Handle_connect_DataChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
+        const auto connection = QObject::connect(THIS, &QAbstractItemModel::dataChanged, [handler](const QModelIndex &topLeft, const QModelIndex &bottomRight, const QList<int> &roles = QList<int>()) {
+            const auto roles2 = fromQList<int,ItemDataRole>(roles, [](auto i) {
+                return static_cast<ItemDataRole>(i);
+            });
+            ModelIndex::__Handle topLeft2(topLeft);
+            ModelIndex::__Handle bottomRight2(bottomRight);
+            handler->dataChanged(&topLeft2, &bottomRight2, roles2);
+        });
+        return new __SignalConnection { connection };
+    }
+
+    SignalConnectionRef Handle_connect_HeaderDataChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
+        const auto connection = QObject::connect(THIS, &QAbstractItemModel::headerDataChanged, [handler](Qt::Orientation orientation, int first, int last) {
+            handler->headerDataChanged(static_cast<Orientation>(orientation), first, last);
+        });
+        return new __SignalConnection { connection };
+    }
+
+    SignalConnectionRef Handle_connect_LayoutAboutToBeChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
+        const auto connection = QObject::connect(THIS, &QAbstractItemModel::layoutAboutToBeChanged, [handler](const QList<QPersistentModelIndex> &parents, QAbstractItemModel::LayoutChangeHint hint) {
+            const auto parents2 = fromQList<QPersistentModelIndex,PersistentModelIndex::HandleRef>(parents, [](auto pmi) {
+                return PMODELINDEX(pmi);
+            });
+            handler->layoutAboutToBeChanged(parents2, static_cast<LayoutChangeHint>(hint));
+        });
+        return new __SignalConnection { connection };
+    }
+
+    SignalConnectionRef Handle_connect_LayoutChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
+        const auto connection = QObject::connect(THIS, &QAbstractItemModel::layoutChanged, [handler](const QList<QPersistentModelIndex> &parents, QAbstractItemModel::LayoutChangeHint hint) {
+            const auto parents2 = fromQList<QPersistentModelIndex,PersistentModelIndex::HandleRef>(parents, [](auto pmi) {
+                return PMODELINDEX(pmi);
+            });
+            handler->layoutChanged(parents2, static_cast<LayoutChangeHint>(hint));
+        });
+        return new __SignalConnection { connection };
+    }
+
+    SignalConnectionRef Handle_connect_ModelAboutToBeReset(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
+        const auto connection = QObject::connect(THIS, &QAbstractItemModel::modelAboutToBeReset, [handler] {
+            handler->modelAboutToBeReset();
+        });
+        return new __SignalConnection { connection };
+    }
+
+    SignalConnectionRef Handle_connect_ModelReset(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
+        const auto connection = QObject::connect(THIS, &QAbstractItemModel::modelReset, [handler] {
+            handler->modelReset();
+        });
+        return new __SignalConnection { connection };
+    }
+
+    SignalConnectionRef Handle_connect_RowsAboutToBeInserted(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
+        const auto connection = QObject::connect(THIS, &QAbstractItemModel::rowsAboutToBeInserted, [handler](const QModelIndex &parent, int start, int end) {
+            ModelIndex::__Handle parent2(parent);
+            handler->rowsAboutToBeInserted(&parent2, start, end);
+        });
+        return new __SignalConnection { connection };
+    }
+
+    SignalConnectionRef Handle_connect_RowsAboutToBeMoved(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
+        const auto connection = QObject::connect(THIS, &QAbstractItemModel::rowsAboutToBeMoved, [handler](const QModelIndex &sourceParent, int sourceStart, int sourceEnd, const QModelIndex &destinationParent, int destinationRow) {
+            ModelIndex::__Handle src2(sourceParent);
+            ModelIndex::__Handle dest2(destinationParent);
+            handler->rowsAboutToBeMoved(&src2, sourceStart, sourceEnd, &dest2, destinationRow);
+        });
+        return new __SignalConnection { connection };
+    }
+
+    SignalConnectionRef Handle_connect_RowsAboutToBeRemoved(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
+        const auto connection = QObject::connect(THIS, &QAbstractItemModel::rowsAboutToBeRemoved, [handler](const QModelIndex &parent, int first, int last) {
+            ModelIndex::__Handle parent2(parent);
+            handler->rowsAboutToBeRemoved(&parent2, first, last);
+        });
+        return new __SignalConnection { connection };
+    }
+
+    SignalConnectionRef Handle_connect_RowsInserted(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
+        const auto connection = QObject::connect(THIS, &QAbstractItemModel::rowsInserted, [handler](const QModelIndex &parent, int first, int last) {
+            ModelIndex::__Handle parent2(parent);
+            handler->rowsInserted(&parent2, first, last);
+        });
+        return new __SignalConnection { connection };
+    }
+
+    SignalConnectionRef Handle_connect_RowsMoved(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
+        const auto connection = QObject::connect(THIS, &QAbstractItemModel::rowsMoved, [handler](const QModelIndex &sourceParent, int sourceStart, int sourceEnd, const QModelIndex &destinationParent, int destinationRow) {
+            ModelIndex::__Handle src2(sourceParent);
+            ModelIndex::__Handle dest2(destinationParent);
+            handler->rowsMoved(&src2, sourceStart, sourceEnd, &dest2, destinationRow);
+        });
+        return new __SignalConnection { connection };
+    }
+
+    SignalConnectionRef Handle_connect_RowsRemoved(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
+        const auto connection = QObject::connect(THIS, &QAbstractItemModel::rowsRemoved, [handler](const QModelIndex &parent, int first, int last) {
+            ModelIndex::__Handle parent2(parent);
+            handler->rowsRemoved(&parent2, first, last);
+        });
+        return new __SignalConnection { connection };
     }
 
     // subclassing stuff ===============================================================
@@ -361,17 +516,11 @@ namespace AbstractItemModel
         return new ModelIndex::__Owned(raw);
     }
 
-    void Interior_setSignalMask(InteriorRef _this, SignalMask mask) {
-        WRAPPER->setSignalMask(mask);
-    }
-
     void Interior_dispose(InteriorRef _this) {
-        delete WRAPPER;
+        delete SUBCLASSED_THIS;
     }
 
     InteriorRef createImplementation(const std::shared_ptr<SignalHandler>& handler, const std::shared_ptr<ImplementationMethods>& methods, ImplementationMask mask) {
-        const auto model = new Implementation(methods, mask);
-        const auto wrapper = new SignalWrapper(model, handler);
-        return reinterpret_cast<InteriorRef>(wrapper);
+        return reinterpret_cast<InteriorRef>(new Implementation(methods, mask));
     }
 }

@@ -1,13 +1,9 @@
 #include "generated/Layout.h"
 #include "LayoutInternal.h"
 
-#include <QWidget>
-#include <QLayout>
-
 #include "WidgetInternal.h"
 
-#define WRAPPER (reinterpret_cast<SignalWrapper*>(_this))
-#define LAYOUT_THIS (WRAPPER->getActual())
+#define THIS (reinterpret_cast<QLayout*>(_this))
 
 namespace Layout
 {
@@ -20,109 +16,93 @@ namespace Layout
     // }
 
     SizeConstraint Handle_getSizeConstraint(HandleRef _this) {
-        return static_cast<SizeConstraint>(LAYOUT_THIS->sizeConstraint());
+        return static_cast<SizeConstraint>(THIS->sizeConstraint());
     }
 
     void Handle_setSizeConstraint(HandleRef _this, SizeConstraint constraint) {
-        LAYOUT_THIS->setSizeConstraint(static_cast<QLayout::SizeConstraint>(constraint));
+        THIS->setSizeConstraint(static_cast<QLayout::SizeConstraint>(constraint));
     }
 
     int32_t Handle_spacing(HandleRef _this) {
-        return LAYOUT_THIS->spacing();
+        return THIS->spacing();
     }
 
     void Handle_setSpacing(HandleRef _this, int32_t spacing) {
-        LAYOUT_THIS->setSpacing(spacing);
+        THIS->setSpacing(spacing);
     }
 
     bool Handle_isEnabled(HandleRef _this) {
-        return LAYOUT_THIS->isEnabled();
+        return THIS->isEnabled();
     }
 
     void Handle_setEnabled(HandleRef _this, bool enabled) {
-        LAYOUT_THIS->setEnabled(enabled);
+        THIS->setEnabled(enabled);
     }
 
     bool Handle_activate(HandleRef _this) {
-        return LAYOUT_THIS->activate();
+        return THIS->activate();
     }
 
     void Handle_addWidget(HandleRef _this, WidgetHandleRef widget) {
-        const auto wrapper = reinterpret_cast<Widget::SignalWrapper*>(widget);
-        LAYOUT_THIS->addWidget(wrapper->getActual());
+        THIS->addWidget(AS_QWIDGET_PTR(widget));
     }
 
     Margins Handle_contentsMargins(HandleRef _this) {
         int left, top, right, bottom;
-        LAYOUT_THIS->getContentsMargins(&left, &top, &right, &bottom);
+        THIS->getContentsMargins(&left, &top, &right, &bottom);
         return Margins { left, top, right, bottom };
     }
 
     Rect Handle_contentsRect(HandleRef _this) {
-        return toRect(LAYOUT_THIS->contentsRect());
+        return toRect(THIS->contentsRect());
     }
 
     int32_t Handle_count(HandleRef _this) {
-        return LAYOUT_THIS->count();
+        return THIS->count();
     }
 
     int32_t Handle_indexOf(HandleRef _this, WidgetHandleRef widget) {
-        const auto wrapper = reinterpret_cast<Widget::SignalWrapper*>(widget);
-        return LAYOUT_THIS->indexOf(wrapper->getActual());
+        return THIS->indexOf(AS_QWIDGET_PTR(widget));
     }
 
     WidgetHandleRef Handle_menuBar(HandleRef _this) {
-        if (const auto widget = LAYOUT_THIS->menuBar(); widget != nullptr) {
-            const auto wrapper = wrapperForQObject(widget);
-            assert(wrapper != nullptr);
-            return reinterpret_cast<WidgetHandleRef>(wrapper);
-        }
-        return nullptr;
+        return reinterpret_cast<WidgetHandleRef>(THIS->menuBar());
     }
 
     WidgetHandleRef Handle_parentWidget(HandleRef _this) {
-        if (const auto widget = LAYOUT_THIS->parentWidget(); widget != nullptr) {
-            const auto wrapper = wrapperForQObject(widget);
-            assert(wrapper != nullptr);
-            return reinterpret_cast<WidgetHandleRef>(wrapper);
-        }
-        return nullptr;
+        return reinterpret_cast<WidgetHandleRef>(THIS->parentWidget());
     }
 
     void Handle_removeWidget(HandleRef _this, WidgetHandleRef widget) {
-        const auto wrapper = reinterpret_cast<Widget::SignalWrapper*>(widget);
-        LAYOUT_THIS->removeWidget(wrapper->getActual());
+        THIS->removeWidget(AS_QWIDGET_PTR(widget));
     }
 
     void Handle_setAlignment(HandleRef _this, WidgetHandleRef widget, Alignment alignment) {
-        const auto wrapper = reinterpret_cast<Widget::SignalWrapper*>(widget);
-        LAYOUT_THIS->setAlignment(wrapper->getActual(), static_cast<Qt::Alignment>(alignment));
+        THIS->setAlignment(AS_QWIDGET_PTR(widget), static_cast<Qt::Alignment>(alignment));
     }
 
     void Handle_setAlignment(HandleRef _this, HandleRef layout, Alignment alignment) {
-        const auto wrapper = reinterpret_cast<Layout::SignalWrapper*>(layout);
-        LAYOUT_THIS->setAlignment(wrapper->getActual(), static_cast<Qt::Alignment>(alignment));
+        THIS->setAlignment(AS_QLAYOUT_PTR(layout), static_cast<Qt::Alignment>(alignment));
     }
 
     void Handle_setContentsMargins(HandleRef _this, Margins margins) {
-        LAYOUT_THIS->setContentsMargins(toQMargins(margins));
+        THIS->setContentsMargins(toQMargins(margins));
     }
 
     void Handle_setContentsMargins(HandleRef _this, int32_t left, int32_t top, int32_t right, int32_t bottom) {
-        LAYOUT_THIS->setContentsMargins(left, top, right, bottom);
+        THIS->setContentsMargins(left, top, right, bottom);
     }
 
     void Handle_setMenuBar(HandleRef _this, WidgetHandleRef widget) {
-        const auto wrapper = reinterpret_cast<Widget::SignalWrapper*>(widget);
-        LAYOUT_THIS->setMenuBar(wrapper->getActual());
+        THIS->setMenuBar(AS_QWIDGET_PTR(widget));
     }
 
     void Handle_unsetContentsMargins(HandleRef _this) {
-        LAYOUT_THIS->unsetContentsMargins();
+        THIS->unsetContentsMargins();
     }
 
     void Handle_update(HandleRef _this) {
-        LAYOUT_THIS->update();
+        THIS->update();
     }
 }
 

@@ -1,148 +1,160 @@
 #include "generated/ListView.h"
 #include "ListViewInternal.h"
+#include "ModelIndexInternal.h"
 
+#include "ObjectInternal.h"
+#include "WidgetInternal.h"
 #include "util/convert.h"
 
-#define WRAPPER (reinterpret_cast<SignalWrapper*>(_this))
-#define LISTVIEW_THIS (WRAPPER->getActual())
+#define THIS (reinterpret_cast<QListView*>(_this))
 
 namespace ListView
 {
     int32_t Handle_batchSize(HandleRef _this) {
-        return LISTVIEW_THIS->batchSize();
+        return THIS->batchSize();
     }
 
     void Handle_setBatchSize(HandleRef _this, int32_t size) {
-        LISTVIEW_THIS->setBatchSize(size);
+        THIS->setBatchSize(size);
     }
 
     Flow Handle_getFlow(HandleRef _this) {
-        return static_cast<Flow>(LISTVIEW_THIS->flow());
+        return static_cast<Flow>(THIS->flow());
     }
 
     void Handle_setFlow(HandleRef _this, Flow flow) {
-        LISTVIEW_THIS->setFlow(static_cast<QListView::Flow>(flow));
+        THIS->setFlow(static_cast<QListView::Flow>(flow));
     }
 
     Size Handle_gridSize(HandleRef _this) {
-        return toSize(LISTVIEW_THIS->gridSize());
+        return toSize(THIS->gridSize());
     }
 
     void Handle_setGridSize(HandleRef _this, Size size) {
-        LISTVIEW_THIS->setGridSize(toQSize(size));
+        THIS->setGridSize(toQSize(size));
     }
 
     Alignment Handle_itemAlignment(HandleRef _this) {
-        return LISTVIEW_THIS->itemAlignment();
+        return THIS->itemAlignment();
     }
 
     void Handle_setItemAlignment(HandleRef _this, Alignment align) {
-        LISTVIEW_THIS->setItemAlignment(static_cast<Qt::Alignment>(align));
+        THIS->setItemAlignment(static_cast<Qt::Alignment>(align));
     }
 
     LayoutMode Handle_getLayoutMode(HandleRef _this) {
-        return static_cast<LayoutMode>(LISTVIEW_THIS->layoutMode());
+        return static_cast<LayoutMode>(THIS->layoutMode());
     }
 
     void Handle_setLayoutMode(HandleRef _this, LayoutMode mode) {
-        LISTVIEW_THIS->setLayoutMode(static_cast<QListView::LayoutMode>(mode));
+        THIS->setLayoutMode(static_cast<QListView::LayoutMode>(mode));
     }
 
     int32_t Handle_modelColumn(HandleRef _this) {
-        return LISTVIEW_THIS->modelColumn();
+        return THIS->modelColumn();
     }
 
     void Handle_setModelColumn(HandleRef _this, int32_t column) {
-        LISTVIEW_THIS->setModelColumn(column);
+        THIS->setModelColumn(column);
     }
 
     Movement Handle_getMovement(HandleRef _this) {
-        return static_cast<Movement>(LISTVIEW_THIS->movement());
+        return static_cast<Movement>(THIS->movement());
     }
 
     void Handle_setMovement(HandleRef _this, Movement movement) {
-        LISTVIEW_THIS->setMovement(static_cast<QListView::Movement>(movement));
+        THIS->setMovement(static_cast<QListView::Movement>(movement));
     }
 
     ResizeMode Handle_getResizeMode(HandleRef _this) {
-        return static_cast<ResizeMode>(LISTVIEW_THIS->resizeMode());
+        return static_cast<ResizeMode>(THIS->resizeMode());
     }
 
     void Handle_setResizeMode(HandleRef _this, ResizeMode mode) {
-        LISTVIEW_THIS->setResizeMode(static_cast<QListView::ResizeMode>(mode));
+        THIS->setResizeMode(static_cast<QListView::ResizeMode>(mode));
     }
 
     bool Handle_isSelectionRectVisible(HandleRef _this) {
-        return LISTVIEW_THIS->isSelectionRectVisible();
+        return THIS->isSelectionRectVisible();
     }
 
     void Handle_setSelectionRectVisible(HandleRef _this, bool visible) {
-        LISTVIEW_THIS->setSelectionRectVisible(visible);
+        THIS->setSelectionRectVisible(visible);
     }
 
     int32_t Handle_spacing(HandleRef _this) {
-        return LISTVIEW_THIS->spacing();
+        return THIS->spacing();
     }
 
     void Handle_setSpacing(HandleRef _this, int32_t spacing) {
-        LISTVIEW_THIS->setSpacing(spacing);
+        THIS->setSpacing(spacing);
     }
 
     bool Handle_uniformItemSizes(HandleRef _this) {
-        return LISTVIEW_THIS->uniformItemSizes();
+        return THIS->uniformItemSizes();
     }
 
     void Handle_setUniformItemSizes(HandleRef _this, bool state) {
-        LISTVIEW_THIS->setUniformItemSizes(state);
+        THIS->setUniformItemSizes(state);
     }
 
     ViewMode Handle_getViewMode(HandleRef _this) {
-        return static_cast<ViewMode>(LISTVIEW_THIS->viewMode());
+        return static_cast<ViewMode>(THIS->viewMode());
     }
 
     void Handle_setViewMode(HandleRef _this, ViewMode mode) {
-        LISTVIEW_THIS->setViewMode(static_cast<QListView::ViewMode>(mode));
+        THIS->setViewMode(static_cast<QListView::ViewMode>(mode));
     }
 
     bool Handle_wordWrap(HandleRef _this) {
-        return LISTVIEW_THIS->wordWrap();
+        return THIS->wordWrap();
     }
 
     void Handle_setWordWrap(HandleRef _this, bool state) {
-        LISTVIEW_THIS->setWordWrap(state);
+        THIS->setWordWrap(state);
     }
 
     bool Handle_isWrapping(HandleRef _this) {
-        return LISTVIEW_THIS->isWrapping();
+        return THIS->isWrapping();
     }
 
     void Handle_setWrapping(HandleRef _this, bool wrapping) {
-        LISTVIEW_THIS->setWrapping(wrapping);
+        THIS->setWrapping(wrapping);
     }
 
     void Handle_clearPropertyFlags(HandleRef _this) {
-        LISTVIEW_THIS->clearPropertyFlags();
+        THIS->clearPropertyFlags();
     }
 
     bool Handle_isRowHidden(HandleRef _this, int32_t row) {
-        return LISTVIEW_THIS->isRowHidden(row);
+        return THIS->isRowHidden(row);
     }
 
     void Handle_setRowHidden(HandleRef _this, int32_t row, bool hide) {
-        LISTVIEW_THIS->setRowHidden(row, hide);
+        THIS->setRowHidden(row, hide);
     }
 
-    void Handle_setSignalMask(HandleRef _this, SignalMask mask) {
-        WRAPPER->setSignalMask(mask);
+    SignalConnectionRef Handle_connect_IndexesMoved(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
+        const auto connection = QObject::connect(THIS, &QListView::indexesMoved, [handler](const QModelIndexList &indexes) {
+            // oof, we really need to solve this whole ModelIndex/Variant Handle-vs-Owned problem
+            std::vector<ModelIndex::__Owned> indexes2;
+            std::vector<ModelIndex::HandleRef> pointers;
+            int count = 0;
+            for (auto &index : indexes) {
+                indexes2.push_back(ModelIndex::__Owned { index });
+                pointers.push_back(&indexes2[count++]);
+            }
+            handler->indexesMoved(pointers);
+        });
+        return new __SignalConnection { connection };
     }
 
     void Handle_dispose(HandleRef _this) {
-        delete WRAPPER;
+        delete THIS;
     }
 
     HandleRef create(const std::shared_ptr<SignalHandler>& handler, const std::optional<Widget::HandleRef>& parent) {
         const auto qParent = Widget::fromOptionalHandle(parent);
-        const auto wrapper = new SignalWrapper(new QListView(qParent), handler);
-        return reinterpret_cast<HandleRef>(wrapper);
+        return reinterpret_cast<HandleRef>(new QListView(qParent));
     }
 }

@@ -6,142 +6,188 @@
 
 #include "util/convert.h"
 
-#define WRAPPER (reinterpret_cast<SignalWrapper*>(_this))
-#define FILEDLG_THIS (WRAPPER->getActual())
+#define THIS (reinterpret_cast<QFileDialog*>(_this))
 
 namespace FileDialog
 {
     AcceptMode Handle_getAcceptMode(HandleRef _this) {
-        return static_cast<AcceptMode>(FILEDLG_THIS->acceptMode());
+        return static_cast<AcceptMode>(THIS->acceptMode());
     }
 
     void Handle_setAcceptMode(HandleRef _this, AcceptMode mode) {
-        FILEDLG_THIS->setAcceptMode(static_cast<QFileDialog::AcceptMode>(mode));
+        THIS->setAcceptMode(static_cast<QFileDialog::AcceptMode>(mode));
     }
 
     std::string Handle_defaultSuffix(HandleRef _this) {
-        return FILEDLG_THIS->defaultSuffix().toStdString();
+        return THIS->defaultSuffix().toStdString();
     }
 
     void Handle_setDefaultSuffix(HandleRef _this, const std::string& suffix) {
-        FILEDLG_THIS->setDefaultSuffix(QString::fromStdString(suffix));
+        THIS->setDefaultSuffix(QString::fromStdString(suffix));
     }
 
     FileMode Handle_getFileMode(HandleRef _this) {
-        return static_cast<FileMode>(FILEDLG_THIS->fileMode());
+        return static_cast<FileMode>(THIS->fileMode());
     }
 
     void Handle_setFileMode(HandleRef _this, FileMode mode) {
-        FILEDLG_THIS->setFileMode(static_cast<QFileDialog::FileMode>(mode));
+        THIS->setFileMode(static_cast<QFileDialog::FileMode>(mode));
     }
 
     Options Handle_getOptions(HandleRef _this) {
-        return FILEDLG_THIS->options();
+        return THIS->options();
     }
 
     void Handle_setOptions(HandleRef _this, Options opts) {
-        FILEDLG_THIS->setOptions(static_cast<QFileDialog::Options>(opts));
+        THIS->setOptions(static_cast<QFileDialog::Options>(opts));
     }
 
     std::vector<std::string> Handle_supportedSchemes(HandleRef _this) {
-        return toVectorStrings(FILEDLG_THIS->supportedSchemes());
+        return toVectorStrings(THIS->supportedSchemes());
     }
 
     void Handle_setSupportedSchemes(HandleRef _this, const std::vector<std::string>& schemes) {
-        FILEDLG_THIS->setSupportedSchemes(toQStringList(schemes));
+        THIS->setSupportedSchemes(toQStringList(schemes));
     }
 
     ViewMode Handle_getViewMode(HandleRef _this) {
-        return static_cast<ViewMode>(FILEDLG_THIS->viewMode());
+        return static_cast<ViewMode>(THIS->viewMode());
     }
 
     void Handle_setViewMode(HandleRef _this, ViewMode mode) {
-        FILEDLG_THIS->setViewMode(static_cast<QFileDialog::ViewMode>(mode));
+        THIS->setViewMode(static_cast<QFileDialog::ViewMode>(mode));
     }
 
     Dir::OwnedRef Handle_directory(HandleRef _this) {
-        return DIR_HEAP_NEW(FILEDLG_THIS->directory());
+        return DIR_HEAP_NEW(THIS->directory());
     }
 
     Url::OwnedRef Handle_directoryUrl(HandleRef _this) {
-        return URL_HEAP_NEW(FILEDLG_THIS->directoryUrl());
+        return URL_HEAP_NEW(THIS->directoryUrl());
     }
 
     std::vector<std::string> Handle_mimeTypeFilters(HandleRef _this) {
-        return toVectorStrings(FILEDLG_THIS->mimeTypeFilters());
+        return toVectorStrings(THIS->mimeTypeFilters());
     }
 
     std::vector<std::string> Handle_nameFilters(HandleRef _this) {
-        return toVectorStrings(FILEDLG_THIS->nameFilters());
+        return toVectorStrings(THIS->nameFilters());
     }
 
     void Handle_setDirectory(HandleRef _this, const std::string& dir) {
-        FILEDLG_THIS->setDirectory(QString::fromStdString(dir));
+        THIS->setDirectory(QString::fromStdString(dir));
     }
 
     void Handle_setDirectory(HandleRef _this, Dir::HandleRef dir) {
-        FILEDLG_THIS->setDirectory(QDIR_VALUE(dir));
+        THIS->setDirectory(QDIR_VALUE(dir));
     }
 
     void Handle_setDirectoryUrl(HandleRef _this, Url::HandleRef url) {
-        FILEDLG_THIS->setDirectoryUrl(QURL_VALUE(url));
+        THIS->setDirectoryUrl(QURL_VALUE(url));
     }
 
     void Handle_setMimeTypeFilters(HandleRef _this, const std::vector<std::string>& filters) {
-        FILEDLG_THIS->setMimeTypeFilters(toQStringList(filters));
+        THIS->setMimeTypeFilters(toQStringList(filters));
     }
 
     void Handle_setNameFilter(HandleRef _this, const std::string& filter) {
-        FILEDLG_THIS->setNameFilter(QString::fromStdString(filter));
+        THIS->setNameFilter(QString::fromStdString(filter));
     }
 
     void Handle_setNameFilters(HandleRef _this, const std::vector<std::string>& filters) {
-        FILEDLG_THIS->setNameFilters(toQStringList(filters));
+        THIS->setNameFilters(toQStringList(filters));
     }
 
     void Handle_selectFile(HandleRef _this, const std::string& file) {
-        FILEDLG_THIS->selectFile(QString::fromStdString(file));
+        THIS->selectFile(QString::fromStdString(file));
     }
 
     std::vector<std::string> Handle_selectedFiles(HandleRef _this) {
-        return toVectorStrings(FILEDLG_THIS->selectedFiles());
+        return toVectorStrings(THIS->selectedFiles());
     }
 
-    void Handle_setSignalMask(HandleRef _this, SignalMask mask) {
-        WRAPPER->setSignalMask(mask);
+    SignalConnectionRef Handle_connect_CurrentChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
+        const auto connection = QObject::connect(THIS, &QFileDialog::currentChanged, [handler](const QString &path) {
+            handler->currentChanged(path.toStdString());
+        });
+        return new __SignalConnection { connection };
+    }
+
+    SignalConnectionRef Handle_connect_CurrentUrlChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
+        const auto connection = QObject::connect(THIS, &QFileDialog::currentUrlChanged, [handler](const QUrl &url) {
+            handler->currentUrlChanged((Url::HandleRef)&url);
+        });
+        return new __SignalConnection { connection };
+    }
+
+    SignalConnectionRef Handle_connect_DirectoryEntered(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
+        const auto connection = QObject::connect(THIS, &QFileDialog::directoryEntered, [handler](const QString &directory) {
+            handler->directoryEntered(directory.toStdString());
+        });
+        return new __SignalConnection { connection };
+    }
+
+    SignalConnectionRef Handle_connect_DirectoryUrlEntered(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
+        const auto connection = QObject::connect(THIS, &QFileDialog::directoryUrlEntered, [handler](const QUrl &directory) {
+            handler->directoryUrlEntered((Url::HandleRef)&directory);
+        });
+        return new __SignalConnection { connection };
+    }
+
+    SignalConnectionRef Handle_connect_FileSelected(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
+        const auto connection = QObject::connect(THIS, &QFileDialog::fileSelected, [handler](const QString &file) {
+            handler->fileSelected(file.toStdString());
+        });
+        return new __SignalConnection { connection };
+    }
+
+    SignalConnectionRef Handle_connect_FilesSelected(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
+        const auto connection = QObject::connect(THIS, &QFileDialog::filesSelected, [handler](const QStringList &selected) {
+            handler->filesSelected(toVectorStrings(selected));
+        });
+        return new __SignalConnection { connection };
+    }
+
+    SignalConnectionRef Handle_connect_FilterSelected(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
+        const auto connection = QObject::connect(THIS, &QFileDialog::filterSelected, [handler](const QString &filter) {
+            handler->filterSelected(filter.toStdString());
+        });
+        return new __SignalConnection { connection };
+    }
+
+    SignalConnectionRef Handle_connect_UrlSelected(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
+        const auto connection = QObject::connect(THIS, &QFileDialog::urlSelected, [handler](const QUrl &url) {
+            handler->urlSelected((Url::HandleRef)&url);
+        });
+        return new __SignalConnection { connection };
+    }
+
+    SignalConnectionRef Handle_connect_UrlsSelected(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
+        const auto connection = QObject::connect(THIS, &QFileDialog::urlsSelected, [handler](const QList<QUrl> &urls) {
+            const auto urls2 = fromQList<QUrl,Url::HandleRef>(urls, [](auto url) { return (Url::HandleRef)&url; }); // seems sketchy
+        });
+        return new __SignalConnection { connection };
     }
 
     void Handle_dispose(HandleRef _this) {
-        delete WRAPPER;
+        delete THIS;
     }
 
-    HandleRef create(Widget::HandleRef parent, WindowFlags flags_, const std::shared_ptr<SignalHandler>& handler) {
-        const auto parentWrapper = reinterpret_cast<Widget::SignalWrapper*>(parent);
-        QWidget* parentWidget = parentWrapper != nullptr ? parentWrapper->getActual() : nullptr;
-        const auto dlg = new QFileDialog(parentWidget, static_cast<Qt::WindowFlags>(flags_));
-        const auto wrapper = new SignalWrapper(dlg, handler);
-        return reinterpret_cast<HandleRef>(wrapper);
+    HandleRef create(Widget::HandleRef parent, WindowFlags flags_) {
+        return reinterpret_cast<HandleRef>(new QFileDialog(reinterpret_cast<QWidget*>(parent), static_cast<Qt::WindowFlags>(flags_)));
     }
 
-    HandleRef create(const std::shared_ptr<SignalHandler>& handler, const CreateOpts& opts) {
-        const auto parent = opts.mapOrDefaultParent([](auto handle) {
-            const auto parentWrapper = reinterpret_cast<Widget::SignalWrapper*>(handle);
-            return parentWrapper->getActual();
-        }, static_cast<QWidget*>(nullptr));
+    HandleRef create(const CreateOpts& opts) {
+        const auto parent = opts.mapOrDefaultParent([](auto p) { return reinterpret_cast<QWidget*>(p); }, nullptr);
         const auto caption = opts.mapOrDefaultCaption(QString::fromStdString, QString());
         const auto directory = opts.mapOrDefaultDirectory(QString::fromStdString, QString());
         const auto filter = opts.mapOrDefaultFilter(QString::fromStdString, QString());
-        // !
-        const auto dlg = new QFileDialog(parent, caption, directory, filter);
-        const auto wrapper = new SignalWrapper(dlg, handler);
-        return reinterpret_cast<HandleRef>(wrapper);
+        //
+        return reinterpret_cast<HandleRef>(new QFileDialog(parent, caption, directory, filter));
     }
 
     std::string getExistingDirectory(const GetExistingDirectoryOpts& opts) {
-        const auto parent = opts.mapOrDefaultParent([](auto handle) {
-            const auto parentWrapper = reinterpret_cast<Widget::SignalWrapper*>(handle);
-            return parentWrapper->getActual();
-        }, static_cast<QWidget*>(nullptr));
+        const auto parent = opts.mapOrDefaultParent([](auto p) { return reinterpret_cast<QWidget*>(p); }, nullptr);
         const auto caption = opts.mapOrDefaultCaption(QString::fromStdString, QString());
         const auto dir = opts.mapOrDefaultDir(QString::fromStdString, QString());
         const auto options = opts.mapOrDefaultOptions_([](auto x) { return static_cast<QFileDialog::Options>(x); }, static_cast<QFileDialog::Options>(QFileDialog::ShowDirsOnly));
@@ -151,10 +197,7 @@ namespace FileDialog
     }
 
     Url::OwnedRef getExistingDirectoryUrl(const GetExistingDirectoryUrlOpts& opts) {
-        const auto parent = opts.mapOrDefaultParent([](auto handle) {
-            const auto parentWrapper = reinterpret_cast<Widget::SignalWrapper*>(handle);
-            return parentWrapper->getActual();
-        }, static_cast<QWidget*>(nullptr));
+        const auto parent = opts.mapOrDefaultParent([](auto p) { return reinterpret_cast<QWidget*>(p); }, nullptr);
         const auto caption = opts.mapOrDefaultCaption(QString::fromStdString, QString());
         const auto dir = opts.mapOrDefaultDir([](auto urlHandle) { return QURL_VALUE(urlHandle); }, QUrl());
         const auto options = opts.mapOrDefaultOptions_([](auto x) { return static_cast<QFileDialog::Options>(x); }, static_cast<QFileDialog::Options>(QFileDialog::ShowDirsOnly));
@@ -165,11 +208,7 @@ namespace FileDialog
     }
 
     void getOpenFileContent(const std::string& nameFilter, const std::function<FileOpenCompletedFunc>& completedFunc, const std::optional<Widget::HandleRef>& parent) {
-        QWidget *qParent = nullptr;
-        if (parent.has_value()) {
-            const auto parentWrapper = reinterpret_cast<Widget::SignalWrapper*>(parent.value());
-            qParent = parentWrapper->getActual();
-        }
+        const auto qParent = Widget::fromOptionalHandle(parent);
         auto fileContentsReady = [completedFunc](const QString& qFilename, const QByteArray& qBytes) {
             if (qFilename.isEmpty()) {
                 // nothin'
@@ -185,10 +224,7 @@ namespace FileDialog
     }
 
     GetOpenFileNameResult getOpenFileName(const GetOpenFileNameOpts& opts) {
-        const auto parent = opts.mapOrDefaultParent([](auto handle) {
-            const auto parentWrapper = reinterpret_cast<Widget::SignalWrapper*>(handle);
-            return parentWrapper->getActual();
-        }, static_cast<QWidget*>(nullptr));
+        const auto parent = opts.mapOrDefaultParent([](auto p) { return reinterpret_cast<QWidget*>(p); }, nullptr);
         const auto caption = opts.mapOrDefaultCaption(QString::fromStdString, QString());
         const auto dir = opts.mapOrDefaultDir(QString::fromStdString, QString());
         const auto filter = opts.mapOrDefaultFilter(QString::fromStdString, QString());
@@ -209,10 +245,7 @@ namespace FileDialog
     }
 
     GetOpenFileNamesResult getOpenFileNames(const GetOpenFileNamesOpts& opts) {
-        const auto parent = opts.mapOrDefaultParent([](auto handle) {
-            const auto parentWrapper = reinterpret_cast<Widget::SignalWrapper*>(handle);
-            return parentWrapper->getActual();
-        }, static_cast<QWidget*>(nullptr));
+        const auto parent = opts.mapOrDefaultParent([](auto p) { return reinterpret_cast<QWidget*>(p); }, nullptr);
         const auto caption = opts.mapOrDefaultCaption(QString::fromStdString, QString());
         const auto dir = opts.mapOrDefaultDir(QString::fromStdString, QString());
         const auto filter = opts.mapOrDefaultFilter(QString::fromStdString, QString());
@@ -233,10 +266,7 @@ namespace FileDialog
     }
 
     GetOpenFileUrlResult getOpenFileUrl(const GetOpenFileUrlOpts& opts) {
-        const auto parent = opts.mapOrDefaultParent([](auto handle) {
-            const auto parentWrapper = reinterpret_cast<Widget::SignalWrapper*>(handle);
-            return parentWrapper->getActual();
-        }, static_cast<QWidget*>(nullptr));
+        const auto parent = opts.mapOrDefaultParent([](auto p) { return reinterpret_cast<QWidget*>(p); }, nullptr);
         const auto caption = opts.mapOrDefaultCaption(QString::fromStdString, QString());
         const auto dir = opts.mapOrDefaultDir([](auto x) { return QURL_VALUE(x); }, QUrl());
         const auto filter = opts.mapOrDefaultFilter(QString::fromStdString, QString());
@@ -259,10 +289,7 @@ namespace FileDialog
     }
 
     GetOpenFileUrlsResult getOpenFileUrls(const GetOpenFileUrlsOpts& opts) {
-        const auto parent = opts.mapOrDefaultParent([](auto handle) {
-            const auto parentWrapper = reinterpret_cast<Widget::SignalWrapper*>(handle);
-            return parentWrapper->getActual();
-        }, static_cast<QWidget*>(nullptr));
+        const auto parent = opts.mapOrDefaultParent([](auto p) { return reinterpret_cast<QWidget*>(p); }, nullptr);
         const auto caption = opts.mapOrDefaultCaption(QString::fromStdString, QString());
         const auto dir = opts.mapOrDefaultDir([](auto x) { return QURL_VALUE(x); }, QUrl());
         const auto filter = opts.mapOrDefaultFilter(QString::fromStdString, QString());
@@ -287,10 +314,7 @@ namespace FileDialog
     }
 
     GetSaveFileNameResult getSaveFileName(const GetSaveFileNameOpts& opts) {
-        const auto parent = opts.mapOrDefaultParent([](auto handle) {
-            const auto parentWrapper = reinterpret_cast<Widget::SignalWrapper*>(handle);
-            return parentWrapper->getActual();
-        }, static_cast<QWidget*>(nullptr));
+        const auto parent = opts.mapOrDefaultParent([](auto p) { return reinterpret_cast<QWidget*>(p); }, nullptr);
         const auto caption = opts.mapOrDefaultCaption(QString::fromStdString, QString());
         const auto dir = opts.mapOrDefaultDir(QString::fromStdString, QString());
         const auto filter = opts.mapOrDefaultFilter(QString::fromStdString, QString());
@@ -311,10 +335,7 @@ namespace FileDialog
     }
 
     GetSaveFileUrlResult getSaveFileUrl(const GetSaveFileUrlOpts& opts) {
-        const auto parent = opts.mapOrDefaultParent([](auto handle) {
-            const auto parentWrapper = reinterpret_cast<Widget::SignalWrapper*>(handle);
-            return parentWrapper->getActual();
-        }, static_cast<QWidget*>(nullptr));
+        const auto parent = opts.mapOrDefaultParent([](auto p) { return reinterpret_cast<QWidget*>(p); }, nullptr);
         const auto caption = opts.mapOrDefaultCaption(QString::fromStdString, QString());
         const auto dir = opts.mapOrDefaultDir([](auto x) { return QURL_VALUE(x); }, QUrl());
         const auto filter = opts.mapOrDefaultFilter(QString::fromStdString, QString());
@@ -337,13 +358,9 @@ namespace FileDialog
     }
 
     void saveFileContent(const std::vector<uint8_t>& fileContent, const std::string& fileNameHint, const std::optional<Widget::HandleRef>& parent) {
-        QByteArray qFileContent(reinterpret_cast<const char*>(fileContent.data()), fileContent.size());
+        QByteArray qFileContent(reinterpret_cast<const char*>(fileContent.data()), static_cast<qsizetype>(fileContent.size()));
         QString qFileNameHint = QString::fromStdString(fileNameHint);
-        QWidget *qParent = nullptr;
-        if (parent.has_value()) {
-            const auto parentWrapper = reinterpret_cast<Widget::SignalWrapper*>(parent.value());
-            qParent = parentWrapper->getActual();
-        }
+        const auto qParent = Widget::fromOptionalHandle(parent);
         QFileDialog::saveFileContent(qFileContent, qFileNameHint, qParent);
     }
 }

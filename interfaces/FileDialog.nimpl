@@ -95,7 +95,7 @@ opaque Handle extends Dialog.Handle {
 }
 
 // ctors
-Handle create(Widget.Handle parent, WindowFlags flags_, SignalHandler handler);
+Handle create(Widget.Handle parent, WindowFlags flags_);
 options CreateOpts {
     Widget.Handle parent;
     string caption;

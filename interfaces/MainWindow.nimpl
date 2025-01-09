@@ -28,25 +28,6 @@ flags DockOptions {
     GroupedDragging = 0x20    // implies AllowTabbedDocks
 }
 
-delegate Menu.Handle CreateMenuWrapperFunc(Menu.SignalHandler handler);
-sumtype PopupMenuResult {
-    NotRequired,                                    // none, no toolbars / dock widgets present
-    AlreadyExists(Menu.Handle handle),
-    NeedsWrapper(CreateMenuWrapperFunc createFunc)
-}
-
-delegate MenuBar.Handle CreateMenuBarWrapperFunc(MenuBar.SignalHandler handler);
-sumtype MenuBarResult {
-    AlreadyExists(MenuBar.Handle handle),
-    NeedsWrapper(CreateMenuBarWrapperFunc createFunc)
-}
-
-delegate StatusBar.Handle CreateStatusBarWrapperFunc(StatusBar.SignalHandler handler);
-sumtype StatusBarResult {
-    AlreadyExists(StatusBar.Handle handle),
-    NeedsWrapper(CreateStatusBarWrapperFunc createFunc)
-}
-
 opaque Handle extends Widget.Handle {
     // fields ==========================================
     bool isAnimated();
@@ -78,16 +59,16 @@ opaque Handle extends Widget.Handle {
     void addDockWidget(DockWidgetArea area, DockWidget.Handle dockWidget, Option<Orientation> orientation);
     void addToolBar(ToolBarArea area, ToolBar.Handle toolbar);
     void addToolBar(ToolBar.Handle toolbar);
-    ToolBar.Handle addToolBar(string title, ToolBar.SignalHandler handler);
+    ToolBar.Handle addToolBar(string title);
     void addToolBarBreak(Option<ToolBarArea> area);
     Widget.Handle centralWidget();
     DockWidgetArea corner(Corner corner);
-    PopupMenuResult createPopupMenu();
+    Menu.Handle createPopupMenu();
     DockWidgetArea getDockWidgetArea(DockWidget.Handle dockwidget);
     void insertToolBar(ToolBar.Handle before, ToolBar.Handle toolbar);
     void insertToolBarBreak(ToolBar.Handle before);
-    MenuBarResult menuBar();                                // creates empty menubar if it doesn't yet exist 
-    Widget.Handle menuWidget();                             // doesn't create, only returns existing
+    MenuBar.Handle menuBar();                                // creates empty menubar if it doesn't yet exist 
+    Widget.Handle menuWidget();                              // doesn't create, only returns existing
     void removeDockWidget(DockWidget.Handle dockwidget);
     void removeToolBar(ToolBar.Handle toolbar);
     void removeToolBarBreak(ToolBar.Handle before);
@@ -102,7 +83,7 @@ opaque Handle extends Widget.Handle {
     void setStatusBar(StatusBar.Handle statusbar);
     void setTabPosition(DockWidgetAreas areas, TabPosition tabPosition);
     void splitDockWidget(DockWidget.Handle first, DockWidget.Handle second, Orientation orientation);
-    StatusBarResult statusBar();                            // create if it doesn't exist yet
+    StatusBar.Handle statusBar();                            // create if it doesn't exist yet
     TabPosition tabPosition(DockWidgetArea area);
     Array<DockWidget.Handle> tabifiedDockWidgets(DockWidget.Handle dockwidget);
     void tabifyDockWidget(DockWidget.Handle first, DockWidget.Handle second);
