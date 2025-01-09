@@ -520,7 +520,7 @@ namespace AbstractItemModel
         delete SUBCLASSED_THIS;
     }
 
-    InteriorRef createImplementation(const std::shared_ptr<SignalHandler>& handler, const std::shared_ptr<ImplementationMethods>& methods, ImplementationMask mask) {
+    InteriorRef createImplementation(const std::shared_ptr<ImplementationMethods>& methods, ImplementationMask mask) {
         return reinterpret_cast<InteriorRef>(new Implementation(methods, mask));
     }
 }

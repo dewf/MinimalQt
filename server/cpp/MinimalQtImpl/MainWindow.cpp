@@ -257,7 +257,7 @@ namespace MainWindow
         delete THIS;
     }
 
-    HandleRef create(const std::shared_ptr<SignalHandler>& handler, const std::optional<Widget::HandleRef>& parent, const std::optional<WindowFlags>& flags_) {
+    HandleRef create(const std::optional<Widget::HandleRef>& parent, const std::optional<WindowFlags>& flags_) {
         const auto qParent = Widget::fromOptionalHandle(parent);
         const auto qFlags = optionOrDefaultStaticCast(flags_, Qt::WindowFlags());
         return reinterpret_cast<HandleRef>(new QMainWindow(qParent, qFlags));
@@ -302,7 +302,7 @@ namespace MainWindow
         delete DELEGATED_THIS;
     }
 
-    DelegatedRef createDelegated(const std::shared_ptr<SignalHandler>& handler) {
+    DelegatedRef createDelegated() {
         return reinterpret_cast<DelegatedRef>(new Delegated());
     }
 }

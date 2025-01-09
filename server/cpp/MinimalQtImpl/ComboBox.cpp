@@ -3,10 +3,12 @@
 
 #include <QStringList>
 
+#include "ObjectInternal.h"
 #include "AbstractItemModelInternal.h"
-#include "util/convert.h"
 #include "VariantInternal.h"
 #include "IconInternal.h"
+
+#include "util/convert.h"
 
 #define THIS (reinterpret_cast<QComboBox*>(_this))
 

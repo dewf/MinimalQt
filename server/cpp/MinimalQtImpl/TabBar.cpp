@@ -1,99 +1,129 @@
 #include "generated/TabBar.h"
 #include "TabBarInternal.h"
 
-#include "util/convert.h"
+#include "ObjectInternal.h"
 #include "IconInternal.h"
+#include "util/convert.h"
 
-#define WRAPPER (reinterpret_cast<SignalWrapper*>(_this))
-#define TABBAR_THIS (WRAPPER->getActual())
+#define THIS (reinterpret_cast<QTabBar*>(_this))
 
 namespace TabBar
 {
     void Handle_setAutoHide(HandleRef _this, bool value) {
-        TABBAR_THIS->setAutoHide(value);
+        THIS->setAutoHide(value);
     }
 
     void Handle_setChangeCurrentOnDrag(HandleRef _this, bool value) {
-        TABBAR_THIS->setChangeCurrentOnDrag(value);
+        THIS->setChangeCurrentOnDrag(value);
     }
 
     int32_t Handle_count(HandleRef _this) {
-        return TABBAR_THIS->count();
+        return THIS->count();
     }
 
     void Handle_setCurrentIndex(HandleRef _this, int32_t value) {
-        TABBAR_THIS->setCurrentIndex(value);
+        THIS->setCurrentIndex(value);
     }
 
     int32_t Handle_currentIndex(HandleRef _this) {
-        return TABBAR_THIS->currentIndex();
+        return THIS->currentIndex();
     }
 
     void Handle_setDocumentMode(HandleRef _this, bool value) {
-        TABBAR_THIS->setDocumentMode(value);
+        THIS->setDocumentMode(value);
     }
 
     void Handle_setDrawBase(HandleRef _this, bool value) {
-        TABBAR_THIS->setDrawBase(value);
+        THIS->setDrawBase(value);
     }
 
     void Handle_setElideMode(HandleRef _this, TextElideMode mode) {
-        TABBAR_THIS->setElideMode(static_cast<Qt::TextElideMode>(mode));
+        THIS->setElideMode(static_cast<Qt::TextElideMode>(mode));
     }
 
     void Handle_setExpanding(HandleRef _this, bool value) {
-        TABBAR_THIS->setExpanding(value);
+        THIS->setExpanding(value);
     }
 
     void Handle_setIconSize(HandleRef _this, Size size) {
-        TABBAR_THIS->setIconSize(toQSize(size));
+        THIS->setIconSize(toQSize(size));
     }
 
     void Handle_setMovable(HandleRef _this, bool value) {
-        TABBAR_THIS->setMovable(value);
+        THIS->setMovable(value);
     }
 
     void Handle_setSelectionBehaviorOnRemove(HandleRef _this, SelectionBehavior value) {
-        TABBAR_THIS->setSelectionBehaviorOnRemove(static_cast<QTabBar::SelectionBehavior>(value));
+        THIS->setSelectionBehaviorOnRemove(static_cast<QTabBar::SelectionBehavior>(value));
     }
 
     void Handle_setShape(HandleRef _this, Shape shape) {
-        TABBAR_THIS->setShape(static_cast<QTabBar::Shape>(shape));
+        THIS->setShape(static_cast<QTabBar::Shape>(shape));
     }
 
     void Handle_setTabsClosable(HandleRef _this, bool value) {
-        TABBAR_THIS->setTabsClosable(value);
+        THIS->setTabsClosable(value);
     }
 
     void Handle_setUsesScrollButtons(HandleRef _this, bool value) {
-        TABBAR_THIS->setUsesScrollButtons(value);
+        THIS->setUsesScrollButtons(value);
     }
 
     void Handle_removeAllTabs(HandleRef _this) {
-        auto count = TABBAR_THIS->count();
+        auto count = THIS->count();
         for (auto i=0; i< count; i++) {
-            TABBAR_THIS->removeTab(0);
+            THIS->removeTab(0);
         }
     }
 
     int32_t Handle_addTab(HandleRef _this, const std::string& text) {
-        return TABBAR_THIS->addTab(QString::fromStdString(text));
+        return THIS->addTab(QString::fromStdString(text));
     }
 
     int32_t Handle_addTab(HandleRef _this, Icon::HandleRef icon, const std::string& text) {
-        return TABBAR_THIS->addTab(QICON_VALUE(icon), QString::fromStdString(text));
+        return THIS->addTab(QICON_VALUE(icon), QString::fromStdString(text));
     }
 
-    void Handle_setSignalMask(HandleRef _this, SignalMask mask) {
-        WRAPPER->setSignalMask(mask);
+    SignalConnectionRef Handle_connect_CurrentChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
+        const auto connection = QObject::connect(THIS, &QTabBar::currentChanged, [handler](int index) {
+            handler->currentChanged(index);
+        });
+        return new __SignalConnection { connection };
+    }
+
+    SignalConnectionRef Handle_connect_TabBarClicked(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
+        const auto connection = QObject::connect(THIS, &QTabBar::tabBarClicked, [handler](int index) {
+            handler->tabBarClicked(index);
+        });
+        return new __SignalConnection { connection };
+    }
+
+    SignalConnectionRef Handle_connect_TabBarDoubleClicked(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
+        const auto connection = QObject::connect(THIS, &QTabBar::tabBarDoubleClicked, [handler](int index) {
+            handler->tabBarDoubleClicked(index);
+        });
+        return new __SignalConnection { connection };
+    }
+
+    SignalConnectionRef Handle_connect_TabCloseRequested(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
+        const auto connection = QObject::connect(THIS, &QTabBar::tabCloseRequested, [handler](int index) {
+            handler->tabCloseRequested(index);
+        });
+        return new __SignalConnection { connection };
+    }
+
+    SignalConnectionRef Handle_connect_TabMoved(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
+        const auto connection = QObject::connect(THIS, &QTabBar::tabMoved, [handler](int fromIndex, int toIndex) {
+            handler->tabMoved(fromIndex, toIndex);
+        });
+        return new __SignalConnection { connection };
     }
 
     void Handle_dispose(HandleRef _this) {
-        delete WRAPPER;
+        delete THIS;
     }
 
-    HandleRef create(const std::shared_ptr<SignalHandler>& handler) {
-        const auto wrapper = new SignalWrapper(new QTabBar(), handler);
-        return reinterpret_cast<HandleRef>(wrapper);
+    HandleRef create() {
+        return reinterpret_cast<HandleRef>(new QTabBar());
     }
 }

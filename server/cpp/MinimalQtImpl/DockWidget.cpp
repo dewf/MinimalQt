@@ -1,6 +1,8 @@
 #include "generated/DockWidget.h"
 #include "DockWidgetInternal.h"
 
+#include "ObjectInternal.h"
+
 #define THIS (reinterpret_cast<QDockWidget*>(_this))
 
 namespace DockWidget
@@ -89,13 +91,13 @@ namespace DockWidget
     }
 
     HandleRef create(const CtorOptions& opts) {
-        const auto parent = opts.mapOrDefaultParent([](auto p) { return AS_QWIDGET_PTR(p); }, nullptr);
+        const auto parent = opts.mapOrDefaultParent([](auto p) { return AS_QWIDGET_PTR(p); }, static_cast<QWidget*>(nullptr));
         const auto flags = opts.mapOrDefaultFlags_([](auto f) { return static_cast<Qt::WindowFlags>(f); }, Qt::WindowFlags());
         return reinterpret_cast<HandleRef>(new QDockWidget(parent, flags));
     }
 
     HandleRef create(const std::string& title, const CtorOptions& opts) {
-        const auto parent = opts.mapOrDefaultParent([](auto p) { return AS_QWIDGET_PTR(p); }, nullptr);
+        const auto parent = opts.mapOrDefaultParent([](auto p) { return AS_QWIDGET_PTR(p); }, static_cast<QWidget*>(nullptr));
         const auto flags = opts.mapOrDefaultFlags_([](auto f) { return static_cast<Qt::WindowFlags>(f); }, Qt::WindowFlags());
         return reinterpret_cast<HandleRef>(new QDockWidget(QString::fromStdString(title), parent, flags));
     }

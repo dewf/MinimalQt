@@ -1,6 +1,7 @@
 #include "generated/Action.h"
 #include "ActionInternal.h"
 
+#include "ObjectInternal.h"
 #include "IconInternal.h"
 #include "KeySequenceInternal.h"
 #include "FontInternal.h"

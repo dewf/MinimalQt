@@ -1,6 +1,8 @@
 #include "generated/GroupBox.h"
 #include "GroupBoxInternal.h"
 
+#include "ObjectInternal.h"
+
 #define THIS (reinterpret_cast<QGroupBox*>(_this))
 
 namespace GroupBox {

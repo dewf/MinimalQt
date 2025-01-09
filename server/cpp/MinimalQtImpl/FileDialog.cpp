@@ -1,6 +1,7 @@
 #include "generated/FileDialog.h"
 #include "FileDialogInternal.h"
 
+#include "ObjectInternal.h"
 #include "UrlInternal.h"
 #include "DirInternal.h"
 
@@ -178,7 +179,7 @@ namespace FileDialog
     }
 
     HandleRef create(const CreateOpts& opts) {
-        const auto parent = opts.mapOrDefaultParent([](auto p) { return reinterpret_cast<QWidget*>(p); }, nullptr);
+        const auto parent = opts.mapOrDefaultParent([](auto p) { return reinterpret_cast<QWidget*>(p); }, static_cast<QWidget*>(nullptr));
         const auto caption = opts.mapOrDefaultCaption(QString::fromStdString, QString());
         const auto directory = opts.mapOrDefaultDirectory(QString::fromStdString, QString());
         const auto filter = opts.mapOrDefaultFilter(QString::fromStdString, QString());
@@ -187,7 +188,7 @@ namespace FileDialog
     }
 
     std::string getExistingDirectory(const GetExistingDirectoryOpts& opts) {
-        const auto parent = opts.mapOrDefaultParent([](auto p) { return reinterpret_cast<QWidget*>(p); }, nullptr);
+        const auto parent = opts.mapOrDefaultParent([](auto p) { return reinterpret_cast<QWidget*>(p); }, static_cast<QWidget*>(nullptr));
         const auto caption = opts.mapOrDefaultCaption(QString::fromStdString, QString());
         const auto dir = opts.mapOrDefaultDir(QString::fromStdString, QString());
         const auto options = opts.mapOrDefaultOptions_([](auto x) { return static_cast<QFileDialog::Options>(x); }, static_cast<QFileDialog::Options>(QFileDialog::ShowDirsOnly));
@@ -197,7 +198,7 @@ namespace FileDialog
     }
 
     Url::OwnedRef getExistingDirectoryUrl(const GetExistingDirectoryUrlOpts& opts) {
-        const auto parent = opts.mapOrDefaultParent([](auto p) { return reinterpret_cast<QWidget*>(p); }, nullptr);
+        const auto parent = opts.mapOrDefaultParent([](auto p) { return reinterpret_cast<QWidget*>(p); }, static_cast<QWidget*>(nullptr));
         const auto caption = opts.mapOrDefaultCaption(QString::fromStdString, QString());
         const auto dir = opts.mapOrDefaultDir([](auto urlHandle) { return QURL_VALUE(urlHandle); }, QUrl());
         const auto options = opts.mapOrDefaultOptions_([](auto x) { return static_cast<QFileDialog::Options>(x); }, static_cast<QFileDialog::Options>(QFileDialog::ShowDirsOnly));
@@ -224,7 +225,7 @@ namespace FileDialog
     }
 
     GetOpenFileNameResult getOpenFileName(const GetOpenFileNameOpts& opts) {
-        const auto parent = opts.mapOrDefaultParent([](auto p) { return reinterpret_cast<QWidget*>(p); }, nullptr);
+        const auto parent = opts.mapOrDefaultParent([](auto p) { return reinterpret_cast<QWidget*>(p); }, static_cast<QWidget*>(nullptr));
         const auto caption = opts.mapOrDefaultCaption(QString::fromStdString, QString());
         const auto dir = opts.mapOrDefaultDir(QString::fromStdString, QString());
         const auto filter = opts.mapOrDefaultFilter(QString::fromStdString, QString());
@@ -245,7 +246,7 @@ namespace FileDialog
     }
 
     GetOpenFileNamesResult getOpenFileNames(const GetOpenFileNamesOpts& opts) {
-        const auto parent = opts.mapOrDefaultParent([](auto p) { return reinterpret_cast<QWidget*>(p); }, nullptr);
+        const auto parent = opts.mapOrDefaultParent([](auto p) { return reinterpret_cast<QWidget*>(p); }, static_cast<QWidget*>(nullptr));
         const auto caption = opts.mapOrDefaultCaption(QString::fromStdString, QString());
         const auto dir = opts.mapOrDefaultDir(QString::fromStdString, QString());
         const auto filter = opts.mapOrDefaultFilter(QString::fromStdString, QString());
@@ -266,7 +267,7 @@ namespace FileDialog
     }
 
     GetOpenFileUrlResult getOpenFileUrl(const GetOpenFileUrlOpts& opts) {
-        const auto parent = opts.mapOrDefaultParent([](auto p) { return reinterpret_cast<QWidget*>(p); }, nullptr);
+        const auto parent = opts.mapOrDefaultParent([](auto p) { return reinterpret_cast<QWidget*>(p); }, static_cast<QWidget*>(nullptr));
         const auto caption = opts.mapOrDefaultCaption(QString::fromStdString, QString());
         const auto dir = opts.mapOrDefaultDir([](auto x) { return QURL_VALUE(x); }, QUrl());
         const auto filter = opts.mapOrDefaultFilter(QString::fromStdString, QString());
@@ -289,7 +290,7 @@ namespace FileDialog
     }
 
     GetOpenFileUrlsResult getOpenFileUrls(const GetOpenFileUrlsOpts& opts) {
-        const auto parent = opts.mapOrDefaultParent([](auto p) { return reinterpret_cast<QWidget*>(p); }, nullptr);
+        const auto parent = opts.mapOrDefaultParent([](auto p) { return reinterpret_cast<QWidget*>(p); }, static_cast<QWidget*>(nullptr));
         const auto caption = opts.mapOrDefaultCaption(QString::fromStdString, QString());
         const auto dir = opts.mapOrDefaultDir([](auto x) { return QURL_VALUE(x); }, QUrl());
         const auto filter = opts.mapOrDefaultFilter(QString::fromStdString, QString());
@@ -314,7 +315,7 @@ namespace FileDialog
     }
 
     GetSaveFileNameResult getSaveFileName(const GetSaveFileNameOpts& opts) {
-        const auto parent = opts.mapOrDefaultParent([](auto p) { return reinterpret_cast<QWidget*>(p); }, nullptr);
+        const auto parent = opts.mapOrDefaultParent([](auto p) { return reinterpret_cast<QWidget*>(p); }, static_cast<QWidget*>(nullptr));
         const auto caption = opts.mapOrDefaultCaption(QString::fromStdString, QString());
         const auto dir = opts.mapOrDefaultDir(QString::fromStdString, QString());
         const auto filter = opts.mapOrDefaultFilter(QString::fromStdString, QString());
@@ -335,7 +336,7 @@ namespace FileDialog
     }
 
     GetSaveFileUrlResult getSaveFileUrl(const GetSaveFileUrlOpts& opts) {
-        const auto parent = opts.mapOrDefaultParent([](auto p) { return reinterpret_cast<QWidget*>(p); }, nullptr);
+        const auto parent = opts.mapOrDefaultParent([](auto p) { return reinterpret_cast<QWidget*>(p); }, static_cast<QWidget*>(nullptr));
         const auto caption = opts.mapOrDefaultCaption(QString::fromStdString, QString());
         const auto dir = opts.mapOrDefaultDir([](auto x) { return QURL_VALUE(x); }, QUrl());
         const auto filter = opts.mapOrDefaultFilter(QString::fromStdString, QString());

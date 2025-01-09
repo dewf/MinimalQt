@@ -1,67 +1,69 @@
 #include "generated/ProgressBar.h"
 #include "ProgressBarInternal.h"
 
+#include "ObjectInternal.h"
 #include "util/convert.h"
 
-#define WRAPPER (reinterpret_cast<SignalWrapper*>(_this))
-#define PROGRESS_THIS (WRAPPER->getActual())
+#define THIS (reinterpret_cast<QProgressBar*>(_this))
 
 namespace ProgressBar
 {
     void Handle_setAlignment(HandleRef _this, Alignment align) {
-        PROGRESS_THIS->setAlignment(static_cast<Qt::Alignment>(align));
+        THIS->setAlignment(static_cast<Qt::Alignment>(align));
     }
 
     void Handle_setFormat(HandleRef _this, const std::string& format) {
-        PROGRESS_THIS->setFormat(QString::fromStdString(format));
+        THIS->setFormat(QString::fromStdString(format));
     }
 
     void Handle_setInvertedAppearance(HandleRef _this, bool invert) {
-        PROGRESS_THIS->setInvertedAppearance(invert);
+        THIS->setInvertedAppearance(invert);
     }
 
     void Handle_setMaximum(HandleRef _this, int32_t value) {
-        PROGRESS_THIS->setMaximum(value);
+        THIS->setMaximum(value);
     }
 
     void Handle_setMinimum(HandleRef _this, int32_t value) {
-        PROGRESS_THIS->setMinimum(value);
+        THIS->setMinimum(value);
     }
 
     void Handle_setOrientation(HandleRef _this, Orientation orient) {
-        PROGRESS_THIS->setOrientation(static_cast<Qt::Orientation>(orient));
+        THIS->setOrientation(static_cast<Qt::Orientation>(orient));
     }
 
     std::string Handle_text(HandleRef _this) {
-        return PROGRESS_THIS->text().toStdString();
+        return THIS->text().toStdString();
     }
 
     void Handle_setTextDirection(HandleRef _this, Direction direction) {
-        PROGRESS_THIS->setTextDirection(static_cast<QProgressBar::Direction>(direction));
+        THIS->setTextDirection(static_cast<QProgressBar::Direction>(direction));
     }
 
     void Handle_setTextVisible(HandleRef _this, bool visible) {
-        PROGRESS_THIS->setTextVisible(visible);
+        THIS->setTextVisible(visible);
     }
 
     void Handle_setValue(HandleRef _this, int32_t value) {
-        PROGRESS_THIS->setValue(value);
+        THIS->setValue(value);
     }
 
     void Handle_setRange(HandleRef _this, int32_t min, int32_t max) {
-        PROGRESS_THIS->setRange(min, max);
+        THIS->setRange(min, max);
     }
 
-    void Handle_setSignalMask(HandleRef _this, SignalMask mask) {
-        WRAPPER->setSignalMask(mask);
+    SignalConnectionRef Handle_connect_ValueChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
+        const auto connection = QObject::connect(THIS, &QProgressBar::valueChanged, [handler](int value) {
+            handler->valueChanged(value);
+        });
+        return new __SignalConnection { connection };
     }
 
     void Handle_dispose(HandleRef _this) {
-        delete WRAPPER;
+        delete THIS;
     }
 
-    HandleRef create(const std::shared_ptr<SignalHandler>& handler) {
-        const auto wrapper = new SignalWrapper(new QProgressBar(), handler);
-        return reinterpret_cast<HandleRef>(wrapper);
+    HandleRef create() {
+        return reinterpret_cast<HandleRef>(new QProgressBar());
     }
 }

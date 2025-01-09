@@ -1,37 +1,40 @@
 #include "generated/StatusBar.h"
 #include "StatusBarInternal.h"
 
-#define WRAPPER (reinterpret_cast<SignalWrapper*>(_this))
-#define STATUSBAR_THIS (WRAPPER->getActual())
+#include "ObjectInternal.h"
+
+#define THIS (reinterpret_cast<QStatusBar*>(_this))
 
 namespace StatusBar
 {
     bool Handle_isSizeGripEnabled(HandleRef _this) {
-        return STATUSBAR_THIS->isSizeGripEnabled();
+        return THIS->isSizeGripEnabled();
     }
 
     void Handle_setSizeGripEnabled(HandleRef _this, bool enabled) {
-        STATUSBAR_THIS->setSizeGripEnabled(enabled);
+        THIS->setSizeGripEnabled(enabled);
     }
 
     void Handle_clearMessage(HandleRef _this) {
-        STATUSBAR_THIS->clearMessage();
+        THIS->clearMessage();
     }
 
     void Handle_showMessage(HandleRef _this, const std::string& message, int32_t timeout) {
-        STATUSBAR_THIS->showMessage(QString::fromStdString(message), timeout);
+        THIS->showMessage(QString::fromStdString(message), timeout);
     }
 
-    void Handle_setSignalMask(HandleRef _this, SignalMask mask) {
-        WRAPPER->setSignalMask(mask);
+    SignalConnectionRef Handle_connect_MessageChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
+        const auto connection = QObject::connect(THIS, &QStatusBar::messageChanged, [handler](const QString& message) {
+            handler->messageChanged(message.toStdString());
+        });
+        return new __SignalConnection { connection };
     }
 
     void Handle_dispose(HandleRef _this) {
-        delete WRAPPER;
+        delete THIS;
     }
 
-    HandleRef create(const std::shared_ptr<SignalHandler>& handler) {
-        const auto wrapper = new SignalWrapper(new QStatusBar(), handler);
-        return reinterpret_cast<HandleRef>(wrapper);
+    HandleRef create() {
+        return reinterpret_cast<HandleRef>(new QStatusBar());
     }
 }

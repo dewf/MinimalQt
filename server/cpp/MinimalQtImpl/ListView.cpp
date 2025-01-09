@@ -153,7 +153,7 @@ namespace ListView
         delete THIS;
     }
 
-    HandleRef create(const std::shared_ptr<SignalHandler>& handler, const std::optional<Widget::HandleRef>& parent) {
+    HandleRef create(const std::optional<Widget::HandleRef>& parent) {
         const auto qParent = Widget::fromOptionalHandle(parent);
         return reinterpret_cast<HandleRef>(new QListView(qParent));
     }

@@ -54,7 +54,7 @@ namespace BoxLayout
         delete THIS;
     }
 
-    HandleRef create(Direction dir, const std::shared_ptr<SignalHandler>& handler) {
+    HandleRef create(Direction dir) {
         const auto qDir = static_cast<QBoxLayout::Direction>(dir);
         return reinterpret_cast<HandleRef>(new QBoxLayout(qDir));
     }

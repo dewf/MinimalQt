@@ -3,6 +3,8 @@
 
 #include "WidgetInternal.h"
 
+#include "util/convert.h"
+
 #define THIS (reinterpret_cast<QLayout*>(_this))
 
 namespace Layout

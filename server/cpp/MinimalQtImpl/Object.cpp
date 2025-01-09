@@ -25,4 +25,22 @@ namespace Object
     void Handle_dumpObjectTree(HandleRef _this) {
         THIS->dumpObjectTree();
     }
+
+    SignalConnectionRef Handle_connect_Destroyed(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
+        const auto connection = QObject::connect(THIS, &QObject::destroyed, [handler](QObject *obj) {
+            handler->destroyed(reinterpret_cast<HandleRef>(obj));
+        });
+        return new __SignalConnection { connection };
+    }
+
+    SignalConnectionRef Handle_connect_ObjectNameChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
+        const auto connection = QObject::connect(THIS, &QObject::objectNameChanged, [handler](const QString& name) {
+            handler->objectNameChanged(name.toStdString());
+        });
+        return new __SignalConnection { connection };
+    }
+
+    void disconnect(SignalConnectionRef connection) {
+        QObject::disconnect(connection->qConnection);
+    }
 }

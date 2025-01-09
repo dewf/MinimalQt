@@ -3,8 +3,7 @@
 #include "generated/AbstractButton.h"
 #include <QAbstractButton>
 
-#include "util/SignalStuff.h"
-#include "WidgetInternal.h"
+#define AS_QABSTRACTBUTTON_PTR(x) (reinterpret_cast<QAbstractButton*>(x))
 
 namespace AbstractButton {
 }

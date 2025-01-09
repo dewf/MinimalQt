@@ -1,6 +1,8 @@
 #include "generated/Dialog.h"
 #include "DialogInternal.h"
 
+#include "ObjectInternal.h"
+
 #define THIS (reinterpret_cast<QDialog*>(_this))
 
 namespace Dialog

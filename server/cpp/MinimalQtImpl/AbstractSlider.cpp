@@ -1,6 +1,8 @@
 #include "generated/AbstractSlider.h"
 #include "AbstractSliderInternal.h"
 
+#include "ObjectInternal.h"
+
 #define THIS (reinterpret_cast<QAbstractSlider*>(_this))
 
 namespace AbstractSlider

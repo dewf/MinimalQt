@@ -27,14 +27,14 @@ opaque Handle extends Widget.Handle {
     Action.Handle actionAt(Point pt);
     Rect actionGeometry(Action.Handle act);
     Action.Handle activeAction();
-    Action.Handle addMenu(Menu.Handle menu, Action.SignalHandler actionHandler);
-    Menu.Handle addMenu(string title, Menu.SignalHandler menuHandler);
-    Menu.Handle addMenu(Icon.Handle icon, string title, Menu.SignalHandler menuHandler);
-    Action.Handle addSeparator(Action.SignalHandler actionHandler);
+    Action.Handle addMenu(Menu.Handle menu);
+    Menu.Handle addMenu(string title);
+    Menu.Handle addMenu(Icon.Handle icon, string title);
+    Action.Handle addSeparator();
     void clear();
     Widget.Handle cornerWidget(Option<Corner> corner);
-    Action.Handle insertMenu(Action.Handle before, Menu.Handle menu, Action.SignalHandler actionHandler);
-    Action.Handle insertSeparator(Action.Handle before, Action.SignalHandler actionHandler);
+    Action.Handle insertMenu(Action.Handle before, Menu.Handle menu);
+    Action.Handle insertSeparator(Action.Handle before);
     void setActiveAction(Action.Handle act);
     void setCornerWidget(Widget.Handle widget, Option<Corner> corner);
 

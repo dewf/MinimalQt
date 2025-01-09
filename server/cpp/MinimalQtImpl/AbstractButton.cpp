@@ -1,11 +1,10 @@
 #include "generated/AbstractButton.h"
 #include "AbstractButtonInternal.h"
 
-#include <QAbstractButton>
-
 #include "ObjectInternal.h"
 #include "IconInternal.h"
 #include "KeySequenceInternal.h"
+
 #include "util/convert.h"
 
 #define THIS (reinterpret_cast<QAbstractButton*>(_this))

@@ -123,8 +123,8 @@ opaque Handle extends Dialog.Handle {
     // methods ========================================
 
     void addButton(AbstractButton.Handle button, ButtonRole role);
-    PushButton.Handle addButton(StandardButton button, PushButton.SignalHandler buttonHandler);
-    PushButton.Handle addButton(string text, ButtonRole role, PushButton.SignalHandler buttonHandler);
+    PushButton.Handle addButton(StandardButton button);
+    PushButton.Handle addButton(string text, ButtonRole role);
     AbstractButton.Handle button(StandardButton which);
     ButtonRole buttonRole(AbstractButton.Handle button);
     Array<AbstractButton.Handle> buttons();

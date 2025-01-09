@@ -7,7 +7,7 @@ import Enums;
 import ModelIndex;
 
 interface SignalHandler extends AbstractItemModel.SignalHandler {
-    void ItemChanged(StandardItem.Handle item);
+    void itemChanged(StandardItem.Handle item);
 }
 
 opaque Handle extends AbstractItemModel.Handle {

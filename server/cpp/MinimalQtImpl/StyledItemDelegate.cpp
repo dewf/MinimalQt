@@ -1,20 +1,17 @@
 #include "generated/StyledItemDelegate.h"
 #include "StyledItemDelegateInternal.h"
 
-#define WRAPPER (reinterpret_cast<SignalWrapper*>(_this))
-#define ITEMDELEGATE_THIS (WRAPPER->getActual())
+#define THIS (reinterpret_cast<QStyledItemDelegate*>(_this))
 
 namespace StyledItemDelegate
 {
-    void Handle_setSignalMask(HandleRef _this, SignalMask mask) {
-        WRAPPER->setSignalMask(mask);
-    }
-
     void Handle_dispose(HandleRef _this) {
-        delete WRAPPER;
+        delete THIS;
     }
 
     // subclass stuff ============================================
+
+#define DELEGATED_THIS (reinterpret_cast<Delegated>(_this))
 
     class Delegated : public QStyledItemDelegate {
     private:
@@ -61,9 +58,9 @@ namespace StyledItemDelegate
         }
     };
 
-    HandleRef createdSubclassed(const std::shared_ptr<MethodDelegate>& methodDelegate, MethodMask methodMask, const std::shared_ptr<SignalHandler>& handler) {
-        const auto delegated = new Delegated(methodDelegate, methodMask);
-        const auto wrapper = new SignalWrapper(delegated, handler);
-        return reinterpret_cast<HandleRef>(wrapper);
+    // note the return type, it's not a DelegatedRef or anything (which we don't have yet)
+    // don't remember what this was all about, will look into it later
+    HandleRef createdSubclassed(const std::shared_ptr<MethodDelegate>& methodDelegate, MethodMask methodMask) {
+        return reinterpret_cast<HandleRef>(new Delegated(methodDelegate, methodMask));
     }
 }

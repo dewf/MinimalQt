@@ -1,45 +1,39 @@
 #include "generated/PushButton.h"
 #include "PushButtonInternal.h"
 
-#define WRAPPER (reinterpret_cast<SignalWrapper*>(_this))
-#define PUSHBUTTON_THIS (WRAPPER->getActual())
+#define THIS (reinterpret_cast<QPushButton*>(_this))
 
 namespace PushButton
 {
     bool Handle_autoDefault(HandleRef _this) {
-        return PUSHBUTTON_THIS->autoDefault();
+        return THIS->autoDefault();
     }
 
     void Handle_setAutoDefault(HandleRef _this, bool value) {
-        PUSHBUTTON_THIS->setAutoDefault(value);
+        THIS->setAutoDefault(value);
     }
 
     bool Handle_isDefault(HandleRef _this) {
-        return PUSHBUTTON_THIS->isDefault();
+        return THIS->isDefault();
     }
 
     void Handle_setDefault(HandleRef _this, bool value) {
-        PUSHBUTTON_THIS->setDefault(value);
+        THIS->setDefault(value);
     }
 
     bool Handle_isFlat(HandleRef _this) {
-        return PUSHBUTTON_THIS->isFlat();
+        return THIS->isFlat();
     }
 
     void Handle_setFlat(HandleRef _this, bool value) {
-        PUSHBUTTON_THIS->setFlat(value);
-    }
-
-    void Handle_setSignalMask(HandleRef _this, SignalMask mask) {
-        WRAPPER->setSignalMask(mask);
+        THIS->setFlat(value);
     }
 
     void Handle_dispose(HandleRef _this) {
-        delete WRAPPER;
+        delete THIS;
     }
 
-    HandleRef create(const std::shared_ptr<SignalHandler>& handler) {
-        const auto wrapper = new SignalWrapper(new QPushButton(), handler);
-        return reinterpret_cast<HandleRef>(wrapper);
+    HandleRef create() {
+        return reinterpret_cast<HandleRef>(new QPushButton());
     }
 }

@@ -8,8 +8,6 @@
 
 #include "util/convert.h"
 
-// #define WRAPPER (reinterpret_cast<SignalWrapper*>(_this))
-// #define MIMEDATA_THIS (WRAPPER->getActual())
 #define THIS (reinterpret_cast<QMimeData*>(_this))
 
 namespace MimeData

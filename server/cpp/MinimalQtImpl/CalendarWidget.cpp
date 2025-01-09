@@ -1,6 +1,7 @@
 #include "generated/CalendarWidget.h"
 #include "CalendarWidgetInternal.h"
 
+#include "ObjectInternal.h"
 #include "DateInternal.h"
 
 #define THIS (reinterpret_cast<QCalendarWidget*>(_this))

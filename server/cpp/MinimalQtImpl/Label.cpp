@@ -143,13 +143,13 @@ namespace Label
     }
 
     HandleRef create(const CreateOptions& opts) {
-        QWidget *parent = opts.mapOrDefaultParent([](auto handle) { return reinterpret_cast<Widget::SignalWrapper*>(handle)->getActual(); }, static_cast<QWidget*>(nullptr));
+        QWidget *parent = opts.mapOrDefaultParent([](auto handle) { return AS_QWIDGET_PTR(handle); }, static_cast<QWidget*>(nullptr)); // static_cast<QWidget*>(nullptr)
         const auto qFlags = opts.mapOrDefaultFlags_([](auto flags) { return static_cast<Qt::WindowFlags>(flags); }, Qt::WindowFlags());
         return reinterpret_cast<HandleRef>(new QLabel(parent, qFlags));
     }
 
     HandleRef create(const std::string& text, const CreateOptions& opts) {
-        QWidget *parent = opts.mapOrDefaultParent([](auto handle) { return reinterpret_cast<Widget::SignalWrapper*>(handle)->getActual(); }, static_cast<QWidget*>(nullptr));
+        QWidget *parent = opts.mapOrDefaultParent([](auto handle) { return AS_QWIDGET_PTR(handle); }, static_cast<QWidget*>(nullptr)); // static_cast<QWidget*>(nullptr)
         const auto qFlags = opts.mapOrDefaultFlags_([](auto flags) { return static_cast<Qt::WindowFlags>(flags); }, Qt::WindowFlags());
         return reinterpret_cast<HandleRef>(new QLabel(QString::fromStdString(text), parent, qFlags));
     }
