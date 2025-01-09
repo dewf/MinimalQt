@@ -6,6 +6,8 @@
 #include <QMessageBox>
 #include <QAbstractButton>
 
+#include "AbstractButtonInternal.h"
+
 namespace MessageBox {
     class SignalWrapper : public Dialog::SignalWrapper {
         Q_OBJECT
@@ -35,7 +37,19 @@ namespace MessageBox {
         }
     public slots:
         void onButtonClicked(QAbstractButton *button) const {
-            handler->buttonClicked(reinterpret_cast<AbstractButton::HandleRef>(button));
+            // uhhhh, it coudl conceivably be a button we haven't wrapped yet, SIGH
+            std::shared_ptr<AbstractButtonResult::Base> result;
+            if (const auto existing = wrapperForQObject(button); existing != nullptr) {
+                result = std::make_shared<AbstractButtonResult::Existing>(reinterpret_cast<AbstractButton::HandleRef>(existing));
+            } else {
+                // we haven't seen it before, needs a wrapper
+                const auto createFunc = [button](const std::shared_ptr<AbstractButton::SignalHandler>& handler) {
+                    const auto wrapper = new AbstractButton::SignalWrapper(button, handler);
+                    return reinterpret_cast<AbstractButton::HandleRef>(wrapper);
+                };
+                result = std::make_shared<AbstractButtonResult::NeedsWrapper>(createFunc);
+            }
+            handler->buttonClicked(result);
         }
     };
 }

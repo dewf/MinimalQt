@@ -6,14 +6,47 @@ import Icon;
 import Enums;
 import Dialog;
 import AbstractButton;
+import PushButton;
 import Widget;
+import Pixmap;
+
+delegate AbstractButton.Handle AbstractWrapperCreateFunc(AbstractButton.SignalHandler handler);
+delegate PushButton.Handle PushButtonWrapperCreateFunc(PushButton.SignalHandler handler);
+
+sumtype AbstractButtonResult {
+    NoButton,
+    Existing(AbstractButton.Handle handle),
+    NeedsWrapper(AbstractWrapperCreateFunc createFunc)
+}
+
+sumtype PushButtonResult {
+    NoButton,
+    Existing(PushButton.Handle handle),
+    NeedsWrapper(PushButtonWrapperCreateFunc createFunc)
+}
 
 namedbits SignalMask extends Dialog.SignalMask {
     ButtonClicked
 }
 
 interface SignalHandler extends Dialog.SignalHandler {
-    void buttonClicked(AbstractButton.Handle button);
+    void buttonClicked(AbstractButtonResult result);   // because it might be a Qt-created button we haven't wrapped yet!
+}
+
+enum ButtonRole {
+    // keep this in sync with QDialogButtonBox::ButtonRole and QPlatformDialogHelper::ButtonRole
+    InvalidRole = -1,
+    AcceptRole,
+    RejectRole,
+    DestructiveRole,
+    ActionRole,
+    HelpRole,
+    YesRole,
+    NoRole,
+    ResetRole,
+    ApplyRole,
+
+    NRoles
 }
 
 enum StandardButton {
@@ -38,7 +71,7 @@ enum StandardButton {
     RestoreDefaults    = 0x08000000
 }
 
-flags StandardButtonSet {
+flags StandardButtons {
     NoButton           = 0x00000000,
     Ok                 = 0x00000400,
     Save               = 0x00000800,
@@ -60,7 +93,7 @@ flags StandardButtonSet {
     RestoreDefaults    = 0x08000000
 }
 
-enum MessageBoxIcon {
+enum Icon {
     NoIcon = 0,
     Information = 1,
     Warning = 2,
@@ -68,25 +101,125 @@ enum MessageBoxIcon {
     Question = 4
 }
 
-flags Options {
+enum OptionEnum {
+    DontUseNativeDialog = 0x00000001
+}
+
+flags OptionEnumSet {
     DontUseNativeDialog = 0x00000001
 }
 
 opaque Handle extends Dialog.Handle {
+    // properties ============================
+
+    string detailedText();
     void setDetailedText(string text);
-    void setIcon(MessageBoxIcon icon);
-    // void setIconPixmap(QPixmap)
+
+    Icon getIcon();
+    void setIcon(Icon icon);
+
+    Pixmap.Owned iconPixmap();
+    void setIconPixmap(Pixmap.Handle pixmap);
+
+    string informativeText();
     void setInformativeText(string text);
-    void setOptions(Options opts);
-    void setStandardButtons(StandardButtonSet buttons);
+
+    OptionEnumSet getOptions();
+    void setOptions(OptionEnumSet opts);
+
+    StandardButtons getStandardButtons();
+    void setStandardButtons(StandardButtons buttons);
+
+    string text();
     void setText(string text);
+
+    TextFormat getTextFormat();
     void setTextFormat(TextFormat format);
+
+    TextInteractionFlags getTextInteractionFlags();
     void setTextInteractionFlags(TextInteractionFlags tiFlags);
 
+    // methods ========================================
+
+    // void addButton(QAbstractButton *button, QMessageBox::ButtonRole role)
+    void addButton(AbstractButton.Handle button, ButtonRole role);
+
+    // QPushButton * addButton(QMessageBox::StandardButton button)
+    PushButton.Handle addButton(StandardButton button, PushButton.SignalHandler buttonHandler);
+
+    // QPushButton * addButton(const QString &text, QMessageBox::ButtonRole role)
+    PushButton.Handle addButton(string text, ButtonRole role, PushButton.SignalHandler buttonHandler);
+
+    // QAbstractButton * button(QMessageBox::StandardButton which) const
+    AbstractButtonResult button(StandardButton which);
+
+    // QMessageBox::ButtonRole buttonRole(QAbstractButton *button) const
+    ButtonRole buttonRole(AbstractButton.Handle button);
+
+    // QList<QAbstractButton *> buttons() const
+    Array<AbstractButtonResult> buttons();
+
+    // QCheckBox * checkBox() const
+    // TODO
+
+    // QAbstractButton * clickedButton() const
+    AbstractButtonResult clickedButton();
+
+    // QPushButton * defaultButton() const
+    PushButtonResult defaultButton();
+
+    // QAbstractButton * escapeButton() const
+    AbstractButtonResult escapeButton();
+
+    // void open(QObject *receiver, const char *member)
+
+    // void removeButton(QAbstractButton *button)
+    void removeButton(AbstractButton.Handle button);
+
+    // void setCheckBox(QCheckBox *cb)
+    // TODO
+
+    // void setDefaultButton(QMessageBox::StandardButton button)
     void setDefaultButton(StandardButton button);
 
+    // void setDefaultButton(QPushButton *button)
+    void setDefaultButton(PushButton.Handle button);
+
+    // void setEscapeButton(QAbstractButton *button)
+    void setEscapeButton(AbstractButton.Handle button);
+
+    // void setEscapeButton(QMessageBox::StandardButton button)
+    void setEscapeButton(StandardButton button);
+
+    // (since 6.6) void setOption(QMessageBox::Option option, bool on = true)
+    void setOption(OptionEnum option_, Option<bool> on);
+
+    // void setWindowModality(Qt::WindowModality windowModality)
+    void setWindowModality(WindowModality windowModality);
+
+    // void setWindowTitle(const QString &title)
+    void setWindowTitle(string title);
+
+    // QMessageBox::StandardButton standardButton(QAbstractButton *button) const
+    StandardButton getStandardButton(AbstractButton.Handle button);
+
+    // (since 6.6) bool testOption(QMessageBox::Option option) const
+    bool testOption(OptionEnum option_);
+
     // exec() defined by Dialog.Handle
+
+    // etc ============================================
     void setSignalMask(SignalMask mask);
 }
 
-Handle create(Widget.Handle parent, SignalHandler handler);
+// ctors:
+Handle create(SignalHandler handler, Option<Widget.Handle> parent);
+Handle create(SignalHandler handler, Icon icon, string title, string text, Option<StandardButtons> buttons, Option<Widget.Handle> parent, Option<WindowFlags> flags_);
+
+// static methods:
+void about(Widget.Handle parent, string title, string text);
+void aboutQt(Widget.Handle parent, Option<string> title);
+StandardButton critical(Widget.Handle parent, string title, string text, Option<StandardButtons> buttons, Option<StandardButton> defaultButton);
+StandardButton information(Widget.Handle parent, string title, string text, Option<StandardButtons> buttons, Option<StandardButton> defaultButton);
+StandardButton question(Widget.Handle parent, string title, string text, Option<StandardButtons> buttons, Option<StandardButton> defaultButton);
+StandardButton warning(Widget.Handle parent, string title, string text, Option<StandardButtons> buttons, Option<StandardButton> defaultButton);
