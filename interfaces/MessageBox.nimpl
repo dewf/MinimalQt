@@ -10,27 +10,8 @@ import PushButton;
 import Widget;
 import Pixmap;
 
-delegate AbstractButton.Handle AbstractWrapperCreateFunc(AbstractButton.SignalHandler handler);
-delegate PushButton.Handle PushButtonWrapperCreateFunc(PushButton.SignalHandler handler);
-
-sumtype AbstractButtonResult {
-    NoButton,
-    Existing(AbstractButton.Handle handle),
-    NeedsWrapper(AbstractWrapperCreateFunc createFunc)
-}
-
-sumtype PushButtonResult {
-    NoButton,
-    Existing(PushButton.Handle handle),
-    NeedsWrapper(PushButtonWrapperCreateFunc createFunc)
-}
-
-namedbits SignalMask extends Dialog.SignalMask {
-    ButtonClicked
-}
-
 interface SignalHandler extends Dialog.SignalHandler {
-    void buttonClicked(AbstractButtonResult result);   // because it might be a Qt-created button we haven't wrapped yet!
+    void buttonClicked(AbstractButton.Handle button);
 }
 
 enum ButtonRole {
@@ -141,80 +122,46 @@ opaque Handle extends Dialog.Handle {
 
     // methods ========================================
 
-    // void addButton(QAbstractButton *button, QMessageBox::ButtonRole role)
     void addButton(AbstractButton.Handle button, ButtonRole role);
-
-    // QPushButton * addButton(QMessageBox::StandardButton button)
     PushButton.Handle addButton(StandardButton button, PushButton.SignalHandler buttonHandler);
-
-    // QPushButton * addButton(const QString &text, QMessageBox::ButtonRole role)
     PushButton.Handle addButton(string text, ButtonRole role, PushButton.SignalHandler buttonHandler);
-
-    // QAbstractButton * button(QMessageBox::StandardButton which) const
-    AbstractButtonResult button(StandardButton which);
-
-    // QMessageBox::ButtonRole buttonRole(QAbstractButton *button) const
+    AbstractButton.Handle button(StandardButton which);
     ButtonRole buttonRole(AbstractButton.Handle button);
-
-    // QList<QAbstractButton *> buttons() const
-    Array<AbstractButtonResult> buttons();
+    Array<AbstractButton.Handle> buttons();
 
     // QCheckBox * checkBox() const
     // TODO
 
-    // QAbstractButton * clickedButton() const
-    AbstractButtonResult clickedButton();
-
-    // QPushButton * defaultButton() const
-    PushButtonResult defaultButton();
-
-    // QAbstractButton * escapeButton() const
-    AbstractButtonResult escapeButton();
+    AbstractButton.Handle clickedButton();
+    PushButton.Handle defaultButton();
+    AbstractButton.Handle escapeButton();
 
     // void open(QObject *receiver, const char *member)
 
-    // void removeButton(QAbstractButton *button)
     void removeButton(AbstractButton.Handle button);
 
     // void setCheckBox(QCheckBox *cb)
     // TODO
 
-    // void setDefaultButton(QMessageBox::StandardButton button)
     void setDefaultButton(StandardButton button);
-
-    // void setDefaultButton(QPushButton *button)
     void setDefaultButton(PushButton.Handle button);
-
-    // void setEscapeButton(QAbstractButton *button)
     void setEscapeButton(AbstractButton.Handle button);
-
-    // void setEscapeButton(QMessageBox::StandardButton button)
     void setEscapeButton(StandardButton button);
-
-    // (since 6.6) void setOption(QMessageBox::Option option, bool on = true)
     void setOption(OptionEnum option_, Option<bool> on);
-
-    // void setWindowModality(Qt::WindowModality windowModality)
     void setWindowModality(WindowModality windowModality);
-
-    // void setWindowTitle(const QString &title)
     void setWindowTitle(string title);
-
-    // QMessageBox::StandardButton standardButton(QAbstractButton *button) const
     StandardButton getStandardButton(AbstractButton.Handle button);
-
-    // (since 6.6) bool testOption(QMessageBox::Option option) const
     bool testOption(OptionEnum option_);
 
     // exec() defined by Dialog.Handle
 
-    // etc ============================================
-    void setSignalMask(SignalMask mask);
+    // signals ========================================
+    SignalConnection connect_ButtonClicked(SignalHandler handler);
 }
 
 // ctors:
-Handle create(SignalHandler handler, Option<Widget.Handle> parent);
-Handle create(SignalHandler handler, Icon icon, string title, string text, Option<StandardButtons> buttons, Option<Widget.Handle> parent, Option<WindowFlags> flags_);
+Handle create(Option<Widget.Handle> parent);
+Handle create(Icon icon, string title, string text, Option<StandardButtons> buttons, Option<Widget.Handle> parent, Option<WindowFlags> flags_);
 
 // static methods:
 void about(Widget.Handle parent, string title, string text);

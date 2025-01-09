@@ -8,27 +8,6 @@ import PersistentModelIndex;
 import Variant;
 import MimeData;
 
-namedbits SignalMask extends Object.SignalMask {
-    ColumnsAboutToBeInserted,
-    ColumnsAboutToBeMoved,
-    ColumnsAboutToBeRemoved,
-    ColumnsInserted,
-    ColumnsMoved,
-    ColumnsRemoved,
-    DataChanged,
-    HeaderDataChanged,
-    LayoutAboutToBeChanged,
-    LayoutChanged,
-    ModelAboutToBeReset,
-    ModelReset,
-    RowsAboutToBeInserted,
-    RowsAboutToBeMoved,
-    RowsAboutToBeRemoved,
-    RowsInserted,
-    RowsMoved,
-    RowsRemoved
-}
-
 enum LayoutChangeHint
 {
     NoLayoutChangeHint,
@@ -124,6 +103,26 @@ opaque Handle extends Object.Handle {
 
     void revert();
     void submit();
+
+    // signals ============================
+    SignalConnection connect_ColumnsAboutToBeInserted(SignalHandler handler);
+    SignalConnection connect_ColumnsAboutToBeMoved(SignalHandler handler);
+    SignalConnection connect_ColumnsAboutToBeRemoved(SignalHandler handler);
+    SignalConnection connect_ColumnsInserted(SignalHandler handler);
+    SignalConnection connect_ColumnsMoved(SignalHandler handler);
+    SignalConnection connect_ColumnsRemoved(SignalHandler handler);
+    SignalConnection connect_DataChanged(SignalHandler handler);
+    SignalConnection connect_HeaderDataChanged(SignalHandler handler);
+    SignalConnection connect_LayoutAboutToBeChanged(SignalHandler handler);
+    SignalConnection connect_LayoutChanged(SignalHandler handler);
+    SignalConnection connect_ModelAboutToBeReset(SignalHandler handler);
+    SignalConnection connect_ModelReset(SignalHandler handler);
+    SignalConnection connect_RowsAboutToBeInserted(SignalHandler handler);
+    SignalConnection connect_RowsAboutToBeMoved(SignalHandler handler);
+    SignalConnection connect_RowsAboutToBeRemoved(SignalHandler handler);
+    SignalConnection connect_RowsInserted(SignalHandler handler);
+    SignalConnection connect_RowsMoved(SignalHandler handler);
+    SignalConnection connect_RowsRemoved(SignalHandler handler);
 }
 
 // subclass (implementation) stuff ================================================================================
@@ -176,9 +175,6 @@ opaque Interior extends Handle {
     void endResetModel();
 
     ModelIndex.Owned createIndex(int row, int column, size_t ptr);
-
-    // etc:
-    void setSignalMask(SignalMask mask); // here because Handle is abstract!
 }
 
-Interior createImplementation(SignalHandler handler, ImplementationMethods methods, ImplementationMask mask);
+Interior createImplementation(ImplementationMethods methods, ImplementationMask mask);

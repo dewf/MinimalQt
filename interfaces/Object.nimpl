@@ -1,15 +1,11 @@
 module Object;
 
-namedbits SignalMask {
-    Destroyed,
-    ObjectNameChanged
-}
+opaque SignalConnection; // contains a MetaObject::Connection
 
 interface SignalHandler {
     // internal use (always on)
-    void destroyedByQt();
+    // void destroyedByQt();
 
-    // Qt stuff (masked)
     void destroyed(Handle obj);
     void objectNameChanged(string objectName);
 }
@@ -24,7 +20,11 @@ opaque Handle {
     void setParent(Handle parent);
     void dumpObjectTree();
 
-    // no setSignalMask because abstract
+    SignalConnection connect_Destroyed(SignalHandler handler);
+    SignalConnection connect_ObjectNameChanged(SignalHandler handler);
 }
 
 // no create() because abstract
+
+// static methods:
+void disconnect(SignalConnection connection);

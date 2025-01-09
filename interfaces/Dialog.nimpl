@@ -5,12 +5,6 @@ import Common;
 import Icon;
 import Widget;
 
-namedbits SignalMask extends Widget.SignalMask {
-    Accepted,
-    Finished,
-    Rejected
-}
-
 interface SignalHandler extends Widget.SignalHandler {
     void accepted();
     void finished(int result);
@@ -40,7 +34,10 @@ opaque Handle extends Widget.Handle {
     void reject();
     int exec();
 
-    void setSignalMask(SignalMask mask);
+    // signals ============================
+    SignalConnection connect_Accepted(SignalHandler handler);
+    SignalConnection connect_Finished(SignalHandler handler);
+    SignalConnection connect_Rejected(SignalHandler handler);
 }
 
-Handle create(Widget.Handle parent, SignalHandler handler);
+Handle create(Widget.Handle parent);

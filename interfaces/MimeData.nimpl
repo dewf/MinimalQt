@@ -3,7 +3,10 @@ module MimeData;
 import Variant;
 import Url;
 
-// we're ignoring the QObject inheritance for now,
+// NOTE: I think this was regarding the signalwrapper stuff, which is now changed
+// so maybe we can inherit from Object just fine now?
+
+// [OLD]: we're ignoring the QObject inheritance for now,
 // it needlessly complicates our API (particularly in subclassed Widget events),
 // and I doubt seriously we would care about attaching signals to it in C#
 

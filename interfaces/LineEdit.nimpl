@@ -8,16 +8,6 @@ import Enums;
 import Action;
 import Menu;
 
-namedbits SignalMask extends Widget.SignalMask {
-    CursorPositionChanged,
-    EditingFinished,
-    InputRejected,
-    ReturnPressed,
-    SelectionChanged,
-    TextChanged,
-    TextEdited
-}
-
 interface SignalHandler extends Widget.SignalHandler {
     void cursorPositionChanged(int oldPos, int newPos);
     void editingFinished();
@@ -140,9 +130,15 @@ opaque Handle extends Widget.Handle {
     void selectAll();
     void undo();
 
-    // etc =====================================
-    void setSignalMask(SignalMask mask);
+    // signals =================================
+    SignalConnection connect_CursorPositionChanged(SignalHandler handler);
+    SignalConnection connect_EditingFinished(SignalHandler handler);
+    SignalConnection connect_InputRejected(SignalHandler handler);
+    SignalConnection connect_ReturnPressed(SignalHandler handler);
+    SignalConnection connect_SelectionChanged(SignalHandler handler);
+    SignalConnection connect_TextChanged(SignalHandler handler);
+    SignalConnection connect_TextEdited(SignalHandler handler);
 }
 
-Handle create(SignalHandler handler, Option<Widget.Handle> parent);
-Handle create(SignalHandler handler, string contents, Option<Widget.Handle> parent);
+Handle create(Option<Widget.Handle> parent);
+Handle create(string contents, Option<Widget.Handle> parent);

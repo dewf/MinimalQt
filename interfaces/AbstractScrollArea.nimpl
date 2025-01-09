@@ -6,10 +6,6 @@ import Icon;
 import Frame;
 import Enums;
 
-namedbits SignalMask extends Frame.SignalMask {
-    // none of our own
-}
-
 interface SignalHandler extends Frame.SignalHandler {
     // none of our own
 }
@@ -30,8 +26,6 @@ opaque Handle extends Frame.Handle {
 
     ScrollBarPolicy verticalScrollBarPolicy();
     void setVerticalScrollBarPolicy(ScrollBarPolicy policy);
-
-    // abstract class, so no signal mask setter
 }
 
 // no create

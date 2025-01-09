@@ -13,12 +13,6 @@ import ToolBar;
 import StatusBar;
 import TabWidget;
 
-namedbits SignalMask extends Widget.SignalMask {
-    IconSizeChanged,
-    TabifiedDockWidgetActivated,
-    ToolButtonStyleChanged
-}
-
 interface SignalHandler extends Widget.SignalHandler {
     void iconSizeChanged(Size iconSize);
     void tabifiedDockWidgetActivated(DockWidget.Handle dockWidget);
@@ -116,11 +110,13 @@ opaque Handle extends Widget.Handle {
     ToolBarArea toolBarArea(ToolBar.Handle toolbar);
     bool toolBarBreak(ToolBar.Handle toolbar);
 
-    // signalmask ======================================
-    void setSignalMask(SignalMask mask);
+    // signals =========================================
+    SignalConnection connect_IconSizeChanged(SignalHandler handler);
+    SignalConnection connect_TabifiedDockWidgetActivated(SignalHandler handler);
+    SignalConnection connect_ToolButtonStyleChanged(SignalHandler handler);
 }
 
-Handle create(SignalHandler handler, Option<Widget.Handle> parent, Option<WindowFlags> flags_);
+Handle create(Option<Widget.Handle> parent, Option<WindowFlags> flags_);
 
 // delegated ==========================================================
 
@@ -139,4 +135,4 @@ opaque Delegated extends Handle {
     void setDelegate(DelegatedMethods methods, DelegatedMethodMask mask);
 }
 
-Delegated createDelegated(SignalHandler handler);
+Delegated createDelegated();

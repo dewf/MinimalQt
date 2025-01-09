@@ -9,10 +9,6 @@ import ModelIndex;
 import AbstractItemView;
 import Widget;
 
-namedbits SignalMask extends AbstractItemView.SignalMask {
-    IndexesMoved
-}
-
 interface SignalHandler extends AbstractItemView.SignalHandler {
     void indexesMoved(Array<ModelIndex.Handle> indexes);
 }
@@ -94,8 +90,8 @@ opaque Handle extends AbstractItemView.Handle {
     bool isRowHidden(int row);
     void setRowHidden(int row, bool hide);
 
-    // etc ====================
-    void setSignalMask(SignalMask mask);
+    // signals ================
+    SignalConnection connect_IndexesMoved(SignalHandler handler);
 }
 
-Handle create(SignalHandler handler, Option<Widget.Handle> parent);
+Handle create(Option<Widget.Handle> parent);

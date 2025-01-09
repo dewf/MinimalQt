@@ -6,14 +6,6 @@ import AbstractItemModel;
 import ItemSelectionCommon;
 import ItemSelection;
 
-namedbits SignalMask extends Object.SignalMask {
-    CurrentChanged,
-    CurrentColumnChanged,
-    CurrentRowChanged,
-    ModelChanged,
-    SelectionChanged
-}
-
 interface SignalHandler extends Object.SignalHandler {
     void currentChanged(ModelIndex.Handle current, ModelIndex.Handle previous);
     void currentColumnChanged(ModelIndex.Handle current, ModelIndex.Handle previous);
@@ -48,8 +40,12 @@ opaque Handle extends Object.Handle {
     void select(ModelIndex.Handle index, SelectionFlags command);
     void setCurrentIndex(ModelIndex.Handle index, SelectionFlags command);
 
-    // etc
-    void setSignalMask(SignalMask signalMask);
+    // signals ============================
+    SignalConnection connect_CurrentChanged(SignalHandler handler);
+    SignalConnection connect_CurrentColumnChanged(SignalHandler handler);
+    SignalConnection connect_CurrentRowChanged(SignalHandler handler);
+    SignalConnection connect_ModelChanged(SignalHandler handler);
+    SignalConnection connect_SelectionChanged(SignalHandler handler);
 }
 
 // can't create these for the moment, we just get them from AbstractItemView->selectionModel

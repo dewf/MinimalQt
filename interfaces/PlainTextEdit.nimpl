@@ -7,18 +7,6 @@ import Enums;
 import AbstractScrollArea;
 import TextOption;
 
-namedbits SignalMask extends AbstractScrollArea.SignalMask {
-    BlockCountChanged,
-    CopyAvailable,
-    CursorPositionChanged,
-    ModificationChanged,
-    RedoAvailable,
-    SelectionChanged,
-    TextChanged,
-    UndoAvailable,
-    UpdateRequest
-}
-
 interface SignalHandler extends AbstractScrollArea.SignalHandler {
     void blockCountChanged(int newBlockCount);
     void copyAvailable(bool yes);
@@ -56,7 +44,16 @@ opaque Handle extends AbstractScrollArea.Handle {
     
     string toPlainText();
 
-    void setSignalMask(SignalMask mask);
+    // signals ============================
+    SignalConnection connect_BlockCountChanged(SignalHandler handler);
+    SignalConnection connect_CopyAvailable(SignalHandler handler);
+    SignalConnection connect_CursorPositionChanged(SignalHandler handler);
+    SignalConnection connect_ModificationChanged(SignalHandler handler);
+    SignalConnection connect_RedoAvailable(SignalHandler handler);
+    SignalConnection connect_SelectionChanged(SignalHandler handler);
+    SignalConnection connect_TextChanged(SignalHandler handler);
+    SignalConnection connect_UndoAvailable(SignalHandler handler);
+    SignalConnection connect_UpdateRequest(SignalHandler handler);
 }
 
-Handle create(SignalHandler handler);
+Handle create();

@@ -6,13 +6,6 @@ import Icon;
 import Enums;
 import Widget;
 
-namedbits SignalMask extends Widget.SignalMask {
-    CurrentChanged,
-    TabBarClicked,
-    TabBarDoubleClicked,
-    TabCloseRequested
-}
-
 interface SignalHandler extends Widget.SignalHandler {
     void currentChanged(int index);
     void tabBarClicked(int index);
@@ -65,8 +58,11 @@ opaque Handle extends Widget.Handle {
     void clear();                                               // remove all widgets without destroying
     void removeTab(int index);
 
-    // etc =================================
-    void setSignalMask(SignalMask mask);
+    // signals =============================
+    SignalConnection connect_CurrentChanged(SignalHandler handler);
+    SignalConnection connect_TabBarClicked(SignalHandler handler);
+    SignalConnection connect_TabBarDoubleClicked(SignalHandler handler);
+    SignalConnection connect_TabCloseRequested(SignalHandler handler);
 }
 
-Handle create(SignalHandler handler);
+Handle create();

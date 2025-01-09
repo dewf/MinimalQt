@@ -6,14 +6,9 @@ import Layout;
 import Enums;
 import Object;
 
-namedbits SignalMask extends Layout.SignalMask {
-    // none extra
-}
-
 interface SignalHandler extends Layout.SignalHandler {
     // none of our own
 }
-
 
 enum Direction {
     LeftToRight,
@@ -39,9 +34,7 @@ opaque Handle extends Layout.Handle {
     void addStretch(int stretch);
     void addWidget(Widget.Handle widget, AddWidgetOptions opts);
     void addLayout(Layout.Handle layout, AddLayoutOptions opts);
-
-    void setSignalMask(SignalMask mask);
 }
 
-Handle create(Direction dir, SignalHandler handler);
+Handle create(Direction dir);
 Handle createNoHandler(Direction dir);

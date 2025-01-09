@@ -4,10 +4,6 @@ import Object;
 import Common;
 import Enums;
 
-namedbits SignalMask extends Object.SignalMask {
-    // none extra
-}
-
 interface SignalHandler extends Object.SignalHandler {
     // none of our own
 }
@@ -76,7 +72,7 @@ opaque Handle extends Object.Handle {
     void unsetContentsMargins();
     void update();
 
-    // no setsignalmask because abstract
+    // no extra signals
 }
 
 // no create because abstract

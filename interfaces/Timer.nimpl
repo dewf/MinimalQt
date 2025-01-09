@@ -3,10 +3,6 @@ module Timer;
 import Object;
 import Enums;
 
-namedbits SignalMask extends Object.SignalMask {
-    Timeout
-}
-
 interface SignalHandler extends Object.SignalHandler {
     void timeout();
 }
@@ -22,7 +18,8 @@ opaque Handle extends Object.Handle {
     void start();
     void stop();
 
-    void setSignalMask(SignalMask mask);
+    // signals ============================
+    SignalConnection connect_Timeout(SignalHandler handler);
 }
 
-Handle create(SignalHandler handler);
+Handle create();

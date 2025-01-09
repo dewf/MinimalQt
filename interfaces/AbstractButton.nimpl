@@ -6,13 +6,6 @@ import KeySequence;
 import Widget;
 import Icon;
 
-namedbits SignalMask extends Widget.SignalMask{
-    Clicked,
-    Pressed,
-    Released,
-    Toggled
-}
-
 interface SignalHandler extends Widget.SignalHandler {
     void clicked(bool checkState);
     void pressed();
@@ -22,6 +15,7 @@ interface SignalHandler extends Widget.SignalHandler {
 
 @nodispose
 opaque Handle extends Widget.Handle {
+    // properties =========================
     bool autoExclusive();
     void setAutoExclusive(bool state);
 
@@ -54,6 +48,12 @@ opaque Handle extends Widget.Handle {
 
     string text();
     void setText(string text);
+
+    // signals ============================
+    SignalConnection connect_Clicked(SignalHandler handler);
+    SignalConnection connect_Pressed(SignalHandler handler);
+    SignalConnection connect_Released(SignalHandler handler);
+    SignalConnection connect_Toggled(SignalHandler handler);
 }
 
 // can't create directly

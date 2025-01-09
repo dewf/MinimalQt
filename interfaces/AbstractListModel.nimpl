@@ -7,10 +7,6 @@ import Variant;
 import ModelIndex;
 import PersistentModelIndex;
 
-namedbits SignalMask extends AbstractItemModel.SignalMask {
-    // none extra
-}
-
 interface SignalHandler extends AbstractItemModel.SignalHandler {
     // none extra
 }
@@ -65,9 +61,6 @@ opaque Interior extends Handle {
 
     void beginResetModel();
     void endResetModel();
-
-    // etc:
-    void setSignalMask(SignalMask mask); // here because Handle is abstract!
 }
 
-Interior createImplementation(SignalHandler handler, ImplementationMethods methods, ImplementedMethodMask mask);
+Interior createImplementation(ImplementationMethods methods, ImplementedMethodMask mask);

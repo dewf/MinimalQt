@@ -5,10 +5,6 @@ import Common;
 import Icon;
 import AbstractButton;
 
-namedbits SignalMask extends AbstractButton.SignalMask {
-    // none extra
-}
-
 interface SignalHandler extends AbstractButton.SignalHandler {
     // (none)
 }
@@ -16,7 +12,7 @@ interface SignalHandler extends AbstractButton.SignalHandler {
 opaque Handle extends AbstractButton.Handle {
     // no properties
 
-    void setSignalMask(SignalMask mask);
+    // no extra signals
 }
 
-Handle create(SignalHandler handler);
+Handle create();

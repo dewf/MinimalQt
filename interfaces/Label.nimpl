@@ -8,11 +8,6 @@ import Enums;
 import Pixmap;
 import Widget;
 
-namedbits SignalMask extends Frame.SignalMask {
-    LinkActivated,
-    LinkHovered
-}
-
 interface SignalHandler extends Frame.SignalHandler {
     void linkActivated(string link);
     void linkHovered(string link);
@@ -72,14 +67,15 @@ opaque Handle extends Frame.Handle {
     int selectionStart();
     // read-only
 
-    // methods ====================
+    // methods ============================
     void clear();
     void setSelection(int start, int length);
     void setNum(int num);
     void setNum(double num);
 
-    // etc:
-    void setSignalMask(SignalMask mask);
+    // signals ============================
+    SignalConnection connect_LinkActivated(SignalHandler handler);
+    SignalConnection connect_LinkHovered(SignalHandler handler);
 }
 
 options CreateOptions {
@@ -87,6 +83,5 @@ options CreateOptions {
     WindowFlags flags_;
 }
 
-Handle createNoHandler();
-Handle create(SignalHandler handler, CreateOptions opts);
-Handle create(string text, SignalHandler handler, CreateOptions opts);
+Handle create(CreateOptions opts);
+Handle create(string text, CreateOptions opts);

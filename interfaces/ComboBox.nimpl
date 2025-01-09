@@ -8,16 +8,6 @@ import Variant;
 import AbstractItemModel;
 import Icon;
 
-namedbits SignalMask extends Widget.SignalMask {
-    Activated,
-    CurrentIndexChanged,
-    CurrentTextChanged,
-    EditTextChanged,
-    Highlighted,
-    TextActivated,
-    TextHighlighted
-}
-
 interface SignalHandler extends Widget.SignalHandler {
     void activated(int index);
     void currentIndexChanged(int index);
@@ -104,9 +94,15 @@ opaque Handle extends Widget.Handle {
 
     void setModel(AbstractItemModel.Handle model);
 
-    // etc
-    void setSignalMask(SignalMask mask);
+    // signals =============================
+    SignalConnection connect_Activated(SignalHandler handler);
+    SignalConnection connect_CurrentIndexChanged(SignalHandler handler);
+    SignalConnection connect_CurrentTextChanged(SignalHandler handler);
+    SignalConnection connect_EditTextChanged(SignalHandler handler);
+    SignalConnection connect_Highlighted(SignalHandler handler);
+    SignalConnection connect_TextActivated(SignalHandler handler);
+    SignalConnection connect_TextHighlighted(SignalHandler handler);
 }
 
-Handle create(SignalHandler handler);
+Handle create();
 Handle downcastFrom(Widget.Handle widget);

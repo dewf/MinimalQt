@@ -7,13 +7,6 @@ import Widget;
 import Date;
 import Enums;
 
-namedbits SignalMask extends Widget.SignalMask {
-    Activated,
-    Clicked,
-    CurrentPageChanged,
-    SelectionChanged
-}
-
 interface SignalHandler extends Widget.SignalHandler {
     void activated(Date.Handle date);
     void clicked(Date.Handle date);
@@ -91,8 +84,11 @@ opaque Handle extends Widget.Handle {
     // void setWeekdayTextFormat(QDayOfWeek dayOfWeek, TextCharFormat format);
     // TextCharFormat weekdayTextFormat(QDayOfWeek dayOfWeek);
 
-    // etc
-    void setSignalMask(SignalMask mask);
+    // signals ============================
+    SignalConnection connect_Activated(SignalHandler handler);
+    SignalConnection connect_Clicked(SignalHandler handler);
+    SignalConnection connect_CurrentPageChanged(SignalHandler handler);
+    SignalConnection connect_SelectionChanged(SignalHandler handler);
 }
 
-Handle create(SignalHandler handler);
+Handle create();

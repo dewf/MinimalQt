@@ -7,10 +7,6 @@ import Enums;
 import Widget;
 import AbstractScrollArea;
 
-namedbits SignalMask extends AbstractScrollArea.SignalMask {
-    // none extra
-}
-
 interface SignalHandler extends AbstractScrollArea.SignalHandler {
     // (none)
 }
@@ -21,7 +17,7 @@ opaque Handle extends AbstractScrollArea.Handle {
 
     void setWidget(Widget.Handle widget);
 
-    void setSignalMask(SignalMask mask);
+    // no extra signals
 }
 
-Handle create(SignalHandler handler);
+Handle create();

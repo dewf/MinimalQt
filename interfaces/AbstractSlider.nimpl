@@ -6,15 +6,6 @@ import Common;
 import Icon;
 import Enums;
 
-namedbits SignalMask extends Widget.SignalMask {
-    ActionTriggered,
-    RangeChanged,
-    SliderMoved,
-    SliderPressed,
-    SliderReleased,
-    ValueChanged
-}
-
 enum SliderAction {
     SliderNoAction,
     SliderSingleStepAdd,
@@ -52,7 +43,13 @@ opaque Handle extends Widget.Handle {
     // why not a property?
     void setRange(int min, int max);
 
-    // abstract, no mask setter
+    // signals ============================
+    SignalConnection connect_ActionTriggered(SignalHandler handler);
+    SignalConnection connect_RangeChanged(SignalHandler handler);
+    SignalConnection connect_SliderMoved(SignalHandler handler);
+    SignalConnection connect_SliderPressed(SignalHandler handler);
+    SignalConnection connect_SliderReleased(SignalHandler handler);
+    SignalConnection connect_ValueChanged(SignalHandler handler);
 }
 
 // no direct creation, inherited by eg QSlider

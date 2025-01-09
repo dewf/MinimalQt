@@ -8,22 +8,9 @@ import AbstractItemView;
 import ModelIndex;
 import HeaderView;
 
-namedbits SignalMask extends AbstractItemView.SignalMask {
-    Collapsed,
-    Expanded
-}
-
 interface SignalHandler extends AbstractItemView.SignalHandler {
     void collapsed(ModelIndex.Handle index);
     void expanded(ModelIndex.Handle index);
-}
-
-// some fancy stuff for the HeaderView getter:
-delegate HeaderView.Handle HeaderViewWrapperCreateFunc(HeaderView.SignalHandler handler);
-sumtype HeaderViewResult {
-    NoHeaderView,
-    AlreadyExists(HeaderView.Handle handle),             // something we (C#) created/assigned previously
-    NeedsWrapper(HeaderViewWrapperCreateFunc createFunc) // Qt-created default: using the function, provide a SignalHandler, receive the HeadrView.Handle
 }
 
 opaque Handle extends AbstractItemView.Handle {
@@ -63,11 +50,12 @@ opaque Handle extends AbstractItemView.Handle {
     void setWordWrap(bool value);
 
     // methods:
-    HeaderViewResult header();
+    HeaderView.Handle header();
     void resizeColumnToContents(int column);
 
-    // etc:
-    void setSignalMask(SignalMask mask);
+    // signals ============================
+    SignalConnection connect_Collapsed(SignalHandler handler);
+    SignalConnection connect_Expanded(SignalHandler handler);
 }
 
-Handle create(SignalHandler handler);
+Handle create();

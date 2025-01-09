@@ -6,10 +6,6 @@ import Enums;
 import Icon;
 import Widget;
 
-namedbits SignalMask extends Widget.SignalMask {
-    ValueChanged
-}
-
 interface SignalHandler extends Widget.SignalHandler {
     void valueChanged(int value);
 }
@@ -30,7 +26,8 @@ opaque Handle extends Widget.Handle {
 
     void setRange(int min, int max);
 
-    void setSignalMask(SignalMask mask);
+    // signals ============================
+    SignalConnection connect_ValueChanged(SignalHandler handler);
 }
 
-Handle create(SignalHandler handler);
+Handle create();

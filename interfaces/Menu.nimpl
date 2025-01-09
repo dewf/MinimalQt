@@ -6,13 +6,6 @@ import Widget;
 import Action;
 import Icon;
 
-namedbits SignalMask extends Widget.SignalMask {
-    AboutToHide,
-    AboutToShow,
-    Hovered,
-    Triggered
-}
-
 interface SignalHandler extends Widget.SignalHandler {
     void aboutToHide();
     void aboutToShow();
@@ -65,12 +58,16 @@ opaque Handle extends Widget.Handle {
     void setDefaultAction(Action.Handle act);
     void showTearOffMenu(Option<Point> pos);
 
-    // signalmask ==============================
-    void setSignalMask(SignalMask mask);
+    // signals =================================
+    SignalConnection connect_AboutToHide(SignalHandler handler);
+    SignalConnection connect_AboutToShow(SignalHandler handler);
+    SignalConnection connect_Hovered(SignalHandler handler);
+    SignalConnection connect_Triggered(SignalHandler handler);
 }
 
-Handle create(SignalHandler handler, Option<Widget.Handle> parent);
-Handle create(SignalHandler handler, string title, Option<Widget.Handle> parent);
+Handle create(Option<Widget.Handle> parent);
+Handle create(string title, Option<Widget.Handle> parent);
 
+// static methods:
 Action.Handle exec(Array<Action.Handle> actions, Point pos, Option<Action.Handle> at, Option<Widget.Handle> parent);
 Handle menuInAction(Action.Handle action);

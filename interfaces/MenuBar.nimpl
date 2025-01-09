@@ -8,11 +8,6 @@ import Widget;
 import Menu;
 import Action;
 
-namedbits SignalMask extends Widget.SignalMask {
-    Hovered,
-    Triggered
-}
-
 interface SignalHandler extends Widget.SignalHandler {
     void hovered(Action.Handle action);
     void triggered(Action.Handle action);
@@ -43,9 +38,9 @@ opaque Handle extends Widget.Handle {
     void setActiveAction(Action.Handle act);
     void setCornerWidget(Widget.Handle widget, Option<Corner> corner);
 
-    // etc ==========================
-
-    void setSignalMask(SignalMask mask);
+    // signals ======================
+    SignalConnection connect_Hovered(SignalHandler handler);
+    SignalConnection connect_Triggered(SignalHandler handler);
 }
 
-Handle create(SignalHandler handler, Option<Widget.Handle> parent);
+Handle create(Option<Widget.Handle> parent);

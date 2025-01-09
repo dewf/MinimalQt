@@ -6,16 +6,6 @@ import Icon;
 import Enums;
 import Font;
 
-namedbits SignalMask extends Object.SignalMask {
-    Changed,
-    CheckableChanged,
-    EnabledChanged,
-    Hovered,
-    Toggled,
-    Triggered,
-    VisibleChanged
-}
-
 interface SignalHandler extends Object.SignalHandler {
     void changed();
     void checkableChanged(bool checkable);
@@ -101,8 +91,14 @@ opaque Handle extends Object.Handle {
     // methods:
     void setSeparator(bool state);
 
-    // signal mask:
-    void setSignalMask(SignalMask mask);
+    // signals ============================
+    SignalConnection connect_Changed(SignalHandler handler);
+    SignalConnection connect_CheckableChanged(SignalHandler handler);
+    SignalConnection connect_EnabledChanged(SignalHandler handler);
+    SignalConnection connect_Hovered(SignalHandler handler);
+    SignalConnection connect_Toggled(SignalHandler handler);
+    SignalConnection connect_Triggered(SignalHandler handler);
+    SignalConnection connect_VisibleChanged(SignalHandler handler);
 }
 
-Handle create(Object.Handle owner, SignalHandler handler);
+Handle create(Object.Handle owner);

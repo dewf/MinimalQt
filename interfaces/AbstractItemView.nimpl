@@ -10,16 +10,6 @@ import ModelIndex;
 import AbstractItemDelegate;
 import ItemSelectionModel;
 
-namedbits SignalMask extends AbstractScrollArea.SignalMask {
-    Activated,
-    Clicked,
-    DoubleClickedBit, // 'Bit' to distinguish from a Qt-defined enum/flag
-    Entered,
-    IconSizeChanged,
-    Pressed,
-    ViewportEntered
-}
-
 interface SignalHandler extends AbstractScrollArea.SignalHandler {
     void activated(ModelIndex.Handle index);
     void clicked(ModelIndex.Handle index);
@@ -77,14 +67,6 @@ enum SelectionMode {
     ContiguousSelection
 }
 
-// some fancy stuff for the SelectionModel getter:
-delegate ItemSelectionModel.Handle WrapperCreationFunc(ItemSelectionModel.SignalHandler handler);
-sumtype SelectionModelResult {
-    NoSelectionModel,
-    AlreadyExists(ItemSelectionModel.Handle handle),
-    NeedsWrapper(WrapperCreationFunc createFunc) // using the function, provide a SignalHandler, receive the SelectionModel.Handle
-}
-
 @nodispose
 opaque Handle extends AbstractScrollArea.Handle {
     // properties =======================
@@ -138,7 +120,7 @@ opaque Handle extends AbstractScrollArea.Handle {
     void setVerticalScrollMode(ScrollMode mode);
     void resetVerticalScrollMode();
 
-    // methods ==========================
+    // methods ============================
     void setModel(AbstractItemModel.Handle model);
 
     void clearSelection();
@@ -151,10 +133,19 @@ opaque Handle extends AbstractScrollArea.Handle {
     void setRootIndex(ModelIndex.Handle index);
     void update(ModelIndex.Handle index);
 
-    SelectionModelResult selectionModel();
+    ItemSelectionModel.Handle selectionModel();
     // no setter yet
 
     void setItemDelegate(AbstractItemDelegate.Handle itemDelegate);
     void setItemDelegateForColumn(int column, AbstractItemDelegate.Handle itemDelegate);
     void setItemDelegateForRow(int row, AbstractItemDelegate.Handle itemDelegate);
+
+    // signals ============================
+    SignalConnection connect_Activated(SignalHandler handler);
+    SignalConnection connect_Clicked(SignalHandler handler);
+    SignalConnection connect_DoubleClicked(SignalHandler handler);
+    SignalConnection connect_Entered(SignalHandler handler);
+    SignalConnection connect_IconSizeChanged(SignalHandler handler);
+    SignalConnection connect_Pressed(SignalHandler handler);
+    SignalConnection connect_ViewportEntered(SignalHandler handler);
 }

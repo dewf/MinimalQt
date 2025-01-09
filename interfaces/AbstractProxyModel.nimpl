@@ -6,10 +6,6 @@ import AbstractItemModel;
 import ModelIndex;
 import PersistentModelIndex;
 
-namedbits SignalMask extends AbstractItemModel.SignalMask {
-    SourceModelChanged
-}
-
 interface SignalHandler extends AbstractItemModel.SignalHandler {
     void sourceModelChanged();
 }
@@ -22,7 +18,8 @@ opaque Handle extends AbstractItemModel.Handle {
     // owned, must be released! (heap allocated copy)
     ModelIndex.Owned mapToSource(ModelIndex.Handle proxyIndex);
 
-    // abstract, no signal mask setter
+    // signals ============================
+    SignalConnection connect_SourceModelChanged(SignalHandler handler);
 }
 
 // abstract, no create()

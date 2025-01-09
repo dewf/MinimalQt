@@ -1,21 +1,8 @@
 module HeaderView;
 
+import Object;
 import AbstractItemView;
 import Enums;
-
-namedbits SignalMask extends AbstractItemView.SignalMask {
-    GeometriesChanged,
-    SectionClicked,
-    SectionCountChanged,
-    SectionDoubleClicked,
-    SectionEntered,
-    SectionHandleDoubleClicked,
-    SectionMoved,
-    SectionPressed,
-    SectionResized,
-    SortIndicatorChanged,
-    SortIndicatorClearableChanged
-}
 
 interface SignalHandler extends AbstractItemView.SignalHandler {
     void geometriesChanged();
@@ -74,8 +61,18 @@ opaque Handle extends AbstractItemView.Handle {
     // methods
     void resizeSection(int logicalIndex, int size);
 
-    // etc:
-    void setSignalMask(SignalMask mask);
+    // signals ==========================================
+    SignalConnection connect_GeometriesChanged(SignalHandler handler);
+    SignalConnection connect_SectionClicked(SignalHandler handler);
+    SignalConnection connect_SectionCountChanged(SignalHandler handler);
+    SignalConnection connect_SectionDoubleClicked(SignalHandler handler);
+    SignalConnection connect_SectionEntered(SignalHandler handler);
+    SignalConnection connect_SectionHandleDoubleClicked(SignalHandler handler);
+    SignalConnection connect_SectionMoved(SignalHandler handler);
+    SignalConnection connect_SectionPressed(SignalHandler handler);
+    SignalConnection connect_SectionResized(SignalHandler handler);
+    SignalConnection connect_SortIndicatorChanged(SignalHandler handler);
+    SignalConnection connect_SortIndicatorClearableChanged(SignalHandler handler);
 }
 
-Handle create(Orientation orientation, SignalHandler handler);
+Handle create(Orientation orientation);

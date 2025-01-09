@@ -1,13 +1,10 @@
 module StandardItemModel;
 
+import Object;
 import AbstractItemModel;
 import StandardItem;
 import Enums;
 import ModelIndex;
-
-namedbits SignalMask extends AbstractItemModel.SignalMask {
-    ItemChanged
-}
 
 interface SignalHandler extends AbstractItemModel.SignalHandler {
     void ItemChanged(StandardItem.Handle item);
@@ -62,9 +59,9 @@ opaque Handle extends AbstractItemModel.Handle {
     StandardItem.Handle takeVerticalHeaderItem(int row);
     StandardItem.Handle verticalHeaderItem(int row);
 
-    // etc
-    void setSignalMask(SignalMask mask);
+    // signals ============================
+    SignalConnection connect_ItemChanged(SignalHandler handler);
 }
 
-Handle create(SignalHandler handler);
-Handle create(int rows, int columns, SignalHandler handler);
+Handle create();
+Handle create(int rows, int columns);

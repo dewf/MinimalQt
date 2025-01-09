@@ -4,12 +4,6 @@ import Object;
 import Widget;
 import ModelIndex;
 
-namedbits SignalMask extends Object.SignalMask {
-    CloseEditor,
-    CommitData,
-    SizeHintChanged
-}
-
 enum EndEditHint {
     NoHint,
     EditNextItem,
@@ -25,4 +19,9 @@ interface SignalHandler extends Object.SignalHandler {
 }
 
 @nodispose
-opaque Handle extends Object.Handle;
+opaque Handle extends Object.Handle {
+    // signals ============================
+    SignalConnection connect_CloseEditor(SignalHandler handler);
+    SignalConnection connect_CommitData(SignalHandler handler);
+    SignalConnection connect_SizeHintChanged(SignalHandler handler);
+}

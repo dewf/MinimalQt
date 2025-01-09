@@ -1,14 +1,10 @@
 module GridLayout;
 
+import Object;
 import Common;
 import Widget;
 import Layout;
 import Enums;
-import Object;
-
-namedbits SignalMask extends Layout.SignalMask {
-    // none extra
-}
 
 interface SignalHandler extends Layout.SignalHandler {
     // none of our own
@@ -58,8 +54,7 @@ opaque Handle extends Layout.Handle {
     void setRowMinimumHeight(int row, int minSize);
     void setRowStretch(int row, int stretch);
 
-    // etc:
-    void setSignalMask(SignalMask mask);
+    // no extra signals
 }
 
-Handle create(SignalHandler handler, Option<Widget.Handle> parent);
+Handle create(Option<Widget.Handle> parent);

@@ -1,16 +1,12 @@
 module StyledItemDelegate;
 
-import AbstractItemDelegate;
 import Object;
+import AbstractItemDelegate;
 import Common;
 import Widget;
 import AbstractItemModel;
 import ModelIndex;
 import StyleOptionViewItem;
-
-namedbits SignalMask extends AbstractItemDelegate.SignalMask {
-    // no extra signals
-}
 
 interface SignalHandler extends AbstractItemDelegate.SignalHandler {
     // (none)
@@ -23,7 +19,7 @@ interface SignalHandler extends AbstractItemDelegate.SignalHandler {
 opaque Handle extends AbstractItemDelegate.Handle {
     // TODO: methods
 
-    void setSignalMask(SignalMask mask);
+    // no extra signals
 }
 
 // subclass stuff ===============
@@ -44,4 +40,4 @@ interface MethodDelegate {
     void destroyEditor(Widget.Handle editor, ModelIndex.Handle index);
 }
 
-Handle createdSubclassed(MethodDelegate methodDelegate, MethodMask methodMask, SignalHandler handler);
+Handle createdSubclassed(MethodDelegate methodDelegate, MethodMask methodMask);

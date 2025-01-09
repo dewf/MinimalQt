@@ -8,16 +8,6 @@ import RegularExpression;
 import ModelIndex;
 import PersistentModelIndex;
 
-namedbits SignalMask extends AbstractProxyModel.SignalMask {
-    AutoAcceptChildRowsChanged,
-    FilterCaseSensitivityChanged,
-    FilterRoleChanged,
-    RecursiveFilteringEnabledChanged,
-    SortCaseSensitivityChanged,
-    SortLocaleAwareChanged,
-    SortRoleChanged
-}
-
 interface SignalHandler extends AbstractProxyModel.SignalHandler {
     void autoAcceptChildRowsChanged(bool autoAcceptChildRows);
     void filterCaseSensitivityChanged(CaseSensitivity filterCaseSensitivity);
@@ -40,10 +30,17 @@ opaque Handle extends AbstractProxyModel.Handle {
     void setSortCaseSensitivity(CaseSensitivity sensitivity);
     void setSortRole(ItemDataRole sortRole);
 
-    void setSignalMask(SignalMask mask);
+    // signals ============================
+    SignalConnection connect_AutoAcceptChildRowsChanged(SignalHandler handler);
+    SignalConnection connect_FilterCaseSensitivityChanged(SignalHandler handler);
+    SignalConnection connect_FilterRoleChanged(SignalHandler handler);
+    SignalConnection connect_RecursiveFilteringEnabledChanged(SignalHandler handler);
+    SignalConnection connect_SortCaseSensitivityChanged(SignalHandler handler);
+    SignalConnection connect_SortLocaleAwareChanged(SignalHandler handler);
+    SignalConnection connect_SortRoleChanged(SignalHandler handler);
 }
 
-Handle create(SignalHandler handler);
+Handle create();
 
 // subclassing ==============================================
 
@@ -67,4 +64,4 @@ opaque Delegated extends Handle {
     void setDelegate(MethodDelegate methodDelegate, MethodMask methodMask);
 }
 
-Delegated createDelegated(SignalHandler handler);
+Delegated createDelegated();

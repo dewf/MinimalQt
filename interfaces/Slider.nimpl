@@ -5,10 +5,6 @@ import Common;
 import Icon;
 import AbstractSlider;
 
-namedbits SignalMask extends AbstractSlider.SignalMask {
-    // no extra signals
-}
-
 interface SignalHandler extends AbstractSlider.SignalHandler {
     // (none)
 }
@@ -26,7 +22,7 @@ opaque Handle extends AbstractSlider.Handle {
     void setTickInterval(int interval);
     void setTickPosition(TickPosition tpos);
 
-    void setSignalMask(SignalMask mask);
+    // no extra signals
 }
 
-Handle create(SignalHandler handler);
+Handle create();

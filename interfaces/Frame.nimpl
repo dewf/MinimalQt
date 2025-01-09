@@ -5,10 +5,6 @@ import Common;
 import Icon;
 import Widget;
 
-namedbits SignalMask extends Widget.SignalMask {
-    // none of our own
-}
-
 interface SignalHandler extends Widget.SignalHandler {
     // (none)
 }
@@ -55,8 +51,7 @@ opaque Handle extends Widget.Handle {
     // methods:
     void setFrameStyle(Shape shape, Shadow shadow);
 
-    // etc:
-    void setSignalMask(SignalMask mask);
+    // no extra signals
 }
 
-Handle create(SignalHandler handler);
+Handle create();

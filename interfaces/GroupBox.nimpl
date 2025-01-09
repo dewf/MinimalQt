@@ -6,11 +6,6 @@ import Icon;
 import Enums;
 import Widget;
 
-namedbits SignalMask extends Widget.SignalMask {
-    Clicked,
-    Toggled
-}
-
 interface SignalHandler extends Widget.SignalHandler {
     void clicked(bool checked_);
     void toggled(bool state);
@@ -33,9 +28,10 @@ opaque Handle extends Widget.Handle {
     string title();
     void setTitle(string title);
 
-    // etc:
-    void setSignalMask(SignalMask mask);
+    // signals ============================
+    SignalConnection connect_Clicked(SignalHandler handler);
+    SignalConnection connect_Toggled(SignalHandler handler);
 }
 
-Handle create(SignalHandler handler, Option<Widget.Handle> parent);
-Handle create(string title, SignalHandler handler, Option<Widget.Handle> parent);
+Handle create(Option<Widget.Handle> parent);
+Handle create(string title, Option<Widget.Handle> parent);

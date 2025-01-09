@@ -1,5 +1,6 @@
 module DockWidget;
 
+import Object;
 import Widget;
 import Enums;
 import Action;
@@ -16,27 +17,12 @@ flags DockWidgetFeatures {
     Reserved              = 0xff
 }
 
-namedbits SignalMask extends Widget.SignalMask {
-    AllowedAreasChanged,
-    DockLocationChanged,
-    FeaturesChanged,
-    TopLevelChanged,
-    VisibilityChanged
-}
-
 interface SignalHandler extends Widget.SignalHandler {
     void allowedAreasChanged(DockWidgetAreas allowedAreas);
     void dockLocationChanged(DockWidgetArea area);
     void featuresChanged(DockWidgetFeatures features);
     void topLevelChanged(bool topLevel);
     void visibilityChanged(bool visible);
-}
-
-// some fancy stuff for the ToggleViewAction getter:
-delegate Action.Handle WrapperCreationFunc(Action.SignalHandler handler);
-sumtype ToggleViewActionResult {
-    AlreadyExists(Action.Handle handle),              // wrapper already existed on C++ side
-    NeedsWrapper(WrapperCreationFunc createFunc)      // apply function to receive the handle
 }
 
 @nodispose
@@ -63,10 +49,14 @@ opaque Handle extends Widget.Handle {
 
     // methods:
     bool isAreaAllowed(DockWidgetArea area);
-    ToggleViewActionResult toggleViewAction();
+    Action.Handle toggleViewAction();
 
-    // etc:
-    void setSignalMask(SignalMask mask);
+    // signals ============================
+    SignalConnection connect_AllowedAreasChanged(SignalHandler handler);
+    SignalConnection connect_DockLocationChanged(SignalHandler handler);
+    SignalConnection connect_FeaturesChanged(SignalHandler handler);
+    SignalConnection connect_TopLevelChanged(SignalHandler handler);
+    SignalConnection connect_VisibilityChanged(SignalHandler handler);
 }
 
 options CtorOptions {
@@ -74,5 +64,5 @@ options CtorOptions {
     WindowFlags flags_;
 }
 
-Handle create(SignalHandler handler, CtorOptions opts);
-Handle create(string title, SignalHandler handler, CtorOptions opts);
+Handle create(CtorOptions opts);
+Handle create(string title, CtorOptions opts);

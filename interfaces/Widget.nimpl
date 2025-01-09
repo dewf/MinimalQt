@@ -15,24 +15,10 @@ import MimeData;
 
 int WIDGET_SIZE_MAX;   // pass-through of QWIDGETSIZE_MAX
 
-namedbits SignalMask extends Object.SignalMask {
-    CustomContextMenuRequested,
-    WindowIconChanged,
-    WindowTitleChanged
-}
-
 interface SignalHandler extends Object.SignalHandler {
     void customContextMenuRequested(Point pos);
     void windowIconChanged(Icon.Handle icon);
     void windowTitleChanged(string title);
-}
-
-// some fancy stuff for the Layout getter:
-delegate Layout.Handle LayoutWrapperCreateFunc(Layout.SignalHandler handler);
-sumtype LayoutResult {
-    NoLayout,
-    AlreadyExists(Layout.Handle handle),             // something we (C#) created/assigned previously
-    NeedsWrapper(LayoutWrapperCreateFunc createFunc) // Qt-created default: using the function, provide a SignalHandler, receive the Layout.Handle
 }
 
 opaque Handle extends Object.Handle {
@@ -241,16 +227,17 @@ opaque Handle extends Object.Handle {
     void update(Rect rect);
 
     void setLayout(Layout.Handle layout);
-    LayoutResult getLayout();
+    Layout.Handle getLayout();
 
     Point mapToGlobal(Point p);
 
-    // signal mask ==================================
-    void setSignalMask(SignalMask mask);
+    // signals ======================================
+    SignalConnection connect_CustomContextMenuRequested(SignalHandler handler);
+    SignalConnection connect_WindowIconChanged(SignalHandler handler);
+    SignalConnection connect_WindowTitleChanged(SignalHandler handler);
 }
 
-Handle create(SignalHandler handler);
-Handle createNoHandler();
+Handle create();
 
 // SUBCLASSING ===========================================================
 
@@ -315,4 +302,4 @@ opaque Delegated extends Handle {
     void setDelegate(DelegateMethods methods, MethodMask methodMask);
 }
 
-Delegated createDelegated(SignalHandler handler);
+Delegated createDelegated();

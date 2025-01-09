@@ -9,18 +9,6 @@ import Enums;
 import Dir;
 import Url;
 
-namedbits SignalMask extends Dialog.SignalMask {
-    CurrentChanged,
-    CurrentUrlChanged,
-    DirectoryEntered,
-    DirectoryUrlEntered,
-    FileSelected,
-    FilesSelected,
-    FilterSelected,
-    UrlSelected,
-    UrlsSelected
-}
-
 interface SignalHandler extends Dialog.SignalHandler {
     void currentChanged(string path);
     void currentUrlChanged(Url.Handle url);
@@ -94,8 +82,16 @@ opaque Handle extends Dialog.Handle {
     void selectFile(string file);
     Array<string> selectedFiles();
 
-    // etc:
-    void setSignalMask(SignalMask mask);
+    // signals ============================
+    SignalConnection connect_CurrentChanged(SignalHandler handler);
+    SignalConnection connect_CurrentUrlChanged(SignalHandler handler);
+    SignalConnection connect_DirectoryEntered(SignalHandler handler);
+    SignalConnection connect_DirectoryUrlEntered(SignalHandler handler);
+    SignalConnection connect_FileSelected(SignalHandler handler);
+    SignalConnection connect_FilesSelected(SignalHandler handler);
+    SignalConnection connect_FilterSelected(SignalHandler handler);
+    SignalConnection connect_UrlSelected(SignalHandler handler);
+    SignalConnection connect_UrlsSelected(SignalHandler handler);
 }
 
 // ctors
@@ -106,7 +102,7 @@ options CreateOpts {
     string directory;
     string filter;
 }
-Handle create(SignalHandler handler, CreateOpts opts);
+Handle create(CreateOpts opts);
 
 // static methods
 
