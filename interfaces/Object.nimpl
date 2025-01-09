@@ -4,7 +4,7 @@ opaque SignalConnection; // contains a MetaObject::Connection
 
 interface SignalHandler {
     // internal use (always on)
-    // void destroyedByQt();
+    void destroyedByQt();
 
     void destroyed(Handle obj);
     void objectNameChanged(string objectName);
@@ -20,6 +20,7 @@ opaque Handle {
     void setParent(Handle parent);
     void dumpObjectTree();
 
+    SignalConnection connect_DestroyedByQt(SignalHandler handler);
     SignalConnection connect_Destroyed(SignalHandler handler);
     SignalConnection connect_ObjectNameChanged(SignalHandler handler);
 }
