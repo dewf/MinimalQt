@@ -1,8 +1,8 @@
 #include "generated/MimeData.h"
+#include "MimeDataInternal.h"
 
 #include <QUrl>
 
-#include "MimeDataInternal.h"
 #include "UrlInternal.h"
 #include "VariantInternal.h"
 

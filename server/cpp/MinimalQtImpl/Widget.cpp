@@ -9,6 +9,7 @@
 
 #include <QDrag>
 
+#include "ObjectInternal.h"
 #include "ActionInternal.h"
 #include "FontInternal.h"
 #include "IconInternal.h"
