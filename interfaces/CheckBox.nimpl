@@ -1,0 +1,25 @@
+module CheckBox;
+
+import Object;
+import Widget;
+import AbstractButton;
+import Enums;
+
+interface SignalHandler extends AbstractButton.SignalHandler {
+    void checkStateChanged(CheckState state);
+}
+
+opaque Handle extends AbstractButton.Handle {
+    // properties
+    CheckState getCheckState();
+    void setCheckState(CheckState value);
+
+    bool isTristate();
+    void setTristate(bool value);
+
+    // signals
+    SignalConnection connect_CheckStateChanged(SignalHandler handler);
+}
+
+Handle create(Option<Widget.Handle> parent);
+Handle create(string text, Option<Widget.Handle> parent);

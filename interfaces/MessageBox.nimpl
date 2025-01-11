@@ -7,6 +7,7 @@ import Enums;
 import Dialog;
 import AbstractButton;
 import PushButton;
+import CheckBox;
 import Widget;
 import Pixmap;
 
@@ -128,10 +129,7 @@ opaque Handle extends Dialog.Handle {
     AbstractButton.Handle button(StandardButton which);
     ButtonRole buttonRole(AbstractButton.Handle button);
     Array<AbstractButton.Handle> buttons();
-
-    // QCheckBox * checkBox() const
-    // TODO
-
+    CheckBox.Handle checkBox();
     AbstractButton.Handle clickedButton();
     PushButton.Handle defaultButton();
     AbstractButton.Handle escapeButton();
@@ -139,10 +137,7 @@ opaque Handle extends Dialog.Handle {
     // void open(QObject *receiver, const char *member)
 
     void removeButton(AbstractButton.Handle button);
-
-    // void setCheckBox(QCheckBox *cb)
-    // TODO
-
+    void setCheckBox(CheckBox.Handle cb);
     void setDefaultButton(StandardButton button);
     void setDefaultButton(PushButton.Handle button);
     void setEscapeButton(AbstractButton.Handle button);

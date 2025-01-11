@@ -3,6 +3,7 @@
 
 #include "ObjectInternal.h"
 #include "AbstractButtonInternal.h"
+#include "CheckBoxInternal.h"
 #include "WidgetInternal.h"
 #include "PushButtonInternal.h"
 #include "PixmapInternal.h"
@@ -110,6 +111,10 @@ namespace MessageBox
         });
     }
 
+    CheckBox::HandleRef Handle_checkBox(HandleRef _this) {
+        return reinterpret_cast<CheckBox::HandleRef>(THIS->checkBox());
+    }
+
     AbstractButton::HandleRef Handle_clickedButton(HandleRef _this) {
         return reinterpret_cast<AbstractButton::HandleRef>(THIS->clickedButton());
     }
@@ -124,6 +129,10 @@ namespace MessageBox
 
     void Handle_removeButton(HandleRef _this, AbstractButton::HandleRef button) {
         THIS->removeButton(AS_QABSTRACTBUTTON_PTR(button));
+    }
+
+    void Handle_setCheckBox(HandleRef _this, CheckBox::HandleRef cb) {
+        THIS->setCheckBox(AS_QCHECKBOX_PTR(cb));
     }
 
     void Handle_setDefaultButton(HandleRef _this, StandardButton button) {

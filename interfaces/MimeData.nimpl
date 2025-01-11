@@ -4,9 +4,8 @@ import Object;
 import Variant;
 import Url;
 
-interface SignalHandler extends Object.SignalHandler {
-    // no extra signals
-}
+interface SignalHandler extends Object.SignalHandler;
+// no extra signals
 
 opaque Handle extends Object.Handle {
     void clear();

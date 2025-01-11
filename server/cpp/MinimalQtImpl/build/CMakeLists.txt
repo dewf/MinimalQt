@@ -81,6 +81,11 @@ add_library(MinimalQtImpl STATIC
     ../CalendarWidget.cpp
     ../CalendarWidgetInternal.h
 
+    ../generated/CheckBox.h
+    ../generated/CheckBox_wrappers.cpp
+    ../CheckBox.cpp
+    ../CheckBoxInternal.h
+
     ../generated/Color.h
     ../generated/Color_wrappers.cpp
     ../Color.cpp
