@@ -1,7 +1,7 @@
 #include "generated/Variant.h"
 
 #include "VariantInternal.h"
-#include "PaintResourcesInternal.h"
+// #include "PaintResourcesInternal.h"
 
 #include <QVariant>
 
@@ -66,7 +66,7 @@ namespace Variant
     Color::OwnedRef Handle_toColor(HandleRef _this) {
         if (VALUE.isValid() && VALUE.canConvert<QColor>()) {
             const auto color = VALUE.value<QColor>();
-            return new Color::__Owned { color };
+            return COLOR_HEAP_NEW(color);
         }
         // else
         throw VariantConversionFailure();
@@ -120,7 +120,7 @@ namespace Variant
     }
 
     OwnedRef create(Color::HandleRef color) {
-        return new __Owned(color->qColor);
+        return new __Owned(QCOLOR_VALUE(color));
     }
 
     OwnedRef createAlign(Alignment align) {

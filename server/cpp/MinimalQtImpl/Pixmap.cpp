@@ -10,10 +10,15 @@
 
 #include "util/convert.h"
 
-#define THIS (&(_this->qPixmap)) // in preparation for removing the PaintStackItem inheritance, so we don't have to change code below
+#define THIS (AS_QPIXMAP_PTR(_this))
 
 namespace Pixmap
 {
+    PaintDevice::HandleRef Handle_asPaintDevice(HandleRef _this) {
+        // we're treating QPaintDevice as an interface, not a superclass
+        return reinterpret_cast<PaintDevice::HandleRef>(_this);
+    }
+
     int64_t Handle_cacheKey(HandleRef _this) {
         return THIS->cacheKey();
     }
@@ -26,11 +31,11 @@ namespace Pixmap
     OwnedRef Handle_copy(HandleRef _this, const std::optional<Rect>& rect) {
         QRect qRect;
         if (rect.has_value()) qRect = toQRect(rect.value());
-        return new __Owned { THIS->copy(qRect) };
+        return PIXMAP_HEAP_NEW(THIS->copy(qRect));
     }
 
     OwnedRef Handle_copy(HandleRef _this, int32_t x, int32_t y, int32_t width, int32_t height) {
-        return new __Owned { THIS->copy(x, y, width, height) };
+        return PIXMAP_HEAP_NEW(THIS->copy(x, y, width, height));
     }
 
     int32_t Handle_depth(HandleRef _this) {
@@ -50,10 +55,9 @@ namespace Pixmap
     }
 
     void Handle_fill(HandleRef _this, const std::optional<Color::HandleRef>& color) {
-        const auto qColor = optionalMap<Color::HandleRef,QColor>(color, [](auto c) {
-            return c->qColor;
-        });
-        THIS->fill(qColor.value_or(Qt::white));
+        QColor qColor = Qt::white;
+        if (color.has_value()) qColor = QCOLOR_VALUE(color.value());
+        THIS->fill(qColor);
     }
 
     bool Handle_hasAlpha(HandleRef _this) {
@@ -111,23 +115,23 @@ namespace Pixmap
     OwnedRef Handle_scaled(HandleRef _this, Size size, const std::optional<AspectRatioMode>& aspectRatioMode, const std::optional<TransformationMode>& transformMode) {
         const auto qAspect = optionOrDefaultStaticCast(aspectRatioMode, Qt::IgnoreAspectRatio);
         const auto qTransform = optionOrDefaultStaticCast(transformMode, Qt::FastTransformation);
-        return new __Owned { THIS->scaled(toQSize(size), qAspect, qTransform) };
+        return PIXMAP_HEAP_NEW(THIS->scaled(toQSize(size), qAspect, qTransform));
     }
 
     OwnedRef Handle_scaled(HandleRef _this, int32_t width, int32_t height, const std::optional<AspectRatioMode>& aspectRatioMode, const std::optional<TransformationMode>& transformMode) {
         const auto qAspect = optionOrDefaultStaticCast(aspectRatioMode, Qt::IgnoreAspectRatio);
         const auto qTransform = optionOrDefaultStaticCast(transformMode, Qt::FastTransformation);
-        return new __Owned { THIS->scaled(width, height, qAspect, qTransform) };
+        return PIXMAP_HEAP_NEW(THIS->scaled(width, height, qAspect, qTransform));
     }
 
     OwnedRef Handle_scaledToHeight(HandleRef _this, int32_t height, const std::optional<TransformationMode>& mode) {
         const auto qTransform = optionOrDefaultStaticCast(mode, Qt::FastTransformation);
-        return new __Owned { THIS->scaledToHeight(height, qTransform) };
+        return PIXMAP_HEAP_NEW(THIS->scaledToHeight(height, qTransform));
     }
 
     OwnedRef Handle_scaledToWidth(HandleRef _this, int32_t width, const std::optional<TransformationMode>& mode) {
         const auto qTransform = optionOrDefaultStaticCast(mode, Qt::FastTransformation);
-        return new __Owned { THIS->scaledToWidth(width, qTransform) };
+        return PIXMAP_HEAP_NEW(THIS->scaledToWidth(width, qTransform));
     }
 
     void Handle_scroll(HandleRef _this, int32_t dx, int32_t dy, Rect rect, const std::optional<Region::HandleRef>& exposed) {
@@ -151,7 +155,7 @@ namespace Pixmap
     }
 
     void Handle_swap(HandleRef _this, HandleRef other) {
-        THIS->swap(other->qPixmap);
+        THIS->swap(QPIXMAP_VALUE(other));
     }
 
     Image::OwnedRef Handle_toImage(HandleRef _this) {
@@ -160,7 +164,7 @@ namespace Pixmap
 
     OwnedRef Handle_transformed(HandleRef _this, Transform::HandleRef transform, const std::optional<TransformationMode>& mode) {
         const auto qTransform = optionOrDefaultStaticCast(mode, Qt::FastTransformation);
-        return new __Owned { THIS->transformed(QTRANSFORM_VALUE(transform), qTransform) };
+        return PIXMAP_HEAP_NEW(THIS->transformed(QTRANSFORM_VALUE(transform), qTransform));
     }
 
     int32_t Handle_width(HandleRef _this) {
@@ -168,32 +172,32 @@ namespace Pixmap
     }
 
     void Owned_dispose(OwnedRef _this) {
-        delete _this;
+        delete THIS;
     }
 
     OwnedRef create(const std::vector<uint8_t>& xpm) {
         std::vector copy(xpm);
         copy.push_back(0); // null-terminator
         const auto qPtr = reinterpret_cast<const char *>(copy.data());
-        return new __Owned { QPixmap(qPtr) };
+        return PIXMAP_HEAP_NEW(qPtr);
     }
 
     OwnedRef create(int32_t width, int32_t height) {
-        return new __Owned { QPixmap(width, height) };
+        return PIXMAP_HEAP_NEW(width, height);
     }
 
     OwnedRef create(const std::string& filename, const FilenameOptions& opts) {
         const auto format = opts.mapOrDefaultFormat([](auto fmt) { return fmt.c_str(); }, static_cast<const char *>(nullptr));
         const auto flags = static_cast<Qt::ImageConversionFlags>(opts.getOrDefaultImageConversionFlags(AutoColor));
-        return new __Owned { QPixmap(QString::fromStdString(filename), format, flags) };
+        return PIXMAP_HEAP_NEW(QString::fromStdString(filename), format, flags);
     }
 
     OwnedRef create(Size size) {
-        return new __Owned { QPixmap(toQSize(size)) };
+        return PIXMAP_HEAP_NEW(toQSize(size));
     }
 
     OwnedRef create(HandleRef other) {
-        return new __Owned { QPixmap(other->qPixmap) };
+        return PIXMAP_HEAP_NEW(QPIXMAP_VALUE(other));
     }
 
     int32_t defaultDepth() {
@@ -202,7 +206,7 @@ namespace Pixmap
 
     OwnedRef fromImage(Image::HandleRef image, const std::optional<ImageConversionFlags>& imageConversionFlags) {
         const auto qFlags = static_cast<Qt::ImageConversionFlags>(imageConversionFlags.value_or(AutoColor));
-        return new __Owned { QPixmap::fromImage(QIMAGE_VALUE(image), qFlags) };
+        return PIXMAP_HEAP_NEW(QPixmap::fromImage(QIMAGE_VALUE(image), qFlags));
     }
 
     Transform::OwnedRef trueMatrix(Transform::HandleRef matrix, int32_t width, int32_t height) {

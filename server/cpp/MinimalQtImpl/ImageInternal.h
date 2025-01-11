@@ -2,9 +2,6 @@
 
 #include "generated/Image.h"
 #include <QImage>
-#include <utility>
-#include "CommonInternal.h" // for PaintStackItem
-#include "PaintDeviceInternal.h"
 
 #define AS_QIMAGE_PTR(x) (reinterpret_cast<QImage*>(x))
 #define QIMAGE_VALUE(x) (*AS_QIMAGE_PTR(x))

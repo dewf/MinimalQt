@@ -3,19 +3,10 @@
 #include "generated/Color.h"
 #include <QColor>
 
-#include "CommonInternal.h" // for PaintStackItem
-using namespace Common;
+#define AS_QCOLOR_PTR(x) (reinterpret_cast<QColor*>(x))
+#define QCOLOR_VALUE(x) (*AS_QCOLOR_PTR(x))
+#define COLOR_HEAP_NEW(...) (reinterpret_cast<Color::OwnedRef>(new QColor(__VA_ARGS__)))
 
 namespace Color {
-    struct __Handle : PaintStackItem {
-        QColor qColor;
-        explicit __Handle(const QColor qColor) : qColor(qColor) {}
-    };
-
-    struct __Owned : __Handle {
-        explicit __Owned(const QColor qColor) : __Handle(qColor) {}
-    };
-
     QColor fromConstant(Constant name);
-    // QColor fromDeferred(const std::shared_ptr<Deferred::Base> &deferred);
 }

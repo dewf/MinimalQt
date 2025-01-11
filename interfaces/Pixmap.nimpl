@@ -13,7 +13,10 @@ options FilenameOptions {
 }
 
 @nodispose
-opaque Handle extends PaintDevice.Handle {
+opaque Handle {         // we don't directly inherit from PaintDevice, because that's conceptually more of an interface, and it's nice to get the QValueType<T> behavior on the C# side
+    // interfaces:
+    PaintDevice.Handle asPaintDevice();
+
     int64 cacheKey();
     bool convertFromImage(Image.Handle image, Option<ImageConversionFlags> flags_);
     Owned copy(Option<Rect> rect);

@@ -115,7 +115,7 @@ namespace Image
     }
 
     void Handle_fill(HandleRef _this, Color::HandleRef color) {
-        return THIS->fill(color->qColor);
+        return THIS->fill(QCOLOR_VALUE(color));
     }
 
     Format Handle_format(HandleRef _this) {
@@ -178,11 +178,11 @@ namespace Image
     }
 
     Color::OwnedRef Handle_pixelColor(HandleRef _this, Point position) {
-        return new Color::__Owned { THIS->pixelColor(toQPoint(position)) };
+        return COLOR_HEAP_NEW(THIS->pixelColor(toQPoint(position)));
     }
 
     Color::OwnedRef Handle_pixelColor(HandleRef _this, int32_t x, int32_t y) {
-        return new Color::__Owned { THIS->pixelColor(x, y) };
+        return COLOR_HEAP_NEW(THIS->pixelColor(x, y));
     }
 
     int32_t Handle_pixelIndex(HandleRef _this, Point position) {
@@ -286,11 +286,11 @@ namespace Image
     }
 
     void Handle_setPixelColor(HandleRef _this, Point position, Color::HandleRef color) {
-        THIS->setPixelColor(toQPoint(position), color->qColor);
+        THIS->setPixelColor(toQPoint(position), QCOLOR_VALUE(color));
     }
 
     void Handle_setPixelColor(HandleRef _this, int32_t x, int32_t y, Color::HandleRef color) {
-        THIS->setPixelColor(x, y, color->qColor);
+        THIS->setPixelColor(x, y, QCOLOR_VALUE(color));
     }
 
     void Handle_setText(HandleRef _this, const std::string& key, const std::string& text) {

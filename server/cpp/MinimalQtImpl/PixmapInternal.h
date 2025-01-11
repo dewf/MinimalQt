@@ -2,21 +2,10 @@
 
 #include "generated/Pixmap.h"
 #include <QPixmap>
-#include "CommonInternal.h" // for PaintStackItem
-#include "PaintDeviceInternal.h"
+
+#define AS_QPIXMAP_PTR(x) (reinterpret_cast<QPixmap*>(x))
+#define QPIXMAP_VALUE(x) (*AS_QPIXMAP_PTR(x))
+#define PIXMAP_HEAP_NEW(...) (reinterpret_cast<Pixmap::OwnedRef>(new QPixmap(__VA_ARGS__)))
 
 namespace Pixmap {
-    struct __Handle : PaintDevice::__Handle, PaintStackItem {
-        QPixmap qPixmap;
-        explicit __Handle(QPixmap qPixmap) : qPixmap(std::move(qPixmap)) {}
-
-        // needed to call PaintDevice methods
-        QPaintDevice * getPaintDevice() override {
-            return &qPixmap;
-        }
-    };
-
-    struct __Owned : __Handle {
-        explicit __Owned(const QPixmap &qPixmap) : __Handle(qPixmap) {}
-    };
 }

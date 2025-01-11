@@ -3,14 +3,9 @@
 #include "generated/Brush.h"
 #include <QBrush>
 
-#include "CommonInternal.h" // for PaintStackItem, which we will get rid of someday
+#define AS_QBRUSH_PTR(x) (reinterpret_cast<QBrush*>(x))
+#define QBRUSH_VALUE(x) (*AS_QBRUSH_PTR(x))
+#define BRUSH_HEAP_NEW(...) (reinterpret_cast<Brush::OwnedRef>(new QBrush(__VA_ARGS__)))
 
 namespace Brush {
-    struct __Handle : PaintStackItem {
-        QBrush qBrush;
-        explicit __Handle(const QBrush &q_brush) : qBrush(q_brush) {}
-    };
-    struct __Owned : __Handle {
-        explicit __Owned(const QBrush &q_brush) : __Handle(q_brush) {}
-    };
 }

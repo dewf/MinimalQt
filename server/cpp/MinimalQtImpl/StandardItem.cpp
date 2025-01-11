@@ -39,11 +39,11 @@ namespace StandardItem
     }
 
     Brush::OwnedRef Handle_background(HandleRef _this) {
-        return new Brush::__Owned { THIS->background() };
+        return BRUSH_HEAP_NEW(THIS->background());
     }
 
     void Handle_setBackground(HandleRef _this, Brush::HandleRef brush) {
-        THIS->setBackground(brush->qBrush);
+        THIS->setBackground(QBRUSH_VALUE(brush));
     }
 
     CheckState Handle_checkState(HandleRef _this) {
@@ -119,11 +119,11 @@ namespace StandardItem
     }
 
     Brush::OwnedRef Handle_foreground(HandleRef _this) {
-        return new Brush::__Owned { THIS->foreground() };
+        return BRUSH_HEAP_NEW(THIS->foreground());
     }
 
     void Handle_setForeground(HandleRef _this, Brush::HandleRef brush) {
-        THIS->setForeground(brush->qBrush);
+        THIS->setForeground(QBRUSH_VALUE(brush));
     }
 
     Icon::OwnedRef Handle_getIcon(HandleRef _this) {

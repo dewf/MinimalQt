@@ -3,7 +3,7 @@
 #include <QColor>
 #include "ColorInternal.h"
 
-// #define THIS ((QColor*)_this)
+#define THIS (AS_QCOLOR_PTR(_this))
 
 namespace Color
 {
@@ -52,25 +52,25 @@ namespace Color
     }
 
     void Owned_dispose(OwnedRef _this) {
-        delete _this;
+        delete THIS;
     }
 
     OwnedRef create() {
-        return new __Owned { QColor() };
+        return COLOR_HEAP_NEW();
     }
     OwnedRef create(Constant name) {
-        return new __Owned { fromConstant(name) };
+        return COLOR_HEAP_NEW(fromConstant(name));
     }
     OwnedRef create(int32_t r, int32_t g, int32_t b) {
-        return new __Owned { QColor(r, g, b) };
+        return COLOR_HEAP_NEW(r, g, b);
     }
     OwnedRef create(int32_t r, int32_t g, int32_t b, int32_t a) {
-        return new __Owned { QColor(r, g, b, a) };
+        return COLOR_HEAP_NEW(r, g, b, a);
     }
     OwnedRef create(float r, float g, float b) {
-        return new __Owned { QColor::fromRgbF(r, g, b) };
+        return COLOR_HEAP_NEW(QColor::fromRgbF(r, g, b));
     }
     OwnedRef create(float r, float g, float b, float a) {
-        return new __Owned { QColor::fromRgbF(r, g, b, a) };
+        return COLOR_HEAP_NEW(QColor::fromRgbF(r, g, b, a));
     }
 }

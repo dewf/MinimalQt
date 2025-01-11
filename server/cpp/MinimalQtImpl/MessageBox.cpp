@@ -34,11 +34,11 @@ namespace MessageBox
     }
 
     Pixmap::OwnedRef Handle_iconPixmap(HandleRef _this) {
-        return new Pixmap::__Owned { THIS->iconPixmap() };
+        return PIXMAP_HEAP_NEW(THIS->iconPixmap());
     }
 
     void Handle_setIconPixmap(HandleRef _this, Pixmap::HandleRef pixmap) {
-        THIS->setIconPixmap(pixmap->qPixmap);
+        THIS->setIconPixmap(QPIXMAP_VALUE(pixmap));
     }
 
     std::string Handle_informativeText(HandleRef _this) {

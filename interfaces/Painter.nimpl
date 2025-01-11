@@ -1,7 +1,7 @@
 module Painter;
 
 import Common;
-import PaintResources;
+//import PaintResources;
 import Enums;
 import Color;
 import Pixmap;
@@ -28,42 +28,42 @@ flags RenderHintSet {
 
 @nodispose
 opaque Handle {
-    void setRenderHint(RenderHint hint, bool on);
-    void setRenderHints(RenderHintSet hints, bool on);
+    // void setRenderHint(RenderHint hint, bool on);
+    // void setRenderHints(RenderHintSet hints, bool on);
 
-    void setPen(Pen pen);
-    void setBrush(Brush.Handle brush);
-    void setFont(Font.Handle font);
-    void drawText(Rect rect, Alignment align, string text);
+    // void setPen(Pen pen);
+    // void setBrush(Brush.Handle brush);
+    // void setFont(Font.Handle font);
+    // void drawText(Rect rect, Alignment align, string text);
 
-    void fillPath(PainterPath path, Brush.Handle brush);
-    void strokePath(PainterPath path, Pen pen);
+    // void fillPath(PainterPath path, Brush.Handle brush);
+    // void strokePath(PainterPath path, Pen pen);
 
-    void fillRect(Rect rect, Brush.Handle brush);
-    void fillRect(Rect rect, Color.Handle color);
+    // void fillRect(Rect rect, Brush.Handle brush);
+    // void fillRect(Rect rect, Color.Handle color);
 
-    void drawRect(Rect rect);
-    void drawRect(RectF rect);
-    void drawRect(int x, int y, int width, int height);
+    // void drawRect(Rect rect);
+    // void drawRect(RectF rect);
+    // void drawRect(int x, int y, int width, int height);
 
-    void drawEllipse(RectF rectangle);
-    void drawEllipse(Rect rectangle);
-    void drawEllipse(int x, int y, int width, int height);
-    void drawEllipse(PointF center, double rx, double ry);
-    void drawEllipse(Point center, int rx, int ry);
+    // void drawEllipse(RectF rectangle);
+    // void drawEllipse(Rect rectangle);
+    // void drawEllipse(int x, int y, int width, int height);
+    // void drawEllipse(PointF center, double rx, double ry);
+    // void drawEllipse(Point center, int rx, int ry);
 
-    void drawPolyline(Array<PointF> points);
-    void drawPolyline(Array<Point> points);
+    // void drawPolyline(Array<PointF> points);
+    // void drawPolyline(Array<Point> points);
 
-    void drawPixmap(RectF target, Pixmap.Handle pixmap, RectF source);
-    void drawPixmap(Point point, Pixmap.Handle pixmap);
-    void drawPixmap(PointF point, Pixmap.Handle pixmap);
-    void drawPixmap(Rect rect, Pixmap.Handle pixmap);
-    void drawPixmap(Point point, Pixmap.Handle pixmap, Rect source);
-    void drawPixmap(PointF point, Pixmap.Handle pixmap, RectF source);
-    void drawPixmap(Rect target, Pixmap.Handle pixmap, Rect source);
-    void drawPixmap(int x, int y, Pixmap.Handle pixmap);
-    void drawPixmap(int x, int y, int width, int height, Pixmap.Handle pixmap);
-    void drawPixmap(int x, int y, Pixmap.Handle pixmap, int sx, int sy, int sw, int sh);
-    void drawPixmap(int x, int y, int w, int h, Pixmap.Handle pixmap, int sx, int sy, int sw, int sh);
+    // void drawPixmap(RectF target, Pixmap.Handle pixmap, RectF source);
+    // void drawPixmap(Point point, Pixmap.Handle pixmap);
+    // void drawPixmap(PointF point, Pixmap.Handle pixmap);
+    // void drawPixmap(Rect rect, Pixmap.Handle pixmap);
+    // void drawPixmap(Point point, Pixmap.Handle pixmap, Rect source);
+    // void drawPixmap(PointF point, Pixmap.Handle pixmap, RectF source);
+    // void drawPixmap(Rect target, Pixmap.Handle pixmap, Rect source);
+    // void drawPixmap(int x, int y, Pixmap.Handle pixmap);
+    // void drawPixmap(int x, int y, int width, int height, Pixmap.Handle pixmap);
+    // void drawPixmap(int x, int y, Pixmap.Handle pixmap, int sx, int sy, int sw, int sh);
+    // void drawPixmap(int x, int y, int w, int h, Pixmap.Handle pixmap, int sx, int sy, int sw, int sh);
 }

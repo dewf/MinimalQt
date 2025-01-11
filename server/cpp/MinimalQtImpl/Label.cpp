@@ -45,11 +45,11 @@ namespace Label
     }
 
     Pixmap::OwnedRef Handle_getPixmap(HandleRef _this) {
-        return new Pixmap::__Owned { THIS->pixmap() };
+        return PIXMAP_HEAP_NEW(THIS->pixmap());
     }
 
     void Handle_setPixmap(HandleRef _this, Pixmap::HandleRef pixmap) {
-        THIS->setPixmap(pixmap->qPixmap);
+        THIS->setPixmap(QPIXMAP_VALUE(pixmap));
     }
 
     bool Handle_hasScaledContents(HandleRef _this) {

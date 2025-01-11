@@ -34,7 +34,7 @@ namespace Icon
 
     void Handle_addPixmap(HandleRef _this, Pixmap::HandleRef pixmap, const Handle::ModeStateOpts& opts) {
         const auto [mode, state] = getOpts(opts);
-        THIS->addPixmap(pixmap->qPixmap, mode, state);
+        THIS->addPixmap(QPIXMAP_VALUE(pixmap), mode, state);
     }
 
     std::vector<Size> Handle_availableSizes(HandleRef _this, const Handle::ModeStateOpts& opts) {
@@ -74,22 +74,22 @@ namespace Icon
 
     Pixmap::OwnedRef Handle_pixmap(HandleRef _this, Size size, const Handle::ModeStateOpts& opts) {
         const auto [mode, state] = getOpts(opts);
-        return new Pixmap::__Owned { THIS->pixmap(toQSize(size), mode, state) };
+        return PIXMAP_HEAP_NEW(THIS->pixmap(toQSize(size), mode, state));
     }
 
     Pixmap::OwnedRef Handle_pixmap(HandleRef _this, int32_t extent, const Handle::ModeStateOpts& opts) {
         const auto [mode, state] = getOpts(opts);
-        return new Pixmap::__Owned { THIS->pixmap(extent, mode, state) };
+        return PIXMAP_HEAP_NEW(THIS->pixmap(extent, mode, state));
     }
 
     Pixmap::OwnedRef Handle_pixmap(HandleRef _this, Size size, double devicePixelRatio, const Handle::ModeStateOpts& opts) {
         const auto [mode, state] = getOpts(opts);
-        return new Pixmap::__Owned { THIS->pixmap(toQSize(size), devicePixelRatio, mode, state) };
+        return PIXMAP_HEAP_NEW(THIS->pixmap(toQSize(size), devicePixelRatio, mode, state));
     }
 
     Pixmap::OwnedRef Handle_pixmap(HandleRef _this, int32_t w, int32_t h, const Handle::ModeStateOpts& opts) {
         const auto [mode, state] = getOpts(opts);
-        return new Pixmap::__Owned { THIS->pixmap(w, h, mode, state) };
+        return PIXMAP_HEAP_NEW(THIS->pixmap(w, h, mode, state));
     }
 
     void Handle_setIsMask(HandleRef _this, bool isMask) {
@@ -109,11 +109,11 @@ namespace Icon
     }
 
     OwnedRef create(Pixmap::HandleRef pixmap) {
-        return ICON_HEAP_NEW(pixmap->qPixmap); // same as above
+        return ICON_HEAP_NEW(QPIXMAP_VALUE(pixmap));
     }
 
     OwnedRef create(const std::string& filename) {
-        return ICON_HEAP_NEW(QString::fromStdString(filename)); // ! using QIcon ctor
+        return ICON_HEAP_NEW(QString::fromStdString(filename));
     }
 
     OwnedRef create(HandleRef other) {
