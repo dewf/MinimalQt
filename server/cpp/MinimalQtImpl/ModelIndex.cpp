@@ -34,6 +34,10 @@ namespace ModelIndex
         return VALUE.isValid();
     }
 
+    AbstractItemModelHandleRef Handle_model(HandleRef _this) {
+        return (AbstractItemModelHandleRef)VALUE.model();
+    }
+
     OwnedRef Handle_parent(HandleRef _this) {
         return new __Owned(VALUE.parent());
     }

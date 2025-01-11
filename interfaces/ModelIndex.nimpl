@@ -3,6 +3,7 @@ module ModelIndex;
 import Variant;
 import Enums;
 
+fwdopaque AbstractItemModelHandle = AbstractItemModel.Handle;
 
 @nodispose
 opaque Handle {
@@ -13,8 +14,7 @@ opaque Handle {
     size_t internalId(); // is there any real difference between this and internalPointer?
     bool isValid();
     
-    // how could we import QAbstractItemModel, which depends on ModelIndex? hmmm
-    // AbstractItemModel.Handle model();
+    AbstractItemModelHandle model();
 
     // void multiData(...) TODO
     
