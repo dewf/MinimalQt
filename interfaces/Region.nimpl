@@ -5,6 +5,4 @@ opaque Handle;
 
 opaque Owned extends Handle;
 
-sumtype Deferred {
-    Todo
-}
+// no ctors or methods yet, later

@@ -1,6 +1,5 @@
 #include "generated/Region.h"
-
-#include <QRegion>
+#include "RegionInternal.h"
 
 #define THIS ((QRegion*)_this)
 

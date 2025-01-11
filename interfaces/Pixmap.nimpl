@@ -3,20 +3,79 @@ import PaintDevice;
 import Common;
 import Enums;
 import Image;
-
-@nodispose
-opaque Handle extends PaintDevice.Handle;
-
-opaque Owned extends Handle;
+import Color;
+import Region;
+import Transform;
 
 options FilenameOptions {
     string format;
     ImageConversionFlags imageConversionFlags; // defaults to Qt::AutoColor
 }
 
+@nodispose
+opaque Handle extends PaintDevice.Handle {
+    int64 cacheKey();
+    bool convertFromImage(Image.Handle image, Option<ImageConversionFlags> flags_);
+    Owned copy(Option<Rect> rect);
+    Owned copy(int x, int y, int width, int height);
+
+    // QBitmap createHeuristicMask(bool clipTight = true) const
+    // QBitmap createMaskFromColor(const QColor &maskColor, Qt::MaskMode mode = Qt::MaskInColor) const
+    // TODO
+
+    int depth();
+    void detach();
+    SizeF deviceIndependentSize();
+    double devicePixelRatio();
+    void fill(Option<Color.Handle> color);
+    bool hasAlpha();
+    bool hasAlphaChannel();
+    int height();
+    bool isNull();
+    bool isQBitmap();
+    bool load(string fileName, FilenameOptions opts);
+    bool loadFromData(Buffer<byte> data, FilenameOptions opts);
+    bool loadFromData(Array<byte> data, FilenameOptions opts);
+
+    // QBitmap mask() const
+    // TODO
+
+    Rect rect();
+    bool save(string fileName, Option<string> format, Option<int> quality);
+
+    // bool save(QIODevice *device, const char *format = nullptr, int quality = -1) const
+    // TODO
+
+    Owned scaled(Size size, Option<AspectRatioMode> aspectRatioMode, Option<TransformationMode> transformMode);
+    Owned scaled(int width, int height, Option<AspectRatioMode> aspectRatioMode, Option<TransformationMode> transformMode);
+    Owned scaledToHeight(int height, Option<TransformationMode> mode);
+    Owned scaledToWidth(int width, Option<TransformationMode> mode);
+    void scroll(int dx, int dy, Rect rect, Option<Region.Handle> exposed);
+    void scroll(int dx, int dy, int x, int y, int width, int height, Option<Region.Handle> exposed);
+    void setDevicePixelRatio(double scaleFactor);
+
+    // void setMask(const QBitmap &mask)
+    // TODO
+
+    Size size();
+    void swap(Handle other);
+    Image.Owned toImage();
+    Owned transformed(Transform.Handle transform, Option<TransformationMode> mode);
+    int width();
+}
+
+opaque Owned extends Handle;
+
+Owned create(Array<byte> xpm);
 Owned create(int width, int height);
 Owned create(string filename, FilenameOptions opts);
+Owned create(Size size);
+Owned create(Handle other);
 
 // static methods:
-// not sure we'd ever want this from Deferred, but ...
-Owned fromImage(Image.Handle image, Option<ImageConversionFlags> imageConversionFlags);
+int defaultDepth();
+Owned fromImage(Image.Handle image, Option<ImageConversionFlags> flags_);
+Transform.Owned trueMatrix(Transform.Handle matrix, int width, int height);
+
+// QPixmap	fromImageReader(QImageReader *imageReader, Qt::ImageConversionFlags flags = Qt::AutoColor)
+// TODO
