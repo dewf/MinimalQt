@@ -1,23 +1,23 @@
 module ScrollArea;
 
 import Object;
-import Common;
-import Icon;
-import Enums;
 import Widget;
+import Enums;
 import AbstractScrollArea;
 
-interface SignalHandler extends AbstractScrollArea.SignalHandler {
-    // (none)
-}
+interface SignalHandler extends AbstractScrollArea.SignalHandler;
+// none extra
 
 opaque Handle extends AbstractScrollArea.Handle {
+    Alignment getAlignment();
+    void ensureVisible(int x, int y, Option<int> xmargin, Option<int> ymargin);
+    void ensureWidgetVisible(Widget.Handle childWidget, Option<int> xmargin, Option<int> ymargin);
     void setAlignment(Alignment align);
-    void setWidgetResizable(bool resizable);
-
     void setWidget(Widget.Handle widget);
-
-    // no extra signals
+    void setWidgetResizable(bool resizable);
+    Widget.Handle takeWidget();
+    Widget.Handle widget();
+    bool widgetResizable();
 }
 
-Handle create();
+Handle create(Option<Widget.Handle> parent);

@@ -1,5 +1,7 @@
 module SizePolicy;
 
+import Enums;
+
 enum ControlType {
     DefaultType      = 0x00000001,
     ButtonBox        = 0x00000002,
@@ -18,7 +20,7 @@ enum ControlType {
     ToolButton       = 0x00004000
 }
 
-flags ControlTypes {
+flags ControlTypeSet {
     DefaultType      = 0x00000001,
     ButtonBox        = 0x00000002,
     CheckBox         = 0x00000004,
@@ -55,6 +57,29 @@ flags Policy {
 }
 
 @nodispose
-opaque Handle;
+opaque Handle {
+    ControlType getControlType();
+    Orientations expandingDirections();
+    bool hasHeightForWidth();
+    bool hasWidthForHeight();
+    Policy horizontalPolicy();
+    int horizontalStretch();
+    bool retainSizeWhenHidden();
+    void setControlType(ControlType type_);
+    void setHeightForWidth(bool dependent);
+    void setHorizontalPolicy(Policy policy);
+    void setHorizontalStretch(int stretchFactor);
+    void setRetainSizeWhenHidden(bool retainSize);
+    void setVerticalPolicy(Policy policy);
+    void setVerticalStretch(int stretchFactor);
+    void setWidthForHeight(bool dependent);
+    void transpose();
+    Owned transposed();
+    Policy verticalPolicy();
+    int verticalStretch();
+}
 
 opaque Owned extends Handle;
+
+Owned create();
+Owned create(Policy horizontal, Policy vertical, Option<ControlType> type_);

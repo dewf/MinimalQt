@@ -11,6 +11,32 @@ flags PatternOptions {
     UseUnicodePropertiesOption     = 0x0040
 }
 
+enum MatchType {
+    NormalMatch = 0,
+    PartialPreferCompleteMatch,
+    PartialPreferFirstMatch,
+    NoMatch
+}
+
+enum MatchOption {
+    NoMatchOption              = 0x0000,
+    AnchorAtOffsetMatchOption  = 0x0001,
+    // AnchoredMatchOption Q_DECL_ENUMERATOR_DEPRECATED_X("Use AnchorAtOffsetMatchOption instead") = AnchorAtOffsetMatchOption, // Rename@Qt6.0
+    DontCheckSubjectStringMatchOption = 0x0002
+}
+
+flags MatchOptionSet {
+    NoMatchOption              = 0x0000,
+    AnchorAtOffsetMatchOption  = 0x0001,
+    // AnchoredMatchOption Q_DECL_ENUMERATOR_DEPRECATED_X("Use AnchorAtOffsetMatchOption instead") = AnchorAtOffsetMatchOption, // Rename@Qt6.0
+    DontCheckSubjectStringMatchOption = 0x0002
+}
+
 @nodispose
 opaque Handle;
+
 opaque Owned extends Handle;
+
+Owned create();
+Owned create(string pattern, Option<PatternOptions> options_);
+Owned create(Handle other);

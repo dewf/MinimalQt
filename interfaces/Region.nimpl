@@ -1,8 +1,19 @@
 module Region;
 
+import Common;
+
+enum RegionType { Rectangle, Ellipse }
+
 @nodispose
 opaque Handle;
 
 opaque Owned extends Handle;
 
-// no ctors or methods yet, later
+Owned create();
+
+// QRegion(const QBitmap &bm)
+// QRegion(const QPolygon &a, Qt::FillRule fillRule = Qt::OddEvenFill)
+
+Owned create(int x, int y, int w, int h, Option<RegionType> t);
+Owned create(Rect r, Option<RegionType> t);
+Owned create(Handle other);
