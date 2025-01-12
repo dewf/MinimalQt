@@ -1,6 +1,7 @@
 module Object;
 
-opaque SignalConnection; // contains a MetaObject::Connection
+@nodispose
+opaque SignalConnection; // contains a MetaObject::Connection. @nodispose because they are automatically deleted on disconnection
 
 interface SignalHandler {
     // internal use (always on)
@@ -28,4 +29,4 @@ opaque Handle {
 // no create() because abstract
 
 // static methods:
-void disconnect(SignalConnection connection);
+void disconnect(SignalConnection connection); // disconnect + delete SignalConnection wrapper

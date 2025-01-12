@@ -5,10 +5,6 @@
 
 namespace Object
 {
-    void SignalConnection_dispose(SignalConnectionRef _this) {
-        delete _this;
-    }
-
     std::string Handle_objectName(HandleRef _this) {
         return THIS->objectName().toStdString();
     }
@@ -49,5 +45,6 @@ namespace Object
 
     void disconnect(SignalConnectionRef connection) {
         QObject::disconnect(connection->qConnection);
+        delete connection;
     }
 }
