@@ -1,18 +1,15 @@
 module RadioButton;
 
 import Object;
-import Common;
-import Icon;
+import Widget;
 import AbstractButton;
 
-interface SignalHandler extends AbstractButton.SignalHandler {
-    // (none)
-}
+interface SignalHandler extends AbstractButton.SignalHandler;
+// none extra
 
 opaque Handle extends AbstractButton.Handle {
-    // no properties
-
-    // no extra signals
+    // nothin'
 }
 
-Handle create();
+Handle create(Option<Widget.Handle> parent);
+Handle create(string text, Option<Widget.Handle> parent);
