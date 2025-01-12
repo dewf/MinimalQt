@@ -2,12 +2,45 @@
 #include "ProgressBarInternal.h"
 
 #include "ObjectInternal.h"
+#include "WidgetInternal.h"
 #include "util/convert.h"
 
 #define THIS (reinterpret_cast<QProgressBar*>(_this))
 
 namespace ProgressBar
 {
+    Alignment Handle_getAlignment(HandleRef _this) {
+        return THIS->alignment();
+    }
+
+    std::string Handle_format(HandleRef _this) {
+        return THIS->format().toStdString();
+    }
+
+    bool Handle_invertedAppearance(HandleRef _this) {
+        return THIS->invertedAppearance();
+    }
+
+    bool Handle_isTextVisible(HandleRef _this) {
+        return THIS->isTextVisible();
+    }
+
+    int32_t Handle_maximum(HandleRef _this) {
+        return THIS->maximum();
+    }
+
+    int32_t Handle_minimum(HandleRef _this) {
+        return THIS->minimum();
+    }
+
+    Orientation Handle_getOrientation(HandleRef _this) {
+        return static_cast<Orientation>(THIS->orientation());
+    }
+
+    void Handle_resetFormat(HandleRef _this) {
+        return THIS->resetFormat();
+    }
+
     void Handle_setAlignment(HandleRef _this, Alignment align) {
         THIS->setAlignment(static_cast<Qt::Alignment>(align));
     }
@@ -18,6 +51,30 @@ namespace ProgressBar
 
     void Handle_setInvertedAppearance(HandleRef _this, bool invert) {
         THIS->setInvertedAppearance(invert);
+    }
+
+    void Handle_setTextDirection(HandleRef _this, Direction direction) {
+        THIS->setTextDirection(static_cast<QProgressBar::Direction>(direction));
+    }
+
+    void Handle_setTextVisible(HandleRef _this, bool visible) {
+        THIS->setTextVisible(visible);
+    }
+
+    std::string Handle_text(HandleRef _this) {
+        return THIS->text().toStdString();
+    }
+
+    Direction Handle_textDirection(HandleRef _this) {
+        return static_cast<Direction>(THIS->textDirection());
+    }
+
+    int32_t Handle_value(HandleRef _this) {
+        return THIS->value();
+    }
+
+    void Handle_reset(HandleRef _this) {
+        THIS->reset();
     }
 
     void Handle_setMaximum(HandleRef _this, int32_t value) {
@@ -32,24 +89,12 @@ namespace ProgressBar
         THIS->setOrientation(static_cast<Qt::Orientation>(orient));
     }
 
-    std::string Handle_text(HandleRef _this) {
-        return THIS->text().toStdString();
-    }
-
-    void Handle_setTextDirection(HandleRef _this, Direction direction) {
-        THIS->setTextDirection(static_cast<QProgressBar::Direction>(direction));
-    }
-
-    void Handle_setTextVisible(HandleRef _this, bool visible) {
-        THIS->setTextVisible(visible);
+    void Handle_setRange(HandleRef _this, int32_t min, int32_t max) {
+        THIS->setRange(min, max);
     }
 
     void Handle_setValue(HandleRef _this, int32_t value) {
         THIS->setValue(value);
-    }
-
-    void Handle_setRange(HandleRef _this, int32_t min, int32_t max) {
-        THIS->setRange(min, max);
     }
 
     SignalConnectionRef Handle_connect_ValueChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
@@ -63,7 +108,7 @@ namespace ProgressBar
         delete THIS;
     }
 
-    HandleRef create() {
-        return reinterpret_cast<HandleRef>(new QProgressBar());
+    HandleRef create(const std::optional<Widget::HandleRef>& parent) {
+        return reinterpret_cast<HandleRef>(new QProgressBar(Widget::fromOptionalHandle(parent)));
     }
 }

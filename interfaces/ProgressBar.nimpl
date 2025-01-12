@@ -13,21 +13,31 @@ interface SignalHandler extends Widget.SignalHandler {
 enum Direction { TopToBottom, BottomToTop }
 
 opaque Handle extends Widget.Handle {
-    void setAlignment(Alignment align);
+    Alignment getAlignment();
+    string format();
+    bool invertedAppearance();
+    bool isTextVisible();
+    int maximum();
+    int minimum();
+    Orientation getOrientation();
+    void resetFormat();
+    void setAlignment(Alignment alignment);
     void setFormat(string format);
     void setInvertedAppearance(bool invert);
-    void setMaximum(int value);
-    void setMinimum(int value);
-    void setOrientation(Orientation orient);
-    string text();
-    void setTextDirection(Direction direction);
+    void setTextDirection(Direction textDirection);
     void setTextVisible(bool visible);
+    string text();
+    Direction textDirection();
+    int value();
+    void reset();
+    void setMaximum(int maximum);
+    void setMinimum(int minimum);
+    void setOrientation(Orientation orientation);
+    void setRange(int minimum, int maximum);
     void setValue(int value);
-
-    void setRange(int min, int max);
 
     // signals ============================
     SignalConnection connect_ValueChanged(SignalHandler handler);
 }
 
-Handle create();
+Handle create(Option<Widget.Handle> parent);
