@@ -2,24 +2,26 @@ module PushButton;
 
 import Object;
 import Common;
+import Widget;
 import Icon;
 import AbstractButton;
+import Menu;
 
-interface SignalHandler extends AbstractButton.SignalHandler {
-    // (none)
-}
+interface SignalHandler extends AbstractButton.SignalHandler;
+// none extra
 
 opaque Handle extends AbstractButton.Handle {
     bool autoDefault();
-    void setAutoDefault(bool value);
-
     bool isDefault();
-    void setDefault(bool value);
-
     bool isFlat();
+    Menu.Handle getMenu();
+    void setAutoDefault(bool value);
+    void setDefault(bool value);
     void setFlat(bool value);
-    
-    // no extra signals
+    void setMenu(Menu.Handle menu);
+    void showMenu();
 }
 
-Handle create();
+Handle create(Option<Widget.Handle> parent);
+Handle create(string text, Option<Widget.Handle> parent);
+Handle create(Icon.Handle icon, string text, Option<Widget.Handle> parent);
