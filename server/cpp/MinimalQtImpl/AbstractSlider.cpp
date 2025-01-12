@@ -7,6 +7,38 @@
 
 namespace AbstractSlider
 {
+    bool Handle_hasTracking(HandleRef _this) {
+        return THIS->hasTracking();
+    }
+
+    bool Handle_invertedAppearance(HandleRef _this) {
+        return THIS->invertedAppearance();
+    }
+
+    bool Handle_invertedControls(HandleRef _this) {
+        return THIS->invertedControls();
+    }
+
+    bool Handle_isSliderDown(HandleRef _this) {
+        return THIS->isSliderDown();
+    }
+
+    int32_t Handle_maximum(HandleRef _this) {
+        return THIS->maximum();
+    }
+
+    int32_t Handle_minimum(HandleRef _this) {
+        return THIS->minimum();
+    }
+
+    Orientation Handle_getOrientation(HandleRef _this) {
+        return static_cast<Orientation>(THIS->orientation());
+    }
+
+    int32_t Handle_pageStep(HandleRef _this) {
+        return THIS->pageStep();
+    }
+
     void Handle_setInvertedAppearance(HandleRef _this, bool state) {
         THIS->setInvertedAppearance(state);
     }
@@ -21,10 +53,6 @@ namespace AbstractSlider
 
     void Handle_setMinimum(HandleRef _this, int32_t value) {
         THIS->setMinimum(value);
-    }
-
-    void Handle_setOrientation(HandleRef _this, Orientation orient) {
-        THIS->setOrientation((Qt::Orientation)orient);
     }
 
     void Handle_setPageStep(HandleRef _this, int32_t pageStep) {
@@ -47,12 +75,32 @@ namespace AbstractSlider
         THIS->setTracking(value);
     }
 
-    void Handle_setValue(HandleRef _this, int32_t value) {
-        THIS->setValue(value);
+    int32_t Handle_singleStep(HandleRef _this) {
+        return THIS->singleStep();
+    }
+
+    int32_t Handle_sliderPosition(HandleRef _this) {
+        return THIS->sliderPosition();
+    }
+
+    void Handle_triggerAction(HandleRef _this, SliderAction action) {
+        return THIS->triggerAction(static_cast<QAbstractSlider::SliderAction>(action));
+    }
+
+    int32_t Handle_value(HandleRef _this) {
+        return THIS->value();
+    }
+
+    void Handle_setOrientation(HandleRef _this, Orientation orient) {
+        THIS->setOrientation(static_cast<Qt::Orientation>(orient));
     }
 
     void Handle_setRange(HandleRef _this, int32_t min, int32_t max) {
         THIS->setRange(min, max);
+    }
+
+    void Handle_setValue(HandleRef _this, int32_t value) {
+        THIS->setValue(value);
     }
 
     SignalConnectionRef Handle_connect_ActionTriggered(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {

@@ -2,8 +2,6 @@ module AbstractSlider;
 
 import Object;
 import Widget;
-import Common;
-import Icon;
 import Enums;
 
 enum SliderAction {
@@ -28,20 +26,31 @@ interface SignalHandler extends Widget.SignalHandler {
 
 @nodispose
 opaque Handle extends Widget.Handle {
+    bool hasTracking();
+    bool invertedAppearance();
+    bool invertedControls();
+    bool isSliderDown();
+    int maximum();
+    int minimum();
+    Orientation getOrientation();
+    int pageStep();
     void setInvertedAppearance(bool state);
     void setInvertedControls(bool state);
     void setMaximum(int value);
     void setMinimum(int value);
-    void setOrientation(Orientation orient);
     void setPageStep(int pageStep);
     void setSingleStep(int step);
     void setSliderDown(bool state);
     void setSliderPosition(int pos);
     void setTracking(bool value);
-    void setValue(int value);
+    int singleStep();
+    int sliderPosition();
+    void triggerAction(SliderAction action);
+    int value();
 
-    // why not a property?
+    void setOrientation(Orientation orient);
     void setRange(int min, int max);
+    void setValue(int value);
 
     // signals ============================
     SignalConnection connect_ActionTriggered(SignalHandler handler);

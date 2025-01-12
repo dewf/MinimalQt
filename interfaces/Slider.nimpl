@@ -1,13 +1,11 @@
 module Slider;
 
 import Object;
-import Common;
-import Icon;
+import Widget;
+import Enums;
 import AbstractSlider;
 
-interface SignalHandler extends AbstractSlider.SignalHandler {
-    // (none)
-}
+interface SignalHandler extends AbstractSlider.SignalHandler;
 
 enum TickPosition {
     NoTicks = 0,
@@ -19,10 +17,11 @@ enum TickPosition {
 }
 
 opaque Handle extends AbstractSlider.Handle {
+    int tickInterval();
+    TickPosition tickPosition();
     void setTickInterval(int interval);
     void setTickPosition(TickPosition tpos);
-
-    // no extra signals
 }
 
-Handle create();
+Handle create(Option<Widget.Handle> parent);
+Handle create(Orientation orientation, Option<Widget.Handle> parent);
