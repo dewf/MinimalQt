@@ -17,6 +17,8 @@ opaque Handle {         // we don't directly inherit from PaintDevice, because t
     // interfaces:
     PaintDevice.Handle asPaintDevice();
 
+    // properties + methods:
+
     int64 cacheKey();
     bool convertFromImage(Image.Handle image, Option<ImageConversionFlags> flags_);
     Owned copy(Option<Rect> rect);

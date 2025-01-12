@@ -54,7 +54,12 @@ options ScaledOptions {
 }
 
 @nodispose
-opaque Handle extends PaintDevice.Handle {
+opaque Handle {
+    // interfaces:
+    PaintDevice.Handle asPaintDevice();
+
+    // properties + methods:
+
     bool allGray();
 
     // void applyColorTransform(QColorTransform &transform);

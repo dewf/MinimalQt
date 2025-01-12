@@ -10,6 +10,10 @@
 
 namespace Image
 {
+    PaintDevice::HandleRef Handle_asPaintDevice(HandleRef _this) {
+        return reinterpret_cast<PaintDevice::HandleRef>(_this);
+    }
+
     bool Handle_allGray(HandleRef _this) {
         return THIS->allGray();
     }
