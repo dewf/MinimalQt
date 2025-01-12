@@ -11,7 +11,6 @@ flags PatternOptions {
     UseUnicodePropertiesOption     = 0x0040
 }
 
-sumtype Deferred {
-    Empty,                                        // empty QString()
-    Regex(string pattern, PatternOptions opts)
-}
+@nodispose
+opaque Handle;
+opaque Owned extends Handle;

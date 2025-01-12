@@ -72,11 +72,11 @@ namespace Label
         THIS->setText(QString::fromStdString(text));
     }
 
-    TextFormat Handle_getTextFormat(HandleRef _this) {
-        return static_cast<TextFormat>(THIS->textFormat());
+    TextFormatEnum Handle_getTextFormat(HandleRef _this) {
+        return static_cast<TextFormatEnum>(THIS->textFormat());
     }
 
-    void Handle_setTextFormat(HandleRef _this, TextFormat format) {
+    void Handle_setTextFormat(HandleRef _this, TextFormatEnum format) {
         THIS->setTextFormat(static_cast<Qt::TextFormat>(format));
     }
 

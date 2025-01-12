@@ -1,13 +1,11 @@
 #include "generated/RegularExpression.h"
-
 #include "RegularExpressionInternal.h"
+
+#define THIS (AS_QREGEX_PTR(_this))
 
 namespace RegularExpression
 {
-    QRegularExpression fromDeferred(const std::shared_ptr<Deferred::Base>& deferred) {
-        QRegularExpression ret;
-        FromDeferredMatcher matcher(ret);
-        deferred->match(&matcher);
-        return ret;
+    void Owned_dispose(OwnedRef _this) {
+        delete THIS;
     }
 }

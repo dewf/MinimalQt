@@ -26,8 +26,8 @@ namespace SortFilterProxyModel
         THIS->setFilterKeyColumn(filterKeyColumn);
     }
 
-    void Handle_setFilterRegularExpression(HandleRef _this, const std::shared_ptr<RegularExpression::Deferred::Base>& regex) {
-        THIS->setFilterRegularExpression(RegularExpression::fromDeferred(regex));
+    void Handle_setFilterRegularExpression(HandleRef _this, RegularExpression::HandleRef regex) {
+        THIS->setFilterRegularExpression(QREGEX_VALUE(regex));
     }
 
     void Handle_setFilterRole(HandleRef _this, ItemDataRole filterRole) {

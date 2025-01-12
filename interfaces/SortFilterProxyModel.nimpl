@@ -23,7 +23,7 @@ opaque Handle extends AbstractProxyModel.Handle {
     void setDynamicSortFilter(bool state);
     void setFilterCaseSensitivity(CaseSensitivity sensitivity);
     void setFilterKeyColumn(int filterKeyColumn); // -1 = all columns
-    void setFilterRegularExpression(RegularExpression.Deferred regex);
+    void setFilterRegularExpression(RegularExpression.Handle regex);
     void setFilterRole(ItemDataRole filterRole);
     void setSortLocaleAware(bool state);
     void setRecursiveFilteringEnabled(bool enabled);

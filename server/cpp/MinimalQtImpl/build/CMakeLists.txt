@@ -361,9 +361,35 @@ add_library(MinimalQtImpl STATIC
     ../TabWidget.cpp
     ../TabWidgetInternal.h
 
+    ../generated/TextCharFormat.h
+    ../generated/TextCharFormat_wrappers.cpp
+    ../TextCharFormat.cpp
+    ../TextCharFormatInternal.h
+
+    ../generated/TextCursor.h
+    ../generated/TextCursor_wrappers.cpp
+    ../TextCursor.cpp
+    ../TextCursorInternal.h
+
+    ../generated/TextDocument.h
+    ../generated/TextDocument_wrappers.cpp
+    ../TextDocument.cpp
+    ../TextDocumentInternal.h
+
+    ../generated/TextEdit.h
+    ../generated/TextEdit_wrappers.cpp
+    ../TextEdit.cpp
+    ../TextEditInternal.h
+
+    ../generated/TextFormat.h
+    ../generated/TextFormat_wrappers.cpp
+    ../TextFormat.cpp
+    ../TextFormatInternal.h
+
     ../generated/TextOption.h
     ../generated/TextOption_wrappers.cpp
     ../TextOption.cpp
+    ../TextOptionInternal.h
 
     ../generated/Timer.h
     ../generated/Timer_wrappers.cpp

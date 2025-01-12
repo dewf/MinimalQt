@@ -2,30 +2,164 @@
 #include "PlainTextEditInternal.h"
 
 #include "ObjectInternal.h"
+#include "RegularExpressionInternal.h"
+#include "TextCharFormatInternal.h"
+#include "TextCursorInternal.h"
+#include "TextEditInternal.h"
+#include "UrlInternal.h"
+#include "VariantInternal.h"
+#include "WidgetInternal.h"
+
 #include "util/convert.h"
 
 #define THIS (reinterpret_cast<QPlainTextEdit*>(_this))
 
 namespace PlainTextEdit
 {
-    void Handle_setBackgroundVisible(HandleRef _this, bool visible) {
-        THIS->setBackgroundVisible(visible);
+    std::string Handle_anchorAt(HandleRef _this, Point pos) {
+        return THIS->anchorAt(toQPoint(pos)).toStdString();
+    }
+
+    bool Handle_backgroundVisible(HandleRef _this) {
+        return THIS->backgroundVisible();
     }
 
     int32_t Handle_blockCount(HandleRef _this) {
         return THIS->blockCount();
     }
 
+    bool Handle_canPaste(HandleRef _this) {
+        return THIS->canPaste();
+    }
+
+    bool Handle_centerOnScroll(HandleRef _this) {
+        return THIS->centerOnScroll();
+    }
+
+    Menu::HandleRef Handle_createStandardContextMenu(HandleRef _this) {
+        return reinterpret_cast<Menu::HandleRef>(THIS->createStandardContextMenu());
+    }
+
+    Menu::HandleRef Handle_createStandardContextMenu(HandleRef _this, Point position) {
+        return reinterpret_cast<Menu::HandleRef>(THIS->createStandardContextMenu());
+    }
+
+    TextCharFormat::OwnedRef Handle_currentCharFormat(HandleRef _this) {
+        return TEXTCHARFORMAT_HEAP_NEW(THIS->currentCharFormat());
+    }
+
+    TextCursor::OwnedRef Handle_cursorForPosition(HandleRef _this, Point pos) {
+        return TEXTCURSOR_HEAP_NEW(THIS->cursorForPosition(toQPoint(pos)));
+    }
+
+    Rect Handle_cursorRect(HandleRef _this) {
+        return toRect(THIS->cursorRect());
+    }
+
+    Rect Handle_cursorRect(HandleRef _this, TextCursor::HandleRef cursor) {
+        return toRect(THIS->cursorRect(QTEXTCURSOR_VALUE(cursor)));
+    }
+
+    int32_t Handle_cursorWidth(HandleRef _this) {
+        return THIS->cursorWidth();
+    }
+
+    TextDocument::HandleRef Handle_document(HandleRef _this) {
+        return reinterpret_cast<TextDocument::HandleRef>(THIS->document());
+    }
+
+    std::string Handle_documentTitle(HandleRef _this) {
+        return THIS->documentTitle().toStdString();
+    }
+
+    void Handle_ensureCursorVisible(HandleRef _this) {
+        THIS->ensureCursorVisible();
+    }
+
+    std::vector<ExtraSelection::OwnedRef> Handle_extraSelections(HandleRef _this) {
+        return fromQList<QTextEdit::ExtraSelection,ExtraSelection::OwnedRef>(THIS->extraSelections(), [](auto sel) {
+            return TEXTEDIT_EXTRASEL_HEAP_NEW(sel.cursor, sel.format);
+        });
+    }
+
+    bool Handle_find(HandleRef _this, const std::string& exp, const std::optional<FindFlags>& options_) {
+        QTextDocument::FindFlags flags;
+        if (options_.has_value()) flags = static_cast<QTextDocument::FindFlags>(options_.value());
+        return THIS->find(QString::fromStdString(exp), flags);
+    }
+
+    bool Handle_find(HandleRef _this, RegularExpression::HandleRef exp, const std::optional<FindFlags>& options_) {
+        QTextDocument::FindFlags flags;
+        if (options_.has_value()) flags = static_cast<QTextDocument::FindFlags>(options_.value());
+        return THIS->find(QREGEX_VALUE(exp), flags);
+    }
+
+    bool Handle_isReadOnly(HandleRef _this) {
+        return THIS->isReadOnly();
+    }
+
+    bool Handle_isUndoRedoEnabled(HandleRef _this) {
+        return THIS->isUndoRedoEnabled();
+    }
+
+    LineWrapMode Handle_getLineWrapMode(HandleRef _this) {
+        return static_cast<LineWrapMode>(THIS->lineWrapMode());
+    }
+
+    Variant::OwnedRef Handle_loadResource(HandleRef _this, int32_t type, Url::HandleRef name) {
+        return new Variant::__Owned { THIS->loadResource(type, QURL_VALUE(name)) };
+    }
+
+    int32_t Handle_maximumBlockCount(HandleRef _this) {
+        return THIS->maximumBlockCount();
+    }
+
+    void Handle_mergeCurrentCharFormat(HandleRef _this, TextCharFormat::HandleRef modifier) {
+        return THIS->mergeCurrentCharFormat(QTEXTCHARFORMAT_VALUE(modifier));
+    }
+
+    void Handle_moveCursor(HandleRef _this, MoveOperation operation, const std::optional<MoveMode>& mode) {
+        const auto qMode = optionOrDefaultStaticCast(mode, QTextCursor::MoveAnchor);
+        THIS->moveCursor(static_cast<QTextCursor::MoveOperation>(operation), qMode);
+    }
+
+    bool Handle_overwriteMode(HandleRef _this) {
+        return THIS->overwriteMode();
+    }
+
+    std::string Handle_placeholderText(HandleRef _this) {
+        return THIS->placeholderText().toStdString();
+    }
+
+    void Handle_setBackgroundVisible(HandleRef _this, bool visible) {
+        THIS->setBackgroundVisible(visible);
+    }
+
     void Handle_setCenterOnScroll(HandleRef _this, bool state) {
         THIS->setCenterOnScroll(state);
+    }
+
+    void Handle_setCurrentCharFormat(HandleRef _this, TextCharFormat::HandleRef format) {
+        THIS->setCurrentCharFormat(QTEXTCHARFORMAT_VALUE(format));
     }
 
     void Handle_setCursorWidth(HandleRef _this, int32_t width) {
         THIS->setCursorWidth(width);
     }
 
+    void Handle_setDocument(HandleRef _this, TextDocument::HandleRef document) {
+        THIS->setDocument(reinterpret_cast<QTextDocument*>(document));
+    }
+
     void Handle_setDocumentTitle(HandleRef _this, const std::string& title) {
         THIS->setDocumentTitle(QString::fromStdString(title));
+    }
+
+    void Handle_setExtraSelections(HandleRef _this, const std::vector<ExtraSelection::HandleRef>& selections) {
+        const auto qSelections = toQList<ExtraSelection::HandleRef,QTextEdit::ExtraSelection>(selections, [](auto sel) {
+            return QTEXTEDIT_EXTRASEL_VALUE(sel);
+        });
+        THIS->setExtraSelections(qSelections);
     }
 
     void Handle_setLineWrapMode(HandleRef _this, LineWrapMode mode) {
@@ -44,10 +178,6 @@ namespace PlainTextEdit
         THIS->setPlaceholderText(QString::fromStdString(text));
     }
 
-    void Handle_setPlainText(HandleRef _this, const std::string& text) {
-        THIS->setPlainText(QString::fromStdString(text));
-    }
-
     void Handle_setReadOnly(HandleRef _this, bool state) {
         THIS->setReadOnly(state);
     }
@@ -58,6 +188,10 @@ namespace PlainTextEdit
 
     void Handle_setTabStopDistance(HandleRef _this, double distance) {
         THIS->setTabStopDistance(distance);
+    }
+
+    void Handle_setTextCursor(HandleRef _this, TextCursor::HandleRef cursor) {
+        THIS->setTextCursor(QTEXTCURSOR_VALUE(cursor));
     }
 
     void Handle_setTextInteractionFlags(HandleRef _this, TextInteractionFlags tiFlags) {
@@ -72,8 +206,84 @@ namespace PlainTextEdit
         THIS->setWordWrapMode(static_cast<QTextOption::WrapMode>(mode));
     }
 
+    bool Handle_tabChangesFocus(HandleRef _this) {
+        return THIS->tabChangesFocus();
+    }
+
+    double Handle_tabStopDistance(HandleRef _this) {
+        return THIS->tabStopDistance();
+    }
+
+    TextCursor::OwnedRef Handle_textCursor(HandleRef _this) {
+        return TEXTCURSOR_HEAP_NEW(THIS->textCursor());
+    }
+
+    TextInteractionFlags Handle_getTextInteractionFlags(HandleRef _this) {
+        return THIS->textInteractionFlags();
+    }
+
     std::string Handle_toPlainText(HandleRef _this) {
         return THIS->toPlainText().toStdString();
+    }
+
+    WrapMode Handle_wordWrapMode(HandleRef _this) {
+        return static_cast<WrapMode>(THIS->wordWrapMode());
+    }
+
+    void Handle_appendHtml(HandleRef _this, const std::string& html) {
+        THIS->appendHtml(QString::fromStdString(html));
+    }
+
+    void Handle_appendPlainText(HandleRef _this, const std::string& text) {
+        THIS->appendPlainText(QString::fromStdString(text));
+    }
+
+    void Handle_centerCursor(HandleRef _this) {
+        THIS->centerCursor();
+    }
+
+    void Handle_clear(HandleRef _this) {
+        THIS->clear();
+    }
+
+    void Handle_copy(HandleRef _this) {
+        THIS->copy();
+    }
+
+    void Handle_cut(HandleRef _this) {
+        THIS->cut();
+    }
+
+    void Handle_insertPlainText(HandleRef _this, const std::string& text) {
+        THIS->insertPlainText(QString::fromStdString(text));
+    }
+
+    void Handle_paste(HandleRef _this) {
+        THIS->paste();
+    }
+
+    void Handle_redo(HandleRef _this) {
+        THIS->redo();
+    }
+
+    void Handle_selectAll(HandleRef _this) {
+        THIS->selectAll();
+    }
+
+    void Handle_setPlainText(HandleRef _this, const std::string& text) {
+        THIS->setPlainText(QString::fromStdString(text));
+    }
+
+    void Handle_undo(HandleRef _this) {
+        THIS->undo();
+    }
+
+    void Handle_zoomIn(HandleRef _this, const std::optional<int32_t>& range) {
+        THIS->zoomIn(range.value_or(1));
+    }
+
+    void Handle_zoomOut(HandleRef _this, const std::optional<int32_t>& range) {
+        THIS->zoomOut(range.value_or(1));
     }
 
     SignalConnectionRef Handle_connect_BlockCountChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
@@ -143,7 +353,13 @@ namespace PlainTextEdit
         delete THIS;
     }
 
-    HandleRef create() {
-        return reinterpret_cast<HandleRef>(new QPlainTextEdit());
+    HandleRef create(const std::optional<Widget::HandleRef>& parent) {
+        const auto qParent = Widget::fromOptionalHandle(parent);
+        return reinterpret_cast<HandleRef>(new QPlainTextEdit(qParent));
+    }
+
+    HandleRef create(const std::string& text, const std::optional<Widget::HandleRef>& parent) {
+        const auto qParent = Widget::fromOptionalHandle(parent);
+        return reinterpret_cast<HandleRef>(new QPlainTextEdit(QString::fromStdString(text), qParent));
     }
 }

@@ -1,25 +1,12 @@
 #pragma once
 
-#include <QRegularExpression>
 #include "generated/RegularExpression.h"
+#include <QRegularExpression>
+
+#define AS_QREGEX_PTR(x) (reinterpret_cast<QRegularExpression*>(x))
+#define QREGEX_VALUE(x) (*AS_QREGEX_PTR(x))
+#define REGEX_HEAP_NEW(...) (reinterpret_cast<RegularExpression::OwnedRef>(new QRegularExpression(__VA_ARGS__)))
 
 namespace RegularExpression {
-    class FromDeferredMatcher : public Deferred::Matcher {
-    private:
-        QRegularExpression &qRegex;
-    public:
-        explicit FromDeferredMatcher(QRegularExpression &qRegex) : qRegex(qRegex) {}
-
-        void onEmpty(const Deferred::Empty *empty) override {
-            qRegex = QRegularExpression("");
-        }
-
-        void onRegex(const Deferred::Regex *regex) override {
-            auto opts = (int)regex->opts;
-            qRegex = QRegularExpression(QString::fromStdString(regex->pattern), static_cast<QRegularExpression::PatternOptions>(opts));
-        }
-    };
-
-    QRegularExpression fromDeferred(const std::shared_ptr<Deferred::Base>& deferred);
 }
 

@@ -1,0 +1,36 @@
+module TextDocument;
+
+import Object;
+import Url;
+import TextCursor;
+
+interface SignalHandler {
+    void baseUrlChanged(Url.Handle url);
+    void blockCountChanged(int newBlockCount);
+    void contentsChange(int position, int charsRemoved, int charsAdded);
+    void contentsChanged();
+    void cursorPositionChanged(TextCursor.Handle cursor);
+    void documentLayoutChanged();
+    void modificationChanged(bool changed);
+    void redoAvailable(bool available);
+    void undoAvailable(bool available);
+    void undoCommandAdded();
+}
+
+enum FindFlag
+{
+    FindBackward        = 0x00001,
+    FindCaseSensitively = 0x00002,
+    FindWholeWords      = 0x00004
+}
+
+flags FindFlags {
+    FindBackward        = 0x00001,
+    FindCaseSensitively = 0x00002,
+    FindWholeWords      = 0x00004
+}
+
+@nodispose
+opaque Handle extends Object.Handle {
+    // TODO
+}

@@ -125,7 +125,7 @@ enum CursorMoveStyle {
     VisualMoveStyle
 }
 
-enum TextFormat {
+enum TextFormatEnum {
     PlainText,
     RichText,
     AutoText,

@@ -1,0 +1,15 @@
+module TextEdit;
+
+import TextCursor;
+import TextCharFormat;
+
+group ExtraSelection {
+    @nodispose
+    opaque Handle {
+        TextCursor.Owned cursor();
+        TextCharFormat.Owned format();
+    }
+    opaque Owned extends Handle;
+
+    Owned create(TextCursor.Handle cursor, TextCharFormat.Handle format);
+}

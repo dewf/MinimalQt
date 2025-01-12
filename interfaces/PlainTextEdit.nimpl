@@ -1,11 +1,21 @@
 module PlainTextEdit;
 
 import Object;
+import Widget;
 import Common;
 import Icon;
 import Enums;
 import AbstractScrollArea;
 import TextOption;
+import Menu;
+import TextCursor;
+import TextEdit;
+import TextFormat;
+import TextCharFormat;
+import TextDocument;
+import RegularExpression;
+import Variant;
+import Url;
 
 interface SignalHandler extends AbstractScrollArea.SignalHandler {
     void blockCountChanged(int newBlockCount);
@@ -25,24 +35,76 @@ enum LineWrapMode {
 }
 
 opaque Handle extends AbstractScrollArea.Handle {
+    string anchorAt(Point pos);
+    bool backgroundVisible();
+    int blockCount();
+    bool canPaste();
+    bool centerOnScroll();
+    Menu.Handle createStandardContextMenu();
+    Menu.Handle createStandardContextMenu(Point position);
+    TextCharFormat.Owned currentCharFormat();
+    TextCursor.Owned cursorForPosition(Point pos);
+    Rect cursorRect();
+    Rect cursorRect(TextCursor.Handle cursor);
+    int cursorWidth();
+    TextDocument.Handle document();
+    string documentTitle();
+    void ensureCursorVisible();
+    Array<TextEdit.ExtraSelection.Owned> extraSelections();
+    bool find(string exp, Option<TextDocument.FindFlags> options_);
+    bool find(RegularExpression.Handle exp, Option<TextDocument.FindFlags> options_);
+    bool isReadOnly();
+    bool isUndoRedoEnabled();
+    LineWrapMode getLineWrapMode();
+    Variant.Owned loadResource(int type, Url.Handle name);
+    int maximumBlockCount();
+    void mergeCurrentCharFormat(TextCharFormat.Handle modifier);
+    void moveCursor(TextCursor.MoveOperation operation, Option<TextCursor.MoveMode> mode);
+    bool overwriteMode();
+    string placeholderText();
+
+    // void print(QPagedPaintDevice *printer) const
+    // TODO
+
     void setBackgroundVisible(bool visible);
-    int blockCount();                           // readonly
-    void setCenterOnScroll(bool state);
+    void setCenterOnScroll(bool enabled);
+    void setCurrentCharFormat(TextCharFormat.Handle format);
     void setCursorWidth(int width);
+    void setDocument(TextDocument.Handle document);
     void setDocumentTitle(string title);
+    void setExtraSelections(Array<TextEdit.ExtraSelection.Handle> selections);
     void setLineWrapMode(LineWrapMode mode);
-    void setMaximumBlockCount(int count);
+    void setMaximumBlockCount(int maximum);
     void setOverwriteMode(bool overwrite);
-    void setPlaceholderText(string text);
-    void setPlainText(string text);
-    void setReadOnly(bool state);
-    void setTabChangesFocus(bool state);
+    void setPlaceholderText(string placeholderText);
+    void setReadOnly(bool ro);
+    void setTabChangesFocus(bool b);
     void setTabStopDistance(double distance);
-    void setTextInteractionFlags(TextInteractionFlags tiFlags);
-    void setUndoRedoEnabled(bool enabled);
-    void setWordWrapMode(TextOption.WrapMode mode);
-    
+    void setTextCursor(TextCursor.Handle cursor);
+    void setTextInteractionFlags(TextInteractionFlags flags_);
+    void setUndoRedoEnabled(bool enable);
+    void setWordWrapMode(TextOption.WrapMode policy);
+    bool tabChangesFocus();
+    double tabStopDistance();
+    TextCursor.Owned textCursor();
+    TextInteractionFlags getTextInteractionFlags();
     string toPlainText();
+    TextOption.WrapMode wordWrapMode();
+
+    void appendHtml(string html);
+    void appendPlainText(string text);
+    void centerCursor();
+    void clear();
+    void copy();
+    void cut();
+    void insertPlainText(string text);
+    void paste();
+    void redo();
+    void selectAll();
+    void setPlainText(string text);
+    void undo();
+    void zoomIn(Option<int> range);
+    void zoomOut(Option<int> range);
 
     // signals ============================
     SignalConnection connect_BlockCountChanged(SignalHandler handler);
@@ -56,4 +118,5 @@ opaque Handle extends AbstractScrollArea.Handle {
     SignalConnection connect_UpdateRequest(SignalHandler handler);
 }
 
-Handle create();
+Handle create(Option<Widget.Handle> parent);
+Handle create(string text, Option<Widget.Handle> parent);

@@ -115,8 +115,8 @@ opaque Handle extends Dialog.Handle {
     string text();
     void setText(string text);
 
-    TextFormat getTextFormat();
-    void setTextFormat(TextFormat format);
+    TextFormatEnum getTextFormat();
+    void setTextFormat(TextFormatEnum format);
 
     TextInteractionFlags getTextInteractionFlags();
     void setTextInteractionFlags(TextInteractionFlags tiFlags);
