@@ -10,8 +10,8 @@ interface SignalHandler extends AbstractScrollArea.SignalHandler;
 
 opaque Handle extends AbstractScrollArea.Handle {
     Alignment getAlignment();
-    void ensureVisible(int x, int y, Option<int> xmargin, Option<int> ymargin);
-    void ensureWidgetVisible(Widget.Handle childWidget, Option<int> xmargin, Option<int> ymargin);
+    void ensureVisible(int x, int y, int xmargin = 50, int ymargin = 50);
+    void ensureWidgetVisible(Widget.Handle childWidget, int xmargin = 50, int ymargin = 50);
     void setAlignment(Alignment align);
     void setWidget(Widget.Handle widget);
     void setWidgetResizable(bool resizable);
@@ -20,4 +20,4 @@ opaque Handle extends AbstractScrollArea.Handle {
     bool widgetResizable();
 }
 
-Handle create(Option<Widget.Handle> parent);
+Handle create(Widget.Handle parent = null);

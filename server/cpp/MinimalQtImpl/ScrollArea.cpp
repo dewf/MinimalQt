@@ -11,12 +11,12 @@ namespace ScrollArea
         return THIS->alignment();
     }
 
-    void Handle_ensureVisible(HandleRef _this, int32_t x, int32_t y, const std::optional<int32_t>& xmargin, const std::optional<int32_t>& ymargin) {
-        THIS->ensureVisible(x, y, xmargin.value_or(50), ymargin.value_or(50));
+    void Handle_ensureVisible(HandleRef _this, int32_t x, int32_t y, int32_t xmargin /* 50 */, int32_t ymargin /* 50 */) {
+        THIS->ensureVisible(x, y, xmargin, ymargin);
     }
 
-    void Handle_ensureWidgetVisible(HandleRef _this, Widget::HandleRef childWidget, const std::optional<int32_t>& xmargin, const std::optional<int32_t>& ymargin) {
-        THIS->ensureWidgetVisible(AS_QWIDGET_PTR(childWidget), xmargin.value_or(50), ymargin.value_or(50));
+    void Handle_ensureWidgetVisible(HandleRef _this, Widget::HandleRef childWidget, int32_t xmargin /* 50 */, int32_t ymargin /* 50 */) {
+        THIS->ensureWidgetVisible(AS_QWIDGET_PTR(childWidget), xmargin, ymargin);
     }
 
     void Handle_setAlignment(HandleRef _this, Alignment align) {
@@ -47,7 +47,7 @@ namespace ScrollArea
         delete THIS;
     }
 
-    HandleRef create(const std::optional<Widget::HandleRef>& parent) {
-        return reinterpret_cast<HandleRef>(new QScrollArea(Widget::fromOptionalHandle(parent)));
+    HandleRef create(Widget::HandleRef parent /* nullptr */) {
+        return reinterpret_cast<HandleRef>(new QScrollArea(AS_QWIDGET_PTR(parent)));
     }
 }
