@@ -1,8 +1,6 @@
 module StatusBar;
 
 import Object;
-import Common;
-import Icon;
 import Widget;
 
 interface SignalHandler extends Widget.SignalHandler {
@@ -10,14 +8,19 @@ interface SignalHandler extends Widget.SignalHandler {
 }
 
 opaque Handle extends Widget.Handle {
-    bool isSizeGripEnabled();               // just testing something ...
-    void setSizeGripEnabled(bool enabled);
-    
+    void addPermanentWidget(Widget.Handle widget, int stretch = 0);
+    void addWidget(Widget.Handle widget, int stretch = 0);
+    string currentMessage();
+    int insertPermanentWidget(int index, Widget.Handle widget, int stretch = 0);
+    int insertWidget(int index, Widget.Handle widget, int stretch = 0);
+    bool isSizeGripEnabled();
+    void removeWidget(Widget.Handle widget);
+    void setSizeGripEnabled(bool enable);
     void clearMessage();
-    void showMessage(string message, int timeout);
+    void showMessage(string message, int timeout = 0);
 
     // signals ============================
     SignalConnection connect_MessageChanged(SignalHandler handler);
 }
 
-Handle create();
+Handle create(Widget.Handle parent = null);
