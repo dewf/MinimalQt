@@ -1,51 +1,106 @@
 #include "generated/ToolBar.h"
+
+#include "ActionInternal.h"
 #include "ToolBarInternal.h"
 
 #include "ObjectInternal.h"
+#include "WidgetInternal.h"
 #include "util/convert.h"
 
 #define THIS (reinterpret_cast<QToolBar*>(_this))
 
 namespace ToolBar
 {
-    void Handle_setAllowedAreas(HandleRef _this, Enums::ToolBarAreas allowed) {
-        THIS->setAllowedAreas(static_cast<Qt::ToolBarAreas>(allowed));
+    Action::HandleRef Handle_actionAt(HandleRef _this, Point p) {
+        return reinterpret_cast<Action::HandleRef>(THIS->actionAt(toQPoint(p)));
     }
 
-    void Handle_setFloatable(HandleRef _this, bool floatable) {
-        THIS->setFloatable(floatable);
-    }
-
-    bool Handle_isFloating(HandleRef _this) {
-        return THIS->isFloating();
-    }
-
-    void Handle_setIconSize(HandleRef _this, Size size) {
-        THIS->setIconSize(toQSize(size));
-    }
-
-    void Handle_setMovable(HandleRef _this, bool value) {
-        THIS->setMovable(value);
-    }
-
-    void Handle_setOrientation(HandleRef _this, Orientation value) {
-        THIS->setOrientation(static_cast<Qt::Orientation>(value));
-    }
-
-    void Handle_setToolButtonStyle(HandleRef _this, ToolButtonStyle style) {
-        THIS->setToolButtonStyle(static_cast<Qt::ToolButtonStyle>(style));
+    Action::HandleRef Handle_actionAt(HandleRef _this, int32_t x, int32_t y) {
+        return reinterpret_cast<Action::HandleRef>(THIS->actionAt(x, y));
     }
 
     Action::HandleRef Handle_addSeparator(HandleRef _this) {
         return reinterpret_cast<Action::HandleRef>(THIS->addSeparator());
     }
 
-    void Handle_addWidget(HandleRef _this, Widget::HandleRef widget) {
-        THIS->addWidget(reinterpret_cast<QWidget *>(widget));
+    Action::HandleRef Handle_addWidget(HandleRef _this, Widget::HandleRef widget) {
+        return reinterpret_cast<Action::HandleRef>(THIS->addWidget(AS_QWIDGET_PTR(widget)));
+    }
+
+    ToolBarAreas Handle_allowedAreas(HandleRef _this) {
+        return THIS->allowedAreas();
     }
 
     void Handle_clear(HandleRef _this) {
         THIS->clear();
+    }
+
+    Size Handle_iconSize(HandleRef _this) {
+        return toSize(THIS->iconSize());
+    }
+
+    Action::HandleRef Handle_insertSeparator(HandleRef _this, Action::HandleRef before) {
+        return reinterpret_cast<Action::HandleRef>(THIS->insertSeparator(AS_QACTION_PTR(before)));
+    }
+
+    Action::HandleRef Handle_insertWidget(HandleRef _this, Action::HandleRef before, Widget::HandleRef widget) {
+        return reinterpret_cast<Action::HandleRef>(THIS->insertWidget(AS_QACTION_PTR(before), AS_QWIDGET_PTR(widget)));
+    }
+
+    bool Handle_isAreaAllowed(HandleRef _this, ToolBarArea area) {
+        return THIS->isAreaAllowed(static_cast<Qt::ToolBarArea>(area));
+    }
+
+    bool Handle_isFloatable(HandleRef _this) {
+        return THIS->isFloatable();
+    }
+
+    bool Handle_isFloating(HandleRef _this) {
+        return THIS->isFloating();
+    }
+
+    bool Handle_isMovable(HandleRef _this) {
+        return THIS->isMovable();
+    }
+
+    Orientation Handle_orientation(HandleRef _this) {
+        return static_cast<Orientation>(THIS->orientation());
+    }
+
+    void Handle_setAllowedAreas(HandleRef _this, ToolBarAreas areas) {
+        return THIS->setAllowedAreas(static_cast<Qt::ToolBarAreas>(areas));
+    }
+
+    void Handle_setFloatable(HandleRef _this, bool floatable) {
+        THIS->setFloatable(floatable);
+    }
+
+    void Handle_setMovable(HandleRef _this, bool movable) {
+        THIS->setMovable(movable);
+    }
+
+    void Handle_setOrientation(HandleRef _this, Orientation orientation) {
+        THIS->setOrientation(static_cast<Qt::Orientation>(orientation));
+    }
+
+    Action::HandleRef Handle_toggleViewAction(HandleRef _this) {
+        return reinterpret_cast<Action::HandleRef>(THIS->toggleViewAction());
+    }
+
+    ToolButtonStyle Handle_getToolButtonStyle(HandleRef _this) {
+        return static_cast<ToolButtonStyle>(THIS->toolButtonStyle());
+    }
+
+    Widget::HandleRef Handle_widgetForAction(HandleRef _this, Action::HandleRef action) {
+        return reinterpret_cast<Widget::HandleRef>(THIS->widgetForAction(AS_QACTION_PTR(action)));
+    }
+
+    void Handle_setIconSize(HandleRef _this, Size iconSize) {
+        THIS->setIconSize(toQSize(iconSize));
+    }
+
+    void Handle_setToolButtonStyle(HandleRef _this, ToolButtonStyle toolButtonStyle) {
+        THIS->setToolButtonStyle(static_cast<Qt::ToolButtonStyle>(toolButtonStyle));
     }
 
     SignalConnectionRef Handle_connect_ActionTriggered(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
@@ -108,7 +163,11 @@ namespace ToolBar
         delete THIS;
     }
 
-    HandleRef create() {
-        return reinterpret_cast<HandleRef>(new QToolBar());
+    HandleRef create(Widget::HandleRef parent /* nullptr */) {
+        return reinterpret_cast<HandleRef>(new QToolBar(AS_QWIDGET_PTR(parent)));
+    }
+
+    HandleRef create(const std::string& title, Widget::HandleRef parent /* nullptr */) {
+        return reinterpret_cast<HandleRef>(new QToolBar(QString::fromStdString(title), AS_QWIDGET_PTR(parent)));
     }
 }
