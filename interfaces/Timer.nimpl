@@ -8,11 +8,31 @@ interface SignalHandler extends Object.SignalHandler {
 }
 
 opaque Handle extends Object.Handle {
+
+    TimerId id();
+    int interval();
+
+    // std::chrono::milliseconds intervalAsDuration() const
+
     bool isActive();
-    void setInterval(int interval);
-    int remainingTime();                // readonly
-    void setSingleShot(bool state);
-    void setTimerType(TimerType type_);
+    bool isSingleShot();
+    int remainingTime();
+    
+    // std::chrono::milliseconds remainingTimeAsDuration() const
+
+    void setInterval(int msec);
+
+    // void setInterval(std::chrono::milliseconds value)
+
+    void setSingleShot(bool singleShot);
+
+    void setTimerType(TimerType atype);
+    
+    // void start(std::chrono::milliseconds msec)
+
+    int timerId();
+
+    TimerType getTimerType();
 
     void start(int msec);
     void start();
@@ -22,4 +42,4 @@ opaque Handle extends Object.Handle {
     SignalConnection connect_Timeout(SignalHandler handler);
 }
 
-Handle create();
+Handle create(Object.Handle parent = null);

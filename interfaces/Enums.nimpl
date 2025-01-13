@@ -278,6 +278,10 @@ enum TimerType {    // defined in Qt namespace, so we put it here instead of Tim
     VeryCoarseTimer
 }
 
+enum TimerId {
+    Invalid = 0,
+}
+
 enum MouseButton {
     NoButton         = 0x00000000,
     LeftButton       = 0x00000001,

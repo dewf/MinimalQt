@@ -7,16 +7,28 @@
 
 namespace Timer
 {
+    TimerId Handle_id(HandleRef _this) {
+        return static_cast<TimerId>(THIS->id());
+    }
+
+    int32_t Handle_interval(HandleRef _this) {
+        return THIS->interval();
+    }
+
     bool Handle_isActive(HandleRef _this) {
         return THIS->isActive();
     }
 
-    void Handle_setInterval(HandleRef _this, int32_t msec) {
-        THIS->setInterval(msec);
+    bool Handle_isSingleShot(HandleRef _this) {
+        return THIS->isSingleShot();
     }
 
     int32_t Handle_remainingTime(HandleRef _this) {
         return THIS->remainingTime();
+    }
+
+    void Handle_setInterval(HandleRef _this, int32_t msec) {
+        THIS->setInterval(msec);
     }
 
     void Handle_setSingleShot(HandleRef _this, bool state) {
@@ -25,6 +37,14 @@ namespace Timer
 
     void Handle_setTimerType(HandleRef _this, TimerType type_) {
         THIS->setTimerType(static_cast<Qt::TimerType>(type_));
+    }
+
+    int32_t Handle_timerId(HandleRef _this) {
+        return THIS->timerId();
+    }
+
+    TimerType Handle_getTimerType(HandleRef _this) {
+        return static_cast<TimerType>(THIS->timerType());
     }
 
     void Handle_start(HandleRef _this, int32_t msec) {
@@ -50,7 +70,7 @@ namespace Timer
         delete THIS;
     }
 
-    HandleRef create() {
-        return reinterpret_cast<HandleRef>(new QTimer());
+    HandleRef create(Object::HandleRef parent /* nullptr */) {
+        return reinterpret_cast<HandleRef>(new QTimer(AS_QOBJECT_PTR(parent)));
     }
 }
