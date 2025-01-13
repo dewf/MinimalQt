@@ -5,6 +5,7 @@ import Common;
 import Icon;
 import Enums;
 import Widget;
+import TabBar;
 
 interface SignalHandler extends Widget.SignalHandler {
     void currentChanged(int index);
@@ -17,46 +18,52 @@ enum TabShape { Rounded, Triangular }
 enum TabPosition { North, South, West, East }
 
 opaque Handle extends Widget.Handle {
-    // properties ==========================
-    int count();
-    // readonly
-
-    int currentIndex();
-    void setCurrentIndex(int index);
-
-    bool documentMode();
-    void setDocumentMode(bool state);
-
-    TextElideMode elideMode();
-    void setElideMode(TextElideMode mode);
-
-    Size iconSize();
-    void setIconSize(Size size);
-
-    bool isMovable();
-    void setMovable(bool state);
-
-    bool tabBarAutoHide();
-    void setTabBarAutoHide(bool state);
-
-    TabPosition getTabPosition();
-    void setTabPosition(TabPosition position);
-
-    TabShape getTabShape();
-    void setTabShape(TabShape shape);
-
-    bool tabsClosable();
-    void setTabsClosable(bool state);
-
-    bool usesScrollButtons();
-    void setUsesScrollButtons(bool state);
-
-    // methods =============================
     int addTab(Widget.Handle page, string label);
+    int addTab(Widget.Handle page, Icon.Handle icon, string label);
+    void clear();
+    Widget.Handle cornerWidget(Corner corner = Corner.TopRightCorner);
+    int count();
+    int currentIndex();
+    Widget.Handle currentWidget();
+    bool documentMode();
+    TextElideMode elideMode();
+    Size iconSize();
+    int indexOf(Widget.Handle w);
     int insertTab(int index, Widget.Handle page, string label);
-    Widget.Handle widgetAt(int index);                          // get page @ position (note: Qt method "widget", but that causes a C# name collision, hence "widgetAt")
-    void clear();                                               // remove all widgets without destroying
+    int insertTab(int index, Widget.Handle page, Icon.Handle icon, string label);
+    bool isMovable();
+    bool isTabEnabled(int index);
+    bool isTabVisible(int index);
     void removeTab(int index);
+    void setCornerWidget(Widget.Handle widget, Corner corner = Corner.TopRightCorner);
+    void setDocumentMode(bool set);
+    void setElideMode(TextElideMode mode);
+    void setIconSize(Size size);
+    void setMovable(bool movable);
+    void setTabBarAutoHide(bool enabled);
+    void setTabEnabled(int index, bool enable);
+    void setTabIcon(int index, Icon.Handle icon);
+    void setTabPosition(TabPosition position);
+    void setTabShape(TabShape s);
+    void setTabText(int index, string label);
+    void setTabToolTip(int index, string tip);
+    void setTabVisible(int index, bool visible);
+    void setTabWhatsThis(int index, string text);
+    void setTabsClosable(bool closeable);
+    void setUsesScrollButtons(bool useButtons);
+    TabBar.Handle tabBar();
+    bool tabBarAutoHide();
+    Icon.Owned tabIcon(int index);
+    TabPosition getTabPosition();
+    TabShape getTabShape();
+    string tabText(int index);
+    string tabToolTip(int index);
+    string tabWhatsThis(int index);
+    bool tabsClosable();
+    bool usesScrollButtons();
+    Widget.Handle widget(int index);
+    void setCurrentIndex(int index);
+    void setCurrentWidget(Widget.Handle widget);
 
     // signals =============================
     SignalConnection connect_CurrentChanged(SignalHandler handler);
@@ -65,4 +72,4 @@ opaque Handle extends Widget.Handle {
     SignalConnection connect_TabCloseRequested(SignalHandler handler);
 }
 
-Handle create();
+Handle create(Widget.Handle parent = null);

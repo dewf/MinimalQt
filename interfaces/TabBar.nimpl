@@ -5,6 +5,8 @@ import Common;
 import Icon;
 import Widget;
 import Enums;
+import Variant;
+import Color;
 
 interface SignalHandler extends Widget.SignalHandler {
     void currentChanged(int index);
@@ -37,27 +39,63 @@ enum Shape {
 }
 
 opaque Handle extends Widget.Handle {
-    // properties
-    void setAutoHide(bool value);
-    void setChangeCurrentOnDrag(bool value);
+    
+    string accessibleTabName(int index);
+    int addTab(string text);
+    int addTab(Icon.Handle icon, string text);
+    bool autoHide();
+    bool changeCurrentOnDrag();
     int count();
-    void setCurrentIndex(int value);
     int currentIndex();
-    void setDocumentMode(bool value);
-    void setDrawBase(bool value);
+    bool documentMode();
+    bool drawBase();
+    TextElideMode elideMode();
+    bool expanding();
+    Size iconSize();
+    int insertTab(int index, string text);
+    int insertTab(int index, Icon.Handle icon, string text);
+    bool isMovable();
+    bool isTabEnabled(int index);
+    bool isTabVisible(int index);
+    void moveTab(int from, int to);
+    void removeTab(int index);
+    SelectionBehavior selectionBehaviorOnRemove();
+    void setAccessibleTabName(int index, string name);
+    void setAutoHide(bool hide);
+    void setChangeCurrentOnDrag(bool change);
+    void setDocumentMode(bool set);
+    void setDrawBase(bool drawTheBase);
     void setElideMode(TextElideMode mode);
-    void setExpanding(bool value);
+    void setExpanding(bool enabled);
     void setIconSize(Size size);
-    void setMovable(bool value);
-    void setSelectionBehaviorOnRemove(SelectionBehavior value);
+    void setMovable(bool movable);
+    void setSelectionBehaviorOnRemove(SelectionBehavior behavior);
     void setShape(Shape shape);
-    void setTabsClosable(bool value);
-    void setUsesScrollButtons(bool value);
+    void setTabButton(int index, ButtonPosition position, Widget.Handle widget);
+    void setTabData(int index, Variant.Handle data);
+    void setTabEnabled(int index, bool enabled);
+    void setTabIcon(int index, Icon.Handle icon);
+    void setTabText(int index, string text);
+    void setTabTextColor(int index, Color.Handle color);
+    void setTabToolTip(int index, string tip);
+    void setTabVisible(int index, bool visible);
+    void setTabWhatsThis(int index, string text);
+    void setTabsClosable(bool closable);
+    void setUsesScrollButtons(bool useButtons);
+    Shape getShape();
+    int tabAt(Point position);
+    Widget.Handle tabButton(int index, ButtonPosition position);
+    Variant.Owned tabData(int index);
+    Icon.Owned tabIcon(int index);
+    Rect tabRect(int index);
+    string tabText(int index);
+    Color.Owned tabTextColor(int index);
+    string tabToolTip(int index);
+    string tabWhatsThis(int index);
+    bool tabsClosable();
+    bool usesScrollButtons();
 
-    // methods
-    void removeAllTabs();   // our own method for convenience
-    int	addTab(string text);
-    int	addTab(Icon.Handle icon, string text);
+    void setCurrentIndex(int index);
 
     // signals ============================
     SignalConnection connect_CurrentChanged(SignalHandler handler);
@@ -67,4 +105,4 @@ opaque Handle extends Widget.Handle {
     SignalConnection connect_TabMoved(SignalHandler handler);
 }
 
-Handle create();
+Handle create(Widget.Handle parent = null);
