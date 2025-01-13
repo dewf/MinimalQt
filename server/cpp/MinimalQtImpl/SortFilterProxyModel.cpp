@@ -3,13 +3,44 @@
 
 #include "ObjectInternal.h"
 #include "RegularExpressionInternal.h"
+#include "ModelIndexInternal.h"
 
 #define THIS (reinterpret_cast<QSortFilterProxyModel*>(_this))
 
-#define BROKEN_MODELINDEX(x) ((ModelIndex::HandleRef)&x) // BAD DON'T USE
-
 namespace SortFilterProxyModel
 {
+    bool Handle_autoAcceptChildRows(HandleRef _this) {
+        return THIS->autoAcceptChildRows();
+    }
+
+    bool Handle_dynamicSortFilter(HandleRef _this) {
+        return THIS->dynamicSortFilter();
+    }
+
+    CaseSensitivity Handle_filterCaseSensitivity(HandleRef _this) {
+        return static_cast<CaseSensitivity>(THIS->filterCaseSensitivity());
+    }
+
+    int32_t Handle_filterKeyColumn(HandleRef _this) {
+        return THIS->filterKeyColumn();
+    }
+
+    RegularExpression::OwnedRef Handle_filterRegularExpression(HandleRef _this) {
+        return REGEX_HEAP_NEW(THIS->filterRegularExpression());
+    }
+
+    int32_t Handle_filterRole(HandleRef _this) {
+        return THIS->filterRole();
+    }
+
+    bool Handle_isRecursiveFilteringEnabled(HandleRef _this) {
+        return THIS->isRecursiveFilteringEnabled();
+    }
+
+    bool Handle_isSortLocaleAware(HandleRef _this) {
+        return THIS->isSortLocaleAware();
+    }
+
     void Handle_setAutoAcceptChildRows(HandleRef _this, bool state) {
         THIS->setAutoAcceptChildRows(state);
     }
@@ -26,16 +57,8 @@ namespace SortFilterProxyModel
         THIS->setFilterKeyColumn(filterKeyColumn);
     }
 
-    void Handle_setFilterRegularExpression(HandleRef _this, RegularExpression::HandleRef regex) {
-        THIS->setFilterRegularExpression(QREGEX_VALUE(regex));
-    }
-
-    void Handle_setFilterRole(HandleRef _this, ItemDataRole filterRole) {
-        THIS->setFilterRole(static_cast<int>(filterRole));
-    }
-
-    void Handle_setSortLocaleAware(HandleRef _this, bool state) {
-        THIS->setSortLocaleAware(state);
+    void Handle_setFilterRole(HandleRef _this, int32_t role) {
+        THIS->setFilterRole(role);
     }
 
     void Handle_setRecursiveFilteringEnabled(HandleRef _this, bool enabled) {
@@ -46,8 +69,48 @@ namespace SortFilterProxyModel
         THIS->setSortCaseSensitivity(static_cast<Qt::CaseSensitivity>(sensitivity));
     }
 
-    void Handle_setSortRole(HandleRef _this, ItemDataRole sortRole) {
-        THIS->setSortRole(static_cast<int>(sortRole));
+    void Handle_setSortLocaleAware(HandleRef _this, bool state) {
+        THIS->setSortLocaleAware(state);
+    }
+
+    void Handle_setSortRole(HandleRef _this, int sortRole) {
+        THIS->setSortRole(sortRole);
+    }
+
+    CaseSensitivity Handle_sortCaseSensitivity(HandleRef _this) {
+        return static_cast<CaseSensitivity>(THIS->sortCaseSensitivity());
+    }
+
+    int32_t Handle_sortColumn(HandleRef _this) {
+        return THIS->sortColumn();
+    }
+
+    SortOrder Handle_sortOrder(HandleRef _this) {
+        return static_cast<SortOrder>(THIS->sortOrder());
+    }
+
+    int32_t Handle_sortRole(HandleRef _this) {
+        return THIS->sortRole();
+    }
+
+    void Handle_invalidate(HandleRef _this) {
+        THIS->invalidate();
+    }
+
+    void Handle_setFilterFixedString(HandleRef _this, const std::string& pattern) {
+        THIS->setFilterFixedString(QString::fromStdString(pattern));
+    }
+
+    void Handle_setFilterRegularExpression(HandleRef _this, const std::string& pattern) {
+        THIS->setFilterRegularExpression(QString::fromStdString(pattern));
+    }
+
+    void Handle_setFilterRegularExpression(HandleRef _this, RegularExpression::HandleRef regex) {
+        THIS->setFilterRegularExpression(QREGEX_VALUE(regex));
+    }
+
+    void Handle_setFilterWildcard(HandleRef _this, const std::string& pattern) {
+        THIS->setFilterWildcard(QString::fromStdString(pattern));
     }
 
     SignalConnectionRef Handle_connect_AutoAcceptChildRowsChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
@@ -66,7 +129,7 @@ namespace SortFilterProxyModel
 
     SignalConnectionRef Handle_connect_FilterRoleChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QSortFilterProxyModel::filterRoleChanged, [handler](int filterRole) {
-            handler->filterRoleChanged(static_cast<ItemDataRole>(filterRole));
+            handler->filterRoleChanged(filterRole);
         });
         return new __SignalConnection { connection };
     }
@@ -94,7 +157,7 @@ namespace SortFilterProxyModel
 
     SignalConnectionRef Handle_connect_SortRoleChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QSortFilterProxyModel::sortRoleChanged, [handler](int sortRole) {
-            handler->sortRoleChanged(static_cast<ItemDataRole>(sortRole));
+            handler->sortRoleChanged(sortRole);
         });
         return new __SignalConnection { connection };
     }
@@ -103,8 +166,8 @@ namespace SortFilterProxyModel
         delete THIS;
     }
 
-    HandleRef create() {
-        return reinterpret_cast<HandleRef>(new QSortFilterProxyModel());
+    HandleRef create(Object::HandleRef parent /* nullptr */) {
+        return reinterpret_cast<HandleRef>(new QSortFilterProxyModel(AS_QOBJECT_PTR(parent)));
     }
 
     // subclass stuff ==================================================
@@ -124,7 +187,8 @@ namespace SortFilterProxyModel
         [[nodiscard]]
         bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override {
             if (methodMask & FilterAcceptsRow) {
-                return methodDelegate->filterAcceptsRow(source_row, BROKEN_MODELINDEX(source_parent));
+                ModelIndex::__Owned source2(source_parent);
+                return methodDelegate->filterAcceptsRow(source_row, &source2);
             } else {
                 return QSortFilterProxyModel::filterAcceptsRow(source_row, source_parent);
             }
@@ -132,7 +196,8 @@ namespace SortFilterProxyModel
         [[nodiscard]]
         bool filterAcceptsColumn(int source_column, const QModelIndex &source_parent) const override {
             if (methodMask & FilterAcceptsColumn) {
-                return methodDelegate->filterAcceptsColumn(source_column,BROKEN_MODELINDEX(source_parent));
+                ModelIndex::__Owned source2(source_parent);
+                return methodDelegate->filterAcceptsColumn(source_column, &source2);
             } else {
                 return QSortFilterProxyModel::filterAcceptsColumn(source_column, source_parent);
             }
@@ -140,7 +205,8 @@ namespace SortFilterProxyModel
         [[nodiscard]]
         bool lessThan(const QModelIndex &source_left, const QModelIndex &source_right) const override {
             if (methodMask & LessThan) {
-                return methodDelegate->lessThan(BROKEN_MODELINDEX(source_left), BROKEN_MODELINDEX(source_right));
+                ModelIndex::__Owned left2(source_left), right2(source_right);
+                return methodDelegate->lessThan(&left2, &right2);
             } else {
                 return QSortFilterProxyModel::lessThan(source_left, source_right);
             }

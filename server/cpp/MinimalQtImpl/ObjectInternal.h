@@ -4,6 +4,8 @@
 
 #include <QObject>
 
+#define AS_QOBJECT_PTR(x) (reinterpret_cast<QObject*>(x))
+
 namespace Object {
     struct __SignalConnection {
         QMetaObject::Connection qConnection;

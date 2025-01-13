@@ -11,24 +11,53 @@ import PersistentModelIndex;
 interface SignalHandler extends AbstractProxyModel.SignalHandler {
     void autoAcceptChildRowsChanged(bool autoAcceptChildRows);
     void filterCaseSensitivityChanged(CaseSensitivity filterCaseSensitivity);
-    void filterRoleChanged(ItemDataRole filterRole);
+    void filterRoleChanged(int filterRole);
     void recursiveFilteringEnabledChanged(bool recursiveFilteringEnabled);
     void sortCaseSensitivityChanged(CaseSensitivity sortCaseSensitivity);
     void sortLocaleAwareChanged(bool sortLocaleAware);
-    void sortRoleChanged(ItemDataRole sortRole);
+    void sortRoleChanged(int sortRole);
 }
 
 opaque Handle extends AbstractProxyModel.Handle {
-    void setAutoAcceptChildRows(bool state);
-    void setDynamicSortFilter(bool state);
-    void setFilterCaseSensitivity(CaseSensitivity sensitivity);
-    void setFilterKeyColumn(int filterKeyColumn); // -1 = all columns
-    void setFilterRegularExpression(RegularExpression.Handle regex);
-    void setFilterRole(ItemDataRole filterRole);
-    void setSortLocaleAware(bool state);
-    void setRecursiveFilteringEnabled(bool enabled);
-    void setSortCaseSensitivity(CaseSensitivity sensitivity);
-    void setSortRole(ItemDataRole sortRole);
+
+    // QBindable<bool> bindableAutoAcceptChildRows()
+    // QBindable<bool> bindableDynamicSortFilter()
+    // QBindable<Qt::CaseSensitivity> bindableFilterCaseSensitivity()
+    // QBindable<int> bindableFilterKeyColumn()
+    // QBindable<QRegularExpression> bindableFilterRegularExpression()
+    // QBindable<int> bindableFilterRole()
+    // QBindable<bool> bindableIsSortLocaleAware()
+    // QBindable<bool> bindableRecursiveFilteringEnabled()
+    // QBindable<Qt::CaseSensitivity> bindableSortCaseSensitivity()
+    // QBindable<int> bindableSortRole()
+
+    bool autoAcceptChildRows();
+    bool dynamicSortFilter();
+    CaseSensitivity filterCaseSensitivity();
+    int filterKeyColumn();
+    RegularExpression.Owned filterRegularExpression();
+    int filterRole();
+    bool isRecursiveFilteringEnabled();
+    bool isSortLocaleAware();
+    void setAutoAcceptChildRows(bool accept);
+    void setDynamicSortFilter(bool enable);
+    void setFilterCaseSensitivity(CaseSensitivity cs);
+    void setFilterKeyColumn(int column);
+    void setFilterRole(int role);
+    void setRecursiveFilteringEnabled(bool recursive);
+    void setSortCaseSensitivity(CaseSensitivity cs);
+    void setSortLocaleAware(bool on);
+    void setSortRole(int role);
+    CaseSensitivity sortCaseSensitivity();
+    int sortColumn();
+    SortOrder sortOrder();
+    int sortRole();
+
+    void invalidate();
+    void setFilterFixedString(string pattern);
+    void setFilterRegularExpression(string pattern);
+    void setFilterRegularExpression(RegularExpression.Handle regularExpression);
+    void setFilterWildcard(string pattern);
 
     // signals ============================
     SignalConnection connect_AutoAcceptChildRowsChanged(SignalHandler handler);
@@ -40,7 +69,7 @@ opaque Handle extends AbstractProxyModel.Handle {
     SignalConnection connect_SortRoleChanged(SignalHandler handler);
 }
 
-Handle create();
+Handle create(Object.Handle parent = null);
 
 // subclassing ==============================================
 
