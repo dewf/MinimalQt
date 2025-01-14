@@ -124,7 +124,7 @@ namespace Variant
     }
 
     OwnedRef createAlign(Alignment align) {
-        const auto qAlign = static_cast<Qt::Alignment>(align);
+        const auto qAlign = static_cast<Qt::Alignment>(align.value);
         return new __Owned(QVariant(qAlign));
     }
 

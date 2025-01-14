@@ -16,11 +16,11 @@ namespace HeaderView
     }
 
     Alignment Handle_defaultAlignment(HandleRef _this) {
-        return THIS->defaultAlignment();
+        return Alignment(THIS->defaultAlignment());
     }
 
     void Handle_setDefaultAlignment(HandleRef _this, Alignment align) {
-        THIS->setDefaultAlignment(static_cast<Qt::Alignment>(align));
+        THIS->setDefaultAlignment(static_cast<Qt::Alignment>(align.value));
     }
 
     int32_t Handle_defaultSectionSize(HandleRef _this) {

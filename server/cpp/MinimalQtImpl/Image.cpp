@@ -46,25 +46,24 @@ namespace Image
         return fromQList<QRgb,Rgb>(THIS->colorTable(), [](auto v) { return static_cast<Rgb>(v); });
     }
 
-    void Handle_convertTo(HandleRef _this, Format format, const std::optional<ImageConversionFlags>& flags_) {
-        const auto qFlags = static_cast<Qt::ImageConversionFlags>(flags_.value_or(AutoColor));
-        THIS->convertTo(static_cast<QImage::Format>(format), qFlags);
+    void Handle_convertTo(HandleRef _this, Format format, ImageConversionFlags flags_ /* ImageConversionFlags::AutoColor */) {
+        THIS->convertTo(static_cast<QImage::Format>(format), static_cast<Qt::ImageConversionFlags>(flags_.value));
     }
 
-    OwnedRef Handle_convertToFormat(HandleRef _this, Format format, const std::optional<ImageConversionFlags>& flags_) {
-        const auto qFlags = static_cast<Qt::ImageConversionFlags>(flags_.value_or(AutoColor));
-        return IMAGE_HEAP_NEW(THIS->convertToFormat(static_cast<QImage::Format>(format), qFlags));
+    OwnedRef Handle_convertToFormat(HandleRef _this, Format format, ImageConversionFlags flags_ /* ImageConversionFlags::AutoColor */) {
+        const auto result = THIS->convertToFormat(static_cast<QImage::Format>(format), static_cast<Qt::ImageConversionFlags>(flags_.value));
+        return IMAGE_HEAP_NEW(result);
     }
 
-    OwnedRef Handle_convertToFormat(HandleRef _this, Format format, const std::vector<Rgb>& colorTable, const std::optional<ImageConversionFlags>& flags_) {
-        const auto qFlags = static_cast<Qt::ImageConversionFlags>(flags_.value_or(AutoColor));
+    OwnedRef Handle_convertToFormat(HandleRef _this, Format format, const std::vector<Rgb>& colorTable, ImageConversionFlags flags_ /* ImageConversionFlags::AutoColor */) {
         const auto qColorTable = toQList<Rgb,QRgb>(colorTable, [](auto c) { return static_cast<QRgb>(c); });
-        return IMAGE_HEAP_NEW(THIS->convertToFormat(static_cast<QImage::Format>(format), qColorTable, qFlags));
+        const auto result = THIS->convertToFormat(static_cast<QImage::Format>(format), qColorTable, static_cast<Qt::ImageConversionFlags>(flags_.value));
+        return IMAGE_HEAP_NEW(result);
     }
 
-    OwnedRef Handle_convertedTo(HandleRef _this, Format format, const std::optional<ImageConversionFlags>& flags_) {
-        const auto qFlags = static_cast<Qt::ImageConversionFlags>(flags_.value_or(AutoColor));
-        return IMAGE_HEAP_NEW(THIS->convertedTo(static_cast<QImage::Format>(format), qFlags));
+    OwnedRef Handle_convertedTo(HandleRef _this, Format format, ImageConversionFlags flags_ /* ImageConversionFlags::AutoColor */) {
+        const auto result = THIS->convertedTo(static_cast<QImage::Format>(format), static_cast<Qt::ImageConversionFlags>(flags_.value));
+        return IMAGE_HEAP_NEW(result);
     }
 
     OwnedRef Handle_copy(HandleRef _this, const std::optional<Rect>& rectangle) {
@@ -76,18 +75,16 @@ namespace Image
         return IMAGE_HEAP_NEW(THIS->copy(x, y, width, height));
     }
 
-    OwnedRef Handle_createAlphaMask(HandleRef _this, const std::optional<ImageConversionFlags>& flags_) {
-        const auto qFlags = static_cast<Qt::ImageConversionFlags>(flags_.value_or(AutoColor));
-        return IMAGE_HEAP_NEW(THIS->createAlphaMask(qFlags));
+    OwnedRef Handle_createAlphaMask(HandleRef _this, ImageConversionFlags flags_ /* ImageConversionFlags::AutoColor */) {
+        return IMAGE_HEAP_NEW(THIS->createAlphaMask(static_cast<Qt::ImageConversionFlags>(flags_.value)));
     }
 
-    OwnedRef Handle_createHeuristicMask(HandleRef _this, const std::optional<bool>& clipTight) {
-        return IMAGE_HEAP_NEW(THIS->createHeuristicMask(clipTight.value_or(true)));
+    OwnedRef Handle_createHeuristicMask(HandleRef _this, bool clipTight /* true */) {
+        return IMAGE_HEAP_NEW(THIS->createHeuristicMask(clipTight));
     }
 
-    OwnedRef Handle_createMaskFromColor(HandleRef _this, Rgb color, const std::optional<MaskMode>& mode) {
-        const auto qMode = static_cast<Qt::MaskMode>(mode.value_or(MaskMode::MaskInColor));
-        return IMAGE_HEAP_NEW(THIS->createMaskFromColor(color, qMode));
+    OwnedRef Handle_createMaskFromColor(HandleRef _this, Rgb color, MaskMode mode /* MaskMode::MaskInColor */) {
+        return IMAGE_HEAP_NEW(THIS->createMaskFromColor(color, static_cast<Qt::MaskMode>(mode)));
     }
 
     int32_t Handle_depth(HandleRef _this) {
@@ -134,9 +131,8 @@ namespace Image
         return THIS->height();
     }
 
-    void Handle_invertPixels(HandleRef _this, const std::optional<InvertMode>& mode) {
-        const auto qMode = static_cast<QImage::InvertMode>(mode.value_or(InvertMode::InvertRgb));
-        THIS->invertPixels(qMode);
+    void Handle_invertPixels(HandleRef _this, InvertMode mode /* InvertMode::InvertRgb */) {
+        THIS->invertPixels(static_cast<QImage::InvertMode>(mode));
     }
 
     bool Handle_isGrayscale(HandleRef _this) {
@@ -161,12 +157,12 @@ namespace Image
         return THIS->loadFromData(buf, static_cast<int>(length), ccFormat);
     }
 
-    void Handle_mirror(HandleRef _this, const std::optional<bool>& horizontal, const std::optional<bool>& vertical) {
-        THIS->mirror(horizontal.value_or(false), vertical.value_or(true));
+    void Handle_mirror(HandleRef _this, bool horizontal /* false */, bool vertical /* true */) {
+        THIS->mirror(horizontal, vertical);
     }
 
-    OwnedRef Handle_mirrored(HandleRef _this, const std::optional<bool>& horizontal, const std::optional<bool>& vertical) {
-        return IMAGE_HEAP_NEW(THIS->mirrored(horizontal.value_or(false), vertical.value_or(true)));
+    OwnedRef Handle_mirrored(HandleRef _this, bool horizontal /* false */, bool vertical /* true */) {
+        return IMAGE_HEAP_NEW(THIS->mirrored(horizontal, vertical));
     }
 
     Point Handle_offset(HandleRef _this) {
@@ -213,32 +209,26 @@ namespace Image
         return IMAGE_HEAP_NEW(THIS->rgbSwapped());
     }
 
-    bool Handle_save(HandleRef _this, const std::string& fileName, const std::optional<std::string>& format, const std::optional<int32_t>& quality) {
+    bool Handle_save(HandleRef _this, const std::string& fileName, const std::optional<std::string>& format, int32_t quality /* -1 */) {
         const char *ccFormat = nullptr;
         if (format.has_value()) ccFormat = format.value().c_str();
-        return THIS->save(QString::fromStdString(fileName), ccFormat, quality.value_or(-1));
+        return THIS->save(QString::fromStdString(fileName), ccFormat, quality);
     }
 
-    OwnedRef Handle_scaled(HandleRef _this, Size size, const std::optional<AspectRatioMode>& aspectRatioMode, const std::optional<TransformationMode>& transformMode) {
-        const auto qAspect = static_cast<Qt::AspectRatioMode>(aspectRatioMode.value_or(AspectRatioMode::IgnoreAspectRatio));
-        const auto qTransform = static_cast<Qt::TransformationMode>(transformMode.value_or(TransformationMode::FastTransformation));
-        return IMAGE_HEAP_NEW(THIS->scaled(toQSize(size), qAspect, qTransform));
+    OwnedRef Handle_scaled(HandleRef _this, Size size, AspectRatioMode aspectRadioMode /* AspectRatioMode::IgnoreAspectRatio */, TransformationMode transformMode /* TransformationMode::FastTransformation */) {
+        return IMAGE_HEAP_NEW(THIS->scaled(toQSize(size), static_cast<Qt::AspectRatioMode>(aspectRadioMode), static_cast<Qt::TransformationMode>(transformMode)));
     }
 
-    OwnedRef Handle_scaled(HandleRef _this, int32_t width, int32_t height, const std::optional<AspectRatioMode>& aspectRatioMode, const std::optional<TransformationMode>& transformMode) {
-        const auto qAspect = static_cast<Qt::AspectRatioMode>(aspectRatioMode.value_or(AspectRatioMode::IgnoreAspectRatio));
-        const auto qTransform = static_cast<Qt::TransformationMode>(transformMode.value_or(TransformationMode::FastTransformation));
-        return IMAGE_HEAP_NEW(THIS->scaled(width, height, qAspect, qTransform));
+    OwnedRef Handle_scaled(HandleRef _this, int32_t width, int32_t height, AspectRatioMode aspectRadioMode /* AspectRatioMode::IgnoreAspectRatio */, TransformationMode transformMode /* TransformationMode::FastTransformation */) {
+        return IMAGE_HEAP_NEW(THIS->scaled(width, height, static_cast<Qt::AspectRatioMode>(aspectRadioMode), static_cast<Qt::TransformationMode>(transformMode)));
     }
 
-    OwnedRef Handle_scaledToHeight(HandleRef _this, int32_t height, const std::optional<TransformationMode>& mode) {
-        const auto qTransform = static_cast<Qt::TransformationMode>(mode.value_or(TransformationMode::FastTransformation));
-        return IMAGE_HEAP_NEW(THIS->scaledToHeight(height, qTransform));
+    OwnedRef Handle_scaledToHeight(HandleRef _this, int32_t height, TransformationMode transformMode /* TransformationMode::FastTransformation */) {
+        return IMAGE_HEAP_NEW(THIS->scaledToHeight(height, static_cast<Qt::TransformationMode>(transformMode)));
     }
 
-    OwnedRef Handle_scaledToWidth(HandleRef _this, int32_t width, const std::optional<TransformationMode>& mode) {
-        const auto qTransform = static_cast<Qt::TransformationMode>(mode.value_or(TransformationMode::FastTransformation));
-        return IMAGE_HEAP_NEW(THIS->scaledToWidth(width, qTransform));
+    OwnedRef Handle_scaledToWidth(HandleRef _this, int32_t width, TransformationMode transformMode /* TransformationMode::FastTransformation */) {
+        return IMAGE_HEAP_NEW(THIS->scaledToWidth(width, static_cast<Qt::TransformationMode>(transformMode)));
     }
 
     std::shared_ptr<NativeBuffer<uint32_t>> Handle_scanLine32(HandleRef _this, int32_t i) {
@@ -322,9 +312,8 @@ namespace Image
         return toVectorStrings(THIS->textKeys());
     }
 
-    OwnedRef Handle_transformed(HandleRef _this, Transform::HandleRef matrix, const std::optional<TransformationMode>& mode) {
-        const auto qTransform = static_cast<Qt::TransformationMode>(mode.value_or(TransformationMode::FastTransformation));
-        return IMAGE_HEAP_NEW(THIS->transformed(QTRANSFORM_VALUE(matrix), qTransform));
+    OwnedRef Handle_transformed(HandleRef _this, Transform::HandleRef matrix, TransformationMode transformMode /* TransformationMode::FastTransformation */) {
+        return IMAGE_HEAP_NEW(THIS->transformed(QTRANSFORM_VALUE(matrix), static_cast<Qt::TransformationMode>(transformMode)));
     }
 
     bool Handle_valid(HandleRef _this, Point pos) {

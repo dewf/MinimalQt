@@ -8,19 +8,19 @@
 namespace DockWidget
 {
     DockWidgetAreas Handle_allowedAreas(HandleRef _this) {
-        return THIS->allowedAreas();
+        return DockWidgetAreas(THIS->allowedAreas());
     }
 
     void Handle_setAllowedAreas(HandleRef _this, DockWidgetAreas areas) {
-        THIS->setAllowedAreas(static_cast<Qt::DockWidgetAreas>(areas));
+        THIS->setAllowedAreas(static_cast<Qt::DockWidgetAreas>(areas.value));
     }
 
     DockWidgetFeatures Handle_features(HandleRef _this) {
-        return THIS->features();
+        return DockWidgetFeatures(THIS->features());
     }
 
     void Handle_setFeatures(HandleRef _this, DockWidgetFeatures features) {
-        THIS->setFeatures(static_cast<QDockWidget::DockWidgetFeatures>(features));
+        THIS->setFeatures(static_cast<QDockWidget::DockWidgetFeatures>(features.value));
     }
 
     bool Handle_isFloating(HandleRef _this) {
@@ -57,7 +57,7 @@ namespace DockWidget
 
     SignalConnectionRef Handle_connect_AllowedAreasChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QDockWidget::allowedAreasChanged, [handler](Qt::DockWidgetAreas allowedAreas) {
-            handler->allowedAreasChanged(allowedAreas);
+            handler->allowedAreasChanged(DockWidgetAreas(allowedAreas));
         });
         return new __SignalConnection { connection };
     }
@@ -71,7 +71,7 @@ namespace DockWidget
 
     SignalConnectionRef Handle_connect_FeaturesChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QDockWidget::featuresChanged, [handler](QDockWidget::DockWidgetFeatures features) {
-            handler->featuresChanged(features);
+            handler->featuresChanged(DockWidgetFeatures(features));
         });
         return new __SignalConnection { connection };
     }
@@ -90,15 +90,11 @@ namespace DockWidget
         return new __SignalConnection { connection };
     }
 
-    HandleRef create(const CtorOptions& opts) {
-        const auto parent = opts.mapOrDefaultParent([](auto p) { return AS_QWIDGET_PTR(p); }, static_cast<QWidget*>(nullptr));
-        const auto flags = opts.mapOrDefaultFlags_([](auto f) { return static_cast<Qt::WindowFlags>(f); }, Qt::WindowFlags());
-        return reinterpret_cast<HandleRef>(new QDockWidget(parent, flags));
+    HandleRef create(Widget::HandleRef parent /* nullptr */, WindowFlags flags_ /* 0 */) {
+        return reinterpret_cast<HandleRef>(new QDockWidget(AS_QWIDGET_PTR(parent), static_cast<Qt::WindowFlags>(flags_.value)));
     }
 
-    HandleRef create(const std::string& title, const CtorOptions& opts) {
-        const auto parent = opts.mapOrDefaultParent([](auto p) { return AS_QWIDGET_PTR(p); }, static_cast<QWidget*>(nullptr));
-        const auto flags = opts.mapOrDefaultFlags_([](auto f) { return static_cast<Qt::WindowFlags>(f); }, Qt::WindowFlags());
-        return reinterpret_cast<HandleRef>(new QDockWidget(QString::fromStdString(title), parent, flags));
+    HandleRef create(const std::string& title, Widget::HandleRef parent /* nullptr */, WindowFlags flags_ /* 0 */) {
+        return reinterpret_cast<HandleRef>(new QDockWidget(QString::fromStdString(title), AS_QWIDGET_PTR(parent), static_cast<Qt::WindowFlags>(flags_.value)));
     }
 }

@@ -78,34 +78,40 @@ namespace ItemSelectionModel
     }
 
     void Handle_select(HandleRef _this, ItemSelection::HandleRef selection, SelectionFlags command) {
-        THIS->select(QITEMSELECTION_VALUE(selection), static_cast<QItemSelectionModel::SelectionFlags>(command));
+        THIS->select(QITEMSELECTION_VALUE(selection), static_cast<QItemSelectionModel::SelectionFlags>(command.value));
     }
 
     void Handle_select(HandleRef _this, ModelIndex::HandleRef index, SelectionFlags command) {
-        THIS->select(index->value, static_cast<QItemSelectionModel::SelectionFlags>(command));
+        THIS->select(index->value, static_cast<QItemSelectionModel::SelectionFlags>(command.value));
     }
 
     void Handle_setCurrentIndex(HandleRef _this, ModelIndex::HandleRef index, SelectionFlags command) {
-        THIS->setCurrentIndex(index->value, static_cast<QItemSelectionModel::SelectionFlags>(command));
+        THIS->setCurrentIndex(index->value, static_cast<QItemSelectionModel::SelectionFlags>(command.value));
     }
 
     SignalConnectionRef Handle_connect_CurrentChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QItemSelectionModel::currentChanged, [handler](const QModelIndex &current, const QModelIndex &previous) {
-            handler->currentChanged((ModelIndex::HandleRef)&current, (ModelIndex::HandleRef)&previous);
+            ModelIndex::__Owned current2(current);
+            ModelIndex::__Owned previous2(previous);
+            handler->currentChanged(&current2, &previous2);
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_CurrentColumnChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QItemSelectionModel::currentColumnChanged, [handler](const QModelIndex &current, const QModelIndex &previous) {
-            handler->currentColumnChanged((ModelIndex::HandleRef)&current, (ModelIndex::HandleRef)&previous);
+            ModelIndex::__Owned current2(current);
+            ModelIndex::__Owned previous2(previous);
+            handler->currentColumnChanged(&current2, &previous2);
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_CurrentRowChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QItemSelectionModel::currentRowChanged, [handler](const QModelIndex &current, const QModelIndex &previous) {
-            handler->currentRowChanged((ModelIndex::HandleRef)&current, (ModelIndex::HandleRef)&previous);
+            ModelIndex::__Owned current2(current);
+            ModelIndex::__Owned previous2(previous);
+            handler->currentRowChanged(&current2, &previous2);
         });
         return new __SignalConnection { connection };
     }

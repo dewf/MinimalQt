@@ -31,10 +31,10 @@ opaque Handle extends Layout.Handle {
     // void addItem(QLayoutItem *item, int row, int column, int rowSpan = 1, int columnSpan = 1, Qt::Alignment alignment = Qt::Alignment());
     // TODO: need to figure out layout items
     
-    void addLayout(Layout.Handle layout, int row, int column, Option<Alignment> alignment);
-    void addLayout(Layout.Handle layout, int row, int column, int rowSpan, int columnSpan, Option<Alignment> alignment);
-    void addWidget(Widget.Handle widget, int row, int column, Option<Alignment> alignment);
-    void addWidget(Widget.Handle widget, int fromRow, int fromColumn, int rowSpan, int columnSpan, Option<Alignment> alignment);
+    void addLayout(Layout.Handle layout, int row, int column, Alignment alignment = 0);
+    void addLayout(Layout.Handle layout, int row, int column, int rowSpan, int columnSpan, Alignment alignment = 0);
+    void addWidget(Widget.Handle widget, int row, int column, Alignment alignment = 0);
+    void addWidget(Widget.Handle widget, int fromRow, int fromColumn, int rowSpan, int columnSpan, Alignment alignment = 0);
     Rect cellRect(int row, int column);
     int columnCount();
     int columnMinimumWidth(int column);

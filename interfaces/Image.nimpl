@@ -48,11 +48,6 @@ enum Format {
     NImageFormats
 }
 
-options ScaledOptions {
-    AspectRatioMode aspectMode;         // default: Qt::IgnoreAspectRatio
-    TransformationMode transformMode;   // default: Qt::FastTransformation
-}
-
 @nodispose
 opaque Handle {
     // interfaces:
@@ -85,14 +80,14 @@ opaque Handle {
     // const uchar *constBits();
     // const uchar *constScanLine(int i);
 
-    void convertTo(Format format, Option<ImageConversionFlags> flags_);
+    void convertTo(Format format, ImageConversionFlags flags_ = ImageConversionFlags.AutoColor);
 
     // void convertToColorSpace(QColorSpace &colorSpace);
     // void convertToColorSpace(QColorSpace &colorSpace, QImage::Format format, Qt::ImageConversionFlags flags = Qt::AutoColor);
 
-    Owned convertToFormat(Format format, Option<ImageConversionFlags> flags_);
-    Owned convertToFormat(Format format, Array<Rgb> colorTable, Option<ImageConversionFlags> flags_);
-    Owned convertedTo(Format format, Option<ImageConversionFlags> flags_);
+    Owned convertToFormat(Format format, ImageConversionFlags flags_ = ImageConversionFlags.AutoColor);
+    Owned convertToFormat(Format format, Array<Rgb> colorTable, ImageConversionFlags flags_ = ImageConversionFlags.AutoColor);
+    Owned convertedTo(Format format, ImageConversionFlags flags_ = ImageConversionFlags.AutoColor);
 
     // QImage convertedToColorSpace(const QColorSpace &colorSpace) const
     // QImage convertedToColorSpace(const QColorSpace &colorSpace, QImage::Format format, Qt::ImageConversionFlags flags = Qt::AutoColor) &&
@@ -100,9 +95,9 @@ opaque Handle {
 
     Owned copy(Option<Rect> rectangle);
     Owned copy(int x, int y, int width, int height);
-    Owned createAlphaMask(Option<ImageConversionFlags> flags_);
-    Owned createHeuristicMask(Option<bool> clipTight);
-    Owned createMaskFromColor(Rgb color, Option<MaskMode> mode);
+    Owned createAlphaMask(ImageConversionFlags flags_ = ImageConversionFlags.AutoColor);
+    Owned createHeuristicMask(bool clipTight = true);
+    Owned createMaskFromColor(Rgb color, MaskMode mode = MaskMode.MaskInColor);
     int depth();
     SizeF deviceIndependentSize();
     double devicePixelRatio();
@@ -114,7 +109,7 @@ opaque Handle {
     Format format();
     bool hasAlphaChannel();
     int height();
-    void invertPixels(Option<InvertMode> mode);
+    void invertPixels(InvertMode mode = InvertMode.InvertRgb);
     bool isGrayscale();
     bool isNull();
     bool load(string filename, Option<string> format);
@@ -122,8 +117,8 @@ opaque Handle {
     // bool load(QIODevice *device, const char *format)
 
     bool loadFromData(Buffer<byte> data, Option<string> format);
-    void mirror(Option<bool> horizontal, Option<bool> vertical);
-    Owned mirrored(Option<bool> horizontal, Option<bool> vertical);
+    void mirror(bool horizontal = false, bool vertical = true);
+    Owned mirrored(bool horizontal = false, bool vertical = true);
     Point offset();
     Rgb pixel(Point position);
     Rgb pixel(int x, int y);
@@ -138,14 +133,14 @@ opaque Handle {
     bool reinterpretAsFormat(Format format);
     void rgbSwap();
     Owned rgbSwapped();
-    bool save(string fileName, Option<string> format, Option<int> quality);
+    bool save(string fileName, Option<string> format, int quality = -1);
 
     // bool save(QIODevice *device, const char *format = nullptr, int quality = -1) const
 
-    Owned scaled(Size size, Option<AspectRatioMode> aspectRatioMode, Option<TransformationMode> transformMode);
-    Owned scaled(int width, int height, Option<AspectRatioMode> aspectRatioMode, Option<TransformationMode> transformMode);
-    Owned scaledToHeight(int height, Option<TransformationMode> mode);
-    Owned scaledToWidth(int width, Option<TransformationMode> mode);
+    Owned scaled(Size size, AspectRatioMode aspectRadioMode = AspectRatioMode.IgnoreAspectRatio, TransformationMode transformMode = TransformationMode.FastTransformation);
+    Owned scaled(int width, int height, AspectRatioMode aspectRadioMode = AspectRatioMode.IgnoreAspectRatio, TransformationMode transformMode = TransformationMode.FastTransformation);
+    Owned scaledToHeight(int height, TransformationMode transformMode = TransformationMode.FastTransformation);
+    Owned scaledToWidth(int width, TransformationMode transformMode = TransformationMode.FastTransformation);
 
     Buffer<uint32> scanLine32(int i);             // currently Buffers can't use typedefs, so no Rgb
     Buffer<uint64> scanLine64(int i);
@@ -176,7 +171,7 @@ opaque Handle {
     // HBITMAP toHBITMAP() const
     // HICON toHICON(const QImage &mask = {}) const
     
-    Owned transformed(Transform.Handle matrix, Option<TransformationMode> mode);
+    Owned transformed(Transform.Handle matrix, TransformationMode transformMode = TransformationMode.FastTransformation);
     bool valid(Point pos);
     bool valid(int x, int y);
     int width();

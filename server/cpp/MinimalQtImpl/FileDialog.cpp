@@ -36,11 +36,11 @@ namespace FileDialog
     }
 
     Options Handle_getOptions(HandleRef _this) {
-        return THIS->options();
+        return Options(THIS->options());
     }
 
     void Handle_setOptions(HandleRef _this, Options opts) {
-        THIS->setOptions(static_cast<QFileDialog::Options>(opts));
+        THIS->setOptions(static_cast<QFileDialog::Options>(opts.value));
     }
 
     std::vector<std::string> Handle_supportedSchemes(HandleRef _this) {
@@ -175,7 +175,7 @@ namespace FileDialog
     }
 
     HandleRef create(Widget::HandleRef parent, WindowFlags flags_) {
-        return reinterpret_cast<HandleRef>(new QFileDialog(reinterpret_cast<QWidget*>(parent), static_cast<Qt::WindowFlags>(flags_)));
+        return reinterpret_cast<HandleRef>(new QFileDialog(reinterpret_cast<QWidget*>(parent), static_cast<Qt::WindowFlags>(flags_.value)));
     }
 
     HandleRef create(const CreateOpts& opts) {
@@ -191,7 +191,7 @@ namespace FileDialog
         const auto parent = opts.mapOrDefaultParent([](auto p) { return reinterpret_cast<QWidget*>(p); }, static_cast<QWidget*>(nullptr));
         const auto caption = opts.mapOrDefaultCaption(QString::fromStdString, QString());
         const auto dir = opts.mapOrDefaultDir(QString::fromStdString, QString());
-        const auto options = opts.mapOrDefaultOptions_([](auto x) { return static_cast<QFileDialog::Options>(x); }, static_cast<QFileDialog::Options>(QFileDialog::ShowDirsOnly));
+        const auto options = opts.mapOrDefaultOptions_([](auto x) { return static_cast<QFileDialog::Options>(x.value); }, static_cast<QFileDialog::Options>(QFileDialog::ShowDirsOnly));
         //
         const auto result = QFileDialog::getExistingDirectory(parent, caption, dir, options);
         return result.toStdString();
@@ -201,7 +201,7 @@ namespace FileDialog
         const auto parent = opts.mapOrDefaultParent([](auto p) { return reinterpret_cast<QWidget*>(p); }, static_cast<QWidget*>(nullptr));
         const auto caption = opts.mapOrDefaultCaption(QString::fromStdString, QString());
         const auto dir = opts.mapOrDefaultDir([](auto urlHandle) { return QURL_VALUE(urlHandle); }, QUrl());
-        const auto options = opts.mapOrDefaultOptions_([](auto x) { return static_cast<QFileDialog::Options>(x); }, static_cast<QFileDialog::Options>(QFileDialog::ShowDirsOnly));
+        const auto options = opts.mapOrDefaultOptions_([](auto x) { return static_cast<QFileDialog::Options>(x.value); }, static_cast<QFileDialog::Options>(QFileDialog::ShowDirsOnly));
         const auto supportedSchemes = opts.mapOrDefaultSupportedSchemes(toQStringList, QStringList());
         //
         const auto result = QFileDialog::getExistingDirectoryUrl(parent, caption, dir, options, supportedSchemes);
@@ -235,7 +235,7 @@ namespace FileDialog
             selectedFilterValue = QString::fromStdString(value);
             selectedFilter = &selectedFilterValue;
         }
-        const auto options = opts.mapOrDefaultOptions_([](auto x) { return static_cast<QFileDialog::Options>(x); }, QFileDialog::Options());
+        const auto options = opts.mapOrDefaultOptions_([](auto x) { return static_cast<QFileDialog::Options>(x.value); }, QFileDialog::Options());
         //
         GetOpenFileNameResult result;
         result.filename = QFileDialog::getOpenFileName(parent, caption, dir, filter, selectedFilter, options).toStdString();
@@ -256,7 +256,7 @@ namespace FileDialog
             selectedFilterValue = QString::fromStdString(value);
             selectedFilter = &selectedFilterValue;
         }
-        const auto options = opts.mapOrDefaultOptions_([](auto x) { return static_cast<QFileDialog::Options>(x); }, QFileDialog::Options());
+        const auto options = opts.mapOrDefaultOptions_([](auto x) { return static_cast<QFileDialog::Options>(x.value); }, QFileDialog::Options());
         //
         GetOpenFileNamesResult result;
         result.filenames = toVectorStrings(QFileDialog::getOpenFileNames(parent, caption, dir, filter, selectedFilter, options));
@@ -277,7 +277,7 @@ namespace FileDialog
             selectedFilterValue = QString::fromStdString(value);
             selectedFilter = &selectedFilterValue;
         }
-        const auto options = opts.mapOrDefaultOptions_([](auto x) { return static_cast<QFileDialog::Options>(x); }, QFileDialog::Options());
+        const auto options = opts.mapOrDefaultOptions_([](auto x) { return static_cast<QFileDialog::Options>(x.value); }, QFileDialog::Options());
         const auto supportedSchemes = opts.mapOrDefaultSupportedSchemes(toQStringList, QStringList());
         //
         const auto url = QFileDialog::getOpenFileUrl(parent, caption, dir, filter, selectedFilter, options, supportedSchemes);
@@ -300,7 +300,7 @@ namespace FileDialog
             selectedFilterValue = QString::fromStdString(value);
             selectedFilter = &selectedFilterValue;
         }
-        const auto options = opts.mapOrDefaultOptions_([](auto x) { return static_cast<QFileDialog::Options>(x); }, QFileDialog::Options());
+        const auto options = opts.mapOrDefaultOptions_([](auto x) { return static_cast<QFileDialog::Options>(x.value); }, QFileDialog::Options());
         const auto supportedSchemes = opts.mapOrDefaultSupportedSchemes(toQStringList, QStringList());
         //
         const auto urls = QFileDialog::getOpenFileUrls(parent, caption, dir, filter, selectedFilter, options, supportedSchemes);
@@ -325,7 +325,7 @@ namespace FileDialog
             selectedFilterValue = QString::fromStdString(value);
             selectedFilter = &selectedFilterValue;
         }
-        const auto options = opts.mapOrDefaultOptions_([](auto x) { return static_cast<QFileDialog::Options>(x); }, QFileDialog::Options());
+        const auto options = opts.mapOrDefaultOptions_([](auto x) { return static_cast<QFileDialog::Options>(x.value); }, QFileDialog::Options());
         //
         GetSaveFileNameResult result;
         result.filename = QFileDialog::getSaveFileName(parent, caption, dir, filter, selectedFilter, options).toStdString();
@@ -346,7 +346,7 @@ namespace FileDialog
             selectedFilterValue = QString::fromStdString(value);
             selectedFilter = &selectedFilterValue;
         }
-        const auto options = opts.mapOrDefaultOptions_([](auto x) { return static_cast<QFileDialog::Options>(x); }, QFileDialog::Options());
+        const auto options = opts.mapOrDefaultOptions_([](auto x) { return static_cast<QFileDialog::Options>(x.value); }, QFileDialog::Options());
         const auto supportedSchemes = opts.mapOrDefaultSupportedSchemes(toQStringList, QStringList());
         //
         const auto url = QFileDialog::getSaveFileUrl(parent, caption, dir, filter, selectedFilter, options, supportedSchemes);

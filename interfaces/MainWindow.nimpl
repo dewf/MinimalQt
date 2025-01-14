@@ -97,7 +97,7 @@ opaque Handle extends Widget.Handle {
     SignalConnection connect_ToolButtonStyleChanged(SignalHandler handler);
 }
 
-Handle create(Option<Widget.Handle> parent, Option<WindowFlags> flags_);
+Handle create(Widget.Handle parent = null, WindowFlags flags_ = 0);
 
 // delegated ==========================================================
 

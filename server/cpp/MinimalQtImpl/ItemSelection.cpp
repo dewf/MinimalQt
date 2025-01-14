@@ -16,7 +16,7 @@ namespace ItemSelection {
     }
 
     void Handle_merge(HandleRef _this, HandleRef other, SelectionFlags command) {
-        THIS->merge(QITEMSELECTION_VALUE(other), static_cast<QItemSelectionModel::SelectionFlags>(command));
+        THIS->merge(QITEMSELECTION_VALUE(other), static_cast<QItemSelectionModel::SelectionFlags>(command.value));
     }
 
     void Handle_select(HandleRef _this, ModelIndex::HandleRef topLeft, ModelIndex::HandleRef bottomRight) {

@@ -98,6 +98,10 @@ inline Rect toRect(const QRect& qRect) {
     return { qRect.left(), qRect.top(), qRect.width(), qRect.height() };
 }
 
+inline RectF toRectF(const QRectF& qRectF) {
+    return { qRectF.left(), qRectF.top(), qRectF.width(), qRectF.height() };
+}
+
 inline QRect toQRect(const Rect& r) {
     return {r.x, r.y, r.width, r.height};
 }

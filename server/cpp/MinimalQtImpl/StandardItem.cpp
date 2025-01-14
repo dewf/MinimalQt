@@ -103,11 +103,11 @@ namespace StandardItem
     }
 
     ItemFlags Handle_getFlags(HandleRef _this) {
-        return THIS->flags();
+        return ItemFlags(THIS->flags());
     }
 
     void Handle_setFlags(HandleRef _this, ItemFlags flags_) {
-        THIS->setFlags(static_cast<Qt::ItemFlags>(flags_));
+        THIS->setFlags(static_cast<Qt::ItemFlags>(flags_.value));
     }
 
     Font::OwnedRef Handle_getFont(HandleRef _this) {
@@ -175,11 +175,11 @@ namespace StandardItem
     }
 
     Alignment Handle_textAlignment(HandleRef _this) {
-        return THIS->textAlignment();
+        return Alignment(THIS->textAlignment());
     }
 
     void Handle_setTextAlignment(HandleRef _this, Alignment alignment) {
-        THIS->setTextAlignment(static_cast<Qt::Alignment>(alignment));
+        THIS->setTextAlignment(static_cast<Qt::Alignment>(alignment.value));
     }
 
     std::string Handle_toolTip(HandleRef _this) {

@@ -25,24 +25,20 @@ namespace GridLayout {
         THIS->setVerticalSpacing(value);
     }
 
-    void Handle_addLayout(HandleRef _this, Layout::HandleRef layout, int32_t row, int32_t column, const std::optional<Alignment>& alignment) {
-        const auto qAlignment = optionalMap<Alignment,Qt::Alignment>(alignment, [](auto align) { return static_cast<Qt::Alignment>(align); });
-        THIS->addLayout(AS_QLAYOUT_PTR(layout), row, column, qAlignment.value_or(Qt::Alignment()));
+    void Handle_addLayout(HandleRef _this, Layout::HandleRef layout, int32_t row, int32_t column, Alignment alignment /* 0 */) {
+        THIS->addLayout(AS_QLAYOUT_PTR(layout), row, column, static_cast<Qt::Alignment>(alignment.value));
     }
 
-    void Handle_addLayout(HandleRef _this, Layout::HandleRef layout, int32_t row, int32_t column, int32_t rowSpan, int32_t columnSpan, const std::optional<Alignment>& alignment) {
-        const auto qAlignment = optionalMap<Alignment,Qt::Alignment>(alignment, [](auto align) { return static_cast<Qt::Alignment>(align); });
-        THIS->addLayout(AS_QLAYOUT_PTR(layout), row, column, rowSpan, columnSpan, qAlignment.value_or(Qt::Alignment()));
+    void Handle_addLayout(HandleRef _this, Layout::HandleRef layout, int32_t row, int32_t column, int32_t rowSpan, int32_t columnSpan, Alignment alignment /* 0 */) {
+        THIS->addLayout(AS_QLAYOUT_PTR(layout), row, column, rowSpan, columnSpan, static_cast<Qt::Alignment>(alignment.value));
     }
 
-    void Handle_addWidget(HandleRef _this, Widget::HandleRef widget, int32_t row, int32_t column, const std::optional<Alignment>& alignment) {
-        const auto qAlignment = optionalMap<Alignment,Qt::Alignment>(alignment, [](auto align) { return static_cast<Qt::Alignment>(align); });
-        THIS->addWidget(AS_QWIDGET_PTR(widget), row, column, qAlignment.value_or(Qt::Alignment()));
+    void Handle_addWidget(HandleRef _this, Widget::HandleRef widget, int32_t row, int32_t column, Alignment alignment /* 0 */) {
+        THIS->addWidget(AS_QWIDGET_PTR(widget), row, column, static_cast<Qt::Alignment>(alignment.value));
     }
 
-    void Handle_addWidget(HandleRef _this, Widget::HandleRef widget, int32_t fromRow, int32_t fromColumn, int32_t rowSpan, int32_t columnSpan, const std::optional<Alignment>& alignment) {
-        const auto qAlignment = optionalMap<Alignment,Qt::Alignment>(alignment, [](auto align) { return static_cast<Qt::Alignment>(align); });
-        THIS->addWidget(AS_QWIDGET_PTR(widget), fromRow, fromColumn, rowSpan, columnSpan, qAlignment.value_or(Qt::Alignment()));
+    void Handle_addWidget(HandleRef _this, Widget::HandleRef widget, int32_t fromRow, int32_t fromColumn, int32_t rowSpan, int32_t columnSpan, Alignment alignment /* 0 */) {
+        THIS->addWidget(AS_QWIDGET_PTR(widget), fromRow, fromColumn, rowSpan, columnSpan, static_cast<Qt::Alignment>(alignment.value));
     }
 
     Rect Handle_cellRect(HandleRef _this, int32_t row, int32_t column) {

@@ -80,11 +80,11 @@ namespace Layout
     }
 
     void Handle_setAlignment(HandleRef _this, WidgetHandleRef widget, Alignment alignment) {
-        THIS->setAlignment(AS_QWIDGET_PTR(widget), static_cast<Qt::Alignment>(alignment));
+        THIS->setAlignment(AS_QWIDGET_PTR(widget), static_cast<Qt::Alignment>(alignment.value));
     }
 
     void Handle_setAlignment(HandleRef _this, HandleRef layout, Alignment alignment) {
-        THIS->setAlignment(AS_QLAYOUT_PTR(layout), static_cast<Qt::Alignment>(alignment));
+        THIS->setAlignment(AS_QLAYOUT_PTR(layout), static_cast<Qt::Alignment>(alignment.value));
     }
 
     void Handle_setContentsMargins(HandleRef _this, Margins margins) {

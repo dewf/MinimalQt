@@ -23,7 +23,7 @@ namespace ModelIndex
     }
 
     ItemFlags Handle_getFlags(HandleRef _this) {
-        return VALUE.flags();
+        return ItemFlags(VALUE.flags());
     }
 
     size_t Handle_internalId(HandleRef _this) {

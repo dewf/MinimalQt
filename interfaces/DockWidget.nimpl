@@ -59,10 +59,5 @@ opaque Handle extends Widget.Handle {
     SignalConnection connect_VisibilityChanged(SignalHandler handler);
 }
 
-options CtorOptions {
-    Widget.Handle parent;
-    WindowFlags flags_;
-}
-
-Handle create(CtorOptions opts);
-Handle create(string title, CtorOptions opts);
+Handle create(Widget.Handle parent = null, WindowFlags flags_ = 0);
+Handle create(string title, Widget.Handle parent = null, WindowFlags flags_ = 0);

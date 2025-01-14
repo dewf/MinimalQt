@@ -82,16 +82,12 @@ namespace PlainTextEdit
         });
     }
 
-    bool Handle_find(HandleRef _this, const std::string& exp, const std::optional<FindFlags>& options_) {
-        QTextDocument::FindFlags flags;
-        if (options_.has_value()) flags = static_cast<QTextDocument::FindFlags>(options_.value());
-        return THIS->find(QString::fromStdString(exp), flags);
+    bool Handle_find(HandleRef _this, const std::string& exp, FindFlags options_ /* 0 */) {
+        return THIS->find(QString::fromStdString(exp), static_cast<QTextDocument::FindFlags>(options_.value));
     }
 
-    bool Handle_find(HandleRef _this, RegularExpression::HandleRef exp, const std::optional<FindFlags>& options_) {
-        QTextDocument::FindFlags flags;
-        if (options_.has_value()) flags = static_cast<QTextDocument::FindFlags>(options_.value());
-        return THIS->find(QREGEX_VALUE(exp), flags);
+    bool Handle_find(HandleRef _this, RegularExpression::HandleRef exp, FindFlags options_ /* 0 */) {
+        return THIS->find(QREGEX_VALUE(exp), static_cast<QTextDocument::FindFlags>(options_.value));
     }
 
     bool Handle_isReadOnly(HandleRef _this) {
@@ -118,9 +114,8 @@ namespace PlainTextEdit
         return THIS->mergeCurrentCharFormat(QTEXTCHARFORMAT_VALUE(modifier));
     }
 
-    void Handle_moveCursor(HandleRef _this, MoveOperation operation, const std::optional<MoveMode>& mode) {
-        const auto qMode = optionOrDefaultStaticCast(mode, QTextCursor::MoveAnchor);
-        THIS->moveCursor(static_cast<QTextCursor::MoveOperation>(operation), qMode);
+    void Handle_moveCursor(HandleRef _this, MoveOperation operation, MoveMode mode /* MoveMode::MoveAnchor */) {
+        THIS->moveCursor(static_cast<QTextCursor::MoveOperation>(operation), static_cast<QTextCursor::MoveMode>(mode));
     }
 
     bool Handle_overwriteMode(HandleRef _this) {
@@ -195,7 +190,7 @@ namespace PlainTextEdit
     }
 
     void Handle_setTextInteractionFlags(HandleRef _this, TextInteractionFlags tiFlags) {
-        THIS->setTextInteractionFlags(static_cast<Qt::TextInteractionFlags>(tiFlags));
+        THIS->setTextInteractionFlags(static_cast<Qt::TextInteractionFlags>(tiFlags.value));
     }
 
     void Handle_setUndoRedoEnabled(HandleRef _this, bool enabled) {
@@ -219,7 +214,7 @@ namespace PlainTextEdit
     }
 
     TextInteractionFlags Handle_getTextInteractionFlags(HandleRef _this) {
-        return THIS->textInteractionFlags();
+        return TextInteractionFlags(THIS->textInteractionFlags());
     }
 
     std::string Handle_toPlainText(HandleRef _this) {
@@ -353,13 +348,11 @@ namespace PlainTextEdit
         delete THIS;
     }
 
-    HandleRef create(const std::optional<Widget::HandleRef>& parent) {
-        const auto qParent = Widget::fromOptionalHandle(parent);
-        return reinterpret_cast<HandleRef>(new QPlainTextEdit(qParent));
+    HandleRef create(Widget::HandleRef parent /* nullptr */) {
+        return reinterpret_cast<HandleRef>(new QPlainTextEdit(AS_QWIDGET_PTR(parent)));
     }
 
-    HandleRef create(const std::string& text, const std::optional<Widget::HandleRef>& parent) {
-        const auto qParent = Widget::fromOptionalHandle(parent);
-        return reinterpret_cast<HandleRef>(new QPlainTextEdit(QString::fromStdString(text), qParent));
+    HandleRef create(const std::string& text, Widget::HandleRef parent /* nullptr */) {
+        return reinterpret_cast<HandleRef>(new QPlainTextEdit(QString::fromStdString(text), AS_QWIDGET_PTR(parent)));
     }
 }

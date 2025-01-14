@@ -10,7 +10,7 @@ namespace SizePolicy
     }
 
     Orientations Handle_expandingDirections(HandleRef _this) {
-        return THIS->expandingDirections();
+        return Orientations(THIS->expandingDirections());
     }
 
     bool Handle_hasHeightForWidth(HandleRef _this) {
@@ -42,7 +42,7 @@ namespace SizePolicy
     }
 
     void Handle_setHorizontalPolicy(HandleRef _this, Policy policy) {
-        THIS->setHorizontalPolicy(static_cast<QSizePolicy::Policy>(policy));
+        THIS->setHorizontalPolicy(static_cast<QSizePolicy::Policy>(policy.value));
     }
 
     void Handle_setHorizontalStretch(HandleRef _this, int32_t stretchFactor) {
@@ -54,7 +54,7 @@ namespace SizePolicy
     }
 
     void Handle_setVerticalPolicy(HandleRef _this, Policy policy) {
-        THIS->setVerticalPolicy(static_cast<QSizePolicy::Policy>(policy));
+        THIS->setVerticalPolicy(static_cast<QSizePolicy::Policy>(policy.value));
     }
 
     void Handle_setVerticalStretch(HandleRef _this, int32_t stretchFactor) {
@@ -91,6 +91,6 @@ namespace SizePolicy
 
     OwnedRef create(Policy horizontal, Policy vertical, const std::optional<ControlType>& type_) {
         const auto qType = static_cast<QSizePolicy::ControlType>(type_.value_or(ControlType::DefaultType));
-        return SIZEPOLICY_HEAP_NEW(static_cast<QSizePolicy::Policy>(horizontal), static_cast<QSizePolicy::Policy>(vertical), qType);
+        return SIZEPOLICY_HEAP_NEW(static_cast<QSizePolicy::Policy>(horizontal.value), static_cast<QSizePolicy::Policy>(vertical.value), qType);
     }
 }

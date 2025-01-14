@@ -78,10 +78,5 @@ opaque Handle extends Frame.Handle {
     SignalConnection connect_LinkHovered(SignalHandler handler);
 }
 
-options CreateOptions {
-    Widget.Handle parent;
-    WindowFlags flags_;
-}
-
-Handle create(CreateOptions opts);
-Handle create(string text, CreateOptions opts);
+Handle create(Widget.Handle parent = null, WindowFlags flags_ = 0);
+Handle create(string text, Widget.Handle parent = null, WindowFlags flags_ = 0);

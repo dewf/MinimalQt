@@ -9,11 +9,11 @@
 namespace Label
 {
     Alignment Handle_alignment(HandleRef _this) {
-        return THIS->alignment();
+        return Alignment(THIS->alignment());
     }
 
     void Handle_setAlignment(HandleRef _this, Alignment align) {
-        THIS->setAlignment(static_cast<Qt::AlignmentFlag>(align));
+        THIS->setAlignment(static_cast<Qt::AlignmentFlag>(align.value));
     }
 
     bool Handle_hasSelectedText(HandleRef _this) {
@@ -81,11 +81,11 @@ namespace Label
     }
 
     TextInteractionFlags Handle_getTextInteractionFlags(HandleRef _this) {
-        return THIS->textInteractionFlags();
+        return TextInteractionFlags(THIS->textInteractionFlags());
     }
 
     void Handle_setTextInteractionFlags(HandleRef _this, TextInteractionFlags interactionFlags) {
-        THIS->setTextInteractionFlags(static_cast<Qt::TextInteractionFlags>(interactionFlags));
+        THIS->setTextInteractionFlags(static_cast<Qt::TextInteractionFlags>(interactionFlags.value));
     }
 
     bool Handle_wordWrap(HandleRef _this) {
@@ -142,15 +142,11 @@ namespace Label
         delete THIS;
     }
 
-    HandleRef create(const CreateOptions& opts) {
-        QWidget *parent = opts.mapOrDefaultParent([](auto handle) { return AS_QWIDGET_PTR(handle); }, static_cast<QWidget*>(nullptr)); // static_cast<QWidget*>(nullptr)
-        const auto qFlags = opts.mapOrDefaultFlags_([](auto flags) { return static_cast<Qt::WindowFlags>(flags); }, Qt::WindowFlags());
-        return reinterpret_cast<HandleRef>(new QLabel(parent, qFlags));
+    HandleRef create(Widget::HandleRef parent /* nullptr */, WindowFlags flags_ /* 0 */) {
+        return reinterpret_cast<HandleRef>(new QLabel(AS_QWIDGET_PTR(parent), static_cast<Qt::WindowFlags>(flags_.value)));
     }
 
-    HandleRef create(const std::string& text, const CreateOptions& opts) {
-        QWidget *parent = opts.mapOrDefaultParent([](auto handle) { return AS_QWIDGET_PTR(handle); }, static_cast<QWidget*>(nullptr)); // static_cast<QWidget*>(nullptr)
-        const auto qFlags = opts.mapOrDefaultFlags_([](auto flags) { return static_cast<Qt::WindowFlags>(flags); }, Qt::WindowFlags());
-        return reinterpret_cast<HandleRef>(new QLabel(QString::fromStdString(text), parent, qFlags));
+    HandleRef create(const std::string& text, Widget::HandleRef parent /* nullptr */, WindowFlags flags_ /* 0 */) {
+        return reinterpret_cast<HandleRef>(new QLabel(QString::fromStdString(text), AS_QWIDGET_PTR(parent), static_cast<Qt::WindowFlags>(flags_.value)));
     }
 }

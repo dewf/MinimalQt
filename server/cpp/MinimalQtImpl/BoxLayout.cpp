@@ -20,14 +20,12 @@ namespace BoxLayout
         THIS->addStretch(stretch);
     }
 
-    void Handle_addWidget(HandleRef _this, Widget::HandleRef widget, const Handle::AddWidgetOptions& opts) {
-        const auto stretch = opts.getOrDefaultStretch(0);
-        const auto align = static_cast<Qt::Alignment>(opts.getOrDefaultAlign(0));
-        THIS->addWidget(AS_QWIDGET_PTR(widget), stretch, align);
+    void Handle_addWidget(HandleRef _this, Widget::HandleRef widget, int32_t stretch /* 0 */, Alignment alignment /* 0 */) {
+        THIS->addWidget(AS_QWIDGET_PTR(widget), stretch, static_cast<Qt::Alignment>(alignment.value));
     }
 
-    void Handle_addLayout(HandleRef _this, Layout::HandleRef layout, const Handle::AddLayoutOptions& opts) {
-        THIS->addLayout(AS_QLAYOUT_PTR(layout), opts.getOrDefaultStretch(0));
+    void Handle_addLayout(HandleRef _this, Layout::HandleRef layout, int32_t stretch /* 0 */) {
+        THIS->addLayout(AS_QLAYOUT_PTR(layout), stretch);
     }
 
     void Handle_addWidget(HandleRef _this, Widget::HandleRef widget) {
@@ -38,16 +36,8 @@ namespace BoxLayout
         THIS->addWidget(AS_QWIDGET_PTR(widget), stretch);
     }
 
-    void Handle_addWidget(HandleRef _this, Widget::HandleRef widget, int32_t stretch, Enums::Alignment align) {
-        THIS->addWidget(AS_QWIDGET_PTR(widget), stretch, static_cast<Qt::AlignmentFlag>(align));
-    }
-
     void Handle_addLayout(HandleRef _this, Layout::HandleRef layout) {
         THIS->addLayout(AS_QLAYOUT_PTR(layout));
-    }
-
-    void Handle_addLayout(HandleRef _this, Layout::HandleRef layout, int32_t stretch) {
-        THIS->addLayout(AS_QLAYOUT_PTR(layout), stretch);
     }
 
     void Handle_dispose(HandleRef _this) {

@@ -17,11 +17,11 @@ namespace LineEdit
     }
 
     Alignment Handle_getAlignment(HandleRef _this) {
-        return THIS->alignment();
+        return Alignment(THIS->alignment());
     }
 
     void Handle_setAlignment(HandleRef _this, Enums::Alignment align) {
-        THIS->setAlignment(static_cast<Qt::Alignment>(align));
+        THIS->setAlignment(static_cast<Qt::Alignment>(align.value));
     }
 
     bool Handle_isClearButtonEnabled(HandleRef _this) {

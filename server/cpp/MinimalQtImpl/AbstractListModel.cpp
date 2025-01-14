@@ -49,7 +49,8 @@ namespace AbstractListModel
             auto baseFlags = QAbstractListModel::flags(index);
             if (methodMask & Flags) {
                 ModelIndex::__Handle index2(index);
-                return static_cast<Qt::ItemFlags>(methodDelegate->getFlags(&index2, baseFlags));
+                const auto result = methodDelegate->getFlags(&index2, ItemFlags(baseFlags));
+                return static_cast<Qt::ItemFlags>(result.value);
             } else {
                 return baseFlags;
             }

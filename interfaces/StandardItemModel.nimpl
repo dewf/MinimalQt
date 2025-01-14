@@ -11,12 +11,6 @@ interface SignalHandler extends AbstractItemModel.SignalHandler {
 }
 
 opaque Handle extends AbstractItemModel.Handle {
-    static {
-        options FindItemsArgs {
-            MatchFlags flags_;
-            int column;
-        }
-    }
     // properties:
     int sortRole();
     void setSortRole(int role);
@@ -26,7 +20,7 @@ opaque Handle extends AbstractItemModel.Handle {
     void appendRow(Array<StandardItem.Handle> items);
     void appendRow(StandardItem.Handle item);
     void clear();
-    Array<StandardItem.Handle> findItems(string text, FindItemsArgs args);
+    Array<StandardItem.Handle> findItems(string text, MatchFlags flags_ = MatchFlags.MatchExactly, int column = 0);
     StandardItem.Handle horizontalHeaderItem(int column);
     ModelIndex.Owned indexFromItem(StandardItem.Handle item);
     void insertColumn(int column, Array<StandardItem.Handle> items);

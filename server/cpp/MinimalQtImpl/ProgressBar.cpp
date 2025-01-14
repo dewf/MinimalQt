@@ -10,7 +10,7 @@
 namespace ProgressBar
 {
     Alignment Handle_getAlignment(HandleRef _this) {
-        return THIS->alignment();
+        return Alignment(THIS->alignment());
     }
 
     std::string Handle_format(HandleRef _this) {
@@ -42,7 +42,7 @@ namespace ProgressBar
     }
 
     void Handle_setAlignment(HandleRef _this, Alignment align) {
-        THIS->setAlignment(static_cast<Qt::Alignment>(align));
+        THIS->setAlignment(static_cast<Qt::Alignment>(align.value));
     }
 
     void Handle_setFormat(HandleRef _this, const std::string& format) {

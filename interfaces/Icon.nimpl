@@ -167,26 +167,20 @@ enum ThemeIcon {
 
 @nodispose
 opaque Handle {
-    static {
-        options ModeStateOpts {
-            Mode mode;
-            State state;
-        }
-    }
-    Size actualSize(Size size, ModeStateOpts opts);
-    void addFile(string fileName, Option<Size> size, ModeStateOpts opts);
-    void addPixmap(Pixmap.Handle pixmap, ModeStateOpts opts);
-    Array<Size> availableSizes(ModeStateOpts opts);
+    Size actualSize(Size size, Mode mode = Mode.Normal, State state = State.Off);
+    void addFile(string fileName, Option<Size> size, Mode mode = Mode.Normal, State state = State.Off);
+    void addPixmap(Pixmap.Handle pixmap, Mode mode = Mode.Normal, State state = State.Off);
+    Array<Size> availableSizes(Mode mode = Mode.Normal, State state = State.Off);
     int64 cacheKey();
     bool isMask();
     bool isNull();
     string name();
-    void paint(Painter.Handle painter, Rect rect, Option<Alignment> alignment, ModeStateOpts opts);
-    void paint(Painter.Handle painter, int x, int y, int w, int h, Option<Alignment> alignment, ModeStateOpts opts);
-    Pixmap.Owned pixmap(Size size, ModeStateOpts opts);
-    Pixmap.Owned pixmap(int extent, ModeStateOpts opts);
-    Pixmap.Owned pixmap(Size size, double devicePixelRatio, ModeStateOpts opts);
-    Pixmap.Owned pixmap(int w, int h, ModeStateOpts opts);
+    void paint(Painter.Handle painter, Rect rect, Alignment alignment = Alignment.AlignCenter, Mode mode = Mode.Normal, State state = State.Off);
+    void paint(Painter.Handle painter, int x, int y, int w, int h, Alignment alignment = Alignment.AlignCenter, Mode mode = Mode.Normal, State state = State.Off);
+    Pixmap.Owned pixmap(Size size, Mode mode = Mode.Normal, State state = State.Off);
+    Pixmap.Owned pixmap(int extent, Mode mode = Mode.Normal, State state = State.Off);
+    Pixmap.Owned pixmap(Size size, double devicePixelRatio, Mode mode = Mode.Normal, State state = State.Off);
+    Pixmap.Owned pixmap(int w, int h, Mode mode = Mode.Normal, State state = State.Off);
     void setIsMask(bool isMask);
     void swap(Handle other);
 }

@@ -29,8 +29,8 @@ namespace AbstractItemModel
     }
 
     bool Handle_checkIndex(HandleRef _this, ModelIndex::HandleRef index, const std::optional<CheckIndexOptions>& options_) {
-        CheckIndexOptions optionsArg = options_.value_or(NoOption);
-        return THIS->checkIndex(index->value, static_cast<QAbstractItemModel::CheckIndexOption>(optionsArg));
+        CheckIndexOptions optionsArg = options_.value_or(CheckIndexOptions::NoOption);
+        return THIS->checkIndex(index->value, static_cast<QAbstractItemModel::CheckIndexOption>(optionsArg.value));
     }
 
     bool Handle_clearItemData(HandleRef _this, ModelIndex::HandleRef index) {
@@ -54,7 +54,7 @@ namespace AbstractItemModel
     }
 
     ItemFlags Handle_flags_(HandleRef _this, ModelIndex::HandleRef index) {
-        return THIS->flags(index->value);
+        return ItemFlags(THIS->flags(index->value));
     }
 
     bool Handle_hasChildren(HandleRef _this, const std::optional<ModelIndex::HandleRef>& parent) {
@@ -98,11 +98,9 @@ namespace AbstractItemModel
         return retMap;
     }
 
-    std::vector<ModelIndex::OwnedRef> Handle_match(HandleRef _this, ModelIndex::HandleRef start, int32_t role, Variant::HandleRef value, const Handle::MatchArgs& args) {
+    std::vector<ModelIndex::OwnedRef> Handle_match(HandleRef _this, ModelIndex::HandleRef start, int32_t role, Variant::HandleRef value, int32_t hits /* 1 */, MatchFlags flags_ /* MatchFlags::MatchStartsWith | MatchFlags::MatchWrap */) {
         std::vector<ModelIndex::OwnedRef> ret;
-        const auto hits = args.getOrDefaultHits(1);
-        const auto flags_ = args.getOrDefaultFlags_(MatchStartsWith | MatchWrap);
-        const auto result = THIS->match(start->value, role, value->value, hits, static_cast<Qt::MatchFlags>(flags_));
+        const auto result = THIS->match(start->value, role, value->value, hits, static_cast<Qt::MatchFlags>(flags_.value));
         return fromQList<QModelIndex,ModelIndex::OwnedRef>(result, [](const QModelIndex &index) { return new ModelIndex::__Owned(index); });
     }
 
@@ -185,11 +183,11 @@ namespace AbstractItemModel
     }
 
     DropActionSet Handle_supportedDragActions(HandleRef _this) {
-        return THIS->supportedDragActions();
+        return DropActionSet(THIS->supportedDragActions());
     }
 
     DropActionSet Handle_supportedDropActions(HandleRef _this) {
-        return THIS->supportedDropActions();
+        return DropActionSet(THIS->supportedDropActions());
     }
 
     void Handle_revert(HandleRef _this) {
@@ -422,7 +420,8 @@ namespace AbstractItemModel
             auto baseFlags = QAbstractItemModel::flags(index);
             if (methodMask & Flags) {
                 ModelIndex::__Handle index2(index);
-                return static_cast<Qt::ItemFlags>(methodDelegate->getFlags(&index2, baseFlags));
+                const auto result = methodDelegate->getFlags(&index2, ItemFlags(baseFlags));
+                return static_cast<Qt::ItemFlags>(result.value);
             } else {
                 return baseFlags;
             }

@@ -150,6 +150,11 @@ add_library(MinimalQtImpl STATIC
     ../Frame.cpp
     ../FrameInternal.h
 
+    ../generated/GraphicsEffect.h
+    ../generated/GraphicsEffect_wrappers.cpp
+    ../GraphicsEffect.cpp
+    ../GraphicsEffectInternal.h
+
     ../generated/GridLayout.h
     ../generated/GridLayout_wrappers.cpp
     ../GridLayout.cpp

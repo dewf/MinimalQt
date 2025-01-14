@@ -33,11 +33,11 @@ namespace MainWindow
     }
 
     DockOptions Handle_getDockOptions(HandleRef _this) {
-        return THIS->dockOptions();
+        return DockOptions(THIS->dockOptions());
     }
 
     void Handle_setDockOptions(HandleRef _this, DockOptions dockOptions) {
-        THIS->setDockOptions(static_cast<QMainWindow::DockOptions>(dockOptions));
+        THIS->setDockOptions(static_cast<QMainWindow::DockOptions>(dockOptions.value));
     }
 
     bool Handle_documentMode(HandleRef _this) {
@@ -194,7 +194,7 @@ namespace MainWindow
     }
 
     void Handle_setTabPosition(HandleRef _this, DockWidgetAreas areas, TabPosition tabPosition) {
-        THIS->setTabPosition(static_cast<Qt::DockWidgetAreas>(areas), static_cast<QTabWidget::TabPosition>(tabPosition));
+        THIS->setTabPosition(static_cast<Qt::DockWidgetAreas>(areas.value), static_cast<QTabWidget::TabPosition>(tabPosition));
     }
 
     void Handle_splitDockWidget(HandleRef _this, DockWidget::HandleRef first, DockWidget::HandleRef second, Orientation orientation) {
@@ -257,10 +257,8 @@ namespace MainWindow
         delete THIS;
     }
 
-    HandleRef create(const std::optional<Widget::HandleRef>& parent, const std::optional<WindowFlags>& flags_) {
-        const auto qParent = Widget::fromOptionalHandle(parent);
-        const auto qFlags = optionOrDefaultStaticCast(flags_, Qt::WindowFlags());
-        return reinterpret_cast<HandleRef>(new QMainWindow(qParent, qFlags));
+    HandleRef create(Widget::HandleRef parent /* nullptr */, WindowFlags flags_ /* 0 */) {
+        return reinterpret_cast<HandleRef>(new QMainWindow(AS_QWIDGET_PTR(parent), static_cast<Qt::WindowFlags>(flags_.value)));
     }
 
     // delegated ================================================================================================================

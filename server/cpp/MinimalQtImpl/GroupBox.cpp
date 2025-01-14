@@ -7,7 +7,7 @@
 
 namespace GroupBox {
     Alignment Handle_getAlignment(HandleRef _this) {
-        return THIS->alignment();
+        return Alignment(THIS->alignment());
     }
 
     void Handle_setAlignment(HandleRef _this, Alignment align) {

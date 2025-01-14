@@ -12,6 +12,11 @@ import Cursor;
 import SizePolicy;
 import Font;
 import MimeData;
+import KeySequence;
+import Pixmap;
+import GraphicsEffect;
+import PaintDevice;
+import Variant;
 
 int WIDGET_SIZE_MAX;   // pass-through of QWIDGETSIZE_MAX
 
@@ -21,215 +26,701 @@ interface SignalHandler extends Object.SignalHandler {
     void windowTitleChanged(string title);
 }
 
+enum RenderFlag {
+    DrawWindowBackground = 0x1,
+    DrawChildren = 0x2,
+    IgnoreMask = 0x4
+}
+
+flags RenderFlags {
+    DrawWindowBackground = 0x1,
+    DrawChildren = 0x2,
+    IgnoreMask = 0x4
+}
+
 opaque Handle extends Object.Handle {
-    // properties ==================================
+
+    // bool acceptDrops() const
     bool acceptDrops();
-    void setAcceptDrops(bool state);
 
+    // QString accessibleDescription() const
     string accessibleDescription();
-    void setAccessibleDescription(string desc);
 
+    // QString accessibleName() const
     string accessibleName();
-    void setAccessibleName(string name);
 
-    bool autoFillBackground();
-    void setAutoFillBackground(bool state);
+    // QList<QAction *> actions() const
+    Array<Action.Handle> actions();
 
-    Size baseSize();
-    void setBaseSize(Size size);
-    
-    Rect childrenRect();
-    // no setter
+    // void activateWindow()
+    void activateWindow();
 
-    Region.Owned childrenRegion();
-    // no setter
-    
-    ContextMenuPolicy contextMenuPolicy();
-    void setContextMenuPolicy(ContextMenuPolicy policy);
-
-    Cursor.Owned getCursor();
-    void setCursor(Cursor.Handle cursor);
-
-    bool isEnabled();
-    void setEnabled(bool enabled);
-
-    bool hasFocus();
-    // no setter
-
-    FocusPolicy getFocusPolicy();
-    void setFocusPolicy(FocusPolicy policy);
-
-    Font.Owned getFont();
-    void setFont(Font.Handle font);
-
-    Rect frameGeometry();
-    // no setter
-
-    Size frameSize();
-    // no setter
-    
-    bool isFullscreen();
-    // no setter
-
-    Rect geometry();
-    void setGeometry(Rect rect);
-    void setGeometry(int x, int y, int width, int height);
-
-    int height();
-    // no setter
-
-    InputMethodHints getInputMethodHints();
-    void setInputMethodHints(InputMethodHints hints);
-
-    bool isActiveWindow();
-    // no setter
-
-    LayoutDirection getLayoutDirection();
-    void setLayoutDirection(LayoutDirection direction);
-
-    // TODO:
-    // locale : QLocale
-
-    bool isMaximized();
-    // no setter
-
-    int maximumHeight();
-    void setMaximumHeight(int height);
-
-    Size maximumSize();
-    void setMaximumSize(Size size);
-
-    int maximumWidth();
-    void setMaximumWidth(int width);
-    
-    bool isMinimized();
-    // no setter
-
-    int minimumHeight();
-    void setMinimumHeight(int height);
-
-    Size minimumSize();
-    void setMinimumSize(Size size);
-
-    Size minimumSizeHint();
-    // no setter
-
-    int minimumWidth();
-    void setMinimumWidth(int width);
-
-    bool isModal();
-    // no setter
-
-    bool hasMouseTracking();
-    void setMouseTracking(bool state);
-
-    Rect normalGeometry();
-    // no setter
-
-    // TODO:
-    // palette : QPalette
-
-    Point pos();
-    void move(int x, int y);
-    void move(Point p);
-
-    Rect rect();
-    // no setter
-
-    Size getSize();
-    void resize(int width, int height);
-    void resize(Size size);
-
-    Size sizeHint();
-    // no setter
-
-    Size sizeIncrement();
-    void setSizeIncrement(int w, int h);
-    void setSizeIncrement(Size size);
-
-    SizePolicy.Owned getSizePolicy();
-    void setSizePolicy(SizePolicy.Handle policy);
-    void setSizePolicy(SizePolicy.Policy hPolicy, SizePolicy.Policy vPolicy);
-
-    string statusTip();
-    void setStatusTip(string tip);
-
-    string styleSheet();
-    void setStyleSheet(string styles);
-
-    bool hasTabletTracking();
-    void setTabletTracking(bool state);
-
-    string toolTip();
-    void setToolTip(string tip);
-
-    int toolTipDuration();
-    void setToolTipDuration(int duration);
-
-    bool updatesEnabled();
-    void setUpdatesEnabled(bool enabled);
-
-    bool isVisible();
-    void setVisible(bool visible);
-
-    string whatsThis();
-    void setWhatsThis(string text);
-
-    int width();
-    // readonly
-
-    string windowFilePath();
-    void setWindowFilePath(string path);
-
-    WindowFlags getWindowFlags();
-    void setWindowFlags(WindowFlags flags_);
-
-    Icon.Owned windowIcon();
-    void setWindowIcon(Icon.Handle icon);
-
-    WindowModality getWindowModality();
-    void setWindowModality(WindowModality modality);
-
-    bool isWindowModified();
-    void setWindowModified(bool modified);
-
-    double windowOpacity();
-    void setWindowOpacity(double opacity);
-
-    string windowTitle();
-    void setWindowTitle(string title);
-
-    int x();
-    // readonly
-
-    int y();
-    // readonly
-
-    // methods =====================================
-
+    // void addAction(QAction *action)
     void addAction(Action.Handle action);
-    
-    Handle getWindow();
 
-    void updateGeometry();
+    // QAction * addAction(const QString &text)
+    Action.Handle addAction(string text);
+
+    // QAction * addAction(const QIcon &icon, const QString &text)
+    Action.Handle addAction(Icon.Handle icon, string text);
+
+    // QAction * addAction(const QString &text, const QKeySequence &shortcut)
+    Action.Handle addAction(string text, KeySequence.Handle shortcut);
+
+    // QAction * addAction(const QIcon &icon, const QString &text, const QKeySequence &shortcut)
+    Action.Handle addAction(Icon.Handle icon, string text, KeySequence.Handle shortcut);
+
+    // QAction * addAction(const QString &text, Args &&... args)
+    // QAction * addAction(const QIcon &icon, const QString &text, Args &&... args)
+    // QAction * addAction(const QString &text, const QKeySequence &shortcut, Args &&... args)
+    // QAction * addAction(const QIcon &icon, const QString &text, const QKeySequence &shortcut, Args &&... args)
+    // QAction * addAction(const QString &text, const QObject *receiver, const char *member, Qt::ConnectionType type = Qt::AutoConnection)
+    // QAction * addAction(const QIcon &icon, const QString &text, const QObject *receiver, const char *member, Qt::ConnectionType type = Qt::AutoConnection)
+    // QAction * addAction(const QString &text, const QKeySequence &shortcut, const QObject *receiver, const char *member, Qt::ConnectionType type = Qt::AutoConnection)
+    // QAction * addAction(const QIcon &icon, const QString &text, const QKeySequence &shortcut, const QObject *receiver, const char *member, Qt::ConnectionType type = Qt::AutoConnection)
+
+    // void addActions(const QList<QAction *> &actions)
+    void addActions(Array<Action.Handle> actions);
+
+    // void adjustSize()
     void adjustSize();
 
-    void setFixedWidth(int width);
-    void setFixedHeight(int height);
-    void setFixedSize(Size size);
-    void setFixedSize(int width, int height);
+    // bool autoFillBackground() const
+    bool autoFillBackground();
 
-    void show();
-    void hide();
+    // QPalette::ColorRole backgroundRole() const
+    // QBackingStore * backingStore() const
 
-    void update();
-    void update(int x, int y, int width, int height);
+    // QSize baseSize() const
+    Size baseSize();
+
+    // QWidget * childAt(int x, int y) const
+    Handle childAt(int x, int y);
+
+    // QWidget * childAt(const QPoint &p) const
+    Handle childAt(Point p);
+
+    // QWidget * childAt(const QPointF &p) const
+    Handle childAt(PointF p);
+
+    // QRect childrenRect() const
+    Rect childrenRect();
+
+    // QRegion childrenRegion() const
+    Region.Owned childrenRegion();
+
+    // void clearFocus()
+    void clearFocus();
+
+    // void clearMask()
+    void clearMask();
+
+    // QMargins contentsMargins() const
+    Margins contentsMargins();
+    
+    // QRect contentsRect() const
+    Rect contentsRect();
+
+    // Qt::ContextMenuPolicy contextMenuPolicy() const
+    ContextMenuPolicy contextMenuPolicy();
+
+    // QCursor cursor() const
+    Cursor.Owned cursor();
+
+    // WId effectiveWinId() const
+
+    // void ensurePolished() const
+    void ensurePolished();
+
+    // Qt::FocusPolicy focusPolicy() const
+    FocusPolicy focusPolicy();
+
+    // QWidget * focusProxy() const
+    Handle focusProxy();
+
+    // QWidget * focusWidget() const
+    Handle focusWidget();
+
+    // const QFont & font() const
+    Font.Owned font();
+
+    // QFontInfo fontInfo() const
+    // QFontMetrics fontMetrics() const
+    // QPalette::ColorRole foregroundRole() const
+
+    // QRect frameGeometry() const
+    Rect frameGeometry();
+
+    // QSize frameSize() const
+    Size frameSize();
+
+    // const QRect & geometry() const
+    Rect geometry();
+
+    // QPixmap grab(const QRect &rectangle = QRect(QPoint(0, 0), QSize(-1, -1)))
+    Pixmap.Owned grab(Option<Rect> rectangle); // = QRect(QPoint(0, 0), QSize(-1, -1))
+
+    // void grabGesture(Qt::GestureType gesture, Qt::GestureFlags flags = Qt::GestureFlags())
+    void grabGesture(GestureType gesture, GestureFlags flags_ = 0);
+
+    // void grabKeyboard()
+    void grabKeyboard();
+
+    // void grabMouse()
+    void grabMouse();
+
+    // void grabMouse(const QCursor &cursor)
+    void grabMouse(Cursor.Handle cursor);
+
+    // int grabShortcut(const QKeySequence &key, Qt::ShortcutContext context = Qt::WindowShortcut)
+    int grabShortcut(KeySequence.Handle key, ShortcutContext context = ShortcutContext.WindowShortcut);
+
+    // QGraphicsEffect * graphicsEffect() const
+    GraphicsEffect.Handle graphicsEffect();
+
+    // QGraphicsProxyWidget * graphicsProxyWidget() const
+
+    // bool hasEditFocus() const
+    // (only for embedded linux)
+
+    // bool hasFocus() const
+    bool hasFocus();
+
+    // virtual bool hasHeightForWidth() const
+    bool hasHeightForWidth();
+
+    // bool hasMouseTracking() const
+    bool hasMouseTracking();
+
+    // bool hasTabletTracking() const
+    bool hasTabletTracking();
+
+    // int height() const
+    int height();
+
+    // virtual int heightForWidth(int w) const
+    int heightForWidth(int w);
+
+    // Qt::InputMethodHints inputMethodHints() const
+    InputMethodHints inputMethodHints();
+
+    // virtual QVariant inputMethodQuery(Qt::InputMethodQuery query) const
+    Variant.Owned inputMethodQuery(InputMethodQuery query);
+
+    // void insertAction(QAction *before, QAction *action)
+    void insertAction(Action.Handle before, Action.Handle action);
+
+    // void insertActions(QAction *before, const QList<QAction *> &actions)
+    void insertActions(Action.Handle before, Array<Action.Handle> actions);
+
+    // bool isActiveWindow() const
+    bool isActiveWindow();
+
+    // bool isAncestorOf(const QWidget *child) const
+    bool isAncestorOf(Handle child);
+
+    // bool isEnabled() const
+    bool isEnabled();
+
+    // bool isEnabledTo(const QWidget *ancestor) const
+    bool isEnabledTo(Handle ancestor);
+
+    // bool isFullScreen() const
+    bool isFullScreen();
+
+    // bool isHidden() const
+    bool isHidden();
+
+    // bool isMaximized() const
+    bool isMaximized();
+
+    // bool isMinimized() const
+    bool isMinimized();
+
+    // bool isModal() const
+    bool isModal();
+
+    // bool isVisible() const
+    bool isVisible();
+
+    // bool isVisibleTo(const QWidget *ancestor) const
+    bool isVisibleTo(Handle ancestor);
+
+    // bool isWindow() const
+    bool isWindow();
+
+    // bool isWindowModified() const
+    bool isWindowModified();
+
+    // QLayout * layout() const
+    Layout.Handle layout();
+
+    // Qt::LayoutDirection layoutDirection() const
+    LayoutDirection layoutDirection();
+
+    // QLocale locale() const
+
+    // QPointF mapFrom(const QWidget *parent, const QPointF &pos) const
+    PointF mapFrom(Handle parent, PointF pos);
+
+    // QPoint mapFrom(const QWidget *parent, const QPoint &pos) const
+    Point mapFrom(Handle parent, Point pos);
+
+    // QPointF mapFromGlobal(const QPointF &pos) const
+    PointF mapFromGlobal(PointF pos);
+
+    // QPoint mapFromGlobal(const QPoint &pos) const
+    Point mapFromGlobal(Point pos);
+
+    // QPointF mapFromParent(const QPointF &pos) const
+    PointF mapFromParent(PointF pos);
+
+    // QPoint mapFromParent(const QPoint &pos) const
+    Point mapFromParent(Point pos);
+
+    // QPointF mapTo(const QWidget *parent, const QPointF &pos) const
+    PointF mapTo(Handle parent, PointF pos);
+
+    // QPoint mapTo(const QWidget *parent, const QPoint &pos) const
+    Point mapTo(Handle parent, Point pos);
+
+    // QPointF mapToGlobal(const QPointF &pos) const
+    PointF mapToGlobal(PointF pos);
+
+    // QPoint mapToGlobal(const QPoint &pos) const
+    Point mapToGlobal(Point pos);
+
+    // QPointF mapToParent(const QPointF &pos) const
+    PointF mapToParent(PointF pos);
+
+    // QPoint mapToParent(const QPoint &pos) const
+    Point mapToParent(Point pos);
+
+    // QRegion mask() const
+    Region.Owned mask();
+
+    // int maximumHeight() const
+    int maximumHeight();
+
+    // QSize maximumSize() const
+    Size maximumSize();
+
+    // int maximumWidth() const
+    int maximumWidth();
+
+    // int minimumHeight() const
+    int minimumHeight();
+
+    // QSize minimumSize() const
+    Size minimumSize();
+
+    // virtual QSize minimumSizeHint() const
+    Size minimumSizeHint();
+
+    // int minimumWidth() const
+    int minimumWidth();
+
+    // void move(const QPoint &)
+    void move(Point p);
+
+    // void move(int x, int y)
+    void move(int x, int y);
+
+    // QWidget * nativeParentWidget() const
+    Handle nativeParentWidget();
+
+    // QWidget * nextInFocusChain() const
+    Handle nextInFocusChain();
+
+    // QRect normalGeometry() const
+    Rect normalGeometry();
+
+    // void overrideWindowFlags(Qt::WindowFlags flags)
+    void overrideWindowFlags(WindowFlags flags_);
+
+    // const QPalette & palette() const
+
+    // QWidget * parentWidget() const
+    Handle parentWidget();
+
+    // QPoint pos() const
+    Point pos();
+
+    // QWidget * previousInFocusChain() const
+    Handle previousInFocusChain();
+
+    // QRect rect() const
+    Rect rect();
+
+    // void releaseKeyboard()
+    void releaseKeyboard();
+
+    // void releaseMouse()
+    void releaseMouse();
+
+    // void releaseShortcut(int id)
+    void releaseShortcut(int id);
+
+    // void removeAction(QAction *action)
+    void removeAction(Action.Handle action);
+
+    // void render(QPaintDevice *target, const QPoint &targetOffset = QPoint(), const QRegion &sourceRegion = QRegion(), QWidget::RenderFlags renderFlags = RenderFlags(DrawWindowBackground | DrawChildren))
+    void render(PaintDevice.Handle target, Option<Point> targetOffset, Option<Region.Handle> sourceRegion, RenderFlags renderFlags = RenderFlags.DrawWindowBackground | RenderFlags.DrawChildren);
+
+    // void render(QPainter *painter, const QPoint &targetOffset = QPoint(), const QRegion &sourceRegion = QRegion(), QWidget::RenderFlags renderFlags = RenderFlags(DrawWindowBackground | DrawChildren))
+    void render(Painter.Handle painter, Option<Point> targetOffset, Option<Region.Handle> sourceRegion, RenderFlags renderFlags = RenderFlags.DrawWindowBackground | RenderFlags.DrawChildren);
+
+    // void repaint(const QRect &rect)
+    void repaint(Rect rect);
+
+    // void repaint(const QRegion &rgn)
+    void repaint(Region.Handle rgn);
+
+    // void repaint(int x, int y, int w, int h)
+    void repaint(int x, int y, int w, int h);
+
+    // void resize(const QSize &)
+    void resize(Size size);
+
+    // void resize(int w, int h)
+    void resize(int w, int h);
+
+    // bool restoreGeometry(const QByteArray &geometry)
+    bool restoreGeometry(Array<byte> geometry);
+
+    // QByteArray saveGeometry() const
+    Array<byte> saveGeometry();
+
+    // QScreen * screen() const
+
+    // void scroll(int dx, int dy)
+    void scroll(int dx, int dy);
+
+    // void scroll(int dx, int dy, const QRect &r)
+    void scroll(int dx, int dy, Rect r);
+
+    // void setAcceptDrops(bool on)
+    void setAcceptDrops(bool on);
+
+    // void setAccessibleDescription(const QString &description)
+    void setAccessibleDescription(string description);
+
+    // void setAccessibleName(const QString &name)
+    void setAccessibleName(string name);
+
+    // void setAttribute(Qt::WidgetAttribute attribute, bool on = true)
+    void setAttribute(WidgetAttribute attribute, bool on = true);
+
+    // void setAutoFillBackground(bool enabled)
+    void setAutoFillBackground(bool enabled);
+
+    // void setBackgroundRole(QPalette::ColorRole role)
+
+    // void setBaseSize(const QSize &)
+    void setBaseSize(Size size);
+
+    // void setBaseSize(int basew, int baseh)
+    void setBaseSize(int basew, int baseh);
+
+    // void setContentsMargins(int left, int top, int right, int bottom)
+    void setContentsMargins(int left, int top, int right, int bottom);
+
+    // void setContentsMargins(const QMargins &margins)
+    void setContentsMargins(Margins margins);
+
+    // void setContextMenuPolicy(Qt::ContextMenuPolicy policy)
+    void setContextMenuPolicy(ContextMenuPolicy policy);
+
+    // void setCursor(const QCursor &)
+    void setCursor(Cursor.Handle cursor);
+
+    // void setEditFocus(bool enable)
+    // (only for embedded linux)
+
+    // void setFixedHeight(int h)
+    void setFixedHeight(int h);
+
+    // void setFixedSize(const QSize &s)
+    void setFixedSize(Size s);
+
+    // void setFixedSize(int w, int h)
+    void setFixedSize(int w, int h);
+
+    // void setFixedWidth(int w)
+    void setFixedWidth(int w);
+
+    // void setFocus(Qt::FocusReason reason)
+    void setFocus(FocusReason reason);
+
+    // void setFocusPolicy(Qt::FocusPolicy policy)
+    void setFocusPolicy(FocusPolicy policy);
+
+    // void setFocusProxy(QWidget *w)
+    void setFocusProxy(Handle w);
+
+    // void setFont(const QFont &)
+    void setFont(Font.Handle font);
+
+    // void setForegroundRole(QPalette::ColorRole role)
+
+    // void setGeometry(const QRect &)
+    void setGeometry(Rect r);
+
+    // void setGeometry(int x, int y, int w, int h)
+    void setGeometry(int x, int y, int w, int h);
+
+    // void setGraphicsEffect(QGraphicsEffect *effect)
+    void setGraphicsEffect(GraphicsEffect.Handle effect);
+
+    // void setInputMethodHints(Qt::InputMethodHints hints)
+    void setInputMethodHints(InputMethodHints hints);
+
+    // void setLayout(QLayout *layout)
+    void setLayout(Layout.Handle layout);
+
+    // void setLayoutDirection(Qt::LayoutDirection direction)
+    void setLayoutDirection(LayoutDirection direction);
+
+    // void setLocale(const QLocale &locale)
+
+    // void setMask(const QBitmap &bitmap)
+
+    // void setMask(const QRegion &region)
+    void setMask(Region.Handle region);
+
+    // void setMaximumHeight(int maxh)
+    void setMaximumHeight(int maxh);
+
+    // void setMaximumSize(const QSize &)
+    void setMaximumSize(Size size);
+
+    // void setMaximumSize(int maxw, int maxh)
+    void setMaximumSize(int maxw, int maxh);
+
+    // void setMaximumWidth(int maxw)
+    void setMaximumWidth(int maxw);
+
+    // void setMinimumHeight(int minh)
+    void setMinimumHeight(int minh);
+
+    // void setMinimumSize(const QSize &)
+    void setMinimumSize(Size size);
+
+    // void setMinimumSize(int minw, int minh)
+    void setMinimumSize(int minw, int minh);
+
+    // void setMinimumWidth(int minw)
+    void setMinimumWidth(int minw);
+
+    // void setMouseTracking(bool enable)
+    void setMouseTracking(bool enable);
+
+    // void setPalette(const QPalette &)
+
+    // void setParent(QWidget *parent)
+    void setParent(Handle parent);
+
+    // void setParent(QWidget *parent, Qt::WindowFlags f)
+    void setParent(Handle parent, WindowFlags f);
+
+    // void setScreen(QScreen *screen)
+
+    // void setShortcutAutoRepeat(int id, bool enable = true)
+    void setShortcutAutoRepeat(int id, bool enable = true);
+
+    // void setShortcutEnabled(int id, bool enable = true)
+    void setShortcutEnabled(int id, bool enable = true);
+
+    // void setSizeIncrement(const QSize &)
+    void setSizeIncrement(Size size);
+
+    // void setSizeIncrement(int w, int h)
+    void setSizeIncrement(int w, int h);
+
+    // void setSizePolicy(QSizePolicy)
+    void setSizePolicy(SizePolicy.Handle policy);
+
+    // void setSizePolicy(QSizePolicy::Policy horizontal, QSizePolicy::Policy vertical)
+    void setSizePolicy(SizePolicy.Policy horizontal, SizePolicy.Policy vertical);
+
+    // void setStatusTip(const QString &)
+    void setStatusTip(string tip);
+
+    // void setStyle(QStyle *style)
+
+    // void setTabletTracking(bool enable)
+    void setTabletTracking(bool enable);
+
+    // void setToolTip(const QString &)
+    void setToolTip(string tip);
+    
+    // void setToolTipDuration(int msec)
+    void setToolTipDuration(int msec);
+
+    // void setUpdatesEnabled(bool enable)
+    void setUpdatesEnabled(bool enable);
+
+    // void setWhatsThis(const QString &)
+    void setWhatsThis(string text);
+
+    // void setWindowFilePath(const QString &filePath)
+    void setWindowFilePath(string filePath);
+
+    // void setWindowFlag(Qt::WindowType flag, bool on = true)
+    void setWindowFlag(WindowType flag, bool on = true);
+
+    // void setWindowFlags(Qt::WindowFlags type)
+    void setWindowFlags(WindowFlags type_);
+
+    // void setWindowIcon(const QIcon &icon)
+    void setWindowIcon(Icon.Handle icon);
+
+    // void setWindowModality(Qt::WindowModality windowModality)
+    void setWindowModality(WindowModality windowModality);
+
+    // void setWindowOpacity(qreal level)
+    void setWindowOpacity(double level);
+
+    // void setWindowRole(const QString &role)
+    void setWindowRole(string role);
+
+    // void setWindowState(Qt::WindowStates windowState)
+    void setWindowState(WindowStates windowState);
+
+    // void setupUi(QWidget *widget)
+    // only for Designer-created things
+
+    // QSize size() const
+    Size size();
+
+    // virtual QSize sizeHint() const
+    Size sizeHint();
+
+    // QSize sizeIncrement() const
+    Size sizeIncrement();
+
+    // QSizePolicy sizePolicy() const
+    SizePolicy.Owned sizePolicy();
+
+    // void stackUnder(QWidget *w)
+    void stackUnder(Handle w);
+
+    // QString statusTip() const
+    string statusTip();
+
+    // QStyle * style() const
+
+    // QString styleSheet() const
+    string styleSheet();
+
+    // bool testAttribute(Qt::WidgetAttribute attribute) const
+    bool testAttribute(WidgetAttribute attribute);
+
+    // QString toolTip() const
+    string toolTip();
+
+    // int toolTipDuration() const
+    int toolTipDuration();
+
+    // bool underMouse() const
+    bool underMouse();
+
+    // void ungrabGesture(Qt::GestureType gesture)
+    void ungrabGesture(GestureType gesture);
+
+    // void unsetCursor()
+    void unsetCursor();
+
+    // void unsetLayoutDirection()
+    void unsetLayoutDirection();
+
+    // void unsetLocale()
+    void unsetLocale();
+
+    // void update(const QRect &rect)
     void update(Rect rect);
 
-    void setLayout(Layout.Handle layout);
-    Layout.Handle getLayout();
+    // void update(const QRegion &rgn)
+    void update(Region.Handle rgn);
 
-    Point mapToGlobal(Point p);
+    // void update(int x, int y, int w, int h)
+    void update(int x, int y, int w, int h);
+
+    // void updateGeometry()
+    void updateGeometry();
+
+    // bool updatesEnabled() const
+    bool updatesEnabled();
+
+    // QRegion visibleRegion() const
+    Region.Owned visibleRegion();
+
+    // QString whatsThis() const
+    string whatsThis();
+
+    // int width() const
+    int width();
+
+    // WId winId() const
+
+    // QWidget * window() const
+    Handle window();
+
+    // QString windowFilePath() const
+    string windowFilePath();
+
+    // Qt::WindowFlags windowFlags() const
+    WindowFlags getWindowFlags();
+
+    // QWindow * windowHandle() const
+    Handle windowHandle();
+
+    // QIcon windowIcon() const
+    Icon.Owned windowIcon();
+
+    // Qt::WindowModality windowModality() const
+    WindowModality getWindowModality();
+
+    // qreal windowOpacity() const
+    double windowOpacity();
+
+    // QString windowRole() const
+    string windowRole();
+
+    // Qt::WindowStates windowState() const
+    WindowStates windowState();
+
+    // QString windowTitle() const
+    string windowTitle();
+
+    // Qt::WindowType windowType() const
+    WindowType getWindowType();
+
+    // int x() const
+    int x();
+
+    // int y() const
+    int y();
+
+    bool close();
+    void hide();
+    void lower();
+    void raise();
+    void repaint();
+    void setDisabled(bool disable);
+    void setEnabled(bool enable);
+    void setFocus();
+    void setHidden(bool hidden);
+    void setStyleSheet(string styleSheet);
+    void setVisible(bool visible);
+    void setWindowModified(bool modified);
+    void setWindowTitle(string title);
+    void show();
+    void showFullScreen();
+    void showMaximized();
+    void showMinimized();
+    void showNormal();
+    void update();
 
     // signals ======================================
     SignalConnection connect_CustomContextMenuRequested(SignalHandler handler);
@@ -237,7 +728,7 @@ opaque Handle extends Object.Handle {
     SignalConnection connect_WindowTitleChanged(SignalHandler handler);
 }
 
-Handle create();
+Handle create(Handle parent = null, WindowFlags f = 0);
 
 // SUBCLASSING ===========================================================
 
@@ -285,7 +776,7 @@ interface DelegateMethods {
     void showEvent(bool isSpontaneous);
     void paintEvent(Painter.Handle painter, Rect updateRect);
     void mousePressEvent(Point pos, MouseButton button, Modifiers modifiers);
-    void mouseMoveEvent(Point pos, MouseButtonSet buttons, Modifiers modifiers);
+    void mouseMoveEvent(Point pos, MouseButtons buttons, Modifiers modifiers);
     void mouseReleaseEvent(Point pos, MouseButton button, Modifiers modifiers);
     void enterEvent(Point pos);
     void leaveEvent();

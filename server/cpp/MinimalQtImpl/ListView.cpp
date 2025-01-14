@@ -35,11 +35,11 @@ namespace ListView
     }
 
     Alignment Handle_itemAlignment(HandleRef _this) {
-        return THIS->itemAlignment();
+        return Alignment(THIS->itemAlignment());
     }
 
     void Handle_setItemAlignment(HandleRef _this, Alignment align) {
-        THIS->setItemAlignment(static_cast<Qt::Alignment>(align));
+        THIS->setItemAlignment(static_cast<Qt::Alignment>(align.value));
     }
 
     LayoutMode Handle_getLayoutMode(HandleRef _this) {

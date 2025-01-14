@@ -51,15 +51,15 @@ opaque Handle extends AbstractScrollArea.Handle {
     string documentTitle();
     void ensureCursorVisible();
     Array<TextEdit.ExtraSelection.Owned> extraSelections();
-    bool find(string exp, Option<TextDocument.FindFlags> options_);
-    bool find(RegularExpression.Handle exp, Option<TextDocument.FindFlags> options_);
+    bool find(string exp, TextDocument.FindFlags options_ = 0);
+    bool find(RegularExpression.Handle exp, TextDocument.FindFlags options_ = 0);
     bool isReadOnly();
     bool isUndoRedoEnabled();
     LineWrapMode getLineWrapMode();
     Variant.Owned loadResource(int type, Url.Handle name);
     int maximumBlockCount();
     void mergeCurrentCharFormat(TextCharFormat.Handle modifier);
-    void moveCursor(TextCursor.MoveOperation operation, Option<TextCursor.MoveMode> mode);
+    void moveCursor(TextCursor.MoveOperation operation, TextCursor.MoveMode mode = MoveMode.MoveAnchor);
     bool overwriteMode();
     string placeholderText();
 
@@ -118,5 +118,5 @@ opaque Handle extends AbstractScrollArea.Handle {
     SignalConnection connect_UpdateRequest(SignalHandler handler);
 }
 
-Handle create(Option<Widget.Handle> parent);
-Handle create(string text, Option<Widget.Handle> parent);
+Handle create(Widget.Handle parent = null);
+Handle create(string text, Widget.Handle parent = null);

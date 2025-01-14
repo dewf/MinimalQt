@@ -70,11 +70,11 @@ namespace AbstractItemView
     }
 
     EditTriggers Handle_getEditTriggers(HandleRef _this) {
-        return THIS->editTriggers();
+        return EditTriggers(THIS->editTriggers());
     }
 
     void Handle_setEditTriggers(HandleRef _this, EditTriggers triggers) {
-        THIS->setEditTriggers(static_cast<QAbstractItemView::EditTriggers>(triggers));
+        THIS->setEditTriggers(static_cast<QAbstractItemView::EditTriggers>(triggers.value));
     }
 
     ScrollMode Handle_horizontalScrollMode(HandleRef _this) {

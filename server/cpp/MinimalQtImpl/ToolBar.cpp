@@ -28,7 +28,7 @@ namespace ToolBar
     }
 
     ToolBarAreas Handle_allowedAreas(HandleRef _this) {
-        return THIS->allowedAreas();
+        return ToolBarAreas(THIS->allowedAreas());
     }
 
     void Handle_clear(HandleRef _this) {
@@ -68,7 +68,7 @@ namespace ToolBar
     }
 
     void Handle_setAllowedAreas(HandleRef _this, ToolBarAreas areas) {
-        return THIS->setAllowedAreas(static_cast<Qt::ToolBarAreas>(areas));
+        return THIS->setAllowedAreas(static_cast<Qt::ToolBarAreas>(areas.value));
     }
 
     void Handle_setFloatable(HandleRef _this, bool floatable) {
@@ -112,7 +112,7 @@ namespace ToolBar
 
     SignalConnectionRef Handle_connect_AllowedAreasChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QToolBar::allowedAreasChanged, [handler](Qt::ToolBarAreas allowed) {
-            handler->allowedAreasChanged(allowed);
+            handler->allowedAreasChanged(ToolBarAreas(allowed));
         });
         return new __SignalConnection { connection };
     }

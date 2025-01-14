@@ -45,7 +45,7 @@ namespace KeySequence
 
     OwnedRef create(Key key, Modifiers modifiers) {
         auto key2 = static_cast<Qt::Key>(key);
-        auto mods2 = static_cast<Qt::Modifiers>(modifiers);
+        auto mods2 = static_cast<Qt::Modifiers>(modifiers.value);
         return KEYSEQ_HEAP_NEW(key2 | mods2);
     }
 

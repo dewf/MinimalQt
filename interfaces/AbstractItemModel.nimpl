@@ -45,12 +45,6 @@ interface SignalHandler extends Object.SignalHandler {
 
 @nodispose
 opaque Handle extends Object.Handle {
-    static {
-        options MatchArgs {
-            int hits;
-            MatchFlags flags_;
-        }
-    }
     ModelIndex.Owned buddy(ModelIndex.Handle index);
     bool canDropMimeData(MimeData.Handle data, DropAction action, int row, int column, ModelIndex.Handle parent);
     bool canFetchMore(ModelIndex.Handle parent);
@@ -70,7 +64,7 @@ opaque Handle extends Object.Handle {
     bool insertRow(int row, Option<ModelIndex.Handle> parent);
     bool insertRows(int row, int count, Option<ModelIndex.Handle> parent);
     Map<int, Variant.Owned> itemData(ModelIndex.Handle index);
-    Array<ModelIndex.Owned> match(ModelIndex.Handle start, int role, Variant.Handle value, MatchArgs args);
+    Array<ModelIndex.Owned> match(ModelIndex.Handle start, int role, Variant.Handle value, int hits = 1, MatchFlags flags_ = MatchFlags.MatchStartsWith | MatchFlags.MatchWrap);
     MimeData.Handle getMimeData(Array<ModelIndex.Handle> indexes);
     Array<string> mimeTypes();
     bool moveColumn(ModelIndex.Handle sourceParent, int sourceColumn, ModelIndex.Handle destinationParent, int destinationChild);

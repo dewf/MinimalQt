@@ -8,7 +8,7 @@
 namespace ScrollArea
 {
     Alignment Handle_getAlignment(HandleRef _this) {
-        return THIS->alignment();
+        return Alignment(THIS->alignment());
     }
 
     void Handle_ensureVisible(HandleRef _this, int32_t x, int32_t y, int32_t xmargin /* 50 */, int32_t ymargin /* 50 */) {
@@ -20,7 +20,7 @@ namespace ScrollArea
     }
 
     void Handle_setAlignment(HandleRef _this, Alignment align) {
-        THIS->setAlignment(static_cast<Qt::Alignment>(align));
+        THIS->setAlignment(static_cast<Qt::Alignment>(align.value));
     }
 
     void Handle_setWidget(HandleRef _this, Widget::HandleRef widget) {

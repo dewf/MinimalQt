@@ -50,19 +50,19 @@ namespace MessageBox
     }
 
     OptionEnumSet Handle_getOptions(HandleRef _this) {
-        return THIS->options();
+        return OptionEnumSet(THIS->options());
     }
 
     void Handle_setOptions(HandleRef _this, OptionEnumSet opts) {
-        THIS->setOptions(static_cast<QMessageBox::Options>(opts));
+        THIS->setOptions(static_cast<QMessageBox::Options>(opts.value));
     }
 
     StandardButtons Handle_getStandardButtons(HandleRef _this) {
-        return THIS->standardButtons();
+        return StandardButtons(THIS->standardButtons());
     }
 
     void Handle_setStandardButtons(HandleRef _this, StandardButtons buttons) {
-        THIS->setStandardButtons(static_cast<QMessageBox::StandardButtons>(buttons));
+        THIS->setStandardButtons(static_cast<QMessageBox::StandardButtons>(buttons.value));
     }
 
     std::string Handle_text(HandleRef _this) {
@@ -82,11 +82,11 @@ namespace MessageBox
     }
 
     TextInteractionFlags Handle_getTextInteractionFlags(HandleRef _this) {
-        return THIS->textInteractionFlags();
+        return TextInteractionFlags(THIS->textInteractionFlags());
     }
 
     void Handle_setTextInteractionFlags(HandleRef _this, TextInteractionFlags tiFlags) {
-        THIS->setTextInteractionFlags(static_cast<Qt::TextInteractionFlags>(tiFlags));
+        THIS->setTextInteractionFlags(static_cast<Qt::TextInteractionFlags>(tiFlags.value));
     }
 
     PushButton::HandleRef Handle_addButton(HandleRef _this, StandardButton button) {
@@ -182,16 +182,13 @@ namespace MessageBox
         delete THIS;
     }
 
-    HandleRef create(const std::optional<Widget::HandleRef>& parent) {
-        const auto qParent = Widget::fromOptionalHandle(parent);
-        return reinterpret_cast<HandleRef>(new QMessageBox(qParent));
+    HandleRef create(Widget::HandleRef parent /* nullptr */) {
+        return reinterpret_cast<HandleRef>(new QMessageBox(AS_QWIDGET_PTR(parent)));
     }
 
-    HandleRef create(Icon icon, const std::string& title, const std::string& text, const std::optional<StandardButtons>& buttons, const std::optional<Widget::HandleRef>& parent, const std::optional<WindowFlags>& flags_) {
-        const auto qButtons = optionOrDefaultStaticCast(buttons, QMessageBox::NoButton);
-        const auto qParent = Widget::fromOptionalHandle(parent);
-        const auto qFlags = optionOrDefaultStaticCast(flags_, Qt::Dialog | Qt::MSWindowsFixedSizeDialogHint);
-        return reinterpret_cast<HandleRef>(new QMessageBox(static_cast<QMessageBox::Icon>(icon), QString::fromStdString(title), QString::fromStdString(text), qButtons, qParent, qFlags));
+    HandleRef create(Icon icon, const std::string& title, const std::string& text, StandardButtons buttons /* StandardButtons::NoButton */, Widget::HandleRef parent /* nullptr */, WindowFlags flags_ /* WindowFlags::Dialog | WindowFlags::MSWindowsFixedSizeDialogHint */) {
+        return reinterpret_cast<HandleRef>(new QMessageBox(static_cast<QMessageBox::Icon>(icon), QString::fromStdString(title), QString::fromStdString(text),
+            static_cast<QMessageBox::StandardButtons>(buttons.value), AS_QWIDGET_PTR(parent), static_cast<Qt::WindowFlags>(flags_.value)));
     }
 
     void about(Widget::HandleRef parent, const std::string& title, const std::string& text) {
@@ -205,35 +202,23 @@ namespace MessageBox
         QMessageBox::aboutQt(qParent, qTitle);
     }
 
-    StandardButton critical(Widget::HandleRef parent, const std::string& title, const std::string& text, const std::optional<StandardButtons>& buttons, const std::optional<StandardButton>& defaultButton) {
-        const auto qParent = Widget::fromOptionalHandle(parent);
-        QMessageBox::StandardButtons qButtons(Ok);
-        if (buttons.has_value()) qButtons = static_cast<QMessageBox::StandardButtons>(buttons.value());
-        const auto qDefault = optionOrDefaultStaticCast(defaultButton, QMessageBox::NoButton);
-        return static_cast<StandardButton>(QMessageBox::critical(qParent, QString::fromStdString(title), QString::fromStdString(text), qButtons, qDefault));
+    StandardButton critical(Widget::HandleRef parent, const std::string& title, const std::string& text, StandardButtons buttons /* StandardButtons::Ok */, StandardButton defaultButton /* StandardButton::NoButton */) {
+        return static_cast<StandardButton>(QMessageBox::critical(AS_QWIDGET_PTR(parent), QString::fromStdString(title), QString::fromStdString(text),
+            static_cast<QMessageBox::StandardButtons>(buttons.value), static_cast<QMessageBox::StandardButton>(defaultButton)));
     }
 
-    StandardButton information(Widget::HandleRef parent, const std::string& title, const std::string& text, const std::optional<StandardButtons>& buttons, const std::optional<StandardButton>& defaultButton) {
-        const auto qParent = Widget::fromOptionalHandle(parent);
-        QMessageBox::StandardButtons qButtons(Ok);
-        if (buttons.has_value()) qButtons = static_cast<QMessageBox::StandardButtons>(buttons.value());
-        const auto qDefault = optionOrDefaultStaticCast(defaultButton, QMessageBox::NoButton);
-        return static_cast<StandardButton>(QMessageBox::information(qParent, QString::fromStdString(title), QString::fromStdString(text), qButtons, qDefault));
+    StandardButton information(Widget::HandleRef parent, const std::string& title, const std::string& text, StandardButtons buttons /* StandardButtons::Ok */, StandardButton defaultButton /* StandardButton::NoButton */) {
+        return static_cast<StandardButton>(QMessageBox::information(AS_QWIDGET_PTR(parent), QString::fromStdString(title), QString::fromStdString(text),
+            static_cast<QMessageBox::StandardButtons>(buttons.value), static_cast<QMessageBox::StandardButton>(defaultButton)));
     }
 
-    StandardButton question(Widget::HandleRef parent, const std::string& title, const std::string& text, const std::optional<StandardButtons>& buttons, const std::optional<StandardButton>& defaultButton) {
-        const auto qParent = Widget::fromOptionalHandle(parent);
-        QMessageBox::StandardButtons qButtons(Yes | No);
-        if (buttons.has_value()) qButtons = static_cast<QMessageBox::StandardButtons>(buttons.value());
-        const auto qDefault = optionOrDefaultStaticCast(defaultButton, QMessageBox::NoButton);
-        return static_cast<StandardButton>(QMessageBox::question(qParent, QString::fromStdString(title), QString::fromStdString(text), qButtons, qDefault));
+    StandardButton question(Widget::HandleRef parent, const std::string& title, const std::string& text, StandardButtons buttons /* StandardButtons::Yes | StandardButtons::No */, StandardButton defaultButton /* StandardButton::NoButton */) {
+        return static_cast<StandardButton>(QMessageBox::question(AS_QWIDGET_PTR(parent), QString::fromStdString(title), QString::fromStdString(text),
+            static_cast<QMessageBox::StandardButtons>(buttons.value), static_cast<QMessageBox::StandardButton>(defaultButton)));
     }
 
-    StandardButton warning(Widget::HandleRef parent, const std::string& title, const std::string& text, const std::optional<StandardButtons>& buttons, const std::optional<StandardButton>& defaultButton) {
-        const auto qParent = Widget::fromOptionalHandle(parent);
-        QMessageBox::StandardButtons qButtons(Ok);
-        if (buttons.has_value()) qButtons = static_cast<QMessageBox::StandardButtons>(buttons.value());
-        const auto qDefault = optionOrDefaultStaticCast(defaultButton, QMessageBox::NoButton);
-        return static_cast<StandardButton>(QMessageBox::warning(qParent, QString::fromStdString(title), QString::fromStdString(text), qButtons, qDefault));
+    StandardButton warning(Widget::HandleRef parent, const std::string& title, const std::string& text, StandardButtons buttons /* StandardButtons::Ok */, StandardButton defaultButton /* StandardButton::NoButton */) {
+        return static_cast<StandardButton>(QMessageBox::warning(AS_QWIDGET_PTR(parent), QString::fromStdString(title), QString::fromStdString(text),
+            static_cast<QMessageBox::StandardButtons>(buttons.value), static_cast<QMessageBox::StandardButton>(defaultButton)));
     }
 }
