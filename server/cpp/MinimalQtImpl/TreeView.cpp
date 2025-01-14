@@ -4,6 +4,7 @@
 #include "ObjectInternal.h"
 #include "ModelIndexInternal.h"
 #include "HeaderViewInternal.h"
+#include "WidgetInternal.h"
 
 #define THIS (reinterpret_cast<QTreeView*>(_this))
 
@@ -13,100 +14,204 @@ namespace TreeView
         return THIS->allColumnsShowFocus();
     }
 
-    void Handle_setAllColumnsShowFocus(HandleRef _this, bool value) {
-        THIS->setAllColumnsShowFocus(value);
-    }
-
-    bool Handle_isAnimated(HandleRef _this) {
-        return THIS->isAnimated();
-    }
-
-    void Handle_setAnimated(HandleRef _this, bool value) {
-        THIS->setAnimated(value);
-    }
-
     int32_t Handle_autoExpandDelay(HandleRef _this) {
         return THIS->autoExpandDelay();
     }
 
-    void Handle_setAutoExpandDelay(HandleRef _this, int32_t value) {
-        THIS->setAutoExpandDelay(value);
+    int32_t Handle_columnAt(HandleRef _this, int32_t x) {
+        return THIS->columnAt(x);
+    }
+
+    int32_t Handle_columnViewportPosition(HandleRef _this, int32_t column) {
+        return THIS->columnViewportPosition(column);
+    }
+
+    int32_t Handle_columnWidth(HandleRef _this, int32_t column) {
+        return THIS->columnWidth(column);
     }
 
     bool Handle_expandsOnDoubleClick(HandleRef _this) {
         return THIS->expandsOnDoubleClick();
     }
 
-    void Handle_setExpandsOnDoubleClick(HandleRef _this, bool value) {
-        THIS->setExpandsOnDoubleClick(value);
-    }
-
-    bool Handle_isHeaderHidden(HandleRef _this) {
-        return THIS->isHeaderHidden();
-    }
-
-    void Handle_setHeaderHidden(HandleRef _this, bool value) {
-        THIS->setHeaderHidden(value);
+    HeaderView::HandleRef Handle_header(HandleRef _this) {
+        return reinterpret_cast<HeaderView::HandleRef>(THIS->header());
     }
 
     int32_t Handle_indentation(HandleRef _this) {
         return THIS->indentation();
     }
 
-    void Handle_setIndentation(HandleRef _this, int32_t value) {
-        THIS->setIndentation(value);
+    ModelIndex::OwnedRef Handle_indexAbove(HandleRef _this, ModelIndex::HandleRef index) {
+        return new ModelIndex::__Owned { THIS->indexAbove(index->value) };
     }
 
-    void Handle_resetIndentation(HandleRef _this) {
-        return THIS->resetIndentation();
+    ModelIndex::OwnedRef Handle_indexBelow(HandleRef _this, ModelIndex::HandleRef index) {
+        return new ModelIndex::__Owned { THIS->indexBelow(index->value) };
     }
 
-    bool Handle_itemsExpandable(HandleRef _this) {
-        return THIS->itemsExpandable();
+    bool Handle_isAnimated(HandleRef _this) {
+        return THIS->isAnimated();
     }
 
-    void Handle_setItemsExpandable(HandleRef _this, bool value) {
-        THIS->setItemsExpandable(value);
+    bool Handle_isColumnHidden(HandleRef _this, int32_t column) {
+        return THIS->isColumnHidden(column);
     }
 
-    bool Handle_rootIsDecorated(HandleRef _this) {
-        return THIS->rootIsDecorated();
+    bool Handle_isExpanded(HandleRef _this, ModelIndex::HandleRef index) {
+        return THIS->isExpanded(index->value);
     }
 
-    void Handle_setRootIsDecorated(HandleRef _this, bool value) {
-        THIS->setRootIsDecorated(value);
+    bool Handle_isFirstColumnSpanned(HandleRef _this, int32_t row, ModelIndex::HandleRef parent) {
+        return THIS->isFirstColumnSpanned(row, parent->value);
+    }
+
+    bool Handle_isHeaderHidden(HandleRef _this) {
+        return THIS->isHeaderHidden();
+    }
+
+    bool Handle_isRowHidden(HandleRef _this, int32_t row, ModelIndex::HandleRef parent) {
+        return THIS->isRowHidden(row, parent->value);
     }
 
     bool Handle_isSortingEnabled(HandleRef _this) {
         return THIS->isSortingEnabled();
     }
 
-    void Handle_setSortingEnabled(HandleRef _this, bool value) {
-        THIS->setSortingEnabled(value);
+    bool Handle_itemsExpandable(HandleRef _this) {
+        return THIS->itemsExpandable();
+    }
+
+    void Handle_resetIndentation(HandleRef _this) {
+        THIS->resetIndentation();
+    }
+
+    bool Handle_rootIsDecorated(HandleRef _this) {
+        return THIS->rootIsDecorated();
+    }
+
+    void Handle_setAllColumnsShowFocus(HandleRef _this, bool enable) {
+        return THIS->setAllColumnsShowFocus(enable);
+    }
+
+    void Handle_setAnimated(HandleRef _this, bool enable) {
+        return THIS->setAnimated(enable);
+    }
+
+    void Handle_setAutoExpandDelay(HandleRef _this, int32_t delay) {
+        return THIS->setAutoExpandDelay(delay);
+    }
+
+    void Handle_setColumnHidden(HandleRef _this, int32_t column, bool hide) {
+        return THIS->setColumnHidden(column, hide);
+    }
+
+    void Handle_setColumnWidth(HandleRef _this, int32_t column, int32_t width) {
+        THIS->setColumnWidth(column, width);
+    }
+
+    void Handle_setExpanded(HandleRef _this, ModelIndex::HandleRef index, bool expanded) {
+        THIS->setExpanded(index->value, expanded);
+    }
+
+    void Handle_setExpandsOnDoubleClick(HandleRef _this, bool enable) {
+        THIS->setExpandsOnDoubleClick(enable);
+    }
+
+    void Handle_setFirstColumnSpanned(HandleRef _this, int32_t row, ModelIndex::HandleRef parent, bool span) {
+        THIS->setFirstColumnSpanned(row, parent->value, span);
+    }
+
+    void Handle_setHeader(HandleRef _this, HeaderView::HandleRef header) {
+        THIS->setHeader(reinterpret_cast<QHeaderView*>(header));
+    }
+
+    void Handle_setHeaderHidden(HandleRef _this, bool hide) {
+        THIS->setHeaderHidden(hide);
+    }
+
+    void Handle_setIndentation(HandleRef _this, int32_t i) {
+        THIS->setIndentation(i);
+    }
+
+    void Handle_setItemsExpandable(HandleRef _this, bool enable) {
+        THIS->setItemsExpandable(enable);
+    }
+
+    void Handle_setRootIsDecorated(HandleRef _this, bool show) {
+        THIS->setRootIsDecorated(show);
+    }
+
+    void Handle_setRowHidden(HandleRef _this, int32_t row, ModelIndex::HandleRef parent, bool hide) {
+        THIS->setRowHidden(row, parent->value, hide);
+    }
+
+    void Handle_setSortingEnabled(HandleRef _this, bool enable) {
+        THIS->setSortingEnabled(enable);
+    }
+
+    void Handle_setTreePosition(HandleRef _this, int32_t index) {
+        THIS->setTreePosition(index);
+    }
+
+    void Handle_setUniformRowHeights(HandleRef _this, bool uniform) {
+        THIS->setUniformRowHeights(uniform);
+    }
+
+    void Handle_setWordWrap(HandleRef _this, bool on) {
+        THIS->setWordWrap(on);
+    }
+
+    int32_t Handle_treePosition(HandleRef _this) {
+        return THIS->treePosition();
     }
 
     bool Handle_uniformRowHeights(HandleRef _this) {
         return THIS->uniformRowHeights();
     }
 
-    void Handle_setUniformRowHeights(HandleRef _this, bool value) {
-        THIS->setUniformRowHeights(value);
-    }
-
     bool Handle_wordWrap(HandleRef _this) {
         return THIS->wordWrap();
     }
 
-    void Handle_setWordWrap(HandleRef _this, bool value) {
-        THIS->setWordWrap(value);
+    void Handle_collapse(HandleRef _this, ModelIndex::HandleRef index) {
+        THIS->collapse(index->value);
     }
 
-    HeaderView::HandleRef Handle_header(HandleRef _this) {
-        return reinterpret_cast<HeaderView::HandleRef>(THIS->header());
+    void Handle_collapseAll(HandleRef _this) {
+        THIS->collapseAll();
+    }
+
+    void Handle_expand(HandleRef _this, ModelIndex::HandleRef index) {
+        THIS->expand(index->value);
+    }
+
+    void Handle_expandAll(HandleRef _this) {
+        THIS->expandAll();
+    }
+
+    void Handle_expandRecursively(HandleRef _this, ModelIndex::HandleRef index, int32_t depth /* -1 */) {
+        THIS->expandRecursively(index->value, depth);
+    }
+
+    void Handle_expandToDepth(HandleRef _this, int32_t depth) {
+        THIS->expandToDepth(depth);
+    }
+
+    void Handle_hideColumn(HandleRef _this, int32_t column) {
+        THIS->hideColumn(column);
     }
 
     void Handle_resizeColumnToContents(HandleRef _this, int32_t column) {
         THIS->resizeColumnToContents(column);
+    }
+
+    void Handle_showColumn(HandleRef _this, int32_t column) {
+        THIS->showColumn(column);
+    }
+
+    void Handle_sortByColumn(HandleRef _this, int32_t column, SortOrder order) {
+        THIS->sortByColumn(column, static_cast<Qt::SortOrder>(order));
     }
 
     SignalConnectionRef Handle_connect_Collapsed(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
@@ -129,7 +234,7 @@ namespace TreeView
         delete THIS;
     }
 
-    HandleRef create() {
-        return reinterpret_cast<HandleRef>(new QTreeView());
+    HandleRef create(Widget::HandleRef parent /* nullptr */) {
+        return reinterpret_cast<HandleRef>(new QTreeView(AS_QWIDGET_PTR(parent)));
     }
 }
