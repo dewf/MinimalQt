@@ -264,10 +264,15 @@ add_library(MinimalQtImpl STATIC
     ../Painter.cpp
     ../PainterInternal.h
 
-#    ../generated/PaintResources.h
-#    ../generated/PaintResources_wrappers.cpp
-#    ../PaintResourcesInternal.h                      # needed for internal struct definitions
-#    ../PaintResources.cpp
+    ../generated/PainterPath.h
+    ../generated/PainterPath_wrappers.cpp
+    ../PainterPath.cpp
+    ../PainterPathInternal.h
+
+    ../generated/Pen.h
+    ../generated/Pen_wrappers.cpp
+    ../Pen.cpp
+    ../PenInternal.h
 
     ../generated/PersistentModelIndex.h
     ../generated/PersistentModelIndex_wrappers.cpp

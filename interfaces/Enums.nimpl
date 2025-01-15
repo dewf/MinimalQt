@@ -533,6 +533,19 @@ enum BrushStyle { // brush style
     TexturePattern = 24
 }
 
+enum PenStyle { // pen style
+    NoPen,
+    SolidLine,
+    DashLine,
+    DotLine,
+    DashDotLine,
+    DashDotDotLine,
+    CustomDashLine
+// #ifndef Q_MOC_RUN
+    , MPenStyle = 0x0f
+// #endif
+}
+
 enum GlobalColor {
     color0,
     color1,
@@ -779,6 +792,26 @@ enum WidgetAttribute {
     WA_AttributeCount
 }
 
+enum BGMode {
+    TransparentMode,
+    OpaqueMode
+}
+
+enum FillRule {
+    OddEvenFill,
+    WindingFill
+}
+
+enum SizeMode {
+    AbsoluteSize,
+    RelativeSize
+}
+
+enum ClipOperation {
+    NoClip,
+    ReplaceClip,
+    IntersectClip
+}
 
 enum Key {
     // Unicode Basic Latin block (0x00-0x7f)

@@ -1,12 +1,18 @@
 module Painter;
 
 import Common;
-//import PaintResources;
 import Enums;
 import Color;
 import Pixmap;
 import Font;
+import Pen;
 import Brush;
+import TextOption;
+import Region;
+import Transform;
+import Image;
+import PaintDevice;
+import PainterPath;
 
 enum RenderHint {
     Antialiasing = 0x01,
@@ -17,7 +23,7 @@ enum RenderHint {
     NonCosmeticBrushPatterns = 0x80
 }
 
-flags RenderHintSet {
+flags RenderHints {
     Antialiasing = 0x01,
     TextAntialiasing = 0x02,
     SmoothPixmapTransform = 0x04,
@@ -26,44 +32,289 @@ flags RenderHintSet {
     NonCosmeticBrushPatterns = 0x80
 }
 
+enum CompositionMode {
+    CompositionMode_SourceOver,
+    CompositionMode_DestinationOver,
+    CompositionMode_Clear,
+    CompositionMode_Source,
+    CompositionMode_Destination,
+    CompositionMode_SourceIn,
+    CompositionMode_DestinationIn,
+    CompositionMode_SourceOut,
+    CompositionMode_DestinationOut,
+    CompositionMode_SourceAtop,
+    CompositionMode_DestinationAtop,
+    CompositionMode_Xor,
+
+    //svg 1.2 blend modes
+    CompositionMode_Plus,
+    CompositionMode_Multiply,
+    CompositionMode_Screen,
+    CompositionMode_Overlay,
+    CompositionMode_Darken,
+    CompositionMode_Lighten,
+    CompositionMode_ColorDodge,
+    CompositionMode_ColorBurn,
+    CompositionMode_HardLight,
+    CompositionMode_SoftLight,
+    CompositionMode_Difference,
+    CompositionMode_Exclusion,
+
+    // ROPs
+    RasterOp_SourceOrDestination,
+    RasterOp_SourceAndDestination,
+    RasterOp_SourceXorDestination,
+    RasterOp_NotSourceAndNotDestination,
+    RasterOp_NotSourceOrNotDestination,
+    RasterOp_NotSourceXorDestination,
+    RasterOp_NotSource,
+    RasterOp_NotSourceAndDestination,
+    RasterOp_SourceAndNotDestination,
+    RasterOp_NotSourceOrDestination,
+    RasterOp_SourceOrNotDestination,
+    RasterOp_ClearDestination,
+    RasterOp_SetDestination,
+    RasterOp_NotDestination
+}
+
+group PixmapFragment {
+    @nodispose
+    opaque Handle;
+    opaque Owned extends Handle;
+
+    enum Hint {
+        OpaqueHint = 0x01
+    }
+
+    flags Hints {
+        OpaqueHint = 0x01
+    }
+
+    Owned create(PointF pos, RectF sourceRect, double scaleX = 1, double scaleY = 1, double rotation = 0, double opacity = 1);
+}
+
+
 @nodispose
 opaque Handle {
-    // void setRenderHint(RenderHint hint, bool on);
-    // void setRenderHints(RenderHintSet hints, bool on);
+    Brush.Owned background();
+    BGMode backgroundMode();
+    bool begin(PaintDevice.Handle device);
+    void beginNativePainting();
+    RectF boundingRect(RectF rectangle, int flags_, string text);
+    Rect boundingRect(Rect rectangle, int flags_, string text);
+    RectF boundingRect(RectF rectangle, string text, Option<TextOption.Handle> option);
+    Rect boundingRect(int x, int y, int w, int h, int flags_, string text);
+    Brush.Owned brush();
+    Point brushOrigin();
+    RectF clipBoundingRect();
+    PainterPath.Owned clipPath();
+    Region.Owned clipRegion();
+    Transform.Owned combinedTransform();
+    CompositionMode getCompositionMode();
+    PaintDevice.Handle device();
+    Transform.Owned deviceTransform();
+    void drawArc(RectF rectangle, int startAngle, int spanAngle);
+    void drawArc(Rect rectangle, int startAngle, int spanAngle);
+    void drawArc(int x, int y, int width, int height, int startAngle, int spanAngle);
+    void drawChord(RectF rectangle, int startAngle, int spanAngle);
+    void drawChord(Rect rectangle, int startAngle, int spanAngle);
+    void drawChord(int x, int y, int width, int height, int startAngle, int spanAngle);
+    void drawConvexPolygon(Array<PointF> points);
 
-    // void setPen(Pen pen);
-    // void setBrush(Brush.Handle brush);
-    // void setFont(Font.Handle font);
-    // void drawText(Rect rect, Alignment align, string text);
+    // void drawConvexPolygon(const QPolygon &polygon)
+    // void drawConvexPolygon(const QPolygonF &polygon)
 
-    // void fillPath(PainterPath path, Brush.Handle brush);
-    // void strokePath(PainterPath path, Pen pen);
+    void drawConvexPolygon(Array<Point> points);
+    void drawEllipse(RectF rectangle);
+    void drawEllipse(Rect rectangle);
+    void drawEllipse(Point center, int rx, int ry);
+    void drawEllipse(PointF center, double rx, double ry);
+    void drawEllipse(int x, int y, int width, int height);
 
-    // void fillRect(Rect rect, Brush.Handle brush);
-    // void fillRect(Rect rect, Color.Handle color);
+    // void drawGlyphRun(const QPointF &position, const QGlyphRun &glyphs)
 
-    // void drawRect(Rect rect);
-    // void drawRect(RectF rect);
-    // void drawRect(int x, int y, int width, int height);
+    void drawImage(RectF target, Image.Handle image, RectF source, ImageConversionFlags flags_ = ImageConversionFlags.AutoColor);
+    void drawImage(Point point, Image.Handle image);
+    void drawImage(PointF point, Image.Handle image);
+    void drawImage(Rect rectangle, Image.Handle image);
+    void drawImage(RectF rectangle, Image.Handle image);
+    void drawImage(Point point, Image.Handle image, Rect source, ImageConversionFlags flags_ = ImageConversionFlags.AutoColor);
+    void drawImage(PointF point, Image.Handle image, RectF source, ImageConversionFlags flags_ = ImageConversionFlags.AutoColor);
+    void drawImage(Rect target, Image.Handle image, Rect source, ImageConversionFlags flags_ = ImageConversionFlags.AutoColor);
+    void drawImage(int x, int y, Image.Handle image, int sx = 0, int sy = 0, int sw = -1, int sh = -1, ImageConversionFlags flags_ = ImageConversionFlags.AutoColor);
 
-    // void drawEllipse(RectF rectangle);
-    // void drawEllipse(Rect rectangle);
-    // void drawEllipse(int x, int y, int width, int height);
-    // void drawEllipse(PointF center, double rx, double ry);
-    // void drawEllipse(Point center, int rx, int ry);
+    // void drawLine(const QLineF &line)
+    // void drawLine(const QLine &line)
 
-    // void drawPolyline(Array<PointF> points);
-    // void drawPolyline(Array<Point> points);
+    void drawLine(Point p1, Point p2);
+    void drawLine(PointF p1, PointF p2);
+    void drawLine(int x1, int y1, int x2, int y2);
 
-    // void drawPixmap(RectF target, Pixmap.Handle pixmap, RectF source);
-    // void drawPixmap(Point point, Pixmap.Handle pixmap);
-    // void drawPixmap(PointF point, Pixmap.Handle pixmap);
-    // void drawPixmap(Rect rect, Pixmap.Handle pixmap);
-    // void drawPixmap(Point point, Pixmap.Handle pixmap, Rect source);
-    // void drawPixmap(PointF point, Pixmap.Handle pixmap, RectF source);
-    // void drawPixmap(Rect target, Pixmap.Handle pixmap, Rect source);
-    // void drawPixmap(int x, int y, Pixmap.Handle pixmap);
-    // void drawPixmap(int x, int y, int width, int height, Pixmap.Handle pixmap);
-    // void drawPixmap(int x, int y, Pixmap.Handle pixmap, int sx, int sy, int sw, int sh);
-    // void drawPixmap(int x, int y, int w, int h, Pixmap.Handle pixmap, int sx, int sy, int sw, int sh);
+    // void drawLines(const QLineF *lines, int lineCount)
+    // void drawLines(const QList<QLine> &lines)
+    // void drawLines(const QList<QLineF> &lines)
+
+    void drawLines(Array<Point> pointPairs);
+    void drawLines(Array<PointF> pointPairs);
+
+    // void drawLines(const QLine *lines, int lineCount)
+
+    void drawPath(PainterPath.Handle path);
+
+    // void drawPicture(const QPointF &point, const QPicture &picture)
+    // void drawPicture(const QPoint &point, const QPicture &picture)
+    // void drawPicture(int x, int y, const QPicture &picture)
+
+    void drawPie(RectF rectangle, int startAngle, int spanAngle);
+    void drawPie(Rect rectangle, int startAngle, int spanAngle);
+    void drawPie(int x, int y, int width, int height, int startAngle, int spanAngle);
+    void drawPixmap(RectF target, Pixmap.Handle pixmap, RectF source);
+    void drawPixmap(Point point, Pixmap.Handle pixmap);
+    void drawPixmap(PointF point, Pixmap.Handle pixmap);
+    void drawPixmap(Rect rectangle, Pixmap.Handle pixmap);
+    void drawPixmap(Point point, Pixmap.Handle pixmap, Rect source);
+    void drawPixmap(PointF point, Pixmap.Handle pixmap, RectF source);
+    void drawPixmap(Rect target, Pixmap.Handle pixmap, Rect source);
+    void drawPixmap(int x, int y, Pixmap.Handle pixmap);
+    void drawPixmap(int x, int y, int width, int height, Pixmap.Handle pixmap);
+    void drawPixmap(int x, int y, Pixmap.Handle pixmap, int sx, int sy, int sw, int sh);
+    void drawPixmap(int x, int y, int w, int h, Pixmap.Handle pixmap, int sx, int sy, int sw, int sh);
+    void drawPixmapFragments(Array<PixmapFragment.Handle> fragments, Pixmap.Handle pixmap, PixmapFragment.Hints hints = 0);
+    void drawPoint(PointF position);
+    void drawPoint(Point position);
+    void drawPoint(int x, int y);
+    void drawPoints(Array<PointF> points);
+
+    // void drawPoints(const QPolygon &points)
+    // void drawPoints(const QPolygonF &points)
+
+    void drawPoints(Array<Point> points);
+    void drawPolygon(Array<PointF> points, FillRule fillRule = FillRule.OddEvenFill);
+
+    // void drawPolygon(const QPolygon &points, Qt::FillRule fillRule = Qt::OddEvenFill)
+    // void drawPolygon(const QPolygonF &points, Qt::FillRule fillRule = Qt::OddEvenFill)
+
+    void drawPolygon(Array<Point> points, FillRule fillRule = FillRule.OddEvenFill);
+    void drawPolyline(Array<PointF> points);
+
+    // void drawPolyline(const QPolygon &points)
+    // void drawPolyline(const QPolygonF &points)
+
+    void drawPolyline(Array<Point> points);
+    void drawRect(RectF rectangle);
+    void drawRect(Rect rectangle);
+    void drawRect(int x, int y, int width, int height);
+    void drawRects(Array<RectF> rectangles);
+    void drawRects(Array<Rect> rectangles);
+    void drawRoundedRect(RectF rect, double xRadius, double yRadius, SizeMode mode = SizeMode.AbsoluteSize);
+    void drawRoundedRect(Rect rect, double xRadius, double yRadius, SizeMode mode = SizeMode.AbsoluteSize);
+    void drawRoundedRect(int x, int y, int w, int h, double xRadius, double yRadius, SizeMode mode = SizeMode.AbsoluteSize);
+
+    // void drawStaticText(const QPointF &topLeftPosition, const QStaticText &staticText)
+    // void drawStaticText(const QPoint &topLeftPosition, const QStaticText &staticText)
+    // void drawStaticText(int left, int top, const QStaticText &staticText)
+
+    void drawText(PointF position, string text);
+    void drawText(Point position, string text);
+    void drawText(RectF rectangle, string text, Option<TextOption.Handle> option);
+    void drawText(int x, int y, string text);
+    void drawText(Rect rectangle, int flags_, string text, Option<Rect> boundingRect);
+    void drawText(RectF rectangle, int flags_, string text, Option<RectF> boundingRect);
+    void drawText(int x, int y, int width, int height, int flags_, string text, Option<Rect> boundingRect);
+    void drawTiledPixmap(RectF rectangle, Pixmap.Handle pixmap, Option<PointF> position);
+    void drawTiledPixmap(Rect rectangle, Pixmap.Handle pixmap, Option<Point> position);
+    void drawTiledPixmap(int x, int y, int width, int height, Pixmap.Handle pixmap, int sx = 0, int sy = 0);
+    bool end();
+    void endNativePainting();
+    void eraseRect(RectF rectangle);
+    void eraseRect(Rect rectangle);
+    void eraseRect(int x, int y, int width, int height);
+    void fillPath(PainterPath.Handle path, Brush.Handle brush);
+    void fillRect(RectF rectangle, Brush.Handle brush);
+
+    // void fillRect(const QRect &rectangle, QGradient::Preset preset)
+
+    void fillRect(Rect rectangle, BrushStyle style);
+    void fillRect(Rect rectangle, GlobalColor color);
+    void fillRect(Rect rectangle, Brush.Handle brush);
+    void fillRect(Rect rectangle, Color.Handle color);
+
+    // void fillRect(const QRectF &rectangle, QGradient::Preset preset)
+
+    void fillRect(RectF rectangle, BrushStyle style);
+    void fillRect(RectF rectangle, GlobalColor color);
+    void fillRect(RectF rectangle, Color.Handle color);
+
+    // void fillRect(int x, int y, int width, int height, QGradient::Preset preset)
+    
+    void fillRect(int x, int y, int width, int height, BrushStyle style);
+    void fillRect(int x, int y, int width, int height, GlobalColor color);
+    void fillRect(int x, int y, int width, int height, Brush.Handle brush);
+    void fillRect(int x, int y, int width, int height, Color.Handle color);
+    Font.Owned font();
+
+    // QFontInfo fontInfo() const
+    // QFontMetrics fontMetrics() const
+
+    bool hasClipping();
+    bool isActive();
+    LayoutDirection layoutDirection();
+    double opacity();
+
+    // QPaintEngine * paintEngine() const
+
+    Pen.Owned pen();
+    RenderHints renderHints();
+    void resetTransform();
+    void restore();
+    void rotate(double angle);
+    void save();
+    void scale(double sx, double sy);
+    void setBackground(Brush.Handle brush);
+    void setBackgroundMode(BGMode mode);
+    void setBrush(Brush.Handle brush);
+    void setBrush(BrushStyle style);
+    void setBrushOrigin(PointF position);
+    void setBrushOrigin(Point position);
+    void setBrushOrigin(int x, int y);
+    void setClipPath(PainterPath.Handle path, ClipOperation operation = ClipOperation.ReplaceClip);
+    void setClipRect(RectF rectangle, ClipOperation operation = ClipOperation.ReplaceClip);
+    void setClipRect(int x, int y, int width, int height, ClipOperation operation = ClipOperation.ReplaceClip);
+    void setClipRect(Rect rectangle, ClipOperation operation = ClipOperation.ReplaceClip);
+    void setClipRegion(Region.Handle region, ClipOperation operation = ClipOperation.ReplaceClip);
+    void setClipping(bool enable);
+    void setCompositionMode(CompositionMode mode);
+    void setFont(Font.Handle font);
+    void setLayoutDiretion(LayoutDirection direction);
+    void setOpacity(double opacity);
+    void setPen(Pen.Handle pen);
+    void setPen(PenStyle style);
+    void setPen(Color.Handle color);
+    void setRenderHint(RenderHint hint, bool on = true);
+    void setRenderHints(RenderHints hints, bool on = true);
+    void setTransform(Transform.Handle transform, bool combine = false);
+    void setViewTransformEnabled(bool enable);
+    void setViewport(Rect rectangle);
+    void setViewport(int x, int y, int width, int height);
+    void setWindow(Rect rectangle);
+    void setWindow(int x, int y, int width, int height);
+    void setWorldMatrixEnabled(bool enable);
+    void setWorldTransform(Transform.Handle matrix, bool combine = false);
+    void shear(double sh, double sv);
+    void strokePath(PainterPath.Handle path, Pen.Handle pen);
+    bool testRenderHint(RenderHint hint);
+    Transform.Owned transform();
+    void translate(PointF offset);
+    void translate(Point offset);
+    void translate(double dx, double dy);
+    bool viewTransformEnabled();
+    Rect viewport();
+    Rect window();
+    bool worldMatrixEnabled();
+    Transform.Owned worldTransform();
 }
+
+opaque Owned extends Handle;
+
+Owned create();
+Owned create(PaintDevice.Handle device);

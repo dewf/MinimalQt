@@ -1,0 +1,14 @@
+module PainterPath;
+
+import Common;
+
+@nodispose
+opaque Handle {
+    void addEllipse(RectF boundingRectangle);
+}
+
+opaque Owned extends Handle;
+
+Owned create();
+Owned create(PointF startPoint);
+Owned create(Handle path);

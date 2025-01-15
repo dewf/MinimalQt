@@ -1,0 +1,6 @@
+module Pen;
+
+@nodispose
+opaque Handle;
+
+opaque Owned extends Handle;

@@ -13,6 +13,15 @@ using namespace Enums;
 #define STRUCT_CAST(b,a) *((b*)&a)
 
 template <typename T, typename U>
+std::vector<U> vectorMap(const std::vector<T>& input, const std::function<U(T)>& mapFunc) {
+    std::vector<U> result;
+    for (auto &elem : input) {
+        result.push_back(mapFunc(elem));
+    }
+    return result;
+}
+
+template <typename T, typename U>
 std::optional<U> optionalMap(const std::optional<T>& input, const std::function<U(T)>& mapFunc) {
     if (input.has_value()) {
         return mapFunc(input.value());

@@ -1,5 +1,7 @@
 module TextOption;
 
+import Enums;
+
 enum WrapMode {
     NoWrap,
     WordWrap,
@@ -7,3 +9,10 @@ enum WrapMode {
     WrapAnywhere,
     WrapAtWordBoundaryOrAnywhere
 }
+
+@nodispose
+opaque Handle {
+    Alignment alignment();
+}
+
+opaque Owned extends Handle;
