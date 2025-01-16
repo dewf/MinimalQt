@@ -2,7 +2,14 @@ module AbstractItemDelegate;
 
 import Object;
 import Widget;
+import Common;
 import ModelIndex;
+import StyleOptionViewItem;
+import Event;
+import AbstractItemModel;
+import Painter;
+
+fwdopaque AbstractItemViewHandle = AbstractItemView.Handle;
 
 enum EndEditHint {
     NoHint,
@@ -20,6 +27,16 @@ interface SignalHandler extends Object.SignalHandler {
 
 @nodispose
 opaque Handle extends Object.Handle {
+    Widget.Handle createEditor(Widget.Handle parent, StyleOptionViewItem.Handle option, ModelIndex.Handle index);
+    void destroyEditor(Widget.Handle editor, ModelIndex.Handle index);
+    bool editorEvent(Event.Handle event_, AbstractItemModel.Handle model, StyleOptionViewItem.Handle option, ModelIndex.Handle index);
+    bool helpEvent(HelpEvent.Handle event_, AbstractItemViewHandle view, StyleOptionViewItem.Handle option, ModelIndex.Handle index);
+    void paint(Painter.Handle painter, StyleOptionViewItem.Handle option, ModelIndex.Handle index);
+    void setEditorData(Widget.Handle editor, ModelIndex.Handle index);
+    void setModelData(Widget.Handle editor, AbstractItemModel.Handle model, ModelIndex.Handle index);
+    Size sizeHint(StyleOptionViewItem.Handle option, ModelIndex.Handle index);
+    void updateEditorGeometry(Widget.Handle editor, StyleOptionViewItem.Handle option, ModelIndex.Handle index);
+
     // signals ============================
     SignalConnection connect_CloseEditor(SignalHandler handler);
     SignalConnection connect_CommitData(SignalHandler handler);

@@ -8,19 +8,15 @@ import AbstractItemModel;
 import ModelIndex;
 import StyleOptionViewItem;
 
-interface SignalHandler extends AbstractItemDelegate.SignalHandler {
-    // (none)
-}
+interface SignalHandler extends AbstractItemDelegate.SignalHandler;
+// none extra
 
-// hmm, a little confused here,
-// normally these would be @nodispose since it requires a subclass to instantiate?
-// but we don't have another handle (eg 'Subclassed' or 'Custom') that we're using instead
-// so this needs to be disposable
 opaque Handle extends AbstractItemDelegate.Handle {
-    // TODO: methods
-
+    // methods TODO (itemEditorFactory stuff)
     // no extra signals
 }
+
+Handle create(Object.Handle parent = null);
 
 // subclass stuff ===============
 
@@ -29,15 +25,21 @@ namedbits MethodMask {
     CreateEditor,
     SetEditorData,
     SetModelData,
-    DestroyEditor
+    DestroyEditor,
+    UpdateEditorGeometry
     // others: TODO
 }
 
-interface MethodDelegate {
+interface DelegatedMethods {
     Widget.Handle createEditor(Widget.Handle parent, StyleOptionViewItem.Handle option, ModelIndex.Handle index);
     void setEditorData(Widget.Handle editor, ModelIndex.Handle index);
     void setModelData(Widget.Handle editor, AbstractItemModel.Handle model, ModelIndex.Handle index);
     void destroyEditor(Widget.Handle editor, ModelIndex.Handle index);
+    void updateEditorGeometry(Widget.Handle editor, StyleOptionViewItem.Handle option, ModelIndex.Handle index);
 }
 
-Handle createdSubclassed(MethodDelegate methodDelegate, MethodMask methodMask);
+opaque Delegated extends Handle {
+    void setDelegate(DelegatedMethods methods, MethodMask mask);
+}
+
+Delegated createDelegated();

@@ -22,6 +22,10 @@ namespace Object
         THIS->dumpObjectTree();
     }
 
+    void Handle_deleteLater(HandleRef _this) {
+        THIS->deleteLater();
+    }
+
     SignalConnectionRef Handle_connect_DestroyedByQt(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QObject::destroyed, [handler](QObject *obj) {
             handler->destroyedByQt();

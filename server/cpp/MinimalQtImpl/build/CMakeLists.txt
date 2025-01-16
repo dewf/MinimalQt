@@ -135,6 +135,11 @@ add_library(MinimalQtImpl STATIC
     ../generated/Enums_wrappers.cpp
     ../Enums.cpp
 
+    ../generated/Event.h
+    ../generated/Event_wrappers.cpp
+    ../Event.cpp
+    ../EventInternal.h
+
     ../generated/FileDialog.h
     ../generated/FileDialog_wrappers.cpp
     ../FileDialog.cpp
@@ -360,6 +365,7 @@ add_library(MinimalQtImpl STATIC
     ../generated/StyleOptionViewItem.h
     ../generated/StyleOptionViewItem_wrappers.cpp
     ../StyleOptionViewItem.cpp
+    ../StyleOptionViewItemInternal.h
 
     ../generated/TabBar.h
     ../generated/TabBar_wrappers.cpp

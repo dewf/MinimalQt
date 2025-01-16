@@ -1,0 +1,11 @@
+module Event;
+
+@nodispose
+opaque Handle;
+opaque Owned extends Handle;
+
+group HelpEvent {
+    @nodispose
+    opaque Handle;
+    opaque Owned extends Handle;
+}

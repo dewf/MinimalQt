@@ -21,6 +21,8 @@ opaque Handle {
     void setParent(Handle parent);
     void dumpObjectTree();
 
+    void deleteLater();
+
     SignalConnection connect_DestroyedByQt(SignalHandler handler);
     SignalConnection connect_Destroyed(SignalHandler handler);
     SignalConnection connect_ObjectNameChanged(SignalHandler handler);
