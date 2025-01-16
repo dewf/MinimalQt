@@ -218,8 +218,8 @@ namespace ComboBox
         delete THIS;
     }
 
-    HandleRef create() {
-        return reinterpret_cast<HandleRef>(new QComboBox());
+    HandleRef create(Widget::HandleRef parent /* nullptr */) {
+        return reinterpret_cast<HandleRef>(new QComboBox(AS_QWIDGET_PTR(parent)));
     }
 
     HandleRef downcastFrom(Widget::HandleRef widget) {

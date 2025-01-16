@@ -17,7 +17,7 @@ namespace ModelIndex
         return new Variant::__Owned(VALUE.data());
     }
 
-    Variant::OwnedRef Handle_data(HandleRef _this, ItemDataRole role) {
+    Variant::OwnedRef Handle_data(HandleRef _this, ItemDataRole role /* ItemDataRole::DisplayRole */) {
         auto qRole = static_cast<Qt::ItemDataRole>(role);
         return new Variant::__Owned(VALUE.data(qRole));
     }

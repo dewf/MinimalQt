@@ -8,8 +8,7 @@ fwdopaque AbstractItemModelHandle = AbstractItemModel.Handle;
 @nodispose
 opaque Handle {
     int column();
-    Variant.Owned data();
-    Variant.Owned data(ItemDataRole role);
+    Variant.Owned data(ItemDataRole role = ItemDataRole.DisplayRole); // should be int, but our const-expression stuff doesn't support casts right now
     ItemFlags getFlags();
     size_t internalId(); // is there any real difference between this and internalPointer?
     bool isValid();

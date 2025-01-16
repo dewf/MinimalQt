@@ -104,5 +104,6 @@ opaque Handle extends Widget.Handle {
     SignalConnection connect_TextHighlighted(SignalHandler handler);
 }
 
-Handle create();
+Handle create(Widget.Handle parent = null);
+
 Handle downcastFrom(Widget.Handle widget);
