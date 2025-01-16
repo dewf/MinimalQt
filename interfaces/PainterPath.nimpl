@@ -1,10 +1,81 @@
 module PainterPath;
 
 import Common;
+import Enums;
+import Region;
+import Font;
 
 @nodispose
 opaque Handle {
+
     void addEllipse(RectF boundingRectangle);
+    void addEllipse(PointF center, double rx, double ry);
+    void addEllipse(double x, double y, double width, double height);
+    void addPath(Handle path);
+
+    // void addPolygon(const QPolygonF &polygon)
+
+    void addRect(RectF rectangle);
+    void addRect(double x, double y, double width, double height);
+    void addRegion(Region.Handle region);
+    void addRoundedRect(RectF rect, double xRadius, double yRadius, SizeMode mode = SizeMode.AbsoluteSize);
+    void addRoundedRect(double x, double y, double w, double h, double xRadius, double yRadius, SizeMode mode = SizeMode.AbsoluteSize);
+    void addText(PointF point, Font.Handle font, string text);
+    void addText(double x, double y, Font.Handle font, string text);
+    double angleAtPercent(double t);
+    void arcMoveTo(RectF rectangle, double angle);
+    void arcMoveTo(double x, double y, double width, double height, double angle);
+    void arcTo(RectF rectangle, double startAngle, double sweepLength);
+    void arcTo(double x, double y, double width, double height, double startAngle, double sweepLength);
+    RectF boundingRect();
+    int capacity();
+    void clear();
+    void closeSubpath();
+    void connectPath(Handle path);
+    bool contains(Handle p);
+    bool contains(PointF point);
+    bool contains(RectF rectangle);
+    RectF controlPointRect();
+    void cubicTo(PointF c1, PointF c2, PointF endPoint);
+    void cubicTo(double c1X, double c1Y, double c2X, double c2Y, double endPointX, double endPointY);
+    PointF currentPosition();
+
+    // QPainterPath::Element elementAt(int index) const
+
+    int elementCount();
+    FillRule fillRule();
+    Owned intersected(Handle p);
+    bool intersects(Handle p);
+    bool intersects(RectF rectangle);
+    bool isEmpty();
+    double length();
+    void lineTo(PointF endPoint);
+    void lineTo(double x, double y);
+    void moveTo(PointF point);
+    void moveTo(double x, double y);
+    double percentAtLength(double len);
+    PointF pointAtPercent(double t);
+    void quadTo(PointF c, PointF endPoint);
+    void quadTo(double cx, double cy, double endPointX, double endPointY);
+    void reserve(int size);
+    void setElementPositionAt(int index, double x, double y);
+    void setFillRule(FillRule fillRule);
+    Owned simplified();
+    double slopeAtPercent(double t);
+    Owned subtracted(Handle p);
+
+    // QPolygonF toFillPolygon(const QTransform &matrix = QTransform()) const
+    // QList<QPolygonF> toFillPolygons(const QTransform &matrix = QTransform()) const
+
+    Owned toReversed();
+
+    // QList<QPolygonF> toSubpathPolygons(const QTransform &matrix = QTransform()) const
+
+    void translate(double dx, double dy);
+    void translate(PointF offset);
+    Owned translated(double dx, double dy);
+    Owned translated(PointF offset);
+    Owned united(Handle p);
 }
 
 opaque Owned extends Handle;
