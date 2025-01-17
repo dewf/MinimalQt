@@ -266,14 +266,14 @@ namespace MainWindow
 #define DELEGATED_THIS (reinterpret_cast<Delegated*>(_this))
 
     class Delegated : public QMainWindow {
-    private:
         std::shared_ptr<DelegatedMethods> methods;
         DelegatedMethodMask mask = 0;
     public:
-        void setDelegate(const std::shared_ptr<DelegatedMethods>& methods, DelegatedMethodMask mask) {
-            this->methods = methods;
-            this->mask = mask;
-        }
+        Delegated(QWidget *parent, const Qt::WindowFlags &flags, const std::shared_ptr<DelegatedMethods> &methods,
+            DelegatedMethodMask mask)
+            : QMainWindow(parent, flags),
+              methods(methods),
+              mask(mask) {}
     protected:
         void closeEvent(QCloseEvent *event) override {
             bool canClose = true;
@@ -292,15 +292,11 @@ namespace MainWindow
         }
     };
 
-    void Delegated_setDelegate(DelegatedRef _this, const std::shared_ptr<DelegatedMethods>& methods, DelegatedMethodMask mask) {
-        DELEGATED_THIS->setDelegate(methods, mask);
-    }
-
     void Delegated_dispose(DelegatedRef _this) {
         delete DELEGATED_THIS;
     }
 
-    DelegatedRef createDelegated() {
-        return reinterpret_cast<DelegatedRef>(new Delegated());
+    DelegatedRef createDelegated(const std::shared_ptr<DelegatedMethods>& methods, DelegatedMethodMask mask, Widget::HandleRef parent /* nullptr */, WindowFlags flags_ /* 0 */) {
+        return reinterpret_cast<DelegatedRef>(new Delegated(AS_QWIDGET_PTR(parent), static_cast<Qt::WindowFlags>(flags_.value), methods, mask));
     }
 }

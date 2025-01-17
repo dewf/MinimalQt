@@ -112,8 +112,7 @@ interface DelegatedMethods {
     void closed();
 }
 
-opaque Delegated extends Handle {
-    void setDelegate(DelegatedMethods methods, DelegatedMethodMask mask);
-}
+opaque Delegated extends Handle;
+// no protected/interior methods yet
 
-Delegated createDelegated();
+Delegated createDelegated(DelegatedMethods methods, DelegatedMethodMask mask, Widget.Handle parent = null, WindowFlags flags_ = 0);
