@@ -973,8 +973,8 @@ namespace Widget
         delete THIS;
     }
 
-    HandleRef create(HandleRef parent /* nullptr */, WindowFlags f /* 0 */) {
-        return reinterpret_cast<HandleRef>(new QWidget(AS_QWIDGET_PTR(parent), static_cast<Qt::WindowFlags>(f.value)));
+    HandleRef create(HandleRef parent /* nullptr */, WindowFlags flags_ /* 0 */) {
+        return reinterpret_cast<HandleRef>(new QWidget(AS_QWIDGET_PTR(parent), static_cast<Qt::WindowFlags>(flags_.value)));
     }
 
     // =========================================================================
@@ -1047,17 +1047,16 @@ namespace Widget
 
     // subclass/delegated stuff ==========================================================
 
-#define DELEGATED_THIS (reinterpret_cast<DelegatedWidget*>(_this))
+#define DELEGATED_THIS (reinterpret_cast<Delegated*>(_this))
 
-    class DelegatedWidget : public QWidget {
-    private:
+    class Delegated : public QWidget {
         std::shared_ptr<DelegateMethods> methods;
         MethodMask methodMask = 0;
     public:
-        void setDelegate(const std::shared_ptr<DelegateMethods>& methods, const MethodMask methodMask) {
-            this->methods = methods;
-            this->methodMask = methodMask;
-        }
+        Delegated(QWidget *parent, const Qt::WindowFlags &f, const std::shared_ptr<DelegateMethods> &methods, const MethodMask method_mask)
+            : QWidget(parent, f),
+              methods(methods),
+              methodMask(method_mask) {}
     protected:
         void showEvent(QShowEvent *event) override {
             if (methodMask & ShowEvent) {
@@ -1205,15 +1204,11 @@ namespace Widget
         }
     };
 
-    void Delegated_setDelegate(DelegatedRef _this, const std::shared_ptr<DelegateMethods>& methods, MethodMask methodMask) {
-        DELEGATED_THIS->setDelegate(methods, methodMask);
-    }
-
     void Delegated_dispose(DelegatedRef _this) {
         delete DELEGATED_THIS;
     }
 
-    DelegatedRef createDelegated() {
-        return reinterpret_cast<DelegatedRef>(new DelegatedWidget());
+    DelegatedRef createDelegated(const std::shared_ptr<DelegateMethods>& methods, MethodMask methodMask, HandleRef parent /* nullptr */, WindowFlags flags_ /* 0 */) {
+        return reinterpret_cast<DelegatedRef>(new Delegated(AS_QWIDGET_PTR(parent), static_cast<Qt::WindowFlags>(flags_.value), methods, methodMask));
     }
 }

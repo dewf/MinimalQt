@@ -342,7 +342,7 @@ opaque Handle extends Object.Handle {
     SignalConnection connect_WindowTitleChanged(SignalHandler handler);
 }
 
-Handle create(Handle parent = null, WindowFlags f = 0);
+Handle create(Handle parent = null, WindowFlags flags_ = 0);
 
 // SUBCLASSING ===========================================================
 
@@ -403,8 +403,7 @@ interface DelegateMethods {
     void dropEvent(Point pos, Modifiers modifiers, MimeData.Handle mimeData, DropAction action);
 }
 
-opaque Delegated extends Handle {
-    void setDelegate(DelegateMethods methods, MethodMask methodMask);
-}
+opaque Delegated extends Handle;
+// no interior/protected methods yet
 
-Delegated createDelegated();
+Delegated createDelegated(DelegateMethods methods, MethodMask methodMask, Handle parent = null, WindowFlags flags_ = 0);
