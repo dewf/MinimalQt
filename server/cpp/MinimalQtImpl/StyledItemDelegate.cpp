@@ -21,15 +21,13 @@ namespace StyledItemDelegate
 #define DELEGATED_THIS (reinterpret_cast<Delegated*>(_this))
 
     class Delegated : public QStyledItemDelegate {
-    private:
         std::shared_ptr<DelegatedMethods> methods;
         MethodMask mask;
     public:
-        Delegated() = default;
-        void setDelegate(const std::shared_ptr<DelegatedMethods> &methods, MethodMask mask) {
-            this->methods = methods;
-            this->mask = mask;
-        }
+        Delegated(QObject *parent, const std::shared_ptr<DelegatedMethods> &methods, MethodMask mask)
+            : QStyledItemDelegate(parent),
+              methods(methods),
+              mask(mask) {}
     protected:
         QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const override {
             if (mask & CreateEditor) {
@@ -79,15 +77,11 @@ namespace StyledItemDelegate
         }
     };
 
-    void Delegated_setDelegate(DelegatedRef _this, const std::shared_ptr<DelegatedMethods>& methods, MethodMask mask) {
-        DELEGATED_THIS->setDelegate(methods, mask);
-    }
-
     void Delegated_dispose(DelegatedRef _this) {
         delete DELEGATED_THIS;
     }
 
-    DelegatedRef createDelegated() {
-        return reinterpret_cast<DelegatedRef>(new Delegated());
+    DelegatedRef createDelegated(const std::shared_ptr<DelegatedMethods>& methods, MethodMask mask, Object::HandleRef parent /* nullptr */) {
+        return reinterpret_cast<DelegatedRef>(new Delegated(AS_QOBJECT_PTR(parent), methods, mask));
     }
 }

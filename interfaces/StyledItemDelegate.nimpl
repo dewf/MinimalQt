@@ -38,8 +38,7 @@ interface DelegatedMethods {
     void updateEditorGeometry(Widget.Handle editor, StyleOptionViewItem.Handle option, ModelIndex.Handle index);
 }
 
-opaque Delegated extends Handle {
-    void setDelegate(DelegatedMethods methods, MethodMask mask);
-}
+opaque Delegated extends Handle;
+// no 'interior' methods yet
 
-Delegated createDelegated();
+Delegated createDelegated(DelegatedMethods methods, MethodMask mask, Object.Handle parent = null);
