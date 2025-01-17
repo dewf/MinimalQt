@@ -323,6 +323,11 @@ add_library(MinimalQtImpl STATIC
     ../ScrollArea.cpp
     ../ScrollAreaInternal.h
 
+    ../generated/ScrollBar.h
+    ../generated/ScrollBar_wrappers.cpp
+    ../ScrollBar.cpp
+    ../ScrollBarInternal.h
+
     ../generated/SizePolicy.h
     ../generated/SizePolicy_wrappers.cpp
     ../SizePolicyInternal.h
