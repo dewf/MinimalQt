@@ -57,6 +57,11 @@ add_library(MinimalQtImpl STATIC
     ../AbstractSlider.cpp
     ../AbstractSliderInternal.h
 
+    ../generated/AbstractSpinBox.h
+    ../generated/AbstractSpinBox_wrappers.cpp
+    ../AbstractSpinBox.cpp
+    ../AbstractSpinBoxInternal.h
+
     ../generated/Action.h
     ../generated/Action_wrappers.cpp
     ../Action.cpp
@@ -343,6 +348,11 @@ add_library(MinimalQtImpl STATIC
     ../SortFilterProxyModel.cpp
     ../SortFilterProxyModelInternal.h
 
+    ../generated/SpinBox.h
+    ../generated/SpinBox_wrappers.cpp
+    ../SpinBox.cpp
+    ../SpinBoxInternal.h
+
     ../generated/StandardItem.h
     ../generated/StandardItem_wrappers.cpp
     ../StandardItem.cpp
@@ -437,10 +447,15 @@ add_library(MinimalQtImpl STATIC
     ../Url.cpp
     ../UrlInternal.h
 
+    ../generated/Validator.h
+    ../generated/Validator_wrappers.cpp
+    ../Validator.cpp
+    ../ValidatorInternal.h
+
     ../generated/Variant.h
     ../generated/Variant_wrappers.cpp
-    ../VariantInternal.h
     ../Variant.cpp
+    ../VariantInternal.h
 
     ../generated/Widget.h
     ../generated/Widget_wrappers.cpp

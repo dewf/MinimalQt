@@ -1,0 +1,21 @@
+module Validator;
+
+import Object;
+
+interface SignalHandler extends Object.SignalHandler {
+    void changed();
+}
+
+enum State { Invalid, Intermediate, Acceptable }
+
+@nodispose
+opaque Handle extends Object.Handle {
+
+    // virtual void fixup(QString &input) const
+    // QLocale locale() const
+    // void setLocale(const QLocale &locale)
+    // virtual QValidator::State validate(QString &input, int &pos) const = 0
+
+    // signals ======================
+    SignalConnection connect_Changed(SignalHandler handler);
+}
