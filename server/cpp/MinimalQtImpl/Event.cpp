@@ -22,8 +22,8 @@ namespace Event
         DRAGMOVE_THIS->acceptProposedAction();
     }
 
-    DropActionSet DragMoveEvent_Handle_possibleActions(DragMoveEvent_HandleRef _this) {
-        return static_cast<DropActionSet>(DRAGMOVE_THIS->possibleActions());
+    DropActions DragMoveEvent_Handle_possibleActions(DragMoveEvent_HandleRef _this) {
+        return DropActions(DRAGMOVE_THIS->possibleActions());
     }
 
     void DragMoveEvent_Handle_acceptDropAction(DragMoveEvent_HandleRef _this, DropAction action) {

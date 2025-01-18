@@ -18,7 +18,7 @@ opaque HelpEvent_Handle extends Handle;
 opaque DragMoveEvent_Handle extends Handle {
     DropAction proposedAction();
     void acceptProposedAction();
-    DropActionSet possibleActions();
+    DropActions possibleActions();
 
     // slight variation on the real methods:
     void acceptDropAction(DropAction action); // will internally call either .acceptProposedAction or .accept() after setting drop action

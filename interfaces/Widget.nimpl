@@ -347,16 +347,6 @@ Handle create(Handle parent = null, WindowFlags flags_ = 0);
 
 // SUBCLASSING ===========================================================
 
-@nodispose // owned by Qt once used
-opaque Drag {
-    void setMimeData(MimeData.Handle data);
-    DropAction exec(DropActionSet supportedActions, DropAction defaultAction);
-}
-Drag createDrag(Handle parent);  // the parent will be responsible for cleanup (and neither do we own the MimeData assigned)
-
-// sadly client will have to implement all of these, BUT empty methods / returning default values will be OK
-// because only those included in the "method mask" will actually be invoked
-
 namedbits MethodMask {
     ShowEvent,
     PaintEvent,

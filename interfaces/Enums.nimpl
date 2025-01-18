@@ -230,21 +230,21 @@ enum ShortcutContext {
 }
 
 enum DropAction {
-    Ignore = 0,
-    Copy = 0x1,
-    Move = 0x2,
-    Link = 0x4,
+    CopyAction = 0x1,
+    MoveAction = 0x2,
+    LinkAction = 0x4,
     ActionMask = 0xff,
-    TargetMoveAction = 0x8002 // windows only stuff
+    TargetMoveAction = 0x8002,
+    IgnoreAction = 0x0
 }
 
-flags DropActionSet {
-    Ignore = 0,
-    Copy = 0x1,
-    Move = 0x2,
-    Link = 0x4,
+flags DropActions {
+    CopyAction = 0x1,
+    MoveAction = 0x2,
+    LinkAction = 0x4,
     ActionMask = 0xff,
-    TargetMoveAction = 0x8002 // windows only stuff
+    TargetMoveAction = 0x8002,
+    IgnoreAction = 0x0
 }
 
 enum TextElideMode {

@@ -182,12 +182,12 @@ namespace AbstractItemModel
         return toSize(THIS->span(index->value));
     }
 
-    DropActionSet Handle_supportedDragActions(HandleRef _this) {
-        return DropActionSet(THIS->supportedDragActions());
+    DropActions Handle_supportedDragActions(HandleRef _this) {
+        return DropActions(THIS->supportedDragActions());
     }
 
-    DropActionSet Handle_supportedDropActions(HandleRef _this) {
-        return DropActionSet(THIS->supportedDropActions());
+    DropActions Handle_supportedDropActions(HandleRef _this) {
+        return DropActions(THIS->supportedDropActions());
     }
 
     void Handle_revert(HandleRef _this) {

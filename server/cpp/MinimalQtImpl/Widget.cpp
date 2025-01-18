@@ -977,24 +977,6 @@ namespace Widget
         return reinterpret_cast<HandleRef>(new QWidget(AS_QWIDGET_PTR(parent), static_cast<Qt::WindowFlags>(flags_.value)));
     }
 
-    // =========================================================================
-
-#define DRAGTHIS ((QDrag*)_this)
-
-    void Drag_setMimeData(DragRef _this, MimeData::HandleRef data) {
-        DRAGTHIS->setMimeData(AS_QMIMEDATA_PTR(data));
-    }
-
-    DropAction Drag_exec(DragRef _this, DropActionSet supportedActions, DropAction defaultAction) {
-        auto qDefault = static_cast<Qt::DropAction>(defaultAction);
-        auto qSupported = QFlags<Qt::DropAction>(supportedActions.value);
-        return static_cast<DropAction>(DRAGTHIS->exec(qSupported, qDefault));
-    }
-
-    DragRef createDrag(HandleRef parent) {
-        return reinterpret_cast<DragRef>(new QDrag(reinterpret_cast<QObject *>(parent)));
-    }
-
     // subclass/delegated stuff ==========================================================
 
 #define DELEGATED_THIS (reinterpret_cast<Delegated*>(_this))

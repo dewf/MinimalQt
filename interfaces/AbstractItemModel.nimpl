@@ -92,8 +92,8 @@ opaque Handle extends Object.Handle {
     ModelIndex.Owned sibling(int row, int column, ModelIndex.Handle index);
     void sort(int column, Option<SortOrder> order);
     Size span(ModelIndex.Handle index);
-    DropActionSet supportedDragActions();
-    DropActionSet supportedDropActions();
+    DropActions supportedDragActions();
+    DropActions supportedDropActions();
 
     void revert();
     void submit();

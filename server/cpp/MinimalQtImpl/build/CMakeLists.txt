@@ -136,6 +136,11 @@ add_library(MinimalQtImpl STATIC
     ../DockWidget.cpp
     ../DockWidgetInternal.h
 
+    ../generated/Drag.h
+    ../generated/Drag_wrappers.cpp
+    ../Drag.cpp
+    ../DragInternal.h
+
     ../generated/Enums.h
     ../generated/Enums_wrappers.cpp
     ../Enums.cpp
