@@ -353,6 +353,16 @@ add_library(MinimalQtImpl STATIC
     ../SpinBox.cpp
     ../SpinBoxInternal.h
 
+    ../generated/Splitter.h
+    ../generated/Splitter_wrappers.cpp
+    ../Splitter.cpp
+    ../SplitterInternal.h
+
+    ../generated/SplitterHandle.h
+    ../generated/SplitterHandle_wrappers.cpp
+    ../SplitterHandle.cpp
+    ../SplitterHandleInternal.h
+
     ../generated/StandardItem.h
     ../generated/StandardItem_wrappers.cpp
     ../StandardItem.cpp
