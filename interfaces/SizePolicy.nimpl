@@ -20,7 +20,7 @@ enum ControlType {
     ToolButton       = 0x00004000
 }
 
-flags ControlTypeSet {
+flags ControlTypes {
     DefaultType      = 0x00000001,
     ButtonBox        = 0x00000002,
     CheckBox         = 0x00000004,

@@ -1,0 +1,37 @@
+module LayoutItem;
+
+import Enums;
+import Common;
+import SizePolicy;
+
+fwdopaque LayoutHandle = Layout.Handle;
+fwdopaque WidgetHandle = Widget.Handle;
+
+// note, treating this like an interface, nobody will inherit from it directly
+// doing a similar thing with PaintDevice
+
+@nodispose          // we can't create these directly, and they're not value types, so I don't think any .dispose() method makes sense
+opaque Handle {
+    Alignment alignment();
+    SizePolicy.ControlTypes controlTypes();
+    Orientations expandingDirections();
+    Rect geometry();
+    bool hasHeightForWidth();
+    int heightForWidth(int width);
+    void invalidate();
+    bool isEmpty();
+    LayoutHandle layout();
+    Size maximumSize();
+    int minimumHeightForWidth(int width);
+    Size minimumSize();
+    void setAlignment(Alignment alignment);
+    void setGeometry(Rect r);
+    Size sizeHint();
+    
+    // virtual QSpacerItem * spacerItem()
+    // TODO
+
+    WidgetHandle widget();
+}
+
+// pretty sure these are abstract, so no ctors here

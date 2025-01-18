@@ -3,10 +3,10 @@ module Layout;
 import Object;
 import Common;
 import Enums;
+import LayoutItem;
 
-interface SignalHandler extends Object.SignalHandler {
-    // none of our own
-}
+interface SignalHandler extends Object.SignalHandler;
+// none of our own
 
 enum SizeConstraint {
     SetDefaultConstraint,
@@ -19,60 +19,100 @@ enum SizeConstraint {
 
 fwdopaque WidgetHandle = Widget.Handle;
 
-// TODO: inherit from LayoutItem instead? an issue since we can't do multiple inheritance, and IIRC LayoutItem doesn't inherit QObject
 @nodispose
 opaque Handle extends Object.Handle {
-    // properties =============================
+    // interfaces =============================
+    LayoutItem.Handle asLayoutItem();
 
-    SizeConstraint getSizeConstraint();
-    void setSizeConstraint(SizeConstraint constraint);
-
-    int spacing();
-    void setSpacing(int spacing);
-
-    // pseudo-properties ======================
-    bool isEnabled();
-    void setEnabled(bool enabled);
-
-    // methods =================================
-
+    // methods and properties =================
+    // bool activate()
     bool activate();
 
     // virtual void addItem(QLayoutItem *item) = 0
+    void addItem(LayoutItem.Handle item);
 
-    void addWidget(WidgetHandle widget);
+    // void addWidget(QWidget *w)
+    void addWidget(WidgetHandle w);
+
+    // QMargins contentsMargins() const
     Margins contentsMargins();
+
+    // QRect contentsRect() const
     Rect contentsRect();
+
+    // virtual int count() const = 0
     int count();
 
     // void getContentsMargins(int *left, int *top, int *right, int *bottom) const
-    // virtual int indexOf(const QLayoutItem *layoutItem) const
+    // see contentsMargins() above
 
+    // virtual int indexOf(const QLayoutItem *layoutItem) const
+    int indexOf(LayoutItem.Handle layoutItem);
+
+    // virtual int indexOf(const QWidget *widget) const
     int indexOf(WidgetHandle widget);
 
-    // virtual QLayoutItem * itemAt(int index) const = 0
+    // bool isEnabled() const
+    bool isEnabled();
 
+    // virtual QLayoutItem * itemAt(int index) const = 0
+    LayoutItem.Handle itemAt(int index);
+
+    // QWidget * menuBar() const
     WidgetHandle menuBar();
+
+    // QWidget * parentWidget() const
     WidgetHandle parentWidget();
 
     // void removeItem(QLayoutItem *item)
-    
+    void removeItem(LayoutItem.Handle item);
+
+    // void removeWidget(QWidget *widget)
     void removeWidget(WidgetHandle widget);
 
     // virtual QLayoutItem * replaceWidget(QWidget *from, QWidget *to, Qt::FindChildOptions options = Qt::FindChildrenRecursively)
+    LayoutItem.Handle replaceWidget(WidgetHandle from, WidgetHandle to, FindChildOptions options_ = FindChildOptions.FindChildrenRecursively);
 
-    void setAlignment(WidgetHandle widget, Alignment alignment);
-    void setAlignment(Handle layout, Alignment alignment);
+    // bool setAlignment(QWidget *w, Qt::Alignment alignment)
+    bool setAlignment(WidgetHandle w, Alignment alignment);
+
+    // bool setAlignment(QLayout *l, Qt::Alignment alignment)
+    bool setAlignment(Handle l, Alignment alignment);
+
+    // void setContentsMargins(const QMargins &margins)
     void setContentsMargins(Margins margins);
+
+    // void setContentsMargins(int left, int top, int right, int bottom)
     void setContentsMargins(int left, int top, int right, int bottom);
+
+    // void setEnabled(bool enable)
+    void setEnabled(bool enable);
+
+    // void setMenuBar(QWidget *widget)
     void setMenuBar(WidgetHandle widget);
 
+    // void setSizeConstraint(QLayout::SizeConstraint)
+    void setSizeConstraint(SizeConstraint sizeConstraint);
+
+    // virtual void setSpacing(int)
+    void setSpacing(int spacing);
+
+    // QLayout::SizeConstraint sizeConstraint() const
+    SizeConstraint getSizeConstraint();
+
+    // virtual int spacing() const
+    int spacing();
+
     // virtual QLayoutItem * takeAt(int index) = 0
+    LayoutItem.Handle takeAt(int index);
 
+    // (since 6.1) void unsetContentsMargins()
     void unsetContentsMargins();
-    void update();
 
-    // no extra signals
+    // void update()
+    void update();
 }
 
 // no create because abstract
+
+Size closestAcceptableSize(WidgetHandle widget, Size size);

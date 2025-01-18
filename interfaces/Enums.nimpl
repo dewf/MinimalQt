@@ -829,6 +829,16 @@ enum ClipOperation {
     IntersectClip
 }
 
+enum FindChildOption {
+    FindDirectChildrenOnly = 0x0,
+    FindChildrenRecursively = 0x1
+}
+
+flags FindChildOptions {
+    FindDirectChildrenOnly = 0x0,
+    FindChildrenRecursively = 0x1
+}
+
 enum Key {
     // Unicode Basic Latin block (0x00-0x7f)
     Key_Space = 0x20,

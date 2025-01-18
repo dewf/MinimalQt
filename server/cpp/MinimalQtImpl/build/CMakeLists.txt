@@ -160,6 +160,11 @@ add_library(MinimalQtImpl STATIC
     ../Font.cpp
     ../FontInternal.h
 
+    ../generated/FormLayout.h
+    ../generated/FormLayout_wrappers.cpp
+    ../FormLayout.cpp
+    ../FormLayoutInternal.h
+
     ../generated/Frame.h
     ../generated/Frame_wrappers.cpp
     ../Frame.cpp
@@ -223,6 +228,11 @@ add_library(MinimalQtImpl STATIC
     ../generated/Layout_wrappers.cpp
     ../Layout.cpp
     ../LayoutInternal.h
+
+    ../generated/LayoutItem.h
+    ../generated/LayoutItem_wrappers.cpp
+    ../LayoutItem.cpp
+    ../LayoutItemInternal.h
 
     ../generated/LineEdit.h
     ../generated/LineEdit_wrappers.cpp
