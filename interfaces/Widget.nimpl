@@ -17,6 +17,7 @@ import Pixmap;
 import GraphicsEffect;
 import PaintDevice;
 import Variant;
+import Event;
 
 int WIDGET_SIZE_MAX;   // pass-through of QWIDGETSIZE_MAX
 
@@ -346,28 +347,12 @@ Handle create(Handle parent = null, WindowFlags flags_ = 0);
 
 // SUBCLASSING ===========================================================
 
-@nodispose
-opaque Event {
-    void accept();
-    void ignore();
-}
-
 @nodispose // owned by Qt once used
 opaque Drag {
     void setMimeData(MimeData.Handle data);
     DropAction exec(DropActionSet supportedActions, DropAction defaultAction);
 }
 Drag createDrag(Handle parent);  // the parent will be responsible for cleanup (and neither do we own the MimeData assigned)
-
-@nodispose // not owned, temporary wrapper for method delegate
-opaque DragMoveEvent extends Event {
-    DropAction proposedAction();
-    void acceptProposedAction();
-    DropActionSet possibleActions();
-
-    // slight variation on the real methods:
-    void acceptDropAction(DropAction action); // will internally call either .acceptProposedAction or .accept() after setting drop action
-}
 
 // sadly client will have to implement all of these, BUT empty methods / returning default values will be OK
 // because only those included in the "method mask" will actually be invoked
@@ -398,7 +383,7 @@ interface DelegateMethods {
     void resizeEvent(Size oldSize, Size newSize);
 
     // dragMove does double duty, also an 'enter' event - check isEnterEvent flag
-    void dragMoveEvent(Point pos, Modifiers modifiers, MimeData.Handle mimeData, DragMoveEvent moveEvent, bool isEnterEvent);
+    void dragMoveEvent(Point pos, Modifiers modifiers, MimeData.Handle mimeData, DragMoveEvent_Handle moveEvent, bool isEnterEvent);
     void dragLeaveEvent();
     void dropEvent(Point pos, Modifiers modifiers, MimeData.Handle mimeData, DropAction action);
 }

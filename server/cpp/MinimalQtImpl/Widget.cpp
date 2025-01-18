@@ -979,20 +979,6 @@ namespace Widget
 
     // =========================================================================
 
-#define EVENTTHIS ((QEvent*)_this)
-
-    void Event_accept(EventRef _this) {
-        EVENTTHIS->accept();
-    }
-
-    void Event_ignore(EventRef _this) {
-        EVENTTHIS->ignore();
-    }
-
-//    void Event_dispose(EventRef _this) {
-//        // not owned, do nothing
-//    }
-
 #define DRAGTHIS ((QDrag*)_this)
 
     void Drag_setMimeData(DragRef _this, MimeData::HandleRef data) {
@@ -1005,45 +991,9 @@ namespace Widget
         return static_cast<DropAction>(DRAGTHIS->exec(qSupported, qDefault));
     }
 
-//    void Drag_dispose(DragRef _this) {
-//        // we're not responsible for deleting these (if they are exec'ed)
-//    }
-
     DragRef createDrag(HandleRef parent) {
         return reinterpret_cast<DragRef>(new QDrag(reinterpret_cast<QObject *>(parent)));
     }
-
-#define DRAGMOVETHIS ((QDragMoveEvent*)_this)
-
-    DropAction DragMoveEvent_proposedAction(DragMoveEventRef _this) {
-        return static_cast<DropAction>(DRAGMOVETHIS->proposedAction());
-    }
-
-    void DragMoveEvent_acceptProposedAction(DragMoveEventRef _this) {
-        DRAGMOVETHIS->acceptProposedAction();
-    }
-
-    DropActionSet DragMoveEvent_possibleActions(DragMoveEventRef _this) {
-        return (DropActionSet) DRAGMOVETHIS->possibleActions();
-    }
-
-    void DragMoveEvent_acceptDropAction(DragMoveEventRef _this, DropAction action) {
-        auto qtAction = static_cast<Qt::DropAction>(action);
-        if (qtAction == DRAGMOVETHIS->proposedAction()) {
-            DRAGMOVETHIS->acceptProposedAction();
-        } else {
-            if (DRAGMOVETHIS->possibleActions().testFlag(qtAction)) {
-                DRAGMOVETHIS->setDropAction(qtAction);
-                DRAGMOVETHIS->accept();
-            } else {
-                printf("DragMoveEvent_acceptDropAction: specified action was not in allowed set\n");
-            }
-        }
-    }
-
-//    void DragMoveEvent_dispose(DragMoveEventRef _this) {
-//        // not owned
-//    }
 
     // subclass/delegated stuff ==========================================================
 
@@ -1150,7 +1100,7 @@ namespace Widget
                 auto pos = toPoint(event->position().toPoint());
                 auto modifiers = event->modifiers();
                 auto mimeOpaque = (MimeData::HandleRef)event->mimeData();
-                auto moveEvent = reinterpret_cast<DragMoveEventRef>(event);
+                auto moveEvent = reinterpret_cast<DragMoveEvent_HandleRef>(event);
                 methods->dragMoveEvent(pos, Modifiers(modifiers), mimeOpaque, moveEvent, true);
                 // other side needs to call acceptProposedAction if it's OK, otherwise ... .ignore?
             } else {
@@ -1163,7 +1113,7 @@ namespace Widget
                 auto pos = toPoint(event->position().toPoint());
                 auto modifiers = event->modifiers();
                 auto mimeOpaque = (MimeData::HandleRef)event->mimeData();
-                auto moveEvent = reinterpret_cast<DragMoveEventRef>(event);
+                auto moveEvent = reinterpret_cast<DragMoveEvent_HandleRef>(event);
                 methods->dragMoveEvent(pos, Modifiers(modifiers), mimeOpaque, moveEvent, false);
                 // other side needs to call acceptProposedAction if it's OK, otherwise ... .ignore?
             } else {

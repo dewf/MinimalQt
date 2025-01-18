@@ -1,6 +1,5 @@
 #include "generated/AbstractItemDelegate.h"
-
-#include <QAbstractItemDelegate>
+#include "AbstractItemDelegateInternal.h"
 
 #include "EventInternal.h"
 #include "ObjectInternal.h"
@@ -26,7 +25,7 @@ namespace AbstractItemDelegate
         return THIS->editorEvent(AS_QEVENT_PTR(event_), reinterpret_cast<QAbstractItemModel*>(model), QSTYLEOPTIONVIEWITEM_VALUE(option), index->value);
     }
 
-    bool Handle_helpEvent(HandleRef _this, HelpEvent::HandleRef event_, AbstractItemViewHandleRef view, StyleOptionViewItem::HandleRef option, ModelIndex::HandleRef index) {
+    bool Handle_helpEvent(HandleRef _this, HelpEvent_HandleRef event_, AbstractItemViewHandleRef view, StyleOptionViewItem::HandleRef option, ModelIndex::HandleRef index) {
         return THIS->helpEvent(AS_QHELPEVENT_PTR(event_), reinterpret_cast<QAbstractItemView*>(view), QSTYLEOPTIONVIEWITEM_VALUE(option), index->value);
     }
 

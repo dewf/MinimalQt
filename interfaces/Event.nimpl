@@ -1,11 +1,25 @@
 module Event;
 
-@nodispose
-opaque Handle;
-opaque Owned extends Handle;
+import Enums;
 
-group HelpEvent {
-    @nodispose
-    opaque Handle;
-    opaque Owned extends Handle;
+@nodispose
+opaque Handle {
+    void accept();
+    void ignore();
+}
+
+// we're using underscores instead of 'Handle' inside a nested group,
+// because right now there's no way to inherit from the root-level Handle for a nested Handle (need a root-level namespace . prefix, a la C++ ::Whatever)
+
+@nodispose
+opaque HelpEvent_Handle extends Handle;
+
+@nodispose
+opaque DragMoveEvent_Handle extends Handle {
+    DropAction proposedAction();
+    void acceptProposedAction();
+    DropActionSet possibleActions();
+
+    // slight variation on the real methods:
+    void acceptDropAction(DropAction action); // will internally call either .acceptProposedAction or .accept() after setting drop action
 }
