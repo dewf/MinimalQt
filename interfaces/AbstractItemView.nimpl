@@ -9,6 +9,7 @@ import AbstractItemModel;
 import ModelIndex;
 import AbstractItemDelegate;
 import ItemSelectionModel;
+import Widget;
 
 interface SignalHandler extends AbstractScrollArea.SignalHandler {
     void activated(ModelIndex.Handle index);
@@ -48,6 +49,13 @@ flags EditTriggers {
     AllEditTriggers = 31
 }
 
+enum ScrollHint {
+    EnsureVisible,
+    PositionAtTop,
+    PositionAtBottom,
+    PositionAtCenter
+}
+
 enum ScrollMode {
     ScrollPerItem,
     ScrollPerPixel
@@ -69,59 +77,65 @@ enum SelectionMode {
 
 @nodispose
 opaque Handle extends AbstractScrollArea.Handle {
-    // properties =======================
     bool alternatingRowColors();
-    void setAlternatingRowColors(bool state);
-
-    bool hasAutoScroll();
-    void setAutoScroll(bool state);
-
     int autoScrollMargin();
-    void setAutoScrollMargin(int margin);
-
+    void closePersistentEditor(ModelIndex.Handle index);
+    ModelIndex.Owned currentIndex();
     DropAction defaultDropAction();
-    void setDefaultDropAction(DropAction action);
-
     DragDropMode getDragDropMode();
-    void setDragDropMode(DragDropMode mode);
-
     bool dragDropOverwriteMode();
-    void setDragDropOverwriteMode(bool mode);
-
     bool dragEnabled();
-    void setDragEnabled(bool enabled);
-
     EditTriggers getEditTriggers();
-    void setEditTriggers(EditTriggers triggers);
-    
+    bool hasAutoScroll();
     ScrollMode horizontalScrollMode();
-    void setHorizontalScrollMode(ScrollMode mode);
-    void resetHorizontalScrollMode();
-
     Size iconSize();
-    void setIconSize(Size size);
-
-    SelectionBehavior getSelectionBehavior();
-    void setSelectionBehavior(SelectionBehavior behavior);
-
-    SelectionMode getSelectionMode();
-    void setSelectionMode(SelectionMode mode);
-
-    bool showDropIndicator();
-    void setDropIndicatorShown(bool state);
-
-    bool tabKeyNavigation();
-    void setTabKeyNavigation(bool state);
-
-    TextElideMode getTextElideMode();
-    void setTextElideMode(TextElideMode mode);
-
-    ScrollMode verticalScrollMode();
-    void setVerticalScrollMode(ScrollMode mode);
+    ModelIndex.Owned indexAt(Point point);
+    Widget.Handle indexWidget(ModelIndex.Handle index);
+    bool isPersistentEditorOpen(ModelIndex.Handle index);
+    AbstractItemDelegate.Handle itemDelegate();
+    AbstractItemDelegate.Handle itemDelegateForColumn(int column);
+    AbstractItemDelegate.Handle itemDelegateForIndex(ModelIndex.Handle index);
+    AbstractItemDelegate.Handle itemDelegateForRow(int row);
+    void keyboardSearch(string search);
+    AbstractItemModel.Handle model();
+    void openPersistentEditor(ModelIndex.Handle index);
+    void resetHorizontalScrollMode();
     void resetVerticalScrollMode();
-
-    // methods ============================
+    ModelIndex.Owned rootIndex();
+    void scrollTo(ModelIndex.Handle index, ScrollHint hint = ScrollHint.EnsureVisible);
+    SelectionBehavior getSelectionBehavior();
+    SelectionMode getSelectionMode();
+    ItemSelectionModel.Handle selectionModel();
+    void setAlternatingRowColors(bool enable);
+    void setAutoScroll(bool enable);
+    void setAutoScrollMargin(int margin);
+    void setDefaultDropAction(DropAction dropAction);
+    void setDragDropMode(DragDropMode behavior);
+    void setDragDropOverwriteMode(bool overwrite);
+    void setDragEnabled(bool enable);
+    void setDropIndicatorShown(bool enable);
+    void setEditTriggers(EditTriggers triggers);
+    void setHorizontalScrollMode(ScrollMode mode);
+    void setIconSize(Size size);
+    void setIndexWidget(ModelIndex.Handle index, Widget.Handle widget);
+    void setItemDelegate(AbstractItemDelegate.Handle delegate_);
+    void setItemDelegateForColumn(int column, AbstractItemDelegate.Handle delegate_);
+    void setItemDelegateForRow(int row, AbstractItemDelegate.Handle delegate_);
     void setModel(AbstractItemModel.Handle model);
+    void setSelectionBehavior(SelectionBehavior behavior);
+    void setSelectionMode(SelectionMode mode);
+    void setSelectionModel(ItemSelectionModel.Handle selectionModel);
+    void setTabKeyNavigation(bool enable);
+    void setTextElideMode(TextElideMode mode);
+    void setVerticalScrollMode(ScrollMode mode);
+    bool showDropIndicator();
+    int sizeHintForColumn(int column);
+    Size sizeHintForIndex(ModelIndex.Handle index);
+    int sizeHintForRow(int row);
+    bool tabKeyNavigation();
+    TextElideMode textElideMode();
+    ScrollMode verticalScrollMode();
+    Rect visualRect(ModelIndex.Handle index);
 
     void clearSelection();
     void edit(ModelIndex.Handle index);
@@ -132,13 +146,6 @@ opaque Handle extends AbstractScrollArea.Handle {
     void setCurrentIndex(ModelIndex.Handle index);
     void setRootIndex(ModelIndex.Handle index);
     void update(ModelIndex.Handle index);
-
-    ItemSelectionModel.Handle selectionModel();
-    // no setter yet
-
-    void setItemDelegate(AbstractItemDelegate.Handle itemDelegate);
-    void setItemDelegateForColumn(int column, AbstractItemDelegate.Handle itemDelegate);
-    void setItemDelegateForRow(int row, AbstractItemDelegate.Handle itemDelegate);
 
     // signals ============================
     SignalConnection connect_Activated(SignalHandler handler);
