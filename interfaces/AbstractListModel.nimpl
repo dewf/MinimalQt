@@ -7,6 +7,19 @@ import Variant;
 import ModelIndex;
 import PersistentModelIndex;
 
+
+
+
+// ======================================================================
+
+// NOTE: haven't looked at this in a long time, no idea of its current state
+// I would say to not even bother using it for now, in favor of AbstractItemModel, which isn't much more difficult
+// (plus we could always implement our own AbstractListModel on the C# side)
+
+// ======================================================================
+
+
+
 interface SignalHandler extends AbstractItemModel.SignalHandler {
     // none extra
 }

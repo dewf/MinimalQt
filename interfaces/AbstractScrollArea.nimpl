@@ -5,10 +5,11 @@ import Common;
 import Icon;
 import Frame;
 import Enums;
+import ScrollBar;
+import Widget;
 
-interface SignalHandler extends Frame.SignalHandler {
-    // none of our own
-}
+interface SignalHandler extends Frame.SignalHandler;
+// no extra signals
 
 enum SizeAdjustPolicy {
     AdjustIgnored,
@@ -18,14 +19,24 @@ enum SizeAdjustPolicy {
 
 @nodispose
 opaque Handle extends Frame.Handle {
+    void addScrollBarWidget(Widget.Handle widget, Alignment alignment);
+    Widget.Handle cornerWidget();
+    ScrollBar.Handle horizontalScrollBar();
     ScrollBarPolicy horizontalScrollBarPolicy();
+    Size maximumViewportSize();
+    Array<Widget.Handle> scrollBarWidgets(Alignment alignment);
+    void setCornerWidget(Widget.Handle widget);
+    void setHorizontalScrollBar(ScrollBar.Handle scrollBar);
     void setHorizontalScrollBarPolicy(ScrollBarPolicy policy);
-
-    SizeAdjustPolicy getSizeAdjustPolicy();
     void setSizeAdjustPolicy(SizeAdjustPolicy policy);
-
-    ScrollBarPolicy verticalScrollBarPolicy();
+    void setVerticalScrollBar(ScrollBar.Handle scrollBar);
     void setVerticalScrollBarPolicy(ScrollBarPolicy policy);
+    void setViewport(Widget.Handle widget);
+    void setupViewport(Widget.Handle viewport);
+    SizeAdjustPolicy getSizeAdjustPolicy();
+    ScrollBar.Handle verticalScrollBar();
+    ScrollBarPolicy verticalScrollBarPolicy();
+    Widget.Handle viewport();
 }
 
 // no create
