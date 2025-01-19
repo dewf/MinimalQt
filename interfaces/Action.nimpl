@@ -5,6 +5,7 @@ import KeySequence;
 import Icon;
 import Enums;
 import Font;
+import Variant;
 
 interface SignalHandler extends Object.SignalHandler {
     void changed();
@@ -15,6 +16,8 @@ interface SignalHandler extends Object.SignalHandler {
     void triggered(bool checked_);
     void visibleChanged();
 }
+
+enum ActionEvent { Trigger, Hover }
 
 enum MenuRole { 
     NoRole = 0, 
@@ -32,64 +35,71 @@ enum Priority {
     HighPriority = 256
 }
 
+fwdopaque Menu_Handle = Menu.Handle;
+
 opaque Handle extends Object.Handle {
-    // properties
+
+    // QActionGroup * actionGroup() const
+    // TODO
+
+    void activate(ActionEvent event_);
+    Array<Object.Handle> associatedObjects();
     bool autoRepeat();
-    void setAutoRepeat(bool state);
-    
-    bool isCheckable();
-    void setCheckable(bool checkable);
-
-    bool isChecked();
-    void setChecked(bool checked_);
-
-    bool isEnabled();
-    void setEnabled(bool enabled);
-
-    Font.Owned getFont();              // CHANGEME: altered because of collision with Icon type when rendering push/pop stuff, codegen needs fixing
-    void setFont(Font.Handle font);
-
-    Icon.Owned getIcon();              // CHANGEME: see above
-    void setIcon(Icon.Handle icon);
-
+    Variant.Owned data();
+    Font.Owned font();
+    Icon.Owned icon();
     string iconText();
-    void setIconText(string text);
-
+    bool isCheckable();
+    bool isChecked();
+    bool isEnabled();
     bool isIconVisibleInMenu();
-    void setIconVisibleInMenu(bool visible);
-
-    MenuRole menuRole();
-    void setMenuRole(MenuRole role);
-
-    Priority priority();
-    void setPriority(Priority priority);
-
-    KeySequence.Owned shortcut();
-    void setShortcut(KeySequence.Handle shortcut);
-
-    Enums.ShortcutContext shortcutContext();
-    void setShortcutContext(Enums.ShortcutContext context);
-
+    bool isSeparator();
     bool isShortcutVisibleInContextMenu();
-    void setShortcutVisibleInContextMenu(bool visible);
-
-    string statusTip();
-    void setStatusTip(string tip);
-
-    string text();
-    void setText(string text);
-
-    string toolTip();
-    void setToolTip(string tip);
-
     bool isVisible();
-    void setVisible(bool visible);
+    Menu_Handle menu();
+    MenuRole getMenuRole();
+    Priority getPriority();
 
+    // void setActionGroup(QActionGroup *group)
+    // TODO
+
+    void setAutoRepeat(bool state);
+    void setCheckable(bool state);
+    void setData(Variant.Handle data);
+    void setFont(Font.Handle font);
+    void setIcon(Icon.Handle icon);
+    void setIconText(string text);
+    void setIconVisibleInMenu(bool visible);
+    void setMenu(Menu_Handle menu);
+    void setMenuRole(MenuRole menuRole);
+    void setPriority(Priority priority);
+    void setSeparator(bool b);
+    void setShortcut(KeySequence.Handle shortcut);
+    void setShortcutContext(ShortcutContext context);
+    void setShortcutVisibleInContextMenu(bool show);
+    void setShortcuts(KeySequence.StandardKey key);
+    void setShortcuts(Array<KeySequence.Handle> shortcuts);
+    void setStatusTip(string statusTip);
+    void setText(string text);
+    void setToolTip(string tip);
+    void setWhatsThis(string what);
+    KeySequence.Owned shortcut();
+    ShortcutContext shortcutContext();
+    Array<KeySequence.Owned> shortcuts();
+    bool showStatusText(Object.Handle obj = null);
+    string statusTip();
+    string text();
+    string toolTip();
     string whatsThis();
-    void setWhatsThis(string text);
 
-    // methods:
-    void setSeparator(bool state);
+    void hover();
+    void resetEnabled();
+    void setChecked(bool state);
+    void setDisabled(bool state);
+    void setEnabled(bool state);
+    void setVisible(bool state);
+    void toggle();
+    void trigger();
 
     // signals ============================
     SignalConnection connect_Changed(SignalHandler handler);
@@ -101,6 +111,6 @@ opaque Handle extends Object.Handle {
     SignalConnection connect_VisibleChanged(SignalHandler handler);
 }
 
-Handle create(Option<Object.Handle> parent);
-Handle create(string text, Option<Object.Handle> parent);
-Handle create(Icon.Handle icon, string text, Option<Object.Handle> parent);
+Handle create(Object.Handle parent = null);
+Handle create(string text, Object.Handle parent = null);
+Handle create(Icon.Handle icon, string text, Object.Handle parent = null);
