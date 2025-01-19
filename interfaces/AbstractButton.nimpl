@@ -15,39 +15,35 @@ interface SignalHandler extends Widget.SignalHandler {
 
 @nodispose
 opaque Handle extends Widget.Handle {
-    // properties =========================
     bool autoExclusive();
-    void setAutoExclusive(bool state);
-
     bool autoRepeat();
-    void setAutoRepeat(bool state);
-
     int autoRepeatDelay();
-    void setAutoRepeatDelay(int delay);
-
     int autoRepeatInterval();
-    void setAutoRepeatInterval(int interval);
 
-    bool isCheckable();
-    void setCheckable(bool state);
+    // QButtonGroup * group() const
 
-    bool isChecked();  // 'checked' reserved in some languages
-    void setChecked(bool state);
-
-    bool isDown();
-    void setDown(bool state);
-
-    Icon.Owned getIcon();               // 'get' to avoid conflict with Icon namespace
-    void setIcon(Icon.Handle icon);
-
+    Icon.Owned icon();
     Size iconSize();
-    void setIconSize(Size size);
-
-    KeySequence.Owned shortcut();
-    void setShortcut(KeySequence.Handle seq);
-
-    string text();
+    bool isCheckable();
+    bool isChecked();
+    bool isDown();
+    void setAutoExclusive(bool state);
+    void setAutoRepeat(bool state);
+    void setAutoRepeatDelay(int delay);
+    void setAutoRepeatInterval(int interval);
+    void setCheckable(bool state);
+    void setDown(bool state);
+    void setIcon(Icon.Handle icon);
+    void setShortcut(KeySequence.Handle key);
     void setText(string text);
+    KeySequence.Owned shortcut();
+    string text();
+
+    void animateClick();
+    void click();
+    void setChecked(bool state);
+    void setIconSize(Size size);
+    void toggle();
 
     // signals ============================
     SignalConnection connect_Clicked(SignalHandler handler);
