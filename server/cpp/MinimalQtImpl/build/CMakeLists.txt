@@ -176,6 +176,11 @@ add_library(MinimalQtImpl STATIC
     ../Frame.cpp
     ../FrameInternal.h
 
+    ../generated/Gradient.h
+    ../generated/Gradient_wrappers.cpp
+    ../Gradient.cpp
+    ../GradientInternal.h
+
     ../generated/GraphicsEffect.h
     ../generated/GraphicsEffect_wrappers.cpp
     ../GraphicsEffect.cpp
