@@ -1,0 +1,66 @@
+module Window;
+
+import Object;
+import Enums;
+import Screen;
+
+enum Visibility {
+    Hidden = 0,
+    AutomaticVisibility,
+    Windowed,
+    Minimized,
+    Maximized,
+    FullScreen
+}
+
+enum AncestorMode {
+    ExcludeTransients,
+    IncludeTransients
+}
+
+interface SignalHandler extends Object.SignalHandler {
+    void activeChanged();
+    void contentOrientationChanged(ScreenOrientation orientation);
+    void focusObjectChanged(Object.Handle obj);
+    void heightChanged(int arg);
+    void maximumHeightChanged(int arg);
+    void maximumWidthChanged(int arg);
+    void minimumHeightChanged(int arg);
+    void minimumWidthChanged(int arg);
+    void modalityChanged(WindowModality modality);
+    void opacityChanged(double opacity);
+    void screenChanged(Screen.Handle screen);
+    void transientParentChanged(Handle transientParent);
+    void visibilityChanged(Visibility visibility);
+    void visibleChanged(bool arg);
+    void widthChanged(int arg);
+    void windowStateChanged(WindowState windowState);
+    void windowTitleChanged(string title);
+    void xChanged(int arg);
+    void yChanged(int arg);
+}
+
+@nodispose
+opaque Handle extends Object.Handle {
+    // methods TODO
+
+    SignalConnection connect_ActiveChanged(SignalHandler handler);
+    SignalConnection connect_ContentOrientationChanged(SignalHandler handler);
+    SignalConnection connect_FocusObjectChanged(SignalHandler handler);
+    SignalConnection connect_HeightChanged(SignalHandler handler);
+    SignalConnection connect_MaximumHeightChanged(SignalHandler handler);
+    SignalConnection connect_MaximumWidthChanged(SignalHandler handler);
+    SignalConnection connect_MinimumHeightChanged(SignalHandler handler);
+    SignalConnection connect_MinimumWidthChanged(SignalHandler handler);
+    SignalConnection connect_ModalityChanged(SignalHandler handler);
+    SignalConnection connect_OpacityChanged(SignalHandler handler);
+    SignalConnection connect_ScreenChanged(SignalHandler handler);
+    SignalConnection connect_TransientParentChanged(SignalHandler handler);
+    SignalConnection connect_VisibilityChanged(SignalHandler handler);
+    SignalConnection connect_VisibleChanged(SignalHandler handler);
+    SignalConnection connect_WidthChanged(SignalHandler handler);
+    SignalConnection connect_WindowStateChanged(SignalHandler handler);
+    SignalConnection connect_WindowTitleChanged(SignalHandler handler);
+    SignalConnection connect_XChanged(SignalHandler handler);
+    SignalConnection connect_YChanged(SignalHandler handler);
+}

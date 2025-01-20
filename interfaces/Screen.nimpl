@@ -1,0 +1,32 @@
+module Screen;
+
+import Object;
+import Common;
+import Enums;
+
+interface SignalHandler extends Object.SignalHandler {
+    void availableGeometryChanged(Rect geometry);
+    void geometryChanged(Rect geometry);
+    void logicalDotsPerInchChanged(double dpi);
+    void orientationChanged(ScreenOrientation orientation);
+    void physicalDotsPerInchChanged(double dpi);
+    void physicalSizeChanged(SizeF size);
+    void primaryOrientationChanged(ScreenOrientation orientation);
+    void refreshRateChanged(double refreshRate);
+    void virtualGeometryChanged(Rect rect);
+}
+
+@nodispose
+opaque Handle extends Object.Handle {
+    // methods TODO
+
+    SignalConnection connect_AvailableGeometryChanged(SignalHandler handler);
+    SignalConnection connect_GeometryChanged(SignalHandler handler);
+    SignalConnection connect_LogicalDotsPerInchChanged(SignalHandler handler);
+    SignalConnection connect_OrientationChanged(SignalHandler handler);
+    SignalConnection connect_PhysicalDotsPerInchChanged(SignalHandler handler);
+    SignalConnection connect_PhysicalSizeChanged(SignalHandler handler);
+    SignalConnection connect_PrimaryOrientationChanged(SignalHandler handler);
+    SignalConnection connect_RefreshRateChanged(SignalHandler handler);
+    SignalConnection connect_VirtualGeometryChanged(SignalHandler handler);
+}

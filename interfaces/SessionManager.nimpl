@@ -1,0 +1,17 @@
+module SessionManager;
+
+import Object;
+
+interface SignalHandler extends Object.SignalHandler;
+// no signals
+
+enum RestartHint {
+    RestartIfRunning,
+    RestartAnyway,
+    RestartImmediately,
+    RestartNever
+}
+
+@nodispose
+opaque Handle extends Object.Handle;
+// methods TODO

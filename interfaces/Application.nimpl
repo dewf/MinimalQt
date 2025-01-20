@@ -1,18 +1,26 @@
 module Application;
 
-opaque Handle {
-    // from QGuiApplication:
-    void setQuitOnLastWindowClosed(bool state);
+import GuiApplication;
+import Object;
+import Widget;
+
+interface SignalHandler extends GuiApplication.SignalHandler {
+    void focusChanged(Widget.Handle old, Widget.Handle new_);
 }
 
-// so far all the "methods" are static ...
-void setStyle(string name);
-int exec();
-void quit();
-Array<string> availableStyles();
+opaque Handle extends GuiApplication.Handle {
+    SignalConnection connect_FocusChanged(SignalHandler handler);
+}
 
 Handle create(Array<string> args);
 
+// static methods ===============
+void setStyle(string name);
+int exec();
+void quit();
+
+// convenience (fake) ===========
+Array<string> availableStyles();
 
 delegate void MainThreadFunc();
 void executeOnMainThread(MainThreadFunc func);

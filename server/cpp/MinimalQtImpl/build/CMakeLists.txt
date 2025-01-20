@@ -70,6 +70,7 @@ add_library(MinimalQtImpl STATIC
     ../generated/Application.h
     ../generated/Application_wrappers.cpp
     ../Application.cpp
+    ../ApplicationInternal.h
 
     ../generated/BoxLayout.h
     ../generated/BoxLayout_wrappers.cpp
@@ -105,6 +106,11 @@ add_library(MinimalQtImpl STATIC
     ../generated/Common_wrappers.cpp
     ../Common.cpp
     ../CommonInternal.h
+
+    ../generated/CoreApplication.h
+    ../generated/CoreApplication_wrappers.cpp
+    ../CoreApplication.cpp
+    ../CoreApplicationInternal.h
 
     ../generated/Cursor.h
     ../generated/Cursor_wrappers.cpp
@@ -184,6 +190,11 @@ add_library(MinimalQtImpl STATIC
     ../generated/GroupBox_wrappers.cpp
     ../GroupBox.cpp
     ../GroupBoxInternal.h
+
+    ../generated/GuiApplication.h
+    ../generated/GuiApplication_wrappers.cpp
+    ../GuiApplication.cpp
+    ../GuiApplicationInternal.h
 
     ../generated/HeaderView.h
     ../generated/HeaderView_wrappers.cpp
@@ -338,6 +349,11 @@ add_library(MinimalQtImpl STATIC
     ../RegularExpressionInternal.h
     ../RegularExpression.cpp
 
+    ../generated/Screen.h
+    ../generated/Screen_wrappers.cpp
+    ../Screen.cpp
+    ../ScreenInternal.h
+
     ../generated/ScrollArea.h
     ../generated/ScrollArea_wrappers.cpp
     ../ScrollArea.cpp
@@ -347,6 +363,11 @@ add_library(MinimalQtImpl STATIC
     ../generated/ScrollBar_wrappers.cpp
     ../ScrollBar.cpp
     ../ScrollBarInternal.h
+
+    ../generated/SessionManager.h
+    ../generated/SessionManager_wrappers.cpp
+    ../SessionManager.cpp
+    ../SessionManagerInternal.h
 
     ../generated/SizePolicy.h
     ../generated/SizePolicy_wrappers.cpp
@@ -486,6 +507,11 @@ add_library(MinimalQtImpl STATIC
     ../generated/Widget_wrappers.cpp
     ../Widget.cpp
     ../WidgetInternal.h
+
+    ../generated/Window.h
+    ../generated/Window_wrappers.cpp
+    ../Window.cpp
+    ../WindowInternal.h
 
     ../util/convert.h
     ../util/convert.cpp

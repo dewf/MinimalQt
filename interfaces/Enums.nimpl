@@ -839,6 +839,36 @@ flags FindChildOptions {
     FindChildrenRecursively = 0x1
 }
 
+enum ApplicationState {
+    ApplicationSuspended    = 0x00000000,
+    ApplicationHidden       = 0x00000001,
+    ApplicationInactive     = 0x00000002,
+    ApplicationActive       = 0x00000004
+}
+
+flags ApplicationStates {
+    ApplicationSuspended    = 0x00000000,
+    ApplicationHidden       = 0x00000001,
+    ApplicationInactive     = 0x00000002,
+    ApplicationActive       = 0x00000004
+}
+
+enum ScreenOrientation {
+    PrimaryOrientation           = 0x00000000,
+    PortraitOrientation          = 0x00000001,
+    LandscapeOrientation         = 0x00000002,
+    InvertedPortraitOrientation  = 0x00000004,
+    InvertedLandscapeOrientation = 0x00000008
+}
+
+flags ScreenOrientations {
+    PrimaryOrientation           = 0x00000000,
+    PortraitOrientation          = 0x00000001,
+    LandscapeOrientation         = 0x00000002,
+    InvertedPortraitOrientation  = 0x00000004,
+    InvertedLandscapeOrientation = 0x00000008
+}
+
 enum Key {
     // Unicode Basic Latin block (0x00-0x7f)
     Key_Space = 0x20,
