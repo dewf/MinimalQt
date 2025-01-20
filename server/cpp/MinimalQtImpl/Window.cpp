@@ -140,4 +140,16 @@ namespace Window
         });
         return new __SignalConnection { connection };
     }
+
+    void Handle_dispose(HandleRef _this) {
+        delete THIS;
+    }
+
+    HandleRef create(Screen::HandleRef targetScreen /* nullptr */) {
+        return reinterpret_cast<HandleRef>(new QWindow(reinterpret_cast<QScreen*>(targetScreen)));
+    }
+
+    HandleRef create(HandleRef parent) {
+        return reinterpret_cast<HandleRef>(new QWindow(reinterpret_cast<QWindow*>(parent)));
+    }
 }

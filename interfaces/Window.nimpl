@@ -40,7 +40,6 @@ interface SignalHandler extends Object.SignalHandler {
     void yChanged(int arg);
 }
 
-@nodispose
 opaque Handle extends Object.Handle {
     // methods TODO
 
@@ -64,3 +63,6 @@ opaque Handle extends Object.Handle {
     SignalConnection connect_XChanged(SignalHandler handler);
     SignalConnection connect_YChanged(SignalHandler handler);
 }
+
+Handle create(Screen.Handle targetScreen = null);
+Handle create(Handle parent);
