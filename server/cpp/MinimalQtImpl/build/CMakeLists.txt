@@ -107,6 +107,11 @@ add_library(MinimalQtImpl STATIC
     ../Common.cpp
     ../CommonInternal.h
 
+    ../generated/Completer.h
+    ../generated/Completer_wrappers.cpp
+    ../Completer.cpp
+    ../CompleterInternal.h
+
     ../generated/CoreApplication.h
     ../generated/CoreApplication_wrappers.cpp
     ../CoreApplication.cpp

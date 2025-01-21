@@ -1,0 +1,74 @@
+module Completer;
+
+import Object;
+import ModelIndex;
+import AbstractItemModel;
+import AbstractItemView;
+import Enums;
+import Widget;
+import Common;
+
+interface SignalHandler extends Object.SignalHandler {
+    void activatedIndex(ModelIndex.Handle index);
+    void activatedString(string text);
+    void highlightedIndex(ModelIndex.Handle index);
+    void highlightedString(string text);
+}
+
+enum CompletionMode {
+    PopupCompletion,
+    UnfilteredPopupCompletion,
+    InlineCompletion
+}
+
+enum ModelSorting {
+    UnsortedModel = 0,
+    CaseSensitivelySortedModel,
+    CaseInsensitivelySortedModel
+}
+
+opaque Handle extends Object.Handle {
+    CaseSensitivity caseSensitivity();
+    int completionColumn();
+    int completionCount();
+    CompletionMode getCompletionMode();
+    AbstractItemModel.Handle completionModel();
+    string completionPrefix();
+    int completionRole();
+    string currentCompletion();
+    ModelIndex.Owned currentIndex();
+    int currentRow();
+    MatchFlags filterMode();
+    int maxVisibleItems();
+    AbstractItemModel.Handle model();
+    ModelSorting getModelSorting();
+    string pathFromIndex(ModelIndex.Handle index);
+    AbstractItemView.Handle popup();
+    void setCaseSensitivity(CaseSensitivity caseSensitivity);
+    void setCompletionColumn(int column);
+    void setCompletionMode(CompletionMode mode);
+    void setCompletionRole(int role);
+    bool setCurrentRow(int row);
+    void setFilterMode(MatchFlags filterMode);
+    void setMaxVisibleItems(int maxItems);
+    void setModel(AbstractItemModel.Handle model);
+    void setModelSorting(ModelSorting sorting);
+    void setPopup(AbstractItemView.Handle popup);
+    void setWidget(Widget.Handle widget);
+    Array<string> splitPath(string path);
+    Widget.Handle widget();
+    bool wrapAround();
+    void complete(Option<Rect> rect);
+    void setCompletionPrefix(string prefix);
+    void setWrapAround(bool wrap);
+
+    // signals ======================
+    SignalConnection connect_ActivatedIndex(SignalHandler handler);
+    SignalConnection connect_ActivatedString(SignalHandler handler);
+    SignalConnection connect_HighlightedIndex(SignalHandler handler);
+    SignalConnection connect_HighlightedString(SignalHandler handler);
+}
+
+Handle create(Object.Handle parent = null);
+Handle create(AbstractItemModel.Handle model, Object.Handle parent = null);
+Handle create(Array<string> list, Object.Handle parent = null);
