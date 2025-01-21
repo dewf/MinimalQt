@@ -8,7 +8,6 @@ interface SignalHandler extends Object.SignalHandler {
 
 enum State { Invalid, Intermediate, Acceptable }
 
-@nodispose
 opaque Handle extends Object.Handle {
 
     // virtual void fixup(QString &input) const

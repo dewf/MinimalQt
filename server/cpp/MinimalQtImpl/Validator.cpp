@@ -13,4 +13,8 @@ namespace Validator
         });
         return new __SignalConnection { connection };
     }
+
+    void Handle_dispose(HandleRef _this) {
+        delete THIS;
+    }
 }
