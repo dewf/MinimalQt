@@ -35,11 +35,11 @@ namespace CheckBox
         delete THIS;
     }
 
-    HandleRef create(const std::optional<Widget::HandleRef>& parent) {
-        return reinterpret_cast<HandleRef>(new QCheckBox(Widget::fromOptionalHandle(parent)));
+    HandleRef create(Widget::HandleRef parent /* nullptr */) {
+        return reinterpret_cast<HandleRef>(new QCheckBox(AS_QWIDGET_PTR(parent)));
     }
 
-    HandleRef create(const std::string& text, const std::optional<Widget::HandleRef>& parent) {
-        return reinterpret_cast<HandleRef>(new QCheckBox(QString::fromStdString(text), Widget::fromOptionalHandle(parent)));
+    HandleRef create(const std::string& text, Widget::HandleRef parent /* nullptr */) {
+        return reinterpret_cast<HandleRef>(new QCheckBox(QString::fromStdString(text), AS_QWIDGET_PTR(parent)));
     }
 }
