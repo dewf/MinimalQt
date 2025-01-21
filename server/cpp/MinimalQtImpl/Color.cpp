@@ -51,6 +51,14 @@ namespace Color
         return QColorConstants::Black;
     }
 
+    void Handle_setAlpha(HandleRef _this, int32_t alpha) {
+        THIS->setAlpha(alpha);
+    }
+
+    void Handle_setAlphaF(HandleRef _this, double alpha) {
+        THIS->setAlphaF(alpha);
+    }
+
     void Owned_dispose(OwnedRef _this) {
         delete THIS;
     }
@@ -72,5 +80,8 @@ namespace Color
     }
     OwnedRef create(float r, float g, float b, float a) {
         return COLOR_HEAP_NEW(QColor::fromRgbF(r, g, b, a));
+    }
+    OwnedRef create(HandleRef other) {
+        return COLOR_HEAP_NEW(QCOLOR_VALUE(other));
     }
 }

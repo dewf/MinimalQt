@@ -22,8 +22,10 @@ enum Constant {
 }
 
 @nodispose
-opaque Handle;
-
+opaque Handle {
+    void setAlpha(int alpha);
+    void setAlphaF(double alpha);
+}
 opaque Owned extends Handle;
 
 Owned create();
@@ -32,3 +34,4 @@ Owned create(int r, int g, int b);
 Owned create(int r, int g, int b, int a);
 Owned create(float r, float g, float b);
 Owned create(float r, float g, float b, float a);
+Owned create(Handle other);
