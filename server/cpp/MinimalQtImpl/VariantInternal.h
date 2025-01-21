@@ -24,4 +24,9 @@ namespace Variant {
             return consumeInternal();
         }
     };
+    inline QVariant fromOptional(const std::optional<HandleRef>& x) {
+        QVariant ret;
+        if (x.has_value()) ret = x.value()->value;
+        return ret;
+    }
 }
