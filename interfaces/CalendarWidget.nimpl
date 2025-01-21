@@ -1,11 +1,12 @@
 module CalendarWidget;
 
-import Common;
-import Icon;
 import Object;
 import Widget;
+import Common;
+import Icon;
 import Date;
 import Enums;
+import TextCharFormat;
 
 interface SignalHandler extends Widget.SignalHandler {
     void activated(Date.Handle date);
@@ -32,57 +33,56 @@ enum SelectionMode {
 }
 
 opaque Handle extends Widget.Handle {
-    // properties
-    int dateEditAcceptDelay();
-    void setDateEditAcceptDelay(int value);
 
-    bool isDateEditEnabled();
-    void setDateEditEnabled(bool enabled);
+    // QCalendar calendar() const
+    // TODO
 
-    QDayOfWeek firstDayOfWeek();
-    void setFirstDayOfWeek(QDayOfWeek value);
-
-    bool isGridVisible();
-    void setGridVisible(bool visible);
-
-    // TextCharFormat headerTextFormat();
-    // void setHeaderTextFormat(TextCharFormat format);
-
-    HorizontalHeaderFormat getHorizontalHeaderFormat();
-    void setHorizontalHeaderFormat(HorizontalHeaderFormat format);
-
-    Date.Owned maximumDate();
-    void setMaximumDate(Date.Handle value);
     void clearMaximumDate();
-
-    Date.Owned minimumDate();
-    void setMinimumDate(Date.Handle value);
     void clearMinimumDate();
-
-    int monthShown();
-    // read-only
-
+    int dateEditAcceptDelay();
+    Map<Date.Owned, TextCharFormat.Owned> dateTextFormat();
+    TextCharFormat.Owned dateTextFormat(Date.Handle date);
+    QDayOfWeek firstDayOfWeek();
+    TextCharFormat.Owned headerTextFormat();
+    HorizontalHeaderFormat getHorizontalHeaderFormat();
+    bool isDateEditEnabled();
+    bool isGridVisible();
     bool isNavigationBarVisible();
-    void setNavigationBarVisible(bool visible);
-
+    Date.Owned maximumDate();
+    Date.Owned minimumDate();
+    int monthShown();
     Date.Owned selectedDate();
-    void setSelectedDate(Date.Handle selected);
-
     SelectionMode getSelectionMode();
+
+    // void setCalendar(QCalendar c)
+    // TODO
+
+    void setDateEditAcceptDelay(int delay);
+    void setDateEditEnabled(bool enable);
+    void setDateTextFormat(Date.Handle date, TextCharFormat.Handle format);
+    void setFirstDayOfWeek(QDayOfWeek dayOfWeek);
+    void setHeaderTextFormat(TextCharFormat.Handle format);
+    void setHorizontalHeaderFormat(HorizontalHeaderFormat format);
+    void setMaximumDate(Date.Handle date);
+    void setMinimumDate(Date.Handle date);
     void setSelectionMode(SelectionMode mode);
-
-    VerticalHeaderFormat getVerticalHeaderFormat();
     void setVerticalHeaderFormat(VerticalHeaderFormat format);
-
+    void setWeekdayTextFormat(QDayOfWeek dayOfWeek, TextCharFormat.Handle format);
+    VerticalHeaderFormat getVerticalHeaderFormat();
+    TextCharFormat.Owned weekdayTextFormat(QDayOfWeek dayOfWeek);
     int yearShown();
-    // read-only
 
-    // methods
-    // Map<Date, TextCharFormat> dateTextFormat();
-    // TextCharFormat dateTextFormat(Date date);
-    // void setDateTextFormat(Date date, TextCharFormat format);
-    // void setWeekdayTextFormat(QDayOfWeek dayOfWeek, TextCharFormat format);
-    // TextCharFormat weekdayTextFormat(QDayOfWeek dayOfWeek);
+    void setCurrentPage(int year, int month);
+    void setDateRange(Date.Handle min, Date.Handle max);
+    void setGridVisible(bool show);
+    void setNavigationBarVisible(bool visible);
+    void setSelectedDate(Date.Handle date);
+    void showNextMonth();
+    void showNextYear();
+    void showPreviousMonth();
+    void showPreviousYear();
+    void showSelectedDate();
+    void showToday();
 
     // signals ============================
     SignalConnection connect_Activated(SignalHandler handler);
@@ -91,4 +91,4 @@ opaque Handle extends Widget.Handle {
     SignalConnection connect_SelectionChanged(SignalHandler handler);
 }
 
-Handle create();
+Handle create(Widget.Handle parent = null);
