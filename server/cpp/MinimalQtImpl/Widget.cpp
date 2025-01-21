@@ -836,6 +836,10 @@ namespace Widget
         return WindowFlags(THIS->windowFlags());
     }
 
+    Window::HandleRef Handle_windowHandle(HandleRef _this) {
+        return reinterpret_cast<Window::HandleRef>(THIS->windowHandle());
+    }
+
     Icon::OwnedRef Handle_windowIcon(HandleRef _this) {
         return ICON_HEAP_NEW(THIS->windowIcon());
     }

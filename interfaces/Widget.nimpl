@@ -18,6 +18,7 @@ import GraphicsEffect;
 import PaintDevice;
 import Variant;
 import Event;
+import Window;
 
 int WIDGET_SIZE_MAX;   // pass-through of QWIDGETSIZE_MAX
 
@@ -305,7 +306,7 @@ opaque Handle extends Object.Handle {
     string windowFilePath();
     WindowFlags getWindowFlags();
 
-    // QWindow *windowHandle()
+    Window.Handle windowHandle();
 
     Icon.Owned windowIcon();
     WindowModality getWindowModality();
