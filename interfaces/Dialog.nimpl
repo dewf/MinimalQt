@@ -4,6 +4,7 @@ import Object;
 import Common;
 import Icon;
 import Widget;
+import Enums;
 
 interface SignalHandler extends Widget.SignalHandler {
     void accepted();
@@ -17,22 +18,18 @@ enum DialogCode {
 }
 
 opaque Handle extends Widget.Handle {
-    // isModal in Widget
-    void setModal(bool state);
 
     bool isSizeGripEnabled();
+    int result();
+    void setModal(bool modal);
+    void setResult(int i);
     void setSizeGripEnabled(bool enabled);
 
-    // a version where we're setting WindowFlags (Qt::Dialog) - otherwise it won't work
-    // ?? forget what this was for. nested dialogs I think?
-    void setParentDialogFlags(Widget.Handle parent);
-
-    int result();
-    void setResult(int result);
     void accept();
-    void done(int result);
-    void reject();
+    void done(int r);
     int exec();
+    void open();
+    void reject();
 
     // signals ============================
     SignalConnection connect_Accepted(SignalHandler handler);
@@ -40,4 +37,4 @@ opaque Handle extends Widget.Handle {
     SignalConnection connect_Rejected(SignalHandler handler);
 }
 
-Handle create(Widget.Handle parent);
+Handle create(Widget.Handle parent = null, WindowFlags f = 0);
