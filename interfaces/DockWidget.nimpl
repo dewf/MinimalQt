@@ -27,29 +27,18 @@ interface SignalHandler extends Widget.SignalHandler {
 
 @nodispose
 opaque Handle extends Widget.Handle {
-    // properties
     DockWidgetAreas allowedAreas();
-    void setAllowedAreas(DockWidgetAreas areas);
-
     DockWidgetFeatures features();
-    void setFeatures(DockWidgetFeatures features);
-
-    bool isFloating();
-    void setFloating(bool floating);
-
-    // not sure why windowTitle/setWindowTitle appear as properties in the Qt docs -
-    // they don't seem to be re-implemented in QDockWidget ...
-
-    // quasi-properties (not listed under formal properties in Qt docs)
-    Widget.Handle titleBarWidget();
-    void setTitleBarWidget(Widget.Handle widget);
-
-    Widget.Handle getWidget();
-    void setWidget(Widget.Handle widget);
-
-    // methods:
     bool isAreaAllowed(DockWidgetArea area);
+    bool isFloating();
+    void setAllowedAreas(DockWidgetAreas areas);
+    void setFeatures(DockWidgetFeatures features);
+    void setFloating(bool floating);
+    void setTitleBarWidget(Widget.Handle widget);
+    void setWidget(Widget.Handle widget);
+    Widget.Handle titleBarWidget();
     Action.Handle toggleViewAction();
+    Widget.Handle widget();
 
     // signals ============================
     SignalConnection connect_AllowedAreasChanged(SignalHandler handler);

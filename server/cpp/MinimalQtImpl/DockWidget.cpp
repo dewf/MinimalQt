@@ -11,48 +11,48 @@ namespace DockWidget
         return DockWidgetAreas(THIS->allowedAreas());
     }
 
-    void Handle_setAllowedAreas(HandleRef _this, DockWidgetAreas areas) {
-        THIS->setAllowedAreas(static_cast<Qt::DockWidgetAreas>(areas.value));
-    }
-
     DockWidgetFeatures Handle_features(HandleRef _this) {
         return DockWidgetFeatures(THIS->features());
-    }
-
-    void Handle_setFeatures(HandleRef _this, DockWidgetFeatures features) {
-        THIS->setFeatures(static_cast<QDockWidget::DockWidgetFeatures>(features.value));
-    }
-
-    bool Handle_isFloating(HandleRef _this) {
-        return THIS->isFloating();
-    }
-
-    void Handle_setFloating(HandleRef _this, bool floating) {
-        THIS->setFloating(floating);
-    }
-
-    Widget::HandleRef Handle_titleBarWidget(HandleRef _this) {
-        return reinterpret_cast<Widget::HandleRef>(THIS->titleBarWidget());
-    }
-
-    void Handle_setTitleBarWidget(HandleRef _this, Widget::HandleRef widget) {
-        THIS->setTitleBarWidget(AS_QWIDGET_PTR(widget));
-    }
-
-    Widget::HandleRef Handle_getWidget(HandleRef _this) {
-        return reinterpret_cast<Widget::HandleRef>(THIS->widget());
-    }
-
-    void Handle_setWidget(HandleRef _this, Widget::HandleRef widget) {
-        THIS->setWidget(AS_QWIDGET_PTR(widget));
     }
 
     bool Handle_isAreaAllowed(HandleRef _this, DockWidgetArea area) {
         return THIS->isAreaAllowed(static_cast<Qt::DockWidgetArea>(area));
     }
 
+    bool Handle_isFloating(HandleRef _this) {
+        return THIS->isFloating();
+    }
+
+    void Handle_setAllowedAreas(HandleRef _this, DockWidgetAreas areas) {
+        THIS->setAllowedAreas(static_cast<Qt::DockWidgetAreas>(areas.value));
+    }
+
+    void Handle_setFeatures(HandleRef _this, DockWidgetFeatures features) {
+        THIS->setFeatures(static_cast<QDockWidget::DockWidgetFeatures>(features.value));
+    }
+
+    void Handle_setFloating(HandleRef _this, bool floating) {
+        THIS->setFloating(floating);
+    }
+
+    void Handle_setTitleBarWidget(HandleRef _this, Widget::HandleRef widget) {
+        THIS->setTitleBarWidget(AS_QWIDGET_PTR(widget));
+    }
+
+    void Handle_setWidget(HandleRef _this, Widget::HandleRef widget) {
+        THIS->setWidget(AS_QWIDGET_PTR(widget));
+    }
+
+    Widget::HandleRef Handle_titleBarWidget(HandleRef _this) {
+        return reinterpret_cast<Widget::HandleRef>(THIS->titleBarWidget());
+    }
+
     Action::HandleRef Handle_toggleViewAction(HandleRef _this) {
         return reinterpret_cast<Action::HandleRef>(THIS->toggleViewAction());
+    }
+
+    Widget::HandleRef Handle_widget(HandleRef _this) {
+        return reinterpret_cast<Widget::HandleRef>(THIS->widget());
     }
 
     SignalConnectionRef Handle_connect_AllowedAreasChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
