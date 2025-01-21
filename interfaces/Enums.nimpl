@@ -869,6 +869,34 @@ flags ScreenOrientations {
     InvertedLandscapeOrientation = 0x00000008
 }
 
+enum CursorShape {
+    ArrowCursor,
+    UpArrowCursor,
+    CrossCursor,
+    WaitCursor,
+    IBeamCursor,
+    SizeVerCursor,
+    SizeHorCursor,
+    SizeBDiagCursor,
+    SizeFDiagCursor,
+    SizeAllCursor,
+    BlankCursor,
+    SplitVCursor,
+    SplitHCursor,
+    PointingHandCursor,
+    ForbiddenCursor,
+    WhatsThisCursor,
+    BusyCursor,
+    OpenHandCursor,
+    ClosedHandCursor,
+    DragCopyCursor,
+    DragMoveCursor,
+    DragLinkCursor,
+    LastCursor = DragLinkCursor,
+    BitmapCursor = 24,
+    CustomCursor = 25
+}
+
 enum Key {
     // Unicode Basic Latin block (0x00-0x7f)
     Key_Space = 0x20,

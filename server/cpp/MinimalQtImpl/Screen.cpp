@@ -4,7 +4,7 @@
 #include "ObjectInternal.h"
 #include "util/convert.h"
 
-#define THIS (reinterpret_cast<QScreen*>(_this))
+#define THIS (AS_QSCREEN_PTR(_this))
 
 namespace Screen
 {
