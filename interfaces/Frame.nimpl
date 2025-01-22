@@ -4,10 +4,9 @@ import Object;
 import Common;
 import Icon;
 import Widget;
+import Enums;
 
-interface SignalHandler extends Widget.SignalHandler {
-    // (none)
-}
+interface SignalHandler extends Widget.SignalHandler;
 
 enum Shape {
     NoFrame = 0,
@@ -29,29 +28,20 @@ enum Shadow {
 // Qt's frame style is just a bitwise-OR between shape and shadow
 
 opaque Handle extends Widget.Handle {
-    // properties:
+
     Rect frameRect();
-    void setFrameRect(Rect rect);
-
     Shadow frameShadow();
-    void setFrameShadow(Shadow shadow);
-
     Shape frameShape();
-    void setFrameShape(Shape shape);
-    
+    int frameStyle();
     int frameWidth();
-    // read-only
-
     int lineWidth();
-    void setLineWidth(int width);
-
     int midLineWidth();
+    void setFrameRect(Rect r);
+    void setFrameShadow(Shadow shadow);
+    void setFrameShape(Shape shape);
+    void setFrameStyle(int style);
+    void setLineWidth(int width);
     void setMidLineWidth(int width);
-
-    // methods:
-    void setFrameStyle(Shape shape, Shadow shadow);
-
-    // no extra signals
 }
 
-Handle create();
+Handle create(Widget.Handle parent = null, WindowFlags f = 0);
