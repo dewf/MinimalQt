@@ -21,9 +21,8 @@ namespace KeySequence
         THIS->swap(QKEYSEQ_VALUE(other));
     }
 
-    std::string Handle_toString2(HandleRef _this, const std::optional<SequenceFormat>& format) {
-        const auto qFormat = static_cast<QKeySequence::SequenceFormat>(format.value_or(SequenceFormat::PortableText));
-        return THIS->toString(qFormat).toStdString();
+    std::string Handle_toString2(HandleRef _this, SequenceFormat format /* SequenceFormat::PortableText */) {
+        return THIS->toString(static_cast<QKeySequence::SequenceFormat>(format)).toStdString();
     }
 
     void Owned_dispose(OwnedRef _this) {
@@ -38,9 +37,8 @@ namespace KeySequence
         return KEYSEQ_HEAP_NEW(static_cast<QKeySequence::StandardKey>(key));
     }
 
-    OwnedRef create(const std::string& key, const std::optional<SequenceFormat>& format) {
-        const auto qFormat = static_cast<QKeySequence::SequenceFormat>(format.value_or(SequenceFormat::NativeText));
-        return KEYSEQ_HEAP_NEW(QString::fromStdString(key), qFormat);
+    OwnedRef create(const std::string& key, SequenceFormat format /* SequenceFormat::NativeText */) {
+        return KEYSEQ_HEAP_NEW(QString::fromStdString(key), static_cast<QKeySequence::SequenceFormat>(format));
     }
 
     OwnedRef create(Key key, Modifiers modifiers) {
