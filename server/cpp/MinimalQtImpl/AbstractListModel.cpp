@@ -3,6 +3,7 @@
 
 #include "VariantInternal.h"
 #include "ModelIndexInternal.h"
+#include "SafeReturnInternal.h"
 
 #define ABSLISTMODEL_THIS (reinterpret_cast<QAbstractListModel*>(_this))
 #define SUBCLASSED_THIS (reinterpret_cast<Implementation*>(_this))
@@ -29,16 +30,18 @@ namespace AbstractListModel
         [[nodiscard]]
         QVariant data(const QModelIndex &index, int role) const override {
             ModelIndex::__Handle index2(index);
-            const auto variant = methodDelegate->data(&index2, static_cast<ItemDataRole>(role));
-            return variant->consume();
+            SafeReturn::__Handle safeRet;
+            methodDelegate->data(&index2, static_cast<ItemDataRole>(role), &safeRet);
+            return safeRet.variant;
         }
 
         // ==== optional methods ==========================================
         [[nodiscard]]
         QVariant headerData(int section, Qt::Orientation orientation, int role) const override {
             if (methodMask & HeaderData) {
-                const auto variant = methodDelegate->headerData(section, static_cast<Orientation>(orientation), static_cast<ItemDataRole>(role));
-                return variant->consume();
+                SafeReturn::__Handle safeRet;
+                methodDelegate->headerData(section, static_cast<Orientation>(orientation), static_cast<ItemDataRole>(role), &safeRet);
+                return safeRet.variant;
             } else {
                 return QAbstractListModel::headerData(section, orientation, role);
             }

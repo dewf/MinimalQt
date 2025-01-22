@@ -359,6 +359,11 @@ add_library(MinimalQtImpl STATIC
     ../RegularExpressionInternal.h
     ../RegularExpression.cpp
 
+    ../generated/SafeReturn.h
+    ../generated/SafeReturn_wrappers.cpp
+    ../SafeReturn.cpp
+    ../SafeReturnInternal.h
+
     ../generated/Screen.h
     ../generated/Screen_wrappers.cpp
     ../Screen.cpp

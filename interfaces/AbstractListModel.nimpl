@@ -6,9 +6,7 @@ import AbstractItemModel;
 import Variant;
 import ModelIndex;
 import PersistentModelIndex;
-
-
-
+import SafeReturn;
 
 // ======================================================================
 
@@ -44,10 +42,10 @@ namedbits ImplementedMethodMask { // TODO: inherit from AbstractItemModel Delega
 interface ImplementationMethods {
     // required:
     int rowCount(ModelIndex.Handle parent);
-    Variant.SafeReturn data(ModelIndex.Handle index, ItemDataRole role);
+    void data(ModelIndex.Handle index, ItemDataRole role, SafeReturn.Handle ret);
     
     // optional (mask-activated):
-    Variant.SafeReturn headerData(int section, Orientation orientation, ItemDataRole role);
+    void headerData(int section, Orientation orientation, ItemDataRole role, SafeReturn.Handle ret);
     ItemFlags getFlags(ModelIndex.Handle index, ItemFlags baseFlags);
     bool setData(ModelIndex.Handle index, Variant.Handle value, ItemDataRole role);
     

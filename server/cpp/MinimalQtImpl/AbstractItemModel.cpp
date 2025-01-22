@@ -1,12 +1,12 @@
 #include "generated/AbstractItemModel.h"
 #include "AbstractItemModelInternal.h"
 
-#include <QAbstractItemModel>
-
 #include "ObjectInternal.h"
 #include "MimeDataInternal.h"
 #include "ModelIndexInternal.h"
 #include "VariantInternal.h"
+#include "SafeReturnInternal.h"
+
 #include "util/convert.h"
 
 #define THIS (reinterpret_cast<QAbstractItemModel*>(_this))
@@ -364,15 +364,17 @@ namespace AbstractItemModel
         [[nodiscard]]
         QModelIndex index(int row, int column, const QModelIndex &parent) const override {
             ModelIndex::__Handle parent2(parent);
-            const auto result = methodDelegate->index(row, column, &parent2);
-            return result->consume();
+            SafeReturn::__Handle safeRet;
+            methodDelegate->index(row, column, &parent2, &safeRet);
+            return safeRet.modelIndex;
         }
 
         [[nodiscard]]
         QModelIndex parent(const QModelIndex &child) const override {
             ModelIndex::__Handle child2(child);
-            const auto result = methodDelegate->parent(&child2);
-            return result->consume();
+            SafeReturn::__Handle safeRet;
+            methodDelegate->parent(&child2, &safeRet);
+            return safeRet.modelIndex;
         }
 
         [[nodiscard]]
@@ -390,8 +392,9 @@ namespace AbstractItemModel
         [[nodiscard]]
         QVariant data(const QModelIndex &index, int role) const override {
             ModelIndex::__Handle index2(index);
-            const auto result = methodDelegate->data(&index2, role);
-            return result->consume();
+            SafeReturn::__Handle safeRet;
+            methodDelegate->data(&index2, role, &safeRet);
+            return safeRet.variant;
         }
 
         // ===== optional methods ==================================================
@@ -430,8 +433,9 @@ namespace AbstractItemModel
         [[nodiscard]]
         QVariant headerData(int section, Qt::Orientation orientation, int role) const override {
             if (methodMask & HeaderData) {
-                const auto variant = methodDelegate->headerData(section, static_cast<Orientation>(orientation), role);
-                return variant->consume();
+                SafeReturn::__Handle safeRet;
+                methodDelegate->headerData(section, static_cast<Orientation>(orientation), role, &safeRet);
+                return safeRet.variant;
             } else {
                 return QAbstractItemModel::headerData(section, orientation, role);
             }

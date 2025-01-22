@@ -7,6 +7,7 @@ import ModelIndex;
 import PersistentModelIndex;
 import Variant;
 import MimeData;
+import SafeReturn;
 
 enum LayoutChangeHint
 {
@@ -136,17 +137,17 @@ namedbits ImplementationMask {
 
 interface ImplementationMethods {
     // required:
-    ModelIndex.SafeReturn index(int row, int column, ModelIndex.Handle parent);
-    ModelIndex.SafeReturn parent(ModelIndex.Handle index);
+    void index(int row, int column, ModelIndex.Handle parent, SafeReturn.Handle ret);
+    void parent(ModelIndex.Handle index, SafeReturn.Handle ret);
     int rowCount(ModelIndex.Handle parent);
     int columnCount(ModelIndex.Handle parent);
-    Variant.SafeReturn data(ModelIndex.Handle index, int role);
+    void data(ModelIndex.Handle index, int role, SafeReturn.Handle ret);
 
     // optional (mask-activated):
     bool hasChildren(ModelIndex.Handle parent);
     bool setData(ModelIndex.Handle index, Variant.Handle value, int role);
     ItemFlags getFlags(ModelIndex.Handle index, ItemFlags baseFlags);
-    Variant.SafeReturn headerData(int section, Orientation orientation, int role);
+    void headerData(int section, Orientation orientation, int role, SafeReturn.Handle ret);
     bool setHeaderData(int section, Orientation orientation, Variant.Handle value, int role);
     void sort(int column, SortOrder order);
 }

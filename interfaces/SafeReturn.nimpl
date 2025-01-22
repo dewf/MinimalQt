@@ -1,0 +1,10 @@
+module SafeReturn;
+
+import ModelIndex;
+import Variant;
+
+@nodispose
+opaque Handle {
+    void setModelIndex(ModelIndex.Handle index);
+    void setVariant(Variant.Handle variant);
+}
