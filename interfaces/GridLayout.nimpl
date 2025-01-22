@@ -5,32 +5,19 @@ import Common;
 import Widget;
 import Layout;
 import Enums;
+import LayoutItem;
 
-interface SignalHandler extends Layout.SignalHandler {
-    // none of our own
+interface SignalHandler extends Layout.SignalHandler;
+
+struct ItemPositionResult {
+    int row;
+    int column;
+    int rowSpan;
+    int columnSpan;
 }
 
 opaque Handle extends Layout.Handle {
-    static {
-        struct ItemPositionResult {
-            int row;
-            int column;
-            int rowSpan;
-            int columnSpan;
-        }
-    }
-
-    // properties:
-    int horizontalSpacing();
-    void setHorizontalSpacing(int value);
-
-    int verticalSpacing();
-    void setVerticalSpacing(int value);
-
-    // methods:
-    // void addItem(QLayoutItem *item, int row, int column, int rowSpan = 1, int columnSpan = 1, Qt::Alignment alignment = Qt::Alignment());
-    // TODO: need to figure out layout items
-    
+    void addItem(LayoutItem.Handle item, int row, int column, int rowSpan = 1, int columnSpan = 1, Alignment alignment = 0);
     void addLayout(Layout.Handle layout, int row, int column, Alignment alignment = 0);
     void addLayout(Layout.Handle layout, int row, int column, int rowSpan, int columnSpan, Alignment alignment = 0);
     void addWidget(Widget.Handle widget, int row, int column, Alignment alignment = 0);
@@ -40,21 +27,20 @@ opaque Handle extends Layout.Handle {
     int columnMinimumWidth(int column);
     int columnStretch(int column);
     ItemPositionResult getItemPosition(int index);
-
-    // QLayoutItem * itemAtPosition(int row, int column);
-    // TODO: need to figure out layout items, because of multiple inheritance issues
-
+    int horizontalSpacing();
+    LayoutItem.Handle itemAtPosition(int row, int column);
     Corner originCorner();
     int rowCount();
     int rowMinimumHeight(int row);
     int rowStretch(int row);
     void setColumnMinimumWidth(int column, int minSize);
     void setColumnStretch(int column, int stretch);
+    void setHorizontalSpacing(int spacing);
     void setOriginCorner(Corner corner);
     void setRowMinimumHeight(int row, int minSize);
     void setRowStretch(int row, int stretch);
-
-    // no extra signals
+    void setVerticalSpacing(int spacing);
+    int verticalSpacing();
 }
 
-Handle create(Option<Widget.Handle> parent);
+Handle create(Widget.Handle parent = null);

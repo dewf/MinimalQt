@@ -2,6 +2,7 @@
 #include "GridLayoutInternal.h"
 
 #include "LayoutInternal.h"
+#include "LayoutItemInternal.h"
 #include "WidgetInternal.h"
 
 #include "util/convert.h"
@@ -9,20 +10,8 @@
 #define THIS (reinterpret_cast<QGridLayout*>(_this))
 
 namespace GridLayout {
-    int32_t Handle_horizontalSpacing(HandleRef _this) {
-        return THIS->horizontalSpacing();
-    }
-
-    void Handle_setHorizontalSpacing(HandleRef _this, int32_t value) {
-        THIS->setHorizontalSpacing(value);
-    }
-
-    int32_t Handle_verticalSpacing(HandleRef _this) {
-        return THIS->verticalSpacing();
-    }
-
-    void Handle_setVerticalSpacing(HandleRef _this, int32_t value) {
-        THIS->setVerticalSpacing(value);
+    void Handle_addItem(HandleRef _this, LayoutItem::HandleRef item, int32_t row, int32_t column, int32_t rowSpan /* 1 */, int32_t columnSpan /* 1 */, Alignment alignment /* 0 */) {
+        THIS->addItem(AS_QLAYOUTITEM_PTR(item), row, column, rowSpan, columnSpan, static_cast<Qt::Alignment>(alignment.value));
     }
 
     void Handle_addLayout(HandleRef _this, Layout::HandleRef layout, int32_t row, int32_t column, Alignment alignment /* 0 */) {
@@ -57,10 +46,18 @@ namespace GridLayout {
         return THIS->columnStretch(column);
     }
 
-    Handle::ItemPositionResult Handle_getItemPosition(HandleRef _this, int32_t index) {
-        Handle::ItemPositionResult result { 0, 0, 0, 0};
-        THIS->getItemPosition(index, &result.row, &result.column, &result.rowSpan, &result.columnSpan);
-        return result;
+    ItemPositionResult Handle_getItemPosition(HandleRef _this, int32_t index) {
+        int row, col, rowSpan, colSpan;
+        THIS->getItemPosition(index, &row, &col, &rowSpan, &colSpan);
+        return ItemPositionResult { row, col, rowSpan, colSpan };
+    }
+
+    int32_t Handle_horizontalSpacing(HandleRef _this) {
+        return THIS->horizontalSpacing();
+    }
+
+    LayoutItem::HandleRef Handle_itemAtPosition(HandleRef _this, int32_t row, int32_t column) {
+        return reinterpret_cast<LayoutItem::HandleRef>(THIS->itemAtPosition(row, column));
     }
 
     Corner Handle_originCorner(HandleRef _this) {
@@ -79,32 +76,43 @@ namespace GridLayout {
         return THIS->rowStretch(row);
     }
 
-    void Handle_setColumnMinimumWidth(HandleRef _this, int32_t column, int32_t minWidth) {
-        THIS->setColumnMinimumWidth(column, minWidth);
+    void Handle_setColumnMinimumWidth(HandleRef _this, int32_t column, int32_t minSize) {
+        THIS->setColumnMinimumWidth(column, minSize);
     }
 
     void Handle_setColumnStretch(HandleRef _this, int32_t column, int32_t stretch) {
         THIS->setColumnStretch(column, stretch);
     }
 
+    void Handle_setHorizontalSpacing(HandleRef _this, int32_t spacing) {
+        THIS->setHorizontalSpacing(spacing);
+    }
+
     void Handle_setOriginCorner(HandleRef _this, Corner corner) {
         THIS->setOriginCorner(static_cast<Qt::Corner>(corner));
     }
 
-    void Handle_setRowMinimumHeight(HandleRef _this, int32_t row, int32_t minHeight) {
-        THIS->setRowMinimumHeight(row, minHeight);
+    void Handle_setRowMinimumHeight(HandleRef _this, int32_t row, int32_t minSize) {
+        THIS->setRowMinimumHeight(row, minSize);
     }
 
     void Handle_setRowStretch(HandleRef _this, int32_t row, int32_t stretch) {
         THIS->setRowStretch(row, stretch);
     }
 
+    void Handle_setVerticalSpacing(HandleRef _this, int32_t spacing) {
+        THIS->setVerticalSpacing(spacing);
+    }
+
+    int32_t Handle_verticalSpacing(HandleRef _this) {
+        return THIS->verticalSpacing();
+    }
+
     void Handle_dispose(HandleRef _this) {
         delete THIS;
     }
 
-    HandleRef create(const std::optional<Widget::HandleRef>& parent) {
-        const auto qParent = Widget::fromOptionalHandle(parent);
-        return reinterpret_cast<HandleRef>(new QGridLayout(qParent));
+    HandleRef create(Widget::HandleRef parent /* nullptr */) {
+        return reinterpret_cast<HandleRef>(new QGridLayout(AS_QWIDGET_PTR(parent)));
     }
 }
