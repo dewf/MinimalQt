@@ -8,70 +8,60 @@ import Enums;
 import Pixmap;
 import Widget;
 
+
 interface SignalHandler extends Frame.SignalHandler {
     void linkActivated(string link);
     void linkHovered(string link);
 }
 
 opaque Handle extends Frame.Handle {
-    // properties =================
     Alignment alignment();
-    void setAlignment(Alignment align);
-    
-    bool hasSelectedText();
-    // read-only
-
-    int indent();
-    void setIndent(int indent);
-    
-    int margin();
-    void setMargin(int margin);
-
-    bool openExternalLinks();
-    void setOpenExternalLinks(bool state);
-
-    Pixmap.Owned getPixmap();
-    void setPixmap(Pixmap.Handle pixmap);
-
-    bool hasScaledContents();
-    void setScaledContents(bool state);
-    
-    string selectedText();
-    // read-only
-
-    string text();
-    void setText(string text);
-
-    TextFormatEnum getTextFormat();
-    void setTextFormat(TextFormatEnum format);
-
-    TextInteractionFlags getTextInteractionFlags();
-    void setTextInteractionFlags(TextInteractionFlags interactionFlags);
-
-    bool wordWrap();
-    void setWordWrap(bool state);
-
-    // quasi-properties ===========
     Widget.Handle buddy();
-    void setBuddy(Widget.Handle buddy);
+    bool hasScaledContents();
+    bool hasSelectedText();
+    int indent();
+    int margin();
 
     // QMovie * movie() const
+
+    bool openExternalLinks();
+
+    // (since 6.0) QPicture picture() const
+
+    Pixmap.Owned pixmap();
+
+    // (since 6.1) QTextDocument::ResourceProvider resourceProvider() const
+
+    string selectedText();
+    int selectionStart();
+    void setAlignment(Alignment alignment);
+    void setBuddy(Widget.Handle buddy);
+    void setIndent(int indent);
+    void setMargin(int margin);
+    void setOpenExternalLinks(bool open);
+
+    // (since 6.1) void setResourceProvider(const QTextDocument::ResourceProvider &provider)
+
+    void setScaledContents(bool state);
+    void setSelection(int start, int length);
+    void setTextFormat(TextFormatEnum format);
+    void setTextInteractionFlags(TextInteractionFlags flags_);
+    void setWordWrap(bool on);
+    string text();
+    TextFormatEnum textFormat();
+    TextInteractionFlags textInteractionFlags();
+    bool wordWrap();
+    void clear();
+
     // void setMovie(QMovie *movie)
 
-    // QPicture picture() const
-    // void setPicture(const QPicture &picture)
-
-    // QTextDocument::ResourceProvider resourceProvider() const
-    // void setResourceProvider(const QTextDocument::ResourceProvider &provider)
-
-    int selectionStart();
-    // read-only
-
-    // methods ============================
-    void clear();
-    void setSelection(int start, int length);
     void setNum(int num);
     void setNum(double num);
+
+    // void setPicture(const QPicture &picture)
+
+    void setPixmap(Pixmap.Handle pixmap);
+    void setText(string text);
 
     // signals ============================
     SignalConnection connect_LinkActivated(SignalHandler handler);

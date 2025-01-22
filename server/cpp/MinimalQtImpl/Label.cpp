@@ -12,8 +12,12 @@ namespace Label
         return Alignment(THIS->alignment());
     }
 
-    void Handle_setAlignment(HandleRef _this, Alignment align) {
-        THIS->setAlignment(static_cast<Qt::AlignmentFlag>(align.value));
+    Widget::HandleRef Handle_buddy(HandleRef _this) {
+        return reinterpret_cast<Widget::HandleRef>(THIS->buddy());
+    }
+
+    bool Handle_hasScaledContents(HandleRef _this) {
+        return THIS->hasScaledContents();
     }
 
     bool Handle_hasSelectedText(HandleRef _this) {
@@ -24,96 +28,84 @@ namespace Label
         return THIS->indent();
     }
 
-    void Handle_setIndent(HandleRef _this, int32_t indent) {
-        THIS->setIndent(indent);
-    }
-
     int32_t Handle_margin(HandleRef _this) {
         return THIS->margin();
-    }
-
-    void Handle_setMargin(HandleRef _this, int32_t margin) {
-        THIS->setMargin(margin);
     }
 
     bool Handle_openExternalLinks(HandleRef _this) {
         return THIS->openExternalLinks();
     }
 
-    void Handle_setOpenExternalLinks(HandleRef _this, bool state) {
-        THIS->setOpenExternalLinks(state);
-    }
-
-    Pixmap::OwnedRef Handle_getPixmap(HandleRef _this) {
+    Pixmap::OwnedRef Handle_pixmap(HandleRef _this) {
         return PIXMAP_HEAP_NEW(THIS->pixmap());
-    }
-
-    void Handle_setPixmap(HandleRef _this, Pixmap::HandleRef pixmap) {
-        THIS->setPixmap(QPIXMAP_VALUE(pixmap));
-    }
-
-    bool Handle_hasScaledContents(HandleRef _this) {
-        return THIS->hasScaledContents();
-    }
-
-    void Handle_setScaledContents(HandleRef _this, bool state) {
-        THIS->setScaledContents(state);
     }
 
     std::string Handle_selectedText(HandleRef _this) {
         return THIS->selectedText().toStdString();
     }
 
-    std::string Handle_text(HandleRef _this) {
-        return THIS->text().toStdString();
+    int32_t Handle_selectionStart(HandleRef _this) {
+        return THIS->selectionStart();
     }
 
-    void Handle_setText(HandleRef _this, const std::string& text) {
-        THIS->setText(QString::fromStdString(text));
-    }
-
-    TextFormatEnum Handle_getTextFormat(HandleRef _this) {
-        return static_cast<TextFormatEnum>(THIS->textFormat());
-    }
-
-    void Handle_setTextFormat(HandleRef _this, TextFormatEnum format) {
-        THIS->setTextFormat(static_cast<Qt::TextFormat>(format));
-    }
-
-    TextInteractionFlags Handle_getTextInteractionFlags(HandleRef _this) {
-        return TextInteractionFlags(THIS->textInteractionFlags());
-    }
-
-    void Handle_setTextInteractionFlags(HandleRef _this, TextInteractionFlags interactionFlags) {
-        THIS->setTextInteractionFlags(static_cast<Qt::TextInteractionFlags>(interactionFlags.value));
-    }
-
-    bool Handle_wordWrap(HandleRef _this) {
-        return THIS->wordWrap();
-    }
-
-    void Handle_setWordWrap(HandleRef _this, bool state) {
-        THIS->setWordWrap(state);
-    }
-
-    Widget::HandleRef Handle_buddy(HandleRef _this) {
-        return reinterpret_cast<Widget::HandleRef>(THIS->buddy());
+    void Handle_setAlignment(HandleRef _this, Alignment align) {
+        THIS->setAlignment(static_cast<Qt::AlignmentFlag>(align.value));
     }
 
     void Handle_setBuddy(HandleRef _this, Widget::HandleRef buddy) {
         THIS->setBuddy(AS_QWIDGET_PTR(buddy));
     }
 
-    int32_t Handle_selectionStart(HandleRef _this) {
-        return THIS->selectionStart();
+    void Handle_setIndent(HandleRef _this, int32_t indent) {
+        THIS->setIndent(indent);
     }
 
-    void Handle_clear(HandleRef _this) {
-        THIS->clear();
+    void Handle_setMargin(HandleRef _this, int32_t margin) {
+        THIS->setMargin(margin);
+    }
+
+    void Handle_setOpenExternalLinks(HandleRef _this, bool state) {
+        THIS->setOpenExternalLinks(state);
+    }
+
+    void Handle_setScaledContents(HandleRef _this, bool state) {
+        THIS->setScaledContents(state);
     }
 
     void Handle_setSelection(HandleRef _this, int32_t start, int32_t length) {
         THIS->setSelection(start, length);
+    }
+
+    void Handle_setTextFormat(HandleRef _this, TextFormatEnum format) {
+        THIS->setTextFormat(static_cast<Qt::TextFormat>(format));
+    }
+
+    void Handle_setTextInteractionFlags(HandleRef _this, TextInteractionFlags interactionFlags) {
+        THIS->setTextInteractionFlags(static_cast<Qt::TextInteractionFlags>(interactionFlags.value));
+    }
+
+    void Handle_setWordWrap(HandleRef _this, bool state) {
+        THIS->setWordWrap(state);
+    }
+
+    std::string Handle_text(HandleRef _this) {
+        return THIS->text().toStdString();
+    }
+
+    TextFormatEnum Handle_textFormat(HandleRef _this) {
+        return static_cast<TextFormatEnum>(THIS->textFormat());
+    }
+
+    TextInteractionFlags Handle_textInteractionFlags(HandleRef _this) {
+        return TextInteractionFlags(THIS->textInteractionFlags());
+    }
+
+    bool Handle_wordWrap(HandleRef _this) {
+        return THIS->wordWrap();
+    }
+
+    void Handle_clear(HandleRef _this) {
+        THIS->clear();
     }
 
     void Handle_setNum(HandleRef _this, int32_t num) {
@@ -122,6 +114,14 @@ namespace Label
 
     void Handle_setNum(HandleRef _this, double num) {
         THIS->setNum(num);
+    }
+
+    void Handle_setPixmap(HandleRef _this, Pixmap::HandleRef pixmap) {
+        THIS->setPixmap(QPIXMAP_VALUE(pixmap));
+    }
+
+    void Handle_setText(HandleRef _this, const std::string& text) {
+        THIS->setText(QString::fromStdString(text));
     }
 
     SignalConnectionRef Handle_connect_LinkActivated(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
