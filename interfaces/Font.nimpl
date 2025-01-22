@@ -134,7 +134,7 @@ opaque Handle {
     void setStretch(int factor);
     void setStrikeOut(bool enable);
     void setStyle(Style style);
-    void setStyleHint(StyleHint hint, Option<StyleStrategy> strategy);
+    void setStyleHint(StyleHint hint, StyleStrategy strategy = StyleStrategy.PreferDefault);
     void setStyleName(string styleName);
     void setStyleStrategy(StyleStrategy s);
     void setUnderline(bool enable);
@@ -146,7 +146,7 @@ opaque Handle {
     Style style();
     StyleHint styleHint();
     string styleName();
-    StyleStrategy styleStrategy();
+    StyleStrategy getStyleStrategy();
     void swap(Handle other);
     string toString2(); // +2 to avoid conflict with built-in .NET (we'd need to add 'new' or 'override', but the codegen doesn't do that presently)
     bool underline();
@@ -160,14 +160,8 @@ opaque Handle {
 
 opaque Owned extends Handle;
 
-options CreateOptions {
-    int pointSize;
-    int weight;
-    bool italic;
-}
-
 Owned create();
 Owned create(Handle font, PaintDevice.Handle pd);
-Owned create(string family, CreateOptions opts);
-Owned create(Array<string> families, CreateOptions opts);
-Owned create(Handle font);
+Owned create(string family, int pointSize = -1, int weight = -1, bool italic = false);
+Owned create(Array<string> families, int pointSize = -1, int weight = -1, bool italic = false);
+Owned create(Handle other);

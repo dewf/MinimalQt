@@ -186,9 +186,8 @@ namespace Font
         THIS->setStyle(static_cast<QFont::Style>(style));
     }
 
-    void Handle_setStyleHint(HandleRef _this, StyleHint hint, const std::optional<StyleStrategy>& strategy) {
-        const auto strategy2 = strategy.value_or(StyleStrategy::PreferDefault);
-        THIS->setStyleHint(static_cast<QFont::StyleHint>(hint), static_cast<QFont::StyleStrategy>(strategy2));
+    void Handle_setStyleHint(HandleRef _this, StyleHint hint, StyleStrategy strategy /* StyleStrategy::PreferDefault */) {
+        THIS->setStyleHint(static_cast<QFont::StyleHint>(hint), static_cast<QFont::StyleStrategy>(strategy));
     }
 
     void Handle_setStyleName(HandleRef _this, const std::string& styleName) {
@@ -235,7 +234,7 @@ namespace Font
         return THIS->styleName().toStdString();
     }
 
-    StyleStrategy Handle_styleStrategy(HandleRef _this) {
+    StyleStrategy Handle_getStyleStrategy(HandleRef _this) {
         return static_cast<StyleStrategy>(THIS->styleStrategy());
     }
 
@@ -287,20 +286,12 @@ namespace Font
         return FONT_HEAP_NEW(QFONT_VALUE(font), reinterpret_cast<QPaintDevice*>(pd));
     }
 
-    OwnedRef create(const std::string& family, const CreateOptions& opts) {
-        return FONT_HEAP_NEW(
-            QString::fromStdString(family),
-                opts.getOrDefaultPointSize(-1),
-                opts.getOrDefaultWeight(-1),
-                opts.getOrDefaultItalic(false));
+    OwnedRef create(const std::string& family, int32_t pointSize /* -1 */, int32_t weight /* -1 */, bool italic /* false */) {
+        return FONT_HEAP_NEW(QString::fromStdString(family), pointSize, weight, italic);
     }
 
-    OwnedRef create(const std::vector<std::string>& families, const CreateOptions& opts) {
-        return FONT_HEAP_NEW(
-            toQStringList(families),
-            opts.getOrDefaultPointSize(-1),
-            opts.getOrDefaultWeight(-1),
-            opts.getOrDefaultItalic(false));
+    OwnedRef create(const std::vector<std::string>& families, int32_t pointSize /* -1 */, int32_t weight /* -1 */, bool italic /* false */) {
+        return FONT_HEAP_NEW(toQStringList(families), pointSize, weight, italic);
     }
 
     OwnedRef create(HandleRef font) {
