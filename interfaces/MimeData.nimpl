@@ -26,9 +26,9 @@ opaque Handle extends Object.Handle {
     void setHtml(string html);
     void setImageData(Variant.Handle image);
     void setText(string text);
-    void setUrls(Array<Url.Handle> urls);
+    void setUrls(Url.List urls);
     string text();
-    Array<Url.Owned> urls();
+    Url.List urls();
 }
 
 Handle create();
