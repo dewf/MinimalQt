@@ -35,7 +35,7 @@ namespace ComboBox
     }
 
     Variant::OwnedRef Handle_currentData(HandleRef _this, ItemDataRole role /* ItemDataRole::UserRole */) {
-        return new Variant::__Owned { THIS->currentData(static_cast<int>(role)) };
+        return VARIANT_HEAP_NEW(THIS->currentData(static_cast<int>(role)));
     }
 
     int32_t Handle_currentIndex(HandleRef _this) {
@@ -51,7 +51,7 @@ namespace ComboBox
     }
 
     int32_t Handle_findData(HandleRef _this, Variant::HandleRef data, ItemDataRole role /* ItemDataRole::UserRole */, MatchFlags flags_ /* MatchFlags::MatchExactly | MatchFlags::MatchCaseSensitive */) {
-        return THIS->findData(data->value, static_cast<int>(role), static_cast<Qt::MatchFlags>(flags_.value));
+        return THIS->findData(QVARIANT_VALUE(data), static_cast<int>(role), static_cast<Qt::MatchFlags>(flags_.value));
     }
 
     int32_t Handle_findText(HandleRef _this, const std::string& text, MatchFlags flags_ /* MatchFlags::MatchExactly | MatchFlags::MatchCaseSensitive */) {
@@ -95,7 +95,7 @@ namespace ComboBox
     }
 
     Variant::OwnedRef Handle_itemData(HandleRef _this, int32_t index, ItemDataRole role /* ItemDataRole::UserRole */) {
-        return new Variant::__Owned { THIS->itemData(index, static_cast<int>(role)) };
+        return VARIANT_HEAP_NEW(THIS->itemData(index, static_cast<int>(role)));
     }
 
     AbstractItemDelegate::HandleRef Handle_itemDelegate(HandleRef _this) {
@@ -171,7 +171,7 @@ namespace ComboBox
     }
 
     void Handle_setItemData(HandleRef _this, int32_t index, Variant::HandleRef value, ItemDataRole role /* ItemDataRole::UserRole */) {
-        THIS->setItemData(index, value->value, static_cast<int>(role));
+        THIS->setItemData(index, QVARIANT_VALUE(value), static_cast<int>(role));
     }
 
     void Handle_setItemDelegate(HandleRef _this, AbstractItemDelegate::HandleRef delegate_) {

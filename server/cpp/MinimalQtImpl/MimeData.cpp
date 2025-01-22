@@ -17,7 +17,7 @@ namespace MimeData
     }
 
     Variant::OwnedRef Handle_colorData(HandleRef _this) {
-        return new Variant::__Owned { THIS->colorData() };
+        return VARIANT_HEAP_NEW(THIS->colorData());
     }
 
     std::shared_ptr<NativeBuffer<uint8_t>> Handle_data(HandleRef _this, const std::string& mimeType) {
@@ -64,7 +64,7 @@ namespace MimeData
     }
 
     Variant::OwnedRef Handle_imageData(HandleRef _this) {
-        return new Variant::__Owned { THIS->imageData() };
+        return VARIANT_HEAP_NEW(THIS->imageData());
     }
 
     void Handle_removeFormat(HandleRef _this, const std::string& mimeType) {
@@ -72,7 +72,7 @@ namespace MimeData
     }
 
     void Handle_setColorData(HandleRef _this, Variant::HandleRef color) {
-        THIS->setColorData(color->value);
+        THIS->setColorData(QVARIANT_VALUE(color));
     }
 
     void Handle_setData(HandleRef _this, const std::string& mimeType, const std::shared_ptr<NativeBuffer<uint8_t>>& data) {
@@ -87,7 +87,7 @@ namespace MimeData
     }
 
     void Handle_setImageData(HandleRef _this, Variant::HandleRef image) {
-        THIS->setImageData(image->value);
+        THIS->setImageData(QVARIANT_VALUE(image));
     }
 
     void Handle_setText(HandleRef _this, const std::string& text) {

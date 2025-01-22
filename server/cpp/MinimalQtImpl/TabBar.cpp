@@ -142,7 +142,7 @@ namespace TabBar
     }
 
     void Handle_setTabData(HandleRef _this, int32_t index, Variant::HandleRef data) {
-        THIS->setTabData(index, data->value);
+        THIS->setTabData(index, QVARIANT_VALUE(data));
     }
 
     void Handle_setTabEnabled(HandleRef _this, int32_t index, bool enabled) {
@@ -194,7 +194,7 @@ namespace TabBar
     }
 
     Variant::OwnedRef Handle_tabData(HandleRef _this, int32_t index) {
-        return new Variant::__Owned { THIS->tabData(index) };
+        return VARIANT_HEAP_NEW(THIS->tabData(index));
     }
 
     Icon::OwnedRef Handle_tabIcon(HandleRef _this, int32_t index) {

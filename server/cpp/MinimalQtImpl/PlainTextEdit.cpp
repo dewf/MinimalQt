@@ -103,7 +103,7 @@ namespace PlainTextEdit
     }
 
     Variant::OwnedRef Handle_loadResource(HandleRef _this, int32_t type, Url::HandleRef name) {
-        return new Variant::__Owned { THIS->loadResource(type, QURL_VALUE(name)) };
+        return VARIANT_HEAP_NEW(THIS->loadResource(type, QURL_VALUE(name)));
     }
 
     int32_t Handle_maximumBlockCount(HandleRef _this) {

@@ -245,8 +245,7 @@ namespace StandardItem
     }
 
     Variant::OwnedRef Handle_data(HandleRef _this, const std::optional<int32_t>& role) {
-        const auto ret = THIS->data(role.value_or(Qt::UserRole + 1));
-        return new Variant::__Owned { ret };
+        return VARIANT_HEAP_NEW(THIS->data(role.value_or(Qt::UserRole + 1)));
     }
 
     bool Handle_hasChildren(HandleRef _this) {
@@ -314,7 +313,7 @@ namespace StandardItem
     }
 
     void Handle_setData(HandleRef _this, Variant::HandleRef value, const std::optional<int32_t>& role) {
-        THIS->setData(value->value, role.value_or(Qt::UserRole + 1));
+        THIS->setData(QVARIANT_VALUE(value), role.value_or(Qt::UserRole + 1));
     }
 
     void Handle_sortChildren(HandleRef _this, int32_t column, const std::optional<SortOrder>& order) {

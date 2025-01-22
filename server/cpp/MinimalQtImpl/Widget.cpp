@@ -231,7 +231,7 @@ namespace Widget
     }
 
     Variant::OwnedRef Handle_inputMethodQuery(HandleRef _this, InputMethodQuery query) {
-        return new Variant::__Owned { THIS->inputMethodQuery(static_cast<Qt::InputMethodQuery>(query)) };
+        return VARIANT_HEAP_NEW(THIS->inputMethodQuery(static_cast<Qt::InputMethodQuery>(query)));
     }
 
     void Handle_insertAction(HandleRef _this, Action::HandleRef before, Action::HandleRef action) {

@@ -28,7 +28,7 @@ namespace Action
     }
 
     Variant::OwnedRef Handle_data(HandleRef _this) {
-        return new Variant::__Owned { THIS->data() };
+        return VARIANT_HEAP_NEW(THIS->data());
     }
 
     Font::OwnedRef Handle_font(HandleRef _this) {
@@ -92,7 +92,7 @@ namespace Action
     }
 
     void Handle_setData(HandleRef _this, Variant::HandleRef data) {
-        THIS->setData(data->value);
+        THIS->setData(QVARIANT_VALUE(data));
     }
 
     void Handle_setFont(HandleRef _this, Font::HandleRef font) {

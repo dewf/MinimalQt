@@ -62,8 +62,8 @@ namespace AbstractListModel
         bool setData(const QModelIndex &index, const QVariant &value, int role) override {
             if (methodMask & SetData) {
                 ModelIndex::__Handle index2(index);
-                Variant::__Handle value2(value);
-                return methodDelegate->setData(&index2, &value2, static_cast<ItemDataRole>(role));
+                QVariant value2(value); // because incoming is const, need to get that sorted
+                return methodDelegate->setData(&index2, reinterpret_cast<Variant::HandleRef>(&value2), static_cast<ItemDataRole>(role));
             } else {
                 return QAbstractListModel::setData(index, value, role);
             }

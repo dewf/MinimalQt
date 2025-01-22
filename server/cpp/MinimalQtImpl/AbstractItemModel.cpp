@@ -42,7 +42,7 @@ namespace AbstractItemModel
     }
 
     Variant::OwnedRef Handle_data(HandleRef _this, ModelIndex::HandleRef index, const std::optional<int32_t>& role) {
-        return new Variant::__Owned { THIS->data(index->value, role.value_or(Qt::DisplayRole))};
+        return VARIANT_HEAP_NEW(THIS->data(index->value, role.value_or(Qt::DisplayRole)));
     }
 
     bool Handle_dropMimeData(HandleRef _this, MimeData::HandleRef data, DropAction action, int32_t row, int32_t column, ModelIndex::HandleRef parent) {
@@ -66,7 +66,7 @@ namespace AbstractItemModel
     }
 
     Variant::OwnedRef Handle_headerData(HandleRef _this, int32_t section, Orientation orientation, const std::optional<int32_t>& role) {
-        return new Variant::__Owned { THIS->headerData(section, static_cast<Qt::Orientation>(orientation), role.value_or(Qt::DisplayRole)) };
+        return VARIANT_HEAP_NEW(THIS->headerData(section, static_cast<Qt::Orientation>(orientation), role.value_or(Qt::DisplayRole)));
     }
 
     ModelIndex::OwnedRef Handle_index(HandleRef _this, int32_t row, int32_t column, const std::optional<ModelIndex::HandleRef>& parent) {
@@ -93,14 +93,14 @@ namespace AbstractItemModel
         const auto result = THIS->itemData(index->value);
         std::map<int32_t, Variant::OwnedRef> retMap;
         for (auto i = result.cbegin(), end = result.cend(); i != end; ++i) {
-            retMap[i.key()] = new Variant::__Owned { i.value() };
+            retMap[i.key()] = VARIANT_HEAP_NEW(i.value());
         }
         return retMap;
     }
 
     std::vector<ModelIndex::OwnedRef> Handle_match(HandleRef _this, ModelIndex::HandleRef start, int32_t role, Variant::HandleRef value, int32_t hits /* 1 */, MatchFlags flags_ /* MatchFlags::MatchStartsWith | MatchFlags::MatchWrap */) {
         std::vector<ModelIndex::OwnedRef> ret;
-        const auto result = THIS->match(start->value, role, value->value, hits, static_cast<Qt::MatchFlags>(flags_.value));
+        const auto result = THIS->match(start->value, role, QVARIANT_VALUE(value), hits, static_cast<Qt::MatchFlags>(flags_.value));
         return fromQList<QModelIndex,ModelIndex::OwnedRef>(result, [](const QModelIndex &index) { return new ModelIndex::__Owned(index); });
     }
 
@@ -154,17 +154,17 @@ namespace AbstractItemModel
     }
 
     bool Handle_setData(HandleRef _this, ModelIndex::HandleRef index, Variant::HandleRef value, const std::optional<int32_t>& role) {
-        return THIS->setData(index->value, value->value, role.value_or(Qt::EditRole));
+        return THIS->setData(index->value, QVARIANT_VALUE(value), role.value_or(Qt::EditRole));
     }
 
     bool Handle_setHeaderData(HandleRef _this, int32_t section, Orientation orientation, Variant::HandleRef value, const std::optional<int32_t>& role) {
-        return THIS->setHeaderData(section, static_cast<Qt::Orientation>(orientation), value->value, role.value_or(Qt::EditRole));
+        return THIS->setHeaderData(section, static_cast<Qt::Orientation>(orientation), QVARIANT_VALUE(value), role.value_or(Qt::EditRole));
     }
 
     bool Handle_setItemData(HandleRef _this, ModelIndex::HandleRef index, std::map<int32_t,Variant::HandleRef> roles) {
         const QMap<int, QVariant> qRoles;
         for (auto i = roles.begin(); i != roles.end(); ++i) {
-            qRoles[i->first] = i->second->value;
+            qRoles[i->first] = QVARIANT_VALUE(i->second);
         }
         return THIS->setItemData(index->value, qRoles);
     }
@@ -411,8 +411,8 @@ namespace AbstractItemModel
         bool setData(const QModelIndex &index, const QVariant &value, int role) override {
             if (methodMask & SetData) {
                 ModelIndex::__Handle index2(index);
-                Variant::__Handle value2(value);
-                return methodDelegate->setData(&index2, &value2, role);
+                QVariant value2(value); // non-const, until we figure out "proxies" or whatever
+                return methodDelegate->setData(&index2, reinterpret_cast<Variant::HandleRef>(&value2), role);
             } else {
                 return QAbstractItemModel::setData(index, value, role);
             }
@@ -443,8 +443,8 @@ namespace AbstractItemModel
 
         bool setHeaderData(int section, Qt::Orientation orientation, const QVariant &value, int role) override {
             if (methodMask & HeaderData) {
-                Variant::__Handle value2(value);
-                return methodDelegate->setHeaderData(section, static_cast<Orientation>(orientation), &value2, role);
+                QVariant value2(value); // non-const, until we figure out "proxies" or whatever
+                return methodDelegate->setHeaderData(section, static_cast<Orientation>(orientation), reinterpret_cast<Variant::HandleRef>(&value2), role);
             } else {
                 return QAbstractItemModel::setHeaderData(section, orientation, value, role);
             }

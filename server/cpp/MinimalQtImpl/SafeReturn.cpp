@@ -11,6 +11,6 @@ namespace SafeReturn
     }
 
     void VariantReturn_setResult(VariantReturnRef _this, Variant::HandleRef value) {
-        _this->result = value->value;
+        _this->result = QVARIANT_VALUE(value);
     }
 }

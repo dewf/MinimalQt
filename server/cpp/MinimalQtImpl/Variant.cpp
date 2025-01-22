@@ -1,9 +1,5 @@
 #include "generated/Variant.h"
-
 #include "VariantInternal.h"
-// #include "PaintResourcesInternal.h"
-
-#include <QVariant>
 
 #include "DateTimeInternal.h"
 #include "ColorInternal.h"
@@ -11,37 +7,37 @@
 #include "UrlInternal.h"
 #include "util/convert.h"
 
-#define WRAPPER (_this) // RefCountedWrapper<QVariant>*
-#define VALUE (WRAPPER->value)
+#define THIS (AS_QVARIANT_PTR(_this))
 
 namespace Variant
 {
     bool Handle_isValid(HandleRef _this) {
-        return VALUE.isValid();
+        return THIS->isValid();
     }
 
     bool Handle_toBool(HandleRef _this) {
-        return VALUE.toBool();
+        return THIS->toBool();
     }
 
     std::string Handle_toString2(HandleRef _this) {
-        return VALUE.toString().toStdString();
+        return THIS->toString().toStdString();
     }
 
     int32_t Handle_toInt(HandleRef _this) {
-        return VALUE.toInt();
+        return THIS->toInt();
     }
 
     DateTime::OwnedRef Handle_toDateTime(HandleRef _this) {
-        return DATETIME_HEAP_NEW(VALUE.toDateTime());
+        return DATETIME_HEAP_NEW(THIS->toDateTime());
     }
 
     Size Handle_toSize(HandleRef _this) {
-        return toSize(VALUE.toSize());
+        return toSize(THIS->toSize());
     }
 
     CheckState Handle_toCheckState(HandleRef _this) {
-        switch (static_cast<Qt::CheckState>(VALUE.toInt())) {
+        const auto intValue = THIS->toInt();
+        switch (static_cast<Qt::CheckState>(intValue)) {
             case Qt::Unchecked:
                 return CheckState::Unchecked;
             case Qt::PartiallyChecked:
@@ -49,14 +45,14 @@ namespace Variant
             case Qt::Checked:
                 return CheckState::Checked;
             default:
-                printf("Variant::Handle_toCheckState - unknown input value %d\n", VALUE.toInt());
+                printf("Variant::Handle_toCheckState - unknown input value %d\n", intValue);
         }
         return CheckState::Unchecked;
     }
 
     Icon::OwnedRef Handle_toIcon(HandleRef _this) { // throws VariantConversionFailure
-        if (VALUE.isValid() && VALUE.canConvert<QIcon>()) {
-            const auto icon = VALUE.value<QIcon>();
+        if (THIS->isValid() && THIS->canConvert<QIcon>()) {
+            const auto icon = THIS->value<QIcon>();
             return ICON_HEAP_NEW(icon);
         }
         // else
@@ -64,71 +60,61 @@ namespace Variant
     }
 
     Color::OwnedRef Handle_toColor(HandleRef _this) {
-        if (VALUE.isValid() && VALUE.canConvert<QColor>()) {
-            const auto color = VALUE.value<QColor>();
+        if (THIS->isValid() && THIS->canConvert<QColor>()) {
+            const auto color = THIS->value<QColor>();
             return COLOR_HEAP_NEW(color);
         }
         // else
         throw VariantConversionFailure();
     }
 
-    SafeReturnRef Owned_getSafeReturn(OwnedRef _this) {
-        WRAPPER->addRef();
-        // return "as" a different type, but not really - this is just to enforce API safety requiring us to call this method to safely return the opaques from a client interface (which is normally unsafe)
-        return reinterpret_cast<SafeReturnRef>(_this);
-    }
-
     void Owned_dispose(OwnedRef _this) {
-        WRAPPER->release();
-    }
-
-    void SafeReturn_dispose(SafeReturnRef _this) {
-        WRAPPER->release();
+        delete THIS;
     }
 
     // ctors =================================================
     OwnedRef create() {
-        return new __Owned(QVariant());
+        return VARIANT_HEAP_NEW();
     }
 
     OwnedRef create(bool value) {
-        return new __Owned(value);
+        return VARIANT_HEAP_NEW(value);
     }
 
     OwnedRef create(const std::string& value) {
-        return new __Owned(QString::fromStdString(value));
+        return VARIANT_HEAP_NEW(QString::fromStdString(value));
     }
 
     OwnedRef create(int32_t value) {
-        return new __Owned(value);
+        return VARIANT_HEAP_NEW(value);
     }
 
     OwnedRef create(DateTime::HandleRef value) {
-        return new __Owned(QDATETIME_VALUE(value));
+        return VARIANT_HEAP_NEW(QDATETIME_VALUE(value));
     }
 
     OwnedRef create(CheckState value) {
-        return new __Owned(static_cast<int>(value));
+        return VARIANT_HEAP_NEW(static_cast<int>(value));
     }
 
     OwnedRef create(Size size) {
-        return new __Owned(toQSize(size));
+        return VARIANT_HEAP_NEW(toQSize(size));
     }
 
     OwnedRef create(Icon::HandleRef icon) {
-        return new __Owned(QICON_VALUE(icon));
+        return VARIANT_HEAP_NEW(QICON_VALUE(icon));
     }
 
     OwnedRef create(Color::HandleRef color) {
-        return new __Owned(QCOLOR_VALUE(color));
+        return VARIANT_HEAP_NEW(QCOLOR_VALUE(color));
     }
 
     OwnedRef createAlign(Alignment align) {
         const auto qAlign = static_cast<Qt::Alignment>(align.value);
-        return new __Owned(QVariant(qAlign));
+        return VARIANT_HEAP_NEW(qAlign);
     }
 
     OwnedRef create(Url::HandleRef url) {
-        return new __Owned(QURL_VALUE(url));
+        return VARIANT_HEAP_NEW(QURL_VALUE(url));
     }
 }

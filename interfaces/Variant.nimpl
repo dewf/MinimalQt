@@ -25,15 +25,7 @@ opaque Handle {
     Icon.Owned toIcon() throws VariantConversionFailure;
     Color.Owned toColor() throws VariantConversionFailure;
 }
-
-opaque Owned extends Handle {
-    SafeReturn getSafeReturn(); // see note below
-}
-
-// for safely returning from client interface methods
-// (internally addref'ed via an Owned method)
-// (normally opaques aren't safe to use as return values from the client side, unless we can guarantee they can't accidentally be GC'ed going out of scope etc)
-opaque SafeReturn extends Owned;
+opaque Owned extends Handle;
 
 Owned create();
 Owned create(bool value);
