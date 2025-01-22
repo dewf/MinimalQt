@@ -8,13 +8,17 @@ interface SignalHandler extends Object.SignalHandler {
 
 enum State { Invalid, Intermediate, Acceptable }
 
-opaque Handle extends Object.Handle {
+@nodispose
+opaque ConstHandle extends Object.Handle {
+    // const methods only
 
+    // signals ======================
+    SignalConnection connect_Changed(SignalHandler handler);
+}
+
+opaque Handle extends ConstHandle {
     // virtual void fixup(QString &input) const
     // QLocale locale() const
     // void setLocale(const QLocale &locale)
     // virtual QValidator::State validate(QString &input, int &pos) const = 0
-
-    // signals ======================
-    SignalConnection connect_Changed(SignalHandler handler);
 }

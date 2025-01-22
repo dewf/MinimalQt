@@ -93,11 +93,11 @@ opaque Handle extends Widget.Handle {
     void setPlaceholderText(string placeholderText);
     void setRootModelIndex(ModelIndex.Handle index);
     void setSizeAdjustPolicy(SizeAdjustPolicy policy);
-    void setValidator(Validator.Handle validator);
+    void setValidator(Validator.ConstHandle validator);
     void setView(AbstractItemView.Handle itemView);
     void showPopup();
     SizeAdjustPolicy getSizeAdjustPolicy();
-    Validator.Handle validator();
+    Validator.ConstHandle validator();
     AbstractItemView.Handle view();
     void clear();
     void clearEditText();

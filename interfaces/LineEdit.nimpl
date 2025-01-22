@@ -7,6 +7,8 @@ import Icon;
 import Enums;
 import Action;
 import Menu;
+import Completer;
+import Validator;
 
 interface SignalHandler extends Widget.SignalHandler {
     void cursorPositionChanged(int oldPos, int newPos);
@@ -26,108 +28,70 @@ enum ActionPosition {
 }
 
 opaque Handle extends Widget.Handle {
-    // properties ==================================
-    bool hasAcceptableInput();
-    // read-only
-
-    Alignment getAlignment();
-    void setAlignment(Alignment align);
-
-    bool isClearButtonEnabled();
-    void setClearButtonEnabled(bool enabled);
-
-    CursorMoveStyle getCursorMoveStyle();
-    void setCursorMoveStyle(CursorMoveStyle style);
-
-    int cursorPosition();
-    void setCursorPosition(int pos);
-
-    string displayText();
-    // read-only
-
-    bool dragEnabled();
-    void setDragEnabled(bool enabled);
-
-    EchoMode getEchoMode();
-    void setEchoMode(EchoMode mode);
-
-    bool hasFrame();
-    void setFrame(bool enabled);
-
-    bool hasSelectedText();
-    // read-only
-
-    string inputMask();
-    void setInputMask(string mask);
-
-    int maxLength();
-    void setMaxLength(int length);
-
-    // not sure about these two, might not need the setter? read docs
-    bool isModified();
-    void setModified(bool modified);
-
-    string placeholderText();
-    void setPlaceholderText(string text);
-
-    bool isReadOnly();
-    void setReadOnly(bool value);
-
-    bool isRedoAvailable();
-    // read-only
-
-    string selectedText();
-    // read-only
-
-    string text();
-    void setText(string text);
-
-    bool isUndoAvailable();
-    // read-only
-
-    // methods =================================
-
     void addAction(Action.Handle action, ActionPosition position);
-    void addAction(Icon.Handle icon, ActionPosition position);
+    Action.Handle addAction(Icon.Handle icon, ActionPosition position);
+    Alignment alignment();
     void backspace();
-
-    // QCompleter * completer() const
-
-    Menu.Handle createStandardContextMenu(Menu.SignalHandler handler); // what happens if this is called more than once?
-    void cursorBackward(bool mark, Option<int> steps);
-    void cursorForward(bool mark, Option<int> steps);
+    Completer.Handle completer();
+    Menu.Handle createStandardContextMenu();
+    void cursorBackward(bool mark, int steps = 1);
+    void cursorForward(bool mark, int steps = 1);
+    CursorMoveStyle cursorMoveStyle();
+    int cursorPosition();
     int cursorPositionAt(Point pos);
     void cursorWordBackward(bool mark);
     void cursorWordForward(bool mark);
     void del();
     void deselect();
+    string displayText();
+    bool dragEnabled();
+    EchoMode getEchoMode();
     void end(bool mark);
+    bool hasAcceptableInput();
+    bool hasFrame();
+    bool hasSelectedText();
     void home(bool mark);
+    string inputMask();
     void insert(string newText);
+    bool isClearButtonEnabled();
+    bool isModified();
+    bool isReadOnly();
+    bool isRedoAvailable();
+    bool isUndoAvailable();
+    int maxLength();
+    string placeholderText();
+    string selectedText();
     int selectionEnd();
     int selectionLength();
     int selectionStart();
-
-    // void setCompleter(QCompleter *c)
-    
+    void setAlignment(Alignment flag);
+    void setClearButtonEnabled(bool enable);
+    void setCompleter(Completer.Handle completer);
+    void setCursorMoveStyle(CursorMoveStyle style);
+    void setCursorPosition(int position);
+    void setDragEnabled(bool enabled);
+    void setEchoMode(EchoMode mode);
+    void setFrame(bool hasFrame);
+    void setInputMask(string inputMask);
+    void setMaxLength(int length);
+    void setModified(bool modified);
+    void setPlaceholderText(string text);
+    void setReadOnly(bool state);
     void setSelection(int start, int length);
     void setTextMargins(Margins margins);
     void setTextMargins(int left, int top, int right, int bottom);
-
-    // void setValidator(const QValidator *v)
-
+    void setValidator(Validator.ConstHandle validator);
+    string text();
     Margins textMargins();
+    Validator.ConstHandle validator();
 
-    // const QValidator * validator() const
-
-    // slots ===================================
-    
     void clear();
     void copy();
     void cut();
     void paste();
     void redo();
     void selectAll();
+    void setText(string text);
     void undo();
 
     // signals =================================
@@ -140,5 +104,5 @@ opaque Handle extends Widget.Handle {
     SignalConnection connect_TextEdited(SignalHandler handler);
 }
 
-Handle create(Option<Widget.Handle> parent);
-Handle create(string contents, Option<Widget.Handle> parent);
+Handle create(Widget.Handle parent = null);
+Handle create(string contents, Widget.Handle parent = null);

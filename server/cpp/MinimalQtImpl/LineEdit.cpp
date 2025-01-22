@@ -5,6 +5,7 @@
 #include "WidgetInternal.h"
 #include "ActionInternal.h"
 #include "IconInternal.h"
+#include "ValidatorInternal.h"
 
 #include "util/convert.h"
 
@@ -12,156 +13,45 @@
 
 namespace LineEdit
 {
-    bool Handle_hasAcceptableInput(HandleRef _this) {
-        return THIS->hasAcceptableInput();
-    }
-
-    Alignment Handle_getAlignment(HandleRef _this) {
-        return Alignment(THIS->alignment());
-    }
-
-    void Handle_setAlignment(HandleRef _this, Enums::Alignment align) {
-        THIS->setAlignment(static_cast<Qt::Alignment>(align.value));
-    }
-
-    bool Handle_isClearButtonEnabled(HandleRef _this) {
-        return THIS->isClearButtonEnabled();
-    }
-
-    void Handle_setClearButtonEnabled(HandleRef _this, bool enabled) {
-        THIS->setClearButtonEnabled(enabled);
-    }
-
-    CursorMoveStyle Handle_getCursorMoveStyle(HandleRef _this) {
-        return static_cast<CursorMoveStyle>(THIS->cursorMoveStyle());
-    }
-
-    void Handle_setCursorMoveStyle(HandleRef _this, CursorMoveStyle style) {
-        THIS->setCursorMoveStyle(static_cast<Qt::CursorMoveStyle>(style));
-    }
-
-    int32_t Handle_cursorPosition(HandleRef _this) {
-        return THIS->cursorPosition();
-    }
-
-    void Handle_setCursorPosition(HandleRef _this, int32_t pos) {
-        THIS->setCursorPosition(pos);
-    }
-
-    std::string Handle_displayText(HandleRef _this) {
-        return THIS->displayText().toStdString();
-    }
-
-    bool Handle_dragEnabled(HandleRef _this) {
-        return THIS->dragEnabled();
-    }
-
-    void Handle_setDragEnabled(HandleRef _this, bool enabled) {
-        THIS->setDragEnabled(enabled);
-    }
-
-    EchoMode Handle_getEchoMode(HandleRef _this) {
-        return static_cast<EchoMode>(THIS->echoMode());
-    }
-
-    void Handle_setEchoMode(HandleRef _this, EchoMode mode) {
-        THIS->setEchoMode(static_cast<QLineEdit::EchoMode>(mode));
-    }
-
-    bool Handle_hasFrame(HandleRef _this) {
-        return THIS->hasFrame();
-    }
-
-    void Handle_setFrame(HandleRef _this, bool enabled) {
-        THIS->setFrame(enabled);
-    }
-
-    bool Handle_hasSelectedText(HandleRef _this) {
-        return THIS->hasSelectedText();
-    }
-
-    std::string Handle_inputMask(HandleRef _this) {
-        return THIS->inputMask().toStdString();
-    }
-
-    void Handle_setInputMask(HandleRef _this, const std::string& mask) {
-        return THIS->setInputMask(QString::fromStdString(mask));
-    }
-
-    int32_t Handle_maxLength(HandleRef _this) {
-        return THIS->maxLength();
-    }
-
-    void Handle_setMaxLength(HandleRef _this, int32_t length) {
-        THIS->setMaxLength(length);
-    }
-
-    bool Handle_isModified(HandleRef _this) {
-        return THIS->isModified();
-    }
-
-    void Handle_setModified(HandleRef _this, bool modified) {
-        THIS->setModified(modified);
-    }
-
-    std::string Handle_placeholderText(HandleRef _this) {
-        return THIS->placeholderText().toStdString();
-    }
-
-    void Handle_setPlaceholderText(HandleRef _this, const std::string& text) {
-        THIS->setPlaceholderText(QString::fromStdString(text));
-    }
-
-    bool Handle_isReadOnly(HandleRef _this) {
-        return THIS->isReadOnly();
-    }
-
-    void Handle_setReadOnly(HandleRef _this, bool value) {
-        THIS->setReadOnly(value);
-    }
-
-    bool Handle_isRedoAvailable(HandleRef _this) {
-        return THIS->isRedoAvailable();
-    }
-
-    std::string Handle_selectedText(HandleRef _this) {
-        return THIS->selectedText().toStdString();
-    }
-
-    std::string Handle_text(HandleRef _this) {
-        return THIS->text().toStdString();
-    }
-
-    void Handle_setText(HandleRef _this, const std::string& text) {
-        THIS->setText(QString::fromStdString(text));
-    }
-
-    bool Handle_isUndoAvailable(HandleRef _this) {
-        return THIS->isUndoAvailable();
-    }
-
     void Handle_addAction(HandleRef _this, Action::HandleRef action, ActionPosition position) {
         THIS->addAction(AS_QACTION_PTR(action), static_cast<QLineEdit::ActionPosition>(position));
     }
 
-    void Handle_addAction(HandleRef _this, Icon::HandleRef icon, ActionPosition position) {
-        THIS->addAction(QICON_VALUE(icon), static_cast<QLineEdit::ActionPosition>(position));
+    Action::HandleRef Handle_addAction(HandleRef _this, Icon::HandleRef icon, ActionPosition position) {
+        const auto action = THIS->addAction(QICON_VALUE(icon), static_cast<QLineEdit::ActionPosition>(position));
+        return reinterpret_cast<Action::HandleRef>(action);
+    }
+
+    Alignment Handle_alignment(HandleRef _this) {
+        return Alignment(THIS->alignment());
     }
 
     void Handle_backspace(HandleRef _this) {
         THIS->backspace();
     }
 
-    Menu::HandleRef Handle_createStandardContextMenu(HandleRef _this, const std::shared_ptr<Menu::SignalHandler>& handler) {
+    Completer::HandleRef Handle_completer(HandleRef _this) {
+        return reinterpret_cast<Completer::HandleRef>(THIS->completer());
+    }
+
+    Menu::HandleRef Handle_createStandardContextMenu(HandleRef _this) {
         return reinterpret_cast<Menu::HandleRef>(THIS->createStandardContextMenu());
     }
 
-    void Handle_cursorBackward(HandleRef _this, bool mark, const std::optional<int32_t>& steps) {
-        THIS->cursorBackward(mark, steps.value_or(1));
+    void Handle_cursorBackward(HandleRef _this, bool mark, int32_t steps /* 1 */) {
+        THIS->cursorBackward(mark, steps);
     }
 
-    void Handle_cursorForward(HandleRef _this, bool mark, const std::optional<int32_t>& steps) {
-        THIS->cursorForward(mark, steps.value_or(1));
+    void Handle_cursorForward(HandleRef _this, bool mark, int32_t steps /* 1 */) {
+        THIS->cursorForward(mark, steps);
+    }
+
+    CursorMoveStyle Handle_cursorMoveStyle(HandleRef _this) {
+        return static_cast<CursorMoveStyle>(THIS->cursorMoveStyle());
+    }
+
+    int32_t Handle_cursorPosition(HandleRef _this) {
+        return THIS->cursorPosition();
     }
 
     int32_t Handle_cursorPositionAt(HandleRef _this, Point pos) {
@@ -184,16 +74,76 @@ namespace LineEdit
         THIS->deselect();
     }
 
+    std::string Handle_displayText(HandleRef _this) {
+        return THIS->displayText().toStdString();
+    }
+
+    bool Handle_dragEnabled(HandleRef _this) {
+        return THIS->dragEnabled();
+    }
+
+    EchoMode Handle_getEchoMode(HandleRef _this) {
+        return static_cast<EchoMode>(THIS->echoMode());
+    }
+
     void Handle_end(HandleRef _this, bool mark) {
         THIS->end(mark);
+    }
+
+    bool Handle_hasAcceptableInput(HandleRef _this) {
+        return THIS->hasAcceptableInput();
+    }
+
+    bool Handle_hasFrame(HandleRef _this) {
+        return THIS->hasFrame();
+    }
+
+    bool Handle_hasSelectedText(HandleRef _this) {
+        return THIS->hasSelectedText();
     }
 
     void Handle_home(HandleRef _this, bool mark) {
         THIS->home(mark);
     }
 
+    std::string Handle_inputMask(HandleRef _this) {
+        return THIS->inputMask().toStdString();
+    }
+
     void Handle_insert(HandleRef _this, const std::string& newText) {
         THIS->insert(QString::fromStdString(newText));
+    }
+
+    bool Handle_isClearButtonEnabled(HandleRef _this) {
+        return THIS->isClearButtonEnabled();
+    }
+
+    bool Handle_isModified(HandleRef _this) {
+        return THIS->isModified();
+    }
+
+    bool Handle_isReadOnly(HandleRef _this) {
+        return THIS->isReadOnly();
+    }
+
+    bool Handle_isRedoAvailable(HandleRef _this) {
+        return THIS->isRedoAvailable();
+    }
+
+    bool Handle_isUndoAvailable(HandleRef _this) {
+        return THIS->isUndoAvailable();
+    }
+
+    int32_t Handle_maxLength(HandleRef _this) {
+        return THIS->maxLength();
+    }
+
+    std::string Handle_placeholderText(HandleRef _this) {
+        return THIS->placeholderText().toStdString();
+    }
+
+    std::string Handle_selectedText(HandleRef _this) {
+        return THIS->selectedText().toStdString();
     }
 
     int32_t Handle_selectionEnd(HandleRef _this) {
@@ -208,6 +158,58 @@ namespace LineEdit
         return THIS->selectionStart();
     }
 
+    void Handle_setAlignment(HandleRef _this, Enums::Alignment align) {
+        THIS->setAlignment(static_cast<Qt::Alignment>(align.value));
+    }
+
+    void Handle_setClearButtonEnabled(HandleRef _this, bool enabled) {
+        THIS->setClearButtonEnabled(enabled);
+    }
+
+    void Handle_setCompleter(HandleRef _this, Completer::HandleRef completer) {
+        THIS->setCompleter(reinterpret_cast<QCompleter*>(completer));
+    }
+
+    void Handle_setCursorMoveStyle(HandleRef _this, CursorMoveStyle style) {
+        THIS->setCursorMoveStyle(static_cast<Qt::CursorMoveStyle>(style));
+    }
+
+    void Handle_setCursorPosition(HandleRef _this, int32_t pos) {
+        THIS->setCursorPosition(pos);
+    }
+
+    void Handle_setDragEnabled(HandleRef _this, bool enabled) {
+        THIS->setDragEnabled(enabled);
+    }
+
+    void Handle_setEchoMode(HandleRef _this, EchoMode mode) {
+        THIS->setEchoMode(static_cast<QLineEdit::EchoMode>(mode));
+    }
+
+    void Handle_setFrame(HandleRef _this, bool enabled) {
+        THIS->setFrame(enabled);
+    }
+
+    void Handle_setInputMask(HandleRef _this, const std::string& mask) {
+        return THIS->setInputMask(QString::fromStdString(mask));
+    }
+
+    void Handle_setMaxLength(HandleRef _this, int32_t length) {
+        THIS->setMaxLength(length);
+    }
+
+    void Handle_setModified(HandleRef _this, bool modified) {
+        THIS->setModified(modified);
+    }
+
+    void Handle_setPlaceholderText(HandleRef _this, const std::string& text) {
+        THIS->setPlaceholderText(QString::fromStdString(text));
+    }
+
+    void Handle_setReadOnly(HandleRef _this, bool value) {
+        THIS->setReadOnly(value);
+    }
+
     void Handle_setSelection(HandleRef _this, int32_t start, int32_t length) {
         THIS->setSelection(start, length);
     }
@@ -220,8 +222,20 @@ namespace LineEdit
         THIS->setTextMargins(left, top, right, bottom);
     }
 
+    void Handle_setValidator(HandleRef _this, ConstHandleRef validator) {
+        THIS->setValidator(AS_QVALIDATOR_CONSTPTR(validator));
+    }
+
+    std::string Handle_text(HandleRef _this) {
+        return THIS->text().toStdString();
+    }
+
     Margins Handle_textMargins(HandleRef _this) {
         return toMargins(THIS->textMargins());
+    }
+
+    ConstHandleRef Handle_validator(HandleRef _this) {
+        return AS_VALIDATOR_CONSTHANDLE(THIS->validator());
     }
 
     void Handle_clear(HandleRef _this) {
@@ -246,6 +260,10 @@ namespace LineEdit
 
     void Handle_selectAll(HandleRef _this) {
         THIS->selectAll();
+    }
+
+    void Handle_setText(HandleRef _this, const std::string& text) {
+        THIS->setText(QString::fromStdString(text));
     }
 
     void Handle_undo(HandleRef _this) {
@@ -305,13 +323,11 @@ namespace LineEdit
         delete THIS;
     }
 
-    HandleRef create(const std::optional<Widget::HandleRef>& parent) {
-        const auto qParent = Widget::fromOptionalHandle(parent);
-        return reinterpret_cast<HandleRef>(new QLineEdit(qParent));
+    HandleRef create(Widget::HandleRef parent /* nullptr */) {
+        return reinterpret_cast<HandleRef>(new QLineEdit(AS_QWIDGET_PTR(parent)));
     }
 
-    HandleRef create(const std::string& contents, const std::optional<Widget::HandleRef>& parent) {
-        const auto qParent = Widget::fromOptionalHandle(parent);
-        return reinterpret_cast<HandleRef>(new QLineEdit(QString::fromStdString(contents), qParent));
+    HandleRef create(const std::string& contents, Widget::HandleRef parent /* nullptr */) {
+        return reinterpret_cast<HandleRef>(new QLineEdit(QString::fromStdString(contents), AS_QWIDGET_PTR(parent)));
     }
 }

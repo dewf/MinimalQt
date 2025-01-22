@@ -6,6 +6,7 @@
 #include "VariantInternal.h"
 #include "IconInternal.h"
 #include "ModelIndexInternal.h"
+#include "ValidatorInternal.h"
 
 #include "util/convert.h"
 
@@ -221,8 +222,8 @@ namespace ComboBox
         THIS->setSizeAdjustPolicy(static_cast<QComboBox::SizeAdjustPolicy>(policy));
     }
 
-    void Handle_setValidator(HandleRef _this, Validator::HandleRef validator) {
-        THIS->setValidator(reinterpret_cast<QValidator*>(validator));
+    void Handle_setValidator(HandleRef _this, ConstHandleRef validator) {
+        THIS->setValidator(AS_QVALIDATOR_CONSTPTR(validator));
     }
 
     void Handle_setView(HandleRef _this, AbstractItemView::HandleRef itemView) {
@@ -237,8 +238,8 @@ namespace ComboBox
         return static_cast<SizeAdjustPolicy>(THIS->sizeAdjustPolicy());
     }
 
-    Validator::HandleRef Handle_validator(HandleRef _this) {
-        return (Validator::HandleRef)THIS->validator();
+    ConstHandleRef Handle_validator(HandleRef _this) {
+        return AS_VALIDATOR_CONSTHANDLE(THIS->validator());
     }
 
     AbstractItemView::HandleRef Handle_view(HandleRef _this) {
