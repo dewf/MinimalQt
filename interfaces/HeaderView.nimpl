@@ -3,6 +3,8 @@ module HeaderView;
 import Object;
 import AbstractItemView;
 import Enums;
+import Widget;
+import Common;
 
 interface SignalHandler extends AbstractItemView.SignalHandler {
     void geometriesChanged();
@@ -18,48 +20,81 @@ interface SignalHandler extends AbstractItemView.SignalHandler {
     void sortIndicatorClearableChanged(bool clearable);
 }
 
+enum ResizeMode
+{
+    Interactive,
+    Stretch,
+    Fixed,
+    ResizeToContents,
+    Custom = Fixed
+}
+
 opaque Handle extends AbstractItemView.Handle {
-    // properties
-
     bool cascadingSectionResizes();
-    void setCascadingSectionResizes(bool enable);
-
+    int count();
     Alignment defaultAlignment();
-    void setDefaultAlignment(Alignment align);
-
     int defaultSectionSize();
-    void setDefaultSectionSize(int size);
-    void resetDefaultSectionSize();
-
-    bool isFirstSectionMovable();
-    void setFirstSectionMovable(bool movable);
-
+    int hiddenSectionCount();
+    void hideSection(int logicalIndex);
     bool highlightSections();
-    void setHighlightSections(bool highlight);
-
-    int maximumSectionSize();
-    void setMaximumSectionSize(int size);
-
-    int minimumSectionSize();
-    void setMinimumSectionSize(int size);
-
-    bool sectionsClickable();
-    void setSectionsClickable(bool clickable);
-
-    bool sectionsMovable();
-    void setSectionsMovable(bool movable);
-
-    bool isSortIndicatorShown();
-    void setSortIndicatorShown(bool show);
-
+    bool isFirstSectionMovable();
+    bool isSectionHidden(int logicalIndex);
     bool isSortIndicatorClearable();
-    void setSortIndicatorClearable(bool clearable);
-
-    bool stretchLastSection();
-    void setStretchLastSection(bool stretch);
-
-    // methods
+    bool isSortIndicatorShown();
+    int length();
+    int logicalIndex(int visualIndex);
+    int logicalIndexAt(Point pos);
+    int logicalIndexAt(int position);
+    int logicalIndexAt(int x, int y);
+    int maximumSectionSize();
+    int minimumSectionSize();
+    void moveSection(int from, int to);
+    int offset();
+    Orientation orientation();
+    void resetDefaultSectionSize();
+    int resizeContentsPrecision();
     void resizeSection(int logicalIndex, int size);
+    void resizeSections(ResizeMode mode);
+    bool restoreState(Array<byte> state);
+    Array<byte> saveState();
+    int sectionPosition(int logicalIndex);
+    ResizeMode sectionResizeMode(int logicalIndex);
+    int sectionSize(int logicalIndex);
+    int sectionSizeHint(int logicalIndex);
+    int sectionViewportPosition(int logicalIndex);
+    bool sectionsClickable();
+    bool sectionsHidden();
+    bool sectionsMovable();
+    bool sectionsMoved();
+    void setCascadingSectionResizes(bool enable);
+    void setDefaultAlignment(Alignment alignment);
+    void setDefaultSectionSize(int size);
+    void setFirstSectionMovable(bool movable);
+    void setHighlightSections(bool highlight);
+    void setMaximumSectionSize(int size);
+    void setMinimumSectionSize(int size);
+    void setResizeContentsPrecision(int precision);
+    void setSectionHidden(int logicalIndex, bool hide);
+    void setSectionResizeMode(ResizeMode mode);
+    void setSectionResizeMode(int logicalIndex, ResizeMode mode);
+    void setSectionsClickable(bool clickable);
+    void setSectionsMovable(bool movable);
+    void setSortIndicator(int logicalIndex, SortOrder order);
+    void setSortIndicatorClearable(bool clearable);
+    void setSortIndicatorShown(bool show);
+    void setStretchLastSection(bool stretch);
+    void showSection(int logicalIndex);
+    SortOrder sortIndicatorOrder();
+    int sortIndicatorSection();
+    bool stretchLastSection();
+    int stretchSectionCount();
+    void swapSections(int first, int second);
+    int visualIndex(int logicalIndex);
+    int visualIndexAt(int position);
+    void headerDataChanged(Orientation orientation, int logicalFirst, int logicalLast);
+    void setOffset(int offset);
+    void setOffsetToLastSection();
+    void setOffsetToSectionPosition(int visualSectionNumber);
 
     // signals ==========================================
     SignalConnection connect_GeometriesChanged(SignalHandler handler);
@@ -75,4 +110,4 @@ opaque Handle extends AbstractItemView.Handle {
     SignalConnection connect_SortIndicatorClearableChanged(SignalHandler handler);
 }
 
-Handle create(Orientation orientation);
+Handle create(Orientation orientation, Widget.Handle parent = null);
