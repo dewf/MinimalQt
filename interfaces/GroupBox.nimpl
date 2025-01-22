@@ -12,26 +12,23 @@ interface SignalHandler extends Widget.SignalHandler {
 }
 
 opaque Handle extends Widget.Handle {
-    // properties:
-    Alignment getAlignment();
-    void setAlignment(Alignment align);
 
+    Alignment alignment();
     bool isCheckable();
-    void setCheckable(bool state);
-
     bool isChecked();
-    void setChecked(bool state);
-
     bool isFlat();
-    void setFlat(bool state);
-
-    string title();
+    void setAlignment(int alignment);
+    void setCheckable(bool checkable);
+    void setFlat(bool flat);
     void setTitle(string title);
+    string title();
+
+    void setChecked(bool checked_);
 
     // signals ============================
     SignalConnection connect_Clicked(SignalHandler handler);
     SignalConnection connect_Toggled(SignalHandler handler);
 }
 
-Handle create(Option<Widget.Handle> parent);
-Handle create(string title, Option<Widget.Handle> parent);
+Handle create(Widget.Handle parent = null);
+Handle create(string title, Widget.Handle parent = null);

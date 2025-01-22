@@ -2,48 +2,50 @@
 #include "GroupBoxInternal.h"
 
 #include "ObjectInternal.h"
+#include "WidgetInternal.h"
 
 #define THIS (reinterpret_cast<QGroupBox*>(_this))
 
 namespace GroupBox {
-    Alignment Handle_getAlignment(HandleRef _this) {
-        return Alignment(THIS->alignment());
-    }
 
-    void Handle_setAlignment(HandleRef _this, Alignment align) {
-        THIS->setAlignment(align);
+    Alignment Handle_alignment(HandleRef _this) {
+        return Alignment(THIS->alignment());
     }
 
     bool Handle_isCheckable(HandleRef _this) {
         return THIS->isCheckable();
     }
 
-    void Handle_setCheckable(HandleRef _this, bool state) {
-        THIS->setCheckable(state);
-    }
-
     bool Handle_isChecked(HandleRef _this) {
         return THIS->isChecked();
-    }
-
-    void Handle_setChecked(HandleRef _this, bool state) {
-        THIS->setChecked(state);
     }
 
     bool Handle_isFlat(HandleRef _this) {
         return THIS->isFlat();
     }
 
+    void Handle_setAlignment(HandleRef _this, int32_t alignment) {
+        THIS->setAlignment(alignment);
+    }
+
+    void Handle_setCheckable(HandleRef _this, bool state) {
+        THIS->setCheckable(state);
+    }
+
     void Handle_setFlat(HandleRef _this, bool state) {
         THIS->setFlat(state);
+    }
+
+    void Handle_setTitle(HandleRef _this, const std::string& title) {
+        THIS->setTitle(QString::fromStdString(title));
     }
 
     std::string Handle_title(HandleRef _this) {
         return THIS->title().toStdString();
     }
 
-    void Handle_setTitle(HandleRef _this, const std::string& title) {
-        THIS->setTitle(QString::fromStdString(title));
+    void Handle_setChecked(HandleRef _this, bool state) {
+        THIS->setChecked(state);
     }
 
     SignalConnectionRef Handle_connect_Clicked(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
@@ -64,13 +66,11 @@ namespace GroupBox {
         delete THIS;
     }
 
-    HandleRef create(const std::optional<Widget::HandleRef>& parent) {
-        const auto qParent = Widget::fromOptionalHandle(parent);
-        return reinterpret_cast<HandleRef>(new QGroupBox(qParent));
+    HandleRef create(Widget::HandleRef parent /* nullptr */) {
+        return reinterpret_cast<HandleRef>(new QGroupBox(AS_QWIDGET_PTR(parent)));
     }
 
-    HandleRef create(const std::string& title, const std::optional<Widget::HandleRef>& parent) {
-        const auto qParent = Widget::fromOptionalHandle(parent);
-        return reinterpret_cast<HandleRef>(new QGroupBox(QString::fromStdString(title), qParent));
+    HandleRef create(const std::string& title, Widget::HandleRef parent /* nullptr */) {
+        return reinterpret_cast<HandleRef>(new QGroupBox(QString::fromStdString(title), AS_QWIDGET_PTR(parent)));
     }
 }
