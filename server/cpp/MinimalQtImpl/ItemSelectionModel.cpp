@@ -11,12 +11,6 @@
 
 namespace ItemSelectionModel
 {
-    std::vector<ModelIndex::OwnedRef> Handle_selectedIndexes(HandleRef _this) {
-        return fromQList<QModelIndex,ModelIndex::OwnedRef>(THIS->selectedIndexes(), [](auto index) {
-            return new ModelIndex::__Owned(index);
-        });
-    }
-
     bool Handle_columnIntersectsSelection(HandleRef _this, int32_t column, const std::optional<ModelIndex::HandleRef>& parent) {
         return THIS->columnIntersectsSelection(column, fromOptionalIndex(parent));
     }
@@ -41,24 +35,38 @@ namespace ItemSelectionModel
         return THIS->isSelected(index->value);
     }
 
+    AbstractItemModel::HandleRef Handle_model(HandleRef _this) {
+        return reinterpret_cast<AbstractItemModel::HandleRef>(THIS->model());
+    }
+
     bool Handle_rowIntersectsSelection(HandleRef _this, int32_t row, const std::optional<ModelIndex::HandleRef>& parent) {
         return THIS->rowIntersectsSelection(row, fromOptionalIndex(parent));
     }
 
-    std::vector<ModelIndex::OwnedRef> Handle_selectedColumns(HandleRef _this, const std::optional<int32_t>& row) {
-        return fromQList<QModelIndex,ModelIndex::OwnedRef>(THIS->selectedColumns(row.value_or(0)), [](auto index) {
+    std::vector<ModelIndex::OwnedRef> Handle_selectedColumns(HandleRef _this, int32_t row /* 0 */) {
+        return fromQList<QModelIndex,ModelIndex::OwnedRef>(THIS->selectedColumns(row), [](auto index) {
             return new ModelIndex::__Owned(index);
         });
     }
 
-    std::vector<ModelIndex::OwnedRef> Handle_selectedRows(HandleRef _this, const std::optional<int32_t>& column) {
-        return fromQList<QModelIndex,ModelIndex::OwnedRef>(THIS->selectedRows(column.value_or(0)), [](auto index) {
+    std::vector<ModelIndex::OwnedRef> Handle_selectedIndexes(HandleRef _this) {
+        return fromQList<QModelIndex,ModelIndex::OwnedRef>(THIS->selectedIndexes(), [](auto index) {
+            return new ModelIndex::__Owned(index);
+        });
+    }
+
+    std::vector<ModelIndex::OwnedRef> Handle_selectedRows(HandleRef _this, int32_t column /* 0 */) {
+        return fromQList<QModelIndex,ModelIndex::OwnedRef>(THIS->selectedRows(column), [](auto index) {
             return new ModelIndex::__Owned(index);
         });
     }
 
     ItemSelection::OwnedRef Handle_selection(HandleRef _this) {
         return ITEMSELECTION_HEAP_NEW(THIS->selection());
+    }
+
+    void Handle_setModel(HandleRef _this, AbstractItemModel::HandleRef model) {
+        THIS->setModel(reinterpret_cast<QAbstractItemModel*>(model));
     }
 
     void Handle_clear(HandleRef _this) {
@@ -132,5 +140,13 @@ namespace ItemSelectionModel
 
     void Handle_dispose(HandleRef _this) {
         delete THIS;
+    }
+
+    HandleRef create(AbstractItemModel::HandleRef model /* nullptr */) {
+        return reinterpret_cast<HandleRef>(new QItemSelectionModel(reinterpret_cast<QAbstractItemModel*>(model)));
+    }
+
+    HandleRef create(AbstractItemModel::HandleRef model, Object::HandleRef parent) {
+        return reinterpret_cast<HandleRef>(new QItemSelectionModel(reinterpret_cast<QAbstractItemModel*>(model), AS_QOBJECT_PTR(parent)));
     }
 }

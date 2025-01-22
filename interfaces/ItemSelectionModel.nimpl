@@ -15,23 +15,19 @@ interface SignalHandler extends Object.SignalHandler {
 }
 
 opaque Handle extends Object.Handle {
-    // properties:
-    
-    Array<ModelIndex.Owned> selectedIndexes();
-    // readonly
-
-    // methods:
     bool columnIntersectsSelection(int column, Option<ModelIndex.Handle> parent);
     ModelIndex.Owned currentIndex();
     bool hasSelection();
     bool isColumnSelected(int column, Option<ModelIndex.Handle> parent);
     bool isRowSelected(int row, Option<ModelIndex.Handle> parent);
     bool isSelected(ModelIndex.Handle index);
+    AbstractItemModel.Handle model();
     bool rowIntersectsSelection(int row, Option<ModelIndex.Handle> parent);
-    Array<ModelIndex.Owned> selectedColumns(Option<int> row);
-    Array<ModelIndex.Owned> selectedRows(Option<int> column);
+    Array<ModelIndex.Owned> selectedColumns(int row = 0);
+    Array<ModelIndex.Owned> selectedIndexes();
+    Array<ModelIndex.Owned> selectedRows(int column = 0);
     ItemSelection.Owned selection();
-
+    void setModel(AbstractItemModel.Handle model);
     void clear();
     void clearCurrentIndex();
     void clearSelection();
@@ -48,4 +44,5 @@ opaque Handle extends Object.Handle {
     SignalConnection connect_SelectionChanged(SignalHandler handler);
 }
 
-// can't create these for the moment, we just get them from AbstractItemView->selectionModel
+Handle create(AbstractItemModel.Handle model = null);
+Handle create(AbstractItemModel.Handle model, Object.Handle parent);
