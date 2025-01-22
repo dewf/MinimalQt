@@ -15,48 +15,8 @@ namespace FileDialog
         return static_cast<AcceptMode>(THIS->acceptMode());
     }
 
-    void Handle_setAcceptMode(HandleRef _this, AcceptMode mode) {
-        THIS->setAcceptMode(static_cast<QFileDialog::AcceptMode>(mode));
-    }
-
     std::string Handle_defaultSuffix(HandleRef _this) {
         return THIS->defaultSuffix().toStdString();
-    }
-
-    void Handle_setDefaultSuffix(HandleRef _this, const std::string& suffix) {
-        THIS->setDefaultSuffix(QString::fromStdString(suffix));
-    }
-
-    FileMode Handle_getFileMode(HandleRef _this) {
-        return static_cast<FileMode>(THIS->fileMode());
-    }
-
-    void Handle_setFileMode(HandleRef _this, FileMode mode) {
-        THIS->setFileMode(static_cast<QFileDialog::FileMode>(mode));
-    }
-
-    Options Handle_getOptions(HandleRef _this) {
-        return Options(THIS->options());
-    }
-
-    void Handle_setOptions(HandleRef _this, Options opts) {
-        THIS->setOptions(static_cast<QFileDialog::Options>(opts.value));
-    }
-
-    std::vector<std::string> Handle_supportedSchemes(HandleRef _this) {
-        return toVectorStrings(THIS->supportedSchemes());
-    }
-
-    void Handle_setSupportedSchemes(HandleRef _this, const std::vector<std::string>& schemes) {
-        THIS->setSupportedSchemes(toQStringList(schemes));
-    }
-
-    ViewMode Handle_getViewMode(HandleRef _this) {
-        return static_cast<ViewMode>(THIS->viewMode());
-    }
-
-    void Handle_setViewMode(HandleRef _this, ViewMode mode) {
-        THIS->setViewMode(static_cast<QFileDialog::ViewMode>(mode));
     }
 
     Dir::OwnedRef Handle_directory(HandleRef _this) {
@@ -67,6 +27,26 @@ namespace FileDialog
         return URL_HEAP_NEW(THIS->directoryUrl());
     }
 
+    FileMode Handle_getFileMode(HandleRef _this) {
+        return static_cast<FileMode>(THIS->fileMode());
+    }
+
+    Filters Handle_filter(HandleRef _this) {
+        return static_cast<Filters>(THIS->filter());
+    }
+
+    std::vector<std::string> Handle_history(HandleRef _this) {
+        return toVectorStrings(THIS->history());
+    }
+
+    AbstractItemDelegate_HandleRef Handle_itemDelegate(HandleRef _this) {
+        return reinterpret_cast<AbstractItemDelegate_HandleRef>(THIS->itemDelegate());
+    }
+
+    std::string Handle_labelText(HandleRef _this, DialogLabel label) {
+        return THIS->labelText(static_cast<QFileDialog::DialogLabel>(label)).toStdString();
+    }
+
     std::vector<std::string> Handle_mimeTypeFilters(HandleRef _this) {
         return toVectorStrings(THIS->mimeTypeFilters());
     }
@@ -75,16 +55,92 @@ namespace FileDialog
         return toVectorStrings(THIS->nameFilters());
     }
 
-    void Handle_setDirectory(HandleRef _this, const std::string& dir) {
-        THIS->setDirectory(QString::fromStdString(dir));
+    Options Handle_getOptions(HandleRef _this) {
+        return Options(THIS->options());
     }
 
-    void Handle_setDirectory(HandleRef _this, Dir::HandleRef dir) {
-        THIS->setDirectory(QDIR_VALUE(dir));
+    AbstractProxyModel_HandleRef Handle_proxyModel(HandleRef _this) {
+        return reinterpret_cast<AbstractProxyModel_HandleRef>(THIS->proxyModel());
+    }
+
+    bool Handle_restoreState(HandleRef _this, const std::vector<uint8_t>& state) {
+        return THIS->restoreState(toQByteArray(state));
+    }
+
+    std::vector<uint8_t> Handle_saveState(HandleRef _this) {
+        return fromQByteArray(THIS->saveState());
+    }
+
+    void Handle_selectFile(HandleRef _this, const std::string& filename) {
+        THIS->selectFile(QString::fromStdString(filename));
+    }
+
+    void Handle_selectMimeTypeFilter(HandleRef _this, const std::string& filter) {
+        THIS->selectMimeTypeFilter(QString::fromStdString(filter));
+    }
+
+    void Handle_selectNameFilter(HandleRef _this, const std::string& filter) {
+        THIS->selectNameFilter(QString::fromStdString(filter));
+    }
+
+    void Handle_selectUrl(HandleRef _this, Url::HandleRef url) {
+        THIS->selectUrl(QURL_VALUE(url));
+    }
+
+    std::vector<std::string> Handle_selectedFiles(HandleRef _this) {
+        return toVectorStrings(THIS->selectedFiles());
+    }
+
+    std::string Handle_selectedMimeTypeFilter(HandleRef _this) {
+        return THIS->selectedMimeTypeFilter().toStdString();
+    }
+
+    std::string Handle_selectedNameFilter(HandleRef _this) {
+        return THIS->selectedNameFilter().toStdString();
+    }
+
+    ListRef Handle_selectedUrls(HandleRef _this) {
+        return new Url::__List { THIS->selectedUrls() };
+    }
+
+    void Handle_setAcceptMode(HandleRef _this, AcceptMode mode) {
+        THIS->setAcceptMode(static_cast<QFileDialog::AcceptMode>(mode));
+    }
+
+    void Handle_setDefaultSuffix(HandleRef _this, const std::string& suffix) {
+        THIS->setDefaultSuffix(QString::fromStdString(suffix));
+    }
+
+    void Handle_setDirectory(HandleRef _this, const std::string& directory) {
+        THIS->setDirectory(QString::fromStdString(directory));
+    }
+
+    void Handle_setDirectory(HandleRef _this, Dir::HandleRef directory) {
+        THIS->setDirectory(QDIR_VALUE(directory));
     }
 
     void Handle_setDirectoryUrl(HandleRef _this, Url::HandleRef url) {
         THIS->setDirectoryUrl(QURL_VALUE(url));
+    }
+
+    void Handle_setFileMode(HandleRef _this, FileMode mode) {
+        THIS->setFileMode(static_cast<QFileDialog::FileMode>(mode));
+    }
+
+    void Handle_setFilter(HandleRef _this, Filters filters) {
+        THIS->setFilter(static_cast<QDir::Filters>(filters.value));
+    }
+
+    void Handle_setHistory(HandleRef _this, const std::vector<std::string>& paths) {
+        THIS->setHistory(toQStringList(paths));
+    }
+
+    void Handle_setItemDelegate(HandleRef _this, AbstractItemDelegate_HandleRef delegate_) {
+        THIS->setItemDelegate(reinterpret_cast<QAbstractItemDelegate*>(delegate_));
+    }
+
+    void Handle_setLabelText(HandleRef _this, DialogLabel label, const std::string& text) {
+        THIS->setLabelText(static_cast<QFileDialog::DialogLabel>(label), QString::fromStdString(text));
     }
 
     void Handle_setMimeTypeFilters(HandleRef _this, const std::vector<std::string>& filters) {
@@ -99,12 +155,44 @@ namespace FileDialog
         THIS->setNameFilters(toQStringList(filters));
     }
 
-    void Handle_selectFile(HandleRef _this, const std::string& file) {
-        THIS->selectFile(QString::fromStdString(file));
+    void Handle_setOption(HandleRef _this, OptionEnum option, bool on /* true */) {
+        THIS->setOption(static_cast<QFileDialog::Option>(option), on);
     }
 
-    std::vector<std::string> Handle_selectedFiles(HandleRef _this) {
-        return toVectorStrings(THIS->selectedFiles());
+    void Handle_setOptions(HandleRef _this, Options options_) {
+        THIS->setOptions(static_cast<QFileDialog::Options>(options_.value));
+    }
+
+    void Handle_setProxyModel(HandleRef _this, AbstractProxyModel_HandleRef proxyModel) {
+        THIS->setProxyModel(reinterpret_cast<QAbstractProxyModel*>(proxyModel));
+    }
+
+    void Handle_setSidebarUrls(HandleRef _this, ListRef urls) {
+        THIS->setSidebarUrls(urls->qList);
+    }
+
+    void Handle_setSupportedSchemes(HandleRef _this, const std::vector<std::string>& schemes) {
+        THIS->setSupportedSchemes(toQStringList(schemes));
+    }
+
+    void Handle_setViewMode(HandleRef _this, ViewMode mode) {
+        THIS->setViewMode(static_cast<QFileDialog::ViewMode>(mode));
+    }
+
+    ListRef Handle_sidebarUrls(HandleRef _this) {
+        return new __List { THIS->sidebarUrls() };
+    }
+
+    std::vector<std::string> Handle_supportedSchemes(HandleRef _this) {
+        return toVectorStrings(THIS->supportedSchemes());
+    }
+
+    bool Handle_testOption(HandleRef _this, OptionEnum option) {
+        return THIS->testOption(static_cast<QFileDialog::Option>(option));
+    }
+
+    ViewMode Handle_getViewMode(HandleRef _this) {
+        return static_cast<ViewMode>(THIS->viewMode());
     }
 
     SignalConnectionRef Handle_connect_CurrentChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
@@ -165,7 +253,8 @@ namespace FileDialog
 
     SignalConnectionRef Handle_connect_UrlsSelected(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QFileDialog::urlsSelected, [handler](const QList<QUrl> &urls) {
-            const auto urls2 = fromQList<QUrl,Url::HandleRef>(urls, [](auto url) { return (Url::HandleRef)&url; }); // seems sketchy
+            Url::__List urlList { urls };
+            handler->urlsSelected(&urlList);
         });
         return new __SignalConnection { connection };
     }

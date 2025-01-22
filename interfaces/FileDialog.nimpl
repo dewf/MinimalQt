@@ -9,6 +9,9 @@ import Enums;
 import Dir;
 import Url;
 
+fwdopaque AbstractItemDelegate_Handle = AbstractItemDelegate.Handle;
+fwdopaque AbstractProxyModel_Handle = AbstractProxyModel.Handle;
+
 interface SignalHandler extends Dialog.SignalHandler {
     void currentChanged(string path);
     void currentUrlChanged(Url.Handle url);
@@ -18,7 +21,7 @@ interface SignalHandler extends Dialog.SignalHandler {
     void filesSelected(Array<string> selected);
     void filterSelected(string filter);
     void urlSelected(Url.Handle url);
-    void urlsSelected(Array<Url.Handle> urls);
+    void urlsSelected(Url.List urls);
 }
 
 enum FileMode {
@@ -38,6 +41,18 @@ enum AcceptMode {
     Save
 }
 
+enum DialogLabel { LookIn, FileName, FileType, Accept, Reject }
+
+enum OptionEnum {
+    ShowDirsOnly                = 0x00000001,
+    DontResolveSymlinks         = 0x00000002,
+    DontConfirmOverwrite        = 0x00000004,
+    DontUseNativeDialog         = 0x00000008,
+    ReadOnly                    = 0x00000010,
+    HideNameFilterDetails       = 0x00000020,
+    DontUseCustomDirectoryIcons = 0x00000040
+}
+
 flags Options {
     ShowDirsOnly                = 0x00000001,
     DontResolveSymlinks         = 0x00000002,
@@ -49,38 +64,65 @@ flags Options {
 }
 
 opaque Handle extends Dialog.Handle {
-    // properties
+
     AcceptMode getAcceptMode();
-    void setAcceptMode(AcceptMode mode);
-
     string defaultSuffix();
-    void setDefaultSuffix(string suffix);
-
-    FileMode getFileMode();
-    void setFileMode(FileMode mode);
-    
-    Options getOptions();
-    void setOptions(Options opts);
-
-    Array<string> supportedSchemes();
-    void setSupportedSchemes(Array<string> schemes);
-
-    ViewMode getViewMode();
-    void setViewMode(ViewMode mode);
-        
-    // others:
     Dir.Owned directory();
     Url.Owned directoryUrl();
+    FileMode getFileMode();
+    Dir.Filters filter();
+    Array<string> history();
+
+    // QAbstractFileIconProvider * iconProvider() const
+    // TODO
+
+    AbstractItemDelegate_Handle itemDelegate();
+    string labelText(DialogLabel label);
     Array<string> mimeTypeFilters();
     Array<string> nameFilters();
-    void setDirectory(string dir);
-    void setDirectory(Dir.Handle dir);
-    void setDirectoryUrl(Url.Handle url);
-    void setMimeTypeFilters(Array<string> filters);
-    void setNameFilter(string filter); // no corresponding getter?
-    void setNameFilters(Array<string> filters);
-    void selectFile(string file);
+
+    // void open(QObject *receiver, const char *member)
+    // hmmm
+
+    Options getOptions();
+    AbstractProxyModel_Handle proxyModel();
+    bool restoreState(Array<byte> state);
+    Array<byte> saveState();
+    void selectFile(string filename);
+    void selectMimeTypeFilter(string filter);
+    void selectNameFilter(string filter);
+    void selectUrl(Url.Handle url);
     Array<string> selectedFiles();
+    string selectedMimeTypeFilter();
+    string selectedNameFilter();
+    Url.List selectedUrls();
+    void setAcceptMode(AcceptMode mode);
+    void setDefaultSuffix(string suffix);
+    void setDirectory(string directory);
+    void setDirectory(Dir.Handle directory);
+    void setDirectoryUrl(Url.Handle directory);
+    void setFileMode(FileMode mode);
+    void setFilter(Dir.Filters filters);
+    void setHistory(Array<string> paths);
+
+    // void setIconProvider(QAbstractFileIconProvider *provider)
+    // TODO
+
+    void setItemDelegate(AbstractItemDelegate_Handle delegate_);
+    void setLabelText(DialogLabel label, string text);
+    void setMimeTypeFilters(Array<string> filters);
+    void setNameFilter(string filter);
+    void setNameFilters(Array<string> filters);
+    void setOption(OptionEnum option, bool on = true);
+    void setOptions(Options options_);
+    void setProxyModel(AbstractProxyModel_Handle proxyModel);
+    void setSidebarUrls(Url.List urls);
+    void setSupportedSchemes(Array<string> schemes);
+    void setViewMode(ViewMode mode);
+    Url.List sidebarUrls();
+    Array<string> supportedSchemes();
+    bool testOption(OptionEnum option);
+    ViewMode getViewMode();
 
     // signals ============================
     SignalConnection connect_CurrentChanged(SignalHandler handler);

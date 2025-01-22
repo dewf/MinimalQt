@@ -9,4 +9,7 @@
 #define URL_HEAP_NEW(...) (reinterpret_cast<Url::OwnedRef>(new QUrl(__VA_ARGS__)))
 
 namespace Url {
+    struct __List {
+        QList<QUrl> qList;
+    };
 }

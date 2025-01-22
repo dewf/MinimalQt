@@ -12,6 +12,16 @@ using namespace Enums;
 
 #define STRUCT_CAST(b,a) *((b*)&a)
 
+inline QByteArray toQByteArray(const std::vector<uint8_t>& input) {
+    const QByteArray qState(reinterpret_cast<const char *>(input.data()), static_cast<qsizetype>(input.size()));
+    return qState;
+}
+
+inline std::vector<uint8_t> fromQByteArray(const QByteArray& bytes) {
+    const auto data = bytes.data();
+    return std::vector<uint8_t>(data, data + bytes.length());
+}
+
 template <typename T, typename U>
 std::vector<U> vectorMap(const std::vector<T>& input, const std::function<U(T)>& mapFunc) {
     std::vector<U> result;

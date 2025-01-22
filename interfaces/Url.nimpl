@@ -4,7 +4,15 @@ module Url;
 opaque Handle {
     string toAbsoluteInternal();
 }
-
 opaque Owned extends Handle;
 
 Owned createFromAbsolute(string absoluteUrl);
+
+// list ===============================
+
+opaque List {
+    Array<Handle> items();
+    Array<string> itemsAbsolute();
+}
+
+List createFromAbsoluteList(Array<string> absoluteUrls);

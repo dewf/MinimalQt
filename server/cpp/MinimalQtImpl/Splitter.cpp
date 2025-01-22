@@ -64,14 +64,11 @@ namespace Splitter
     }
 
     bool Handle_restoreState(HandleRef _this, const std::vector<uint8_t>& state) {
-        const QByteArray qState(reinterpret_cast<const char *>(state.data()), static_cast<qsizetype>(state.size()));
-        return THIS->restoreState(qState);
+        return THIS->restoreState(toQByteArray(state));
     }
 
     std::vector<uint8_t> Handle_saveState(HandleRef _this) {
-        const auto bytes = THIS->saveState();
-        const auto data = bytes.data();
-        return std::vector<uint8_t>(data, data + bytes.length());
+        return fromQByteArray(THIS->saveState());
     }
 
     void Handle_setChildrenCollapsible(HandleRef _this, bool value) {
