@@ -4,7 +4,11 @@ import ModelIndex;
 import Variant;
 
 @nodispose
-opaque Handle {
-    void setModelIndex(ModelIndex.Handle index);
-    void setVariant(Variant.Handle variant);
+opaque ModelIndexReturn {
+    void setResult(ModelIndex.Handle value);
+}
+
+@nodispose
+opaque VariantReturn {
+    void setResult(Variant.Handle value);
 }

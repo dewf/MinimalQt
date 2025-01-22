@@ -5,8 +5,10 @@
 #include <QVariant>
 
 namespace SafeReturn {
-    struct __Handle {
-        QModelIndex modelIndex;
-        QVariant variant;
+    struct __ModelIndexReturn {
+        QModelIndex result;
+    };
+    struct __VariantReturn {
+        QVariant result;
     };
 }

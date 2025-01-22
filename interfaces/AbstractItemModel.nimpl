@@ -137,17 +137,17 @@ namedbits ImplementationMask {
 
 interface ImplementationMethods {
     // required:
-    void index(int row, int column, ModelIndex.Handle parent, SafeReturn.Handle ret);
-    void parent(ModelIndex.Handle index, SafeReturn.Handle ret);
+    void index(int row, int column, ModelIndex.Handle parent, ModelIndexReturn ret);
+    void parent(ModelIndex.Handle index, ModelIndexReturn ret);
     int rowCount(ModelIndex.Handle parent);
     int columnCount(ModelIndex.Handle parent);
-    void data(ModelIndex.Handle index, int role, SafeReturn.Handle ret);
+    void data(ModelIndex.Handle index, int role, VariantReturn ret);
 
     // optional (mask-activated):
     bool hasChildren(ModelIndex.Handle parent);
     bool setData(ModelIndex.Handle index, Variant.Handle value, int role);
     ItemFlags getFlags(ModelIndex.Handle index, ItemFlags baseFlags);
-    void headerData(int section, Orientation orientation, int role, SafeReturn.Handle ret);
+    void headerData(int section, Orientation orientation, int role, VariantReturn ret);
     bool setHeaderData(int section, Orientation orientation, Variant.Handle value, int role);
     void sort(int column, SortOrder order);
 }

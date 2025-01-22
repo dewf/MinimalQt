@@ -6,11 +6,11 @@
 
 namespace SafeReturn
 {
-    void Handle_setModelIndex(HandleRef _this, ModelIndex::HandleRef index) {
-        _this->modelIndex = index->value;
+    void ModelIndexReturn_setResult(ModelIndexReturnRef _this, ModelIndex::HandleRef value) {
+        _this->result = value->value;
     }
 
-    void Handle_setVariant(HandleRef _this, Variant::HandleRef variant) {
-        _this->variant = variant->value;
+    void VariantReturn_setResult(VariantReturnRef _this, Variant::HandleRef value) {
+        _this->result = value->value;
     }
 }

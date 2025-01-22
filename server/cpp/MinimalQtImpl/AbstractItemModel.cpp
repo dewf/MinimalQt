@@ -364,17 +364,17 @@ namespace AbstractItemModel
         [[nodiscard]]
         QModelIndex index(int row, int column, const QModelIndex &parent) const override {
             ModelIndex::__Handle parent2(parent);
-            SafeReturn::__Handle safeRet;
+            __ModelIndexReturn safeRet;
             methodDelegate->index(row, column, &parent2, &safeRet);
-            return safeRet.modelIndex;
+            return safeRet.result;
         }
 
         [[nodiscard]]
         QModelIndex parent(const QModelIndex &child) const override {
             ModelIndex::__Handle child2(child);
-            SafeReturn::__Handle safeRet;
+            __ModelIndexReturn safeRet;
             methodDelegate->parent(&child2, &safeRet);
-            return safeRet.modelIndex;
+            return safeRet.result;
         }
 
         [[nodiscard]]
@@ -392,9 +392,9 @@ namespace AbstractItemModel
         [[nodiscard]]
         QVariant data(const QModelIndex &index, int role) const override {
             ModelIndex::__Handle index2(index);
-            SafeReturn::__Handle safeRet;
+            __VariantReturn safeRet;
             methodDelegate->data(&index2, role, &safeRet);
-            return safeRet.variant;
+            return safeRet.result;
         }
 
         // ===== optional methods ==================================================
@@ -433,9 +433,9 @@ namespace AbstractItemModel
         [[nodiscard]]
         QVariant headerData(int section, Qt::Orientation orientation, int role) const override {
             if (methodMask & HeaderData) {
-                SafeReturn::__Handle safeRet;
+                __VariantReturn safeRet;
                 methodDelegate->headerData(section, static_cast<Orientation>(orientation), role, &safeRet);
-                return safeRet.variant;
+                return safeRet.result;
             } else {
                 return QAbstractItemModel::headerData(section, orientation, role);
             }

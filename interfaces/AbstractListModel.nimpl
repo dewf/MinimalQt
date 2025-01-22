@@ -42,10 +42,10 @@ namedbits ImplementedMethodMask { // TODO: inherit from AbstractItemModel Delega
 interface ImplementationMethods {
     // required:
     int rowCount(ModelIndex.Handle parent);
-    void data(ModelIndex.Handle index, ItemDataRole role, SafeReturn.Handle ret);
+    void data(ModelIndex.Handle index, ItemDataRole role, VariantReturn ret);
     
     // optional (mask-activated):
-    void headerData(int section, Orientation orientation, ItemDataRole role, SafeReturn.Handle ret);
+    void headerData(int section, Orientation orientation, ItemDataRole role, VariantReturn ret);
     ItemFlags getFlags(ModelIndex.Handle index, ItemFlags baseFlags);
     bool setData(ModelIndex.Handle index, Variant.Handle value, ItemDataRole role);
     

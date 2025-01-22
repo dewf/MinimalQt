@@ -30,18 +30,18 @@ namespace AbstractListModel
         [[nodiscard]]
         QVariant data(const QModelIndex &index, int role) const override {
             ModelIndex::__Handle index2(index);
-            SafeReturn::__Handle safeRet;
+            __VariantReturn safeRet;
             methodDelegate->data(&index2, static_cast<ItemDataRole>(role), &safeRet);
-            return safeRet.variant;
+            return safeRet.result;
         }
 
         // ==== optional methods ==========================================
         [[nodiscard]]
         QVariant headerData(int section, Qt::Orientation orientation, int role) const override {
             if (methodMask & HeaderData) {
-                SafeReturn::__Handle safeRet;
+                __VariantReturn safeRet;
                 methodDelegate->headerData(section, static_cast<Orientation>(orientation), static_cast<ItemDataRole>(role), &safeRet);
-                return safeRet.variant;
+                return safeRet.result;
             } else {
                 return QAbstractListModel::headerData(section, orientation, role);
             }
