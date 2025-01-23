@@ -29,6 +29,7 @@ opaque Handle extends Widget.Handle {
     string text();
     Direction textDirection();
     int value();
+
     void reset();
     void setMaximum(int maximum);
     void setMinimum(int minimum);
@@ -40,4 +41,4 @@ opaque Handle extends Widget.Handle {
     SignalConnection connect_ValueChanged(SignalHandler handler);
 }
 
-Handle create(Option<Widget.Handle> parent);
+Handle create(Widget.Handle parent = null);

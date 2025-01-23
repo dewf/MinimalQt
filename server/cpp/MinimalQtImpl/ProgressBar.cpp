@@ -108,7 +108,7 @@ namespace ProgressBar
         delete THIS;
     }
 
-    HandleRef create(const std::optional<Widget::HandleRef>& parent) {
-        return reinterpret_cast<HandleRef>(new QProgressBar(Widget::fromOptionalHandle(parent)));
+    HandleRef create(Widget::HandleRef parent /* nullptr */) {
+        return reinterpret_cast<HandleRef>(new QProgressBar(AS_QWIDGET_PTR(parent)));
     }
 }
