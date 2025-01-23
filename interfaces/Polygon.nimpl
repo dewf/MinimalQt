@@ -1,0 +1,39 @@
+module Polygon;
+
+import Common;
+import Enums;
+
+@nodispose
+opaque Handle {
+    Rect boundingRect();
+    bool containsPoint(Point point, FillRule fillRule);
+    Owned intersected(Handle r);
+    bool intersects(Handle p);
+
+    // void point(int index, int *x, int *y) const
+
+    Point point(int index);
+    void putPoints(int index, Array<Point> points);
+    void putPoints(int index, int nPoints, Handle fromPolygon, int fromIndex = 0);
+    void setPoint(int index, int x, int y);
+    void setPoint(int index, Point point);
+
+    // void setPoints(int nPoints, const int *points)
+    // void setPoints(int nPoints, int firstx, int firsty, ...)
+    void setPoints(Array<Point> points);
+
+    Owned subtracted(Handle r);
+
+    // (since 6.4) QPolygonF toPolygonF() const
+
+    void translate(int dx, int dy);
+    void translate(Point offset);
+    Owned translated(int dx, int dy);
+    Owned translated(Point offset);
+    Owned united(Handle r);
+}
+opaque Owned extends Handle;
+
+Owned create();
+Owned create(Array<Point> points);
+Owned create(Rect rect, bool closed = false);

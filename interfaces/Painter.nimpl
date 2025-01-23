@@ -13,6 +13,8 @@ import Transform;
 import Image;
 import PaintDevice;
 import PainterPath;
+import Polygon;
+import Gradient;
 
 enum RenderHint {
     Antialiasing = 0x01,
@@ -120,8 +122,8 @@ opaque Handle {
     void drawChord(Rect rectangle, int startAngle, int spanAngle);
     void drawChord(int x, int y, int width, int height, int startAngle, int spanAngle);
     void drawConvexPolygon(Array<PointF> points);
+    void drawConvexPolygon(Polygon.Handle polygon);
 
-    // void drawConvexPolygon(const QPolygon &polygon)
     // void drawConvexPolygon(const QPolygonF &polygon)
 
     void drawConvexPolygon(Array<Point> points);
@@ -184,20 +186,20 @@ opaque Handle {
     void drawPoint(Point position);
     void drawPoint(int x, int y);
     void drawPoints(Array<PointF> points);
+    void drawPoints(Polygon.Handle points);
 
-    // void drawPoints(const QPolygon &points)
     // void drawPoints(const QPolygonF &points)
 
     void drawPoints(Array<Point> points);
     void drawPolygon(Array<PointF> points, FillRule fillRule = FillRule.OddEvenFill);
+    void drawPolygon(Polygon.Handle points, FillRule fillRule = FillRule.OddEvenFill);
 
-    // void drawPolygon(const QPolygon &points, Qt::FillRule fillRule = Qt::OddEvenFill)
     // void drawPolygon(const QPolygonF &points, Qt::FillRule fillRule = Qt::OddEvenFill)
 
     void drawPolygon(Array<Point> points, FillRule fillRule = FillRule.OddEvenFill);
     void drawPolyline(Array<PointF> points);
+    void drawPolyline(Polygon.Handle points);
 
-    // void drawPolyline(const QPolygon &points)
     // void drawPolyline(const QPolygonF &points)
 
     void drawPolyline(Array<Point> points);
@@ -231,22 +233,16 @@ opaque Handle {
     void eraseRect(int x, int y, int width, int height);
     void fillPath(PainterPath.Handle path, Brush.Handle brush);
     void fillRect(RectF rectangle, Brush.Handle brush);
-
-    // void fillRect(const QRect &rectangle, QGradient::Preset preset)
-
+    void fillRect(Rect rectangle, Gradient.Preset preset);
     void fillRect(Rect rectangle, BrushStyle style);
     void fillRect(Rect rectangle, GlobalColor color);
     void fillRect(Rect rectangle, Brush.Handle brush);
     void fillRect(Rect rectangle, Color.Handle color);
-
-    // void fillRect(const QRectF &rectangle, QGradient::Preset preset)
-
+    void fillRect(RectF rectangle, Gradient.Preset preset);
     void fillRect(RectF rectangle, BrushStyle style);
     void fillRect(RectF rectangle, GlobalColor color);
     void fillRect(RectF rectangle, Color.Handle color);
-
-    // void fillRect(int x, int y, int width, int height, QGradient::Preset preset)
-    
+    void fillRect(int x, int y, int width, int height, Gradient.Preset preset);
     void fillRect(int x, int y, int width, int height, BrushStyle style);
     void fillRect(int x, int y, int width, int height, GlobalColor color);
     void fillRect(int x, int y, int width, int height, Brush.Handle brush);

@@ -8,6 +8,7 @@
 #include "PainterPathInternal.h"
 #include "PenInternal.h"
 #include "PixmapInternal.h"
+#include "PolygonInternal.h"
 #include "RegionInternal.h"
 #include "TextOptionInternal.h"
 #include "TransformInternal.h"
@@ -126,6 +127,10 @@ namespace Painter
     void Handle_drawConvexPolygon(HandleRef _this, const std::vector<PointF>& points) {
         const auto qPoints = vectorMap<PointF,QPointF>(points, [](auto p) { return toQPointF(p); });
         THIS->drawConvexPolygon(qPoints.data(), static_cast<int>(qPoints.size()));
+    }
+
+    void Handle_drawConvexPolygon(HandleRef _this, Polygon::HandleRef polygon) {
+        THIS->drawConvexPolygon(QPOLYGON_VALUE(polygon));
     }
 
     void Handle_drawConvexPolygon(HandleRef _this, const std::vector<Point>& points) {
@@ -295,6 +300,10 @@ namespace Painter
         THIS->drawPoints(qPoints.data(), static_cast<int>(qPoints.size()));
     }
 
+    void Handle_drawPoints(HandleRef _this, Polygon::HandleRef points) {
+        THIS->drawPoints(QPOLYGON_VALUE(points));
+    }
+
     void Handle_drawPoints(HandleRef _this, const std::vector<Point>& points) {
         const auto qPoints = vectorMap<Point,QPoint>(points, [](auto p) { return toQPoint(p); });
         THIS->drawPoints(qPoints.data(), static_cast<int>(qPoints.size()));
@@ -305,6 +314,10 @@ namespace Painter
         THIS->drawPolygon(qPoints.data(), static_cast<int>(qPoints.size()), static_cast<Qt::FillRule>(fillRule));
     }
 
+    void Handle_drawPolygon(HandleRef _this, Polygon::HandleRef points, FillRule fillRule /* FillRule::OddEvenFill */) {
+        THIS->drawPolygon(QPOLYGON_VALUE(points), static_cast<Qt::FillRule>(fillRule));
+    }
+
     void Handle_drawPolygon(HandleRef _this, const std::vector<Point>& points, FillRule fillRule /* FillRule::OddEvenFill */) {
         const auto qPoints = vectorMap<Point,QPoint>(points, [](auto p) { return toQPoint(p); });
         THIS->drawPolygon(qPoints.data(), static_cast<int>(qPoints.size()), static_cast<Qt::FillRule>(fillRule));
@@ -313,6 +326,10 @@ namespace Painter
     void Handle_drawPolyline(HandleRef _this, const std::vector<PointF>& points) {
         const auto qPoints = vectorMap<PointF,QPointF>(points, [](auto p) { return toQPointF(p); });
         THIS->drawPolyline(qPoints.data(), static_cast<int>(qPoints.size()));
+    }
+
+    void Handle_drawPolyline(HandleRef _this, Polygon::HandleRef points) {
+        THIS->drawPolyline(QPOLYGON_VALUE(points));
     }
 
     void Handle_drawPolyline(HandleRef _this, const std::vector<Point>& points) {
@@ -446,6 +463,10 @@ namespace Painter
         THIS->fillRect(toQRectF(rectangle), QBRUSH_VALUE(brush));
     }
 
+    void Handle_fillRect(HandleRef _this, Rect rectangle, Preset preset) {
+        THIS->fillRect(toQRect(rectangle), static_cast<QGradient::Preset>(preset));
+    }
+
     void Handle_fillRect(HandleRef _this, Rect rectangle, BrushStyle style) {
         THIS->fillRect(toQRect(rectangle), static_cast<Qt::BrushStyle>(style));
     }
@@ -462,6 +483,10 @@ namespace Painter
         THIS->fillRect(toQRect(rectangle), QCOLOR_VALUE(color));
     }
 
+    void Handle_fillRect(HandleRef _this, RectF rectangle, Preset preset) {
+        THIS->fillRect(toQRectF(rectangle), static_cast<QGradient::Preset>(preset));
+    }
+
     void Handle_fillRect(HandleRef _this, RectF rectangle, BrushStyle style) {
         THIS->fillRect(toQRectF(rectangle), static_cast<Qt::BrushStyle>(style));
     }
@@ -472,6 +497,10 @@ namespace Painter
 
     void Handle_fillRect(HandleRef _this, RectF rectangle, Color::HandleRef color) {
         THIS->fillRect(toQRectF(rectangle), QCOLOR_VALUE(color));
+    }
+
+    void Handle_fillRect(HandleRef _this, int32_t x, int32_t y, int32_t width, int32_t height, Preset preset) {
+        THIS->fillRect(x, y, width, height, static_cast<QGradient::Preset>(preset));
     }
 
     void Handle_fillRect(HandleRef _this, int32_t x, int32_t y, int32_t width, int32_t height, BrushStyle style) {

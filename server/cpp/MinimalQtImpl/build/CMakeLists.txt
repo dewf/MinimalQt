@@ -334,6 +334,11 @@ add_library(MinimalQtImpl STATIC
     ../PlainTextEdit.cpp
     ../PlainTextEditInternal.h
 
+    ../generated/Polygon.h
+    ../generated/Polygon_wrappers.cpp
+    ../Polygon.cpp
+    ../PolygonInternal.h
+
     ../generated/ProgressBar.h
     ../generated/ProgressBar_wrappers.cpp
     ../ProgressBar.cpp
