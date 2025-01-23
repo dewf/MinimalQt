@@ -29,67 +29,57 @@ flags DockOptions {
 }
 
 opaque Handle extends Widget.Handle {
-    // fields ==========================================
-    bool isAnimated();
-    void setAnimated(bool state);
-
-    bool isDockNestingEnabled();
-    void setDockNestingEnabled(bool state);
-
-    DockOptions getDockOptions();
-    void setDockOptions(DockOptions dockOptions);
-
-    bool documentMode();
-    void setDocumentMode(bool state);
-
-    Size iconSize();
-    void setIconSize(Size size);
-
-    TabShape getTabShape();
-    void setTabShape(TabShape tabShape);
-
-    ToolButtonStyle getToolButtonStyle();
-    void setToolButtonStyle(ToolButtonStyle style);
-
-    bool unifiedTitleAndToolBarOnMac();
-    void setUnifiedTitleAndToolBarOnMac(bool state);
-
-    // methods =========================================
-
-    void addDockWidget(DockWidgetArea area, DockWidget.Handle dockWidget, Option<Orientation> orientation);
+    void addDockWidget(DockWidgetArea area, DockWidget.Handle dockwidget);
+    void addDockWidget(DockWidgetArea area, DockWidget.Handle dockwidget, Orientation orientation);
     void addToolBar(ToolBarArea area, ToolBar.Handle toolbar);
     void addToolBar(ToolBar.Handle toolbar);
     ToolBar.Handle addToolBar(string title);
-    void addToolBarBreak(Option<ToolBarArea> area);
+    void addToolBarBreak(ToolBarArea area = ToolBarArea.TopToolBarArea);
     Widget.Handle centralWidget();
     DockWidgetArea corner(Corner corner);
     Menu.Handle createPopupMenu();
-    DockWidgetArea getDockWidgetArea(DockWidget.Handle dockwidget);
+    DockOptions getDockOptions();
+    DockWidgetArea dockWidgetArea(DockWidget.Handle dockwidget);
+    bool documentMode();
+    Size iconSize();
     void insertToolBar(ToolBar.Handle before, ToolBar.Handle toolbar);
     void insertToolBarBreak(ToolBar.Handle before);
-    MenuBar.Handle menuBar();                                // creates empty menubar if it doesn't yet exist 
-    Widget.Handle menuWidget();                              // doesn't create, only returns existing
+    bool isAnimated();
+    bool isDockNestingEnabled();
+    MenuBar.Handle menuBar();
+    Widget.Handle menuWidget();
     void removeDockWidget(DockWidget.Handle dockwidget);
     void removeToolBar(ToolBar.Handle toolbar);
     void removeToolBarBreak(ToolBar.Handle before);
     void resizeDocks(Array<DockWidget.Handle> docks, Array<int> sizes, Orientation orientation);
     bool restoreDockWidget(DockWidget.Handle dockwidget);
-    bool restoreState(Array<byte> state, Option<int> version);
-    Array<byte> saveState(Option<int> version);
+    bool restoreState(Array<byte> state, int version = 0);
+    Array<byte> saveState(int version = 0);
     void setCentralWidget(Widget.Handle widget);
     void setCorner(Corner corner, DockWidgetArea area);
-    void setMenuBar(MenuBar.Handle menubar);
-    void setMenuWidget(Widget.Handle menubar);
+    void setDockOptions(DockOptions options_);
+    void setDocumentMode(bool enabled);
+    void setIconSize(Size iconSize);
+    void setMenuBar(MenuBar.Handle menuBar);
+    void setMenuWidget(Widget.Handle menuBar);
     void setStatusBar(StatusBar.Handle statusbar);
     void setTabPosition(DockWidgetAreas areas, TabPosition tabPosition);
+    void setTabShape(TabShape tabShape);
+    void setToolButtonStyle(ToolButtonStyle toolButtonStyle);
     void splitDockWidget(DockWidget.Handle first, DockWidget.Handle second, Orientation orientation);
-    StatusBar.Handle statusBar();                            // create if it doesn't exist yet
+    StatusBar.Handle statusBar();
     TabPosition tabPosition(DockWidgetArea area);
+    TabShape tabShape();
     Array<DockWidget.Handle> tabifiedDockWidgets(DockWidget.Handle dockwidget);
     void tabifyDockWidget(DockWidget.Handle first, DockWidget.Handle second);
-    Widget.Handle takeCentralWidget(); // removes ownership
-    ToolBarArea toolBarArea(ToolBar.Handle toolbar);
+    Widget.Handle takeCentralWidget();
+    ToolBarArea getToolBarArea(ToolBar.Handle toolbar);
     bool toolBarBreak(ToolBar.Handle toolbar);
+    ToolButtonStyle toolButtonStyle();
+    bool unifiedTitleAndToolBarOnMac();
+    void setAnimated(bool enabled);
+    void setDockNestingEnabled(bool enabled);
+    void setUnifiedTitleAndToolBarOnMac(bool set);
 
     // signals =========================================
     SignalConnection connect_IconSizeChanged(SignalHandler handler);

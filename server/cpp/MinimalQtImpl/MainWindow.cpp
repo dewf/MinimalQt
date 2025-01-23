@@ -16,77 +16,12 @@
 
 namespace MainWindow
 {
-    bool Handle_isAnimated(HandleRef _this) {
-        return THIS->isAnimated();
+    void Handle_addDockWidget(HandleRef _this, DockWidgetArea area, DockWidget::HandleRef dockwidget) {
+        THIS->addDockWidget(static_cast<Qt::DockWidgetArea>(area), AS_QDOCKWIDGET_PTR(dockwidget));
     }
 
-    void Handle_setAnimated(HandleRef _this, bool state) {
-        THIS->setAnimated(state);
-    }
-
-    bool Handle_isDockNestingEnabled(HandleRef _this) {
-        return THIS->isDockNestingEnabled();
-    }
-
-    void Handle_setDockNestingEnabled(HandleRef _this, bool state) {
-        THIS->setDockNestingEnabled(state);
-    }
-
-    DockOptions Handle_getDockOptions(HandleRef _this) {
-        return DockOptions(THIS->dockOptions());
-    }
-
-    void Handle_setDockOptions(HandleRef _this, DockOptions dockOptions) {
-        THIS->setDockOptions(static_cast<QMainWindow::DockOptions>(dockOptions.value));
-    }
-
-    bool Handle_documentMode(HandleRef _this) {
-        return THIS->documentMode();
-    }
-
-    void Handle_setDocumentMode(HandleRef _this, bool state) {
-        THIS->setDocumentMode(state);
-    }
-
-    Size Handle_iconSize(HandleRef _this) {
-        return toSize(THIS->iconSize());
-    }
-
-    void Handle_setIconSize(HandleRef _this, Size size) {
-        THIS->setIconSize(toQSize(size));
-    }
-
-    TabShape Handle_getTabShape(HandleRef _this) {
-        return static_cast<TabShape>(THIS->tabShape());
-    }
-
-    void Handle_setTabShape(HandleRef _this, TabShape tabShape) {
-        THIS->setTabShape(static_cast<QTabWidget::TabShape>(tabShape));
-    }
-
-    ToolButtonStyle Handle_getToolButtonStyle(HandleRef _this) {
-        return static_cast<ToolButtonStyle>(THIS->toolButtonStyle());
-    }
-
-    void Handle_setToolButtonStyle(HandleRef _this, ToolButtonStyle style) {
-        THIS->setToolButtonStyle(static_cast<Qt::ToolButtonStyle>(style));
-    }
-
-    bool Handle_unifiedTitleAndToolBarOnMac(HandleRef _this) {
-        return THIS->unifiedTitleAndToolBarOnMac();
-    }
-
-    void Handle_setUnifiedTitleAndToolBarOnMac(HandleRef _this, bool state) {
-        THIS->setUnifiedTitleAndToolBarOnMac(state);
-    }
-
-    void Handle_addDockWidget(HandleRef _this, DockWidgetArea area, DockWidget::HandleRef dockWidget, const std::optional<Orientation>& orientation) {
-        if (orientation.has_value()) {
-            const auto qOrientation = static_cast<Qt::Orientation>(orientation.value());
-            THIS->addDockWidget(static_cast<Qt::DockWidgetArea>(area), AS_QDOCKWIDGET_PTR(dockWidget), qOrientation);
-        } else {
-            THIS->addDockWidget(static_cast<Qt::DockWidgetArea>(area), AS_QDOCKWIDGET_PTR(dockWidget)); // weird that Qt has 2 different methods, vs. one with an optional param ...
-        }
+    void Handle_addDockWidget(HandleRef _this, DockWidgetArea area, DockWidget::HandleRef dockwidget, Orientation orientation) {
+        THIS->addDockWidget(static_cast<Qt::DockWidgetArea>(area), AS_QDOCKWIDGET_PTR(dockwidget), static_cast<Qt::Orientation>(orientation));
     }
 
     void Handle_addToolBar(HandleRef _this, ToolBarArea area, ToolBar::HandleRef toolbar) {
@@ -101,9 +36,8 @@ namespace MainWindow
         return reinterpret_cast<ToolBar::HandleRef>(THIS->addToolBar(QString::fromStdString(title)));
     }
 
-    void Handle_addToolBarBreak(HandleRef _this, const std::optional<ToolBarArea>& area) {
-        const auto qArea = optionOrDefaultStaticCast(area, Qt::TopToolBarArea);
-        THIS->addToolBarBreak(qArea);
+    void Handle_addToolBarBreak(HandleRef _this, ToolBarArea area /* ToolBarArea::TopToolBarArea */) {
+        THIS->addToolBarBreak(static_cast<Qt::ToolBarArea>(area));
     }
 
     Widget::HandleRef Handle_centralWidget(HandleRef _this) {
@@ -118,8 +52,20 @@ namespace MainWindow
         return reinterpret_cast<Menu::HandleRef>(THIS->createPopupMenu());
     }
 
-    DockWidgetArea Handle_getDockWidgetArea(HandleRef _this, DockWidget::HandleRef dockwidget) {
+    DockOptions Handle_getDockOptions(HandleRef _this) {
+        return DockOptions(THIS->dockOptions());
+    }
+
+    DockWidgetArea Handle_dockWidgetArea(HandleRef _this, DockWidget::HandleRef dockwidget) {
         return static_cast<DockWidgetArea>(THIS->dockWidgetArea(AS_QDOCKWIDGET_PTR(dockwidget)));
+    }
+
+    bool Handle_documentMode(HandleRef _this) {
+        return THIS->documentMode();
+    }
+
+    Size Handle_iconSize(HandleRef _this) {
+        return toSize(THIS->iconSize());
     }
 
     void Handle_insertToolBar(HandleRef _this, ToolBar::HandleRef before, ToolBar::HandleRef toolbar) {
@@ -128,6 +74,14 @@ namespace MainWindow
 
     void Handle_insertToolBarBreak(HandleRef _this, ToolBar::HandleRef before) {
         THIS->insertToolBarBreak(AS_QTOOLBAR_PTR(before));
+    }
+
+    bool Handle_isAnimated(HandleRef _this) {
+        return THIS->isAnimated();
+    }
+
+    bool Handle_isDockNestingEnabled(HandleRef _this) {
+        return THIS->isDockNestingEnabled();
     }
 
     MenuBar::HandleRef Handle_menuBar(HandleRef _this) {
@@ -162,15 +116,12 @@ namespace MainWindow
         return THIS->restoreDockWidget(AS_QDOCKWIDGET_PTR(dockwidget));
     }
 
-    bool Handle_restoreState(HandleRef _this, const std::vector<uint8_t>& state, const std::optional<int32_t>& version) {
-        const QByteArray qState(reinterpret_cast<const char *>(state.data()), static_cast<qsizetype>(state.size()));
-        return THIS->restoreState(qState, version.value_or(0));
+    bool Handle_restoreState(HandleRef _this, const std::vector<uint8_t>& state, int32_t version /* 0 */) {
+        return THIS->restoreState(toQByteArray(state), version);
     }
 
-    std::vector<uint8_t> Handle_saveState(HandleRef _this, const std::optional<int32_t>& version) {
-        const auto bytes = THIS->saveState(version.value_or(0));
-        const auto data = bytes.data();
-        return std::vector<uint8_t>(data, data + bytes.length());
+    std::vector<uint8_t> Handle_saveState(HandleRef _this, int32_t version /* 0 */) {
+        return fromQByteArray(THIS->saveState(version));
     }
 
     void Handle_setCentralWidget(HandleRef _this, Widget::HandleRef widget) {
@@ -181,12 +132,24 @@ namespace MainWindow
         THIS->setCorner(static_cast<Qt::Corner>(corner), static_cast<Qt::DockWidgetArea>(area));
     }
 
-    void Handle_setMenuBar(HandleRef _this, MenuBar::HandleRef menubar) {
-        THIS->setMenuBar(reinterpret_cast<QMenuBar*>(menubar));
+    void Handle_setDockOptions(HandleRef _this, DockOptions options_) {
+        THIS->setDockOptions(static_cast<QMainWindow::DockOptions>(options_.value));
     }
 
-    void Handle_setMenuWidget(HandleRef _this, Widget::HandleRef menubar) {
-        THIS->setMenuWidget(AS_QWIDGET_PTR(menubar));
+    void Handle_setDocumentMode(HandleRef _this, bool enabled) {
+        THIS->setDocumentMode(enabled);
+    }
+
+    void Handle_setIconSize(HandleRef _this, Size iconSize) {
+        THIS->setIconSize(toQSize(iconSize));
+    }
+
+    void Handle_setMenuBar(HandleRef _this, MenuBar::HandleRef menuBar) {
+        THIS->setMenuBar(reinterpret_cast<QMenuBar*>(menuBar));
+    }
+
+    void Handle_setMenuWidget(HandleRef _this, Widget::HandleRef menuBar) {
+        THIS->setMenuWidget(AS_QWIDGET_PTR(menuBar));
     }
 
     void Handle_setStatusBar(HandleRef _this, StatusBar::HandleRef statusbar) {
@@ -195,6 +158,14 @@ namespace MainWindow
 
     void Handle_setTabPosition(HandleRef _this, DockWidgetAreas areas, TabPosition tabPosition) {
         THIS->setTabPosition(static_cast<Qt::DockWidgetAreas>(areas.value), static_cast<QTabWidget::TabPosition>(tabPosition));
+    }
+
+    void Handle_setTabShape(HandleRef _this, TabShape tabShape) {
+        THIS->setTabShape(static_cast<QTabWidget::TabShape>(tabShape));
+    }
+
+    void Handle_setToolButtonStyle(HandleRef _this, ToolButtonStyle toolButtonStyle) {
+        THIS->setToolButtonStyle(static_cast<Qt::ToolButtonStyle>(toolButtonStyle));
     }
 
     void Handle_splitDockWidget(HandleRef _this, DockWidget::HandleRef first, DockWidget::HandleRef second, Orientation orientation) {
@@ -207,6 +178,10 @@ namespace MainWindow
 
     TabPosition Handle_tabPosition(HandleRef _this, DockWidgetArea area) {
         return static_cast<TabPosition>(THIS->tabPosition(static_cast<Qt::DockWidgetArea>(area)));
+    }
+
+    TabShape Handle_tabShape(HandleRef _this) {
+        return static_cast<TabShape>(THIS->tabShape());
     }
 
     std::vector<DockWidget::HandleRef> Handle_tabifiedDockWidgets(HandleRef _this, DockWidget::HandleRef dockwidget) {
@@ -224,12 +199,32 @@ namespace MainWindow
         return reinterpret_cast<Widget::HandleRef>(THIS->takeCentralWidget());
     }
 
-    ToolBarArea Handle_toolBarArea(HandleRef _this, ToolBar::HandleRef toolbar) {
+    ToolBarArea Handle_getToolBarArea(HandleRef _this, ToolBar::HandleRef toolbar) {
         return static_cast<ToolBarArea>(THIS->toolBarArea(AS_QTOOLBAR_PTR(toolbar)));
     }
 
     bool Handle_toolBarBreak(HandleRef _this, ToolBar::HandleRef toolbar) {
         return THIS->toolBarBreak(AS_QTOOLBAR_PTR(toolbar));
+    }
+
+    ToolButtonStyle Handle_toolButtonStyle(HandleRef _this) {
+        return static_cast<ToolButtonStyle>(THIS->toolButtonStyle());
+    }
+
+    bool Handle_unifiedTitleAndToolBarOnMac(HandleRef _this) {
+        return THIS->unifiedTitleAndToolBarOnMac();
+    }
+
+    void Handle_setAnimated(HandleRef _this, bool enabled) {
+        THIS->setAnimated(enabled);
+    }
+
+    void Handle_setDockNestingEnabled(HandleRef _this, bool enabled) {
+        THIS->setDockNestingEnabled(enabled);
+    }
+
+    void Handle_setUnifiedTitleAndToolBarOnMac(HandleRef _this, bool set) {
+        THIS->setUnifiedTitleAndToolBarOnMac(set);
     }
 
     SignalConnectionRef Handle_connect_IconSizeChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
