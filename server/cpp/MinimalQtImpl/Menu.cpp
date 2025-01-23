@@ -12,48 +12,8 @@
 
 namespace Menu
 {
-    Icon::OwnedRef Handle_getIcon(HandleRef _this) {
-        return ICON_HEAP_NEW(THIS->icon());
-    }
-
-    void Handle_setIcon(HandleRef _this, Icon::HandleRef icon) {
-        THIS->setIcon(QICON_VALUE(icon));
-    }
-
-    bool Handle_separatorsCollasible(HandleRef _this) {
-        return THIS->separatorsCollapsible();
-    }
-
-    void Handle_setSeparatorsCollapsible(HandleRef _this, bool state) {
-        THIS->setSeparatorsCollapsible(state);
-    }
-
-    bool Handle_isTearOffEnabled(HandleRef _this) {
-        return THIS->isTearOffEnabled();
-    }
-
-    void Handle_setTearOffEnabled(HandleRef _this, bool state) {
-        THIS->setTearOffEnabled(state);
-    }
-
-    std::string Handle_title(HandleRef _this) {
-        return THIS->title().toStdString();
-    }
-
-    void Handle_setTitle(HandleRef _this, const std::string& title) {
-        THIS->setTitle(QString::fromStdString(title));
-    }
-
-    bool Handle_toolTipsVisible(HandleRef _this) {
-        return THIS->toolTipsVisible();
-    }
-
-    void Handle_setToolTipsVisible(HandleRef _this, bool visible) {
-        THIS->setToolTipsVisible(visible);
-    }
-
-    Action::HandleRef Handle_actionAt(HandleRef _this, Point pos) {
-        return reinterpret_cast<Action::HandleRef>(THIS->actionAt(toQPoint(pos)));
+    Action::HandleRef Handle_actionAt(HandleRef _this, Point pt) {
+        return reinterpret_cast<Action::HandleRef>(THIS->actionAt(toQPoint(pt)));
     }
 
     Rect Handle_actionGeometry(HandleRef _this, Action::HandleRef act) {
@@ -76,12 +36,12 @@ namespace Menu
         return reinterpret_cast<HandleRef>(THIS->addMenu(QICON_VALUE(icon), QString::fromStdString(title)));
     }
 
-    Action::HandleRef Handle_addSection(HandleRef _this, const std::string& text, const std::optional<Icon::HandleRef>& icon) {
-        if (icon.has_value()) {
-            return reinterpret_cast<Action::HandleRef>(THIS->addSection(QICON_VALUE(icon.value()), QString::fromStdString(text)));
-        } else {
-            return reinterpret_cast<Action::HandleRef>(THIS->addSection(QString::fromStdString(text)));
-        }
+    Action::HandleRef Handle_addSection(HandleRef _this, const std::string& text) {
+        return reinterpret_cast<Action::HandleRef>(THIS->addSection(QString::fromStdString(text)));
+    }
+
+    Action::HandleRef Handle_addSection(HandleRef _this, Icon::HandleRef icon, const std::string& text) {
+        return reinterpret_cast<Action::HandleRef>(THIS->addSection(QICON_VALUE(icon), QString::fromStdString(text)));
     }
 
     Action::HandleRef Handle_addSeparator(HandleRef _this) {
@@ -100,25 +60,28 @@ namespace Menu
         return reinterpret_cast<Action::HandleRef>(THIS->exec());
     }
 
-    Action::HandleRef Handle_exec(HandleRef _this, Point p, const std::optional<Action::HandleRef>& action) {
-        QAction *qAction = Action::fromOptionalHandle(action);
-        return reinterpret_cast<Action::HandleRef>(THIS->exec(toQPoint(p), qAction));
+    Action::HandleRef Handle_exec(HandleRef _this, Point p, Action::HandleRef action /* nullptr */) {
+        return reinterpret_cast<Action::HandleRef>(THIS->exec(toQPoint(p), AS_QACTION_PTR(action)));
     }
 
     void Handle_hideTearOffMenu(HandleRef _this) {
         THIS->hideTearOffMenu();
     }
 
+    Icon::OwnedRef Handle_icon(HandleRef _this) {
+        return ICON_HEAP_NEW(THIS->icon());
+    }
+
     Action::HandleRef Handle_insertMenu(HandleRef _this, Action::HandleRef before, HandleRef menu) {
         return reinterpret_cast<Action::HandleRef>(THIS->insertMenu(AS_QACTION_PTR(before), AS_QMENU_PTR(menu)));
     }
 
-    Action::HandleRef Handle_insertSection(HandleRef _this, Action::HandleRef before, const std::string& text, const std::optional<Icon::HandleRef>& icon) {
-        if (icon.has_value()) {
-            return reinterpret_cast<Action::HandleRef>(THIS->insertSection(AS_QACTION_PTR(before), QICON_VALUE(icon.value()), QString::fromStdString(text)));
-        } else {
-            return reinterpret_cast<Action::HandleRef>(THIS->insertSection(AS_QACTION_PTR(before),QString::fromStdString(text)));
-        }
+    Action::HandleRef Handle_insertSection(HandleRef _this, Action::HandleRef before, const std::string& text) {
+        return reinterpret_cast<Action::HandleRef>(THIS->insertSection(AS_QACTION_PTR(before), QString::fromStdString(text)));
+    }
+
+    Action::HandleRef Handle_insertSection(HandleRef _this, Action::HandleRef before, Icon::HandleRef icon, const std::string& text) {
+        return reinterpret_cast<Action::HandleRef>(THIS->insertSection(AS_QACTION_PTR(before), QICON_VALUE(icon), QString::fromStdString(text)));
     }
 
     Action::HandleRef Handle_insertSeparator(HandleRef _this, Action::HandleRef before) {
@@ -129,6 +92,10 @@ namespace Menu
         return THIS->isEmpty();
     }
 
+    bool Handle_isTearOffEnabled(HandleRef _this) {
+        return THIS->isTearOffEnabled();
+    }
+
     bool Handle_isTearOffMenuVisible(HandleRef _this) {
         return THIS->isTearOffMenuVisible();
     }
@@ -137,8 +104,12 @@ namespace Menu
         return reinterpret_cast<Action::HandleRef>(THIS->menuAction());
     }
 
-    void Handle_popup(HandleRef _this, Point p, const std::optional<Action::HandleRef>& atAction) {
-        THIS->popup(toQPoint(p), Action::fromOptionalHandle(atAction));
+    void Handle_popup(HandleRef _this, Point p, Action::HandleRef atAction /* nullptr */) {
+        THIS->popup(toQPoint(p), AS_QACTION_PTR(atAction));
+    }
+
+    bool Handle_separatorsCollapsible(HandleRef _this) {
+        return THIS->separatorsCollapsible();
     }
 
     void Handle_setActiveAction(HandleRef _this, Action::HandleRef act) {
@@ -146,19 +117,47 @@ namespace Menu
     }
 
     void Handle_setAsDockMenu(HandleRef _this) {
-        // TODO, macOS only!
+        // MACOS-ONLY
     }
 
     void Handle_setDefaultAction(HandleRef _this, Action::HandleRef act) {
         THIS->setDefaultAction(AS_QACTION_PTR(act));
     }
 
-    void Handle_showTearOffMenu(HandleRef _this, const std::optional<Point>& pos) {
-        if (pos.has_value()) {
-            THIS->showTearOffMenu(toQPoint(pos.value()));
-        } else {
-            THIS->showTearOffMenu();
-        }
+    void Handle_setIcon(HandleRef _this, Icon::HandleRef icon) {
+        THIS->setIcon(QICON_VALUE(icon));
+    }
+
+    void Handle_setSeparatorsCollapsible(HandleRef _this, bool collapse) {
+        THIS->setSeparatorsCollapsible(collapse);
+    }
+
+    void Handle_setTearOffEnabled(HandleRef _this, bool enabled) {
+        THIS->setTearOffEnabled(enabled);
+    }
+
+    void Handle_setTitle(HandleRef _this, const std::string& title) {
+        THIS->setTitle(QString::fromStdString(title));
+    }
+
+    void Handle_setToolTipsVisible(HandleRef _this, bool visible) {
+        THIS->setToolTipsVisible(visible);
+    }
+
+    void Handle_showTearOffMenu(HandleRef _this, Point pos) {
+        THIS->showTearOffMenu(toQPoint(pos));
+    }
+
+    void Handle_showTearOffMenu(HandleRef _this) {
+        THIS->showTearOffMenu();
+    }
+
+    std::string Handle_title(HandleRef _this) {
+        return THIS->title().toStdString();
+    }
+
+    bool Handle_toolTipsVisible(HandleRef _this) {
+        return THIS->toolTipsVisible();
     }
 
     SignalConnectionRef Handle_connect_AboutToHide(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
@@ -193,21 +192,20 @@ namespace Menu
         delete THIS;
     }
 
-    HandleRef create(const std::optional<Widget::HandleRef>& parent) {
-        const auto qParent = Widget::fromOptionalHandle(parent);
-        return reinterpret_cast<HandleRef>(new QMenu(qParent));
+    HandleRef create(Widget::HandleRef parent /* nullptr */) {
+        return reinterpret_cast<HandleRef>(new QMenu(AS_QWIDGET_PTR(parent)));
     }
 
-    HandleRef create(const std::string& title, const std::optional<Widget::HandleRef>& parent) {
-        const auto qParent = Widget::fromOptionalHandle(parent);
-        return reinterpret_cast<HandleRef>(new QMenu(QString::fromStdString(title), qParent));
+    HandleRef create(const std::string& title, Widget::HandleRef parent /* nullptr */) {
+        return reinterpret_cast<HandleRef>(new QMenu(QString::fromStdString(title), AS_QWIDGET_PTR(parent)));
     }
 
-    Action::HandleRef exec(const std::vector<Action::HandleRef>& actions, Point pos, const std::optional<Action::HandleRef>& at, const std::optional<Widget::HandleRef>& parent) {
+    Action::HandleRef exec(const std::vector<Action::HandleRef>& actions, Point pos, Action::HandleRef at /* nullptr */, Widget::HandleRef parent /* nullptr */) {
         const auto qActionList = toQList<Action::HandleRef,QAction*>(actions, [](auto a) {
             return AS_QACTION_PTR(a);
         });
-        return reinterpret_cast<Action::HandleRef>(QMenu::exec(qActionList, toQPoint(pos), Action::fromOptionalHandle(at), Widget::fromOptionalHandle(parent)));
+        const auto result = QMenu::exec(qActionList, toQPoint(pos), AS_QACTION_PTR(at), AS_QWIDGET_PTR(parent));
+        return reinterpret_cast<Action::HandleRef>(result);
     }
 
     HandleRef menuInAction(Action::HandleRef action) {

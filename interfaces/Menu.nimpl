@@ -14,49 +14,49 @@ interface SignalHandler extends Widget.SignalHandler {
 }
 
 opaque Handle extends Widget.Handle {
-    // properties ==============================
-
-    Icon.Owned getIcon();
-    void setIcon(Icon.Handle icon);
-
-    bool separatorsCollasible();
-    void setSeparatorsCollapsible(bool state);
-
-    bool isTearOffEnabled();
-    void setTearOffEnabled(bool state);
-
-    string title();
-    void setTitle(string title);
-
-    bool toolTipsVisible();
-    void setToolTipsVisible(bool visible);
-
-    // methods =================================
-
-    Action.Handle actionAt(Point pos);
+    Action.Handle actionAt(Point pt);
     Rect actionGeometry(Action.Handle act);
     Action.Handle activeAction();
-    Action.Handle addMenu(Handle menu);
-    Handle addMenu(string title);
-    Handle addMenu(Icon.Handle icon, string title);
-    Action.Handle addSection(string text, Option<Icon.Handle> icon);
+    Action.Handle addMenu(Menu.Handle menu);
+    Menu.Handle addMenu(string title);
+    Menu.Handle addMenu(Icon.Handle icon, string title);
+    Action.Handle addSection(string text);
+    Action.Handle addSection(Icon.Handle icon, string text);
     Action.Handle addSeparator();
     void clear();
-    Action.Handle defaultAction(); // I believe this must already be known to client side ...
+    Action.Handle defaultAction();
     Action.Handle exec();
-    Action.Handle exec(Point p, Option<Action.Handle> action);
+    Action.Handle exec(Point p, Action.Handle action = null);
     void hideTearOffMenu();
-    Action.Handle insertMenu(Action.Handle before, Handle menu);
-    Action.Handle insertSection(Action.Handle before, string text, Option<Icon.Handle> icon);
+    Icon.Owned icon();
+    Action.Handle insertMenu(Action.Handle before, Menu.Handle menu);
+    Action.Handle insertSection(Action.Handle before, string text);
+    Action.Handle insertSection(Action.Handle before, Icon.Handle icon, string text);
     Action.Handle insertSeparator(Action.Handle before);
     bool isEmpty();
+    bool isTearOffEnabled();
     bool isTearOffMenuVisible();
-    Action.Handle menuAction();     // not sure how this one works, could it be null?
-    void popup(Point p, Option<Action.Handle> atAction);
+    Action.Handle menuAction();
+    void popup(Point p, Action.Handle atAction = null);
+    bool separatorsCollapsible();
     void setActiveAction(Action.Handle act);
+
+    // MACOS ONLY
     void setAsDockMenu();
+
     void setDefaultAction(Action.Handle act);
-    void showTearOffMenu(Option<Point> pos);
+    void setIcon(Icon.Handle icon);
+    void setSeparatorsCollapsible(bool collapse);
+    void setTearOffEnabled(bool enabled);
+    void setTitle(string title);
+    void setToolTipsVisible(bool visible);
+    void showTearOffMenu(Point pos);
+    void showTearOffMenu();
+    string title();
+
+    // NSMenu * toNSMenu()
+
+    bool toolTipsVisible();
 
     // signals =================================
     SignalConnection connect_AboutToHide(SignalHandler handler);
@@ -65,9 +65,10 @@ opaque Handle extends Widget.Handle {
     SignalConnection connect_Triggered(SignalHandler handler);
 }
 
-Handle create(Option<Widget.Handle> parent);
-Handle create(string title, Option<Widget.Handle> parent);
+Handle create(Widget.Handle parent = null);
+Handle create(string title, Widget.Handle parent = null);
 
 // static methods:
-Action.Handle exec(Array<Action.Handle> actions, Point pos, Option<Action.Handle> at, Option<Widget.Handle> parent);
+
+Action.Handle exec(Array<Action.Handle> actions, Point pos, Action.Handle at = null, Widget.Handle parent = null);
 Handle menuInAction(Action.Handle action);
