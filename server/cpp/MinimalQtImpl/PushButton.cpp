@@ -49,15 +49,15 @@ namespace PushButton
         delete THIS;
     }
 
-    HandleRef create(const std::optional<Widget::HandleRef>& parent) {
-        return reinterpret_cast<HandleRef>(new QPushButton(Widget::fromOptionalHandle(parent)));
+    HandleRef create(Widget::HandleRef parent /* nullptr */) {
+        return reinterpret_cast<HandleRef>(new QPushButton(AS_QWIDGET_PTR(parent)));
     }
 
-    HandleRef create(const std::string& text, const std::optional<Widget::HandleRef>& parent) {
-        return reinterpret_cast<HandleRef>(new QPushButton(QString::fromStdString(text), Widget::fromOptionalHandle(parent)));
+    HandleRef create(const std::string& text, Widget::HandleRef parent /* nullptr */) {
+        return reinterpret_cast<HandleRef>(new QPushButton(QString::fromStdString(text), AS_QWIDGET_PTR(parent)));
     }
 
-    HandleRef create(Icon::HandleRef icon, const std::string& text, const std::optional<Widget::HandleRef>& parent) {
-        return reinterpret_cast<HandleRef>(new QPushButton(QICON_VALUE(icon), QString::fromStdString(text), Widget::fromOptionalHandle(parent)));
+    HandleRef create(Icon::HandleRef icon, const std::string& text, Widget::HandleRef parent /* nullptr */) {
+        return reinterpret_cast<HandleRef>(new QPushButton(QICON_VALUE(icon), QString::fromStdString(text), AS_QWIDGET_PTR(parent)));
     }
 }

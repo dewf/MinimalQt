@@ -22,6 +22,6 @@ opaque Handle extends AbstractButton.Handle {
     void showMenu();
 }
 
-Handle create(Option<Widget.Handle> parent);
-Handle create(string text, Option<Widget.Handle> parent);
-Handle create(Icon.Handle icon, string text, Option<Widget.Handle> parent);
+Handle create(Widget.Handle parent = null);
+Handle create(string text, Widget.Handle parent = null);
+Handle create(Icon.Handle icon, string text, Widget.Handle parent = null);
