@@ -40,58 +40,41 @@ enum ViewMode {
 }
 
 opaque Handle extends AbstractItemView.Handle {
-    // properties =============
-
-    int batchSize();
-    void setBatchSize(int size);
-
-    Flow getFlow();
-    void setFlow(Flow flow);
-
-    Size gridSize();
-    void setGridSize(Size size);
-
-    Alignment itemAlignment();
-    void setItemAlignment(Alignment align);
-
-    LayoutMode getLayoutMode();
-    void setLayoutMode(LayoutMode mode);
-
-    int modelColumn();
-    void setModelColumn(int column);
-
-    Movement getMovement();
-    void setMovement(Movement value);
-
-    ResizeMode getResizeMode();
-    void setResizeMode(ResizeMode mode);
-
-    bool isSelectionRectVisible();
-    void setSelectionRectVisible(bool visible);
     
-    int spacing();
-    void setSpacing(int spacing);
-
-    bool uniformItemSizes();
-    void setUniformItemSizes(bool state);
-
-    ViewMode getViewMode();
-    void setViewMode(ViewMode mode);
-
-    bool wordWrap();
-    void setWordWrap(bool state);
-
-    bool isWrapping();
-    void setWrapping(bool wrapping);
-
-    // methods ================
-
+    int batchSize();
     void clearPropertyFlags();
+    Flow getFlow();
+    Size gridSize();
     bool isRowHidden(int row);
+    bool isSelectionRectVisible();
+    bool isWrapping();
+    Alignment itemAlignment();
+    LayoutMode getLayoutMode();
+    int modelColumn();
+    Movement getMovement();
+    ResizeMode getResizeMode();
+    void setBatchSize(int batchSize);
+    void setFlow(Flow flow);
+    void setGridSize(Size size);
+    void setItemAlignment(Alignment alignment);
+    void setLayoutMode(LayoutMode mode);
+    void setModelColumn(int column);
+    void setMovement(Movement movement);
+    void setResizeMode(ResizeMode mode);
     void setRowHidden(int row, bool hide);
-
+    void setSelectionRectVisible(bool show);
+    void setSpacing(int space);
+    void setUniformItemSizes(bool enable);
+    void setViewMode(ViewMode mode);
+    void setWordWrap(bool on);
+    void setWrapping(bool enable);
+    int spacing();
+    bool uniformItemSizes();
+    ViewMode getViewMode();
+    bool wordWrap();
+    
     // signals ================
     SignalConnection connect_IndexesMoved(SignalHandler handler);
 }
 
-Handle create(Option<Widget.Handle> parent);
+Handle create(Widget.Handle parent = null);

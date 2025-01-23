@@ -14,124 +14,124 @@ namespace ListView
         return THIS->batchSize();
     }
 
-    void Handle_setBatchSize(HandleRef _this, int32_t size) {
-        THIS->setBatchSize(size);
+    void Handle_clearPropertyFlags(HandleRef _this) {
+        THIS->clearPropertyFlags();
     }
 
     Flow Handle_getFlow(HandleRef _this) {
         return static_cast<Flow>(THIS->flow());
     }
 
-    void Handle_setFlow(HandleRef _this, Flow flow) {
-        THIS->setFlow(static_cast<QListView::Flow>(flow));
-    }
-
     Size Handle_gridSize(HandleRef _this) {
         return toSize(THIS->gridSize());
-    }
-
-    void Handle_setGridSize(HandleRef _this, Size size) {
-        THIS->setGridSize(toQSize(size));
-    }
-
-    Alignment Handle_itemAlignment(HandleRef _this) {
-        return Alignment(THIS->itemAlignment());
-    }
-
-    void Handle_setItemAlignment(HandleRef _this, Alignment align) {
-        THIS->setItemAlignment(static_cast<Qt::Alignment>(align.value));
-    }
-
-    LayoutMode Handle_getLayoutMode(HandleRef _this) {
-        return static_cast<LayoutMode>(THIS->layoutMode());
-    }
-
-    void Handle_setLayoutMode(HandleRef _this, LayoutMode mode) {
-        THIS->setLayoutMode(static_cast<QListView::LayoutMode>(mode));
-    }
-
-    int32_t Handle_modelColumn(HandleRef _this) {
-        return THIS->modelColumn();
-    }
-
-    void Handle_setModelColumn(HandleRef _this, int32_t column) {
-        THIS->setModelColumn(column);
-    }
-
-    Movement Handle_getMovement(HandleRef _this) {
-        return static_cast<Movement>(THIS->movement());
-    }
-
-    void Handle_setMovement(HandleRef _this, Movement movement) {
-        THIS->setMovement(static_cast<QListView::Movement>(movement));
-    }
-
-    ResizeMode Handle_getResizeMode(HandleRef _this) {
-        return static_cast<ResizeMode>(THIS->resizeMode());
-    }
-
-    void Handle_setResizeMode(HandleRef _this, ResizeMode mode) {
-        THIS->setResizeMode(static_cast<QListView::ResizeMode>(mode));
-    }
-
-    bool Handle_isSelectionRectVisible(HandleRef _this) {
-        return THIS->isSelectionRectVisible();
-    }
-
-    void Handle_setSelectionRectVisible(HandleRef _this, bool visible) {
-        THIS->setSelectionRectVisible(visible);
-    }
-
-    int32_t Handle_spacing(HandleRef _this) {
-        return THIS->spacing();
-    }
-
-    void Handle_setSpacing(HandleRef _this, int32_t spacing) {
-        THIS->setSpacing(spacing);
-    }
-
-    bool Handle_uniformItemSizes(HandleRef _this) {
-        return THIS->uniformItemSizes();
-    }
-
-    void Handle_setUniformItemSizes(HandleRef _this, bool state) {
-        THIS->setUniformItemSizes(state);
-    }
-
-    ViewMode Handle_getViewMode(HandleRef _this) {
-        return static_cast<ViewMode>(THIS->viewMode());
-    }
-
-    void Handle_setViewMode(HandleRef _this, ViewMode mode) {
-        THIS->setViewMode(static_cast<QListView::ViewMode>(mode));
-    }
-
-    bool Handle_wordWrap(HandleRef _this) {
-        return THIS->wordWrap();
-    }
-
-    void Handle_setWordWrap(HandleRef _this, bool state) {
-        THIS->setWordWrap(state);
-    }
-
-    bool Handle_isWrapping(HandleRef _this) {
-        return THIS->isWrapping();
-    }
-
-    void Handle_setWrapping(HandleRef _this, bool wrapping) {
-        THIS->setWrapping(wrapping);
-    }
-
-    void Handle_clearPropertyFlags(HandleRef _this) {
-        THIS->clearPropertyFlags();
     }
 
     bool Handle_isRowHidden(HandleRef _this, int32_t row) {
         return THIS->isRowHidden(row);
     }
 
+    bool Handle_isSelectionRectVisible(HandleRef _this) {
+        return THIS->isSelectionRectVisible();
+    }
+
+    bool Handle_isWrapping(HandleRef _this) {
+        return THIS->isWrapping();
+    }
+
+    Alignment Handle_itemAlignment(HandleRef _this) {
+        return Alignment(THIS->itemAlignment());
+    }
+
+    LayoutMode Handle_getLayoutMode(HandleRef _this) {
+        return static_cast<LayoutMode>(THIS->layoutMode());
+    }
+
+    int32_t Handle_modelColumn(HandleRef _this) {
+        return THIS->modelColumn();
+    }
+
+    Movement Handle_getMovement(HandleRef _this) {
+        return static_cast<Movement>(THIS->movement());
+    }
+
+    ResizeMode Handle_getResizeMode(HandleRef _this) {
+        return static_cast<ResizeMode>(THIS->resizeMode());
+    }
+
+    void Handle_setBatchSize(HandleRef _this, int32_t batchSize) {
+        THIS->setBatchSize(batchSize);
+    }
+
+    void Handle_setFlow(HandleRef _this, Flow flow) {
+        THIS->setFlow(static_cast<QListView::Flow>(flow));
+    }
+
+    void Handle_setGridSize(HandleRef _this, Size size) {
+        THIS->setGridSize(toQSize(size));
+    }
+
+    void Handle_setItemAlignment(HandleRef _this, Alignment align) {
+        THIS->setItemAlignment(static_cast<Qt::Alignment>(align.value));
+    }
+
+    void Handle_setLayoutMode(HandleRef _this, LayoutMode mode) {
+        THIS->setLayoutMode(static_cast<QListView::LayoutMode>(mode));
+    }
+
+    void Handle_setModelColumn(HandleRef _this, int32_t column) {
+        THIS->setModelColumn(column);
+    }
+
+    void Handle_setMovement(HandleRef _this, Movement movement) {
+        THIS->setMovement(static_cast<QListView::Movement>(movement));
+    }
+
+    void Handle_setResizeMode(HandleRef _this, ResizeMode mode) {
+        THIS->setResizeMode(static_cast<QListView::ResizeMode>(mode));
+    }
+
     void Handle_setRowHidden(HandleRef _this, int32_t row, bool hide) {
         THIS->setRowHidden(row, hide);
+    }
+
+    void Handle_setSelectionRectVisible(HandleRef _this, bool show) {
+        THIS->setSelectionRectVisible(show);
+    }
+
+    void Handle_setSpacing(HandleRef _this, int32_t space) {
+        THIS->setSpacing(space);
+    }
+
+    void Handle_setUniformItemSizes(HandleRef _this, bool enable) {
+        THIS->setUniformItemSizes(enable);
+    }
+
+    void Handle_setViewMode(HandleRef _this, ViewMode mode) {
+        THIS->setViewMode(static_cast<QListView::ViewMode>(mode));
+    }
+
+    void Handle_setWordWrap(HandleRef _this, bool on) {
+        THIS->setWordWrap(on);
+    }
+
+    void Handle_setWrapping(HandleRef _this, bool enable) {
+        THIS->setWrapping(enable);
+    }
+
+    int32_t Handle_spacing(HandleRef _this) {
+        return THIS->spacing();
+    }
+
+    bool Handle_uniformItemSizes(HandleRef _this) {
+        return THIS->uniformItemSizes();
+    }
+
+    ViewMode Handle_getViewMode(HandleRef _this) {
+        return static_cast<ViewMode>(THIS->viewMode());
+    }
+
+    bool Handle_wordWrap(HandleRef _this) {
+        return THIS->wordWrap();
     }
 
     SignalConnectionRef Handle_connect_IndexesMoved(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
@@ -149,8 +149,8 @@ namespace ListView
         delete THIS;
     }
 
-    HandleRef create(const std::optional<Widget::HandleRef>& parent) {
-        const auto qParent = Widget::fromOptionalHandle(parent);
-        return reinterpret_cast<HandleRef>(new QListView(qParent));
+    HandleRef create(Widget::HandleRef parent /* nullptr */) {
+        return reinterpret_cast<HandleRef>(new QListView(AS_QWIDGET_PTR(parent)));
     }
 }
+
