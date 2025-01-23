@@ -14,16 +14,6 @@ interface SignalHandler extends Widget.SignalHandler {
 }
 
 opaque Handle extends Widget.Handle {
-    // properties ===================
-
-    bool isDefaultUp();
-    void setDefaultUp(bool state);
-
-    bool isNativeMenuBar();
-    void setNativeMenuBar(bool state);
-
-    // methods ======================
-
     Action.Handle actionAt(Point pt);
     Rect actionGeometry(Action.Handle act);
     Action.Handle activeAction();
@@ -32,15 +22,24 @@ opaque Handle extends Widget.Handle {
     Menu.Handle addMenu(Icon.Handle icon, string title);
     Action.Handle addSeparator();
     void clear();
-    Widget.Handle cornerWidget(Option<Corner> corner);
+    Widget.Handle cornerWidget(Corner corner = Corner.TopRightCorner);
     Action.Handle insertMenu(Action.Handle before, Menu.Handle menu);
     Action.Handle insertSeparator(Action.Handle before);
+    bool isDefaultUp();
+    bool isNativeMenuBar();
     void setActiveAction(Action.Handle act);
-    void setCornerWidget(Widget.Handle widget, Option<Corner> corner);
+    void setCornerWidget(Widget.Handle widget, Corner corner = Corner.TopRightCorner);
+    void setDefaultUp(bool value);
+    void setNativeMenuBar(bool nativeMenuBar);
+
+    // NSMenu * toNSMenu()
+
+    // already defined on QWidget, why is it a slot in the docs?
+    // void setVisible(bool visible);
 
     // signals ======================
     SignalConnection connect_Hovered(SignalHandler handler);
     SignalConnection connect_Triggered(SignalHandler handler);
 }
 
-Handle create(Option<Widget.Handle> parent);
+Handle create(Widget.Handle parent = null);

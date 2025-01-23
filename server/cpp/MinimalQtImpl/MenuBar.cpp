@@ -13,22 +13,6 @@
 
 namespace MenuBar
 {
-    bool Handle_isDefaultUp(HandleRef _this) {
-        return THIS->isDefaultUp();
-    }
-
-    void Handle_setDefaultUp(HandleRef _this, bool state) {
-        THIS->setDefaultUp(state);
-    }
-
-    bool Handle_isNativeMenuBar(HandleRef _this) {
-        return THIS->isNativeMenuBar();
-    }
-
-    void Handle_setNativeMenuBar(HandleRef _this, bool state) {
-        THIS->setNativeMenuBar(state);
-    }
-
     Action::HandleRef Handle_actionAt(HandleRef _this, Point pt) {
         return reinterpret_cast<Action::HandleRef>(THIS->actionAt(toQPoint(pt)));
     }
@@ -61,9 +45,8 @@ namespace MenuBar
         THIS->clear();
     }
 
-    Widget::HandleRef Handle_cornerWidget(HandleRef _this, const std::optional<Corner>& corner) {
-        const auto qCorner = optionOrDefaultStaticCast(corner, Qt::TopRightCorner);
-        return reinterpret_cast<Widget::HandleRef>(THIS->cornerWidget(qCorner));
+    Widget::HandleRef Handle_cornerWidget(HandleRef _this, Corner corner /* Corner::TopRightCorner */) {
+        return reinterpret_cast<Widget::HandleRef>(THIS->cornerWidget(static_cast<Qt::Corner>(corner)));
     }
 
     Action::HandleRef Handle_insertMenu(HandleRef _this, Action::HandleRef before, Menu::HandleRef menu) {
@@ -74,18 +57,33 @@ namespace MenuBar
         return reinterpret_cast<Action::HandleRef>(THIS->insertSeparator(AS_QACTION_PTR(before)));
     }
 
+    bool Handle_isDefaultUp(HandleRef _this) {
+        return THIS->isDefaultUp();
+    }
+
+    bool Handle_isNativeMenuBar(HandleRef _this) {
+        return THIS->isNativeMenuBar();
+    }
+
     void Handle_setActiveAction(HandleRef _this, Action::HandleRef act) {
         THIS->setActiveAction(AS_QACTION_PTR(act));
     }
 
-    void Handle_setCornerWidget(HandleRef _this, Widget::HandleRef widget, const std::optional<Corner>& corner) {
-        const auto qCorner = optionOrDefaultStaticCast(corner, Qt::TopRightCorner);
-        THIS->setCornerWidget(AS_QWIDGET_PTR(widget), qCorner);
+    void Handle_setCornerWidget(HandleRef _this, Widget::HandleRef widget, Corner corner /* Corner::TopRightCorner */) {
+        THIS->setCornerWidget(AS_QWIDGET_PTR(widget), static_cast<Qt::Corner>(corner));
+    }
+
+    void Handle_setDefaultUp(HandleRef _this, bool value) {
+        THIS->setDefaultUp(value);
+    }
+
+    void Handle_setNativeMenuBar(HandleRef _this, bool nativeMenuBar) {
+        THIS->setNativeMenuBar(nativeMenuBar);
     }
 
     // seems like this is already implemented in Widget, and it's virtual, so why is it listed as a slot on QMenuBar in the docs?
     // void Handle_setVisible(HandleRef _this, bool visible) {
-    //     MENUBAR_THIS->setVisible(visible);
+    //     THIS->setVisible(visible);
     // }
 
     SignalConnectionRef Handle_connect_Hovered(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
@@ -106,7 +104,7 @@ namespace MenuBar
         delete THIS;
     }
 
-    HandleRef create(const std::optional<Widget::HandleRef>& parent) {
-        return reinterpret_cast<HandleRef>(new QMenuBar(Widget::fromOptionalHandle(parent)));
+    HandleRef create(Widget::HandleRef parent /* nullptr */) {
+        return reinterpret_cast<HandleRef>(new QMenuBar(AS_QWIDGET_PTR(parent)));
     }
 }
