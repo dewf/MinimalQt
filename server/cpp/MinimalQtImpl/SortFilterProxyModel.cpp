@@ -187,8 +187,8 @@ namespace SortFilterProxyModel
         [[nodiscard]]
         bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override {
             if (methodMask & FilterAcceptsRow) {
-                ModelIndex::__Owned source2(source_parent);
-                return methodDelegate->filterAcceptsRow(source_row, &source2);
+                QModelIndex source2(source_parent);
+                return methodDelegate->filterAcceptsRow(source_row, reinterpret_cast<ModelIndex::HandleRef>(&source2));
             } else {
                 return QSortFilterProxyModel::filterAcceptsRow(source_row, source_parent);
             }
@@ -196,8 +196,8 @@ namespace SortFilterProxyModel
         [[nodiscard]]
         bool filterAcceptsColumn(int source_column, const QModelIndex &source_parent) const override {
             if (methodMask & FilterAcceptsColumn) {
-                ModelIndex::__Owned source2(source_parent);
-                return methodDelegate->filterAcceptsColumn(source_column, &source2);
+                QModelIndex source2(source_parent);
+                return methodDelegate->filterAcceptsColumn(source_column, reinterpret_cast<ModelIndex::HandleRef>(&source2));
             } else {
                 return QSortFilterProxyModel::filterAcceptsColumn(source_column, source_parent);
             }
@@ -205,8 +205,8 @@ namespace SortFilterProxyModel
         [[nodiscard]]
         bool lessThan(const QModelIndex &source_left, const QModelIndex &source_right) const override {
             if (methodMask & LessThan) {
-                ModelIndex::__Owned left2(source_left), right2(source_right);
-                return methodDelegate->lessThan(&left2, &right2);
+                QModelIndex left2(source_left), right2(source_right);
+                return methodDelegate->lessThan(reinterpret_cast<ModelIndex::HandleRef>(&left2), reinterpret_cast<ModelIndex::HandleRef>(&right2));
             } else {
                 return QSortFilterProxyModel::lessThan(source_left, source_right);
             }

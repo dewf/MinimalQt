@@ -43,7 +43,7 @@ namespace Completer
     }
 
     ModelIndex::OwnedRef Handle_currentIndex(HandleRef _this) {
-        return new ModelIndex::__Owned { THIS->currentIndex() };
+        return MODELINDEX_HEAP_NEW(THIS->currentIndex());
     }
 
     int32_t Handle_currentRow(HandleRef _this) {
@@ -67,7 +67,7 @@ namespace Completer
     }
 
     std::string Handle_pathFromIndex(HandleRef _this, ModelIndex::HandleRef index) {
-        return THIS->pathFromIndex(index->value).toStdString();
+        return THIS->pathFromIndex(QMODELINDEX_VALUE(index)).toStdString();
     }
 
     AbstractItemView::HandleRef Handle_popup(HandleRef _this) {
@@ -146,8 +146,8 @@ namespace Completer
 
     SignalConnectionRef Handle_connect_ActivatedIndex(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, qOverload<const QModelIndex&>(&QCompleter::activated), [handler](const QModelIndex &index) {
-            ModelIndex::__Owned index2(index);
-            handler->activatedIndex(&index2);
+            QModelIndex index2(index);
+            handler->activatedIndex(reinterpret_cast<ModelIndex::HandleRef>(&index2));
         });
         return new __SignalConnection { connection };
     }
@@ -161,8 +161,8 @@ namespace Completer
 
     SignalConnectionRef Handle_connect_HighlightedIndex(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, qOverload<const QModelIndex&>(&QCompleter::highlighted), [handler](const QModelIndex& index) {
-            ModelIndex::__Owned index2(index);
-            handler->highlightedIndex(&index2);
+            QModelIndex index2(index);
+            handler->highlightedIndex(reinterpret_cast<ModelIndex::HandleRef>(&index2));
         });
         return new __SignalConnection { connection };
     }

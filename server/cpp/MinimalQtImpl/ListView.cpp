@@ -136,15 +136,11 @@ namespace ListView
 
     SignalConnectionRef Handle_connect_IndexesMoved(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QListView::indexesMoved, [handler](const QModelIndexList &indexes) {
-            // oof, we really need to solve this whole ModelIndex/Variant Handle-vs-Owned problem
-            std::vector<ModelIndex::__Owned> indexes2;
-            std::vector<ModelIndex::HandleRef> pointers;
-            int count = 0;
-            for (auto &index : indexes) {
-                indexes2.push_back(ModelIndex::__Owned { index });
-                pointers.push_back(&indexes2[count++]);
-            }
-            handler->indexesMoved(pointers);
+            // non-const indexes first:
+            const auto indexes2 = fromQList<QModelIndex,QModelIndex>(indexes, idFunc<QModelIndex>);
+            // and the pointers to them:
+            const auto ptrs = vectorMap<QModelIndex,ModelIndex::HandleRef>(indexes2, [](auto mi) { return reinterpret_cast<ModelIndex::HandleRef>(&mi); });
+            handler->indexesMoved(ptrs);
         });
         return new __SignalConnection { connection };
     }

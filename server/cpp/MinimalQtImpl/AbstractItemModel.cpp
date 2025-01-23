@@ -17,24 +17,24 @@
 namespace AbstractItemModel
 {
     ModelIndex::OwnedRef Handle_buddy(HandleRef _this, ModelIndex::HandleRef index) {
-        return new ModelIndex::__Owned { THIS->buddy(index->value) };
+        return MODELINDEX_HEAP_NEW(THIS->buddy(QMODELINDEX_VALUE(index)));
     }
 
     bool Handle_canDropMimeData(HandleRef _this, MimeData::HandleRef data, DropAction action, int32_t row, int32_t column, ModelIndex::HandleRef parent) {
-        return THIS->canDropMimeData(AS_QMIMEDATA_PTR(data), static_cast<Qt::DropAction>(action), row, column, parent->value);
+        return THIS->canDropMimeData(AS_QMIMEDATA_PTR(data), static_cast<Qt::DropAction>(action), row, column, QMODELINDEX_VALUE(parent));
     }
 
     bool Handle_canFetchMore(HandleRef _this, ModelIndex::HandleRef parent) {
-        return THIS->canFetchMore(parent->value);
+        return THIS->canFetchMore(QMODELINDEX_VALUE(parent));
     }
 
     bool Handle_checkIndex(HandleRef _this, ModelIndex::HandleRef index, const std::optional<CheckIndexOptions>& options_) {
         CheckIndexOptions optionsArg = options_.value_or(CheckIndexOptions::NoOption);
-        return THIS->checkIndex(index->value, static_cast<QAbstractItemModel::CheckIndexOption>(optionsArg.value));
+        return THIS->checkIndex(QMODELINDEX_VALUE(index), static_cast<QAbstractItemModel::CheckIndexOption>(optionsArg.value));
     }
 
     bool Handle_clearItemData(HandleRef _this, ModelIndex::HandleRef index) {
-        return THIS->clearItemData(index->value);
+        return THIS->clearItemData(QMODELINDEX_VALUE(index));
     }
 
     int32_t Handle_columnCount(HandleRef _this, const std::optional<ModelIndex::HandleRef>& parent) {
@@ -42,19 +42,19 @@ namespace AbstractItemModel
     }
 
     Variant::OwnedRef Handle_data(HandleRef _this, ModelIndex::HandleRef index, const std::optional<int32_t>& role) {
-        return VARIANT_HEAP_NEW(THIS->data(index->value, role.value_or(Qt::DisplayRole)));
+        return VARIANT_HEAP_NEW(THIS->data(QMODELINDEX_VALUE(index), role.value_or(Qt::DisplayRole)));
     }
 
     bool Handle_dropMimeData(HandleRef _this, MimeData::HandleRef data, DropAction action, int32_t row, int32_t column, ModelIndex::HandleRef parent) {
-        return THIS->dropMimeData(AS_QMIMEDATA_PTR(data), static_cast<Qt::DropAction>(action), row, column, parent->value);
+        return THIS->dropMimeData(AS_QMIMEDATA_PTR(data), static_cast<Qt::DropAction>(action), row, column, QMODELINDEX_VALUE(parent));
     }
 
     void Handle_fetchMore(HandleRef _this, ModelIndex::HandleRef parent) {
-        THIS->fetchMore(parent->value);
+        THIS->fetchMore(QMODELINDEX_VALUE(parent));
     }
 
     ItemFlags Handle_flags_(HandleRef _this, ModelIndex::HandleRef index) {
-        return ItemFlags(THIS->flags(index->value));
+        return ItemFlags(THIS->flags(QMODELINDEX_VALUE(index)));
     }
 
     bool Handle_hasChildren(HandleRef _this, const std::optional<ModelIndex::HandleRef>& parent) {
@@ -70,7 +70,7 @@ namespace AbstractItemModel
     }
 
     ModelIndex::OwnedRef Handle_index(HandleRef _this, int32_t row, int32_t column, const std::optional<ModelIndex::HandleRef>& parent) {
-        return new ModelIndex::__Owned { THIS->index(row, column, fromOptionalIndex(parent)) };
+        return MODELINDEX_HEAP_NEW(THIS->index(row, column, fromOptionalIndex(parent)));
     }
 
     bool Handle_insertColumn(HandleRef _this, int32_t column, const std::optional<ModelIndex::HandleRef>& parent) {
@@ -90,7 +90,7 @@ namespace AbstractItemModel
     }
 
     std::map<int32_t,Variant::OwnedRef> Handle_itemData(HandleRef _this, ModelIndex::HandleRef index) {
-        const auto result = THIS->itemData(index->value);
+        const auto result = THIS->itemData(QMODELINDEX_VALUE(index));
         std::map<int32_t, Variant::OwnedRef> retMap;
         for (auto i = result.cbegin(), end = result.cend(); i != end; ++i) {
             retMap[i.key()] = VARIANT_HEAP_NEW(i.value());
@@ -100,12 +100,12 @@ namespace AbstractItemModel
 
     std::vector<ModelIndex::OwnedRef> Handle_match(HandleRef _this, ModelIndex::HandleRef start, int32_t role, Variant::HandleRef value, int32_t hits /* 1 */, MatchFlags flags_ /* MatchFlags::MatchStartsWith | MatchFlags::MatchWrap */) {
         std::vector<ModelIndex::OwnedRef> ret;
-        const auto result = THIS->match(start->value, role, QVARIANT_VALUE(value), hits, static_cast<Qt::MatchFlags>(flags_.value));
-        return fromQList<QModelIndex,ModelIndex::OwnedRef>(result, [](const QModelIndex &index) { return new ModelIndex::__Owned(index); });
+        const auto result = THIS->match(QMODELINDEX_VALUE(start), role, QVARIANT_VALUE(value), hits, static_cast<Qt::MatchFlags>(flags_.value));
+        return fromQList<QModelIndex,ModelIndex::OwnedRef>(result, [](const QModelIndex &index) { return MODELINDEX_HEAP_NEW(index); });
     }
 
     MimeData::HandleRef Handle_getMimeData(HandleRef _this, const std::vector<ModelIndex::HandleRef>& indexes) {
-        const auto qIndexes = toQList<ModelIndex::HandleRef,QModelIndex>(indexes, [](const ModelIndex::HandleRef& ref) { return ref->value; });
+        const auto qIndexes = toQList<ModelIndex::HandleRef,QModelIndex>(indexes, [](const ModelIndex::HandleRef& ref) { return QMODELINDEX_VALUE(ref); });
         return reinterpret_cast<MimeData::HandleRef>(THIS->mimeData(qIndexes));
     }
 
@@ -114,23 +114,23 @@ namespace AbstractItemModel
     }
 
     bool Handle_moveColumn(HandleRef _this, ModelIndex::HandleRef sourceParent, int32_t sourceColumn, ModelIndex::HandleRef destinationParent, int32_t destinationChild) {
-        return THIS->moveColumn(sourceParent->value, sourceColumn, destinationParent->value, destinationChild);
+        return THIS->moveColumn(QMODELINDEX_VALUE(sourceParent), sourceColumn, QMODELINDEX_VALUE(destinationParent), destinationChild);
     }
 
     bool Handle_moveColumns(HandleRef _this, ModelIndex::HandleRef sourceParent, int32_t sourceColumn, int32_t count, ModelIndex::HandleRef destinationParent, int32_t destinationChild) {
-        return THIS->moveColumns(sourceParent->value, sourceColumn, count, destinationParent->value, destinationChild);
+        return THIS->moveColumns(QMODELINDEX_VALUE(sourceParent), sourceColumn, count, QMODELINDEX_VALUE(destinationParent), destinationChild);
     }
 
     bool Handle_moveRow(HandleRef _this, ModelIndex::HandleRef sourceParent, int32_t sourceRow, ModelIndex::HandleRef destinationParent, int32_t destinationChild) {
-        return THIS->moveRow(sourceParent->value, sourceRow, destinationParent->value, destinationChild);
+        return THIS->moveRow(QMODELINDEX_VALUE(sourceParent), sourceRow, QMODELINDEX_VALUE(destinationParent), destinationChild);
     }
 
     bool Handle_moveRows(HandleRef _this, ModelIndex::HandleRef sourceParent, int32_t sourceRow, int32_t count, ModelIndex::HandleRef destinationParent, int32_t destinationChild) {
-        return THIS->moveRows(sourceParent->value, sourceRow, count, destinationParent->value, destinationChild);
+        return THIS->moveRows(QMODELINDEX_VALUE(sourceParent), sourceRow, count, QMODELINDEX_VALUE(destinationParent), destinationChild);
     }
 
     ModelIndex::OwnedRef Handle_parent(HandleRef _this, ModelIndex::HandleRef index) {
-        return new ModelIndex::__Owned { THIS->parent(index->value) };
+        return MODELINDEX_HEAP_NEW(THIS->parent(QMODELINDEX_VALUE(index)));
     }
 
     bool Handle_removeColumn(HandleRef _this, int32_t column, const std::optional<ModelIndex::HandleRef>& parent) {
@@ -154,7 +154,7 @@ namespace AbstractItemModel
     }
 
     bool Handle_setData(HandleRef _this, ModelIndex::HandleRef index, Variant::HandleRef value, const std::optional<int32_t>& role) {
-        return THIS->setData(index->value, QVARIANT_VALUE(value), role.value_or(Qt::EditRole));
+        return THIS->setData(QMODELINDEX_VALUE(index), QVARIANT_VALUE(value), role.value_or(Qt::EditRole));
     }
 
     bool Handle_setHeaderData(HandleRef _this, int32_t section, Orientation orientation, Variant::HandleRef value, const std::optional<int32_t>& role) {
@@ -166,11 +166,11 @@ namespace AbstractItemModel
         for (auto i = roles.begin(); i != roles.end(); ++i) {
             qRoles[i->first] = QVARIANT_VALUE(i->second);
         }
-        return THIS->setItemData(index->value, qRoles);
+        return THIS->setItemData(QMODELINDEX_VALUE(index), qRoles);
     }
 
     ModelIndex::OwnedRef Handle_sibling(HandleRef _this, int32_t row, int32_t column, ModelIndex::HandleRef index) {
-        return new ModelIndex::__Owned { THIS->sibling(row, column, index->value) };
+        return MODELINDEX_HEAP_NEW(THIS->sibling(row, column, QMODELINDEX_VALUE(index)));
     }
 
     void Handle_sort(HandleRef _this, int32_t column, const std::optional<SortOrder>& order) {
@@ -179,7 +179,7 @@ namespace AbstractItemModel
     }
 
     Size Handle_span(HandleRef _this, ModelIndex::HandleRef index) {
-        return toSize(THIS->span(index->value));
+        return toSize(THIS->span(QMODELINDEX_VALUE(index)));
     }
 
     DropActions Handle_supportedDragActions(HandleRef _this) {
@@ -200,50 +200,50 @@ namespace AbstractItemModel
 
     SignalConnectionRef Handle_connect_ColumnsAboutToBeInserted(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QAbstractItemModel::columnsAboutToBeInserted, [handler](const QModelIndex &parent, int first, int last) {
-            ModelIndex::__Handle parent2(parent);
-            handler->columnsAboutToBeInserted(&parent2, first, last);
+            QModelIndex parent2(parent);
+            handler->columnsAboutToBeInserted(reinterpret_cast<ModelIndex::HandleRef>(&parent2), first, last);
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_ColumnsAboutToBeMoved(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QAbstractItemModel::columnsAboutToBeMoved, [handler](const QModelIndex &sourceParent, int sourceStart, int sourceEnd, const QModelIndex &destinationParent, int destinationColumn) {
-            ModelIndex::__Handle src2(sourceParent);
-            ModelIndex::__Handle dest2(destinationParent);
-            handler->columnsAboutToBeMoved(&src2, sourceStart, sourceEnd, &dest2, destinationColumn);
+            QModelIndex src2(sourceParent);
+            QModelIndex dest2(destinationParent);
+            handler->columnsAboutToBeMoved(reinterpret_cast<ModelIndex::HandleRef>(&src2), sourceStart, sourceEnd, reinterpret_cast<ModelIndex::HandleRef>(&dest2), destinationColumn);
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_ColumnsAboutToBeRemoved(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QAbstractItemModel::columnsAboutToBeRemoved, [handler](const QModelIndex &parent, int first, int last) {
-            ModelIndex::__Handle parent2(parent);
-            handler->columnsAboutToBeRemoved(&parent2, first, last);
+            QModelIndex parent2(parent);
+            handler->columnsAboutToBeRemoved(reinterpret_cast<ModelIndex::HandleRef>(&parent2), first, last);
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_ColumnsInserted(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QAbstractItemModel::columnsInserted, [handler](const QModelIndex &parent, int first, int last) {
-            ModelIndex::__Handle parent2(parent);
-            handler->columnsInserted(&parent2, first, last);
+            QModelIndex parent2(parent);
+            handler->columnsInserted(reinterpret_cast<ModelIndex::HandleRef>(&parent2), first, last);
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_ColumnsMoved(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QAbstractItemModel::columnsMoved, [handler](const QModelIndex &sourceParent, int sourceStart, int sourceEnd, const QModelIndex &destinationParent, int destinationColumn) {
-            ModelIndex::__Handle src2(sourceParent);
-            ModelIndex::__Handle dest2(destinationParent);
-            handler->columnsMoved(&src2, sourceStart, sourceEnd, &dest2, destinationColumn);
+            QModelIndex src2(sourceParent);
+            QModelIndex dest2(destinationParent);
+            handler->columnsMoved(reinterpret_cast<ModelIndex::HandleRef>(&src2), sourceStart, sourceEnd, reinterpret_cast<ModelIndex::HandleRef>(&dest2), destinationColumn);
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_ColumnsRemoved(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QAbstractItemModel::columnsRemoved, [handler](const QModelIndex &parent, int first, int last) {
-            ModelIndex::__Handle parent2(parent);
-            handler->columnsRemoved(&parent2, first, last);
+            QModelIndex parent2(parent);
+            handler->columnsRemoved(reinterpret_cast<ModelIndex::HandleRef>(&parent2), first, last);
         });
         return new __SignalConnection { connection };
     }
@@ -253,9 +253,9 @@ namespace AbstractItemModel
             const auto roles2 = fromQList<int,ItemDataRole>(roles, [](auto i) {
                 return static_cast<ItemDataRole>(i);
             });
-            ModelIndex::__Handle topLeft2(topLeft);
-            ModelIndex::__Handle bottomRight2(bottomRight);
-            handler->dataChanged(&topLeft2, &bottomRight2, roles2);
+            QModelIndex topLeft2(topLeft);
+            QModelIndex bottomRight2(bottomRight);
+            handler->dataChanged(reinterpret_cast<ModelIndex::HandleRef>(&topLeft2), reinterpret_cast<ModelIndex::HandleRef>(&bottomRight2), roles2);
         });
         return new __SignalConnection { connection };
     }
@@ -303,50 +303,50 @@ namespace AbstractItemModel
 
     SignalConnectionRef Handle_connect_RowsAboutToBeInserted(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QAbstractItemModel::rowsAboutToBeInserted, [handler](const QModelIndex &parent, int start, int end) {
-            ModelIndex::__Handle parent2(parent);
-            handler->rowsAboutToBeInserted(&parent2, start, end);
+            QModelIndex parent2(parent);
+            handler->rowsAboutToBeInserted(reinterpret_cast<ModelIndex::HandleRef>(&parent2), start, end);
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_RowsAboutToBeMoved(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QAbstractItemModel::rowsAboutToBeMoved, [handler](const QModelIndex &sourceParent, int sourceStart, int sourceEnd, const QModelIndex &destinationParent, int destinationRow) {
-            ModelIndex::__Handle src2(sourceParent);
-            ModelIndex::__Handle dest2(destinationParent);
-            handler->rowsAboutToBeMoved(&src2, sourceStart, sourceEnd, &dest2, destinationRow);
+            QModelIndex src2(sourceParent);
+            QModelIndex dest2(destinationParent);
+            handler->rowsAboutToBeMoved(reinterpret_cast<ModelIndex::HandleRef>(&src2), sourceStart, sourceEnd, reinterpret_cast<ModelIndex::HandleRef>(&dest2), destinationRow);
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_RowsAboutToBeRemoved(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QAbstractItemModel::rowsAboutToBeRemoved, [handler](const QModelIndex &parent, int first, int last) {
-            ModelIndex::__Handle parent2(parent);
-            handler->rowsAboutToBeRemoved(&parent2, first, last);
+            QModelIndex parent2(parent);
+            handler->rowsAboutToBeRemoved(reinterpret_cast<ModelIndex::HandleRef>(&parent2), first, last);
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_RowsInserted(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QAbstractItemModel::rowsInserted, [handler](const QModelIndex &parent, int first, int last) {
-            ModelIndex::__Handle parent2(parent);
-            handler->rowsInserted(&parent2, first, last);
+            QModelIndex parent2(parent);
+            handler->rowsInserted(reinterpret_cast<ModelIndex::HandleRef>(&parent2), first, last);
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_RowsMoved(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QAbstractItemModel::rowsMoved, [handler](const QModelIndex &sourceParent, int sourceStart, int sourceEnd, const QModelIndex &destinationParent, int destinationRow) {
-            ModelIndex::__Handle src2(sourceParent);
-            ModelIndex::__Handle dest2(destinationParent);
-            handler->rowsMoved(&src2, sourceStart, sourceEnd, &dest2, destinationRow);
+            QModelIndex src2(sourceParent);
+            QModelIndex dest2(destinationParent);
+            handler->rowsMoved(reinterpret_cast<ModelIndex::HandleRef>(&src2), sourceStart, sourceEnd, reinterpret_cast<ModelIndex::HandleRef>(&dest2), destinationRow);
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_RowsRemoved(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QAbstractItemModel::rowsRemoved, [handler](const QModelIndex &parent, int first, int last) {
-            ModelIndex::__Handle parent2(parent);
-            handler->rowsRemoved(&parent2, first, last);
+            QModelIndex parent2(parent);
+            handler->rowsRemoved(reinterpret_cast<ModelIndex::HandleRef>(&parent2), first, last);
         });
         return new __SignalConnection { connection };
     }
@@ -363,37 +363,37 @@ namespace AbstractItemModel
         // ===== must-implement abstract methods ================================
         [[nodiscard]]
         QModelIndex index(int row, int column, const QModelIndex &parent) const override {
-            ModelIndex::__Handle parent2(parent);
+            QModelIndex parent2(parent);
             __ModelIndexReturn safeRet;
-            methodDelegate->index(row, column, &parent2, &safeRet);
+            methodDelegate->index(row, column, reinterpret_cast<ModelIndex::HandleRef>(&parent2), &safeRet);
             return safeRet.result;
         }
 
         [[nodiscard]]
         QModelIndex parent(const QModelIndex &child) const override {
-            ModelIndex::__Handle child2(child);
+            QModelIndex child2(child);
             __ModelIndexReturn safeRet;
-            methodDelegate->parent(&child2, &safeRet);
+            methodDelegate->parent(reinterpret_cast<ModelIndex::HandleRef>(&child2), &safeRet);
             return safeRet.result;
         }
 
         [[nodiscard]]
         int rowCount(const QModelIndex &parent) const override {
-            ModelIndex::__Handle parent2(parent);
-            return methodDelegate->rowCount(&parent2);
+            QModelIndex parent2(parent);
+            return methodDelegate->rowCount(reinterpret_cast<ModelIndex::HandleRef>(&parent2));
         }
 
         [[nodiscard]]
         int columnCount(const QModelIndex &parent) const override {
-            ModelIndex::__Handle parent2(parent);
-            return methodDelegate->columnCount(&parent2);
+            QModelIndex parent2(parent);
+            return methodDelegate->columnCount(reinterpret_cast<ModelIndex::HandleRef>(&parent2));
         }
 
         [[nodiscard]]
         QVariant data(const QModelIndex &index, int role) const override {
-            ModelIndex::__Handle index2(index);
+            QModelIndex index2(index);
             __VariantReturn safeRet;
-            methodDelegate->data(&index2, role, &safeRet);
+            methodDelegate->data(reinterpret_cast<ModelIndex::HandleRef>(&index2), role, &safeRet);
             return safeRet.result;
         }
 
@@ -401,8 +401,8 @@ namespace AbstractItemModel
         [[nodiscard]]
         bool hasChildren(const QModelIndex &parent) const override {
             if (methodMask & HasChildren) {
-                ModelIndex::__Handle parent2(parent);
-                return methodDelegate->hasChildren(&parent2);
+                QModelIndex parent2(parent);
+                return methodDelegate->hasChildren(reinterpret_cast<ModelIndex::HandleRef>(&parent2));
             } else {
                 return QAbstractItemModel::hasChildren(parent);
             }
@@ -410,9 +410,9 @@ namespace AbstractItemModel
 
         bool setData(const QModelIndex &index, const QVariant &value, int role) override {
             if (methodMask & SetData) {
-                ModelIndex::__Handle index2(index);
+                QModelIndex index2(index);
                 QVariant value2(value); // non-const, until we figure out "proxies" or whatever
-                return methodDelegate->setData(&index2, reinterpret_cast<Variant::HandleRef>(&value2), role);
+                return methodDelegate->setData(reinterpret_cast<ModelIndex::HandleRef>(&index2), reinterpret_cast<Variant::HandleRef>(&value2), role);
             } else {
                 return QAbstractItemModel::setData(index, value, role);
             }
@@ -422,8 +422,8 @@ namespace AbstractItemModel
         Qt::ItemFlags flags(const QModelIndex &index) const override {
             auto baseFlags = QAbstractItemModel::flags(index);
             if (methodMask & Flags) {
-                ModelIndex::__Handle index2(index);
-                const auto result = methodDelegate->getFlags(&index2, ItemFlags(baseFlags));
+                QModelIndex index2(index);
+                const auto result = methodDelegate->getFlags(reinterpret_cast<ModelIndex::HandleRef>(&index2), ItemFlags(baseFlags));
                 return static_cast<Qt::ItemFlags>(result.value);
             } else {
                 return baseFlags;
@@ -483,7 +483,7 @@ namespace AbstractItemModel
         for (auto role : roles) {
             qRoles.push_back(static_cast<int>(role));
         }
-        SUBCLASSED_THIS->emitDataChanged(topLeft->value, bottomRight->value, qRoles);
+        SUBCLASSED_THIS->emitDataChanged(QMODELINDEX_VALUE(topLeft), QMODELINDEX_VALUE(bottomRight), qRoles);
     }
 
     void Interior_emitHeaderDataChanged(InteriorRef _this, Orientation orientation, int32_t first, int32_t last) {
@@ -491,7 +491,7 @@ namespace AbstractItemModel
     }
 
     void Interior_beginInsertRows(InteriorRef _this, ModelIndex::HandleRef parent, int32_t first, int32_t last) {
-        SUBCLASSED_THIS->beginInsertRows(parent->value, first, last);
+        SUBCLASSED_THIS->beginInsertRows(QMODELINDEX_VALUE(parent), first, last);
     }
 
     void Interior_endInsertRows(InteriorRef _this) {
@@ -499,7 +499,7 @@ namespace AbstractItemModel
     }
 
     void Interior_beginRemoveRows(InteriorRef _this, ModelIndex::HandleRef parent, int32_t first, int32_t last) {
-        SUBCLASSED_THIS->beginRemoveRows(parent->value, first, last);
+        SUBCLASSED_THIS->beginRemoveRows(QMODELINDEX_VALUE(parent), first, last);
     }
 
     void Interior_endRemoveRows(InteriorRef _this) {
@@ -515,8 +515,7 @@ namespace AbstractItemModel
     }
 
     ModelIndex::OwnedRef Interior_createIndex(InteriorRef _this, int32_t row, int32_t column, size_t ptr) {
-        const auto raw = SUBCLASSED_THIS->createIndex(row, column, ptr);
-        return new ModelIndex::__Owned(raw);
+        return MODELINDEX_HEAP_NEW(SUBCLASSED_THIS->createIndex(row, column, ptr));
     }
 
     void Interior_dispose(InteriorRef _this) {

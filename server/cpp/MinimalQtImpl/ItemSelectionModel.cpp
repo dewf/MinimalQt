@@ -16,7 +16,7 @@ namespace ItemSelectionModel
     }
 
     ModelIndex::OwnedRef Handle_currentIndex(HandleRef _this) {
-        return new ModelIndex::__Owned(THIS->currentIndex());
+        return MODELINDEX_HEAP_NEW(THIS->currentIndex());
     }
 
     bool Handle_hasSelection(HandleRef _this) {
@@ -32,7 +32,7 @@ namespace ItemSelectionModel
     }
 
     bool Handle_isSelected(HandleRef _this, ModelIndex::HandleRef index) {
-        return THIS->isSelected(index->value);
+        return THIS->isSelected(QMODELINDEX_VALUE(index));
     }
 
     AbstractItemModel::HandleRef Handle_model(HandleRef _this) {
@@ -45,19 +45,19 @@ namespace ItemSelectionModel
 
     std::vector<ModelIndex::OwnedRef> Handle_selectedColumns(HandleRef _this, int32_t row /* 0 */) {
         return fromQList<QModelIndex,ModelIndex::OwnedRef>(THIS->selectedColumns(row), [](auto index) {
-            return new ModelIndex::__Owned(index);
+            return MODELINDEX_HEAP_NEW(index);
         });
     }
 
     std::vector<ModelIndex::OwnedRef> Handle_selectedIndexes(HandleRef _this) {
         return fromQList<QModelIndex,ModelIndex::OwnedRef>(THIS->selectedIndexes(), [](auto index) {
-            return new ModelIndex::__Owned(index);
+            return MODELINDEX_HEAP_NEW(index);
         });
     }
 
     std::vector<ModelIndex::OwnedRef> Handle_selectedRows(HandleRef _this, int32_t column /* 0 */) {
         return fromQList<QModelIndex,ModelIndex::OwnedRef>(THIS->selectedRows(column), [](auto index) {
-            return new ModelIndex::__Owned(index);
+            return MODELINDEX_HEAP_NEW(index);
         });
     }
 
@@ -90,36 +90,36 @@ namespace ItemSelectionModel
     }
 
     void Handle_select(HandleRef _this, ModelIndex::HandleRef index, SelectionFlags command) {
-        THIS->select(index->value, static_cast<QItemSelectionModel::SelectionFlags>(command.value));
+        THIS->select(QMODELINDEX_VALUE(index), static_cast<QItemSelectionModel::SelectionFlags>(command.value));
     }
 
     void Handle_setCurrentIndex(HandleRef _this, ModelIndex::HandleRef index, SelectionFlags command) {
-        THIS->setCurrentIndex(index->value, static_cast<QItemSelectionModel::SelectionFlags>(command.value));
+        THIS->setCurrentIndex(QMODELINDEX_VALUE(index), static_cast<QItemSelectionModel::SelectionFlags>(command.value));
     }
 
     SignalConnectionRef Handle_connect_CurrentChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QItemSelectionModel::currentChanged, [handler](const QModelIndex &current, const QModelIndex &previous) {
-            ModelIndex::__Owned current2(current);
-            ModelIndex::__Owned previous2(previous);
-            handler->currentChanged(&current2, &previous2);
+            QModelIndex current2(current);
+            QModelIndex previous2(previous);
+            handler->currentChanged(reinterpret_cast<ModelIndex::HandleRef>(&current2), reinterpret_cast<ModelIndex::HandleRef>(reinterpret_cast<ModelIndex::HandleRef>(&previous2)));
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_CurrentColumnChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QItemSelectionModel::currentColumnChanged, [handler](const QModelIndex &current, const QModelIndex &previous) {
-            ModelIndex::__Owned current2(current);
-            ModelIndex::__Owned previous2(previous);
-            handler->currentColumnChanged(&current2, &previous2);
+            QModelIndex current2(current);
+            QModelIndex previous2(previous);
+            handler->currentColumnChanged(reinterpret_cast<ModelIndex::HandleRef>(&current2), reinterpret_cast<ModelIndex::HandleRef>(&previous2));
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_CurrentRowChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QItemSelectionModel::currentRowChanged, [handler](const QModelIndex &current, const QModelIndex &previous) {
-            ModelIndex::__Owned current2(current);
-            ModelIndex::__Owned previous2(previous);
-            handler->currentRowChanged(&current2, &previous2);
+            QModelIndex current2(current);
+            QModelIndex previous2(previous);
+            handler->currentRowChanged(reinterpret_cast<ModelIndex::HandleRef>(&current2), reinterpret_cast<ModelIndex::HandleRef>(&previous2));
         });
         return new __SignalConnection { connection };
     }

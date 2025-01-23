@@ -23,11 +23,11 @@ namespace AbstractItemView
     }
 
     void Handle_closePersistentEditor(HandleRef _this, ModelIndex::HandleRef index) {
-        THIS->closePersistentEditor(index->value);
+        THIS->closePersistentEditor(QMODELINDEX_VALUE(index));
     }
 
     ModelIndex::OwnedRef Handle_currentIndex(HandleRef _this) {
-        return new ModelIndex::__Owned { THIS->currentIndex() };
+        return MODELINDEX_HEAP_NEW(THIS->currentIndex());
     }
 
     DropAction Handle_defaultDropAction(HandleRef _this) {
@@ -63,15 +63,15 @@ namespace AbstractItemView
     }
 
     ModelIndex::OwnedRef Handle_indexAt(HandleRef _this, Point point) {
-        return new ModelIndex::__Owned { THIS->indexAt(toQPoint(point)) };
+        return MODELINDEX_HEAP_NEW(THIS->indexAt(toQPoint(point)));
     }
 
     Widget::HandleRef Handle_indexWidget(HandleRef _this, ModelIndex::HandleRef index) {
-        return reinterpret_cast<Widget::HandleRef>(THIS->indexWidget(index->value));
+        return reinterpret_cast<Widget::HandleRef>(THIS->indexWidget(QMODELINDEX_VALUE(index)));
     }
 
     bool Handle_isPersistentEditorOpen(HandleRef _this, ModelIndex::HandleRef index) {
-        return THIS->isPersistentEditorOpen(index->value);
+        return THIS->isPersistentEditorOpen(QMODELINDEX_VALUE(index));
     }
 
     AbstractItemDelegate::HandleRef Handle_itemDelegate(HandleRef _this) {
@@ -83,7 +83,7 @@ namespace AbstractItemView
     }
 
     AbstractItemDelegate::HandleRef Handle_itemDelegateForIndex(HandleRef _this, ModelIndex::HandleRef index) {
-        return reinterpret_cast<AbstractItemDelegate::HandleRef>(THIS->itemDelegateForIndex(index->value));
+        return reinterpret_cast<AbstractItemDelegate::HandleRef>(THIS->itemDelegateForIndex(QMODELINDEX_VALUE(index)));
     }
 
     AbstractItemDelegate::HandleRef Handle_itemDelegateForRow(HandleRef _this, int32_t row) {
@@ -99,7 +99,7 @@ namespace AbstractItemView
     }
 
     void Handle_openPersistentEditor(HandleRef _this, ModelIndex::HandleRef index) {
-        THIS->openPersistentEditor(index->value);
+        THIS->openPersistentEditor(QMODELINDEX_VALUE(index));
     }
 
     void Handle_resetHorizontalScrollMode(HandleRef _this) {
@@ -111,11 +111,11 @@ namespace AbstractItemView
     }
 
     ModelIndex::OwnedRef Handle_rootIndex(HandleRef _this) {
-        return new ModelIndex::__Owned { THIS->rootIndex() };
+        return MODELINDEX_HEAP_NEW(THIS->rootIndex());
     }
 
     void Handle_scrollTo(HandleRef _this, ModelIndex::HandleRef index, ScrollHint hint /* ScrollHint::EnsureVisible */) {
-        THIS->scrollTo(index->value, static_cast<QAbstractItemView::ScrollHint>(hint));
+        THIS->scrollTo(QMODELINDEX_VALUE(index), static_cast<QAbstractItemView::ScrollHint>(hint));
     }
 
     SelectionBehavior Handle_getSelectionBehavior(HandleRef _this) {
@@ -175,7 +175,7 @@ namespace AbstractItemView
     }
 
     void Handle_setIndexWidget(HandleRef _this, ModelIndex::HandleRef index, Widget::HandleRef widget) {
-        THIS->setIndexWidget(index->value, AS_QWIDGET_PTR(widget));
+        THIS->setIndexWidget(QMODELINDEX_VALUE(index), AS_QWIDGET_PTR(widget));
     }
 
     void Handle_setItemDelegate(HandleRef _this, AbstractItemDelegate::HandleRef itemDelegate) {
@@ -227,7 +227,7 @@ namespace AbstractItemView
     }
 
     Size Handle_sizeHintForIndex(HandleRef _this, ModelIndex::HandleRef index) {
-        return toSize(THIS->sizeHintForIndex(index->value));
+        return toSize(THIS->sizeHintForIndex(QMODELINDEX_VALUE(index)));
     }
 
     int32_t Handle_sizeHintForRow(HandleRef _this, int32_t row) {
@@ -247,7 +247,7 @@ namespace AbstractItemView
     }
 
     Rect Handle_visualRect(HandleRef _this, ModelIndex::HandleRef index) {
-        return toRect(THIS->visualRect(index->value));
+        return toRect(THIS->visualRect(QMODELINDEX_VALUE(index)));
     }
 
     void Handle_clearSelection(HandleRef _this) {
@@ -255,7 +255,7 @@ namespace AbstractItemView
     }
 
     void Handle_edit(HandleRef _this, ModelIndex::HandleRef index) {
-        THIS->edit(index->value);
+        THIS->edit(QMODELINDEX_VALUE(index));
     }
 
     void Handle_reset(HandleRef _this) {
@@ -275,45 +275,45 @@ namespace AbstractItemView
     }
 
     void Handle_setCurrentIndex(HandleRef _this, ModelIndex::HandleRef index) {
-        THIS->setCurrentIndex(index->value);
+        THIS->setCurrentIndex(QMODELINDEX_VALUE(index));
     }
 
     void Handle_setRootIndex(HandleRef _this, ModelIndex::HandleRef index) {
-        THIS->setRootIndex(index->value);
+        THIS->setRootIndex(QMODELINDEX_VALUE(index));
     }
 
     void Handle_update(HandleRef _this, ModelIndex::HandleRef index) {
-        THIS->update(index->value);
+        THIS->update(QMODELINDEX_VALUE(index));
     }
 
     SignalConnectionRef Handle_connect_Activated(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QAbstractItemView::activated, [handler](const QModelIndex& index) {
-            ModelIndex::__Handle index2(index);
-            handler->activated(&index2);
+            QModelIndex index2(index);
+            handler->activated(reinterpret_cast<ModelIndex::HandleRef>(&index2));
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_Clicked(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QAbstractItemView::clicked, [handler](const QModelIndex& index) {
-            ModelIndex::__Handle index2(index);
-            handler->clicked(&index2);
+            QModelIndex index2(index);
+            handler->clicked(reinterpret_cast<ModelIndex::HandleRef>(&index2));
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_DoubleClicked(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QAbstractItemView::doubleClicked, [handler](const QModelIndex& index) {
-            ModelIndex::__Handle index2(index);
-            handler->doubleClicked(&index2);
+            QModelIndex index2(index);
+            handler->doubleClicked(reinterpret_cast<ModelIndex::HandleRef>(&index2));
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_Entered(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QAbstractItemView::entered, [handler](const QModelIndex &index) {
-            ModelIndex::__Handle index2(index);
-            handler->entered(&index2);
+            QModelIndex index2(index);
+            handler->entered(reinterpret_cast<ModelIndex::HandleRef>(&index2));
         });
         return new __SignalConnection { connection };
     }
@@ -327,8 +327,8 @@ namespace AbstractItemView
 
     SignalConnectionRef Handle_connect_Pressed(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QAbstractItemView::pressed, [handler](const QModelIndex &index) {
-            ModelIndex::__Handle index2(index);
-            handler->pressed(&index2);
+            QModelIndex index2(index);
+            handler->pressed(reinterpret_cast<ModelIndex::HandleRef>(&index2));
         });
         return new __SignalConnection { connection };
     }

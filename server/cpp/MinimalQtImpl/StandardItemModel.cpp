@@ -44,7 +44,7 @@ namespace StandardItemModel
     }
 
     ModelIndex::OwnedRef Handle_indexFromItem(HandleRef _this, StandardItem::HandleRef item) {
-        return new ModelIndex::__Owned { THIS->indexFromItem(AS_ITEM(item)) };
+        return MODELINDEX_HEAP_NEW(THIS->indexFromItem(AS_ITEM(item)));
     }
 
     void Handle_insertColumn(HandleRef _this, int32_t column, const std::vector<StandardItem::HandleRef>& items) {
@@ -76,7 +76,7 @@ namespace StandardItemModel
     }
 
     StandardItem::HandleRef Handle_itemFromIndex(HandleRef _this, ModelIndex::HandleRef index) {
-        return reinterpret_cast<StandardItem::HandleRef>(THIS->itemFromIndex(index->value));
+        return reinterpret_cast<StandardItem::HandleRef>(THIS->itemFromIndex(QMODELINDEX_VALUE(index)));
     }
 
     StandardItem::HandleRef Handle_itemPrototype(HandleRef _this) {

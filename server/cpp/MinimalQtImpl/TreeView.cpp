@@ -43,11 +43,11 @@ namespace TreeView
     }
 
     ModelIndex::OwnedRef Handle_indexAbove(HandleRef _this, ModelIndex::HandleRef index) {
-        return new ModelIndex::__Owned { THIS->indexAbove(index->value) };
+        return MODELINDEX_HEAP_NEW(THIS->indexAbove(QMODELINDEX_VALUE(index)));
     }
 
     ModelIndex::OwnedRef Handle_indexBelow(HandleRef _this, ModelIndex::HandleRef index) {
-        return new ModelIndex::__Owned { THIS->indexBelow(index->value) };
+        return MODELINDEX_HEAP_NEW(THIS->indexBelow(QMODELINDEX_VALUE(index)));
     }
 
     bool Handle_isAnimated(HandleRef _this) {
@@ -59,11 +59,11 @@ namespace TreeView
     }
 
     bool Handle_isExpanded(HandleRef _this, ModelIndex::HandleRef index) {
-        return THIS->isExpanded(index->value);
+        return THIS->isExpanded(QMODELINDEX_VALUE(index));
     }
 
     bool Handle_isFirstColumnSpanned(HandleRef _this, int32_t row, ModelIndex::HandleRef parent) {
-        return THIS->isFirstColumnSpanned(row, parent->value);
+        return THIS->isFirstColumnSpanned(row, QMODELINDEX_VALUE(parent));
     }
 
     bool Handle_isHeaderHidden(HandleRef _this) {
@@ -71,7 +71,7 @@ namespace TreeView
     }
 
     bool Handle_isRowHidden(HandleRef _this, int32_t row, ModelIndex::HandleRef parent) {
-        return THIS->isRowHidden(row, parent->value);
+        return THIS->isRowHidden(row, QMODELINDEX_VALUE(parent));
     }
 
     bool Handle_isSortingEnabled(HandleRef _this) {
@@ -111,7 +111,7 @@ namespace TreeView
     }
 
     void Handle_setExpanded(HandleRef _this, ModelIndex::HandleRef index, bool expanded) {
-        THIS->setExpanded(index->value, expanded);
+        THIS->setExpanded(QMODELINDEX_VALUE(index), expanded);
     }
 
     void Handle_setExpandsOnDoubleClick(HandleRef _this, bool enable) {
@@ -119,7 +119,7 @@ namespace TreeView
     }
 
     void Handle_setFirstColumnSpanned(HandleRef _this, int32_t row, ModelIndex::HandleRef parent, bool span) {
-        THIS->setFirstColumnSpanned(row, parent->value, span);
+        THIS->setFirstColumnSpanned(row, QMODELINDEX_VALUE(parent), span);
     }
 
     void Handle_setHeader(HandleRef _this, HeaderView::HandleRef header) {
@@ -143,7 +143,7 @@ namespace TreeView
     }
 
     void Handle_setRowHidden(HandleRef _this, int32_t row, ModelIndex::HandleRef parent, bool hide) {
-        THIS->setRowHidden(row, parent->value, hide);
+        THIS->setRowHidden(row, QMODELINDEX_VALUE(parent), hide);
     }
 
     void Handle_setSortingEnabled(HandleRef _this, bool enable) {
@@ -175,7 +175,7 @@ namespace TreeView
     }
 
     void Handle_collapse(HandleRef _this, ModelIndex::HandleRef index) {
-        THIS->collapse(index->value);
+        THIS->collapse(QMODELINDEX_VALUE(index));
     }
 
     void Handle_collapseAll(HandleRef _this) {
@@ -183,7 +183,7 @@ namespace TreeView
     }
 
     void Handle_expand(HandleRef _this, ModelIndex::HandleRef index) {
-        THIS->expand(index->value);
+        THIS->expand(QMODELINDEX_VALUE(index));
     }
 
     void Handle_expandAll(HandleRef _this) {
@@ -191,7 +191,7 @@ namespace TreeView
     }
 
     void Handle_expandRecursively(HandleRef _this, ModelIndex::HandleRef index, int32_t depth /* -1 */) {
-        THIS->expandRecursively(index->value, depth);
+        THIS->expandRecursively(QMODELINDEX_VALUE(index), depth);
     }
 
     void Handle_expandToDepth(HandleRef _this, int32_t depth) {
@@ -216,16 +216,16 @@ namespace TreeView
 
     SignalConnectionRef Handle_connect_Collapsed(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QTreeView::collapsed, [handler](const QModelIndex& index) {
-            ModelIndex::__Owned index2(index);
-            handler->collapsed(&index2);
+            QModelIndex index2(index);
+            handler->collapsed(reinterpret_cast<ModelIndex::HandleRef>(&index2));
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_Expanded(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QTreeView::expanded, [handler](const QModelIndex& index) {
-            ModelIndex::__Owned index2(index);
-            handler->expanded(&index2);
+            QModelIndex index2(index);
+            handler->expanded(reinterpret_cast<ModelIndex::HandleRef>(&index2));
         });
         return new __SignalConnection { connection };
     }

@@ -7,7 +7,7 @@
 namespace SafeReturn
 {
     void ModelIndexReturn_setResult(ModelIndexReturnRef _this, ModelIndex::HandleRef value) {
-        _this->result = value->value;
+        _this->result = QMODELINDEX_VALUE(value);
     }
 
     void VariantReturn_setResult(VariantReturnRef _this, Variant::HandleRef value) {

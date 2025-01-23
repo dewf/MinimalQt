@@ -3,32 +3,14 @@
 #include "generated/ModelIndex.h"
 #include <QModelIndex>
 
-#include "util/RefCountedWrapper.h"
+#define AS_QMODELINDEX_PTR(x) (reinterpret_cast<QModelIndex*>(x))
+#define QMODELINDEX_VALUE(x) (*AS_QMODELINDEX_PTR(x))
+#define MODELINDEX_HEAP_NEW(...) (reinterpret_cast<ModelIndex::OwnedRef>(new QModelIndex(__VA_ARGS__)))
 
 namespace ModelIndex {
-    struct __Handle : RefCountedWrapper<QModelIndex> {
-        explicit __Handle(const QModelIndex &init) : RefCountedWrapper(init) {}
-    };
-    struct __Owned : __Handle {
-        explicit __Owned(const QModelIndex &init) : __Handle(init) {}
-        void addRef() {
-            addRefInternal();
-        }
-        void release() {
-            releaseInternal();
-        }
-    };
-    // note: these are never actually created/instantiated, we just reinterpret OwnedRef as SafeReturnRef for API purposes
-    struct __SafeReturn : __Owned {
-        QModelIndex consume() {
-            return consumeInternal();
-        }
-    };
-
-    inline QModelIndex fromOptionalIndex(const std::optional<HandleRef>& maybeValue) {
-        if (maybeValue.has_value()) {
-            return maybeValue.value()->value;
-        }
-        return {};
+    inline QModelIndex fromOptionalIndex(const std::optional<HandleRef>& x) {
+        QModelIndex ret;
+        if (x.has_value()) ret = QMODELINDEX_VALUE(x.value());
+        return ret;
     }
 }

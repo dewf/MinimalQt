@@ -1,78 +1,66 @@
 #include "generated/ModelIndex.h"
-
 #include "ModelIndexInternal.h"
+
 #include "VariantInternal.h"
 
-// #define WRAPPER (AS_QMODELINDEX_PTR(_this)) // RefCountedWrapper<QModelIndex>*
-#define WRAPPER (_this)
-#define VALUE (WRAPPER->value)
+#define THIS (AS_QMODELINDEX_PTR(_this))
 
 namespace ModelIndex
 {
     int32_t Handle_column(HandleRef _this) {
-        return VALUE.column();
+        return THIS->column();
     }
 
     Variant::OwnedRef Handle_data(HandleRef _this) {
-        return VARIANT_HEAP_NEW(VALUE.data());
+        return VARIANT_HEAP_NEW(THIS->data());
     }
 
     Variant::OwnedRef Handle_data(HandleRef _this, ItemDataRole role /* ItemDataRole::DisplayRole */) {
         auto qRole = static_cast<Qt::ItemDataRole>(role);
-        return VARIANT_HEAP_NEW(VALUE.data(qRole));
+        return VARIANT_HEAP_NEW(THIS->data(qRole));
     }
 
     ItemFlags Handle_getFlags(HandleRef _this) {
-        return ItemFlags(VALUE.flags());
+        return ItemFlags(THIS->flags());
     }
 
     size_t Handle_internalId(HandleRef _this) {
-        return VALUE.internalId();
+        return THIS->internalId();
     }
 
     bool Handle_isValid(HandleRef _this) {
-        return VALUE.isValid();
+        return THIS->isValid();
     }
 
     AbstractItemModelHandleRef Handle_model(HandleRef _this) {
-        return (AbstractItemModelHandleRef)VALUE.model();
+        return (AbstractItemModelHandleRef)THIS->model();
     }
 
     OwnedRef Handle_parent(HandleRef _this) {
-        return new __Owned(VALUE.parent());
+        return MODELINDEX_HEAP_NEW(THIS->parent());
     }
 
     int32_t Handle_row(HandleRef _this) {
-        return VALUE.row();
+        return THIS->row();
     }
 
     OwnedRef Handle_sibling(HandleRef _this, int32_t row, int32_t column) {
-        return new __Owned(VALUE.sibling(row, column));
+        return MODELINDEX_HEAP_NEW(THIS->sibling(row, column));
     }
 
     OwnedRef Handle_siblingAtColumn(HandleRef _this, int32_t column) {
-        return new __Owned(VALUE.siblingAtColumn(column));
+        return MODELINDEX_HEAP_NEW(THIS->siblingAtColumn(column));
     }
 
     OwnedRef Handle_siblingAtRow(HandleRef _this, int32_t row) {
-        return new __Owned(VALUE.siblingAtRow(row));
-    }
-
-    SafeReturnRef Owned_getSafeReturn(OwnedRef _this) {
-        WRAPPER->addRef();
-        // return "as" a different type, but not really - this is just to enforce API safety requiring us to call this method to safely return the opaques from a client interface (which is normally unsafe)
-        return reinterpret_cast<SafeReturnRef>(_this);
+        return MODELINDEX_HEAP_NEW(THIS->siblingAtRow(row));
     }
 
     void Owned_dispose(OwnedRef _this) {
-        WRAPPER->release();
-    }
-
-    void SafeReturn_dispose(SafeReturnRef _this) {
-        WRAPPER->release();
+        delete THIS;
     }
 
     OwnedRef create() {
-        return new __Owned(QModelIndex());
+        return MODELINDEX_HEAP_NEW();
     }
 }

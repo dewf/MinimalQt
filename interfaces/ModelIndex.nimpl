@@ -23,12 +23,7 @@ opaque Handle {
     Owned siblingAtColumn(int column);
     Owned siblingAtRow(int row);
 }
+opaque Owned extends Handle;
 
-opaque Owned extends Handle {
-    SafeReturn getSafeReturn(); // see note below / or in Variant module
-}
-
-// really just an addRef'ed version of an existing Owned, but nice to document in the API to prevent mishaps
-opaque SafeReturn extends Owned;
 
 Owned create(); // empty/invalid

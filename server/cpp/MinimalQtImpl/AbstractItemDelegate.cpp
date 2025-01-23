@@ -14,39 +14,39 @@
 namespace AbstractItemDelegate
 {
     Widget::HandleRef Handle_createEditor(HandleRef _this, Widget::HandleRef parent, StyleOptionViewItem::HandleRef option, ModelIndex::HandleRef index) {
-        return reinterpret_cast<Widget::HandleRef>(THIS->createEditor(AS_QWIDGET_PTR(parent), QSTYLEOPTIONVIEWITEM_VALUE(option), index->value));
+        return reinterpret_cast<Widget::HandleRef>(THIS->createEditor(AS_QWIDGET_PTR(parent), QSTYLEOPTIONVIEWITEM_VALUE(option), QMODELINDEX_VALUE(index)));
     }
 
     void Handle_destroyEditor(HandleRef _this, Widget::HandleRef editor, ModelIndex::HandleRef index) {
-        THIS->destroyEditor(AS_QWIDGET_PTR(editor), index->value);
+        THIS->destroyEditor(AS_QWIDGET_PTR(editor), QMODELINDEX_VALUE(index));
     }
 
     bool Handle_editorEvent(HandleRef _this, Event::HandleRef event_, AbstractItemModel::HandleRef model, StyleOptionViewItem::HandleRef option, ModelIndex::HandleRef index) {
-        return THIS->editorEvent(AS_QEVENT_PTR(event_), reinterpret_cast<QAbstractItemModel*>(model), QSTYLEOPTIONVIEWITEM_VALUE(option), index->value);
+        return THIS->editorEvent(AS_QEVENT_PTR(event_), reinterpret_cast<QAbstractItemModel*>(model), QSTYLEOPTIONVIEWITEM_VALUE(option), QMODELINDEX_VALUE(index));
     }
 
     bool Handle_helpEvent(HandleRef _this, HelpEvent_HandleRef event_, AbstractItemViewHandleRef view, StyleOptionViewItem::HandleRef option, ModelIndex::HandleRef index) {
-        return THIS->helpEvent(AS_QHELPEVENT_PTR(event_), reinterpret_cast<QAbstractItemView*>(view), QSTYLEOPTIONVIEWITEM_VALUE(option), index->value);
+        return THIS->helpEvent(AS_QHELPEVENT_PTR(event_), reinterpret_cast<QAbstractItemView*>(view), QSTYLEOPTIONVIEWITEM_VALUE(option), QMODELINDEX_VALUE(index));
     }
 
     void Handle_paint(HandleRef _this, Painter::HandleRef painter, StyleOptionViewItem::HandleRef option, ModelIndex::HandleRef index) {
-        THIS->paint(AS_QPAINTER_PTR(painter), QSTYLEOPTIONVIEWITEM_VALUE(option), index->value);
+        THIS->paint(AS_QPAINTER_PTR(painter), QSTYLEOPTIONVIEWITEM_VALUE(option), QMODELINDEX_VALUE(index));
     }
 
     void Handle_setEditorData(HandleRef _this, Widget::HandleRef editor, ModelIndex::HandleRef index) {
-        THIS->setEditorData(AS_QWIDGET_PTR(editor), index->value);
+        THIS->setEditorData(AS_QWIDGET_PTR(editor), QMODELINDEX_VALUE(index));
     }
 
     void Handle_setModelData(HandleRef _this, Widget::HandleRef editor, AbstractItemModel::HandleRef model, ModelIndex::HandleRef index) {
-        THIS->setModelData(AS_QWIDGET_PTR(editor), reinterpret_cast<QAbstractItemModel*>(model), index->value);
+        THIS->setModelData(AS_QWIDGET_PTR(editor), reinterpret_cast<QAbstractItemModel*>(model), QMODELINDEX_VALUE(index));
     }
 
     Size Handle_sizeHint(HandleRef _this, StyleOptionViewItem::HandleRef option, ModelIndex::HandleRef index) {
-        return toSize(THIS->sizeHint(QSTYLEOPTIONVIEWITEM_VALUE(option), index->value));
+        return toSize(THIS->sizeHint(QSTYLEOPTIONVIEWITEM_VALUE(option), QMODELINDEX_VALUE(index)));
     }
 
     void Handle_updateEditorGeometry(HandleRef _this, Widget::HandleRef editor, StyleOptionViewItem::HandleRef option, ModelIndex::HandleRef index) {
-        THIS->updateEditorGeometry(AS_QWIDGET_PTR(editor), QSTYLEOPTIONVIEWITEM_VALUE(option), index->value);
+        THIS->updateEditorGeometry(AS_QWIDGET_PTR(editor), QSTYLEOPTIONVIEWITEM_VALUE(option), QMODELINDEX_VALUE(index));
     }
 
     SignalConnectionRef Handle_connect_CloseEditor(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
@@ -65,8 +65,8 @@ namespace AbstractItemDelegate
 
     SignalConnectionRef Handle_connect_SizeHintChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QAbstractItemDelegate::sizeHintChanged, [handler](const QModelIndex &index) {
-            ModelIndex::__Handle index2(index); // until we fix this with proxies or whatever we decide ...
-            handler->sizeHintChanged(&index2);
+            QModelIndex index2(index); // until we fix this with proxies or whatever we decide ...
+            handler->sizeHintChanged(reinterpret_cast<ModelIndex::HandleRef>(&index2));
         });
         return new __SignalConnection { connection };
     }

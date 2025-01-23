@@ -143,7 +143,7 @@ namespace ComboBox
     }
 
     ModelIndex::OwnedRef Handle_rootModelIndex(HandleRef _this) {
-        return new ModelIndex::__Owned { THIS->rootModelIndex() };
+        return MODELINDEX_HEAP_NEW(THIS->rootModelIndex());
     }
 
     void Handle_setCompleter(HandleRef _this, Completer::HandleRef completer) {
@@ -215,7 +215,7 @@ namespace ComboBox
     }
 
     void Handle_setRootModelIndex(HandleRef _this, ModelIndex::HandleRef index) {
-        THIS->setRootModelIndex(index->value);
+        THIS->setRootModelIndex(QMODELINDEX_VALUE(index));
     }
 
     void Handle_setSizeAdjustPolicy(HandleRef _this, SizeAdjustPolicy policy) {

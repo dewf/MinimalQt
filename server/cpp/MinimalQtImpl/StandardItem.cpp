@@ -253,7 +253,7 @@ namespace StandardItem
     }
 
     ModelIndex::OwnedRef Handle_index(HandleRef _this) {
-        return new ModelIndex::__Owned { THIS->index() };
+        return MODELINDEX_HEAP_NEW(THIS->index());
     }
 
     void Handle_insertColumn(HandleRef _this, int32_t column, const std::vector<HandleRef>& items) {
