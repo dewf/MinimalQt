@@ -1,7 +1,6 @@
 #pragma once
 
 #include "generated/Widget.h"
-
 #include <QWidget>
 
 #define AS_QWIDGET_PTR(x) (reinterpret_cast<QWidget*>(x))

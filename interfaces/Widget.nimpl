@@ -19,6 +19,7 @@ import PaintDevice;
 import Variant;
 import Event;
 import Window;
+import Screen;
 
 int WIDGET_SIZE_MAX;   // pass-through of QWIDGETSIZE_MAX
 
@@ -184,9 +185,7 @@ opaque Handle extends Object.Handle {
     void resize(int w, int h);
     bool restoreGeometry(Array<byte> geometry);
     Array<byte> saveGeometry();
-
-    // QScreen * screen() const
-
+    Screen.Handle screen();
     void scroll(int dx, int dy);
     void scroll(int dx, int dy, Rect r);
     void setAcceptDrops(bool on);
@@ -243,9 +242,7 @@ opaque Handle extends Object.Handle {
 
     void setParent(Handle parent);
     void setParent(Handle parent, WindowFlags f);
-
-    // void setScreen(QScreen *screen)
-
+    void setScreen(Screen.Handle screen);
     void setShortcutAutoRepeat(int id, bool enable = true);
     void setShortcutEnabled(int id, bool enable = true);
     void setSizeIncrement(Size size);
@@ -299,15 +296,11 @@ opaque Handle extends Object.Handle {
     Region.Owned visibleRegion();
     string whatsThis();
     int width();
-
-    // WId winId() const
-
+    size_t winId();
     Handle window();
     string windowFilePath();
     WindowFlags getWindowFlags();
-
     Window.Handle windowHandle();
-
     Icon.Owned windowIcon();
     WindowModality getWindowModality();
     double windowOpacity();

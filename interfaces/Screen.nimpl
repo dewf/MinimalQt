@@ -3,6 +3,8 @@ module Screen;
 import Object;
 import Common;
 import Enums;
+import Pixmap;
+import Transform;
 
 interface SignalHandler extends Object.SignalHandler {
     void availableGeometryChanged(Rect geometry);
@@ -18,7 +20,45 @@ interface SignalHandler extends Object.SignalHandler {
 
 @nodispose
 opaque Handle extends Object.Handle {
-    // methods TODO
+    int angleBetween(ScreenOrientation a, ScreenOrientation b);
+    Rect availableGeometry();
+    Size availableSize();
+    Rect availableVirtualGeometry();
+    Size availableVirtualSize();
+    int depth();
+    double devicePixelRatio();
+    Rect geometry();
+    Pixmap.Owned grabWindow(size_t window = 0, int x = 0, int y = 0, int width = -1, int height = -1);
+
+    // QPlatformScreen * handle() const
+
+    bool isLandscape(ScreenOrientation o);
+    bool isPortrait(ScreenOrientation o);
+    double logicalDotsPerInch();
+    double logicalDotsPerInchX();
+    double logicalDotsPerInchY();
+    string manufacturer();
+    Rect mapBetween(ScreenOrientation a, ScreenOrientation b, Rect rect);
+    string model();
+    string name();
+
+    // QNativeInterface * nativeInterface() const
+
+    ScreenOrientation nativeOrientation();
+    ScreenOrientation orientation();
+    double physicalDotsPerInch();
+    double physicalDotsPerInchX();
+    double physicalDotsPerInchY();
+    SizeF physicalSize();
+    ScreenOrientation primaryOrientation();
+    double refreshRate();
+    string serialNumber();
+    Size size();
+    Transform.Owned transformBetween(ScreenOrientation a, ScreenOrientation b, Rect target);
+    Rect virtualGeometry();
+    Handle virtualSiblingAt(Point point);
+    Array<Handle> virtualSiblings();
+    Size virtualSize();
 
     SignalConnection connect_AvailableGeometryChanged(SignalHandler handler);
     SignalConnection connect_GeometryChanged(SignalHandler handler);

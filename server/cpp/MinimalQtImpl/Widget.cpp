@@ -2,12 +2,9 @@
 #include "WidgetInternal.h"
 
 #include <QObject>
-#include <QWidget>
 
 #include <QPainter>
 #include <QPaintEvent>
-
-#include <QDrag>
 
 #include "ObjectInternal.h"
 #include "ActionInternal.h"
@@ -20,6 +17,7 @@
 #include "MimeDataInternal.h"
 #include "PixmapInternal.h"
 #include "RegionInternal.h"
+#include "ScreenInternal.h"
 #include "VariantInternal.h"
 
 #include "util/convert.h"
@@ -488,6 +486,10 @@ namespace Widget
         return std::vector<uint8_t>(data, data + qBytes.length());
     }
 
+    Screen::HandleRef Handle_screen(HandleRef _this) {
+        return reinterpret_cast<Screen::HandleRef>(THIS->screen());
+    }
+
     void Handle_scroll(HandleRef _this, int32_t dx, int32_t dy) {
         THIS->scroll(dx, dy);
     }
@@ -646,6 +648,10 @@ namespace Widget
 
     void Handle_setParent(HandleRef _this, HandleRef parent, WindowFlags f) {
         THIS->setParent(AS_QWIDGET_PTR(parent), static_cast<Qt::WindowFlags>(f.value));
+    }
+
+    void Handle_setScreen(HandleRef _this, Screen::HandleRef screen) {
+        THIS->setScreen(AS_QSCREEN_PTR(screen));
     }
 
     void Handle_setShortcutAutoRepeat(HandleRef _this, int32_t id, bool enable /* true */) {
@@ -822,6 +828,10 @@ namespace Widget
 
     int32_t Handle_width(HandleRef _this) {
         return THIS->width();
+    }
+
+    size_t Handle_winId(HandleRef _this) {
+        return THIS->winId();
     }
 
     HandleRef Handle_window(HandleRef _this) {
