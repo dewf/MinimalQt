@@ -10,11 +10,11 @@ namespace RadioButton
         delete THIS;
     }
 
-    HandleRef create(const std::optional<Widget::HandleRef>& parent) {
-        return reinterpret_cast<HandleRef>(new QRadioButton(fromOptionalHandle(parent)));
+    HandleRef create(Widget::HandleRef parent /* nullptr */) {
+        return reinterpret_cast<HandleRef>(new QRadioButton(AS_QWIDGET_PTR(parent)));
     }
 
-    HandleRef create(const std::string& text, const std::optional<Widget::HandleRef>& parent) {
-        return reinterpret_cast<HandleRef>(new QRadioButton(QString::fromStdString(text), fromOptionalHandle(parent)));
+    HandleRef create(const std::string& text, Widget::HandleRef parent /* nullptr */) {
+        return reinterpret_cast<HandleRef>(new QRadioButton(QString::fromStdString(text), AS_QWIDGET_PTR(parent)));
     }
 }

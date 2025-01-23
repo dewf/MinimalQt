@@ -1,19 +1,45 @@
 module Region;
 
 import Common;
+import Polygon;
+import Enums;
 
 enum RegionType { Rectangle, Ellipse }
 
 @nodispose
-opaque Handle;
+opaque Handle {
+    Rect boundingRect();
+    bool contains(Point p);
+    bool contains(Rect r);
+    Owned intersected(Rect rect);
+    Owned intersected(Handle r);
+    bool intersects(Rect rect);
+    bool intersects(Handle region);
+    bool isEmpty();
+    bool isNull();
+    int rectCount();
+    Array<Rect> rects();
+    void setRects(Array<Rect> rects);
+    Owned subtracted(Handle r);
 
+    // void swap(QRegion &other)
+    // (since 6.0) HRGN toHRGN() const
+
+    void translate(int dx, int dy);
+    void translate(Point point);
+    Owned translated(int dx, int dy);
+    Owned translated(Point p);
+    Owned united(Rect rect);
+    Owned united(Handle r);
+    Owned xored(Handle r);
+}
 opaque Owned extends Handle;
 
 Owned create();
 
 // QRegion(const QBitmap &bm)
-// QRegion(const QPolygon &a, Qt::FillRule fillRule = Qt::OddEvenFill)
 
-Owned create(int x, int y, int w, int h, Option<RegionType> t);
-Owned create(Rect r, Option<RegionType> t);
+Owned create(Polygon.Handle a, FillRule fillRule = FillRule.OddEvenFill);
+Owned create(int x, int y, int w, int h, RegionType t = RegionType.Rectangle);
+Owned create(Rect r, RegionType t = RegionType.Rectangle);
 Owned create(Handle other);

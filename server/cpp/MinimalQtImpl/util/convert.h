@@ -23,6 +23,15 @@ inline std::vector<uint8_t> fromQByteArray(const QByteArray& bytes) {
 }
 
 template <typename T, typename U>
+std::vector<U> fromQSpan(QSpan<T> input, const std::function<U(T)>& mapFunc) {
+    std::vector<U> ret;
+    for (auto i = input.begin(); i != input.end(); ++i) {
+        ret.push_back(mapFunc(*i));
+    }
+    return ret;
+}
+
+template <typename T, typename U>
 std::vector<U> vectorMap(const std::vector<T>& input, const std::function<U(T)>& mapFunc) {
     std::vector<U> result;
     for (auto &elem : input) {

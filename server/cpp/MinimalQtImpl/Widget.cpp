@@ -1006,7 +1006,8 @@ namespace Widget
         void paintEvent(QPaintEvent *event) override {
             if (methodMask & PaintEvent) {
                 QPainter painter(this);
-                methods->paintEvent(reinterpret_cast<Painter::HandleRef>(&painter), toRect(event->rect()));
+                QRegion region(event->region()); // copy, until we have some const-capable stuff
+                methods->paintEvent(reinterpret_cast<Painter::HandleRef>(&painter), reinterpret_cast<Region::HandleRef>(&region));
                 // prevent it from propagating:
                 // do we allow this from the method delegate somehow?
                 event->accept();

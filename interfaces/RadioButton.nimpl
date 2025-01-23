@@ -7,9 +7,8 @@ import AbstractButton;
 interface SignalHandler extends AbstractButton.SignalHandler;
 // none extra
 
-opaque Handle extends AbstractButton.Handle {
-    // nothin'
-}
+opaque Handle extends AbstractButton.Handle;
+// nothin'
 
-Handle create(Option<Widget.Handle> parent);
-Handle create(string text, Option<Widget.Handle> parent);
+Handle create(Widget.Handle parent = null);
+Handle create(string text, Widget.Handle parent = null);
