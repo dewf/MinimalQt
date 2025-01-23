@@ -77,6 +77,10 @@ namespace Variant
         return VARIANT_HEAP_NEW();
     }
 
+    OwnedRef create(HandleRef other) {
+        return VARIANT_HEAP_NEW(QVARIANT_VALUE(other));
+    }
+
     OwnedRef create(bool value) {
         return VARIANT_HEAP_NEW(value);
     }

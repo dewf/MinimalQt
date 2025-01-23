@@ -28,6 +28,7 @@ opaque Handle {
 opaque Owned extends Handle;
 
 Owned create();
+Owned create(Handle other);
 Owned create(bool value);
 Owned create(string value);
 Owned create(int value);
