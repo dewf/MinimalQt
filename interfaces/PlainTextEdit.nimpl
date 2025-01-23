@@ -103,8 +103,8 @@ opaque Handle extends AbstractScrollArea.Handle {
     void selectAll();
     void setPlainText(string text);
     void undo();
-    void zoomIn(Option<int> range);
-    void zoomOut(Option<int> range);
+    void zoomIn(int range = 1);
+    void zoomOut(int range = 1);
 
     // signals ============================
     SignalConnection connect_BlockCountChanged(SignalHandler handler);

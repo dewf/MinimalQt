@@ -273,12 +273,12 @@ namespace PlainTextEdit
         THIS->undo();
     }
 
-    void Handle_zoomIn(HandleRef _this, const std::optional<int32_t>& range) {
-        THIS->zoomIn(range.value_or(1));
+    void Handle_zoomIn(HandleRef _this, int32_t range /* 1 */) {
+        THIS->zoomIn(range);
     }
 
-    void Handle_zoomOut(HandleRef _this, const std::optional<int32_t>& range) {
-        THIS->zoomOut(range.value_or(1));
+    void Handle_zoomOut(HandleRef _this, int32_t range /* 1 */) {
+        THIS->zoomOut(range);
     }
 
     SignalConnectionRef Handle_connect_BlockCountChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
