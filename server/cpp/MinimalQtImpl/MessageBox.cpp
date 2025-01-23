@@ -17,78 +17,6 @@ namespace MessageBox
         THIS->addButton(AS_QABSTRACTBUTTON_PTR(button), static_cast<QMessageBox::ButtonRole>(role));
     }
 
-    std::string Handle_detailedText(HandleRef _this) {
-        return THIS->detailedText().toStdString();
-    }
-
-    void Handle_setDetailedText(HandleRef _this, const std::string& text) {
-        THIS->setDetailedText(QString::fromStdString(text));
-    }
-
-    Icon Handle_getIcon(HandleRef _this) {
-        return static_cast<Icon>(THIS->icon());
-    }
-
-    void Handle_setIcon(HandleRef _this, Icon icon) {
-        THIS->setIcon(static_cast<QMessageBox::Icon>(icon));
-    }
-
-    Pixmap::OwnedRef Handle_iconPixmap(HandleRef _this) {
-        return PIXMAP_HEAP_NEW(THIS->iconPixmap());
-    }
-
-    void Handle_setIconPixmap(HandleRef _this, Pixmap::HandleRef pixmap) {
-        THIS->setIconPixmap(QPIXMAP_VALUE(pixmap));
-    }
-
-    std::string Handle_informativeText(HandleRef _this) {
-        return THIS->informativeText().toStdString();
-    }
-
-    void Handle_setInformativeText(HandleRef _this, const std::string& text) {
-        THIS->setInformativeText(QString::fromStdString(text));
-    }
-
-    OptionEnumSet Handle_getOptions(HandleRef _this) {
-        return OptionEnumSet(THIS->options());
-    }
-
-    void Handle_setOptions(HandleRef _this, OptionEnumSet opts) {
-        THIS->setOptions(static_cast<QMessageBox::Options>(opts.value));
-    }
-
-    StandardButtons Handle_getStandardButtons(HandleRef _this) {
-        return StandardButtons(THIS->standardButtons());
-    }
-
-    void Handle_setStandardButtons(HandleRef _this, StandardButtons buttons) {
-        THIS->setStandardButtons(static_cast<QMessageBox::StandardButtons>(buttons.value));
-    }
-
-    std::string Handle_text(HandleRef _this) {
-        return THIS->text().toStdString();
-    }
-
-    void Handle_setText(HandleRef _this, const std::string& text) {
-        THIS->setText(QString::fromStdString(text));
-    }
-
-    TextFormatEnum Handle_getTextFormat(HandleRef _this) {
-        return static_cast<TextFormatEnum>(THIS->textFormat());
-    }
-
-    void Handle_setTextFormat(HandleRef _this, TextFormatEnum format) {
-        THIS->setTextFormat(static_cast<Qt::TextFormat>(format));
-    }
-
-    TextInteractionFlags Handle_getTextInteractionFlags(HandleRef _this) {
-        return TextInteractionFlags(THIS->textInteractionFlags());
-    }
-
-    void Handle_setTextInteractionFlags(HandleRef _this, TextInteractionFlags tiFlags) {
-        THIS->setTextInteractionFlags(static_cast<Qt::TextInteractionFlags>(tiFlags.value));
-    }
-
     PushButton::HandleRef Handle_addButton(HandleRef _this, StandardButton button) {
         return reinterpret_cast<PushButton::HandleRef>(THIS->addButton(static_cast<QMessageBox::StandardButton>(button)));
     }
@@ -101,7 +29,7 @@ namespace MessageBox
         return reinterpret_cast<AbstractButton::HandleRef>(THIS->button(static_cast<QMessageBox::StandardButton>(which)));
     }
 
-    ButtonRole Handle_buttonRole(HandleRef _this, AbstractButton::HandleRef button) {
+    ButtonRole Handle_getButtonRole(HandleRef _this, AbstractButton::HandleRef button) {
         return static_cast<ButtonRole>(THIS->buttonRole(AS_QABSTRACTBUTTON_PTR(button)));
     }
 
@@ -123,8 +51,28 @@ namespace MessageBox
         return reinterpret_cast<PushButton::HandleRef>(THIS->defaultButton());
     }
 
+    std::string Handle_detailedText(HandleRef _this) {
+        return THIS->detailedText().toStdString();
+    }
+
     AbstractButton::HandleRef Handle_escapeButton(HandleRef _this) {
         return reinterpret_cast<AbstractButton::HandleRef>(THIS->escapeButton());
+    }
+
+    Icon Handle_getIcon(HandleRef _this) {
+        return static_cast<Icon>(THIS->icon());
+    }
+
+    Pixmap::OwnedRef Handle_iconPixmap(HandleRef _this) {
+        return PIXMAP_HEAP_NEW(THIS->iconPixmap());
+    }
+
+    std::string Handle_informativeText(HandleRef _this) {
+        return THIS->informativeText().toStdString();
+    }
+
+    OptionEnumSet Handle_getOptions(HandleRef _this) {
+        return OptionEnumSet(THIS->options());
     }
 
     void Handle_removeButton(HandleRef _this, AbstractButton::HandleRef button) {
@@ -143,6 +91,10 @@ namespace MessageBox
         THIS->setDefaultButton(reinterpret_cast<QPushButton*>(button));
     }
 
+    void Handle_setDetailedText(HandleRef _this, const std::string& text) {
+        THIS->setDetailedText(QString::fromStdString(text));
+    }
+
     void Handle_setEscapeButton(HandleRef _this, AbstractButton::HandleRef button) {
         THIS->setEscapeButton(AS_QABSTRACTBUTTON_PTR(button));
     }
@@ -151,8 +103,40 @@ namespace MessageBox
         THIS->setEscapeButton(static_cast<QMessageBox::StandardButton>(button));
     }
 
-    void Handle_setOption(HandleRef _this, OptionEnum option_, const std::optional<bool>& on) {
-        THIS->setOption(static_cast<QMessageBox::Option>(option_), on.value_or(true));
+    void Handle_setIcon(HandleRef _this, Icon icon) {
+        THIS->setIcon(static_cast<QMessageBox::Icon>(icon));
+    }
+
+    void Handle_setIconPixmap(HandleRef _this, Pixmap::HandleRef pixmap) {
+        THIS->setIconPixmap(QPIXMAP_VALUE(pixmap));
+    }
+
+    void Handle_setInformativeText(HandleRef _this, const std::string& text) {
+        THIS->setInformativeText(QString::fromStdString(text));
+    }
+
+    void Handle_setOption(HandleRef _this, OptionEnum option, bool on /* true */) {
+        THIS->setOption(static_cast<QMessageBox::Option>(option), on);
+    }
+
+    void Handle_setOptions(HandleRef _this, OptionEnumSet opts) {
+        THIS->setOptions(static_cast<QMessageBox::Options>(opts.value));
+    }
+
+    void Handle_setStandardButtons(HandleRef _this, StandardButtons buttons) {
+        THIS->setStandardButtons(static_cast<QMessageBox::StandardButtons>(buttons.value));
+    }
+
+    void Handle_setText(HandleRef _this, const std::string& text) {
+        THIS->setText(QString::fromStdString(text));
+    }
+
+    void Handle_setTextFormat(HandleRef _this, TextFormatEnum format) {
+        THIS->setTextFormat(static_cast<Qt::TextFormat>(format));
+    }
+
+    void Handle_setTextInteractionFlags(HandleRef _this, TextInteractionFlags tiFlags) {
+        THIS->setTextInteractionFlags(static_cast<Qt::TextInteractionFlags>(tiFlags.value));
     }
 
     void Handle_setWindowModality(HandleRef _this, WindowModality windowModality) {
@@ -167,8 +151,24 @@ namespace MessageBox
         return static_cast<StandardButton>(THIS->standardButton(AS_QABSTRACTBUTTON_PTR(button)));
     }
 
-    bool Handle_testOption(HandleRef _this, OptionEnum option_) {
-        return THIS->testOption(static_cast<QMessageBox::Option>(option_));
+    StandardButtons Handle_getStandardButtons(HandleRef _this) {
+        return StandardButtons(THIS->standardButtons());
+    }
+
+    bool Handle_testOption(HandleRef _this, OptionEnum option) {
+        return THIS->testOption(static_cast<QMessageBox::Option>(option));
+    }
+
+    std::string Handle_text(HandleRef _this) {
+        return THIS->text().toStdString();
+    }
+
+    TextFormatEnum Handle_textFormat(HandleRef _this) {
+        return static_cast<TextFormatEnum>(THIS->textFormat());
+    }
+
+    TextInteractionFlags Handle_textInteractionFlags(HandleRef _this) {
+        return TextInteractionFlags(THIS->textInteractionFlags());
     }
 
     SignalConnectionRef Handle_connect_ButtonClicked(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {

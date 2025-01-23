@@ -92,61 +92,49 @@ flags OptionEnumSet {
 }
 
 opaque Handle extends Dialog.Handle {
-    // properties ============================
-
-    string detailedText();
-    void setDetailedText(string text);
-
-    Icon getIcon();
-    void setIcon(Icon icon);
-
-    Pixmap.Owned iconPixmap();
-    void setIconPixmap(Pixmap.Handle pixmap);
-
-    string informativeText();
-    void setInformativeText(string text);
-
-    OptionEnumSet getOptions();
-    void setOptions(OptionEnumSet opts);
-
-    StandardButtons getStandardButtons();
-    void setStandardButtons(StandardButtons buttons);
-
-    string text();
-    void setText(string text);
-
-    TextFormatEnum getTextFormat();
-    void setTextFormat(TextFormatEnum format);
-
-    TextInteractionFlags getTextInteractionFlags();
-    void setTextInteractionFlags(TextInteractionFlags tiFlags);
-
-    // methods ========================================
-
     void addButton(AbstractButton.Handle button, ButtonRole role);
     PushButton.Handle addButton(StandardButton button);
     PushButton.Handle addButton(string text, ButtonRole role);
     AbstractButton.Handle button(StandardButton which);
-    ButtonRole buttonRole(AbstractButton.Handle button);
+    ButtonRole getButtonRole(AbstractButton.Handle button);
     Array<AbstractButton.Handle> buttons();
     CheckBox.Handle checkBox();
     AbstractButton.Handle clickedButton();
     PushButton.Handle defaultButton();
+    string detailedText();
     AbstractButton.Handle escapeButton();
+    Icon getIcon();
+    Pixmap.Owned iconPixmap();
+    string informativeText();
 
     // void open(QObject *receiver, const char *member)
+    // hmmmm
 
+    OptionEnumSet getOptions();
     void removeButton(AbstractButton.Handle button);
     void setCheckBox(CheckBox.Handle cb);
     void setDefaultButton(StandardButton button);
     void setDefaultButton(PushButton.Handle button);
+    void setDetailedText(string text);
     void setEscapeButton(AbstractButton.Handle button);
     void setEscapeButton(StandardButton button);
-    void setOption(OptionEnum option_, Option<bool> on);
+    void setIcon(Icon icon);
+    void setIconPixmap(Pixmap.Handle pixmap);
+    void setInformativeText(string text);
+    void setOption(OptionEnum option, bool on = true);
+    void setOptions(OptionEnumSet options_);
+    void setStandardButtons(StandardButtons buttons);
+    void setText(string text);
+    void setTextFormat(TextFormatEnum format);
+    void setTextInteractionFlags(TextInteractionFlags flags_);
     void setWindowModality(WindowModality windowModality);
     void setWindowTitle(string title);
     StandardButton getStandardButton(AbstractButton.Handle button);
-    bool testOption(OptionEnum option_);
+    StandardButtons getStandardButtons();
+    bool testOption(OptionEnum option);
+    string text();
+    TextFormatEnum textFormat();
+    TextInteractionFlags textInteractionFlags();
 
     // exec() defined by Dialog.Handle
 
