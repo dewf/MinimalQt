@@ -3,6 +3,8 @@ module Polygon;
 import Common;
 import Enums;
 
+fwdopaque PolygonF_Owned = PolygonF.Owned;
+
 @nodispose
 opaque Handle {
     Rect boundingRect();
@@ -24,7 +26,7 @@ opaque Handle {
 
     Owned subtracted(Handle r);
 
-    // (since 6.4) QPolygonF toPolygonF() const
+    PolygonF_Owned toPolygonF();
 
     void translate(int dx, int dy);
     void translate(Point offset);

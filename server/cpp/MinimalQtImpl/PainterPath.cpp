@@ -3,6 +3,8 @@
 #include "FontInternal.h"
 #include "PainterPathInternal.h"
 #include "RegionInternal.h"
+#include "PolygonFInternal.h"
+#include "TransformInternal.h"
 
 #include "util/convert.h"
 
@@ -24,6 +26,10 @@ namespace PainterPath
 
     void Handle_addPath(HandleRef _this, HandleRef path) {
         THIS->addPath(QPAINTERPATH_VALUE(path));
+    }
+
+    void Handle_addPolygon(HandleRef _this, PolygonF::HandleRef polygon) {
+        THIS->addPolygon(QPOLYGONF_VALUE(polygon));
     }
 
     void Handle_addRect(HandleRef _this, RectF rectangle) {
@@ -206,8 +212,26 @@ namespace PainterPath
         return PAINTERPATH_HEAP_NEW(THIS->subtracted(QPAINTERPATH_VALUE(p)));
     }
 
+    PolygonF::OwnedRef Handle_toFillPolygon(HandleRef _this, Transform::HandleRef matrix /* nullptr */) {
+        return POLYGONF_HEAP_NEW(THIS->toFillPolygon(Transform::fromNullable(matrix)));
+    }
+
+    std::vector<PolygonF::OwnedRef> Handle_toFillPolygons(HandleRef _this, Transform::HandleRef matrix /* nullptr */) {
+        const auto qListResult = THIS->toFillPolygons(Transform::fromNullable(matrix));
+        return fromQList<QPolygonF,PolygonF::OwnedRef>(qListResult, [](auto poly) {
+            return POLYGONF_HEAP_NEW(poly);
+        });
+    }
+
     OwnedRef Handle_toReversed(HandleRef _this) {
         return PAINTERPATH_HEAP_NEW(THIS->toReversed());
+    }
+
+    std::vector<PolygonF::OwnedRef> Handle_toSubpathPolygons(HandleRef _this, Transform::HandleRef matrix /* nullptr */) {
+        const auto qListResult = THIS->toSubpathPolygons(Transform::fromNullable(matrix));
+        return fromQList<QPolygonF,PolygonF::OwnedRef>(qListResult, [](auto poly) {
+            return POLYGONF_HEAP_NEW(poly);
+        });
     }
 
     void Handle_translate(HandleRef _this, double dx, double dy) {

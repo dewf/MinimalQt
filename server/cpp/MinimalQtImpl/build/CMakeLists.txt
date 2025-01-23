@@ -339,6 +339,11 @@ add_library(MinimalQtImpl STATIC
     ../Polygon.cpp
     ../PolygonInternal.h
 
+    ../generated/PolygonF.h
+    ../generated/PolygonF_wrappers.cpp
+    ../PolygonF.cpp
+    ../PolygonFInternal.h
+
     ../generated/ProgressBar.h
     ../generated/ProgressBar_wrappers.cpp
     ../ProgressBar.cpp

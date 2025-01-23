@@ -4,17 +4,16 @@ import Common;
 import Enums;
 import Region;
 import Font;
+import PolygonF;
+import Transform;
 
 @nodispose
 opaque Handle {
-
     void addEllipse(RectF boundingRectangle);
     void addEllipse(PointF center, double rx, double ry);
     void addEllipse(double x, double y, double width, double height);
     void addPath(Handle path);
-
-    // void addPolygon(const QPolygonF &polygon)
-
+    void addPolygon(PolygonF.Handle polygon);
     void addRect(RectF rectangle);
     void addRect(double x, double y, double width, double height);
     void addRegion(Region.Handle region);
@@ -63,14 +62,10 @@ opaque Handle {
     Owned simplified();
     double slopeAtPercent(double t);
     Owned subtracted(Handle p);
-
-    // QPolygonF toFillPolygon(const QTransform &matrix = QTransform()) const
-    // QList<QPolygonF> toFillPolygons(const QTransform &matrix = QTransform()) const
-
+    PolygonF.Owned toFillPolygon(Transform.Handle matrix = null);
+    Array<PolygonF.Owned> toFillPolygons(Transform.Handle matrix = null);
     Owned toReversed();
-
-    // QList<QPolygonF> toSubpathPolygons(const QTransform &matrix = QTransform()) const
-
+    Array<PolygonF.Owned> toSubpathPolygons(Transform.Handle matrix = null);
     void translate(double dx, double dy);
     void translate(PointF offset);
     Owned translated(double dx, double dy);

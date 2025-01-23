@@ -9,9 +9,11 @@
 #include "PenInternal.h"
 #include "PixmapInternal.h"
 #include "PolygonInternal.h"
+#include "PolygonFInternal.h"
 #include "RegionInternal.h"
 #include "TextOptionInternal.h"
 #include "TransformInternal.h"
+
 #include "util/convert.h"
 
 #define THIS (AS_QPAINTER_PTR(_this))
@@ -131,6 +133,10 @@ namespace Painter
 
     void Handle_drawConvexPolygon(HandleRef _this, Polygon::HandleRef polygon) {
         THIS->drawConvexPolygon(QPOLYGON_VALUE(polygon));
+    }
+
+    void Handle_drawConvexPolygon(HandleRef _this, PolygonF::HandleRef polygon) {
+        THIS->drawConvexPolygon(QPOLYGONF_VALUE(polygon));
     }
 
     void Handle_drawConvexPolygon(HandleRef _this, const std::vector<Point>& points) {
@@ -304,6 +310,10 @@ namespace Painter
         THIS->drawPoints(QPOLYGON_VALUE(points));
     }
 
+    void Handle_drawPoints(HandleRef _this, PolygonF::HandleRef points) {
+        THIS->drawPoints(QPOLYGONF_VALUE(points));
+    }
+
     void Handle_drawPoints(HandleRef _this, const std::vector<Point>& points) {
         const auto qPoints = vectorMap<Point,QPoint>(points, [](auto p) { return toQPoint(p); });
         THIS->drawPoints(qPoints.data(), static_cast<int>(qPoints.size()));
@@ -318,6 +328,10 @@ namespace Painter
         THIS->drawPolygon(QPOLYGON_VALUE(points), static_cast<Qt::FillRule>(fillRule));
     }
 
+    void Handle_drawPolygon(HandleRef _this, PolygonF::HandleRef points, FillRule fillRule /* FillRule::OddEvenFill */) {
+        THIS->drawPolygon(QPOLYGONF_VALUE(points), static_cast<Qt::FillRule>(fillRule));
+    }
+
     void Handle_drawPolygon(HandleRef _this, const std::vector<Point>& points, FillRule fillRule /* FillRule::OddEvenFill */) {
         const auto qPoints = vectorMap<Point,QPoint>(points, [](auto p) { return toQPoint(p); });
         THIS->drawPolygon(qPoints.data(), static_cast<int>(qPoints.size()), static_cast<Qt::FillRule>(fillRule));
@@ -330,6 +344,10 @@ namespace Painter
 
     void Handle_drawPolyline(HandleRef _this, Polygon::HandleRef points) {
         THIS->drawPolyline(QPOLYGON_VALUE(points));
+    }
+
+    void Handle_drawPolyline(HandleRef _this, PolygonF::HandleRef points) {
+        THIS->drawPolyline(QPOLYGONF_VALUE(points));
     }
 
     void Handle_drawPolyline(HandleRef _this, const std::vector<Point>& points) {
