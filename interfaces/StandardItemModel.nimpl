@@ -11,14 +11,12 @@ interface SignalHandler extends AbstractItemModel.SignalHandler {
 }
 
 opaque Handle extends AbstractItemModel.Handle {
-    // properties:
-    int sortRole();
-    void setSortRole(int role);
-
-    // methods:
     void appendColumn(Array<StandardItem.Handle> items);
     void appendRow(Array<StandardItem.Handle> items);
     void appendRow(StandardItem.Handle item);
+
+    // QBindable<int> bindableSortRole()
+
     void clear();
     Array<StandardItem.Handle> findItems(string text, MatchFlags flags_ = MatchFlags.MatchExactly, int column = 0);
     StandardItem.Handle horizontalHeaderItem(int column);
@@ -29,26 +27,24 @@ opaque Handle extends AbstractItemModel.Handle {
     bool insertRow(int row, Option<ModelIndex.Handle> parent);
     void insertRow(int row, StandardItem.Handle item);
     StandardItem.Handle invisibleRootItem();
-    StandardItem.Handle item(int row, Option<int> column);
+    StandardItem.Handle item(int row, int column = 0);
     StandardItem.Handle itemFromIndex(ModelIndex.Handle index);
-    StandardItem.Handle itemPrototype();
+    StandardItem.Handle itemPrototype(); // note, const!
     void setColumnCount(int columns);
     void setHorizontalHeaderItem(int column, StandardItem.Handle item);
     void setHorizontalHeaderLabels(Array<string> labels);
     void setItem(int row, int column, StandardItem.Handle item);
     void setItem(int row, StandardItem.Handle item);
     void setItemPrototype(StandardItem.Handle item);
-
-    // what does this do? would help to know, to know what to do about the byte arrays
-    // void setItemRoleNames(QHash<int, QByteArray> &roleNames);
-
+    void setItemRoleNames(Map<int,Array<byte>> roleNames);
     void setRowCount(int rows);
+    void setSortRole(int role);
     void setVerticalHeaderItem(int row, StandardItem.Handle item);
     void setVerticalHeaderLabels(Array<string> labels);
-
+    int sortRole();
     Array<StandardItem.Handle> takeColumn(int column);
     StandardItem.Handle takeHorizontalHeaderItem(int column);
-    StandardItem.Handle takeItem(int row, Option<int> column);
+    StandardItem.Handle takeItem(int row, int column = 0);
     Array<StandardItem.Handle> takeRow(int row);
     StandardItem.Handle takeVerticalHeaderItem(int row);
     StandardItem.Handle verticalHeaderItem(int row);
@@ -57,5 +53,5 @@ opaque Handle extends AbstractItemModel.Handle {
     SignalConnection connect_ItemChanged(SignalHandler handler);
 }
 
-Handle create();
-Handle create(int rows, int columns);
+Handle create(Object.Handle parent = null);
+Handle create(int rows, int columns, Object.Handle parent = null);

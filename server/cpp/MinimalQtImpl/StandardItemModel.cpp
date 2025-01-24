@@ -11,14 +11,6 @@
 
 namespace StandardItemModel
 {
-    int32_t Handle_sortRole(HandleRef _this) {
-        return THIS->sortRole();
-    }
-
-    void Handle_setSortRole(HandleRef _this, int32_t role) {
-        THIS->setSortRole(role);
-    }
-
     void Handle_appendColumn(HandleRef _this, const std::vector<StandardItem::HandleRef>& items) {
         THIS->appendColumn(arrayToList(items));
     }
@@ -71,8 +63,8 @@ namespace StandardItemModel
         return reinterpret_cast<StandardItem::HandleRef>(THIS->invisibleRootItem());
     }
 
-    StandardItem::HandleRef Handle_item(HandleRef _this, int32_t row, const std::optional<int32_t>& column) {
-        return reinterpret_cast<StandardItem::HandleRef>(THIS->item(row, column.value_or(0)));
+    StandardItem::HandleRef Handle_item(HandleRef _this, int32_t row, int32_t column /* 0 */) {
+        return reinterpret_cast<StandardItem::HandleRef>(THIS->item(row, column));
     }
 
     StandardItem::HandleRef Handle_itemFromIndex(HandleRef _this, ModelIndex::HandleRef index) {
@@ -80,6 +72,7 @@ namespace StandardItemModel
     }
 
     StandardItem::HandleRef Handle_itemPrototype(HandleRef _this) {
+        // const trouble! can't clone either because then it will leak (unlike value types, where we auto-dispose Owned handles)
         return (StandardItem::HandleRef)THIS->itemPrototype();
     }
 
@@ -107,8 +100,20 @@ namespace StandardItemModel
         THIS->setItemPrototype(AS_ITEM(item));
     }
 
+    void Handle_setItemRoleNames(HandleRef _this, std::map<int32_t,std::vector<uint8_t>> roleNames) {
+        QHash<int, QByteArray> qRoleNames;
+        for (auto i = roleNames.begin(); i != roleNames.end(); ++i) {
+            qRoleNames[i->first] = toQByteArray(i->second);
+        }
+        THIS->setItemRoleNames(qRoleNames);
+    }
+
     void Handle_setRowCount(HandleRef _this, int32_t rows) {
         THIS->setRowCount(rows);
+    }
+
+    void Handle_setSortRole(HandleRef _this, int32_t role) {
+        THIS->setSortRole(role);
     }
 
     void Handle_setVerticalHeaderItem(HandleRef _this, int32_t row, StandardItem::HandleRef item) {
@@ -119,6 +124,10 @@ namespace StandardItemModel
         THIS->setVerticalHeaderLabels(toQStringList(labels));
     }
 
+    int32_t Handle_sortRole(HandleRef _this) {
+        return THIS->sortRole();
+    }
+
     std::vector<StandardItem::HandleRef> Handle_takeColumn(HandleRef _this, int32_t column) {
         return listToArray(THIS->takeColumn(column));
     }
@@ -127,8 +136,8 @@ namespace StandardItemModel
         return reinterpret_cast<StandardItem::HandleRef>(THIS->takeHorizontalHeaderItem(column));
     }
 
-    StandardItem::HandleRef Handle_takeItem(HandleRef _this, int32_t row, const std::optional<int32_t>& column) {
-        return reinterpret_cast<StandardItem::HandleRef>(THIS->takeItem(row, column.value_or(0)));
+    StandardItem::HandleRef Handle_takeItem(HandleRef _this, int32_t row, int32_t column /* 0 */) {
+        return reinterpret_cast<StandardItem::HandleRef>(THIS->takeItem(row, column));
     }
 
     std::vector<StandardItem::HandleRef> Handle_takeRow(HandleRef _this, int32_t row) {
@@ -154,11 +163,11 @@ namespace StandardItemModel
         delete THIS;
     }
 
-    HandleRef create() {
-        return reinterpret_cast<HandleRef>(new QStandardItemModel());
+    HandleRef create(Object::HandleRef parent /* nullptr */) {
+        return reinterpret_cast<HandleRef>(new QStandardItemModel(AS_QOBJECT_PTR(parent)));
     }
 
-    HandleRef create(int32_t rows, int32_t columns) {
-        return reinterpret_cast<HandleRef>(new QStandardItemModel(rows, columns));
+    HandleRef create(int32_t rows, int32_t columns, Object::HandleRef parent /* nullptr */) {
+        return reinterpret_cast<HandleRef>(new QStandardItemModel(rows, columns, AS_QOBJECT_PTR(parent)));
     }
 }
