@@ -17,11 +17,11 @@ enum TickPosition {
 }
 
 opaque Handle extends AbstractSlider.Handle {
-    int tickInterval();
-    TickPosition tickPosition();
     void setTickInterval(int interval);
     void setTickPosition(TickPosition tpos);
+    int tickInterval();
+    TickPosition tickPosition();
 }
 
-Handle create(Option<Widget.Handle> parent);
-Handle create(Orientation orientation, Option<Widget.Handle> parent);
+Handle create(Widget.Handle parent = null);
+Handle create(Orientation orientation, Widget.Handle parent = null);

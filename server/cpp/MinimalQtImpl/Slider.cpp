@@ -6,31 +6,31 @@
 
 namespace Slider
 {
-    int32_t Handle_tickInterval(HandleRef _this) {
-        return THIS->tickInterval();
-    }
-
     void Handle_setTickInterval(HandleRef _this, int32_t interval) {
         THIS->setTickInterval(interval);
-    }
-
-    TickPosition Handle_tickPosition(HandleRef _this) {
-        return static_cast<TickPosition>(THIS->tickPosition());
     }
 
     void Handle_setTickPosition(HandleRef _this, TickPosition tpos) {
         THIS->setTickPosition(static_cast<QSlider::TickPosition>(tpos));
     }
 
+    int32_t Handle_tickInterval(HandleRef _this) {
+        return THIS->tickInterval();
+    }
+
+    TickPosition Handle_tickPosition(HandleRef _this) {
+        return static_cast<TickPosition>(THIS->tickPosition());
+    }
+
     void Handle_dispose(HandleRef _this) {
         delete THIS;
     }
 
-    HandleRef create(const std::optional<Widget::HandleRef>& parent) {
-        return reinterpret_cast<HandleRef>(new QSlider(Widget::fromOptionalHandle(parent)));
+    HandleRef create(Widget::HandleRef parent /* nullptr */) {
+        return reinterpret_cast<HandleRef>(new QSlider(AS_QWIDGET_PTR(parent)));
     }
 
-    HandleRef create(Orientation orientation, const std::optional<Widget::HandleRef>& parent) {
-        return reinterpret_cast<HandleRef>(new QSlider(static_cast<Qt::Orientation>(orientation), Widget::fromOptionalHandle(parent)));
+    HandleRef create(Orientation orientation, Widget::HandleRef parent /* nullptr */) {
+        return reinterpret_cast<HandleRef>(new QSlider(static_cast<Qt::Orientation>(orientation), AS_QWIDGET_PTR(parent)));
     }
 }
