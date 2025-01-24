@@ -30,6 +30,18 @@ flags FindFlags {
     FindWholeWords      = 0x00004
 }
 
+enum MarkdownFeature {
+    MarkdownNoHTML = 0x0020 | 0x0040,
+    MarkdownDialectCommonMark = 0,
+    MarkdownDialectGitHub = 0x0004 | 0x0008 | 0x0400 | 0x0100 | 0x0200 | 0x0800 | 0x4000 | 0x100000
+}
+
+flags MarkdownFeatures {
+    MarkdownNoHTML = 0x0020 | 0x0040,
+    MarkdownDialectCommonMark = 0,
+    MarkdownDialectGitHub = 0x0004 | 0x0008 | 0x0400 | 0x0100 | 0x0200 | 0x0800 | 0x4000 | 0x100000
+}
+
 @nodispose
 opaque Handle extends Object.Handle {
     // TODO

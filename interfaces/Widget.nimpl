@@ -89,7 +89,7 @@ opaque Handle extends Object.Handle {
     FocusPolicy focusPolicy();
     Handle focusProxy();
     Handle focusWidget();
-    Font.Owned font();
+    Font.Owned getFont();
 
     // QFontInfo fontInfo() const
     // QFontMetrics fontMetrics() const

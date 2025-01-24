@@ -149,7 +149,7 @@ namespace Widget
         return reinterpret_cast<HandleRef>(THIS->focusWidget());
     }
 
-    Font::OwnedRef Handle_font(HandleRef _this) {
+    Font::OwnedRef Handle_getFont(HandleRef _this) {
         return FONT_HEAP_NEW(THIS->font());
     }
 
