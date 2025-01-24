@@ -1,10 +1,94 @@
 module Transform;
 
-@nodispose
-opaque Handle {
-    double m11();
+import Common;
+import Polygon;
+import PolygonF;
+import Region;
+import Enums;
+
+fwdopaque PainterPath_Handle = PainterPath.Handle;
+fwdopaque PainterPath_Owned = PainterPath.Owned;
+
+enum TransformationType {
+    TxNone      = 0x00,
+    TxTranslate = 0x01,
+    TxScale     = 0x02,
+    TxRotate    = 0x04,
+    TxShear     = 0x08,
+    TxProject   = 0x10
 }
 
+@nodispose
+opaque Handle {
+
+    double m11();
+    double m12();
+    double m13();
+    double m21();
+    double m22();
+    double m23();
+    double m31();
+    double m32();
+    double m33();
+    Owned adjoint();
+    double determinant();
+    double dx();
+    double dy();
+    Option<Owned> inverted();
+    bool isAffine();
+    bool isIdentity();
+    bool isInvertible();
+    bool isRotating();
+    bool isScaling();
+    bool isTranslating();
+    Tuple<double,double> map(double x, double y);
+
+    // QLine map(const QLine &l) const
+    // QLineF map(const QLineF &line) const
+
+    PainterPath_Owned map(PainterPath_Handle path);
+    Point map(Point point);
+    PointF map(PointF p);
+    Polygon.Owned map(Polygon.Handle polygon);
+    PolygonF.Owned map(PolygonF.Handle polygon);
+    Region.Owned map(Region.Handle region);
+    Tuple<int,int> map(int x, int y);
+    RectF mapRect(RectF rectangle);
+    Rect mapRect(Rect rectangle);
+    Polygon.Owned mapToPolygon(Rect rectangle);
+    void reset();
+    Owned rotate(double a, Axis axis, double distanceToPlane);
+    Owned rotate(double a, Axis axis = Axis.ZAxis);
+    Owned rotateRadians(double a, Axis axis, double distanceToPlane);
+    Owned rotateRadians(double a, Axis axis = Axis.ZAxis);
+    Owned scale(double sx, double sy);
+    void setMatrix(double m11, double m12, double m13, double m21, double m22, double m23, double m31, double m32, double m33);
+    Owned shear(double sh, double sv);
+    Owned translate(double dx, double dy);
+    Owned transposed();
+    TransformationType type();
+
+    // operator overloads =================================
+
+    bool operator_equal(Handle other);
+    int hashCode();
+
+    Owned operator_mul(Handle matrix);
+    Owned operator_mul(double scalar);
+    Owned operator_plus(double scalar);
+    Owned operator_minus(double scalar);
+    Owned operator_div(double scalar);
+}
 opaque Owned extends Handle;
 
-// TODO: ctors etc
+Owned create();
+Owned create(double m11, double m12, double m21, double m22, double dx, double dy);
+Owned create(double m11, double m12, double m13, double m21, double m22, double m23, double m31, double m32, double m33);
+
+// static methods ===============
+
+Owned fromScale(double sx, double sy);
+Owned fromTranslate(double dx, double dy);
+Option<Owned> quadToQuad(PolygonF.Handle one, PolygonF.Handle two);
+Option<Owned> quadToSquare(PolygonF.Handle quad);
+Option<Owned> squareToQuad(PolygonF.Handle quad);

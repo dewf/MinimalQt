@@ -897,6 +897,12 @@ enum CursorShape {
     CustomCursor = 25
 }
 
+enum Axis {
+    XAxis,
+    YAxis,
+    ZAxis
+}
+
 enum Key {
     // Unicode Basic Latin block (0x00-0x7f)
     Key_Space = 0x20,
