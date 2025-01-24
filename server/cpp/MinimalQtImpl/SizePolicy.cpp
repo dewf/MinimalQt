@@ -89,8 +89,8 @@ namespace SizePolicy
         return SIZEPOLICY_HEAP_NEW();
     }
 
-    OwnedRef create(Policy horizontal, Policy vertical, const std::optional<ControlType>& type_) {
-        const auto qType = static_cast<QSizePolicy::ControlType>(type_.value_or(ControlType::DefaultType));
+    OwnedRef create(Policy horizontal, Policy vertical, ControlType type_ /* ControlType::DefaultType */) {
+        const auto qType = static_cast<QSizePolicy::ControlType>(type_);
         return SIZEPOLICY_HEAP_NEW(static_cast<QSizePolicy::Policy>(horizontal.value), static_cast<QSizePolicy::Policy>(vertical.value), qType);
     }
 }

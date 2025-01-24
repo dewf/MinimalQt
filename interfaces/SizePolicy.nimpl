@@ -82,4 +82,4 @@ opaque Handle {
 opaque Owned extends Handle;
 
 Owned create();
-Owned create(Policy horizontal, Policy vertical, Option<ControlType> type_);
+Owned create(Policy horizontal, Policy vertical, ControlType type_ = ControlType.DefaultType);
