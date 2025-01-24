@@ -18,196 +18,8 @@ namespace StandardItem
         return THIS->accessibleDescription().toStdString();
     }
 
-    void Handle_setAccessibleDescription(HandleRef _this, const std::string& description) {
-        THIS->setAccessibleDescription(QString::fromStdString(description));
-    }
-
     std::string Handle_accessibleText(HandleRef _this) {
         return THIS->accessibleText().toStdString();
-    }
-
-    void Handle_setAccessibleText(HandleRef _this, const std::string& accessibleText) {
-        THIS->setAccessibleText(QString::fromStdString(accessibleText));
-    }
-
-    bool Handle_isAutoTristate(HandleRef _this) {
-        return THIS->isAutoTristate();
-    }
-
-    void Handle_setAutoTristate(HandleRef _this, bool tristate) {
-        THIS->setAutoTristate(tristate);
-    }
-
-    Brush::OwnedRef Handle_background(HandleRef _this) {
-        return BRUSH_HEAP_NEW(THIS->background());
-    }
-
-    void Handle_setBackground(HandleRef _this, Brush::HandleRef brush) {
-        THIS->setBackground(QBRUSH_VALUE(brush));
-    }
-
-    CheckState Handle_checkState(HandleRef _this) {
-        return static_cast<CheckState>(THIS->checkState());
-    }
-
-    void Handle_setCheckState(HandleRef _this, CheckState state) {
-        return THIS->setCheckState(static_cast<Qt::CheckState>(state));
-    }
-
-    bool Handle_isCheckable(HandleRef _this) {
-        return THIS->isCheckable();
-    }
-
-    void Handle_setCheckable(HandleRef _this, bool checkable) {
-        THIS->setCheckable(checkable);
-    }
-
-    int32_t Handle_columnCount(HandleRef _this) {
-        return THIS->columnCount();
-    }
-
-    void Handle_setColumnCount(HandleRef _this, int32_t columns) {
-        THIS->setColumnCount(columns);
-    }
-
-    bool Handle_isDragEnabled(HandleRef _this) {
-        return THIS->isDragEnabled();
-    }
-
-    void Handle_setDragEnabled(HandleRef _this, bool dragEnabled) {
-        THIS->setDragEnabled(dragEnabled);
-    }
-
-    bool Handle_isDropEnabled(HandleRef _this) {
-        return THIS->isDropEnabled();
-    }
-
-    void Handle_setDropEnabled(HandleRef _this, bool dropEnabled) {
-        THIS->setDropEnabled(dropEnabled);
-    }
-
-    bool Handle_isEditable(HandleRef _this) {
-        return THIS->isEditable();
-    }
-
-    void Handle_setEditable(HandleRef _this, bool editable) {
-        THIS->setEditable(editable);
-    }
-
-    bool Handle_isEnabled(HandleRef _this) {
-        return THIS->isEnabled();
-    }
-
-    void Handle_setEnabled(HandleRef _this, bool enabled) {
-        THIS->setEnabled(enabled);
-    }
-
-    ItemFlags Handle_getFlags(HandleRef _this) {
-        return ItemFlags(THIS->flags());
-    }
-
-    void Handle_setFlags(HandleRef _this, ItemFlags flags_) {
-        THIS->setFlags(static_cast<Qt::ItemFlags>(flags_.value));
-    }
-
-    Font::OwnedRef Handle_getFont(HandleRef _this) {
-        return FONT_HEAP_NEW(THIS->font());
-    }
-
-    void Handle_setFont(HandleRef _this, Font::HandleRef font) {
-        THIS->setFont(QFONT_VALUE(font));
-    }
-
-    Brush::OwnedRef Handle_foreground(HandleRef _this) {
-        return BRUSH_HEAP_NEW(THIS->foreground());
-    }
-
-    void Handle_setForeground(HandleRef _this, Brush::HandleRef brush) {
-        THIS->setForeground(QBRUSH_VALUE(brush));
-    }
-
-    Icon::OwnedRef Handle_getIcon(HandleRef _this) {
-        return ICON_HEAP_NEW(THIS->icon());
-    }
-
-    void Handle_setIcon(HandleRef _this, Icon::HandleRef icon) {
-        THIS->setIcon(QICON_VALUE(icon));
-    }
-
-    int32_t Handle_rowCount(HandleRef _this) {
-        return THIS->rowCount();
-    }
-
-    void Handle_setRowCount(HandleRef _this, int32_t rows) {
-        THIS->setRowCount(rows);
-    }
-
-    bool Handle_isSelectable(HandleRef _this) {
-        return THIS->isSelectable();
-    }
-
-    void Handle_setSelectable(HandleRef _this, bool selectable) {
-        THIS->setSelectable(selectable);
-    }
-
-    Size Handle_sizeHint(HandleRef _this) {
-        return toSize(THIS->sizeHint());
-    }
-
-    void Handle_setSizeHint(HandleRef _this, Size size) {
-        THIS->setSizeHint(toQSize(size));
-    }
-
-    std::string Handle_statusTip(HandleRef _this) {
-        return THIS->statusTip().toStdString();
-    }
-
-    void Handle_setStatusTip(HandleRef _this, const std::string& statusTip) {
-        THIS->setStatusTip(QString::fromStdString(statusTip));
-    }
-
-    std::string Handle_text(HandleRef _this) {
-        return THIS->text().toStdString();
-    }
-
-    void Handle_setText(HandleRef _this, const std::string& text) {
-        THIS->setText(QString::fromStdString(text));
-    }
-
-    Alignment Handle_textAlignment(HandleRef _this) {
-        return Alignment(THIS->textAlignment());
-    }
-
-    void Handle_setTextAlignment(HandleRef _this, Alignment alignment) {
-        THIS->setTextAlignment(static_cast<Qt::Alignment>(alignment.value));
-    }
-
-    std::string Handle_toolTip(HandleRef _this) {
-        return THIS->toolTip().toStdString();
-    }
-
-    void Handle_setToolTip(HandleRef _this, const std::string& toolTip) {
-        THIS->setToolTip(QString::fromStdString(toolTip));
-    }
-
-    int32_t Handle_type_(HandleRef _this) {
-        return THIS->type();
-    }
-
-    bool Handle_isUserTristate(HandleRef _this) {
-        return THIS->isUserTristate();
-    }
-
-    void Handle_setUserTristate(HandleRef _this, bool tristate) {
-        THIS->setUserTristate(tristate);
-    }
-
-    std::string Handle_whatsThis(HandleRef _this) {
-        return THIS->whatsThis().toStdString();
-    }
-
-    void Handle_setWhatsThis(HandleRef _this, const std::string& whatsThis) {
-        THIS->setWhatsThis(QString::fromStdString(whatsThis));
     }
 
     void Handle_appendColumn(HandleRef _this, const std::vector<HandleRef>& items) {
@@ -226,8 +38,16 @@ namespace StandardItem
         THIS->appendRows(arrayToList(items));
     }
 
-    HandleRef Handle_child(HandleRef _this, int32_t row, const std::optional<int32_t>& column) {
-        const auto ret = THIS->child(row, column.value_or(0));
+    Brush::OwnedRef Handle_background(HandleRef _this) {
+        return BRUSH_HEAP_NEW(THIS->background());
+    }
+
+    CheckState Handle_checkState(HandleRef _this) {
+        return static_cast<CheckState>(THIS->checkState());
+    }
+
+    HandleRef Handle_child(HandleRef _this, int32_t row, int32_t column /* 0 */) {
+        const auto ret = THIS->child(row, column);
         return reinterpret_cast<HandleRef>(ret);
     }
 
@@ -244,12 +64,32 @@ namespace StandardItem
         return THIS->column();
     }
 
-    Variant::OwnedRef Handle_data(HandleRef _this, const std::optional<int32_t>& role) {
-        return VARIANT_HEAP_NEW(THIS->data(role.value_or(Qt::UserRole + 1)));
+    int32_t Handle_columnCount(HandleRef _this) {
+        return THIS->columnCount();
+    }
+
+    Variant::OwnedRef Handle_data(HandleRef _this, ItemDataRole role) {
+        return VARIANT_HEAP_NEW(THIS->data(static_cast<int>(role)));
+    }
+
+    ItemFlags Handle_getFlags(HandleRef _this) {
+        return ItemFlags(THIS->flags());
+    }
+
+    Font::OwnedRef Handle_font(HandleRef _this) {
+        return FONT_HEAP_NEW(THIS->font());
+    }
+
+    Brush::OwnedRef Handle_foreground(HandleRef _this) {
+        return BRUSH_HEAP_NEW(THIS->foreground());
     }
 
     bool Handle_hasChildren(HandleRef _this) {
         return THIS->hasChildren();
+    }
+
+    Icon::OwnedRef Handle_icon(HandleRef _this) {
+        return ICON_HEAP_NEW(THIS->icon());
     }
 
     ModelIndex::OwnedRef Handle_index(HandleRef _this) {
@@ -280,6 +120,42 @@ namespace StandardItem
         THIS->insertRows(row, count);
     }
 
+    bool Handle_isAutoTristate(HandleRef _this) {
+        return THIS->isAutoTristate();
+    }
+
+    bool Handle_isCheckable(HandleRef _this) {
+        return THIS->isCheckable();
+    }
+
+    bool Handle_isDragEnabled(HandleRef _this) {
+        return THIS->isDragEnabled();
+    }
+
+    bool Handle_isDropEnabled(HandleRef _this) {
+        return THIS->isDropEnabled();
+    }
+
+    bool Handle_isEditable(HandleRef _this) {
+        return THIS->isEditable();
+    }
+
+    bool Handle_isEnabled(HandleRef _this) {
+        return THIS->isEnabled();
+    }
+
+    bool Handle_isSelectable(HandleRef _this) {
+        return THIS->isSelectable();
+    }
+
+    bool Handle_isUserTristate(HandleRef _this) {
+        return THIS->isUserTristate();
+    }
+
+    StandardItemModel_HandleRef Handle_model(HandleRef _this) {
+        return reinterpret_cast<StandardItemModel_HandleRef>(THIS->model());
+    }
+
     HandleRef Handle_parent(HandleRef _this) {
         return reinterpret_cast<HandleRef>(THIS->parent());
     }
@@ -304,6 +180,34 @@ namespace StandardItem
         return THIS->row();
     }
 
+    int32_t Handle_rowCount(HandleRef _this) {
+        return THIS->rowCount();
+    }
+
+    void Handle_setAccessibleDescription(HandleRef _this, const std::string& description) {
+        THIS->setAccessibleDescription(QString::fromStdString(description));
+    }
+
+    void Handle_setAccessibleText(HandleRef _this, const std::string& accessibleText) {
+        THIS->setAccessibleText(QString::fromStdString(accessibleText));
+    }
+
+    void Handle_setAutoTristate(HandleRef _this, bool tristate) {
+        THIS->setAutoTristate(tristate);
+    }
+
+    void Handle_setBackground(HandleRef _this, Brush::HandleRef brush) {
+        THIS->setBackground(QBRUSH_VALUE(brush));
+    }
+
+    void Handle_setCheckState(HandleRef _this, CheckState state) {
+        return THIS->setCheckState(static_cast<Qt::CheckState>(state));
+    }
+
+    void Handle_setCheckable(HandleRef _this, bool checkable) {
+        THIS->setCheckable(checkable);
+    }
+
     void Handle_setChild(HandleRef _this, int32_t row, int32_t column, HandleRef item) {
         THIS->setChild(row, column, AS_ITEM(item));
     }
@@ -312,17 +216,96 @@ namespace StandardItem
         THIS->setChild(row, AS_ITEM(item));
     }
 
-    void Handle_setData(HandleRef _this, Variant::HandleRef value, const std::optional<int32_t>& role) {
-        THIS->setData(QVARIANT_VALUE(value), role.value_or(Qt::UserRole + 1));
+    void Handle_setColumnCount(HandleRef _this, int32_t columns) {
+        THIS->setColumnCount(columns);
     }
 
-    void Handle_sortChildren(HandleRef _this, int32_t column, const std::optional<SortOrder>& order) {
-        const auto qOrder = static_cast<Qt::SortOrder>(order.value_or(SortOrder::AscendingOrder));
-        THIS->sortChildren(column, qOrder);
+    void Handle_setData(HandleRef _this, Variant::HandleRef value, ItemDataRole role) {
+        THIS->setData(QVARIANT_VALUE(value), static_cast<int>(role));
     }
 
-    HandleRef Handle_takeChild(HandleRef _this, int32_t row, const std::optional<int32_t>& column) {
-        return reinterpret_cast<HandleRef>(THIS->takeChild(row, column.value_or(0)));
+    void Handle_setDragEnabled(HandleRef _this, bool dragEnabled) {
+        THIS->setDragEnabled(dragEnabled);
+    }
+
+    void Handle_setDropEnabled(HandleRef _this, bool dropEnabled) {
+        THIS->setDropEnabled(dropEnabled);
+    }
+
+    void Handle_setEditable(HandleRef _this, bool editable) {
+        THIS->setEditable(editable);
+    }
+
+    void Handle_setEnabled(HandleRef _this, bool enabled) {
+        THIS->setEnabled(enabled);
+    }
+
+    void Handle_setFlags(HandleRef _this, ItemFlags flags_) {
+        THIS->setFlags(static_cast<Qt::ItemFlags>(flags_.value));
+    }
+
+    void Handle_setFont(HandleRef _this, Font::HandleRef font) {
+        THIS->setFont(QFONT_VALUE(font));
+    }
+
+    void Handle_setForeground(HandleRef _this, Brush::HandleRef brush) {
+        THIS->setForeground(QBRUSH_VALUE(brush));
+    }
+
+    void Handle_setIcon(HandleRef _this, Icon::HandleRef icon) {
+        THIS->setIcon(QICON_VALUE(icon));
+    }
+
+    void Handle_setRowCount(HandleRef _this, int32_t rows) {
+        THIS->setRowCount(rows);
+    }
+
+    void Handle_setSelectable(HandleRef _this, bool selectable) {
+        THIS->setSelectable(selectable);
+    }
+
+    void Handle_setSizeHint(HandleRef _this, Size size) {
+        THIS->setSizeHint(toQSize(size));
+    }
+
+    void Handle_setStatusTip(HandleRef _this, const std::string& statusTip) {
+        THIS->setStatusTip(QString::fromStdString(statusTip));
+    }
+
+    void Handle_setText(HandleRef _this, const std::string& text) {
+        THIS->setText(QString::fromStdString(text));
+    }
+
+    void Handle_setTextAlignment(HandleRef _this, Alignment alignment) {
+        THIS->setTextAlignment(static_cast<Qt::Alignment>(alignment.value));
+    }
+
+    void Handle_setToolTip(HandleRef _this, const std::string& toolTip) {
+        THIS->setToolTip(QString::fromStdString(toolTip));
+    }
+
+    void Handle_setUserTristate(HandleRef _this, bool tristate) {
+        THIS->setUserTristate(tristate);
+    }
+
+    void Handle_setWhatsThis(HandleRef _this, const std::string& whatsThis) {
+        THIS->setWhatsThis(QString::fromStdString(whatsThis));
+    }
+
+    Size Handle_sizeHint(HandleRef _this) {
+        return toSize(THIS->sizeHint());
+    }
+
+    void Handle_sortChildren(HandleRef _this, int32_t column, SortOrder order /* SortOrder::AscendingOrder */) {
+        THIS->sortChildren(column, static_cast<Qt::SortOrder>(order));
+    }
+
+    std::string Handle_statusTip(HandleRef _this) {
+        return THIS->statusTip().toStdString();
+    }
+
+    HandleRef Handle_takeChild(HandleRef _this, int32_t row, int32_t column /* 0 */) {
+        return reinterpret_cast<HandleRef>(THIS->takeChild(row, column));
     }
 
     std::vector<HandleRef> Handle_takeColumn(HandleRef _this, int32_t column) {
@@ -331,6 +314,26 @@ namespace StandardItem
 
     std::vector<HandleRef> Handle_takeRow(HandleRef _this, int32_t row) {
         return listToArray(THIS->takeRow(row));
+    }
+
+    std::string Handle_text(HandleRef _this) {
+        return THIS->text().toStdString();
+    }
+
+    Alignment Handle_textAlignment(HandleRef _this) {
+        return Alignment(THIS->textAlignment());
+    }
+
+    std::string Handle_toolTip(HandleRef _this) {
+        return THIS->toolTip().toStdString();
+    }
+
+    int32_t Handle_type(HandleRef _this) {
+        return THIS->type();
+    }
+
+    std::string Handle_whatsThis(HandleRef _this) {
+        return THIS->whatsThis().toStdString();
     }
 
     void Handle_dispose(HandleRef _this) {
@@ -349,7 +352,7 @@ namespace StandardItem
         return reinterpret_cast<HandleRef>(new QStandardItem(QICON_VALUE(icon), QString::fromStdString(text)));
     }
 
-    HandleRef create(int32_t rows, int32_t columns) {
+    HandleRef create(int32_t rows, int32_t columns /* 1 */) {
         return reinterpret_cast<HandleRef>(new QStandardItem(rows, columns));
     }
 }

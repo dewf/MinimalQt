@@ -8,133 +8,100 @@ import Brush;
 import Font;
 import Common;
 
+enum ItemType { Type = 0, UserType = 1000 }
+
+fwdopaque StandardItemModel_Handle = StandardItemModel.Handle;
+
 opaque Handle {
-    // properties
     string accessibleDescription();
-    void setAccessibleDescription(string description);
-
     string accessibleText();
-    void setAccessibleText(string accessibleText);
-
-    bool isAutoTristate();
-    void setAutoTristate(bool tristate);
-
-    Brush.Owned background();
-    void setBackground(Brush.Handle brush);
-
-    CheckState checkState();
-    void setCheckState(CheckState state);
-
-    bool isCheckable();
-    void setCheckable(bool checkable);
-
-    int column();
-    // read-only
-
-    int columnCount();
-    void setColumnCount(int columns);
-
-    bool isDragEnabled();
-    void setDragEnabled(bool dragEnabled);
-
-    bool isDropEnabled();
-    void setDropEnabled(bool dropEnabled);
-
-    bool isEditable();
-    void setEditable(bool editable);
-
-    bool isEnabled();
-    void setEnabled(bool enabled);
-
-    bool hasChildren();
-    // read-only
-
-    ItemFlags getFlags();
-    void setFlags(ItemFlags flags_);
-
-    Font.Owned getFont();
-    void setFont(Font.Handle font);
-
-    Brush.Owned foreground();
-    void setForeground(Brush.Handle brush);
-
-    Icon.Owned getIcon();
-    void setIcon(Icon.Handle icon);
-
-    Handle parent();
-    // read-only
-
-    int row();
-    // read-only
-
-    int rowCount();
-    void setRowCount(int rows);
-
-    bool isSelectable();
-    void setSelectable(bool selectable);
-
-    Size sizeHint();
-    void setSizeHint(Size size);
-
-    string statusTip();
-    void setStatusTip(string statusTip);
-
-    string text();
-    void setText(string text);
-
-    Alignment textAlignment();
-    void setTextAlignment(Alignment alignment);
-
-    string toolTip();
-    void setToolTip(string toolTip);
-
-    int type_();
-    // read-only
-
-    bool isUserTristate();
-    void setUserTristate(bool tristate);
-
-    string whatsThis();
-    void setWhatsThis(string whatsThis);
-
-    // methods
     void appendColumn(Array<Handle> items);
     void appendRow(Array<Handle> items);
     void appendRow(Handle item);
     void appendRows(Array<Handle> items);
-
-    Handle child(int row, Option<int> column);
+    Brush.Owned background();
+    CheckState checkState();
+    Handle child(int row, int column = 0);
     void clearData();
     Handle clone();
-    Variant.Owned data(Option<int> role);
+    int column();
+    int columnCount();
+    Variant.Owned data(ItemDataRole role);  // int role = Qt::UserRole + 1 // our current const stuff isn't smart enough to handle this (we need to emit an int cast on our enum-class ItemDataRole)
+    ItemFlags getFlags();
+    Font.Owned font();
+    Brush.Owned foreground();
+    bool hasChildren();
+    Icon.Owned icon();
     ModelIndex.Owned index();
-
     void insertColumn(int column, Array<Handle> items);
     void insertColumns(int column, int count);
     void insertRow(int row, Array<Handle> items);
     void insertRow(int row, Handle item);
     void insertRows(int row, Array<Handle> items);
     void insertRows(int row, int count);
+    bool isAutoTristate();
+    bool isCheckable();
+    bool isDragEnabled();
+    bool isDropEnabled();
+    bool isEditable();
+    bool isEnabled();
+    bool isSelectable();
+    bool isUserTristate();
+    StandardItemModel_Handle model();
 
-    // StandardItemModel model()
-    // multiData(...)
+    // (since 6.0) virtual void multiData(QModelRoleDataSpan roleDataSpan) const
+
+    Handle parent();
+
+    // virtual void read(QDataStream &in)
 
     void removeColumn(int column);
     void removeColumns(int column, int count);
     void removeRow(int row);
     void removeRows(int row, int count);
-
+    int row();
+    int rowCount();
+    void setAccessibleDescription(string accessibleDescription);
+    void setAccessibleText(string accessibleText);
+    void setAutoTristate(bool tristate);
+    void setBackground(Brush.Handle brush);
+    void setCheckState(CheckState state);
+    void setCheckable(bool checkable);
     void setChild(int row, int column, Handle item);
     void setChild(int row, Handle item);
-
-    void setData(Variant.Handle value, Option<int> role);
-    void sortChildren(int column, Option<SortOrder> order);
-    Handle takeChild(int row, Option<int> column);
+    void setColumnCount(int columns);
+    void setData(Variant.Handle value, ItemDataRole role); // int role = Qt::UserRole + 1 - see note above on data()
+    void setDragEnabled(bool dragEnabled);
+    void setDropEnabled(bool dropEnabled);
+    void setEditable(bool editable);
+    void setEnabled(bool enabled);
+    void setFlags(ItemFlags flags_);
+    void setFont(Font.Handle font);
+    void setForeground(Brush.Handle brush);
+    void setIcon(Icon.Handle icon);
+    void setRowCount(int rows);
+    void setSelectable(bool selectable);
+    void setSizeHint(Size size);
+    void setStatusTip(string statusTip);
+    void setText(string text);
+    void setTextAlignment(Alignment alignment);
+    void setToolTip(string toolTip);
+    void setUserTristate(bool tristate);
+    void setWhatsThis(string whatsThis);
+    Size sizeHint();
+    void sortChildren(int column, SortOrder order = SortOrder.AscendingOrder);
+    string statusTip();
+    Handle takeChild(int row, int column = 0);
     Array<Handle> takeColumn(int column);
     Array<Handle> takeRow(int row);
+    string text();
+    Alignment textAlignment();
+    string toolTip();
+    int type();
+    string whatsThis();
 }
 
 Handle create();
 Handle create(string text);
 Handle create(Icon.Handle icon, string text);
-Handle create(int rows, int columns); // columns = 1
+Handle create(int rows, int columns = 1);
