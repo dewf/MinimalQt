@@ -16,6 +16,7 @@ opaque Handle extends Widget.Handle {
     bool isSizeGripEnabled();
     void removeWidget(Widget.Handle widget);
     void setSizeGripEnabled(bool enable);
+    
     void clearMessage();
     void showMessage(string message, int timeout = 0);
 

@@ -62,6 +62,7 @@ opaque Handle extends Widget.Handle {
     bool tabsClosable();
     bool usesScrollButtons();
     Widget.Handle widget(int index);
+    
     void setCurrentIndex(int index);
     void setCurrentWidget(Widget.Handle widget);
 
