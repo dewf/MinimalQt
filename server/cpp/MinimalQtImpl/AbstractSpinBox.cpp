@@ -24,11 +24,12 @@ namespace AbstractSpinBox
         return static_cast<CorrectionMode>(THIS->correctionMode());
     }
 
-    // void Handle_fixup(HandleRef _this, const std::string& input) {
-    //     // this is a virtual function that modifies its input (a non-const QString reference)
-    //     // used by subclasses, not sure if we really need it or what
-    //     // we'd have to return a copy, treated as a 'ref' or whatever in C#
-    // }
+    std::string Handle_fixup(HandleRef _this, const std::string& input) {
+        // 'input' is actually a ref QString, we need to retun the (potentially) modified version to emulate similar behavior on the frontend
+        auto qInput = QString::fromStdString(input);
+        THIS->fixup(qInput);
+        return qInput.toStdString();
+    }
 
     bool Handle_hasAcceptableInput(HandleRef _this) {
         return THIS->hasAcceptableInput();

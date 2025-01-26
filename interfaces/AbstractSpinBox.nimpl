@@ -36,8 +36,7 @@ opaque Handle extends Widget.Handle {
     ButtonSymbols getButtonSymbols();
     CorrectionMode getCorrectionMode();
     
-    // void fixup(string input);
-    // TODO: the input to the C++ function is actually a reference (it's a virtual func for subclasses, not sure why it's not protected)
+    string fixup(string input); // 'input' is actually a string ref, and function returns void
 
     bool hasAcceptableInput();
     bool hasFrame();
