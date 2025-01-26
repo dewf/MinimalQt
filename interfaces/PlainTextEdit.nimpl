@@ -59,7 +59,7 @@ opaque Handle extends AbstractScrollArea.Handle {
     Variant.Owned loadResource(int type, Url.Handle name);
     int maximumBlockCount();
     void mergeCurrentCharFormat(TextCharFormat.Handle modifier);
-    void moveCursor(TextCursor.MoveOperation operation, TextCursor.MoveMode mode = MoveMode.MoveAnchor);
+    void moveCursor(TextCursor.MoveOperation operation, TextCursor.MoveMode mode = MoveAnchor);
     bool overwriteMode();
     string placeholderText();
 

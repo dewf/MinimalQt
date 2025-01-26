@@ -21,7 +21,7 @@ opaque Handle extends Widget.Handle {
     int addTab(Widget.Handle page, string label);
     int addTab(Widget.Handle page, Icon.Handle icon, string label);
     void clear();
-    Widget.Handle cornerWidget(Corner corner = Corner.TopRightCorner);
+    Widget.Handle cornerWidget(Corner corner = TopRightCorner);
     int count();
     int currentIndex();
     Widget.Handle currentWidget();
@@ -35,7 +35,7 @@ opaque Handle extends Widget.Handle {
     bool isTabEnabled(int index);
     bool isTabVisible(int index);
     void removeTab(int index);
-    void setCornerWidget(Widget.Handle widget, Corner corner = Corner.TopRightCorner);
+    void setCornerWidget(Widget.Handle widget, Corner corner = TopRightCorner);
     void setDocumentMode(bool set);
     void setElideMode(TextElideMode mode);
     void setIconSize(Size size);

@@ -46,12 +46,12 @@ opaque Handle extends Widget.Handle {
     void addItems(Array<string> texts);
     Completer.Handle completer();
     int count();
-    Variant.Owned currentData(ItemDataRole role = ItemDataRole.UserRole); // // should be int, but our const-expression stuff doesn't support casts right now
+    Variant.Owned currentData(ItemDataRole role = UserRole); // // should be int, but our const-expression stuff doesn't support casts right now
     int currentIndex();
     string currentText();
     bool duplicatesEnabled();
-    int findData(Variant.Handle data, ItemDataRole role = ItemDataRole.UserRole, MatchFlags flags_ = MatchFlags.MatchExactly | MatchFlags.MatchCaseSensitive);
-    int findText(string text, MatchFlags flags_ = MatchFlags.MatchExactly | MatchFlags.MatchCaseSensitive);
+    int findData(Variant.Handle data, ItemDataRole role = UserRole, MatchFlags flags_ = MatchExactly | MatchCaseSensitive);
+    int findText(string text, MatchFlags flags_ = MatchExactly | MatchCaseSensitive);
     bool hasFrame();
     void hidePopup();
     Size iconSize();
@@ -61,7 +61,7 @@ opaque Handle extends Widget.Handle {
     InsertPolicy getInsertPolicy();
     void insertSeparator(int index);
     bool isEditable();
-    Variant.Owned itemData(int index, ItemDataRole role = ItemDataRole.UserRole); // should be int
+    Variant.Owned itemData(int index, ItemDataRole role = UserRole); // should be int
     AbstractItemDelegate.Handle itemDelegate();
     Icon.Owned itemIcon(int index);
     string itemText(int index);
@@ -80,7 +80,7 @@ opaque Handle extends Widget.Handle {
     void setFrame(bool hasFrame);
     void setIconSize(Size size);
     void setInsertPolicy(InsertPolicy policy);
-    void setItemData(int index, Variant.Handle value, ItemDataRole role = ItemDataRole.UserRole); // should be int
+    void setItemData(int index, Variant.Handle value, ItemDataRole role = UserRole); // should be int
     void setItemDelegate(AbstractItemDelegate.Handle delegate_);
     void setItemIcon(int index, Icon.Handle icon);
     void setItemText(int index, string text);

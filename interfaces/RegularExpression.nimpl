@@ -38,5 +38,5 @@ opaque Handle;
 opaque Owned extends Handle;
 
 Owned create();
-Owned create(string pattern, PatternOptions options_ = PatternOptions.NoPatternOption);
+Owned create(string pattern, PatternOptions options_ = NoPatternOption);
 Owned create(Handle other);

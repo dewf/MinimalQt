@@ -22,13 +22,13 @@ opaque Handle extends Widget.Handle {
     Menu.Handle addMenu(Icon.Handle icon, string title);
     Action.Handle addSeparator();
     void clear();
-    Widget.Handle cornerWidget(Corner corner = Corner.TopRightCorner);
+    Widget.Handle cornerWidget(Corner corner = TopRightCorner);
     Action.Handle insertMenu(Action.Handle before, Menu.Handle menu);
     Action.Handle insertSeparator(Action.Handle before);
     bool isDefaultUp();
     bool isNativeMenuBar();
     void setActiveAction(Action.Handle act);
-    void setCornerWidget(Widget.Handle widget, Corner corner = Corner.TopRightCorner);
+    void setCornerWidget(Widget.Handle widget, Corner corner = TopRightCorner);
     void setDefaultUp(bool value);
     void setNativeMenuBar(bool nativeMenuBar);
 

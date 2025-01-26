@@ -15,7 +15,7 @@ opaque Handle extends Object.Handle {
 
     DropAction defaultAction();
     Pixmap.Owned dragCursor(DropAction action);
-    DropAction exec(DropActions supportedActions = DropActions.MoveAction);
+    DropAction exec(DropActions supportedActions = MoveAction);
     DropAction exec(DropActions supportedActions, DropAction defaultDropAction);
     Point hotSpot();
     MimeData.Handle mimeData();

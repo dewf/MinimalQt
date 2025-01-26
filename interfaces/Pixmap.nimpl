@@ -15,7 +15,7 @@ opaque Handle {         // we don't directly inherit from PaintDevice, because t
     // properties + methods:
 
     int64 cacheKey();
-    bool convertFromImage(Image.Handle image, ImageConversionFlags flags_ = ImageConversionFlags.AutoColor);
+    bool convertFromImage(Image.Handle image, ImageConversionFlags flags_ = AutoColor);
     Owned copy(Option<Rect> rect);
     Owned copy(int x, int y, int width, int height);
 
@@ -33,9 +33,9 @@ opaque Handle {         // we don't directly inherit from PaintDevice, because t
     int height();
     bool isNull();
     bool isQBitmap();
-    bool load(string fileName, Option<string> format, ImageConversionFlags flags_ = ImageConversionFlags.AutoColor);
-    bool loadFromData(Buffer<byte> data, Option<string> format, ImageConversionFlags flags_ = ImageConversionFlags.AutoColor);
-    bool loadFromData(Array<byte> data, Option<string> format, ImageConversionFlags flags_ = ImageConversionFlags.AutoColor);
+    bool load(string fileName, Option<string> format, ImageConversionFlags flags_ = AutoColor);
+    bool loadFromData(Buffer<byte> data, Option<string> format, ImageConversionFlags flags_ = AutoColor);
+    bool loadFromData(Array<byte> data, Option<string> format, ImageConversionFlags flags_ = AutoColor);
 
     // QBitmap mask() const
     // TODO
@@ -46,10 +46,10 @@ opaque Handle {         // we don't directly inherit from PaintDevice, because t
     // bool save(QIODevice *device, const char *format = nullptr, int quality = -1) const
     // TODO
 
-    Owned scaled(Size size, AspectRatioMode aspectRatioMode = AspectRatioMode.IgnoreAspectRatio, TransformationMode transformMode = TransformationMode.FastTransformation);
-    Owned scaled(int width, int height, AspectRatioMode aspectRatioMode = AspectRatioMode.IgnoreAspectRatio, TransformationMode transformMode = TransformationMode.FastTransformation);
-    Owned scaledToHeight(int height, TransformationMode mode = TransformationMode.FastTransformation);
-    Owned scaledToWidth(int width, TransformationMode mode = TransformationMode.FastTransformation);
+    Owned scaled(Size size, AspectRatioMode aspectRatioMode = IgnoreAspectRatio, TransformationMode transformMode = FastTransformation);
+    Owned scaled(int width, int height, AspectRatioMode aspectRatioMode = IgnoreAspectRatio, TransformationMode transformMode = FastTransformation);
+    Owned scaledToHeight(int height, TransformationMode mode = FastTransformation);
+    Owned scaledToWidth(int width, TransformationMode mode = FastTransformation);
     void scroll(int dx, int dy, Rect rect, Option<Region.Handle> exposed);
     void scroll(int dx, int dy, int x, int y, int width, int height, Option<Region.Handle> exposed);
     void setDevicePixelRatio(double scaleFactor);
@@ -60,7 +60,7 @@ opaque Handle {         // we don't directly inherit from PaintDevice, because t
     Size size();
     void swap(Handle other);
     Image.Owned toImage();
-    Owned transformed(Transform.Handle transform, TransformationMode mode = TransformationMode.FastTransformation);
+    Owned transformed(Transform.Handle transform, TransformationMode mode = FastTransformation);
     int width();
 }
 
@@ -68,13 +68,13 @@ opaque Owned extends Handle;
 
 Owned create(Array<byte> xpm);
 Owned create(int width, int height);
-Owned create(string filename, Option<string> format, ImageConversionFlags flags_ = ImageConversionFlags.AutoColor);
+Owned create(string filename, Option<string> format, ImageConversionFlags flags_ = AutoColor);
 Owned create(Size size);
 Owned create(Handle other);
 
 // static methods:
 int defaultDepth();
-Owned fromImage(Image.Handle image, ImageConversionFlags flags_ = ImageConversionFlags.AutoColor);
+Owned fromImage(Image.Handle image, ImageConversionFlags flags_ = AutoColor);
 Transform.Owned trueMatrix(Transform.Handle matrix, int width, int height);
 
 // QPixmap	fromImageReader(QImageReader *imageReader, Qt::ImageConversionFlags flags = Qt::AutoColor)

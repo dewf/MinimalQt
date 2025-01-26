@@ -18,7 +18,7 @@ opaque Handle extends AbstractItemModel.Handle {
     // QBindable<int> bindableSortRole()
 
     void clear();
-    Array<StandardItem.Handle> findItems(string text, MatchFlags flags_ = MatchFlags.MatchExactly, int column = 0);
+    Array<StandardItem.Handle> findItems(string text, MatchFlags flags_ = MatchExactly, int column = 0);
     StandardItem.Handle horizontalHeaderItem(int column);
     ModelIndex.Owned indexFromItem(StandardItem.Handle item);
     void insertColumn(int column, Array<StandardItem.Handle> items);

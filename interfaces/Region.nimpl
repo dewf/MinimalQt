@@ -39,7 +39,7 @@ Owned create();
 
 // QRegion(const QBitmap &bm)
 
-Owned create(Polygon.Handle a, FillRule fillRule = FillRule.OddEvenFill);
-Owned create(int x, int y, int w, int h, RegionType t = RegionType.Rectangle);
-Owned create(Rect r, RegionType t = RegionType.Rectangle);
+Owned create(Polygon.Handle a, FillRule fillRule = OddEvenFill);
+Owned create(int x, int y, int w, int h, RegionType t = Rectangle);
+Owned create(Rect r, RegionType t = Rectangle);
 Owned create(Handle other);

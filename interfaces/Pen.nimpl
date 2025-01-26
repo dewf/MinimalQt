@@ -36,5 +36,5 @@ opaque Owned extends Handle;
 Owned create();
 Owned create(PenStyle style);
 Owned create(Color.Handle color);
-Owned create(Brush.Handle brush, double width, PenStyle style = PenStyle.SolidLine, PenCapStyle cap = PenCapStyle.SquareCap, PenJoinStyle join = PenJoinStyle.BevelJoin);
+Owned create(Brush.Handle brush, double width, PenStyle style = SolidLine, PenCapStyle cap = SquareCap, PenJoinStyle join = BevelJoin);
 Owned create(Handle other);

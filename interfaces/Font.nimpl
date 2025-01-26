@@ -134,7 +134,7 @@ opaque Handle {
     void setStretch(int factor);
     void setStrikeOut(bool enable);
     void setStyle(Style style);
-    void setStyleHint(StyleHint hint, StyleStrategy strategy = StyleStrategy.PreferDefault);
+    void setStyleHint(StyleHint hint, StyleStrategy strategy = PreferDefault);
     void setStyleName(string styleName);
     void setStyleStrategy(StyleStrategy s);
     void setUnderline(bool enable);

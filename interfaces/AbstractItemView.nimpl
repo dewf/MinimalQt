@@ -102,7 +102,7 @@ opaque Handle extends AbstractScrollArea.Handle {
     void resetHorizontalScrollMode();
     void resetVerticalScrollMode();
     ModelIndex.Owned rootIndex();
-    void scrollTo(ModelIndex.Handle index, ScrollHint hint = ScrollHint.EnsureVisible);
+    void scrollTo(ModelIndex.Handle index, ScrollHint hint = EnsureVisible);
     SelectionBehavior getSelectionBehavior();
     SelectionMode getSelectionMode();
     ItemSelectionModel.Handle selectionModel();

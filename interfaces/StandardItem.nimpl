@@ -89,7 +89,7 @@ opaque Handle {
     void setUserTristate(bool tristate);
     void setWhatsThis(string whatsThis);
     Size sizeHint();
-    void sortChildren(int column, SortOrder order = SortOrder.AscendingOrder);
+    void sortChildren(int column, SortOrder order = AscendingOrder);
     string statusTip();
     Handle takeChild(int row, int column = 0);
     Array<Handle> takeColumn(int column);

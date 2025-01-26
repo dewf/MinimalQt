@@ -103,7 +103,7 @@ opaque Handle extends Object.Handle {
     void grabKeyboard();
     void grabMouse();
     void grabMouse(Cursor.Handle cursor);
-    int grabShortcut(KeySequence.Handle key, ShortcutContext context = ShortcutContext.WindowShortcut);
+    int grabShortcut(KeySequence.Handle key, ShortcutContext context = WindowShortcut);
     GraphicsEffect.Handle graphicsEffect();
 
     // QGraphicsProxyWidget * graphicsProxyWidget() const
@@ -176,8 +176,8 @@ opaque Handle extends Object.Handle {
     void releaseMouse();
     void releaseShortcut(int id);
     void removeAction(Action.Handle action);
-    void render(PaintDevice.Handle target, Option<Point> targetOffset, Option<Region.Handle> sourceRegion, RenderFlags renderFlags = RenderFlags.DrawWindowBackground | RenderFlags.DrawChildren);
-    void render(Painter.Handle painter, Option<Point> targetOffset, Option<Region.Handle> sourceRegion, RenderFlags renderFlags = RenderFlags.DrawWindowBackground | RenderFlags.DrawChildren);
+    void render(PaintDevice.Handle target, Option<Point> targetOffset, Option<Region.Handle> sourceRegion, RenderFlags renderFlags = DrawWindowBackground | DrawChildren);
+    void render(Painter.Handle painter, Option<Point> targetOffset, Option<Region.Handle> sourceRegion, RenderFlags renderFlags = DrawWindowBackground | DrawChildren);
     void repaint(Rect rect);
     void repaint(Region.Handle rgn);
     void repaint(int x, int y, int w, int h);

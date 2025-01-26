@@ -34,7 +34,7 @@ opaque Handle extends Widget.Handle {
     void addToolBar(ToolBarArea area, ToolBar.Handle toolbar);
     void addToolBar(ToolBar.Handle toolbar);
     ToolBar.Handle addToolBar(string title);
-    void addToolBarBreak(ToolBarArea area = ToolBarArea.TopToolBarArea);
+    void addToolBarBreak(ToolBarArea area = TopToolBarArea);
     Widget.Handle centralWidget();
     DockWidgetArea corner(Corner corner);
     Menu.Handle createPopupMenu();

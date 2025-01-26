@@ -65,7 +65,7 @@ opaque Handle extends Object.Handle {
     bool insertRow(int row, Option<ModelIndex.Handle> parent);
     bool insertRows(int row, int count, Option<ModelIndex.Handle> parent);
     Map<int, Variant.Owned> itemData(ModelIndex.Handle index);
-    Array<ModelIndex.Owned> match(ModelIndex.Handle start, int role, Variant.Handle value, int hits = 1, MatchFlags flags_ = MatchFlags.MatchStartsWith | MatchFlags.MatchWrap);
+    Array<ModelIndex.Owned> match(ModelIndex.Handle start, int role, Variant.Handle value, int hits = 1, MatchFlags flags_ = MatchStartsWith | MatchWrap);
     MimeData.Handle getMimeData(Array<ModelIndex.Handle> indexes);
     Array<string> mimeTypes();
     bool moveColumn(ModelIndex.Handle sourceParent, int sourceColumn, ModelIndex.Handle destinationParent, int destinationChild);

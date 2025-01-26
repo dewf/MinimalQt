@@ -80,14 +80,14 @@ opaque Handle {
     // const uchar *constBits();
     // const uchar *constScanLine(int i);
 
-    void convertTo(Format format, ImageConversionFlags flags_ = ImageConversionFlags.AutoColor);
+    void convertTo(Format format, ImageConversionFlags flags_ = AutoColor);
 
     // void convertToColorSpace(QColorSpace &colorSpace);
     // void convertToColorSpace(QColorSpace &colorSpace, QImage::Format format, Qt::ImageConversionFlags flags = Qt::AutoColor);
 
-    Owned convertToFormat(Format format, ImageConversionFlags flags_ = ImageConversionFlags.AutoColor);
-    Owned convertToFormat(Format format, Array<Rgb> colorTable, ImageConversionFlags flags_ = ImageConversionFlags.AutoColor);
-    Owned convertedTo(Format format, ImageConversionFlags flags_ = ImageConversionFlags.AutoColor);
+    Owned convertToFormat(Format format, ImageConversionFlags flags_ = AutoColor);
+    Owned convertToFormat(Format format, Array<Rgb> colorTable, ImageConversionFlags flags_ = AutoColor);
+    Owned convertedTo(Format format, ImageConversionFlags flags_ = AutoColor);
 
     // QImage convertedToColorSpace(const QColorSpace &colorSpace) const
     // QImage convertedToColorSpace(const QColorSpace &colorSpace, QImage::Format format, Qt::ImageConversionFlags flags = Qt::AutoColor) &&
@@ -95,9 +95,9 @@ opaque Handle {
 
     Owned copy(Option<Rect> rectangle);
     Owned copy(int x, int y, int width, int height);
-    Owned createAlphaMask(ImageConversionFlags flags_ = ImageConversionFlags.AutoColor);
+    Owned createAlphaMask(ImageConversionFlags flags_ = AutoColor);
     Owned createHeuristicMask(bool clipTight = true);
-    Owned createMaskFromColor(Rgb color, MaskMode mode = MaskMode.MaskInColor);
+    Owned createMaskFromColor(Rgb color, MaskMode mode = MaskInColor);
     int depth();
     SizeF deviceIndependentSize();
     double devicePixelRatio();
@@ -109,7 +109,7 @@ opaque Handle {
     Format format();
     bool hasAlphaChannel();
     int height();
-    void invertPixels(InvertMode mode = InvertMode.InvertRgb);
+    void invertPixels(InvertMode mode = InvertRgb);
     bool isGrayscale();
     bool isNull();
     bool load(string filename, Option<string> format);
@@ -137,10 +137,10 @@ opaque Handle {
 
     // bool save(QIODevice *device, const char *format = nullptr, int quality = -1) const
 
-    Owned scaled(Size size, AspectRatioMode aspectRadioMode = AspectRatioMode.IgnoreAspectRatio, TransformationMode transformMode = TransformationMode.FastTransformation);
-    Owned scaled(int width, int height, AspectRatioMode aspectRadioMode = AspectRatioMode.IgnoreAspectRatio, TransformationMode transformMode = TransformationMode.FastTransformation);
-    Owned scaledToHeight(int height, TransformationMode transformMode = TransformationMode.FastTransformation);
-    Owned scaledToWidth(int width, TransformationMode transformMode = TransformationMode.FastTransformation);
+    Owned scaled(Size size, AspectRatioMode aspectRadioMode = IgnoreAspectRatio, TransformationMode transformMode = FastTransformation);
+    Owned scaled(int width, int height, AspectRatioMode aspectRadioMode = IgnoreAspectRatio, TransformationMode transformMode = FastTransformation);
+    Owned scaledToHeight(int height, TransformationMode transformMode = FastTransformation);
+    Owned scaledToWidth(int width, TransformationMode transformMode = FastTransformation);
 
     Buffer<uint32> scanLine32(int i);             // currently Buffers can't use typedefs, so no Rgb
     Buffer<uint64> scanLine64(int i);
@@ -171,7 +171,7 @@ opaque Handle {
     // HBITMAP toHBITMAP() const
     // HICON toHICON(const QImage &mask = {}) const
     
-    Owned transformed(Transform.Handle matrix, TransformationMode transformMode = TransformationMode.FastTransformation);
+    Owned transformed(Transform.Handle matrix, TransformationMode transformMode = FastTransformation);
     bool valid(Point pos);
     bool valid(int x, int y);
     int width();

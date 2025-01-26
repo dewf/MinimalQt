@@ -58,9 +58,9 @@ opaque Handle {
     Polygon.Owned mapToPolygon(Rect rectangle);
     void reset();
     Owned rotate(double a, Axis axis, double distanceToPlane);
-    Owned rotate(double a, Axis axis = Axis.ZAxis);
+    Owned rotate(double a, Axis axis = ZAxis);
     Owned rotateRadians(double a, Axis axis, double distanceToPlane);
-    Owned rotateRadians(double a, Axis axis = Axis.ZAxis);
+    Owned rotateRadians(double a, Axis axis = ZAxis);
     Owned scale(double sx, double sy);
     void setMatrix(double m11, double m12, double m13, double m21, double m22, double m23, double m31, double m32, double m33);
     Owned shear(double sh, double sv);

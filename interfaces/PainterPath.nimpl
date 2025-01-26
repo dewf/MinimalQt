@@ -17,8 +17,8 @@ opaque Handle {
     void addRect(RectF rectangle);
     void addRect(double x, double y, double width, double height);
     void addRegion(Region.Handle region);
-    void addRoundedRect(RectF rect, double xRadius, double yRadius, SizeMode mode = SizeMode.AbsoluteSize);
-    void addRoundedRect(double x, double y, double w, double h, double xRadius, double yRadius, SizeMode mode = SizeMode.AbsoluteSize);
+    void addRoundedRect(RectF rect, double xRadius, double yRadius, SizeMode mode = AbsoluteSize);
+    void addRoundedRect(double x, double y, double w, double h, double xRadius, double yRadius, SizeMode mode = AbsoluteSize);
     void addText(PointF point, Font.Handle font, string text);
     void addText(double x, double y, Font.Handle font, string text);
     double angleAtPercent(double t);

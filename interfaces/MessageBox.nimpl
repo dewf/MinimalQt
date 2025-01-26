@@ -144,12 +144,12 @@ opaque Handle extends Dialog.Handle {
 
 // ctors:
 Handle create(Widget.Handle parent = null);
-Handle create(Icon icon, string title, string text, StandardButtons buttons = StandardButtons.NoButton, Widget.Handle parent = null, WindowFlags flags_ = WindowFlags.Dialog | WindowFlags.MSWindowsFixedSizeDialogHint);
+Handle create(Icon icon, string title, string text, StandardButtons buttons = NoButton, Widget.Handle parent = null, WindowFlags flags_ = Dialog | MSWindowsFixedSizeDialogHint);
 
 // static methods:
 void about(Widget.Handle parent, string title, string text);
 void aboutQt(Widget.Handle parent, Option<string> title);
-StandardButton critical(Widget.Handle parent, string title, string text, StandardButtons buttons = StandardButtons.Ok, StandardButton defaultButton = StandardButton.NoButton);
-StandardButton information(Widget.Handle parent, string title, string text, StandardButtons buttons = StandardButtons.Ok, StandardButton defaultButton = StandardButton.NoButton);
-StandardButton question(Widget.Handle parent, string title, string text, StandardButtons buttons = StandardButtons.Yes | StandardButtons.No, StandardButton defaultButton = StandardButton.NoButton);
-StandardButton warning(Widget.Handle parent, string title, string text, StandardButtons buttons = StandardButtons.Ok, StandardButton defaultButton = StandardButton.NoButton);
+StandardButton critical(Widget.Handle parent, string title, string text, StandardButtons buttons = Ok, StandardButton defaultButton = NoButton);
+StandardButton information(Widget.Handle parent, string title, string text, StandardButtons buttons = Ok, StandardButton defaultButton = NoButton);
+StandardButton question(Widget.Handle parent, string title, string text, StandardButtons buttons = Yes | No, StandardButton defaultButton = NoButton);
+StandardButton warning(Widget.Handle parent, string title, string text, StandardButtons buttons = Ok, StandardButton defaultButton = NoButton);

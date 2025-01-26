@@ -88,7 +88,7 @@ opaque Handle extends AbstractScrollArea.Handle {
     LineWrapMode getLineWrapMode();
     Variant.Owned loadResource(int type, Url.Handle name);
     void mergeCurrentCharFormat(TextCharFormat.Handle modifier);
-    void moveCursor(TextCursor.MoveOperation operation, TextCursor.MoveMode mode = MoveMode.MoveAnchor);
+    void moveCursor(TextCursor.MoveOperation operation, TextCursor.MoveMode mode = MoveAnchor);
     bool overwriteMode();
     string placeholderText();
 
@@ -119,7 +119,7 @@ opaque Handle extends AbstractScrollArea.Handle {
     TextCursor.Owned textCursor();
     TextInteractionFlags textInteractionFlags();
     string toHtml();
-    string toMarkdown(TextDocument.MarkdownFeatures features = MarkdownFeatures.MarkdownDialectGitHub);
+    string toMarkdown(TextDocument.MarkdownFeatures features = MarkdownDialectGitHub);
     string toPlainText();
     TextOption.WrapMode wordWrapMode();
 
