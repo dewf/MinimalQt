@@ -1092,6 +1092,24 @@ namespace Widget
             }
         }
 
+        void keyPressEvent(QKeyEvent *event) override {
+            if (methodMask & KeyPressEvent) {
+                methods->keyPressEvent(reinterpret_cast<KeyEvent_HandleRef>(event));
+                // don't need to accept() per docs
+            } else {
+                QWidget::keyPressEvent(event);
+            }
+        }
+
+        void keyReleaseEvent(QKeyEvent *event) override {
+            if (methodMask & KeyReleaseEvent) {
+                methods->keyReleaseEvent(reinterpret_cast<KeyEvent_HandleRef>(event));
+                // don't need to accept() per docs
+            } else {
+                QWidget::keyReleaseEvent(event);
+            }
+        }
+
         void enterEvent(QEnterEvent *event) override {
             if (methodMask & EnterEvent) {
                 auto pos = toPoint(event->position().toPoint());

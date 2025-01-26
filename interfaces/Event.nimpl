@@ -1,6 +1,7 @@
 module Event;
 
 import Enums;
+import KeySequence;
 
 @nodispose
 opaque Handle {
@@ -8,18 +9,49 @@ opaque Handle {
     void ignore();
 }
 
-// we're using underscores instead of 'Handle' inside a nested group,
-// because right now there's no way to inherit from the root-level Handle for a nested Handle (need a root-level namespace . prefix, a la C++ ::Whatever)
+// nested groups are currently buggy, otherwise we'd use a group for HelpEvent/DragMoveEvent with their own contained Handle
+// (but inheriting from Event.Handle should work now, it didn't before)
 
 @nodispose
 opaque HelpEvent_Handle extends Handle;
 
 @nodispose
-opaque DragMoveEvent_Handle extends Handle {
+opaque DropEvent_Handle extends Handle {
+    // methods TODO
+}
+
+@nodispose
+opaque DragMoveEvent_Handle extends DropEvent_Handle {
     DropAction proposedAction();
     void acceptProposedAction();
     DropActions possibleActions();
 
     // slight variation on the real methods:
     void acceptDropAction(DropAction action); // will internally call either .acceptProposedAction or .accept() after setting drop action
+}
+
+@nodispose
+opaque InputEvent_Handle extends Handle {
+
+    // const QInputDevice * device() const
+    // QInputDevice::DeviceType deviceType() const
+
+    KeyboardModifiers modifiers();
+    uint64 timestamp();
+}
+
+@nodispose
+opaque KeyEvent_Handle extends InputEvent_Handle {
+    int count();
+    bool isAutoRepeat();
+    int key();
+
+    // QKeyCombination keyCombination() const
+
+    bool matches(KeySequence.StandardKey key);
+    KeyboardModifiers modifiers();
+    uint32 nativeModifiers();
+    uint32 nativeScanCode();
+    uint32 nativeVirtualKey();
+    string text();
 }
