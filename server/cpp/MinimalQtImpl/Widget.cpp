@@ -48,6 +48,10 @@ namespace Widget
 {
     const int32_t WIDGET_SIZE_MAX = QWIDGETSIZE_MAX;
 
+    PaintDevice::HandleRef Handle_asPaintDevice(HandleRef _this) {
+        return reinterpret_cast<PaintDevice::HandleRef>(_this);
+    }
+
     bool Handle_acceptDrops(HandleRef _this) {
         return THIS->acceptDrops();
     }

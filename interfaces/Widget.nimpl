@@ -37,7 +37,10 @@ enum RenderFlag {
 }
 
 opaque Handle extends Object.Handle {
+    // interfaces:
+    PaintDevice.Handle asPaintDevice();
 
+    // methods:
     bool acceptDrops();
     string accessibleDescription();
     string accessibleName();
