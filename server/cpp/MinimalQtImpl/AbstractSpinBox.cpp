@@ -111,13 +111,11 @@ namespace AbstractSpinBox
         return THIS->text().toStdString();
     }
 
-    // Validator::State Handle_validate(HandleRef _this, const std::string& input, int32_t pos) {
-    //     // don't know why this method wants a mutable copy of 'input' ...
-    //     // the docs don't indicate that it changes the value or anything
-    //     // and again, like fixup this is a virtual function, so it may be of limited use outside
-    //     auto copy = QString::fromStdString(input);
-    //     return static_cast<Validator::State>(THIS->validate(copy, pos));
-    // }
+    ValidateResult Handle_validate(HandleRef _this, const std::string& input, int32_t pos) {
+        auto qInput = QString::fromStdString(input);
+        const auto qState = THIS->validate(qInput, pos);
+        return ValidateResult { static_cast<State>(qState), qInput.toStdString(), pos };
+    }
 
     bool Handle_wrapping(HandleRef _this) {
         return THIS->wrapping();

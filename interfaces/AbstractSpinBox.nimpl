@@ -54,8 +54,7 @@ opaque Handle extends Widget.Handle {
     void stepBy(int steps);
     string text();
 
-    // Validator.State validate(string input, int pos);
-    // TODO: like 'fixup' above, the input is a mutable string reference, same with 'pos' ... and it's a virtual function designed for subclasses, so I'm not sure we need to expose this outside
+    Validator.ValidateResult validate(string input, int pos); // 'input' and 'pos' are both ref params, and return value is simple Validate.State - we're approximating this with a struct return
 
     bool wrapping();
 
