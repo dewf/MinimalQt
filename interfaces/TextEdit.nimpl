@@ -23,13 +23,8 @@ enum LineWrapMode {
     FixedColumnWidth
 }
 
+@withflags(AutoFormatting)
 enum AutoFormattingFlag : uint32 {
-    AutoNone = 0,
-    AutoBulletList = 0x00000001,
-    AutoAll = 0xffffffff
-}
-
-flags AutoFormatting : uint32 {
     AutoNone = 0,
     AutoBulletList = 0x00000001,
     AutoAll = 0xffffffff

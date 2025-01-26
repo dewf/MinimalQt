@@ -18,14 +18,8 @@ enum MatchType {
     NoMatch
 }
 
+@withflags(MatchOptionSet)
 enum MatchOption {
-    NoMatchOption              = 0x0000,
-    AnchorAtOffsetMatchOption  = 0x0001,
-    // AnchoredMatchOption Q_DECL_ENUMERATOR_DEPRECATED_X("Use AnchorAtOffsetMatchOption instead") = AnchorAtOffsetMatchOption, // Rename@Qt6.0
-    DontCheckSubjectStringMatchOption = 0x0002
-}
-
-flags MatchOptionSet {
     NoMatchOption              = 0x0000,
     AnchorAtOffsetMatchOption  = 0x0001,
     // AnchoredMatchOption Q_DECL_ENUMERATOR_DEPRECATED_X("Use AnchorAtOffsetMatchOption instead") = AnchorAtOffsetMatchOption, // Rename@Qt6.0

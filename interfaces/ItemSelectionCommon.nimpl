@@ -1,6 +1,7 @@
 module ItemSelectionCommon;
 
-flags SelectionFlags {
+@withflags(SelectionFlags)
+enum SelectionFlag {
     NoUpdate       = 0x0000,
     Clear          = 0x0001,
     Select         = 0x0002,

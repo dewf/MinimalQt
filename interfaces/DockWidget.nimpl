@@ -5,7 +5,8 @@ import Widget;
 import Enums;
 import Action;
 
-flags DockWidgetFeatures {
+@withflags(DockWidgetFeatures)
+enum DockWidgetFeature {
     DockWidgetClosable    = 0x01,
     DockWidgetMovable     = 0x02,
     DockWidgetFloatable   = 0x04,

@@ -12,14 +12,9 @@ interface SignalHandler extends Widget.SignalHandler {
 enum ButtonSymbols { UpDownArrows, PlusMinus, NoButtons }
 enum CorrectionMode  { CorrectToPreviousValue, CorrectToNearestValue }
 
-// the naming on these seems backwards ...
+// the naming on these seems backwards, but we're just copying Qt
+@withflags(StepEnabled)
 enum StepEnabledFlag {
-    StepNone = 0x00,
-    StepUpEnabled = 0x01,
-    StepDownEnabled = 0x02
-}
-
-flags StepEnabled {
     StepNone = 0x00,
     StepUpEnabled = 0x01,
     StepDownEnabled = 0x02

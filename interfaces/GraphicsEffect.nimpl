@@ -7,14 +7,8 @@ interface SignalHandler {
     void enabledChanged(bool enabled);
 }
 
+@withflags(ChangeFlags)
 enum ChangeFlag {
-    SourceAttached = 0x1,
-    SourceDetached = 0x2,
-    SourceBoundingRectChanged = 0x4,
-    SourceInvalidated = 0x8
-}
-
-flags ChangeFlags {
     SourceAttached = 0x1,
     SourceDetached = 0x2,
     SourceBoundingRectChanged = 0x4,

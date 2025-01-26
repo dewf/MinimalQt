@@ -19,7 +19,8 @@ interface SignalHandler extends Widget.SignalHandler {
     void toolButtonStyleChanged(ToolButtonStyle style);
 }
 
-flags DockOptions {
+@withflags(DockOptions)
+enum DockOption {
     AnimatedDocks = 0x01,
     AllowNestedDocks = 0x02,
     AllowTabbedDocks = 0x04,

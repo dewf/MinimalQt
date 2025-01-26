@@ -29,13 +29,8 @@ interface SignalHandler extends Object.SignalHandler {
     void windowTitleChanged(string title);
 }
 
+@withflags(RenderFlags)
 enum RenderFlag {
-    DrawWindowBackground = 0x1,
-    DrawChildren = 0x2,
-    IgnoreMask = 0x4
-}
-
-flags RenderFlags {
     DrawWindowBackground = 0x1,
     DrawChildren = 0x2,
     IgnoreMask = 0x4
