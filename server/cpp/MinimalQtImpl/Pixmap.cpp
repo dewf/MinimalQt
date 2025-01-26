@@ -1,14 +1,20 @@
 #include "generated/Pixmap.h"
-
-#include <QPixmap>
+#include "PixmapInternal.h"
 
 #include "ColorInternal.h"
 #include "ImageInternal.h"
-#include "PixmapInternal.h"
 #include "RegionInternal.h"
 #include "TransformInternal.h"
 
 #include "util/convert.h"
+
+using namespace ::PaintDevice;
+using namespace ::Common;
+using namespace ::Enums;
+using namespace ::Image;
+using namespace ::Color;
+using namespace ::Region;
+using namespace ::Transform;
 
 #define THIS (AS_QPIXMAP_PTR(_this))
 

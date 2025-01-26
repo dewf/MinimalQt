@@ -3,6 +3,9 @@
 
 #include "VariantInternal.h"
 
+using namespace ::Variant;
+using namespace ::Enums;
+
 #define THIS (AS_QMODELINDEX_PTR(_this))
 
 namespace ModelIndex

@@ -4,6 +4,14 @@
 #include "WidgetInternal.h"
 #include "util/convert.h"
 
+using namespace ::Object;
+using namespace ::Common;
+using namespace ::Icon;
+using namespace ::Frame;
+using namespace ::Enums;
+using namespace ::ScrollBar;
+using namespace ::Widget;
+
 #define THIS (reinterpret_cast<QAbstractScrollArea*>(_this))
 
 namespace AbstractScrollArea

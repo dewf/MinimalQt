@@ -1,13 +1,21 @@
 #include "generated/TabBar.h"
-
-#include "ColorInternal.h"
 #include "TabBarInternal.h"
 
+#include "ColorInternal.h"
 #include "ObjectInternal.h"
 #include "IconInternal.h"
 #include "VariantInternal.h"
 #include "WidgetInternal.h"
+
 #include "util/convert.h"
+
+using namespace ::Object;
+using namespace ::Common;
+using namespace ::Icon;
+using namespace ::Widget;
+using namespace ::Enums;
+using namespace ::Variant;
+using namespace ::Color;
 
 #define THIS (reinterpret_cast<QTabBar*>(_this))
 

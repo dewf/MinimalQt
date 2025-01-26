@@ -5,6 +5,14 @@
 #include "DateInternal.h"
 #include "TextCharFormatInternal.h"
 
+using namespace ::Object;
+using namespace ::Widget;
+using namespace ::Common;
+using namespace ::Icon;
+using namespace ::Date;
+using namespace ::Enums;
+using namespace ::TextCharFormat;
+
 #define THIS (reinterpret_cast<QCalendarWidget*>(_this))
 
 namespace CalendarWidget

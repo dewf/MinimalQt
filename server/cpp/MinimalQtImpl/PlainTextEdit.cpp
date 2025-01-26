@@ -12,6 +12,23 @@
 
 #include "util/convert.h"
 
+using namespace ::Object;
+using namespace ::Widget;
+using namespace ::Common;
+using namespace ::Icon;
+using namespace ::Enums;
+using namespace ::AbstractScrollArea;
+using namespace ::TextOption;
+using namespace ::Menu;
+using namespace ::TextCursor;
+using namespace ::TextEdit;
+using namespace ::TextFormat;
+using namespace ::TextCharFormat;
+using namespace ::TextDocument;
+using namespace ::RegularExpression;
+using namespace ::Variant;
+using namespace ::Url;
+
 #define THIS (reinterpret_cast<QPlainTextEdit*>(_this))
 
 namespace PlainTextEdit

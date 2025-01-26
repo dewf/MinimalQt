@@ -1,11 +1,7 @@
 #include "generated/Widget.h"
 #include "WidgetInternal.h"
 
-#include <QObject>
-
-#include <QPainter>
-#include <QPaintEvent>
-
+#include "PainterInternal.h"
 #include "ObjectInternal.h"
 #include "ActionInternal.h"
 #include "FontInternal.h"
@@ -20,7 +16,31 @@
 #include "ScreenInternal.h"
 #include "VariantInternal.h"
 
+#include <QPaintEvent>
+
 #include "util/convert.h"
+
+using namespace ::Object;
+using namespace ::Common;
+using namespace ::Layout;
+using namespace ::Painter;
+using namespace ::Icon;
+using namespace ::Enums;
+using namespace ::Action;
+using namespace ::Region;
+using namespace ::Cursor;
+using namespace ::SizePolicy;
+using namespace ::Font;
+using namespace ::MimeData;
+using namespace ::KeySequence;
+using namespace ::Pixmap;
+using namespace ::GraphicsEffect;
+using namespace ::PaintDevice;
+using namespace ::Variant;
+using namespace ::Event;
+using namespace ::Window;
+using namespace ::Screen;
+
 
 #define THIS (reinterpret_cast<QWidget*>(_this))
 

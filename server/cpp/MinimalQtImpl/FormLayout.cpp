@@ -7,6 +7,11 @@
 
 #include "util/convert.h"
 
+using namespace ::Enums;
+using namespace ::Layout;
+using namespace ::Widget;
+using namespace ::LayoutItem;
+
 #define THIS (reinterpret_cast<QFormLayout*>(_this))
 
 namespace FormLayout

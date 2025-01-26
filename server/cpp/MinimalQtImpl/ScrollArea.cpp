@@ -3,6 +3,11 @@
 
 #include "WidgetInternal.h"
 
+using namespace ::Object;
+using namespace ::Widget;
+using namespace ::Enums;
+using namespace ::AbstractScrollArea;
+
 #define THIS (reinterpret_cast<QScrollArea*>(_this))
 
 namespace ScrollArea

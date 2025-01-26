@@ -7,6 +7,13 @@
 
 #include "util/convert.h"
 
+using namespace ::Object;
+using namespace ::Common;
+using namespace ::Widget;
+using namespace ::Layout;
+using namespace ::Enums;
+using namespace ::LayoutItem;
+
 #define THIS (reinterpret_cast<QGridLayout*>(_this))
 
 namespace GridLayout {

@@ -8,6 +8,13 @@
 
 #include "util/convert.h"
 
+using namespace ::Common;
+using namespace ::Enums;
+using namespace ::Region;
+using namespace ::Font;
+using namespace ::PolygonF;
+using namespace ::Transform;
+
 #define THIS (AS_QPAINTERPATH_PTR(_this))
 
 namespace PainterPath

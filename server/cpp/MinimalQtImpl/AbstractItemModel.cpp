@@ -9,9 +9,19 @@
 
 #include "util/convert.h"
 
+using namespace ::Object;
+using namespace ::Common;
+using namespace ::Enums;
+using namespace ::ModelIndex;
+using namespace ::PersistentModelIndex;
+using namespace ::Variant;
+using namespace ::MimeData;
+using namespace ::SafeReturn;
+
 #define THIS (reinterpret_cast<QAbstractItemModel*>(_this))
 #define SUBCLASSED_THIS (reinterpret_cast<Implementation*>(_this))
 
+// TODO: replace with new macros
 #define PMODELINDEX(x) ((PersistentModelIndex::HandleRef)&x)
 
 namespace AbstractItemModel

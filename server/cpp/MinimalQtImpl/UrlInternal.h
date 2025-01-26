@@ -1,7 +1,6 @@
 #pragma once
 
 #include "generated/Url.h"
-
 #include <QUrl>
 
 #define AS_QURL_PTR(x) (reinterpret_cast<QUrl*>(x))

@@ -4,6 +4,9 @@
 #include "ModelIndexInternal.h"
 #include "util/convert.h"
 
+using namespace ::ModelIndex;
+using namespace ::ItemSelectionCommon;
+
 #define THIS (AS_QITEMSELECTION_PTR(_this))
 
 namespace ItemSelection {

@@ -1,10 +1,20 @@
 #include "generated/ListView.h"
 #include "ListViewInternal.h"
-#include "ModelIndexInternal.h"
 
+#include "ModelIndexInternal.h"
 #include "ObjectInternal.h"
 #include "WidgetInternal.h"
+
 #include "util/convert.h"
+
+using namespace ::Object;
+using namespace ::Common;
+using namespace ::Enums;
+using namespace ::Icon;
+using namespace ::AbstractListModel;
+using namespace ::ModelIndex;
+using namespace ::AbstractItemView;
+using namespace ::Widget;
 
 #define THIS (reinterpret_cast<QListView*>(_this))
 

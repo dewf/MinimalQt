@@ -6,6 +6,15 @@
 #include "HeaderViewInternal.h"
 #include "WidgetInternal.h"
 
+using namespace ::Object;
+using namespace ::Widget;
+using namespace ::Common;
+using namespace ::Icon;
+using namespace ::Enums;
+using namespace ::AbstractItemView;
+using namespace ::ModelIndex;
+using namespace ::HeaderView;
+
 #define THIS (reinterpret_cast<QTreeView*>(_this))
 
 namespace TreeView

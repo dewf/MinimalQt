@@ -5,6 +5,13 @@
 #include "ModelIndexInternal.h"
 #include "ItemSelectionInternal.h"
 
+using namespace ::Object;
+using namespace ::Enums;
+using namespace ::AbstractItemModel;
+using namespace ::ModelIndex;
+using namespace ::PersistentModelIndex;
+using namespace ::ItemSelection;
+
 #define THIS (reinterpret_cast<QAbstractProxyModel*>(_this))
 
 namespace AbstractProxyModel

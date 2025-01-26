@@ -1,9 +1,16 @@
 #include "generated/PushButton.h"
+#include "PushButtonInternal.h"
 
 #include "IconInternal.h"
 #include "MenuInternal.h"
-#include "PushButtonInternal.h"
 #include "WidgetInternal.h"
+
+using namespace ::Object;
+using namespace ::Common;
+using namespace ::Widget;
+using namespace ::Icon;
+using namespace ::AbstractButton;
+using namespace ::Menu;
 
 #define THIS (reinterpret_cast<QPushButton*>(_this))
 

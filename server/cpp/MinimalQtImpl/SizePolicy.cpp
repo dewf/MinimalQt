@@ -1,6 +1,8 @@
 #include "generated/SizePolicy.h"
 #include "SizePolicyInternal.h"
 
+using namespace ::Enums;
+
 #define THIS (AS_QSIZEPOLICY_PTR(_this))
 
 namespace SizePolicy

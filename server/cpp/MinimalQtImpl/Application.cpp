@@ -5,6 +5,10 @@
 
 #include <QStyleFactory>
 
+using namespace ::GuiApplication;
+using namespace ::Object;
+using namespace ::Widget;
+
 #define THIS (reinterpret_cast<QApplication*>(_this))
 
 namespace Application

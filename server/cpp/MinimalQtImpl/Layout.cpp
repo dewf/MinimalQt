@@ -6,6 +6,11 @@
 
 #include "util/convert.h"
 
+using namespace ::Object;
+using namespace ::Common;
+using namespace ::Enums;
+using namespace ::LayoutItem;
+
 #define THIS (reinterpret_cast<QLayout*>(_this))
 
 namespace Layout

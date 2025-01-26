@@ -2,7 +2,11 @@
 #include "PolygonFInternal.h"
 
 #include "PolygonInternal.h"
+
 #include "util/convert.h"
+
+using namespace ::Common;
+using namespace ::Enums;
 
 #define THIS (AS_QPOLYGONF_PTR(_this))
 

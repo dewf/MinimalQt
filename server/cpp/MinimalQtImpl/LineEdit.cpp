@@ -7,6 +7,16 @@
 #include "IconInternal.h"
 #include "ValidatorInternal.h"
 
+using namespace ::Object;
+using namespace ::Widget;
+using namespace ::Common;
+using namespace ::Icon;
+using namespace ::Enums;
+using namespace ::Action;
+using namespace ::Menu;
+using namespace ::Completer;
+using namespace ::Validator;
+
 #include "util/convert.h"
 
 #define THIS (reinterpret_cast<QLineEdit*>(_this))

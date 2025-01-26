@@ -4,6 +4,10 @@
 #include "ObjectInternal.h"
 #include "WidgetInternal.h"
 
+using namespace ::Object;
+using namespace ::AbstractSpinBox;
+using namespace ::Widget;
+
 #define THIS (reinterpret_cast<QSpinBox*>(_this))
 
 namespace SpinBox

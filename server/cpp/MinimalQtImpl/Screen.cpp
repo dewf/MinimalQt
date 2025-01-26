@@ -4,7 +4,14 @@
 #include "ObjectInternal.h"
 #include "PixmapInternal.h"
 #include "TransformInternal.h"
+
 #include "util/convert.h"
+
+using namespace ::Object;
+using namespace ::Common;
+using namespace ::Enums;
+using namespace ::Pixmap;
+using namespace ::Transform;
 
 #define THIS (AS_QSCREEN_PTR(_this))
 

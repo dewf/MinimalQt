@@ -16,8 +16,24 @@
 
 #include "util/convert.h"
 
-#define THIS (AS_QPAINTER_PTR(_this))
+using namespace ::Common;
+using namespace ::Enums;
+using namespace ::Color;
+using namespace ::Pixmap;
+using namespace ::Font;
+using namespace ::Pen;
+using namespace ::Brush;
+using namespace ::TextOption;
+using namespace ::Region;
+using namespace ::Transform;
+using namespace ::Image;
+using namespace ::PaintDevice;
+using namespace ::PainterPath;
+using namespace ::Polygon;
+using namespace ::PolygonF;
+using namespace ::Gradient;
 
+#define THIS (AS_QPAINTER_PTR(_this))
 #define FRAGMENT_THIS (AS_QPIXMAPFRAGMENT_PTR(_this))
 
 namespace Painter

@@ -1,13 +1,21 @@
 #include "generated/StandardItem.h"
+#include "StandardItemInternal.h"
 
 #include "BrushInternal.h"
 #include "FontInternal.h"
 #include "IconInternal.h"
-#include "StandardItemInternal.h"
 #include "VariantInternal.h"
 #include "ModelIndexInternal.h"
 
 #include "util/convert.h"
+
+using namespace ::Icon;
+using namespace ::Enums;
+using namespace ::Variant;
+using namespace ::ModelIndex;
+using namespace ::Brush;
+using namespace ::Font;
+using namespace ::Common;
 
 #define THIS ((QStandardItem*)_this)
 #define AS_ITEM(x) (reinterpret_cast<QStandardItem*>(x))

@@ -1,9 +1,14 @@
 #include "generated/Pen.h"
+#include "PenInternal.h"
 
 #include "BrushInternal.h"
 #include "ColorInternal.h"
-#include "PenInternal.h"
+
 #include "util/convert.h"
+
+using namespace ::Enums;
+using namespace ::Brush;
+using namespace ::Color;
 
 #define THIS (AS_QPEN_PTR(_this))
 

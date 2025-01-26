@@ -5,6 +5,14 @@
 #include "ModelIndexInternal.h"
 #include "SafeReturnInternal.h"
 
+using namespace ::Object;
+using namespace ::Enums;
+using namespace ::AbstractItemModel;
+using namespace ::Variant;
+using namespace ::ModelIndex;
+using namespace ::PersistentModelIndex;
+using namespace ::SafeReturn;
+
 #define ABSLISTMODEL_THIS (reinterpret_cast<QAbstractListModel*>(_this))
 #define SUBCLASSED_THIS (reinterpret_cast<Implementation*>(_this))
 

@@ -6,6 +6,11 @@
 
 #include "util/convert.h"
 
+using namespace ::Pixmap;
+using namespace ::Enums;
+using namespace ::Screen;
+using namespace ::Common;
+
 #define THIS ((QCursor*)_this)
 
 namespace Cursor

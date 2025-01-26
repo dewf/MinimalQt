@@ -6,6 +6,14 @@
 #include "WidgetInternal.h"
 #include "util/convert.h"
 
+using namespace ::Object;
+using namespace ::ModelIndex;
+using namespace ::AbstractItemModel;
+using namespace ::AbstractItemView;
+using namespace ::Enums;
+using namespace ::Widget;
+using namespace ::Common;
+
 #define THIS (reinterpret_cast<QCompleter*>(_this))
 
 namespace Completer

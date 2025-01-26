@@ -5,7 +5,15 @@
 #include "ColorInternal.h"
 #include "IconInternal.h"
 #include "UrlInternal.h"
+
 #include "util/convert.h"
+
+using namespace ::Icon;
+using namespace ::Common;
+using namespace ::Enums;
+using namespace ::Color;
+using namespace ::DateTime;
+using namespace ::Url;
 
 #define THIS (AS_QVARIANT_PTR(_this))
 

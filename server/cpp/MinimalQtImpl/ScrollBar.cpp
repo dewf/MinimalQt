@@ -1,6 +1,11 @@
 #include "generated/ScrollBar.h"
 #include "ScrollBarInternal.h"
+
 #include "WidgetInternal.h"
+
+using namespace ::AbstractSlider;
+using namespace ::Widget;
+using namespace ::Enums;
 
 #define THIS (reinterpret_cast<QScrollBar*>(_this))
 

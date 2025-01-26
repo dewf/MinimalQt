@@ -1,13 +1,18 @@
 #include "generated/TabWidget.h"
-
-#include "IconInternal.h"
 #include "TabWidgetInternal.h"
 
+#include "IconInternal.h"
 #include "ObjectInternal.h"
 #include "WidgetInternal.h"
-#include "IconInternal.h"
 
 #include "util/convert.h"
+
+using namespace ::Object;
+using namespace ::Common;
+using namespace ::Icon;
+using namespace ::Enums;
+using namespace ::Widget;
+using namespace ::TabBar;
 
 #define THIS (reinterpret_cast<QTabWidget*>(_this))
 

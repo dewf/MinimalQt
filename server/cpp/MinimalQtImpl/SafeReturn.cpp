@@ -4,6 +4,9 @@
 #include "ModelIndexInternal.h"
 #include "VariantInternal.h"
 
+using namespace ::ModelIndex;
+using namespace ::Variant;
+
 namespace SafeReturn
 {
     void ModelIndexReturn_setResult(ModelIndexReturnRef _this, ModelIndex::HandleRef value) {

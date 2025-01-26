@@ -7,6 +7,15 @@
 
 #include "util/convert.h"
 
+using namespace ::Object;
+using namespace ::Common;
+using namespace ::Icon;
+using namespace ::Dialog;
+using namespace ::Widget;
+using namespace ::Enums;
+using namespace ::Dir;
+using namespace ::Url;
+
 #define THIS (reinterpret_cast<QFileDialog*>(_this))
 
 namespace FileDialog

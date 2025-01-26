@@ -4,6 +4,12 @@
 #include "ObjectInternal.h"
 #include "WidgetInternal.h"
 
+using namespace ::Object;
+using namespace ::Common;
+using namespace ::Icon;
+using namespace ::Enums;
+using namespace ::Widget;
+
 #define THIS (reinterpret_cast<QGroupBox*>(_this))
 
 namespace GroupBox {

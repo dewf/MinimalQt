@@ -4,6 +4,9 @@
 #include "ObjectInternal.h"
 #include "WidgetInternal.h"
 
+using namespace ::Object;
+using namespace ::Widget;
+
 #define THIS (reinterpret_cast<QStatusBar*>(_this))
 
 namespace StatusBar

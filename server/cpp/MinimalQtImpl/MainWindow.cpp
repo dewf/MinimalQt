@@ -12,6 +12,19 @@
 
 #include "util/convert.h"
 
+using namespace ::Object;
+using namespace ::Common;
+using namespace ::Enums;
+using namespace ::Widget;
+using namespace ::Layout;
+using namespace ::Menu;
+using namespace ::MenuBar;
+using namespace ::Icon;
+using namespace ::DockWidget;
+using namespace ::ToolBar;
+using namespace ::StatusBar;
+using namespace ::TabWidget;
+
 #define THIS (reinterpret_cast<QMainWindow*>(_this))
 
 namespace MainWindow

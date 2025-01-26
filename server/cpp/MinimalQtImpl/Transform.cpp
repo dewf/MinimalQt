@@ -1,13 +1,19 @@
 #include "generated/Transform.h"
+#include "TransformInternal.h"
 
 #include "PainterPathInternal.h"
 #include "PolygonFInternal.h"
 #include "PolygonInternal.h"
 #include "RegionInternal.h"
-#include "TransformInternal.h"
 
-#include <functional>
+// #include <functional>
 #include "util/convert.h"
+
+using namespace ::Common;
+using namespace ::Polygon;
+using namespace ::PolygonF;
+using namespace ::Region;
+using namespace ::Enums;
 
 #define THIS (AS_QTRANSFORM_PTR(_this))
 

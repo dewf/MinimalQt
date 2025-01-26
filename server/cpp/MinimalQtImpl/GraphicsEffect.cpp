@@ -4,6 +4,9 @@
 #include "ObjectInternal.h"
 #include "util/convert.h"
 
+using namespace ::Object;
+using namespace ::Common;
+
 #define THIS (reinterpret_cast<QGraphicsEffect*>(_this))
 
 namespace GraphicsEffect

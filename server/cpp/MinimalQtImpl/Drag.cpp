@@ -7,6 +7,12 @@
 
 #include "util/convert.h"
 
+using namespace ::Object;
+using namespace ::Enums;
+using namespace ::Pixmap;
+using namespace ::Common;
+using namespace ::MimeData;
+
 #define THIS (AS_QDRAG_PTR(_this))
 
 namespace Drag

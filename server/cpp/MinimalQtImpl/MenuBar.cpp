@@ -9,6 +9,14 @@
 
 #include "util/convert.h"
 
+using namespace ::Object;
+using namespace ::Common;
+using namespace ::Enums;
+using namespace ::Icon;
+using namespace ::Widget;
+using namespace ::Menu;
+using namespace ::Action;
+
 #define THIS (reinterpret_cast<QMenuBar*>(_this))
 
 namespace MenuBar

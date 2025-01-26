@@ -3,6 +3,11 @@
 
 #include "ObjectInternal.h"
 
+using namespace ::Widget;
+using namespace ::Object;
+using namespace ::Enums;
+using namespace ::Validator;
+
 #define THIS (reinterpret_cast<QAbstractSpinBox*>(_this))
 
 namespace AbstractSpinBox

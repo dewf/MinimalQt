@@ -3,6 +3,12 @@
 
 #include "util/convert.h"
 
+using namespace ::Object;
+using namespace ::Common;
+using namespace ::Icon;
+using namespace ::Widget;
+using namespace ::Enums;
+
 #define THIS (reinterpret_cast<QFrame*>(_this))
 
 namespace Frame

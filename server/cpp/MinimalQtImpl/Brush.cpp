@@ -7,6 +7,13 @@
 #include "PixmapInternal.h"
 #include "TransformInternal.h"
 
+using namespace ::Enums;
+using namespace ::Image;
+using namespace ::Pixmap;
+using namespace ::Color;
+using namespace ::Gradient;
+using namespace ::Transform;
+
 #define THIS (AS_QBRUSH_PTR(_this))
 
 namespace Brush

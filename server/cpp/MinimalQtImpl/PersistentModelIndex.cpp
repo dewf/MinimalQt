@@ -1,4 +1,5 @@
 #include "generated/PersistentModelIndex.h"
+#include "PersistentModelIndexInternal.h"
 
 namespace PersistentModelIndex
 {

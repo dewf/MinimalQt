@@ -1,6 +1,8 @@
 #include "generated/TextOption.h"
 #include "TextOptionInternal.h"
 
+using namespace ::Enums;
+
 #define THIS (AS_QTEXTOPTION_PTR(_this))
 
 namespace TextOption

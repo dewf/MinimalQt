@@ -1,7 +1,6 @@
 #pragma once
 
 #include "generated/Action.h"
-
 #include <QAction>
 
 #define AS_QACTION_PTR(x) (reinterpret_cast<QAction*>(x))

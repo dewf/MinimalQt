@@ -1,6 +1,12 @@
 #include "generated/Slider.h"
 #include "SliderInternal.h"
+
 #include "WidgetInternal.h"
+
+using namespace ::Object;
+using namespace ::Widget;
+using namespace ::Enums;
+using namespace ::AbstractSlider;
 
 #define THIS (reinterpret_cast<QSlider*>(_this))
 

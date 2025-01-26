@@ -4,6 +4,9 @@
 #include "PolygonFInternal.h"
 #include "util/convert.h"
 
+using namespace ::Common;
+using namespace ::Enums;
+
 #define THIS (AS_QPOLYGON_PTR(_this))
 
 namespace Polygon

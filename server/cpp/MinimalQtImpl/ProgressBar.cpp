@@ -3,7 +3,14 @@
 
 #include "ObjectInternal.h"
 #include "WidgetInternal.h"
+
 #include "util/convert.h"
+
+using namespace ::Object;
+using namespace ::Common;
+using namespace ::Enums;
+using namespace ::Icon;
+using namespace ::Widget;
 
 #define THIS (reinterpret_cast<QProgressBar*>(_this))
 

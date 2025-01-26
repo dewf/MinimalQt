@@ -1,6 +1,10 @@
 #include "generated/SplitterHandle.h"
 #include "SplitterHandleInternal.h"
 
+using namespace ::Object;
+using namespace ::Widget;
+using namespace ::Enums;
+
 #define THIS (reinterpret_cast<QSplitterHandle*>(_this))
 
 namespace SplitterHandle

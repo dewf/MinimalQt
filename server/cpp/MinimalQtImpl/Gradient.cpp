@@ -4,6 +4,9 @@
 #include "ColorInternal.h"
 #include "util/convert.h"
 
+using namespace ::Color;
+using namespace ::Common;
+
 #define GRAD_THIS (AS_QGRADIENT_PTR(_this))
 
 namespace Gradient

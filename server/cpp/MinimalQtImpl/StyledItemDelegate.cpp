@@ -4,6 +4,14 @@
 #include "ModelIndexInternal.h"
 #include "ObjectInternal.h"
 
+using namespace ::Object;
+using namespace ::AbstractItemDelegate;
+using namespace ::Common;
+using namespace ::Widget;
+using namespace ::AbstractItemModel;
+using namespace ::ModelIndex;
+using namespace ::StyleOptionViewItem;
+
 #define THIS (reinterpret_cast<QStyledItemDelegate*>(_this))
 
 namespace StyledItemDelegate

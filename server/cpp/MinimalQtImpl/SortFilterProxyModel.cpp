@@ -5,6 +5,14 @@
 #include "RegularExpressionInternal.h"
 #include "ModelIndexInternal.h"
 
+using namespace ::Object;
+using namespace ::Enums;
+using namespace ::AbstractItemModel;
+using namespace ::AbstractProxyModel;
+using namespace ::RegularExpression;
+using namespace ::ModelIndex;
+using namespace ::PersistentModelIndex;
+
 #define THIS (reinterpret_cast<QSortFilterProxyModel*>(_this))
 
 namespace SortFilterProxyModel

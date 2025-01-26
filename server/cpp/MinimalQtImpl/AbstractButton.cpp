@@ -1,6 +1,12 @@
 #include "generated/AbstractButton.h"
 #include "AbstractButtonInternal.h"
 
+using namespace ::Object;
+using namespace ::Common;
+using namespace ::KeySequence;
+using namespace ::Widget;
+using namespace ::Icon;
+
 #include "ObjectInternal.h"
 #include "IconInternal.h"
 #include "KeySequenceInternal.h"

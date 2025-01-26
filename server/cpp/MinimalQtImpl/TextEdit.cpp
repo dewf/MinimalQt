@@ -1,10 +1,9 @@
 #include "generated/TextEdit.h"
+#include "TextEditInternal.h"
 
 #include "ColorInternal.h"
 #include "FontInternal.h"
 #include "RegularExpressionInternal.h"
-#include "TextEditInternal.h"
-
 #include "TextCursorInternal.h"
 #include "TextCharFormatInternal.h"
 #include "UrlInternal.h"
@@ -14,6 +13,21 @@
 
 #include "util/convert.h"
 
+using namespace ::Object;
+using namespace ::Widget;
+using namespace ::Common;
+using namespace ::Enums;
+using namespace ::AbstractScrollArea;
+using namespace ::Menu;
+using namespace ::TextCursor;
+using namespace ::TextCharFormat;
+using namespace ::TextDocument;
+using namespace ::TextOption;
+using namespace ::RegularExpression;
+using namespace ::Url;
+using namespace ::Color;
+using namespace ::Font;
+using namespace ::Variant;
 
 #define THIS (reinterpret_cast<QTextEdit*>(_this))
 

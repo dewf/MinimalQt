@@ -1,6 +1,8 @@
 #include "generated/Font.h"
 #include "FontInternal.h"
 
+using namespace ::PaintDevice;
+
 #include "util/convert.h"
 
 #define THIS (AS_QFONT_PTR(_this))

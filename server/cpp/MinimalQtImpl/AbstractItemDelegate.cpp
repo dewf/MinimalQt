@@ -7,6 +7,16 @@
 #include "PainterInternal.h"
 #include "StyleOptionViewItemInternal.h"
 #include "WidgetInternal.h"
+
+using namespace ::Object;
+using namespace ::Widget;
+using namespace ::Common;
+using namespace ::ModelIndex;
+using namespace ::StyleOptionViewItem;
+using namespace ::Event;
+using namespace ::AbstractItemModel;
+using namespace ::Painter;
+
 #include "util/convert.h"
 
 #define THIS (reinterpret_cast<QAbstractItemDelegate*>(_this))

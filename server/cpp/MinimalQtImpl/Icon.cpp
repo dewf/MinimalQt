@@ -5,6 +5,11 @@
 #include "PainterInternal.h"
 #include "util/convert.h"
 
+using namespace ::Pixmap;
+using namespace ::Common;
+using namespace ::Painter;
+using namespace ::Enums;
+
 #define THIS (AS_QICON_PTR(_this))
 
 namespace Icon

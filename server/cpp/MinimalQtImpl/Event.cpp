@@ -1,6 +1,8 @@
 #include "generated/Event.h"
 #include "EventInternal.h"
 
+using namespace ::Enums;
+
 #define THIS (AS_QEVENT_PTR(_this))
 
 namespace Event

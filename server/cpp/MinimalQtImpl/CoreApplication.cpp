@@ -3,6 +3,8 @@
 
 #include "ObjectInternal.h"
 
+using namespace ::Object;
+
 #define THIS (reinterpret_cast<QCoreApplication*>(_this))
 
 namespace CoreApplication

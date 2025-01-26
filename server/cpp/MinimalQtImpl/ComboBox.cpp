@@ -10,6 +10,20 @@
 
 #include "util/convert.h"
 
+using namespace ::Object;
+using namespace ::Common;
+using namespace ::Enums;
+using namespace ::Widget;
+using namespace ::Variant;
+using namespace ::AbstractItemModel;
+using namespace ::AbstractItemDelegate;
+using namespace ::AbstractItemView;
+using namespace ::Icon;
+using namespace ::Completer;
+using namespace ::LineEdit;
+using namespace ::Validator;
+using namespace ::ModelIndex;
+
 #define THIS (reinterpret_cast<QComboBox*>(_this))
 
 namespace ComboBox

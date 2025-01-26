@@ -3,6 +3,10 @@
 
 #include "ObjectInternal.h"
 
+using namespace ::Object;
+using namespace ::Widget;
+using namespace ::Enums;
+
 #define THIS (reinterpret_cast<QAbstractSlider*>(_this))
 
 namespace AbstractSlider

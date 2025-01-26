@@ -1,6 +1,9 @@
 #include "generated/SessionManager.h"
 #include "SessionManagerInternal.h"
+
 #include "util/convert.h"
+
+using namespace ::Object;
 
 #define THIS (reinterpret_cast<QSessionManager*>(_this))
 

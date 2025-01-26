@@ -10,6 +10,17 @@
 
 #include "util/convert.h"
 
+using namespace ::Object;
+using namespace ::Common;
+using namespace ::Enums;
+using namespace ::Icon;
+using namespace ::AbstractScrollArea;
+using namespace ::AbstractItemModel;
+using namespace ::ModelIndex;
+using namespace ::AbstractItemDelegate;
+using namespace ::ItemSelectionModel;
+using namespace ::Widget;
+
 #define THIS (reinterpret_cast<QAbstractItemView*>(_this))
 
 namespace AbstractItemView

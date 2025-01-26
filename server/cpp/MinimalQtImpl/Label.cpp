@@ -4,6 +4,14 @@
 #include "PixmapInternal.h"
 #include "ObjectInternal.h"
 
+using namespace ::Object;
+using namespace ::Common;
+using namespace ::Frame;
+using namespace ::Icon;
+using namespace ::Enums;
+using namespace ::Pixmap;
+using namespace ::Widget;
+
 #define THIS (reinterpret_cast<QLabel*>(_this))
 
 namespace Label

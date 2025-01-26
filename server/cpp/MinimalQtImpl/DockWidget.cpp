@@ -3,6 +3,11 @@
 
 #include "ObjectInternal.h"
 
+using namespace ::Object;
+using namespace ::Widget;
+using namespace ::Enums;
+using namespace ::Action;
+
 #define THIS (reinterpret_cast<QDockWidget*>(_this))
 
 namespace DockWidget

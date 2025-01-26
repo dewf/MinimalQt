@@ -4,7 +4,14 @@
 #include "ObjectInternal.h"
 #include "ModelIndexInternal.h"
 #include "StandardItemInternal.h"
+
 #include "util/convert.h"
+
+using namespace ::Object;
+using namespace ::AbstractItemModel;
+using namespace ::StandardItem;
+using namespace ::Enums;
+using namespace ::ModelIndex;
 
 #define THIS (reinterpret_cast<QStandardItemModel*>(_this))
 #define AS_ITEM(x) (reinterpret_cast<QStandardItem*>(x))

@@ -2,7 +2,12 @@
 #include "WindowInternal.h"
 
 #include "ObjectInternal.h"
+
 #include "util/convert.h"
+
+using namespace ::Object;
+using namespace ::Enums;
+using namespace ::Screen;
 
 #define THIS (reinterpret_cast<QWindow*>(_this))
 

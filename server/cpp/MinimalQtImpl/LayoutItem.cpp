@@ -3,6 +3,10 @@
 
 #include "util/convert.h"
 
+using namespace ::Enums;
+using namespace ::Common;
+using namespace ::SizePolicy;
+
 #define THIS (reinterpret_cast<QLayoutItem*>(_this))
 
 namespace LayoutItem

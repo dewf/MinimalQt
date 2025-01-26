@@ -5,6 +5,13 @@
 #include "LayoutInternal.h"
 #include "WidgetInternal.h"
 
+using namespace ::Common;
+using namespace ::Widget;
+using namespace ::Layout;
+using namespace ::Enums;
+using namespace ::Object;
+using namespace ::LayoutItem;
+
 #define THIS (reinterpret_cast<QBoxLayout*>(_this))
 
 namespace BoxLayout

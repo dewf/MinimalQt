@@ -3,6 +3,9 @@
 
 #include "ObjectInternal.h"
 
+using namespace ::Object;
+using namespace ::Enums;
+
 #define THIS (reinterpret_cast<QTimer*>(_this))
 
 namespace Timer

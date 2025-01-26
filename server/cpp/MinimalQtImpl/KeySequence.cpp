@@ -1,6 +1,8 @@
 #include "generated/KeySequence.h"
 #include "KeySequenceInternal.h"
 
+using namespace ::Enums;
+
 #define THIS (AS_QKEYSEQ_PTR(_this))
 
 namespace KeySequence

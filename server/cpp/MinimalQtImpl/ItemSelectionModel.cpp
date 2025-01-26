@@ -1,11 +1,18 @@
 #include "generated/ItemSelectionModel.h"
 #include "ItemSelectionModelInternal.h"
 
+#include "ObjectInternal.h"
 #include "ModelIndexInternal.h"
 #include "ItemSelectionInternal.h"
+
 #include "util/convert.h"
 
-#include "ObjectInternal.h"
+using namespace ::Object;
+using namespace ::ModelIndex;
+using namespace ::AbstractItemModel;
+using namespace ::ItemSelectionCommon;
+using namespace ::ItemSelection;
+
 
 #define THIS (reinterpret_cast<QItemSelectionModel*>(_this))
 

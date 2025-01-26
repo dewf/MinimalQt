@@ -9,6 +9,17 @@
 #include "PixmapInternal.h"
 #include "util/convert.h"
 
+using namespace ::Object;
+using namespace ::Common;
+using namespace ::Icon;
+using namespace ::Enums;
+using namespace ::Dialog;
+using namespace ::AbstractButton;
+using namespace ::PushButton;
+using namespace ::CheckBox;
+using namespace ::Widget;
+using namespace ::Pixmap;
+
 #define THIS (reinterpret_cast<QMessageBox*>(_this))
 
 namespace MessageBox

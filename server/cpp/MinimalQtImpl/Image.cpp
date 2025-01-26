@@ -6,6 +6,12 @@
 
 #include "util/convert.h"
 
+using namespace ::PaintDevice;
+using namespace ::Common;
+using namespace ::Enums;
+using namespace ::Color;
+using namespace ::Transform;
+
 #define THIS (AS_QIMAGE_PTR(_this))
 
 namespace Image

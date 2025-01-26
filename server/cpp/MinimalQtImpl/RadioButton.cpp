@@ -1,6 +1,11 @@
 #include "generated/RadioButton.h"
 #include "RadioButtonInternal.h"
+
 #include "WidgetInternal.h"
+
+using namespace ::Object;
+using namespace ::Widget;
+using namespace ::AbstractButton;
 
 #define THIS (reinterpret_cast<QRadioButton*>(_this))
 

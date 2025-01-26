@@ -1,11 +1,18 @@
 #include "generated/ToolBar.h"
-
-#include "ActionInternal.h"
 #include "ToolBarInternal.h"
 
+#include "ActionInternal.h"
 #include "ObjectInternal.h"
 #include "WidgetInternal.h"
+
 #include "util/convert.h"
+
+using namespace ::Object;
+using namespace ::Common;
+using namespace ::Enums;
+using namespace ::Widget;
+using namespace ::Action;
+
 
 #define THIS (reinterpret_cast<QToolBar*>(_this))
 

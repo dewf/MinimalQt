@@ -10,6 +10,13 @@
 
 #include "util/convert.h"
 
+using namespace ::Object;
+using namespace ::KeySequence;
+using namespace ::Icon;
+using namespace ::Enums;
+using namespace ::Font;
+using namespace ::Variant;
+
 #define THIS (reinterpret_cast<QAction*>(_this))
 
 namespace Action

@@ -43,7 +43,7 @@ opaque Handle extends Object.Handle {
     WidgetHandle parentWidget();
     void removeItem(LayoutItem.Handle item);
     void removeWidget(WidgetHandle widget);
-    LayoutItem.Handle replaceWidget(WidgetHandle from, WidgetHandle to, FindChildOptions options_ = FindChildOptions.FindChildrenRecursively);
+    LayoutItem.Handle replaceWidget(WidgetHandle from, WidgetHandle to, FindChildOptions options_ = FindChildrenRecursively);
     bool setAlignment(WidgetHandle w, Alignment alignment);
     bool setAlignment(Handle l, Alignment alignment);
     void setContentsMargins(Margins margins);

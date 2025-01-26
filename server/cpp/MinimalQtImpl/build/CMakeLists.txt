@@ -323,6 +323,7 @@ add_library(MinimalQtImpl STATIC
     ../generated/PersistentModelIndex.h
     ../generated/PersistentModelIndex_wrappers.cpp
     ../PersistentModelIndex.cpp
+    ../PersistentModelIndexInternal.h
 
     ../generated/Pixmap.h
     ../generated/Pixmap_wrappers.cpp
@@ -361,13 +362,18 @@ add_library(MinimalQtImpl STATIC
 
     ../generated/Region.h
     ../generated/Region_wrappers.cpp
-    ../RegionInternal.h
     ../Region.cpp
+    ../RegionInternal.h
 
     ../generated/RegularExpression.h
     ../generated/RegularExpression_wrappers.cpp
-    ../RegularExpressionInternal.h
     ../RegularExpression.cpp
+    ../RegularExpressionInternal.h
+
+    ../generated/RegularExpressionValidator.h
+    ../generated/RegularExpressionValidator_wrappers.cpp
+    ../RegularExpressionValidatorInternal.h
+    ../RegularExpressionValidator.cpp
 
     ../generated/SafeReturn.h
     ../generated/SafeReturn_wrappers.cpp

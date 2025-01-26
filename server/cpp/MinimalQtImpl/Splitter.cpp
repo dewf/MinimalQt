@@ -1,9 +1,16 @@
 #include "generated/Splitter.h"
 #include "SplitterInternal.h"
-#include "WidgetInternal.h"
 
+#include "WidgetInternal.h"
 #include "ObjectInternal.h"
+
 #include "util/convert.h"
+
+using namespace ::Object;
+using namespace ::Widget;
+using namespace ::Frame;
+using namespace ::Enums;
+using namespace ::SplitterHandle;
 
 #define THIS (reinterpret_cast<QSplitter*>(_this))
 

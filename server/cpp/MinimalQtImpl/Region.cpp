@@ -1,8 +1,13 @@
 #include "generated/Region.h"
+#include "RegionInternal.h"
 
 #include "PolygonInternal.h"
-#include "RegionInternal.h"
+
 #include "util/convert.h"
+
+using namespace ::Common;
+using namespace ::Polygon;
+using namespace ::Enums;
 
 #define THIS (AS_QREGION_PTR(_this))
 

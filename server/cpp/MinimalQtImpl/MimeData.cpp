@@ -1,12 +1,14 @@
 #include "generated/MimeData.h"
 #include "MimeDataInternal.h"
 
-#include <QUrl>
-
 #include "UrlInternal.h"
 #include "VariantInternal.h"
 
 #include "util/convert.h"
+
+using namespace ::Object;
+using namespace ::Variant;
+using namespace ::Url;
 
 #define THIS (reinterpret_cast<QMimeData*>(_this))
 

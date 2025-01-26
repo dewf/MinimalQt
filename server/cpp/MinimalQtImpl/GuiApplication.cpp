@@ -3,6 +3,13 @@
 
 #include "ObjectInternal.h"
 
+using namespace ::Object;
+using namespace ::CoreApplication;
+using namespace ::Enums;
+using namespace ::SessionManager;
+using namespace ::Screen;
+using namespace ::Window;
+
 #define THIS (reinterpret_cast<QGuiApplication*>(_this))
 
 namespace GuiApplication

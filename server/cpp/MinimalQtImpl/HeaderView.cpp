@@ -3,7 +3,14 @@
 
 #include "ObjectInternal.h"
 #include "WidgetInternal.h"
+
 #include "util/convert.h"
+
+using namespace ::Object;
+using namespace ::AbstractItemView;
+using namespace ::Enums;
+using namespace ::Widget;
+using namespace ::Common;
 
 #define THIS (reinterpret_cast<QHeaderView*>(_this))
 

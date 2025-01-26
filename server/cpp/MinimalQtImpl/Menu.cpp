@@ -1,12 +1,18 @@
 #include "generated/Menu.h"
 #include "MenuInternal.h"
 
-#include "util/convert.h"
-
 #include "ObjectInternal.h"
 #include "WidgetInternal.h"
 #include "ActionInternal.h"
 #include "IconInternal.h"
+
+#include "util/convert.h"
+
+using namespace ::Object;
+using namespace ::Common;
+using namespace ::Widget;
+using namespace ::Action;
+using namespace ::Icon;
 
 #define THIS (reinterpret_cast<QMenu*>(_this))
 

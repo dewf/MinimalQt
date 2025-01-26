@@ -1,6 +1,10 @@
 #include "generated/TextDocument.h"
 #include "TextDocumentInternal.h"
 
+using namespace ::Object;
+using namespace ::Url;
+using namespace ::TextCursor;
+
 namespace TextDocument
 {
     struct __Handle {

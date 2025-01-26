@@ -1,7 +1,6 @@
 #pragma once
 
 #include "generated/Object.h"
-
 #include <QObject>
 
 #define AS_QOBJECT_PTR(x) (reinterpret_cast<QObject*>(x))

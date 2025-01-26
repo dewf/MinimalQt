@@ -4,6 +4,11 @@
 #include "ObjectInternal.h"
 #include "WidgetInternal.h"
 
+using namespace ::Object;
+using namespace ::Widget;
+using namespace ::AbstractButton;
+using namespace ::Enums;
+
 #define THIS (reinterpret_cast<QCheckBox*>(_this))
 
 namespace CheckBox
