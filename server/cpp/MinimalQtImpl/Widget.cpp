@@ -1051,7 +1051,7 @@ namespace Widget
                 auto pos = toPoint(event->pos());
                 auto button = static_cast<MouseButton>(event->button());
                 auto modifiers = event->modifiers();
-                methods->mousePressEvent(pos, button, Modifiers(modifiers));
+                methods->mousePressEvent(pos, button, KeyboardModifiers(modifiers));
                 // prevent from propagating, see notes above
                 event->accept();
             } else {
@@ -1064,7 +1064,7 @@ namespace Widget
                 auto pos = toPoint(event->pos());
                 auto buttons = event->buttons();
                 auto modifiers = event->modifiers();
-                methods->mouseMoveEvent(pos, MouseButtons(buttons), Modifiers(modifiers));
+                methods->mouseMoveEvent(pos, MouseButtons(buttons), KeyboardModifiers(modifiers));
                 // prevent from propagating, see notes above
                 event->accept();
             } else {
@@ -1077,7 +1077,7 @@ namespace Widget
                 auto pos = toPoint(event->pos());
                 auto button = static_cast<MouseButton>(event->button());
                 auto modifiers = event->modifiers();
-                methods->mouseReleaseEvent(pos, button, Modifiers(modifiers));
+                methods->mouseReleaseEvent(pos, button, KeyboardModifiers(modifiers));
                 event->accept();
             } else {
                 QWidget::mouseReleaseEvent(event);
@@ -1118,7 +1118,7 @@ namespace Widget
                 auto modifiers = event->modifiers();
                 auto mimeOpaque = (MimeData::HandleRef)event->mimeData();
                 auto moveEvent = reinterpret_cast<DragMoveEvent_HandleRef>(event);
-                methods->dragMoveEvent(pos, Modifiers(modifiers), mimeOpaque, moveEvent, true);
+                methods->dragMoveEvent(pos, KeyboardModifiers(modifiers), mimeOpaque, moveEvent, true);
                 // other side needs to call acceptProposedAction if it's OK, otherwise ... .ignore?
             } else {
                 QWidget::dragEnterEvent(event);
@@ -1131,7 +1131,7 @@ namespace Widget
                 auto modifiers = event->modifiers();
                 auto mimeOpaque = (MimeData::HandleRef)event->mimeData();
                 auto moveEvent = reinterpret_cast<DragMoveEvent_HandleRef>(event);
-                methods->dragMoveEvent(pos, Modifiers(modifiers), mimeOpaque, moveEvent, false);
+                methods->dragMoveEvent(pos, KeyboardModifiers(modifiers), mimeOpaque, moveEvent, false);
                 // other side needs to call acceptProposedAction if it's OK, otherwise ... .ignore?
             } else {
                 QWidget::dragMoveEvent(event);
@@ -1153,7 +1153,7 @@ namespace Widget
                 auto modifiers = event->modifiers();
                 auto mimeOpaque = (MimeData::HandleRef)event->mimeData();
                 auto action = static_cast<DropAction>(event->proposedAction());
-                methods->dropEvent(pos, Modifiers(modifiers), mimeOpaque, action);
+                methods->dropEvent(pos, KeyboardModifiers(modifiers), mimeOpaque, action);
                 event->acceptProposedAction();
             } else {
                 QWidget::dropEvent(event);

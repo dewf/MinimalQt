@@ -1,5 +1,6 @@
 module Enums;
 
+@withflags(WindowFlags)
 enum WindowType : uint32 {
     Widget = 0x00000000,
     Window = 0x00000001,
@@ -43,59 +44,8 @@ enum WindowType : uint32 {
     WindowFullscreenButtonHint = 0x80000000
 }
 
-flags WindowFlags : uint32 { // aka WindowType enum
-    Widget = 0x00000000,
-    Window = 0x00000001,
-    Dialog = 0x00000002 | Window,
-    Sheet = 0x00000004 | Window,
-    Drawer = Sheet | Dialog,
-    Popup = 0x00000008 | Window,
-    Tool = Popup | Dialog,
-    ToolTip = Popup | Sheet,
-    SplashScreen = ToolTip | Dialog,
-    Desktop = 0x00000010 | Window,
-    SubWindow = 0x00000012, // Note QTBUG-115729 before using
-    ForeignWindow = 0x00000020 | Window,
-    CoverWindow = 0x00000040 | Window,
-
-    WindowType_Mask = 0x000000ff,
-    MSWindowsFixedSizeDialogHint = 0x00000100,
-    MSWindowsOwnDC = 0x00000200,
-    BypassWindowManagerHint = 0x00000400,
-    X11BypassWindowManagerHint = BypassWindowManagerHint,
-    FramelessWindowHint = 0x00000800,
-    WindowTitleHint = 0x00001000,
-    WindowSystemMenuHint = 0x00002000,
-    WindowMinimizeButtonHint = 0x00004000,
-    WindowMaximizeButtonHint = 0x00008000,
-    WindowMinMaxButtonsHint = WindowMinimizeButtonHint | WindowMaximizeButtonHint,
-    WindowContextHelpButtonHint = 0x00010000,
-    WindowShadeButtonHint = 0x00020000,
-    WindowStaysOnTopHint = 0x00040000,
-    WindowTransparentForInput = 0x00080000,
-    WindowOverridesSystemGestures = 0x00100000,
-    WindowDoesNotAcceptFocus = 0x00200000,
-    MaximizeUsingFullscreenGeometryHint = 0x00400000,
-
-    CustomizeWindowHint = 0x02000000,
-    WindowStaysOnBottomHint = 0x04000000,
-    WindowCloseButtonHint = 0x08000000,
-    MacWindowToolBarButtonHint = 0x10000000,
-    BypassGraphicsProxyWidget = 0x20000000,
-    NoDropShadowWindowHint = 0x40000000,
-    WindowFullscreenButtonHint = 0x80000000
-}
-
-
+@withflags(WindowStates)
 enum WindowState {
-    WindowNoState    = 0x00000000,
-    WindowMinimized  = 0x00000001,
-    WindowMaximized  = 0x00000002,
-    WindowFullScreen = 0x00000004,
-    WindowActive     = 0x00000008
-}
-
-flags WindowStates {
     WindowNoState    = 0x00000000,
     WindowMinimized  = 0x00000001,
     WindowMaximized  = 0x00000002,
@@ -128,27 +78,14 @@ flags Alignment {
     AlignCenter = AlignVCenter | AlignHCenter
 }
 
+@withflags(Orientations)
 enum Orientation {
     Horizontal = 0x1,
     Vertical = 0x2
 }
 
-flags Orientations {
-    Horizontal = 0x1,
-    Vertical = 0x2
-}
-
+@withflags(ToolBarAreas)
 enum ToolBarArea {
-    LeftToolBarArea = 0x1,
-    RightToolBarArea = 0x2,
-    TopToolBarArea = 0x4,
-    BottomToolBarArea = 0x8,
-    ToolBarArea_Mask = 0xf,
-    AllToolBarAreas = ToolBarArea_Mask,
-    NoToolBarArea = 0
-}
-
-flags ToolBarAreas {
     LeftToolBarArea = 0x1,
     RightToolBarArea = 0x2,
     TopToolBarArea = 0x4,
@@ -229,16 +166,8 @@ enum ShortcutContext {
     WidgetWithChildrenShortcut
 }
 
+@withflags(DropActions)
 enum DropAction {
-    CopyAction = 0x1,
-    MoveAction = 0x2,
-    LinkAction = 0x4,
-    ActionMask = 0xff,
-    TargetMoveAction = 0x8002,
-    IgnoreAction = 0x0
-}
-
-flags DropActions {
     CopyAction = 0x1,
     MoveAction = 0x2,
     LinkAction = 0x4,
@@ -292,33 +221,8 @@ flags InputMethodHints : uint32 {
     ImhExclusiveInputMask = 0xffff0000
 }
 
+@withflags(InputMethodQueries)
 enum InputMethodQuery : uint32 {
-    ImEnabled = 0x1,
-    ImCursorRectangle = 0x2,
-    ImFont = 0x4,
-    ImCursorPosition = 0x8,
-    ImSurroundingText = 0x10,
-    ImCurrentSelection = 0x20,
-    ImMaximumTextLength = 0x40,
-    ImAnchorPosition = 0x80,
-    ImHints = 0x100,
-    ImPreferredLanguage = 0x200,
-
-    ImAbsolutePosition = 0x400,
-    ImTextBeforeCursor = 0x800,
-    ImTextAfterCursor = 0x1000,
-    ImEnterKeyType = 0x2000,
-    ImAnchorRectangle = 0x4000,
-    ImInputItemClipRectangle = 0x8000,
-
-    ImReadOnly = 0x10000,
-    ImPlatformData = 0x80000000,
-    ImQueryInput = ImCursorRectangle | ImCursorPosition | ImSurroundingText |
-                    ImCurrentSelection | ImAnchorRectangle | ImAnchorPosition,
-    ImQueryAll = 0xffffffff
-}
-
-flags InputMethodQueries : uint32 {
     ImEnabled = 0x1,
     ImCursorRectangle = 0x2,
     ImFont = 0x4,
@@ -394,6 +298,7 @@ enum TimerId {
     Invalid = 0,
 }
 
+@withflags(MouseButtons)
 enum MouseButton {
     NoButton         = 0x00000000,
     LeftButton       = 0x00000001,
@@ -415,29 +320,8 @@ enum MouseButton {
     ExtraButton9     = 0x00000800
 }
 
-flags MouseButtons {
-    NoButton         = 0x00000000,
-    LeftButton       = 0x00000001,
-    RightButton      = 0x00000002,
-    MiddleButton     = 0x00000004,
-    BackButton       = 0x00000008,
-    XButton1         = BackButton,
-    ExtraButton1     = XButton1,
-    ForwardButton    = 0x00000010,
-    XButton2         = ForwardButton,
-    ExtraButton2     = ForwardButton,
-    TaskButton       = 0x00000020,
-    ExtraButton3     = TaskButton,
-    ExtraButton4     = 0x00000040,
-    ExtraButton5     = 0x00000080,
-    ExtraButton6     = 0x00000100,
-    ExtraButton7     = 0x00000200,
-    ExtraButton8     = 0x00000400,
-    ExtraButton9     = 0x00000800
-}
-
-flags Modifiers : uint32 {
-    // Qt::KeyboardModifiers
+@withflags(KeyboardModifiers)
+enum KeyboardModifier : uint {
     NoModifier           = 0x00000000,
     ShiftModifier        = 0x02000000,
     ControlModifier      = 0x04000000,
@@ -445,10 +329,12 @@ flags Modifiers : uint32 {
     MetaModifier         = 0x10000000,
     KeypadModifier       = 0x20000000,
     GroupSwitchModifier  = 0x40000000,
+    // Do not extend the mask to include 0x01000000
     KeyboardModifierMask = 0xfe000000
 }
 
-flags ImageConversionFlags {
+@withflags(ImageConversionFlags)
+enum ImageConversionFlag {
     ColorMode_Mask          = 0x00000003,
     AutoColor               = 0x00000000,
     ColorOnly               = 0x00000003,
@@ -599,18 +485,8 @@ flags MatchFlags {
     MatchRecursive = 64
 }
 
+@withflags(DockWidgetAreas)
 enum DockWidgetArea {
-    LeftDockWidgetArea = 0x1,
-    RightDockWidgetArea = 0x2,
-    TopDockWidgetArea = 0x4,
-    BottomDockWidgetArea = 0x8,
-
-    DockWidgetArea_Mask = 0xf,
-    AllDockWidgetAreas = DockWidgetArea_Mask,
-    NoDockWidgetArea = 0
-}
-
-flags DockWidgetAreas {
     LeftDockWidgetArea = 0x1,
     RightDockWidgetArea = 0x2,
     TopDockWidgetArea = 0x4,
@@ -641,14 +517,8 @@ enum GestureType : uint32
     LastGestureType   = ~0u
 }
 
+@withflags(GestureFlags)
 enum GestureFlag
-{
-    DontStartGestureOnChildren = 0x01,
-    ReceivePartialGestures     = 0x02,
-    IgnoredGesturesPropagateToParent = 0x04
-}
-
-flags GestureFlags
 {
     DontStartGestureOnChildren = 0x01,
     ReceivePartialGestures     = 0x02,
@@ -829,16 +699,13 @@ enum ClipOperation {
     IntersectClip
 }
 
+@withflags(FindChildOptions)
 enum FindChildOption {
     FindDirectChildrenOnly = 0x0,
     FindChildrenRecursively = 0x1
 }
 
-flags FindChildOptions {
-    FindDirectChildrenOnly = 0x0,
-    FindChildrenRecursively = 0x1
-}
-
+@withflags(ApplicationStates)
 enum ApplicationState {
     ApplicationSuspended    = 0x00000000,
     ApplicationHidden       = 0x00000001,
@@ -846,22 +713,8 @@ enum ApplicationState {
     ApplicationActive       = 0x00000004
 }
 
-flags ApplicationStates {
-    ApplicationSuspended    = 0x00000000,
-    ApplicationHidden       = 0x00000001,
-    ApplicationInactive     = 0x00000002,
-    ApplicationActive       = 0x00000004
-}
-
+@withflags(ScreenOrientations)
 enum ScreenOrientation {
-    PrimaryOrientation           = 0x00000000,
-    PortraitOrientation          = 0x00000001,
-    LandscapeOrientation         = 0x00000002,
-    InvertedPortraitOrientation  = 0x00000004,
-    InvertedLandscapeOrientation = 0x00000008
-}
-
-flags ScreenOrientations {
     PrimaryOrientation           = 0x00000000,
     PortraitOrientation          = 0x00000001,
     LandscapeOrientation         = 0x00000002,

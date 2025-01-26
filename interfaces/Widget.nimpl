@@ -358,18 +358,18 @@ namedbits MethodMask {
 interface DelegateMethods {
     void showEvent(bool isSpontaneous);
     void paintEvent(Painter.Handle painter, Region.Handle region);
-    void mousePressEvent(Point pos, MouseButton button, Modifiers modifiers);
-    void mouseMoveEvent(Point pos, MouseButtons buttons, Modifiers modifiers);
-    void mouseReleaseEvent(Point pos, MouseButton button, Modifiers modifiers);
+    void mousePressEvent(Point pos, MouseButton button, KeyboardModifiers modifiers);
+    void mouseMoveEvent(Point pos, MouseButtons buttons, KeyboardModifiers modifiers);
+    void mouseReleaseEvent(Point pos, MouseButton button, KeyboardModifiers modifiers);
     void enterEvent(Point pos);
     void leaveEvent();
     Size sizeHint();
     void resizeEvent(Size oldSize, Size newSize);
 
     // dragMove does double duty, also an 'enter' event - check isEnterEvent flag
-    void dragMoveEvent(Point pos, Modifiers modifiers, MimeData.Handle mimeData, DragMoveEvent_Handle moveEvent, bool isEnterEvent);
+    void dragMoveEvent(Point pos, KeyboardModifiers modifiers, MimeData.Handle mimeData, DragMoveEvent_Handle moveEvent, bool isEnterEvent);
     void dragLeaveEvent();
-    void dropEvent(Point pos, Modifiers modifiers, MimeData.Handle mimeData, DropAction action);
+    void dropEvent(Point pos, KeyboardModifiers modifiers, MimeData.Handle mimeData, DropAction action);
 }
 
 opaque Delegated extends Handle;

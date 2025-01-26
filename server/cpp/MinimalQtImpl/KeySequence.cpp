@@ -43,9 +43,9 @@ namespace KeySequence
         return KEYSEQ_HEAP_NEW(QString::fromStdString(key), static_cast<QKeySequence::SequenceFormat>(format));
     }
 
-    OwnedRef create(Key key, Modifiers modifiers) {
-        auto key2 = static_cast<Qt::Key>(key);
-        auto mods2 = static_cast<Qt::Modifiers>(modifiers.value);
+    OwnedRef create(Key key, KeyboardModifiers modifiers) {
+        const auto key2 = static_cast<Qt::Key>(key);
+        const auto mods2 = static_cast<Qt::KeyboardModifiers>(modifiers.value);
         return KEYSEQ_HEAP_NEW(key2 | mods2);
     }
 

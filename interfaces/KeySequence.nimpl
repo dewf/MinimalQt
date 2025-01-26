@@ -104,7 +104,7 @@ Owned create(string key, SequenceFormat format = NativeText);
 
 // QKeySequence(QKeyCombination k1, QKeyCombination k2 = QKeyCombination::fromCombined(0), QKeyCombination k3 = QKeyCombination::fromCombined(0), QKeyCombination k4 = QKeyCombination::fromCombined(0))
 
-Owned create(Key key, Modifiers modifiers);
+Owned create(Key key, KeyboardModifiers modifiers);
 
 //QKeySequence(int k1, int k2 = 0, int k3 = 0, int k4 = 0)
 
