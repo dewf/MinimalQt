@@ -78,7 +78,7 @@ opaque Handle extends Object.Handle {
     ContextMenuPolicy contextMenuPolicy();
     Cursor.Owned cursor();
 
-    // WId effectiveWinId() const
+    WIN_ID effectiveWinId();
 
     void ensurePolished();
     FocusPolicy focusPolicy();
@@ -291,7 +291,7 @@ opaque Handle extends Object.Handle {
     Region.Owned visibleRegion();
     string whatsThis();
     int width();
-    size_t winId();
+    WIN_ID winId();
     Handle window();
     string windowFilePath();
     WindowFlags getWindowFlags();

@@ -153,6 +153,10 @@ namespace Widget
         return CURSOR_HEAP_NEW(THIS->cursor());
     }
 
+    WIN_ID Handle_effectiveWinId(HandleRef _this) {
+        return THIS->effectiveWinId();
+    }
+
     void Handle_ensurePolished(HandleRef _this) {
         THIS->ensurePolished();
     }
@@ -850,7 +854,7 @@ namespace Widget
         return THIS->width();
     }
 
-    size_t Handle_winId(HandleRef _this) {
+    WIN_ID Handle_winId(HandleRef _this) {
         return THIS->winId();
     }
 
