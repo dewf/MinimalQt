@@ -86,6 +86,20 @@ opaque DragLeaveEvent extends Handle;
 // Tier 2 events (inherit from Tier 1) ==========================================================================
 
 @nodispose
+opaque ContextMenuEvent extends InputEvent {
+    static {
+        enum Reason { Mouse, Keyboard, Other }
+    }
+    Point globalPos();
+    int globalX();
+    int globalY();
+    Point pos();
+    Reason getReason();
+    int x();
+    int y();
+}
+
+@nodispose
 opaque DragMoveEvent extends DropEvent {
     void accept(Rect rectangle);
     
@@ -120,7 +134,7 @@ opaque KeyEvent extends InputEvent {
 
 @nodispose
 opaque PointerEvent extends InputEvent;
-// TODO, looks obnoxious and proliferative :)
+// TODO, looks obnoxious and proliferative!
 
 
 // Tier 3 events (inherit from Tier 2) ==========================================================================

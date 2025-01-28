@@ -341,6 +341,7 @@ Handle create(Handle parent = null, WindowFlags flags_ = 0);
 
 namedbits MethodMask {
     SizeHint,
+    ContextMenuEvent,
     DragEnterEvent,
     DragLeaveEvent,
     DragMoveEvent,
@@ -371,7 +372,9 @@ interface DelegateMethods {
     // virtual void actionEvent(QActionEvent *event)
     // virtual void changeEvent(QEvent *event)
     // virtual void closeEvent(QCloseEvent *event)
-    // virtual void contextMenuEvent(QContextMenuEvent *event)
+
+    void contextMenuEvent(ContextMenuEvent ev);
+
     // void create(WId window = 0, bool initializeWindow = true, bool destroyOldWindow = true)
     // void destroy(bool destroyWindow = true, bool destroySubWindows = true)
 

@@ -163,6 +163,37 @@ namespace Event
     // dragleave event =====================================
     // (nothing)
 
+    // contextmenu event ===================================
+#define CONTEXTMENU_THIS (reinterpret_cast<QContextMenuEvent*>(_this))
+
+    Point ContextMenuEvent_globalPos(ContextMenuEventRef _this) {
+        return toPoint(CONTEXTMENU_THIS->globalPos());
+    }
+
+    int32_t ContextMenuEvent_globalX(ContextMenuEventRef _this) {
+        return CONTEXTMENU_THIS->globalX();
+    }
+
+    int32_t ContextMenuEvent_globalY(ContextMenuEventRef _this) {
+        return CONTEXTMENU_THIS->globalY();
+    }
+
+    Point ContextMenuEvent_pos(ContextMenuEventRef _this) {
+        return toPoint(CONTEXTMENU_THIS->pos());
+    }
+
+    ContextMenuEvent::Reason ContextMenuEvent_getReason(ContextMenuEventRef _this) {
+        return static_cast<ContextMenuEvent::Reason>(CONTEXTMENU_THIS->reason());
+    }
+
+    int32_t ContextMenuEvent_x(ContextMenuEventRef _this) {
+        return CONTEXTMENU_THIS->x();
+    }
+
+    int32_t ContextMenuEvent_y(ContextMenuEventRef _this) {
+        return CONTEXTMENU_THIS->y();
+    }
+
     // dragmove event ======================================
 #define DRAGMOVE_THIS (reinterpret_cast<QDragMoveEvent*>(_this))
 

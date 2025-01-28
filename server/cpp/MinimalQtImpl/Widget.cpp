@@ -1031,7 +1031,25 @@ namespace Widget
             : QWidget(parent, f),
               methods(methods),
               methodMask(method_mask) {}
+
+    // public virtual overrides:
+        [[nodiscard]] QSize sizeHint() const override {
+            if (methodMask & SizeHint) {
+                return toQSize(methods->sizeHint());
+            } else {
+                return QWidget::sizeHint();
+            }
+        }
     protected:
+        void contextMenuEvent(QContextMenuEvent *event) override {
+            if (methodMask & ContextMenuEvent) {
+                methods->contextMenuEvent(reinterpret_cast<ContextMenuEventRef>(event));
+                event->accept();
+            } else {
+                return QWidget::contextMenuEvent(event);
+            }
+        }
+
         void dragEnterEvent(QDragEnterEvent *event) override {
             if (methodMask & DragEnterEvent) {
                 methods->dragEnterEvent(reinterpret_cast<DragEnterEventRef>(event));
@@ -1200,15 +1218,6 @@ namespace Widget
                 event->accept();
             } else {
                 QWidget::wheelEvent(event);
-            }
-        }
-
-    public:
-        [[nodiscard]] QSize sizeHint() const override {
-            if (methodMask & SizeHint) {
-                return toQSize(methods->sizeHint());
-            } else {
-                return QWidget::sizeHint();
             }
         }
     };
