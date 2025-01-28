@@ -88,9 +88,14 @@ opaque DragLeaveEvent extends Handle;
 @nodispose
 opaque DragMoveEvent extends DropEvent {
     void accept(Rect rectangle);
+    
+    @shadows
     void accept();
+
     Rect answerRect();
     void ignore(Rect rectangle);
+
+    @shadows
     void ignore();
 }
 
@@ -103,7 +108,10 @@ opaque KeyEvent extends InputEvent {
     // QKeyCombination keyCombination() const
 
     bool matches(KeySequence.StandardKey key);
+
+    @shadows
     KeyboardModifiers modifiers();
+    
     uint32 nativeModifiers();
     uint32 nativeScanCode();
     uint32 nativeVirtualKey();

@@ -103,8 +103,13 @@ opaque Handle extends Dialog.Handle {
     void setText(string text);
     void setTextFormat(TextFormatEnum format);
     void setTextInteractionFlags(TextInteractionFlags flags_);
+
+    @shadows
     void setWindowModality(WindowModality windowModality);
+
+    @shadows
     void setWindowTitle(string title);
+    
     StandardButton getStandardButton(AbstractButton.Handle button);
     StandardButtons getStandardButtons();
     bool testOption(OptionEnum option);
