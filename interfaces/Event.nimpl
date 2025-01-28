@@ -1,37 +1,60 @@
 module Event;
 
+import Object;
+import Common;
 import Enums;
 import KeySequence;
+import Region;
+import MimeData;
 
 @nodispose
 opaque Handle {
     void accept();
+
+    // (since 6.0) virtual QEvent * clone() const
+
     void ignore();
+    bool isAccepted();
+    bool isInputEvent();
+    bool isPointerEvent();
+    bool isSinglePointEvent();
+    void setAccepted(bool accepted);
+    bool spontaneous();
+
+    // QEvent::Type type() const
 }
 
-// nested groups are currently buggy, otherwise we'd use a group for HelpEvent/DragMoveEvent with their own contained Handle
-// (but inheriting from Event.Handle should work now, it didn't before)
+
+// Tier 1 events (inherit from QEvent) ==========================================================================
 
 @nodispose
-opaque HelpEvent_Handle extends Handle;
-
-@nodispose
-opaque DropEvent_Handle extends Handle {
-    // methods TODO
+opaque ResizeEvent extends Handle {
+    Size oldSize();
+    Size size();
 }
 
 @nodispose
-opaque DragMoveEvent_Handle extends DropEvent_Handle {
-    DropAction proposedAction();
+opaque HelpEvent extends Handle;
+
+@nodispose
+opaque DropEvent extends Handle {
     void acceptProposedAction();
+    MouseButtons buttons();
+    DropAction dropAction();
+    MimeData.ConstHandle mimeData();
+    KeyboardModifiers modifiers();
+    PointF position();
     DropActions possibleActions();
+    DropAction proposedAction();
+    void setDropAction(DropAction action);
+    Object.Handle source();
 
-    // slight variation on the real methods:
+    // convenience method =============================
     void acceptDropAction(DropAction action); // will internally call either .acceptProposedAction or .accept() after setting drop action
 }
 
 @nodispose
-opaque InputEvent_Handle extends Handle {
+opaque InputEvent extends Handle {
 
     // const QInputDevice * device() const
     // QInputDevice::DeviceType deviceType() const
@@ -41,7 +64,38 @@ opaque InputEvent_Handle extends Handle {
 }
 
 @nodispose
-opaque KeyEvent_Handle extends InputEvent_Handle {
+opaque FocusEvent extends Handle {
+    bool gotFocus();
+    bool lostFocus();
+    FocusReason reason();
+}
+
+@nodispose
+opaque ShowEvent extends Handle;
+
+@nodispose
+opaque PaintEvent extends Handle {
+    Rect rect();
+    Region.Owned region();
+}
+
+@nodispose
+opaque DragLeaveEvent extends Handle;
+
+
+// Tier 2 events (inherit from Tier 1) ==========================================================================
+
+@nodispose
+opaque DragMoveEvent extends DropEvent {
+    void accept(Rect rectangle);
+    void accept();
+    Rect answerRect();
+    void ignore(Rect rectangle);
+    void ignore();
+}
+
+@nodispose
+opaque KeyEvent extends InputEvent {
     int count();
     bool isAutoRepeat();
     int key();
@@ -55,3 +109,47 @@ opaque KeyEvent_Handle extends InputEvent_Handle {
     uint32 nativeVirtualKey();
     string text();
 }
+
+@nodispose
+opaque PointerEvent extends InputEvent;
+// TODO, looks obnoxious and proliferative :)
+
+
+// Tier 3 events (inherit from Tier 2) ==========================================================================
+
+@nodispose
+opaque DragEnterEvent extends DragMoveEvent;
+// no methods
+
+@nodispose
+opaque SinglePointEvent extends PointerEvent {
+    MouseButton button();
+    MouseButtons buttons();
+    Object.Handle exclusivePointGrabber();
+    PointF globalPosition();
+    PointF position();
+    PointF scenePosition();
+    void setExclusivePointGrabber(Object.Handle exclusiveGrabber);
+}
+
+
+// Tier 4 events (inherit from Tier 3) ==========================================================================
+
+@nodispose
+opaque EnterEvent extends SinglePointEvent;
+
+@nodispose
+opaque MouseEvent extends SinglePointEvent {
+    MouseEventFlags flags_();
+}
+
+@nodispose
+opaque WheelEvent extends SinglePointEvent {
+    Point angleDelta();
+    bool inverted();
+    ScrollPhase phase();
+    Point pixelDelta();
+}
+
+// Tier 5 events (inherit from Tier 4) ==========================================================================
+// Tier 6 events (inherit from Tier 5) ==========================================================================

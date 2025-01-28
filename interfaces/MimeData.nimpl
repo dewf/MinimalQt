@@ -7,8 +7,8 @@ import Url;
 interface SignalHandler extends Object.SignalHandler;
 // no extra signals
 
-opaque Handle extends Object.Handle {
-    void clear();
+@nodispose
+opaque ConstHandle extends Object.Handle {
     Variant.Owned colorData();
     Buffer<byte> data(string mimeType);
     Array<string> formats();
@@ -20,6 +20,12 @@ opaque Handle extends Object.Handle {
     bool hasUrls();
     string html();
     Variant.Owned imageData();
+    string text();
+    Url.List urls();
+}
+
+opaque Handle extends ConstHandle {
+    void clear();
     void removeFormat(string mimeType);
     void setColorData(Variant.Handle color);
     void setData(string mimeType, Buffer<byte> data);
@@ -27,8 +33,6 @@ opaque Handle extends Object.Handle {
     void setImageData(Variant.Handle image);
     void setText(string text);
     void setUrls(Url.List urls);
-    string text();
-    Url.List urls();
 }
 
 Handle create();

@@ -758,6 +758,21 @@ enum Axis {
     ZAxis
 }
 
+@withflags(MouseEventFlags)
+enum MouseEventFlag {
+    NoMouseEventFlag = 0x00,
+    MouseEventCreatedDoubleClick = 0x01,
+    MouseEventFlagMask = 0xFF
+}
+
+enum ScrollPhase {
+    NoScrollPhase = 0,
+    ScrollBegin,
+    ScrollUpdate,
+    ScrollEnd,
+    ScrollMomentum
+}
+
 enum Key {
     // Unicode Basic Latin block (0x00-0x7f)
     Key_Space = 0x20,

@@ -1,94 +1,296 @@
 #include "generated/Event.h"
 #include "EventInternal.h"
 
+#include "MimeDataInternal.h"
+#include "ObjectInternal.h"
+#include "RegionInternal.h"
+#include "util/convert.h"
+
+using namespace ::Object;
+using namespace ::Common;
 using namespace ::Enums;
 using namespace ::KeySequence;
+using namespace ::Region;
+using namespace ::MimeData;
 
-#define THIS (AS_QEVENT_PTR(_this))
+#define EVENT_THIS (reinterpret_cast<QEvent*>(_this))
 
 namespace Event
 {
     void Handle_accept(HandleRef _this) {
-        THIS->accept();
+        EVENT_THIS->accept();
     }
 
     void Handle_ignore(HandleRef _this) {
-        THIS->ignore();
+        EVENT_THIS->ignore();
     }
 
-#define DRAGMOVE_THIS (AS_QDRAGMOVEEVENT_PTR(_this))
-    DropAction DragMoveEvent_Handle_proposedAction(DragMoveEvent_HandleRef _this) {
-        return static_cast<DropAction>(DRAGMOVE_THIS->proposedAction());
+    bool Handle_isAccepted(HandleRef _this) {
+        return EVENT_THIS->isAccepted();
     }
 
-    void DragMoveEvent_Handle_acceptProposedAction(DragMoveEvent_HandleRef _this) {
-        DRAGMOVE_THIS->acceptProposedAction();
+    bool Handle_isInputEvent(HandleRef _this) {
+        return EVENT_THIS->isInputEvent();
     }
 
-    DropActions DragMoveEvent_Handle_possibleActions(DragMoveEvent_HandleRef _this) {
-        return DropActions(DRAGMOVE_THIS->possibleActions());
+    bool Handle_isPointerEvent(HandleRef _this) {
+        return EVENT_THIS->isPointerEvent();
     }
 
-    void DragMoveEvent_Handle_acceptDropAction(DragMoveEvent_HandleRef _this, DropAction action) {
+    bool Handle_isSinglePointEvent(HandleRef _this) {
+        return EVENT_THIS->isSinglePointEvent();
+    }
+
+    void Handle_setAccepted(HandleRef _this, bool accepted) {
+        return EVENT_THIS->setAccepted(accepted);
+    }
+
+    bool Handle_spontaneous(HandleRef _this) {
+        return EVENT_THIS->spontaneous();
+    }
+
+    // resize event ========================================
+#define RESIZE_THIS (reinterpret_cast<QResizeEvent*>(_this))
+
+    Size ResizeEvent_oldSize(ResizeEventRef _this) {
+        return toSize(RESIZE_THIS->oldSize());
+    }
+
+    Size ResizeEvent_size(ResizeEventRef _this) {
+        return toSize(RESIZE_THIS->size());
+    }
+
+    // help event ==========================================
+    // (nothing)
+
+    // drop event ==========================================
+#define DROPEVENT_THIS (reinterpret_cast<QDropEvent*>(_this))
+
+    void DropEvent_acceptProposedAction(DropEventRef _this) {
+        DROPEVENT_THIS->acceptProposedAction();
+    }
+
+    MouseButtons DropEvent_buttons(DropEventRef _this) {
+        return MouseButtons(DROPEVENT_THIS->buttons());
+    }
+
+    DropAction DropEvent_dropAction(DropEventRef _this) {
+        return static_cast<DropAction>(DROPEVENT_THIS->dropAction());
+    }
+
+    ConstHandleRef DropEvent_mimeData(DropEventRef _this) {
+        return AS_MIMEDATA_CONST(DROPEVENT_THIS->mimeData()); // const!!
+    }
+
+    KeyboardModifiers DropEvent_modifiers(DropEventRef _this) {
+        return KeyboardModifiers(DROPEVENT_THIS->modifiers());
+    }
+
+    PointF DropEvent_position(DropEventRef _this) {
+        return toPointF(DROPEVENT_THIS->position());
+    }
+
+    DropActions DropEvent_possibleActions(DropEventRef _this) {
+        return DropActions(DROPEVENT_THIS->possibleActions());
+    }
+
+    DropAction DropEvent_proposedAction(DropEventRef _this) {
+        return static_cast<DropAction>(DROPEVENT_THIS->proposedAction());
+    }
+
+    void DropEvent_setDropAction(DropEventRef _this, DropAction action) {
+        DROPEVENT_THIS->setDropAction(static_cast<Qt::DropAction>(action));
+    }
+
+    Object::HandleRef DropEvent_source(DropEventRef _this) {
+        return reinterpret_cast<Object::HandleRef>(DROPEVENT_THIS->source());
+    }
+
+    void DropEvent_acceptDropAction(DropEventRef _this, DropAction action) {
         const auto qtAction = static_cast<Qt::DropAction>(action);
-        if (qtAction == DRAGMOVE_THIS->proposedAction()) {
-            DRAGMOVE_THIS->acceptProposedAction();
+        if (qtAction == DROPEVENT_THIS->proposedAction()) {
+            DROPEVENT_THIS->acceptProposedAction();
         } else {
-            if (DRAGMOVE_THIS->possibleActions().testFlag(qtAction)) {
-                DRAGMOVE_THIS->setDropAction(qtAction);
-                DRAGMOVE_THIS->accept();
+            if (DROPEVENT_THIS->possibleActions().testFlag(qtAction)) {
+                DROPEVENT_THIS->setDropAction(qtAction);
+                DROPEVENT_THIS->accept();
             } else {
                 printf("DragMoveEvent_acceptDropAction: specified action was not in allowed set\n");
             }
         }
     }
 
-    // input event ===============================================
-#define INPUTEVENT_THIS (AS_QINPUTEVENT_PTR(_this))
-    KeyboardModifiers InputEvent_Handle_modifiers(InputEvent_HandleRef _this) {
+    // input event =========================================
+#define INPUTEVENT_THIS (reinterpret_cast<QInputEvent*>(_this))
+
+    KeyboardModifiers InputEvent_modifiers(InputEventRef _this) {
         return KeyboardModifiers(INPUTEVENT_THIS->modifiers());
     }
 
-    uint64_t InputEvent_Handle_timestamp(InputEvent_HandleRef _this) {
+    uint64_t InputEvent_timestamp(InputEventRef _this) {
         return INPUTEVENT_THIS->timestamp();
     }
 
-    // keyevent ==================================================
-#define KEYEVENT_THIS (AS_QKEYEVENT_PTR(_this))
+    // focus event =========================================
+#define FOCUSEVENT_THIS (reinterpret_cast<QFocusEvent*>(_this))
 
-    int32_t KeyEvent_Handle_count(KeyEvent_HandleRef _this) {
+    bool FocusEvent_gotFocus(FocusEventRef _this) {
+        return FOCUSEVENT_THIS->gotFocus();
+    }
+
+    bool FocusEvent_lostFocus(FocusEventRef _this) {
+        return FOCUSEVENT_THIS->lostFocus();
+    }
+
+    FocusReason FocusEvent_reason(FocusEventRef _this) {
+        return static_cast<FocusReason>(FOCUSEVENT_THIS->reason());
+    }
+
+    // show event ==========================================
+    // (nothing)
+
+    // paint event =========================================
+#define PAINTEVENT_THIS (reinterpret_cast<QPaintEvent*>(_this))
+
+    Rect PaintEvent_rect(PaintEventRef _this) {
+        return toRect(PAINTEVENT_THIS->rect());
+    }
+
+    Region::OwnedRef PaintEvent_region(PaintEventRef _this) {
+        return REGION_HEAP_NEW(PAINTEVENT_THIS->region());
+    }
+
+    // dragleave event =====================================
+    // (nothing)
+
+    // dragmove event ======================================
+#define DRAGMOVE_THIS (reinterpret_cast<QDragMoveEvent*>(_this))
+
+    void DragMoveEvent_accept(DragMoveEventRef _this, Rect rectangle) {
+        DRAGMOVE_THIS->accept(toQRect(rectangle));
+    }
+
+    void DragMoveEvent_accept(DragMoveEventRef _this) {
+        DRAGMOVE_THIS->accept();
+    }
+
+    Rect DragMoveEvent_answerRect(DragMoveEventRef _this) {
+        return toRect(DRAGMOVE_THIS->answerRect());
+    }
+
+    void DragMoveEvent_ignore(DragMoveEventRef _this, Rect rectangle) {
+        DRAGMOVE_THIS->ignore(toQRect(rectangle));
+    }
+
+    void DragMoveEvent_ignore(DragMoveEventRef _this) {
+        DRAGMOVE_THIS->ignore();
+    }
+
+    // key event ===========================================
+#define KEYEVENT_THIS (reinterpret_cast<QKeyEvent*>(_this))
+
+    int32_t KeyEvent_count(KeyEventRef _this) {
         return KEYEVENT_THIS->count();
     }
 
-    bool KeyEvent_Handle_isAutoRepeat(KeyEvent_HandleRef _this) {
+    bool KeyEvent_isAutoRepeat(KeyEventRef _this) {
         return KEYEVENT_THIS->isAutoRepeat();
     }
 
-    int32_t KeyEvent_Handle_key(KeyEvent_HandleRef _this) {
+    int32_t KeyEvent_key(KeyEventRef _this) {
         return KEYEVENT_THIS->key();
     }
 
-    bool KeyEvent_Handle_matches(KeyEvent_HandleRef _this, StandardKey key) {
+    bool KeyEvent_matches(KeyEventRef _this, StandardKey key) {
         return KEYEVENT_THIS->matches(static_cast<QKeySequence::StandardKey>(key));
     }
 
-    KeyboardModifiers KeyEvent_Handle_modifiers(KeyEvent_HandleRef _this) {
+    KeyboardModifiers KeyEvent_modifiers(KeyEventRef _this) {
         return KeyboardModifiers(KEYEVENT_THIS->modifiers());
     }
 
-    uint32_t KeyEvent_Handle_nativeModifiers(KeyEvent_HandleRef _this) {
+    uint32_t KeyEvent_nativeModifiers(KeyEventRef _this) {
         return KEYEVENT_THIS->nativeModifiers();
     }
 
-    uint32_t KeyEvent_Handle_nativeScanCode(KeyEvent_HandleRef _this) {
+    uint32_t KeyEvent_nativeScanCode(KeyEventRef _this) {
         return KEYEVENT_THIS->nativeScanCode();
     }
 
-    uint32_t KeyEvent_Handle_nativeVirtualKey(KeyEvent_HandleRef _this) {
+    uint32_t KeyEvent_nativeVirtualKey(KeyEventRef _this) {
         return KEYEVENT_THIS->nativeVirtualKey();
     }
 
-    std::string KeyEvent_Handle_text(KeyEvent_HandleRef _this) {
+    std::string KeyEvent_text(KeyEventRef _this) {
         return KEYEVENT_THIS->text().toStdString();
+    }
+
+    // dragmove event ======================================
+    // (nothing)
+
+    // pointer event =======================================
+    // TODO
+
+    // dragenter event =====================================
+    // (nothing)
+
+    // single point event ==================================
+#define SINGLEPOINT_THIS (reinterpret_cast<QSinglePointEvent*>(_this))
+
+    MouseButton SinglePointEvent_button(SinglePointEventRef _this) {
+        return static_cast<MouseButton>(SINGLEPOINT_THIS->button());
+    }
+
+    MouseButtons SinglePointEvent_buttons(SinglePointEventRef _this) {
+        return MouseButtons(SINGLEPOINT_THIS->buttons());
+    }
+
+    Object::HandleRef SinglePointEvent_exclusivePointGrabber(SinglePointEventRef _this) {
+        return reinterpret_cast<Object::HandleRef>(SINGLEPOINT_THIS->exclusivePointGrabber());
+    }
+
+    PointF SinglePointEvent_globalPosition(SinglePointEventRef _this) {
+        return toPointF(SINGLEPOINT_THIS->globalPosition());
+    }
+
+    PointF SinglePointEvent_position(SinglePointEventRef _this) {
+        return toPointF(SINGLEPOINT_THIS->position());
+    }
+
+    PointF SinglePointEvent_scenePosition(SinglePointEventRef _this) {
+        return toPointF(SINGLEPOINT_THIS->scenePosition());
+    }
+
+    void SinglePointEvent_setExclusivePointGrabber(SinglePointEventRef _this, Object::HandleRef exclusiveGrabber) {
+        SINGLEPOINT_THIS->setExclusivePointGrabber(AS_QOBJECT_PTR(exclusiveGrabber));
+    }
+
+    // enter event =========================================
+    // (nothing)
+
+    // mouse event =========================================
+#define MOUSEEVENT_THIS (reinterpret_cast<QMouseEvent*>(_this))
+
+    MouseEventFlags MouseEvent_flags_(MouseEventRef _this) {
+        return MouseEventFlags(MOUSEEVENT_THIS->flags());
+    }
+
+    // wheel event =========================================
+#define WHEELEVENT_THIS (reinterpret_cast<QWheelEvent*>(_this))
+
+    Point WheelEvent_angleDelta(WheelEventRef _this) {
+        return toPoint(WHEELEVENT_THIS->angleDelta());
+    }
+
+    bool WheelEvent_inverted(WheelEventRef _this) {
+        return WHEELEVENT_THIS->inverted();
+    }
+
+    ScrollPhase WheelEvent_phase(WheelEventRef _this) {
+        return static_cast<ScrollPhase>(WHEELEVENT_THIS->phase());
+    }
+
+    Point WheelEvent_pixelDelta(WheelEventRef _this) {
+        return toPoint(WHEELEVENT_THIS->pixelDelta());
     }
 }

@@ -1032,69 +1032,76 @@ namespace Widget
               methods(methods),
               methodMask(method_mask) {}
     protected:
-        void showEvent(QShowEvent *event) override {
-            if (methodMask & ShowEvent) {
-                methods->showEvent(event->spontaneous());
+        void dragEnterEvent(QDragEnterEvent *event) override {
+            if (methodMask & DragEnterEvent) {
+                methods->dragEnterEvent(reinterpret_cast<DragEnterEventRef>(event));
+                // other side needs to call acceptProposedAction if it's OK, otherwise ... .ignore?
                 event->accept();
             } else {
-                QWidget::showEvent(event);
+                QWidget::dragEnterEvent(event);
             }
         }
 
-        void paintEvent(QPaintEvent *event) override {
-            if (methodMask & PaintEvent) {
-                QPainter painter(this);
-                QRegion region(event->region()); // copy, until we have some const-capable stuff
-                methods->paintEvent(reinterpret_cast<Painter::HandleRef>(&painter), reinterpret_cast<Region::HandleRef>(&region));
-                // prevent it from propagating:
-                // do we allow this from the method delegate somehow?
+        void dragLeaveEvent(QDragLeaveEvent *event) override {
+            if (methodMask & DragLeaveEvent) {
+                methods->dragLeaveEvent(reinterpret_cast<DragLeaveEventRef>(event));
                 event->accept();
             } else {
-                QWidget::paintEvent(event);
+                QWidget::dragLeaveEvent(event);
             }
         }
 
-        void mousePressEvent(QMouseEvent *event) override {
-            if (methodMask & MousePressEvent) {
-                auto pos = toPoint(event->pos());
-                auto button = static_cast<MouseButton>(event->button());
-                auto modifiers = event->modifiers();
-                methods->mousePressEvent(pos, button, KeyboardModifiers(modifiers));
-                // prevent from propagating, see notes above
+        void dragMoveEvent(QDragMoveEvent *event) override {
+            if (methodMask & DragMoveEvent) {
+                methods->dragMoveEvent(reinterpret_cast<DragMoveEventRef>(event));
+                // other side needs to call acceptProposedAction if it's OK, otherwise ... .ignore?
                 event->accept();
             } else {
-                QWidget::mousePressEvent(event);
+                QWidget::dragMoveEvent(event);
             }
         }
 
-        void mouseMoveEvent(QMouseEvent *event) override {
-            if (methodMask & MouseMoveEvent) {
-                auto pos = toPoint(event->pos());
-                auto buttons = event->buttons();
-                auto modifiers = event->modifiers();
-                methods->mouseMoveEvent(pos, MouseButtons(buttons), KeyboardModifiers(modifiers));
-                // prevent from propagating, see notes above
+        void dropEvent(QDropEvent *event) override {
+            if (methodMask & DropEvent) {
+                methods->dropEvent(reinterpret_cast<DropEventRef>(event));
+                // ?? forget why this was being called originally, seemes like the implementer's responsibility:
+                // event->acceptProposedAction();
                 event->accept();
             } else {
-                QWidget::mouseMoveEvent(event);
+                QWidget::dropEvent(event);
             }
         }
 
-        void mouseReleaseEvent(QMouseEvent *event) override {
-            if (methodMask & MouseReleaseEvent) {
-                auto pos = toPoint(event->pos());
-                auto button = static_cast<MouseButton>(event->button());
-                auto modifiers = event->modifiers();
-                methods->mouseReleaseEvent(pos, button, KeyboardModifiers(modifiers));
+        void enterEvent(QEnterEvent *event) override {
+            if (methodMask & EnterEvent) {
+                methods->enterEvent(reinterpret_cast<EnterEventRef>(event));
                 event->accept();
             } else {
-                QWidget::mouseReleaseEvent(event);
+                QWidget::enterEvent(event);
+            }
+        }
+
+        void focusInEvent(QFocusEvent *event) override {
+            if (methodMask & FocusInEvent) {
+                methods->focusInEvent(reinterpret_cast<FocusEventRef>(event));
+                event->accept();
+            } else {
+                QWidget::focusInEvent(event);
+            }
+        }
+
+        void focusOutEvent(QFocusEvent *event) override {
+            if (methodMask & FocusOutEvent) {
+                methods->focusOutEvent(reinterpret_cast<FocusEventRef>(event));
+                event->accept();
+            } else {
+                QWidget::focusOutEvent(event);
             }
         }
 
         void keyPressEvent(QKeyEvent *event) override {
             if (methodMask & KeyPressEvent) {
-                methods->keyPressEvent(reinterpret_cast<KeyEvent_HandleRef>(event));
+                methods->keyPressEvent(reinterpret_cast<KeyEventRef>(event));
                 // don't need to accept() per docs
             } else {
                 QWidget::keyPressEvent(event);
@@ -1103,94 +1110,103 @@ namespace Widget
 
         void keyReleaseEvent(QKeyEvent *event) override {
             if (methodMask & KeyReleaseEvent) {
-                methods->keyReleaseEvent(reinterpret_cast<KeyEvent_HandleRef>(event));
+                methods->keyReleaseEvent(reinterpret_cast<KeyEventRef>(event));
                 // don't need to accept() per docs
             } else {
                 QWidget::keyReleaseEvent(event);
             }
         }
 
-        void enterEvent(QEnterEvent *event) override {
-            if (methodMask & EnterEvent) {
-                auto pos = toPoint(event->position().toPoint());
-                methods->enterEvent(pos);
-                event->accept();
-            } else {
-                QWidget::enterEvent(event);
-            }
-        }
-
         void leaveEvent(QEvent *event) override {
             if (methodMask & LeaveEvent) {
-                methods->leaveEvent();
+                methods->leaveEvent(reinterpret_cast<Event::HandleRef>(event));
                 event->accept();
             } else {
                 QWidget::leaveEvent(event);
             }
         }
 
+        void mouseDoubleClickEvent(QMouseEvent *event) override {
+            if (methodMask & MouseDoubleClickEvent) {
+                methods->mouseDoubleClickEvent(reinterpret_cast<MouseEventRef>(event));
+                event->accept();
+            } else {
+                QWidget::mouseDoubleClickEvent(event);
+            }
+        }
+
+        void mouseMoveEvent(QMouseEvent *event) override {
+            if (methodMask & MouseMoveEvent) {
+                methods->mouseMoveEvent(reinterpret_cast<MouseEventRef>(event));
+                // prevent from propagating, see notes above
+                event->accept();
+            } else {
+                QWidget::mouseMoveEvent(event);
+            }
+        }
+
+        void mousePressEvent(QMouseEvent *event) override {
+            if (methodMask & MousePressEvent) {
+                methods->mousePressEvent(reinterpret_cast<MouseEventRef>(event));
+                // prevent from propagating, see notes above
+                event->accept();
+            } else {
+                QWidget::mousePressEvent(event);
+            }
+        }
+
+        void mouseReleaseEvent(QMouseEvent *event) override {
+            if (methodMask & MouseReleaseEvent) {
+                methods->mouseReleaseEvent(reinterpret_cast<MouseEventRef>(event));
+                event->accept();
+            } else {
+                QWidget::mouseReleaseEvent(event);
+            }
+        }
+
+        void paintEvent(QPaintEvent *event) override {
+            if (methodMask & PaintEvent) {
+                QPainter painter(this);
+                methods->paintEvent(reinterpret_cast<Painter::HandleRef>(&painter), reinterpret_cast<PaintEventRef>(event));
+                // prevent it from propagating:
+                // do we allow this from the method delegate somehow?
+                event->accept();
+            } else {
+                QWidget::paintEvent(event);
+            }
+        }
+
         void resizeEvent(QResizeEvent *event) override {
             if (methodMask & ResizeEvent) {
-                methods->resizeEvent(toSize(event->oldSize()), toSize(event->size()));
+                methods->resizeEvent(reinterpret_cast<ResizeEventRef>(event));
                 event->accept();
             } else {
                 QWidget::resizeEvent(event);
             }
         }
 
-        void dragEnterEvent(QDragEnterEvent *event) override {
-            if (methodMask & DropEvents) {
-                auto pos = toPoint(event->position().toPoint());
-                auto modifiers = event->modifiers();
-                auto mimeOpaque = (MimeData::HandleRef)event->mimeData();
-                auto moveEvent = reinterpret_cast<DragMoveEvent_HandleRef>(event);
-                methods->dragMoveEvent(pos, KeyboardModifiers(modifiers), mimeOpaque, moveEvent, true);
-                // other side needs to call acceptProposedAction if it's OK, otherwise ... .ignore?
-            } else {
-                QWidget::dragEnterEvent(event);
-            }
-        }
-
-        void dragMoveEvent(QDragMoveEvent *event) override {
-            if (methodMask & DropEvents) {
-                auto pos = toPoint(event->position().toPoint());
-                auto modifiers = event->modifiers();
-                auto mimeOpaque = (MimeData::HandleRef)event->mimeData();
-                auto moveEvent = reinterpret_cast<DragMoveEvent_HandleRef>(event);
-                methods->dragMoveEvent(pos, KeyboardModifiers(modifiers), mimeOpaque, moveEvent, false);
-                // other side needs to call acceptProposedAction if it's OK, otherwise ... .ignore?
-            } else {
-                QWidget::dragMoveEvent(event);
-            }
-        }
-
-        void dragLeaveEvent(QDragLeaveEvent *event) override {
-            if (methodMask & DropEvents) {
-                methods->dragLeaveEvent();
+        void showEvent(QShowEvent *event) override {
+            if (methodMask & ShowEvent) {
+                methods->showEvent(reinterpret_cast<ShowEventRef>(event));
                 event->accept();
             } else {
-                QWidget::dragLeaveEvent(event);
+                QWidget::showEvent(event);
             }
         }
 
-        void dropEvent(QDropEvent *event) override {
-            if (methodMask & DropEvents) {
-                auto pos = toPoint(event->position().toPoint());
-                auto modifiers = event->modifiers();
-                auto mimeOpaque = (MimeData::HandleRef)event->mimeData();
-                auto action = static_cast<DropAction>(event->proposedAction());
-                methods->dropEvent(pos, KeyboardModifiers(modifiers), mimeOpaque, action);
-                event->acceptProposedAction();
+        void wheelEvent(QWheelEvent *event) override {
+            if (methodMask & WheelEvent) {
+                methods->wheelEvent(reinterpret_cast<WheelEventRef>(event));
+                event->accept();
             } else {
-                QWidget::dropEvent(event);
+                QWidget::wheelEvent(event);
             }
         }
 
     public:
         [[nodiscard]] QSize sizeHint() const override {
             if (methodMask & SizeHint) {
-                auto size = methods->sizeHint();
-                return toQSize(size);
+                return toQSize(methods->sizeHint());
             } else {
                 return QWidget::sizeHint();
             }
