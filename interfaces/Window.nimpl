@@ -3,6 +3,10 @@ module Window;
 import Object;
 import Enums;
 import Screen;
+import Common;
+import Cursor;
+import Icon;
+import Region;
 
 enum Visibility {
     Hidden = 0,
@@ -41,8 +45,132 @@ interface SignalHandler extends Object.SignalHandler {
 }
 
 opaque Handle extends Object.Handle {
-    // methods TODO
+    Size baseSize();
+    ScreenOrientation contentOrientation();
+    void create();
+    Cursor.Owned cursor();
+    void destroy();
+    double devicePixelRatio();
+    string filePath();
+    WindowFlags flags_();
+    Object.Handle focusObject();
+    Rect frameGeometry();
+    Margins frameMargins();
+    Point framePosition();
+    Rect geometry();
+    int height();
+    Icon.Owned icon();
+    bool isActive();
+    bool isAncestorOf(Window.Handle child, AncestorMode mode = IncludeTransients);
+    bool isExposed();
+    bool isModal();
+    bool isTopLevel();
+    bool isVisible();
+    PointF mapFromGlobal(PointF pos);
+    Point mapFromGlobal(Point pos);
+    PointF mapToGlobal(PointF pos);
+    Point mapToGlobal(Point pos);
+    Region.Owned mask();
+    int maximumHeight();
+    Size maximumSize();
+    int maximumWidth();
+    int minimumHeight();
+    Size minimumSize();
+    int minimumWidth();
+    WindowModality modality();
+    double opacity();
+    Window.Handle parent(AncestorMode mode = ExcludeTransients);
+    Point position();
+    void reportContentOrientationChange(ScreenOrientation orientation);
 
+    // QSurfaceFormat requestedFormat() const
+    // TODO
+
+    void resize(Size newSize);
+    void resize(int w, int h);
+    Screen.Handle screen();
+    void setBaseSize(Size size);
+    void setCursor(Cursor.Handle cursor);
+    void setFilePath(string filePath);
+    void setFlag(WindowType flag, bool on = true);
+    void setFlags(WindowFlags flags_);
+
+    // void setFormat(const QSurfaceFormat &format)
+    // TODO
+
+    void setFramePosition(Point point);
+    void setIcon(Icon.Handle icon);
+    bool setKeyboardGrabEnabled(bool grab);
+    void setMask(Region.Handle region);
+    void setMaximumSize(Size size);
+    void setMinimumSize(Size size);
+    void setModality(WindowModality modality);
+    bool setMouseGrabEnabled(bool grab);
+    void setOpacity(double level);
+    void setParent(Window.Handle parent);
+    void setPosition(Point pt);
+    void setPosition(int posx, int posy);
+    void setScreen(Screen.Handle newScreen);
+    void setSizeIncrement(Size size);
+
+    // void setSurfaceType(QSurface::SurfaceType surfaceType)
+    // TODO
+
+    void setTransientParent(Window.Handle parent);
+    void setVisibility(Visibility v);
+
+    // void setVulkanInstance(QVulkanInstance *instance)
+    // TODO
+
+    void setWindowState(WindowState state);
+    void setWindowStates(WindowStates states);
+    Size sizeIncrement();
+    string title();
+    Window.Handle transientParent();
+    WindowType type();
+    void unsetCursor();
+    Visibility getVisibility();
+
+    // QVulkanInstance * vulkanInstance() const
+    // TODO
+
+    int width();
+    WIN_ID winId();
+    WindowState getWindowState();
+    WindowStates getWindowStates();
+    int x();
+    int y();
+
+    // slots ==================================
+
+    void alert(int msec);
+    bool close();
+    void hide();
+    void lower();
+    void raise();
+    void requestActivate();
+    void requestUpdate();
+    void setGeometry(Rect rect);
+    void setGeometry(int posx, int posy, int w, int h);
+    void setHeight(int height);
+    void setMaximumHeight(int height);
+    void setMaximumWidth(int width);
+    void setMinimumHeight(int height);
+    void setMinimumWidth(int width);
+    void setTitle(string title);
+    void setVisible(bool visible);
+    void setWidth(int width);
+    void setX(int x);
+    void setY(int y);
+    void show();
+    void showFullScreen();
+    void showMaximized();
+    void showMinimized();
+    void showNormal();
+    bool startSystemMove();
+    bool startSystemResize(Edges edges);
+
+    // signals ================================
     SignalConnection connect_ActiveChanged(SignalHandler handler);
     SignalConnection connect_ContentOrientationChanged(SignalHandler handler);
     SignalConnection connect_FocusObjectChanged(SignalHandler handler);
@@ -66,3 +194,6 @@ opaque Handle extends Object.Handle {
 
 Handle create(Screen.Handle targetScreen = null);
 Handle create(Handle parent);
+
+// static methods ==============================
+Handle fromWinId(WIN_ID id);

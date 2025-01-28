@@ -773,6 +773,14 @@ enum ScrollPhase {
     ScrollMomentum
 }
 
+@withflags(Edges)
+enum Edge {
+    TopEdge = 0x00001,
+    LeftEdge = 0x00002,
+    RightEdge = 0x00004,
+    BottomEdge = 0x00008
+}
+
 enum Key {
     // Unicode Basic Latin block (0x00-0x7f)
     Key_Space = 0x20,
