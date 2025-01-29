@@ -1,8 +1,11 @@
 #include "generated/StyleOption.h"
 
+#include "LoggingInternal.h"
+using namespace ::Logging;
+
 namespace StyleOption
 {
     void Handle_dispose(HandleRef _this) {
-        printf("StyleOption Handle_dispose ... why?\n");
+        clientLog(LogLevel::Warning, "StyleOption Handle_dispose ... why?");
     }
 }

@@ -490,7 +490,7 @@ public:
 };
 
 // null methods for callback defaults (also assigned when client is shut down, to prevent dtors from calling back into client)
-static void nullLogFunc(LogLevel level, const char *text, int length) {}
+static void nullLogFunc(ni_ClientLogLevel level, const char *text, int length) {}
 static void nullIntMethod(int x) {}
 static void nullVoidMethod() {}
 static void nullMethodExec(ni_InterfaceMethodRef method, int id) {}
@@ -505,7 +505,7 @@ niClientResourceRelease ni_clientResourceRelease;
 niClientClearSafetyArea ni_clientClearSafetyArea;
 
 // from ChatGPT:
-void ni_clientLogger(const LogLevel level, const char* fmt, ...) {
+void ni_clientLogger(const ni_ClientLogLevel level, const char* fmt, ...) {
 	va_list args;
 	va_start(args, fmt);
 
@@ -513,18 +513,18 @@ void ni_clientLogger(const LogLevel level, const char* fmt, ...) {
 	const auto size = std::vsnprintf(nullptr, 0, fmt, args);
 	va_end(args);
 
-	if (size < 0) {
-		const auto err = "!!! ni_clientLogger: size was < 0";
+	if (size > 0) {
+		std::vector<char> buffer(size + 1); // +1 for null terminator
+
+		va_start(args, fmt);
+		std::vsnprintf(buffer.data(), buffer.size(), fmt, args);
+		va_end(args);
+
+		internal_clientLogFunc(level, buffer.data(), static_cast<int>(buffer.size()));
+	} else {
+		const auto err = "!!! ni_clientLogger: size was <= 0";
 		internal_clientLogFunc(LogLevel_Error, err, static_cast<int>(strlen(err) + 1));
 	}
-
-	std::vector<char> buffer(size + 1); // +1 for null terminator
-
-	va_start(args, fmt);
-	std::vsnprintf(buffer.data(), buffer.size(), fmt, args);
-	va_end(args);
-
-	internal_clientLogFunc(level, buffer.data(), static_cast<int>(buffer.size()));
 }
 
 struct ThreadLocal {

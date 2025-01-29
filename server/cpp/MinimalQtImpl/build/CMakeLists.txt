@@ -265,6 +265,11 @@ add_library(MinimalQtImpl STATIC
     ../ListView.cpp
     ../ListViewInternal.h
 
+    ../generated/Logging.h
+    ../generated/Logging_wrappers.cpp
+    ../Logging.cpp
+    ../LoggingInternal.h
+
     ../generated/MainWindow.h
     ../generated/MainWindow_wrappers.cpp
     ../MainWindow.cpp

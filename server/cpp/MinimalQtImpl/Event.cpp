@@ -1,9 +1,13 @@
 #include "generated/Event.h"
 #include "EventInternal.h"
 
+#include "LoggingInternal.h"
+using namespace ::Logging;
+
 #include "MimeDataInternal.h"
 #include "ObjectInternal.h"
 #include "RegionInternal.h"
+
 #include "util/convert.h"
 
 using namespace ::Object;
@@ -115,7 +119,7 @@ namespace Event
                 DROPEVENT_THIS->setDropAction(qtAction);
                 DROPEVENT_THIS->accept();
             } else {
-                printf("DragMoveEvent_acceptDropAction: specified action was not in allowed set\n");
+                clientLog(LogLevel::Warning, "DragMoveEvent_acceptDropAction: specified action was not in allowed set");
             }
         }
     }

@@ -4,7 +4,7 @@ namespace Org.Whatever.MinimalQt.Support
 {
     internal static partial class NativeMethods
     {
-        internal enum LogLevel {
+        internal enum ClientLogLevel {
             Trace,
             Debug,
             Information,
@@ -13,7 +13,7 @@ namespace Org.Whatever.MinimalQt.Support
             Critical,
             None
         }
-        internal delegate void ClientLogFuncDelegate(LogLevel level, IntPtr strData, int length);
+        internal delegate void ClientLogFuncDelegate(ClientLogLevel level, IntPtr strData, int length);
         internal delegate void ExecFunctionDelegate(int id);
         internal delegate void ClientMethodDelegate(IntPtr methodHandle, int objectId);
         internal delegate void ClientResourceReleaseDelegate(int id);

@@ -1,7 +1,8 @@
 #include "generated/Color.h"
-
-#include <QColor>
 #include "ColorInternal.h"
+
+#include "LoggingInternal.h"
+using namespace ::Logging;
 
 #define THIS (AS_QCOLOR_PTR(_this))
 
@@ -46,7 +47,7 @@ namespace Color
             case Constant::Transparent:
                 return QColorConstants::Transparent;
             default:
-                printf("Painter.cpp Color::fromConstant - unhandled value\n");
+                clientLog(LogLevel::Warning, "Painter.cpp Color::fromConstant - unhandled value");
         }
         return QColorConstants::Black;
     }
@@ -55,7 +56,7 @@ namespace Color
         THIS->setAlpha(alpha);
     }
 
-    void Handle_setAlphaF(HandleRef _this, double alpha) {
+    void Handle_setAlphaF(HandleRef _this, float alpha) {
         THIS->setAlphaF(alpha);
     }
 

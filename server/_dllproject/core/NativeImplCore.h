@@ -12,7 +12,7 @@ NIHANDLE(InterfaceMethod);
 NIHANDLE(Object);
 NIHANDLE(Exception);
 
-enum LogLevel {
+enum ni_ClientLogLevel {
 	LogLevel_Trace,
 	LogLevel_Debug,
 	LogLevel_Information,
@@ -22,7 +22,7 @@ enum LogLevel {
 	LogLevel_None
 };
 
-typedef void (*niClientLogFunc)(LogLevel level, const char *fmt, int length);
+typedef void (*niClientLogFunc)(ni_ClientLogLevel level, const char *fmt, int length);
 typedef void (*niClientFuncExec)(int id);
 typedef void (*niClientMethodExec)(ni_InterfaceMethodRef method, int objID);
 typedef void (*niClientResourceRelease)(int id);
@@ -62,7 +62,10 @@ extern "C" {
 	extern niClientClearSafetyArea ni_clientClearSafetyArea;
 	extern ni_ExceptionRef ni_currentException;
 
-	void ni_clientLogger(LogLevel level, const char* fmt, ...);
+	// confusing terminology here ... it's called 'clientLogger' but it's meant
+	// as a callback for the server to use, to log server messages
+	// but clientServerLogger seems a bit much
+	void ni_clientLogger(ni_ClientLogLevel level, const char* fmt, ...);
 
 	// mostly client stuff, but some used by server as well
 	int ni_nativeImplInit(

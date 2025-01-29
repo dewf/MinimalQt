@@ -6,6 +6,9 @@
 #include "IconInternal.h"
 #include "UrlInternal.h"
 
+#include "LoggingInternal.h"
+using namespace ::Logging;
+
 #include "util/convert.h"
 
 using namespace ::Icon;
@@ -53,7 +56,7 @@ namespace Variant
             case Qt::Checked:
                 return CheckState::Checked;
             default:
-                printf("Variant::Handle_toCheckState - unknown input value %d\n", intValue);
+                clientLog(LogLevel::Warning, "Variant::Handle_toCheckState - unknown input value %d", intValue);
         }
         return CheckState::Unchecked;
     }

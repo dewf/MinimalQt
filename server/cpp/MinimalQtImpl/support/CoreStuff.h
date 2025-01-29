@@ -25,7 +25,7 @@ extern "C" {
 	extern niClientResourceRelease ni_clientResourceRelease;
 	extern niClientClearSafetyArea ni_clientClearSafetyArea;
 
-	enum LogLevel {
+	enum ni_ClientLogLevel {
 		LogLevel_Trace,
 		LogLevel_Debug,
 		LogLevel_Information,
@@ -34,7 +34,7 @@ extern "C" {
 		LogLevel_Critical,
 		LogLevel_None
 	};
-	void ni_clientLogger(LogLevel level, const char* fmt, ...);
+	void ni_clientLogger(ni_ClientLogLevel level, const char* fmt, ...);
 
 	typedef void (*ModuleFunc)();
 	typedef void (*InterfaceFunc)(int serverID);

@@ -1,4 +1,5 @@
 ﻿using System.Runtime.InteropServices;
+using Microsoft.Extensions.Logging;
 
 namespace Org.Whatever.MinimalQt.Support
 {
@@ -18,7 +19,7 @@ namespace Org.Whatever.MinimalQt.Support
             _totalSize = _totalCount * _elementSize;
             _block = Marshal.AllocHGlobal((IntPtr)_totalSize);
             GC.AddMemoryPressure(_totalSize);
-            Console.WriteLine("ClientBuffer {0} allocated (from dimensions)", _block);
+            SupportLogger.Log(LogLevel.Trace, "ClientBuffer {0} allocated (from dimensions)", _block);
         }
         private static unsafe void GenericArrayCopy(T[] sourceArray, IntPtr destination) 
         {
@@ -44,7 +45,7 @@ namespace Org.Whatever.MinimalQt.Support
             _totalSize = _totalCount * _elementSize;
             _block = Marshal.AllocHGlobal((IntPtr)_totalSize);
             GC.AddMemoryPressure(_totalSize);
-            Console.WriteLine("ClientBuffer {0} allocated (from array)", _block);
+            SupportLogger.Log(LogLevel.Trace, "ClientBuffer {0} allocated (from array)", _block);
             GenericArrayCopy(data, _block);
         }
         public ClientBuffer(Span<T> data)
@@ -55,7 +56,7 @@ namespace Org.Whatever.MinimalQt.Support
             _totalSize = _totalCount * _elementSize;
             _block = Marshal.AllocHGlobal((IntPtr)_totalSize);
             GC.AddMemoryPressure(_totalSize);
-            Console.WriteLine("ClientBuffer {0} allocated (from span)", _block);
+            SupportLogger.Log(LogLevel.Trace, "ClientBuffer {0} allocated (from span)", _block);
             GenericSpanCopy(data, _block);
         }
         
@@ -76,7 +77,7 @@ namespace Org.Whatever.MinimalQt.Support
         //         Buffer.MemoryCopy(sourcePtr.ToPointer(), _block.ToPointer(), _totalSize, _totalSize);
         //     }
         //     // done
-        //     Console.WriteLine("ClientBuffer {0} allocated", _block);
+        //     InternalLogger.Log(LogLevel.Trace, "ClientBuffer {0} allocated", _block);
         // }
         
         public Span<T> GetSpan(out int length)
@@ -109,7 +110,7 @@ namespace Org.Whatever.MinimalQt.Support
             if (_disposed) return;
             Marshal.FreeHGlobal(_block);
             GC.RemoveMemoryPressure(_totalSize);
-            Console.WriteLine("ClientBuffer {0} disposed", _block);
+            SupportLogger.Log(LogLevel.Trace, "ClientBuffer {0} disposed", _block);
             _block = IntPtr.Zero;
             _disposed = true;
         }

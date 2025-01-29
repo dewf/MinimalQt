@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 using System.Text;
-using Org.Whatever.MinimalQt.Support;
+using Microsoft.Extensions.Logging;
 
 namespace Org.Whatever.MinimalQt.Support
 {
@@ -26,15 +26,12 @@ namespace Org.Whatever.MinimalQt.Support
             ((IPushable)funcVal).Push(false); // isReturn = false (more correctly, "not applicable") - client resources don't need to be protected on return
         }
 
-        private static void ClientLogger(NativeMethods.LogLevel level, IntPtr strData, int length)
+        private static void ClientLogger(NativeMethods.ClientLogLevel level, IntPtr strData, int length)
         {
             if (length > 0)
             {
-                var str = Marshal.PtrToStringUTF8(strData, length);
-                if (level != NativeMethods.LogLevel.None)
-                {
-                    Console.WriteLine(str);
-                }
+                var message = Marshal.PtrToStringUTF8(strData, length);
+                SupportLogger.Log((LogLevel)level, message);
             }
         }
         
@@ -48,8 +45,10 @@ namespace Org.Whatever.MinimalQt.Support
             ClientResource.GetResourceById(id).Release();
         }
         
-        public static int Init()
+        public static int Init(ILogger logger)
         {
+            SupportLogger.SetLogger(logger);
+            
             // delegates must be saved from GC until the end of the program, kthx
             _savedClientLogFuncDelegate = ClientLogger;
             _savedExecFunctionDelegate = FuncValExecutor;
@@ -69,9 +68,9 @@ namespace Org.Whatever.MinimalQt.Support
         public static void Shutdown()
         {
             RemoteIsShutdown = true; // don't free any remote delegates after this!
-            Console.WriteLine("C# NativeImplClient Shutdown (before native)");
+            SupportLogger.Info("C# NativeImplClient Shutdown (before native)");
             NativeMethods.nativeImplShutdown();
-            Console.WriteLine("C# NativeImplClient Shutdown (after native)");
+            SupportLogger.Info("C# NativeImplClient Shutdown (after native)");
         }
 
         public static ModuleHandle GetModule(string name)
@@ -604,23 +603,23 @@ namespace Org.Whatever.MinimalQt.Support
 
         private static void ClientClearSafetyArea()
         {
-            Console.WriteLine("C#: before ClientClearSafetyArea");
+            SupportLogger.Trace("C#: before ClientClearSafetyArea");
             ServerResource.ClearSafeArea();
-            Console.WriteLine("C#: after ClientClearSafetyArea");
+            SupportLogger.Trace("C#: after ClientClearSafetyArea");
         }
         
         public static void DumpTables()
         {
-            Console.WriteLine("============Dump Tables==================");
-            Console.WriteLine("Native tables----------------------------");
+            SupportLogger.Info("============Dump Tables==================");
+            SupportLogger.Info("Native tables----------------------------");
             NativeMethods.dumpTables();
             
-            Console.WriteLine("Local tables-----------------------------");
+            SupportLogger.Info("Local tables-----------------------------");
             
-            Console.WriteLine("== C# client resources:");
+            SupportLogger.Info("== C# client resources:");
             ClientResource.DumpTables();
             
-            Console.WriteLine("=========================================");
+            SupportLogger.Info("=========================================");
         }
         
         public static void SetExceptionBuilder(ExceptionHandle eh, ExceptionBuildAndThrowDelegate builder)

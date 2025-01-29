@@ -24,7 +24,7 @@ enum Constant {
 @nodispose
 opaque Handle {
     void setAlpha(int alpha);
-    void setAlphaF(double alpha);
+    void setAlphaF(float alpha);
 }
 opaque Owned extends Handle;
 
