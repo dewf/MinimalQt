@@ -5,7 +5,11 @@
 
 namespace Logging
 {
-    static std::function<LogFunc> _logger;
+    static void defaultLogFunc(LogLevel level, const std::string& text) {
+        // defer to NI system-level logging if no logger has been set:
+        ni_clientLogger(LogLevel_Warning, "Logging::clientLog emergency backup via ni_clientLogger: [%s]", text.c_str());
+    }
+    static std::function<LogFunc> _logger = defaultLogFunc;
 
     void setLogFunc(const std::function<LogFunc>& func) {
         _logger = func;
@@ -28,14 +32,13 @@ namespace Logging
             va_end(args);
 
             std::string output(buffer.data(), buffer.data() + buffer.size());
-            if (_logger != nullptr) {
-                _logger(level, output);
-            } else {
-                // defer to NI system-level logging if no logger has been set:
-                ni_clientLogger(LogLevel_Warning, "Logging::clientLog emergency backup via ni_clientLogger: [%s]", output.c_str());
-            }
+            _logger(level, output);
         } else {
             _logger(LogLevel::Error, "!!! ni_clientLogger: size was <= 0");
         }
+    }
+
+    void clearFunc() {
+        _logger = defaultLogFunc;
     }
 }

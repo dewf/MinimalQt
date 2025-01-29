@@ -13,3 +13,4 @@ enum LogLevel {
 delegate void LogFunc(LogLevel level, string text);
 
 void setLogFunc(LogFunc func);
+void clearFunc();

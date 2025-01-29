@@ -1,6 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 using System.Text;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Org.Whatever.MinimalQt.Support
 {
@@ -26,12 +27,13 @@ namespace Org.Whatever.MinimalQt.Support
             ((IPushable)funcVal).Push(false); // isReturn = false (more correctly, "not applicable") - client resources don't need to be protected on return
         }
 
+        private static ILogger _cppSupportLogger = NullLogger.Instance;
         private static void ClientLogger(NativeMethods.ClientLogLevel level, IntPtr strData, int length)
         {
             if (length > 0)
             {
                 var message = Marshal.PtrToStringUTF8(strData, length);
-                SupportLogger.Log((LogLevel)level, message);
+                _cppSupportLogger.Log((LogLevel)level, "{}", message);
             }
         }
         
@@ -45,9 +47,12 @@ namespace Org.Whatever.MinimalQt.Support
             ClientResource.GetResourceById(id).Release();
         }
         
-        public static int Init(ILogger logger)
+        public static int Init(ILogger csharpSupportLogger, ILogger cppSupportLogger)
         {
-            SupportLogger.SetLogger(logger);
+            // used as the C++ support logger callback (see above):
+            _cppSupportLogger = cppSupportLogger;
+            // used as our C# support code logger:
+            SupportLogger.SetLogger(csharpSupportLogger);
             
             // delegates must be saved from GC until the end of the program, kthx
             _savedClientLogFuncDelegate = ClientLogger;
