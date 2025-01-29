@@ -4,6 +4,16 @@ namespace Org.Whatever.MinimalQt.Support
 {
     internal static partial class NativeMethods
     {
+        internal enum LogLevel {
+            Trace,
+            Debug,
+            Information,
+            Warning,
+            Error,
+            Critical,
+            None
+        }
+        internal delegate void ClientLogFuncDelegate(LogLevel level, IntPtr strData, int length);
         internal delegate void ExecFunctionDelegate(int id);
         internal delegate void ClientMethodDelegate(IntPtr methodHandle, int objectId);
         internal delegate void ClientResourceReleaseDelegate(int id);
@@ -12,6 +22,7 @@ namespace Org.Whatever.MinimalQt.Support
         [LibraryImport("MinimalQtServer")]
         [UnmanagedCallConv(CallConvs = new [] { typeof(System.Runtime.CompilerServices.CallConvCdecl) })]
         internal static partial int nativeImplInit(
+            ClientLogFuncDelegate logFuncDelegate,
             ExecFunctionDelegate execFunctionDelegate,
             ClientMethodDelegate methodDelegate,
             ClientResourceReleaseDelegate resourceReleaseDelegate,

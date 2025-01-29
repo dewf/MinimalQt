@@ -10,6 +10,7 @@ namespace Org.Whatever.MinimalQt.Support
     internal static class NativeImplClient
     {
         // these MUST be saved, else GC will take the delegates out from under us. ohnononono!
+        private static NativeMethods.ClientLogFuncDelegate _savedClientLogFuncDelegate;
         private static NativeMethods.ExecFunctionDelegate _savedExecFunctionDelegate;
         private static NativeMethods.ClientMethodDelegate _savedClientMethodDelegate;
         private static NativeMethods.ClientResourceReleaseDelegate _savedClientResourceReleaseDelegate;
@@ -23,6 +24,18 @@ namespace Org.Whatever.MinimalQt.Support
         {
             var funcVal = ClientFuncVal.AddFuncVal(wrapper, uniqueKey);
             ((IPushable)funcVal).Push(false); // isReturn = false (more correctly, "not applicable") - client resources don't need to be protected on return
+        }
+
+        private static void ClientLogger(NativeMethods.LogLevel level, IntPtr strData, int length)
+        {
+            if (length > 0)
+            {
+                var str = Marshal.PtrToStringUTF8(strData, length);
+                if (level != NativeMethods.LogLevel.None)
+                {
+                    Console.WriteLine(str);
+                }
+            }
         }
         
         private static void FuncValExecutor(int id)
@@ -38,12 +51,14 @@ namespace Org.Whatever.MinimalQt.Support
         public static int Init()
         {
             // delegates must be saved from GC until the end of the program, kthx
+            _savedClientLogFuncDelegate = ClientLogger;
             _savedExecFunctionDelegate = FuncValExecutor;
             _savedClientMethodDelegate = InvokeClientMethod;
             _savedClientResourceReleaseDelegate = ReleaseClientResourceId;
             _savedClientClearSafetyAreaDelegate = ClientClearSafetyArea;
 
             return NativeMethods.nativeImplInit(
+                _savedClientLogFuncDelegate,
                 _savedExecFunctionDelegate,
                 _savedClientMethodDelegate,
                 _savedClientResourceReleaseDelegate,
