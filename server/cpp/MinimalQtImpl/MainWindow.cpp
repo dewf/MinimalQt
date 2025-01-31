@@ -283,19 +283,34 @@ namespace MainWindow
               methods(methods),
               mask(mask) {}
     protected:
-        void closeEvent(QCloseEvent *event) override {
-            bool canClose = true;
-            if (mask & CanClose) {
-                canClose = methods->canClose();
+        void resizeEvent(QResizeEvent *event) override {
+            if (mask & Resized) {
+                methods->resized(toSize(event->oldSize()), toSize(event->size()));
+                event->accept();
+            } else {
+                QMainWindow::resizeEvent(event);
             }
-            if (canClose) {
-                // definitely going to close
-                if (mask & Closed) {
-                    methods->closed();
+        }
+        void closeEvent(QCloseEvent *event) override {
+            if (mask & (CanClose | Closed)) {
+                // potentially custom behavior
+                bool canClose = true;
+                if (mask & CanClose) {
+                    canClose = methods->canClose();
+                }
+                if (canClose) {
+                    // definitely going to close
+                    if (mask & Closed) {
+                        methods->closed();
+                    }
+                    event->accept();
+                } else {
+                    // ignore close event
+                    event->ignore();
                 }
             } else {
-                // ignore close event
-                event->ignore();
+                // totally default behavior
+                QMainWindow::closeEvent(event);
             }
         }
     };

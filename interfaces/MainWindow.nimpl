@@ -94,13 +94,15 @@ Handle create(Widget.Handle parent = null, WindowFlags flags_ = 0);
 
 namedbits DelegatedMethodMask {
     CanClose,
-    Closed
+    Closed,
+    Resized
     // TODO: CreatePopupMenu
 }
 
 interface DelegatedMethods {
     bool canClose();
     void closed();
+    void resized(Size oldSize, Size newSize);
 }
 
 opaque Delegated extends Handle;
