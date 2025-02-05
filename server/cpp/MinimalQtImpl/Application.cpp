@@ -2,12 +2,15 @@
 #include "ApplicationInternal.h"
 
 #include "ObjectInternal.h"
+#include "LoggingInternal.h"
 
 #include <QStyleFactory>
+#include <QThread>
 
 using namespace ::GuiApplication;
 using namespace ::Object;
 using namespace ::Widget;
+using namespace ::Logging;
 
 #define THIS (reinterpret_cast<QApplication*>(_this))
 
@@ -56,6 +59,13 @@ namespace Application
     }
 
     void executeOnMainThread(const std::function<MainThreadFunc>& func) {
-        QMetaObject::invokeMethod(QCoreApplication::instance(), func, Qt::QueuedConnection);
+        if (QThread::currentThread() == QCoreApplication::instance()->thread()) {
+            // already in the GUI thread, execute directly (with a warning)
+            clientLog(LogLevel::Warning, "Application::executeOnMainThread() - already on the GUI thread!");
+            func();
+        } else {
+            // OK
+            QMetaObject::invokeMethod(QCoreApplication::instance(), func, Qt::BlockingQueuedConnection);
+        }
     }
 }
