@@ -15,7 +15,7 @@
 #include "RegionInternal.h"
 #include "ScreenInternal.h"
 #include "VariantInternal.h"
-#include "PointF2Internal.h"
+#include "PointFInternal.h"
 #include "PointInternal.h"
 
 #include <QPaintEvent>
@@ -25,7 +25,7 @@
 using namespace ::Object;
 using namespace ::Common;
 using namespace ::Point;
-using namespace ::PointF2;
+using namespace ::PointF;
 using namespace ::Layout;
 using namespace ::Painter;
 using namespace ::Icon;
@@ -125,7 +125,7 @@ namespace Widget
         return reinterpret_cast<HandleRef>(THIS->childAt(QPOINT_VALUE(p)));
     }
 
-    HandleRef Handle_childAt(HandleRef _this, PointF2::HandleRef p) {
+    HandleRef Handle_childAt(HandleRef _this, PointF::HandleRef p) {
         return reinterpret_cast<HandleRef>(THIS->childAt(QPOINTF_VALUE(p)));
     }
 
@@ -335,7 +335,7 @@ namespace Widget
         return static_cast<LayoutDirection>(THIS->layoutDirection());
     }
 
-    PointF2::OwnedRef Handle_mapFrom(HandleRef _this, HandleRef parent, PointF2::HandleRef pos) {
+    PointF::OwnedRef Handle_mapFrom(HandleRef _this, HandleRef parent, PointF::HandleRef pos) {
         return POINTF_HEAP_NEW(THIS->mapFrom(AS_QWIDGET_PTR(parent), QPOINTF_VALUE(pos)));
     }
 
@@ -343,7 +343,7 @@ namespace Widget
         return POINT_HEAP_NEW(THIS->mapFrom(AS_QWIDGET_PTR(parent), QPOINT_VALUE(pos)));
     }
 
-    PointF2::OwnedRef Handle_mapFromGlobal(HandleRef _this, PointF2::HandleRef pos) {
+    PointF::OwnedRef Handle_mapFromGlobal(HandleRef _this, PointF::HandleRef pos) {
         return POINTF_HEAP_NEW(THIS->mapFromGlobal(QPOINTF_VALUE(pos)));
     }
 
@@ -351,7 +351,7 @@ namespace Widget
         return POINT_HEAP_NEW(THIS->mapFromGlobal(QPOINT_VALUE(pos)));
     }
 
-    PointF2::OwnedRef Handle_mapFromParent(HandleRef _this, PointF2::HandleRef pos) {
+    PointF::OwnedRef Handle_mapFromParent(HandleRef _this, PointF::HandleRef pos) {
         return POINTF_HEAP_NEW(THIS->mapFromParent(QPOINTF_VALUE(pos)));
     }
 
@@ -359,7 +359,7 @@ namespace Widget
         return POINT_HEAP_NEW(THIS->mapFromParent(QPOINT_VALUE(pos)));
     }
 
-    PointF2::OwnedRef Handle_mapTo(HandleRef _this, HandleRef parent, PointF2::HandleRef pos) {
+    PointF::OwnedRef Handle_mapTo(HandleRef _this, HandleRef parent, PointF::HandleRef pos) {
         return POINTF_HEAP_NEW(THIS->mapTo(AS_QWIDGET_PTR(parent), QPOINTF_VALUE(pos)));
     }
 
@@ -367,7 +367,7 @@ namespace Widget
         return POINT_HEAP_NEW(THIS->mapTo(AS_QWIDGET_PTR(parent), QPOINT_VALUE(pos)));
     }
 
-    PointF2::OwnedRef Handle_mapToGlobal(HandleRef _this, PointF2::HandleRef pos) {
+    PointF::OwnedRef Handle_mapToGlobal(HandleRef _this, PointF::HandleRef pos) {
         return POINTF_HEAP_NEW(THIS->mapToGlobal(QPOINTF_VALUE(pos)));
     }
 
@@ -375,7 +375,7 @@ namespace Widget
         return POINT_HEAP_NEW(THIS->mapToGlobal(QPOINT_VALUE(pos)));
     }
 
-    PointF2::OwnedRef Handle_mapToParent(HandleRef _this, PointF2::HandleRef pos) {
+    PointF::OwnedRef Handle_mapToParent(HandleRef _this, PointF::HandleRef pos) {
         return POINTF_HEAP_NEW(THIS->mapToParent(QPOINTF_VALUE(pos)));
     }
 

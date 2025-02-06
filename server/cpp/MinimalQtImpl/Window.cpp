@@ -5,7 +5,7 @@
 #include "CursorInternal.h"
 #include "IconInternal.h"
 #include "PointInternal.h"
-#include "PointF2Internal.h"
+#include "PointFInternal.h"
 #include "RegionInternal.h"
 
 #include "util/convert.h"
@@ -15,7 +15,7 @@ using namespace ::Enums;
 using namespace ::Screen;
 using namespace ::Common;
 using namespace ::Point;
-using namespace ::PointF2;
+using namespace ::PointF;
 using namespace ::Cursor;
 using namespace ::Icon;
 using namespace ::Region;
@@ -108,7 +108,7 @@ namespace Window
         return THIS->isVisible();
     }
 
-    PointF2::OwnedRef Handle_mapFromGlobal(HandleRef _this, PointF2::HandleRef pos) {
+    PointF::OwnedRef Handle_mapFromGlobal(HandleRef _this, PointF::HandleRef pos) {
         return POINTF_HEAP_NEW(THIS->mapFromGlobal(QPOINTF_VALUE(pos)));
     }
 
@@ -116,7 +116,7 @@ namespace Window
         return POINT_HEAP_NEW(THIS->mapFromGlobal(QPOINT_VALUE(pos)));
     }
 
-    PointF2::OwnedRef Handle_mapToGlobal(HandleRef _this, PointF2::HandleRef pos) {
+    PointF::OwnedRef Handle_mapToGlobal(HandleRef _this, PointF::HandleRef pos) {
         return POINTF_HEAP_NEW(THIS->mapToGlobal(QPOINTF_VALUE(pos)));
     }
 

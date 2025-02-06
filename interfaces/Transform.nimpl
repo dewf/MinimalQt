@@ -2,7 +2,7 @@ module Transform;
 
 import Common;
 import Point;
-import PointF2;
+import PointF;
 import Polygon;
 import PolygonF;
 import Region;
@@ -50,7 +50,7 @@ opaque Handle {
 
     PainterPath_Owned map(PainterPath_Handle path);
     Point.Owned map(Point.Handle point);
-    PointF2.Owned map(PointF2.Handle p);
+    PointF.Owned map(PointF.Handle p);
     Polygon.Owned map(Polygon.Handle polygon);
     PolygonF.Owned map(PolygonF.Handle polygon);
     Region.Owned map(Region.Handle region);

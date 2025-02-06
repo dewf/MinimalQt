@@ -1,6 +1,6 @@
 #include "generated/Point.h"
 
-#include "PointF2Internal.h"
+#include "PointFInternal.h"
 #include "PointInternal.h"
 
 #include "util/convert.h"
@@ -11,6 +11,10 @@ using namespace ::Common;
 
 namespace Point
 {
+    int32_t Handle_hashCode(HandleRef _this) {
+        return qHash(QPOINT_VALUE(_this));
+    }
+
     bool Handle_isNull(HandleRef _this) {
         return THIS->isNull();
     }
@@ -87,5 +91,41 @@ namespace Point
 
     int32_t dotProduct(HandleRef p1, HandleRef p2) {
         return QPoint::dotProduct(QPOINT_VALUE(p1), QPOINT_VALUE(p2));
+    }
+
+    bool operator_notEqual(HandleRef lhs, HandleRef rhs) {
+        return QPOINT_VALUE(lhs) != QPOINT_VALUE(rhs);
+    }
+
+    OwnedRef operator_mul(HandleRef point, double factor) {
+        return POINT_HEAP_NEW(QPOINT_VALUE(point) * factor);
+    }
+
+    OwnedRef operator_mul(HandleRef point, float factor) {
+        return POINT_HEAP_NEW(QPOINT_VALUE(point) * factor);
+    }
+
+    OwnedRef operator_mul(HandleRef point, int32_t factor) {
+        return POINT_HEAP_NEW(QPOINT_VALUE(point) * factor);
+    }
+
+    OwnedRef operator_add(HandleRef p1, HandleRef p2) {
+        return POINT_HEAP_NEW(QPOINT_VALUE(p1) + QPOINT_VALUE(p2));
+    }
+
+    OwnedRef operator_sub(HandleRef p1, HandleRef p2) {
+        return POINT_HEAP_NEW(QPOINT_VALUE(p1) - QPOINT_VALUE(p2));
+    }
+
+    OwnedRef operator_negate(HandleRef point) {
+        return POINT_HEAP_NEW(-QPOINT_VALUE(point));
+    }
+
+    OwnedRef operator_div(HandleRef point, double divisor) {
+        return POINT_HEAP_NEW(QPOINT_VALUE(point) / divisor);
+    }
+
+    bool operator_equal(HandleRef lhs, HandleRef rhs) {
+        return QPOINT_VALUE(lhs) == QPOINT_VALUE(rhs);
     }
 }

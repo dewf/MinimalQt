@@ -345,10 +345,10 @@ add_library(MinimalQtImpl STATIC
     ../Point.cpp
     ../PointInternal.h
 
-    ../generated/PointF2.h
-    ../generated/PointF2_wrappers.cpp
-    ../PointF2.cpp
-    ../PointF2Internal.h
+    ../generated/PointF.h
+    ../generated/PointF_wrappers.cpp
+    ../PointF.cpp
+    ../PointFInternal.h
 
     ../generated/Polygon.h
     ../generated/Polygon_wrappers.cpp

@@ -1,11 +1,11 @@
-#include "generated/PointF2.h"
-#include "PointF2Internal.h"
+#include "generated/PointF.h"
+#include "PointFInternal.h"
 
 #include "PointInternal.h"
 
 #define THIS (AS_QPOINTF_PTR(_this))
 
-namespace PointF2
+namespace PointF
 {
     bool Handle_isNull(HandleRef _this) {
         return THIS->isNull();
@@ -77,5 +77,41 @@ namespace PointF2
 
     double dotProduct(HandleRef p1, HandleRef p2) {
         return QPointF::dotProduct(QPOINTF_VALUE(p1), QPOINTF_VALUE(p2));
+    }
+
+    bool fuzzyCompare(HandleRef p1, HandleRef p2) {
+        return qFuzzyCompare(QPOINTF_VALUE(p1), QPOINTF_VALUE(p2));
+    }
+
+    bool fuzzyIsNull(HandleRef point) {
+        return qFuzzyIsNull(QPOINTF_VALUE(point));
+    }
+
+    bool operator_notEqual(HandleRef lhs, HandleRef rhs) {
+        return QPOINTF_VALUE(lhs) != QPOINTF_VALUE(rhs);
+    }
+
+    OwnedRef operator_mul(HandleRef point, double factor) {
+        return POINTF_HEAP_NEW(QPOINTF_VALUE(point) * factor);
+    }
+
+    OwnedRef operator_add(HandleRef p1, HandleRef p2) {
+        return POINTF_HEAP_NEW(QPOINTF_VALUE(p1) + QPOINTF_VALUE(p2));
+    }
+
+    OwnedRef operator_sub(HandleRef p1, HandleRef p2) {
+        return POINTF_HEAP_NEW(QPOINTF_VALUE(p1) - QPOINTF_VALUE(p2));
+    }
+
+    OwnedRef operator_negate(HandleRef point) {
+        return POINTF_HEAP_NEW(-QPOINTF_VALUE(point));
+    }
+
+    OwnedRef operator_div(HandleRef point, double divisor) {
+        return POINTF_HEAP_NEW(QPOINTF_VALUE(point) / divisor);
+    }
+
+    bool operator_equal(HandleRef lhs, HandleRef rhs) {
+        return QPOINTF_VALUE(lhs) == QPOINTF_VALUE(rhs);
     }
 }

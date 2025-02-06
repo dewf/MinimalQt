@@ -1,7 +1,7 @@
 module PolygonF;
 
 import Common;
-import PointF2;
+import PointF;
 import Enums;
 
 fwdopaque Polygon_Handle = Polygon.Handle;
@@ -10,21 +10,21 @@ fwdopaque Polygon_Owned = Polygon.Owned;
 @nodispose
 opaque Handle {
     RectF boundingRect();
-    bool containsPoint(PointF2.Handle point, FillRule fillRule);
+    bool containsPoint(PointF.Handle point, FillRule fillRule);
     Owned intersected(Handle r);
     bool intersects(Handle p);
     bool isClosed();
     Owned subtracted(Handle r);
     Polygon_Owned toPolygon();
-    void translate(PointF2.Handle offset);
+    void translate(PointF.Handle offset);
     void translate(double dx, double dy);
-    Owned translated(PointF2.Handle offset);
+    Owned translated(PointF.Handle offset);
     Owned translated(double dx, double dy);
     Owned united(Handle r);
 }
 opaque Owned extends Handle;
 
 Owned create();
-Owned create(Array<PointF2.Handle> points);
+Owned create(Array<PointF.Handle> points);
 Owned create(Polygon_Handle polygon);
 Owned create(RectF rectangle);

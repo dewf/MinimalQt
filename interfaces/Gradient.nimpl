@@ -2,7 +2,7 @@ module Gradient;
 
 import Color;
 import Common;
-import PointF2;
+import PointF;
 
 enum Type {
     LinearGradient,
@@ -233,47 +233,47 @@ group Conical {
     @nodispose
     opaque Handle extends Gradient.Handle {
         double angle();
-        PointF2.Owned center();
+        PointF.Owned center();
         void setAngle(double angle);
-        void setCenter(PointF2.Handle center);
+        void setCenter(PointF.Handle center);
         void setCenter(double x, double y);
     }
     opaque Owned extends Handle;
 
     Owned create();
-    Owned create(PointF2.Handle center, double angle);
+    Owned create(PointF.Handle center, double angle);
     Owned create(double cx, double cy, double angle);
 }
 
 group Linear {
     @nodispose
     opaque Handle extends Gradient.Handle {
-        PointF2.Owned finalStop();
-        void setFinalStop(PointF2.Handle stop);
+        PointF.Owned finalStop();
+        void setFinalStop(PointF.Handle stop);
         void setFinalStop(double x, double y);
-        void setStart(PointF2.Handle start);
+        void setStart(PointF.Handle start);
         void setStart(double x, double y);
-        PointF2.Owned start();
+        PointF.Owned start();
     }
     opaque Owned extends Handle;
 
     Owned create();
-    Owned create(PointF2.Handle start, PointF2.Handle finalStop);
+    Owned create(PointF.Handle start, PointF.Handle finalStop);
     Owned create(double x1, double y1, double x2, double y2);
 }
 
 group Radial {
     @nodispose
     opaque Handle extends Gradient.Handle {
-        PointF2.Owned center();
+        PointF.Owned center();
         double centerRadius();
-        PointF2.Owned focalPoint();
+        PointF.Owned focalPoint();
         double focalRadius();
         double radius();
-        void setCenter(PointF2.Handle center);
+        void setCenter(PointF.Handle center);
         void setCenter(double x, double y);
         void setCenterRadius(double radius);
-        void setFocalPoint(PointF2.Handle focalPoint);
+        void setFocalPoint(PointF.Handle focalPoint);
         void setFocalPoint(double x, double y);
         void setFocalRadius(double radius);
         void setRadius(double radius);
@@ -281,10 +281,10 @@ group Radial {
     opaque Owned extends Handle;
 
     Owned create();
-    Owned create(PointF2.Handle center, double radius);
-    Owned create(PointF2.Handle center, double radius, PointF2.Handle focalPoint);
+    Owned create(PointF.Handle center, double radius);
+    Owned create(PointF.Handle center, double radius, PointF.Handle focalPoint);
     Owned create(double cx, double cy, double radius);
-    Owned create(PointF2.Handle center, double centerRadius, PointF2.Handle focalPoint, double focalRadius);
+    Owned create(PointF.Handle center, double centerRadius, PointF.Handle focalPoint, double focalRadius);
     Owned create(double cx, double cy, double radius, double fx, double fy);
     Owned create(double cx, double cy, double centerRadius, double fx, double fy, double focalRadius);
 }

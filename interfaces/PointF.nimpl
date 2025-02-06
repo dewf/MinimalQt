@@ -1,0 +1,66 @@
+module PointF;
+
+fwdopaque Point_Handle = Point.Handle;
+fwdopaque Point_Owned = Point.Owned;
+
+@nodispose
+opaque Handle {
+    // qHash unsupported for QPointF
+    // int hashCode();
+
+    bool isNull();
+    double manhattanLength();
+
+    // qreal & rx()
+    // qreal & ry()
+
+    void setX(double x);
+    void setY(double y);
+
+    // CGPoint toCGPoint() const
+
+    Point_Owned toPoint();
+    Owned transposed();
+    double x();
+    double y();
+
+    // the following return 'this':
+
+    Handle operator_mul(double factor);
+    Handle operator_add(Handle point);
+    Handle operator_sub(Handle point);
+    Handle operator_div(double divisor);
+}
+opaque Owned extends Handle;
+
+Owned create();
+Owned create(Point_Handle point);
+Owned create(double xpos, double ypos);
+
+// static methods ==================================
+
+double dotProduct(Handle p1, Handle p2);
+
+// QPointF fromCGPoint(CGPoint point)
+
+// operators =======================================
+
+bool fuzzyCompare(Handle p1, Handle p2);
+bool fuzzyIsNull(Handle point);
+bool operator_notEqual(Handle lhs, Handle rhs);
+Owned operator_mul(Handle point, double factor);
+
+// QPointF operator*(qreal factor, const QPointF &point)
+
+// QPointF operator+(const QPointF &point)
+
+Owned operator_add(Handle p1, Handle p2);
+Owned operator_sub(Handle p1, Handle p2);
+Owned operator_negate(Handle point);
+Owned operator_div(Handle point, double divisor);
+
+// QDataStream & operator<<(QDataStream &stream, const QPointF &point)
+
+bool operator_equal(Handle lhs, Handle rhs);
+
+// QDataStream & operator>>(QDataStream &stream, QPointF &point)
