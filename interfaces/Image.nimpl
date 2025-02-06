@@ -1,6 +1,7 @@
 module Image;
 import PaintDevice;
 import Common;
+import Point2;
 import Enums;
 import Color;
 import Transform;
@@ -119,15 +120,15 @@ opaque Handle {
     bool loadFromData(Buffer<byte> data, Option<string> format);
     void mirror(bool horizontal = false, bool vertical = true);
     Owned mirrored(bool horizontal = false, bool vertical = true);
-    Point offset();
-    Rgb pixel(Point position);
+    Point2.Owned offset();
+    Rgb pixel(Point2.Handle position);
     Rgb pixel(int x, int y);
-    Color.Owned pixelColor(Point position);
+    Color.Owned pixelColor(Point2.Handle position);
     Color.Owned pixelColor(int x, int y);
 
     // QPixelFormat pixelFormat() const
 
-    int pixelIndex(Point position);
+    int pixelIndex(Point2.Handle position);
     int pixelIndex(int x, int y);
     Rect rect();
     bool reinterpretAsFormat(Format format);
@@ -155,10 +156,10 @@ opaque Handle {
     void setDevicePixelRatio(double scaleFactor);
     void setDotsPerMeterX(int x);
     void setDotsPerMeterY(int y);
-    void setOffset(Point offset);
-    void setPixel(Point position, uint32 index_or_rgb);
+    void setOffset(Point2.Handle offset);
+    void setPixel(Point2.Handle position, uint32 index_or_rgb);
     void setPixel(int x, int y, uint32 index_or_rgb);
-    void setPixelColor(Point position, Color.Handle color);
+    void setPixelColor(Point2.Handle position, Color.Handle color);
     void setPixelColor(int x, int y, Color.Handle color);
     void setText(string key, string text);
     Size size();
@@ -172,7 +173,7 @@ opaque Handle {
     // HICON toHICON(const QImage &mask = {}) const
     
     Owned transformed(Transform.Handle matrix, TransformationMode transformMode = FastTransformation);
-    bool valid(Point pos);
+    bool valid(Point2.Handle pos);
     bool valid(int x, int y);
     int width();
 }

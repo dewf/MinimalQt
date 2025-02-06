@@ -3,6 +3,7 @@ module TextEdit;
 import Object;
 import Widget;
 import Common;
+import Point2;
 import Enums;
 import AbstractScrollArea;
 import Menu;
@@ -55,14 +56,14 @@ opaque Handle extends AbstractScrollArea.Handle {
 
     bool acceptRichText();
     Alignment alignment();
-    string anchorAt(Point pos);
+    string anchorAt(Point2.Handle pos);
     AutoFormatting getAutoFormatting();
     bool canPaste();
     Menu.Handle createStandardContextMenu();
-    Menu.Handle createStandardContextMenu(Point position);
+    Menu.Handle createStandardContextMenu(Point2.Handle position);
     TextCharFormat.Owned currentCharFormat();
     Font.Owned currentFont();
-    TextCursor.Owned cursorForPosition(Point pos);
+    TextCursor.Owned cursorForPosition(Point2.Handle pos);
     Rect cursorRect();
     Rect cursorRect(TextCursor.Handle cursor);
     int cursorWidth();

@@ -4,6 +4,7 @@ import Object;
 import Enums;
 import Pixmap;
 import Common;
+import Point2;
 import MimeData;
 
 interface SignalHandler extends Object.SignalHandler {
@@ -17,11 +18,11 @@ opaque Handle extends Object.Handle {
     Pixmap.Owned dragCursor(DropAction action);
     DropAction exec(DropActions supportedActions = MoveAction);
     DropAction exec(DropActions supportedActions, DropAction defaultDropAction);
-    Point hotSpot();
+    Point2.Owned hotSpot();
     MimeData.Handle mimeData();
     Pixmap.Owned pixmap();
     void setDragCursor(Pixmap.Handle cursor, DropAction action);
-    void setHotSpot(Point hotspot);
+    void setHotSpot(Point2.Handle hotspot);
     void setMimeData(MimeData.Handle data);
     void setPixmap(Pixmap.Handle pixmap);
     Object.Handle source();

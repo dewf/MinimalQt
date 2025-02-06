@@ -2,6 +2,7 @@ module MenuBar;
 
 import Object;
 import Common;
+import Point2;
 import Enums;
 import Icon;
 import Widget;
@@ -14,7 +15,7 @@ interface SignalHandler extends Widget.SignalHandler {
 }
 
 opaque Handle extends Widget.Handle {
-    Action.Handle actionAt(Point pt);
+    Action.Handle actionAt(Point2.Handle pt);
     Rect actionGeometry(Action.Handle act);
     Action.Handle activeAction();
     Action.Handle addMenu(Menu.Handle menu);

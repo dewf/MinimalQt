@@ -3,12 +3,14 @@
 
 #include "ObjectInternal.h"
 #include "PixmapInternal.h"
+#include "Point2Internal.h"
 #include "TransformInternal.h"
 
 #include "util/convert.h"
 
 using namespace ::Object;
 using namespace ::Common;
+using namespace ::Point2;
 using namespace ::Enums;
 using namespace ::Pixmap;
 using namespace ::Transform;
@@ -137,8 +139,8 @@ namespace Screen
         return toRect(THIS->virtualGeometry());
     }
 
-    HandleRef Handle_virtualSiblingAt(HandleRef _this, Point point) {
-        return reinterpret_cast<HandleRef>(THIS->virtualSiblingAt(toQPoint(point)));
+    HandleRef Handle_virtualSiblingAt(HandleRef _this, Point2::HandleRef point) {
+        return reinterpret_cast<HandleRef>(THIS->virtualSiblingAt(QPOINT_VALUE(point)));
     }
 
     std::vector<HandleRef> Handle_virtualSiblings(HandleRef _this) {

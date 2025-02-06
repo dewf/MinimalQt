@@ -5,11 +5,13 @@
 #include "WidgetInternal.h"
 #include "ActionInternal.h"
 #include "IconInternal.h"
+#include "Point2Internal.h"
 
 #include "util/convert.h"
 
 using namespace ::Object;
 using namespace ::Common;
+using namespace ::Point2;
 using namespace ::Widget;
 using namespace ::Action;
 using namespace ::Icon;
@@ -18,8 +20,8 @@ using namespace ::Icon;
 
 namespace Menu
 {
-    Action::HandleRef Handle_actionAt(HandleRef _this, Point pt) {
-        return reinterpret_cast<Action::HandleRef>(THIS->actionAt(toQPoint(pt)));
+    Action::HandleRef Handle_actionAt(HandleRef _this, Point2::HandleRef pt) {
+        return reinterpret_cast<Action::HandleRef>(THIS->actionAt(QPOINT_VALUE(pt)));
     }
 
     Rect Handle_actionGeometry(HandleRef _this, Action::HandleRef act) {
@@ -66,8 +68,8 @@ namespace Menu
         return reinterpret_cast<Action::HandleRef>(THIS->exec());
     }
 
-    Action::HandleRef Handle_exec(HandleRef _this, Point p, Action::HandleRef action /* nullptr */) {
-        return reinterpret_cast<Action::HandleRef>(THIS->exec(toQPoint(p), AS_QACTION_PTR(action)));
+    Action::HandleRef Handle_exec(HandleRef _this, Point2::HandleRef p, Action::HandleRef action /* nullptr */) {
+        return reinterpret_cast<Action::HandleRef>(THIS->exec(QPOINT_VALUE(p), reinterpret_cast<QAction*>(action)));
     }
 
     void Handle_hideTearOffMenu(HandleRef _this) {
@@ -110,8 +112,8 @@ namespace Menu
         return reinterpret_cast<Action::HandleRef>(THIS->menuAction());
     }
 
-    void Handle_popup(HandleRef _this, Point p, Action::HandleRef atAction /* nullptr */) {
-        THIS->popup(toQPoint(p), AS_QACTION_PTR(atAction));
+    void Handle_popup(HandleRef _this, Point2::HandleRef p, Action::HandleRef atAction /* nullptr */) {
+        THIS->popup(QPOINT_VALUE(p), reinterpret_cast<QAction*>(atAction));
     }
 
     bool Handle_separatorsCollapsible(HandleRef _this) {
@@ -150,8 +152,8 @@ namespace Menu
         THIS->setToolTipsVisible(visible);
     }
 
-    void Handle_showTearOffMenu(HandleRef _this, Point pos) {
-        THIS->showTearOffMenu(toQPoint(pos));
+    void Handle_showTearOffMenu(HandleRef _this, Point2::HandleRef pos) {
+        THIS->showTearOffMenu(QPOINT_VALUE(pos));
     }
 
     void Handle_showTearOffMenu(HandleRef _this) {
@@ -206,11 +208,11 @@ namespace Menu
         return reinterpret_cast<HandleRef>(new QMenu(QString::fromStdString(title), AS_QWIDGET_PTR(parent)));
     }
 
-    Action::HandleRef exec(const std::vector<Action::HandleRef>& actions, Point pos, Action::HandleRef at /* nullptr */, Widget::HandleRef parent /* nullptr */) {
+    Action::HandleRef exec(const std::vector<Action::HandleRef>& actions, Point2::HandleRef pos, Action::HandleRef at /* nullptr */, Widget::HandleRef parent /* nullptr */) {
         const auto qActionList = toQList<Action::HandleRef,QAction*>(actions, [](auto a) {
             return AS_QACTION_PTR(a);
         });
-        const auto result = QMenu::exec(qActionList, toQPoint(pos), AS_QACTION_PTR(at), AS_QWIDGET_PTR(parent));
+        const auto result = QMenu::exec(qActionList, QPOINT_VALUE(pos), AS_QACTION_PTR(at), AS_QWIDGET_PTR(parent));
         return reinterpret_cast<Action::HandleRef>(result);
     }
 

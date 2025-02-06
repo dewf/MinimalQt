@@ -2,6 +2,7 @@
 #include "EventInternal.h"
 
 #include "LoggingInternal.h"
+#include "Point2Internal.h"
 using namespace ::Logging;
 
 #include "MimeDataInternal.h"
@@ -12,6 +13,7 @@ using namespace ::Logging;
 
 using namespace ::Object;
 using namespace ::Common;
+using namespace ::Point2;
 using namespace ::Enums;
 using namespace ::KeySequence;
 using namespace ::Region;
@@ -170,8 +172,8 @@ namespace Event
     // contextmenu event ===================================
 #define CONTEXTMENU_THIS (reinterpret_cast<QContextMenuEvent*>(_this))
 
-    Point ContextMenuEvent_globalPos(ContextMenuEventRef _this) {
-        return toPoint(CONTEXTMENU_THIS->globalPos());
+    Point2::OwnedRef ContextMenuEvent_globalPos(ContextMenuEventRef _this) {
+        return POINT_HEAP_NEW(CONTEXTMENU_THIS->globalPos());
     }
 
     int32_t ContextMenuEvent_globalX(ContextMenuEventRef _this) {
@@ -182,8 +184,8 @@ namespace Event
         return CONTEXTMENU_THIS->globalY();
     }
 
-    Point ContextMenuEvent_pos(ContextMenuEventRef _this) {
-        return toPoint(CONTEXTMENU_THIS->pos());
+    Point2::OwnedRef ContextMenuEvent_pos(ContextMenuEventRef _this) {
+        return POINT_HEAP_NEW(CONTEXTMENU_THIS->pos());
     }
 
     ContextMenuEvent::Reason ContextMenuEvent_getReason(ContextMenuEventRef _this) {
@@ -313,8 +315,8 @@ namespace Event
     // wheel event =========================================
 #define WHEELEVENT_THIS (reinterpret_cast<QWheelEvent*>(_this))
 
-    Point WheelEvent_angleDelta(WheelEventRef _this) {
-        return toPoint(WHEELEVENT_THIS->angleDelta());
+    Point2::OwnedRef WheelEvent_angleDelta(WheelEventRef _this) {
+        return POINT_HEAP_NEW(WHEELEVENT_THIS->angleDelta());
     }
 
     bool WheelEvent_inverted(WheelEventRef _this) {
@@ -325,7 +327,7 @@ namespace Event
         return static_cast<ScrollPhase>(WHEELEVENT_THIS->phase());
     }
 
-    Point WheelEvent_pixelDelta(WheelEventRef _this) {
-        return toPoint(WHEELEVENT_THIS->pixelDelta());
+    Point2::OwnedRef WheelEvent_pixelDelta(WheelEventRef _this) {
+        return POINT_HEAP_NEW(WHEELEVENT_THIS->pixelDelta());
     }
 }

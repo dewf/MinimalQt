@@ -5,6 +5,7 @@ import AbstractItemView;
 import Enums;
 import Widget;
 import Common;
+import Point2;
 
 interface SignalHandler extends AbstractItemView.SignalHandler {
     void geometriesChanged();
@@ -43,7 +44,7 @@ opaque Handle extends AbstractItemView.Handle {
     bool isSortIndicatorShown();
     int length();
     int logicalIndex(int visualIndex);
-    int logicalIndexAt(Point pos);
+    int logicalIndexAt(Point2.Handle pos);
     int logicalIndexAt(int position);
     int logicalIndexAt(int x, int y);
     int maximumSectionSize();

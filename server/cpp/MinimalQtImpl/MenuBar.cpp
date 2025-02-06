@@ -6,11 +6,13 @@
 #include "ActionInternal.h"
 #include "IconInternal.h"
 #include "MenuInternal.h"
+#include "Point2Internal.h"
 
 #include "util/convert.h"
 
 using namespace ::Object;
 using namespace ::Common;
+using namespace ::Point2;
 using namespace ::Enums;
 using namespace ::Icon;
 using namespace ::Widget;
@@ -21,8 +23,8 @@ using namespace ::Action;
 
 namespace MenuBar
 {
-    Action::HandleRef Handle_actionAt(HandleRef _this, Point pt) {
-        return reinterpret_cast<Action::HandleRef>(THIS->actionAt(toQPoint(pt)));
+    Action::HandleRef Handle_actionAt(HandleRef _this, Point2::HandleRef pt) {
+        return reinterpret_cast<Action::HandleRef>(THIS->actionAt(QPOINT_VALUE(pt)));
     }
 
     Rect Handle_actionGeometry(HandleRef _this, Action::HandleRef act) {

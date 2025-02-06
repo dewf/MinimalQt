@@ -1,21 +1,25 @@
 #include "generated/Polygon.h"
-#include "PolygonInternal.h"
 
+#include "Point2Internal.h"
+#include "PolygonInternal.h"
 #include "PolygonFInternal.h"
+
 #include "util/convert.h"
 
 using namespace ::Common;
+using namespace ::Point2;
 using namespace ::Enums;
 
 #define THIS (AS_QPOLYGON_PTR(_this))
 
 namespace Polygon
 {
-    static std::vector<int> pointsToIntVector(const std::vector<Point>& points) {
+    static std::vector<int> pointsToIntVector(const std::vector<Point2::HandleRef>& points) {
         std::vector<int> ret;
-        for (auto &p : points) {
-            ret.push_back(p.x);
-            ret.push_back(p.y);
+        for (const auto handle : points) {
+            const auto qPoint = QPOINT_VALUE(handle);
+            ret.push_back(qPoint.x());
+            ret.push_back(qPoint.y());
         }
         return ret;
     }
@@ -24,8 +28,8 @@ namespace Polygon
         return toRect(THIS->boundingRect());
     }
 
-    bool Handle_containsPoint(HandleRef _this, Point point, FillRule fillRule) {
-        return THIS->containsPoint(toQPoint(point), static_cast<Qt::FillRule>(fillRule));
+    bool Handle_containsPoint(HandleRef _this, Point2::HandleRef point, FillRule fillRule) {
+        return THIS->containsPoint(QPOINT_VALUE(point), static_cast<Qt::FillRule>(fillRule));
     }
 
     OwnedRef Handle_intersected(HandleRef _this, HandleRef r) {
@@ -36,11 +40,11 @@ namespace Polygon
         return THIS->intersects(QPOLYGON_VALUE(p));
     }
 
-    Point Handle_point(HandleRef _this, int32_t index) {
-        return toPoint(THIS->point(index));
+    Point2::OwnedRef Handle_point(HandleRef _this, int32_t index) {
+        return POINT_HEAP_NEW(THIS->point(index));
     }
 
-    void Handle_putPoints(HandleRef _this, int32_t index, const std::vector<Point>& points) {
+    void Handle_putPoints(HandleRef _this, int32_t index, const std::vector<Point2::HandleRef>& points) {
         const auto vec = pointsToIntVector(points);
         THIS->putPoints(index, static_cast<int>(points.size()), vec.data());
     }
@@ -53,11 +57,11 @@ namespace Polygon
         THIS->setPoint(index, x, y);
     }
 
-    void Handle_setPoint(HandleRef _this, int32_t index, Point point) {
-        THIS->setPoint(index, toQPoint(point));
+    void Handle_setPoint(HandleRef _this, int32_t index, Point2::HandleRef point) {
+        THIS->setPoint(index, QPOINT_VALUE(point));
     }
 
-    void Handle_setPoints(HandleRef _this, const std::vector<Point>& points) {
+    void Handle_setPoints(HandleRef _this, const std::vector<Point2::HandleRef>& points) {
         const auto vec = pointsToIntVector(points);
         THIS->setPoints(static_cast<int>(points.size()), vec.data());
     }
@@ -75,16 +79,16 @@ namespace Polygon
         THIS->translate(dx, dy);
     }
 
-    void Handle_translate(HandleRef _this, Point offset) {
-        THIS->translate(toQPoint(offset));
+    void Handle_translate(HandleRef _this, Point2::HandleRef offset) {
+        THIS->translate(QPOINT_VALUE(offset));
     }
 
     OwnedRef Handle_translated(HandleRef _this, int32_t dx, int32_t dy) {
         return POLYGON_HEAP_NEW(THIS->translated(dx, dy));
     }
 
-    OwnedRef Handle_translated(HandleRef _this, Point offset) {
-        return POLYGON_HEAP_NEW(THIS->translated(toQPoint(offset)));
+    OwnedRef Handle_translated(HandleRef _this, Point2::HandleRef offset) {
+        return POLYGON_HEAP_NEW(THIS->translated(QPOINT_VALUE(offset)));
     }
 
     OwnedRef Handle_united(HandleRef _this, HandleRef r) {
@@ -99,8 +103,8 @@ namespace Polygon
         return POLYGON_HEAP_NEW();
     }
 
-    OwnedRef create(const std::vector<Point>& points) {
-        const auto qPoints = toQList<Point,QPoint>(points, toQPoint);
+    OwnedRef create(const std::vector<Point2::HandleRef>& points) {
+        const auto qPoints = toQList<Point2::HandleRef,QPoint>(points, [](auto p) { return QPOINT_VALUE(p); });
         return POLYGON_HEAP_NEW(qPoints);
     }
 

@@ -1,0 +1,39 @@
+module Point2;
+
+import Common;
+//fwdopaque PointF_Owned = PointF.Owned;
+
+@nodispose
+opaque Handle {
+    
+    bool isNull();
+    int manhattanLength();
+
+    // int & rx()
+    // int & ry()
+    
+    void setX(int x);
+    void setY(int y);
+
+    // CGPoint toCGPoint() const
+
+    PointF toPointF();
+    Owned transposed();
+    int x();
+    int y();
+
+    // the following return 'this':
+
+    Handle operator_mul(double factor);
+    Handle operator_mul(float factor);
+    Handle operator_mul(int factor);
+    Handle operator_add(Handle point);
+    Handle operator_sub(Handle point);
+    Handle operator_div(double divisor);
+}
+opaque Owned extends Handle;
+
+Owned create();
+Owned create(int xpos, int ypos);
+
+int dotProduct(Handle p1, Handle p2);

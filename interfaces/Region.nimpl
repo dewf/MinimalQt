@@ -1,6 +1,7 @@
 module Region;
 
 import Common;
+import Point2;
 import Polygon;
 import Enums;
 
@@ -9,7 +10,7 @@ enum RegionType { Rectangle, Ellipse }
 @nodispose
 opaque Handle {
     Rect boundingRect();
-    bool contains(Point p);
+    bool contains(Point2.Handle p);
     bool contains(Rect r);
     Owned intersected(Rect rect);
     Owned intersected(Handle r);
@@ -26,9 +27,9 @@ opaque Handle {
     // (since 6.0) HRGN toHRGN() const
 
     void translate(int dx, int dy);
-    void translate(Point point);
+    void translate(Point2.Handle point);
     Owned translated(int dx, int dy);
-    Owned translated(Point p);
+    Owned translated(Point2.Handle p);
     Owned united(Rect rect);
     Owned united(Handle r);
     Owned xored(Handle r);

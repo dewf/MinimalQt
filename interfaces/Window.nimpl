@@ -4,6 +4,7 @@ import Object;
 import Enums;
 import Screen;
 import Common;
+import Point2;
 import Cursor;
 import Icon;
 import Region;
@@ -56,7 +57,7 @@ opaque Handle extends Object.Handle {
     Object.Handle focusObject();
     Rect frameGeometry();
     Margins frameMargins();
-    Point framePosition();
+    Point2.Owned framePosition();
     Rect geometry();
     int height();
     Icon.Owned icon();
@@ -67,9 +68,9 @@ opaque Handle extends Object.Handle {
     bool isTopLevel();
     bool isVisible();
     PointF mapFromGlobal(PointF pos);
-    Point mapFromGlobal(Point pos);
+    Point2.Owned mapFromGlobal(Point2.Handle pos);
     PointF mapToGlobal(PointF pos);
-    Point mapToGlobal(Point pos);
+    Point2.Owned mapToGlobal(Point2.Handle pos);
     Region.Owned mask();
     int maximumHeight();
     Size maximumSize();
@@ -80,7 +81,7 @@ opaque Handle extends Object.Handle {
     WindowModality modality();
     double opacity();
     Window.Handle parent(AncestorMode mode = ExcludeTransients);
-    Point position();
+    Point2.Owned position();
     void reportContentOrientationChange(ScreenOrientation orientation);
 
     // QSurfaceFormat requestedFormat() const
@@ -98,7 +99,7 @@ opaque Handle extends Object.Handle {
     // void setFormat(const QSurfaceFormat &format)
     // TODO
 
-    void setFramePosition(Point point);
+    void setFramePosition(Point2.Handle point);
     void setIcon(Icon.Handle icon);
     bool setKeyboardGrabEnabled(bool grab);
     void setMask(Region.Handle region);
@@ -108,7 +109,7 @@ opaque Handle extends Object.Handle {
     bool setMouseGrabEnabled(bool grab);
     void setOpacity(double level);
     void setParent(Window.Handle parent);
-    void setPosition(Point pt);
+    void setPosition(Point2.Handle pt);
     void setPosition(int posx, int posy);
     void setScreen(Screen.Handle newScreen);
     void setSizeIncrement(Size size);

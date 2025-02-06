@@ -2,6 +2,7 @@
 #include "PlainTextEditInternal.h"
 
 #include "ObjectInternal.h"
+#include "Point2Internal.h"
 #include "RegularExpressionInternal.h"
 #include "TextCharFormatInternal.h"
 #include "TextCursorInternal.h"
@@ -15,6 +16,7 @@
 using namespace ::Object;
 using namespace ::Widget;
 using namespace ::Common;
+using namespace ::Point2;
 using namespace ::Icon;
 using namespace ::Enums;
 using namespace ::AbstractScrollArea;
@@ -33,8 +35,8 @@ using namespace ::Url;
 
 namespace PlainTextEdit
 {
-    std::string Handle_anchorAt(HandleRef _this, Point pos) {
-        return THIS->anchorAt(toQPoint(pos)).toStdString();
+    std::string Handle_anchorAt(HandleRef _this, Point2::HandleRef pos) {
+        return THIS->anchorAt(QPOINT_VALUE(pos)).toStdString();
     }
 
     bool Handle_backgroundVisible(HandleRef _this) {
@@ -57,16 +59,16 @@ namespace PlainTextEdit
         return reinterpret_cast<Menu::HandleRef>(THIS->createStandardContextMenu());
     }
 
-    Menu::HandleRef Handle_createStandardContextMenu(HandleRef _this, Point position) {
-        return reinterpret_cast<Menu::HandleRef>(THIS->createStandardContextMenu());
+    Menu::HandleRef Handle_createStandardContextMenu(HandleRef _this, Point2::HandleRef position) {
+        return reinterpret_cast<Menu::HandleRef>(THIS->createStandardContextMenu(QPOINT_VALUE(position)));
     }
 
     TextCharFormat::OwnedRef Handle_currentCharFormat(HandleRef _this) {
         return TEXTCHARFORMAT_HEAP_NEW(THIS->currentCharFormat());
     }
 
-    TextCursor::OwnedRef Handle_cursorForPosition(HandleRef _this, Point pos) {
-        return TEXTCURSOR_HEAP_NEW(THIS->cursorForPosition(toQPoint(pos)));
+    TextCursor::OwnedRef Handle_cursorForPosition(HandleRef _this, Point2::HandleRef pos) {
+        return TEXTCURSOR_HEAP_NEW(THIS->cursorForPosition(QPOINT_VALUE(pos)));
     }
 
     Rect Handle_cursorRect(HandleRef _this) {

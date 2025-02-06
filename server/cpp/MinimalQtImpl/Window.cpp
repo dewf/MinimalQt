@@ -4,6 +4,7 @@
 #include "ObjectInternal.h"
 #include "CursorInternal.h"
 #include "IconInternal.h"
+#include "Point2Internal.h"
 #include "RegionInternal.h"
 
 #include "util/convert.h"
@@ -12,6 +13,7 @@ using namespace ::Object;
 using namespace ::Enums;
 using namespace ::Screen;
 using namespace ::Common;
+using namespace ::Point2;
 using namespace ::Cursor;
 using namespace ::Icon;
 using namespace ::Region;
@@ -64,8 +66,8 @@ namespace Window
         return toMargins(THIS->frameMargins());
     }
 
-    Point Handle_framePosition(HandleRef _this) {
-        return toPoint(THIS->framePosition());
+    Point2::OwnedRef Handle_framePosition(HandleRef _this) {
+        return POINT_HEAP_NEW(THIS->framePosition());
     }
 
     Rect Handle_geometry(HandleRef _this) {
@@ -108,16 +110,16 @@ namespace Window
         return toPointF(THIS->mapFromGlobal(toQPointF(pos)));
     }
 
-    Point Handle_mapFromGlobal(HandleRef _this, Point pos) {
-        return toPoint(THIS->mapFromGlobal(toQPoint(pos)));
+    Point2::OwnedRef Handle_mapFromGlobal(HandleRef _this, Point2::HandleRef pos) {
+        return POINT_HEAP_NEW(THIS->mapFromGlobal(QPOINT_VALUE(pos)));
     }
 
     PointF Handle_mapToGlobal(HandleRef _this, PointF pos) {
         return toPointF(THIS->mapToGlobal(toQPointF(pos)));
     }
 
-    Point Handle_mapToGlobal(HandleRef _this, Point pos) {
-        return toPoint(THIS->mapToGlobal(toQPoint(pos)));
+    Point2::OwnedRef Handle_mapToGlobal(HandleRef _this, Point2::HandleRef pos) {
+        return POINT_HEAP_NEW(THIS->mapToGlobal(QPOINT_VALUE(pos)));
     }
 
     Region::OwnedRef Handle_mask(HandleRef _this) {
@@ -160,8 +162,8 @@ namespace Window
         return reinterpret_cast<HandleRef>(THIS->parent(static_cast<QWindow::AncestorMode>(mode)));
     }
 
-    Point Handle_position(HandleRef _this) {
-        return toPoint(THIS->position());
+    Point2::OwnedRef Handle_position(HandleRef _this) {
+        return POINT_HEAP_NEW(THIS->position());
     }
 
     void Handle_reportContentOrientationChange(HandleRef _this, ScreenOrientation orientation) {
@@ -200,8 +202,8 @@ namespace Window
         THIS->setFlags(static_cast<Qt::WindowFlags>(flags_.value));
     }
 
-    void Handle_setFramePosition(HandleRef _this, Point point) {
-        THIS->setFramePosition(toQPoint(point));
+    void Handle_setFramePosition(HandleRef _this, Point2::HandleRef point) {
+        THIS->setFramePosition(QPOINT_VALUE(point));
     }
 
     void Handle_setIcon(HandleRef _this, Icon::HandleRef icon) {
@@ -240,8 +242,8 @@ namespace Window
         THIS->setParent(reinterpret_cast<QWindow*>(parent));
     }
 
-    void Handle_setPosition(HandleRef _this, Point pt) {
-        THIS->setPosition(toQPoint(pt));
+    void Handle_setPosition(HandleRef _this, Point2::HandleRef pt) {
+        THIS->setPosition(QPOINT_VALUE(pt));
     }
 
     void Handle_setPosition(HandleRef _this, int32_t posx, int32_t posy) {

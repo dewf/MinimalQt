@@ -18,10 +18,12 @@
 
 #include <QPaintEvent>
 
+#include "Point2Internal.h"
 #include "util/convert.h"
 
 using namespace ::Object;
 using namespace ::Common;
+using namespace ::Point2;
 using namespace ::Layout;
 using namespace ::Painter;
 using namespace ::Icon;
@@ -117,8 +119,8 @@ namespace Widget
         return reinterpret_cast<HandleRef>(THIS->childAt(x, y));
     }
 
-    HandleRef Handle_childAt(HandleRef _this, Point p) {
-        return reinterpret_cast<HandleRef>(THIS->childAt(toQPoint(p)));
+    HandleRef Handle_childAt(HandleRef _this, Point2::HandleRef p) {
+        return reinterpret_cast<HandleRef>(THIS->childAt(QPOINT_VALUE(p)));
     }
 
     HandleRef Handle_childAt(HandleRef _this, PointF p) {
@@ -335,48 +337,48 @@ namespace Widget
         return toPointF(THIS->mapFrom(AS_QWIDGET_PTR(parent), toQPointF(pos)));
     }
 
-    Point Handle_mapFrom(HandleRef _this, HandleRef parent, Point pos) {
-        return toPoint(THIS->mapFrom(AS_QWIDGET_PTR(parent), toQPoint(pos)));
+    Point2::OwnedRef Handle_mapFrom(HandleRef _this, HandleRef parent, Point2::HandleRef pos) {
+        return POINT_HEAP_NEW(THIS->mapFrom(AS_QWIDGET_PTR(parent), QPOINT_VALUE(pos)));
     }
 
     PointF Handle_mapFromGlobal(HandleRef _this, PointF pos) {
         return toPointF(THIS->mapFromGlobal(toQPointF(pos)));
     }
 
-    Point Handle_mapFromGlobal(HandleRef _this, Point pos) {
-        return toPoint(THIS->mapFromGlobal(toQPoint(pos)));
+    Point2::OwnedRef Handle_mapFromGlobal(HandleRef _this, Point2::HandleRef pos) {
+        return POINT_HEAP_NEW(THIS->mapFromGlobal(QPOINT_VALUE(pos)));
     }
 
     PointF Handle_mapFromParent(HandleRef _this, PointF pos) {
         return toPointF(THIS->mapFromParent(toQPointF(pos)));
     }
 
-    Point Handle_mapFromParent(HandleRef _this, Point pos) {
-        return toPoint(THIS->mapFromParent(toQPoint(pos)));
+    Point2::OwnedRef Handle_mapFromParent(HandleRef _this, Point2::HandleRef pos) {
+        return POINT_HEAP_NEW(THIS->mapFromParent(QPOINT_VALUE(pos)));
     }
 
     PointF Handle_mapTo(HandleRef _this, HandleRef parent, PointF pos) {
         return toPointF(THIS->mapTo(AS_QWIDGET_PTR(parent), toQPointF(pos)));
     }
 
-    Point Handle_mapTo(HandleRef _this, HandleRef parent, Point pos) {
-        return toPoint(THIS->mapTo(AS_QWIDGET_PTR(parent), toQPoint(pos)));
+    Point2::OwnedRef Handle_mapTo(HandleRef _this, HandleRef parent, Point2::HandleRef pos) {
+        return POINT_HEAP_NEW(THIS->mapTo(AS_QWIDGET_PTR(parent), QPOINT_VALUE(pos)));
     }
 
     PointF Handle_mapToGlobal(HandleRef _this, PointF pos) {
         return toPointF(THIS->mapToGlobal(toQPointF(pos)));
     }
 
-    Point Handle_mapToGlobal(HandleRef _this, Point pos) {
-        return toPoint(THIS->mapToGlobal(toQPoint(pos)));
+    Point2::OwnedRef Handle_mapToGlobal(HandleRef _this, Point2::HandleRef pos) {
+        return POINT_HEAP_NEW(THIS->mapToGlobal(QPOINT_VALUE(pos)));
     }
 
     PointF Handle_mapToParent(HandleRef _this, PointF pos) {
         return toPointF(THIS->mapToParent(toQPointF(pos)));
     }
 
-    Point Handle_mapToParent(HandleRef _this, Point pos) {
-        return toPoint(THIS->mapToParent(toQPoint(pos)));
+    Point2::OwnedRef Handle_mapToParent(HandleRef _this, Point2::HandleRef pos) {
+        return POINT_HEAP_NEW(THIS->mapToParent(QPOINT_VALUE(pos)));
     }
 
     Region::OwnedRef Handle_mask(HandleRef _this) {
@@ -411,8 +413,8 @@ namespace Widget
         return THIS->minimumWidth();
     }
 
-    void Handle_move(HandleRef _this, Point p) {
-        THIS->move(toQPoint(p));
+    void Handle_move(HandleRef _this, Point2::HandleRef p) {
+        THIS->move(QPOINT_VALUE(p));
     }
 
     void Handle_move(HandleRef _this, int32_t x, int32_t y) {
@@ -439,8 +441,8 @@ namespace Widget
         return reinterpret_cast<HandleRef>(THIS->parentWidget());
     }
 
-    Point Handle_pos(HandleRef _this) {
-        return toPoint(THIS->pos());
+    Point2::OwnedRef Handle_pos(HandleRef _this) {
+        return POINT_HEAP_NEW(THIS->pos());
     }
 
     HandleRef Handle_previousInFocusChain(HandleRef _this) {
@@ -467,17 +469,17 @@ namespace Widget
         THIS->removeAction(AS_QACTION_PTR(action));
     }
 
-    void Handle_render(HandleRef _this, PaintDevice::HandleRef target, const std::optional<Point>& targetOffset, const std::optional<Region::HandleRef>& sourceRegion, RenderFlags renderFlags /* DrawWindowBackground | DrawChildren */) {
+    void Handle_render(HandleRef _this, PaintDevice::HandleRef target, const std::optional<Point2::HandleRef>& targetOffset, const std::optional<Region::HandleRef>& sourceRegion, RenderFlags renderFlags /* RenderFlags::DrawWindowBackground | RenderFlags::DrawChildren */) {
         QPoint qTargetOffset;
-        if (targetOffset.has_value()) qTargetOffset = toQPoint(targetOffset.value());
+        if (targetOffset.has_value()) qTargetOffset = QPOINT_VALUE(targetOffset.value());
         QRegion qSourceRegion;
         if (sourceRegion.has_value()) qSourceRegion = QREGION_VALUE(sourceRegion.value());
         THIS->render(reinterpret_cast<QPaintDevice*>(target), qTargetOffset, qSourceRegion, static_cast<QWidget::RenderFlags>(renderFlags.value));
     }
 
-    void Handle_render(HandleRef _this, Painter::HandleRef painter, const std::optional<Point>& targetOffset, const std::optional<Region::HandleRef>& sourceRegion, RenderFlags renderFlags /* DrawWindowBackground | DrawChildren */) {
+    void Handle_render(HandleRef _this, Painter::HandleRef painter, const std::optional<Point2::HandleRef>& targetOffset, const std::optional<Region::HandleRef>& sourceRegion, RenderFlags renderFlags /* RenderFlags::DrawWindowBackground | RenderFlags::DrawChildren */) {
         QPoint qTargetOffset;
-        if (targetOffset.has_value()) qTargetOffset = toQPoint(targetOffset.value());
+        if (targetOffset.has_value()) qTargetOffset = QPOINT_VALUE(targetOffset.value());
         QRegion qSourceRegion;
         if (sourceRegion.has_value()) qSourceRegion = QREGION_VALUE(sourceRegion.value());
         THIS->render(reinterpret_cast<QPainter*>(painter), qTargetOffset, qSourceRegion, static_cast<QWidget::RenderFlags>(renderFlags.value));
@@ -992,7 +994,7 @@ namespace Widget
 
     SignalConnectionRef Handle_connect_CustomContextMenuRequested(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QWidget::customContextMenuRequested, [handler](const QPoint& pos) {
-            handler->customContextMenuRequested(toPoint(pos));
+            handler->customContextMenuRequested((Point2::HandleRef)&pos);
         });
         return new __SignalConnection { connection };
     }

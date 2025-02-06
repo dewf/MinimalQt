@@ -2,6 +2,7 @@ module TabBar;
 
 import Object;
 import Common;
+import Point2;
 import Icon;
 import Widget;
 import Enums;
@@ -83,7 +84,7 @@ opaque Handle extends Widget.Handle {
     void setTabsClosable(bool closable);
     void setUsesScrollButtons(bool useButtons);
     Shape getShape();
-    int tabAt(Point position);
+    int tabAt(Point2.Handle position);
     Widget.Handle tabButton(int index, ButtonPosition position);
     Variant.Owned tabData(int index);
     Icon.Owned tabIcon(int index);

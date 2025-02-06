@@ -340,6 +340,11 @@ add_library(MinimalQtImpl STATIC
     ../PlainTextEdit.cpp
     ../PlainTextEditInternal.h
 
+    ../generated/Point2.h
+    ../generated/Point2_wrappers.cpp
+    ../Point2.cpp
+    ../Point2Internal.h
+
     ../generated/Polygon.h
     ../generated/Polygon_wrappers.cpp
     ../Polygon.cpp

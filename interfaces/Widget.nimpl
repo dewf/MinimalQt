@@ -2,6 +2,7 @@ module Widget;
 
 import Object;
 import Common;
+import Point2;
 import Layout;
 import Painter;
 import Icon;
@@ -24,7 +25,7 @@ import Screen;
 int WIDGET_SIZE_MAX;   // pass-through of QWIDGETSIZE_MAX
 
 interface SignalHandler extends Object.SignalHandler {
-    void customContextMenuRequested(Point pos);
+    void customContextMenuRequested(Point2.Handle pos);
     void windowIconChanged(Icon.Handle icon);
     void windowTitleChanged(string title);
 }
@@ -70,7 +71,7 @@ opaque Handle extends Object.Handle {
 
     Size baseSize();
     Handle childAt(int x, int y);
-    Handle childAt(Point p);
+    Handle childAt(Point2.Handle p);
     Handle childAt(PointF p);
     Rect childrenRect();
     Region.Owned childrenRegion();
@@ -138,17 +139,17 @@ opaque Handle extends Object.Handle {
     // QLocale locale() const
 
     PointF mapFrom(Handle parent, PointF pos);
-    Point mapFrom(Handle parent, Point pos);
+    Point2.Owned mapFrom(Handle parent, Point2.Handle pos);
     PointF mapFromGlobal(PointF pos);
-    Point mapFromGlobal(Point pos);
+    Point2.Owned mapFromGlobal(Point2.Handle pos);
     PointF mapFromParent(PointF pos);
-    Point mapFromParent(Point pos);
+    Point2.Owned mapFromParent(Point2.Handle pos);
     PointF mapTo(Handle parent, PointF pos);
-    Point mapTo(Handle parent, Point pos);
+    Point2.Owned mapTo(Handle parent, Point2.Handle pos);
     PointF mapToGlobal(PointF pos);
-    Point mapToGlobal(Point pos);
+    Point2.Owned mapToGlobal(Point2.Handle pos);
     PointF mapToParent(PointF pos);
-    Point mapToParent(Point pos);
+    Point2.Owned mapToParent(Point2.Handle pos);
     Region.Owned mask();
     int maximumHeight();
     Size maximumSize();
@@ -157,7 +158,7 @@ opaque Handle extends Object.Handle {
     Size minimumSize();
     Size minimumSizeHint();
     int minimumWidth();
-    void move(Point p);
+    void move(Point2.Handle p);
     void move(int x, int y);
     Handle nativeParentWidget();
     Handle nextInFocusChain();
@@ -167,15 +168,15 @@ opaque Handle extends Object.Handle {
     // const QPalette & palette() const
 
     Handle parentWidget();
-    Point pos();
+    Point2.Owned pos();
     Handle previousInFocusChain();
     Rect rect();
     void releaseKeyboard();
     void releaseMouse();
     void releaseShortcut(int id);
     void removeAction(Action.Handle action);
-    void render(PaintDevice.Handle target, Option<Point> targetOffset, Option<Region.Handle> sourceRegion, RenderFlags renderFlags = DrawWindowBackground | DrawChildren);
-    void render(Painter.Handle painter, Option<Point> targetOffset, Option<Region.Handle> sourceRegion, RenderFlags renderFlags = DrawWindowBackground | DrawChildren);
+    void render(PaintDevice.Handle target, Option<Point2.Handle> targetOffset, Option<Region.Handle> sourceRegion, RenderFlags renderFlags = DrawWindowBackground | DrawChildren);
+    void render(Painter.Handle painter, Option<Point2.Handle> targetOffset, Option<Region.Handle> sourceRegion, RenderFlags renderFlags = DrawWindowBackground | DrawChildren);
     void repaint(Rect rect);
     void repaint(Region.Handle rgn);
     void repaint(int x, int y, int w, int h);

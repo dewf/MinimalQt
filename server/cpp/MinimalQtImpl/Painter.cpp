@@ -8,6 +8,7 @@
 #include "PainterPathInternal.h"
 #include "PenInternal.h"
 #include "PixmapInternal.h"
+#include "Point2Internal.h"
 #include "PolygonInternal.h"
 #include "PolygonFInternal.h"
 #include "RegionInternal.h"
@@ -17,6 +18,7 @@
 #include "util/convert.h"
 
 using namespace ::Common;
+using namespace ::Point2;
 using namespace ::Enums;
 using namespace ::Color;
 using namespace ::Pixmap;
@@ -86,8 +88,8 @@ namespace Painter
         return BRUSH_HEAP_NEW(THIS->brush());
     }
 
-    Point Handle_brushOrigin(HandleRef _this) {
-        return toPoint(THIS->brushOrigin());
+    Point2::OwnedRef Handle_brushOrigin(HandleRef _this) {
+        return POINT_HEAP_NEW(THIS->brushOrigin());
     }
 
     RectF Handle_clipBoundingRect(HandleRef _this) {
@@ -155,8 +157,8 @@ namespace Painter
         THIS->drawConvexPolygon(QPOLYGONF_VALUE(polygon));
     }
 
-    void Handle_drawConvexPolygon(HandleRef _this, const std::vector<Point>& points) {
-        const auto qPoints = vectorMap<Point,QPoint>(points, [](auto p) { return toQPoint(p); });
+    void Handle_drawConvexPolygon(HandleRef _this, const std::vector<Point2::HandleRef>& points) {
+        const auto qPoints = vectorMap<Point2::HandleRef,QPoint>(points, [](auto p) { return QPOINT_VALUE(p); });
         THIS->drawConvexPolygon(qPoints.data(), static_cast<int>(qPoints.size()));
     }
 
@@ -168,8 +170,8 @@ namespace Painter
         THIS->drawEllipse(toQRect(rectangle));
     }
 
-    void Handle_drawEllipse(HandleRef _this, Point center, int32_t rx, int32_t ry) {
-        THIS->drawEllipse(toQPoint(center), rx, ry);
+    void Handle_drawEllipse(HandleRef _this, Point2::HandleRef center, int32_t rx, int32_t ry) {
+        THIS->drawEllipse(QPOINT_VALUE(center), rx, ry);
     }
 
     void Handle_drawEllipse(HandleRef _this, PointF center, double rx, double ry) {
@@ -184,8 +186,8 @@ namespace Painter
         THIS->drawImage(toQRectF(target), QIMAGE_VALUE(image), toQRectF(source), static_cast<Qt::ImageConversionFlags>(flags_.value));
     }
 
-    void Handle_drawImage(HandleRef _this, Point point, Image::HandleRef image) {
-        THIS->drawImage(toQPoint(point), QIMAGE_VALUE(image));
+    void Handle_drawImage(HandleRef _this, Point2::HandleRef point, Image::HandleRef image) {
+        THIS->drawImage(QPOINT_VALUE(point), QIMAGE_VALUE(image));
     }
 
     void Handle_drawImage(HandleRef _this, PointF point, Image::HandleRef image) {
@@ -200,8 +202,8 @@ namespace Painter
         THIS->drawImage(toQRectF(rectangle), QIMAGE_VALUE(image));
     }
 
-    void Handle_drawImage(HandleRef _this, Point point, Image::HandleRef image, Rect source, ImageConversionFlags flags_ /* ImageConversionFlags::AutoColor */) {
-        THIS->drawImage(toQPoint(point), QIMAGE_VALUE(image), toQRect(source), static_cast<Qt::ImageConversionFlags>(flags_.value));
+    void Handle_drawImage(HandleRef _this, Point2::HandleRef point, Image::HandleRef image, Rect source, ImageConversionFlags flags_ /* ImageConversionFlags::AutoColor */) {
+        THIS->drawImage(QPOINT_VALUE(point), QIMAGE_VALUE(image), toQRect(source), static_cast<Qt::ImageConversionFlags>(flags_.value));
     }
 
     void Handle_drawImage(HandleRef _this, PointF point, Image::HandleRef image, RectF source, ImageConversionFlags flags_ /* ImageConversionFlags::AutoColor */) {
@@ -216,8 +218,8 @@ namespace Painter
         THIS->drawImage(x, y, QIMAGE_VALUE(image), sx, sy, sw, sh, static_cast<Qt::ImageConversionFlags>(flags_.value));
     }
 
-    void Handle_drawLine(HandleRef _this, Point p1, Point p2) {
-        THIS->drawLine(toQPoint(p1), toQPoint(p2));
+    void Handle_drawLine(HandleRef _this, Point2::HandleRef p1, Point2::HandleRef p2) {
+        THIS->drawLine(QPOINT_VALUE(p1), QPOINT_VALUE(p2));
     }
 
     void Handle_drawLine(HandleRef _this, PointF p1, PointF p2) {
@@ -228,8 +230,8 @@ namespace Painter
         THIS->drawLine(x1, y1, x2, y2);
     }
 
-    void Handle_drawLines(HandleRef _this, const std::vector<Point>& pointPairs) {
-        const auto qPointPairs = vectorMap<Point,QPoint>(pointPairs, [](auto p) { return toQPoint(p); });
+    void Handle_drawLines(HandleRef _this, const std::vector<Point2::HandleRef>& pointPairs) {
+        const auto qPointPairs = vectorMap<Point2::HandleRef,QPoint>(pointPairs, [](auto p) { return QPOINT_VALUE(p); });
         const auto lineCount = static_cast<int>(qPointPairs.size() - 1);
         THIS->drawLines(qPointPairs.data(), lineCount);
     }
@@ -260,8 +262,8 @@ namespace Painter
         THIS->drawPixmap(toQRectF(target), QPIXMAP_VALUE(pixmap), toQRectF(source));
     }
 
-    void Handle_drawPixmap(HandleRef _this, Point point, Pixmap::HandleRef pixmap) {
-        THIS->drawPixmap(toQPoint(point), QPIXMAP_VALUE(pixmap));
+    void Handle_drawPixmap(HandleRef _this, Point2::HandleRef point, Pixmap::HandleRef pixmap) {
+        THIS->drawPixmap(QPOINT_VALUE(point), QPIXMAP_VALUE(pixmap));
     }
 
     void Handle_drawPixmap(HandleRef _this, PointF point, Pixmap::HandleRef pixmap) {
@@ -272,8 +274,8 @@ namespace Painter
         THIS->drawPixmap(toQRect(rectangle), QPIXMAP_VALUE(pixmap));
     }
 
-    void Handle_drawPixmap(HandleRef _this, Point point, Pixmap::HandleRef pixmap, Rect source) {
-        THIS->drawPixmap(toQPoint(point), QPIXMAP_VALUE(pixmap), toQRect(source));
+    void Handle_drawPixmap(HandleRef _this, Point2::HandleRef point, Pixmap::HandleRef pixmap, Rect source) {
+        THIS->drawPixmap(QPOINT_VALUE(point), QPIXMAP_VALUE(pixmap), toQRect(source));
     }
 
     void Handle_drawPixmap(HandleRef _this, PointF point, Pixmap::HandleRef pixmap, RectF source) {
@@ -309,8 +311,8 @@ namespace Painter
         THIS->drawPoint(toQPointF(position));
     }
 
-    void Handle_drawPoint(HandleRef _this, Point position) {
-        THIS->drawPoint(toQPoint(position));
+    void Handle_drawPoint(HandleRef _this, Point2::HandleRef position) {
+        THIS->drawPoint(QPOINT_VALUE(position));
     }
 
     void Handle_drawPoint(HandleRef _this, int32_t x, int32_t y) {
@@ -330,8 +332,8 @@ namespace Painter
         THIS->drawPoints(QPOLYGONF_VALUE(points));
     }
 
-    void Handle_drawPoints(HandleRef _this, const std::vector<Point>& points) {
-        const auto qPoints = vectorMap<Point,QPoint>(points, [](auto p) { return toQPoint(p); });
+    void Handle_drawPoints(HandleRef _this, const std::vector<Point2::HandleRef>& points) {
+        const auto qPoints = vectorMap<Point2::HandleRef,QPoint>(points, [](auto p) { return QPOINT_VALUE(p); });
         THIS->drawPoints(qPoints.data(), static_cast<int>(qPoints.size()));
     }
 
@@ -348,8 +350,8 @@ namespace Painter
         THIS->drawPolygon(QPOLYGONF_VALUE(points), static_cast<Qt::FillRule>(fillRule));
     }
 
-    void Handle_drawPolygon(HandleRef _this, const std::vector<Point>& points, FillRule fillRule /* FillRule::OddEvenFill */) {
-        const auto qPoints = vectorMap<Point,QPoint>(points, [](auto p) { return toQPoint(p); });
+    void Handle_drawPolygon(HandleRef _this, const std::vector<Point2::HandleRef>& points, FillRule fillRule /* FillRule::OddEvenFill */) {
+        const auto qPoints = vectorMap<Point2::HandleRef,QPoint>(points, [](auto p) { return QPOINT_VALUE(p); });
         THIS->drawPolygon(qPoints.data(), static_cast<int>(qPoints.size()), static_cast<Qt::FillRule>(fillRule));
     }
 
@@ -366,8 +368,8 @@ namespace Painter
         THIS->drawPolyline(QPOLYGONF_VALUE(points));
     }
 
-    void Handle_drawPolyline(HandleRef _this, const std::vector<Point>& points) {
-        const auto qPoints = vectorMap<Point,QPoint>(points, [](auto p) { return toQPoint(p); });
+    void Handle_drawPolyline(HandleRef _this, const std::vector<Point2::HandleRef>& points) {
+        const auto qPoints = vectorMap<Point2::HandleRef,QPoint>(points, [](auto p) { return QPOINT_VALUE(p); });
         THIS->drawPolyline(qPoints.data(), static_cast<int>(qPoints.size()));
     }
 
@@ -409,8 +411,8 @@ namespace Painter
         THIS->drawText(toQPointF(position), QString::fromStdString(text));
     }
 
-    void Handle_drawText(HandleRef _this, Point position, const std::string& text) {
-        THIS->drawText(toQPoint(position), QString::fromStdString(text));
+    void Handle_drawText(HandleRef _this, Point2::HandleRef position, const std::string& text) {
+        THIS->drawText(QPOINT_VALUE(position), QString::fromStdString(text));
     }
 
     void Handle_drawText(HandleRef _this, RectF rectangle, const std::string& text, const std::optional<TextOption::HandleRef>& option) {
@@ -459,9 +461,9 @@ namespace Painter
         THIS->drawTiledPixmap(toQRectF(rectangle), QPIXMAP_VALUE(pixmap), offset);
     }
 
-    void Handle_drawTiledPixmap(HandleRef _this, Rect rectangle, Pixmap::HandleRef pixmap, const std::optional<Point>& position) {
+    void Handle_drawTiledPixmap(HandleRef _this, Rect rectangle, Pixmap::HandleRef pixmap, const std::optional<Point2::HandleRef>& position) {
         QPoint offset;
-        if (position.has_value()) offset = toQPoint(position.value());
+        if (position.has_value()) offset = QPOINT_VALUE(position.value());
         THIS->drawTiledPixmap(toQRect(rectangle), QPIXMAP_VALUE(pixmap), offset);
     }
 
@@ -621,8 +623,8 @@ namespace Painter
         THIS->setBrushOrigin(toQPointF(position));
     }
 
-    void Handle_setBrushOrigin(HandleRef _this, Point position) {
-        THIS->setBrushOrigin(toQPoint(position));
+    void Handle_setBrushOrigin(HandleRef _this, Point2::HandleRef position) {
+        THIS->setBrushOrigin(QPOINT_VALUE(position));
     }
 
     void Handle_setBrushOrigin(HandleRef _this, int32_t x, int32_t y) {
@@ -741,8 +743,8 @@ namespace Painter
         THIS->translate(toQPointF(offset));
     }
 
-    void Handle_translate(HandleRef _this, Point offset) {
-        THIS->translate(toQPoint(offset));
+    void Handle_translate(HandleRef _this, Point2::HandleRef offset) {
+        THIS->translate(QPOINT_VALUE(offset));
     }
 
     void Handle_translate(HandleRef _this, double dx, double dy) {

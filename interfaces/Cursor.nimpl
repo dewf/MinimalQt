@@ -4,13 +4,14 @@ import Pixmap;
 import Enums;
 import Screen;
 import Common;
+import Point2;
 
 @nodispose
 opaque Handle {
 
     // QBitmap bitmap() const
 
-    Point hotSpot();
+    Point2.Owned hotSpot();
 
     // QBitmap mask() const
 
@@ -32,9 +33,9 @@ Owned create(Handle other);
 
 // static methods ==============
 
-Point pos();
-Point pos(Screen.Handle screen);
+Point2.Owned pos();
+Point2.Owned pos(Screen.Handle screen);
 void setPos(int x, int y);
 void setPos(Screen.Handle screen, int x, int y);
-void setPos(Point p);
-void setPos(Screen.Handle screen, Point p);
+void setPos(Point2.Handle p);
+void setPos(Screen.Handle screen, Point2.Handle p);

@@ -5,11 +5,13 @@
 #include "WidgetInternal.h"
 #include "ActionInternal.h"
 #include "IconInternal.h"
+#include "Point2Internal.h"
 #include "ValidatorInternal.h"
 
 using namespace ::Object;
 using namespace ::Widget;
 using namespace ::Common;
+using namespace ::Point2;
 using namespace ::Icon;
 using namespace ::Enums;
 using namespace ::Action;
@@ -64,8 +66,8 @@ namespace LineEdit
         return THIS->cursorPosition();
     }
 
-    int32_t Handle_cursorPositionAt(HandleRef _this, Point pos) {
-        return THIS->cursorPositionAt(toQPoint(pos));
+    int32_t Handle_cursorPositionAt(HandleRef _this, Point2::HandleRef pos) {
+        return THIS->cursorPositionAt(QPOINT_VALUE(pos));
     }
 
     void Handle_cursorWordBackward(HandleRef _this, bool mark) {
