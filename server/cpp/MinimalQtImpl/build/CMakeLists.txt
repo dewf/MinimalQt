@@ -415,6 +415,11 @@ add_library(MinimalQtImpl STATIC
     ../SessionManager.cpp
     ../SessionManagerInternal.h
 
+    ../generated/Size2.h
+    ../generated/Size2_wrappers.cpp
+    ../Size2Internal.h
+    ../Size2.cpp
+
     ../generated/SizePolicy.h
     ../generated/SizePolicy_wrappers.cpp
     ../SizePolicyInternal.h
