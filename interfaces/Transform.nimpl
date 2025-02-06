@@ -1,7 +1,7 @@
 module Transform;
 
 import Common;
-import Point2;
+import Point;
 import Polygon;
 import PolygonF;
 import Region;
@@ -48,7 +48,7 @@ opaque Handle {
     // QLineF map(const QLineF &line) const
 
     PainterPath_Owned map(PainterPath_Handle path);
-    Point2.Owned map(Point2.Handle point);
+    Point.Owned map(Point.Handle point);
     PointF map(PointF p);
     Polygon.Owned map(Polygon.Handle polygon);
     PolygonF.Owned map(PolygonF.Handle polygon);

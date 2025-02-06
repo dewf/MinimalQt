@@ -9,7 +9,7 @@
 #include "UrlInternal.h"
 #include "VariantInternal.h"
 #include "ObjectInternal.h"
-#include "Point2Internal.h"
+#include "PointInternal.h"
 #include "WidgetInternal.h"
 
 #include "util/convert.h"
@@ -17,7 +17,7 @@
 using namespace ::Object;
 using namespace ::Widget;
 using namespace ::Common;
-using namespace ::Point2;
+using namespace ::Point;
 using namespace ::Enums;
 using namespace ::AbstractScrollArea;
 using namespace ::Menu;
@@ -67,7 +67,7 @@ namespace TextEdit
         return static_cast<Alignment>(THIS->alignment());
     }
 
-    std::string Handle_anchorAt(HandleRef _this, Point2::HandleRef pos) {
+    std::string Handle_anchorAt(HandleRef _this, Point::HandleRef pos) {
         return THIS->anchorAt(QPOINT_VALUE(pos)).toStdString();
     }
 
@@ -83,7 +83,7 @@ namespace TextEdit
         return reinterpret_cast<Menu::HandleRef>(THIS->createStandardContextMenu());
     }
 
-    Menu::HandleRef Handle_createStandardContextMenu(HandleRef _this, Point2::HandleRef position) {
+    Menu::HandleRef Handle_createStandardContextMenu(HandleRef _this, Point::HandleRef position) {
         return reinterpret_cast<Menu::HandleRef>(THIS->createStandardContextMenu(QPOINT_VALUE(position)));
     }
 
@@ -95,7 +95,7 @@ namespace TextEdit
         return FONT_HEAP_NEW(THIS->currentFont());
     }
 
-    TextCursor::OwnedRef Handle_cursorForPosition(HandleRef _this, Point2::HandleRef pos) {
+    TextCursor::OwnedRef Handle_cursorForPosition(HandleRef _this, Point::HandleRef pos) {
         return TEXTCURSOR_HEAP_NEW(THIS->cursorForPosition(QPOINT_VALUE(pos)));
     }
 

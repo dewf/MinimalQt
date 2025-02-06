@@ -7,11 +7,11 @@
 #include "RegionInternal.h"
 
 // #include <functional>
-#include "Point2Internal.h"
+#include "PointInternal.h"
 #include "util/convert.h"
 
 using namespace ::Common;
-using namespace ::Point2;
+using namespace ::Point;
 using namespace ::Polygon;
 using namespace ::PolygonF;
 using namespace ::Region;
@@ -118,7 +118,7 @@ namespace Transform
         return reinterpret_cast<PainterPath_OwnedRef>(result);
     }
 
-    Point2::OwnedRef Handle_map(HandleRef _this, Point2::HandleRef point) {
+    Point::OwnedRef Handle_map(HandleRef _this, Point::HandleRef point) {
         return POINT_HEAP_NEW(THIS->map(QPOINT_VALUE(point)));
     }
 

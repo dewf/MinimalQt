@@ -6,14 +6,14 @@
 #include "AbstractItemModelInternal.h"
 #include "ItemSelectionModelInternal.h"
 #include "ModelIndexInternal.h"
-#include "Point2Internal.h"
+#include "PointInternal.h"
 #include "WidgetInternal.h"
 
 #include "util/convert.h"
 
 using namespace ::Object;
 using namespace ::Common;
-using namespace ::Point2;
+using namespace ::Point;
 using namespace ::Enums;
 using namespace ::Icon;
 using namespace ::AbstractScrollArea;
@@ -75,7 +75,7 @@ namespace AbstractItemView
         return toSize(THIS->iconSize());
     }
 
-    ModelIndex::OwnedRef Handle_indexAt(HandleRef _this, Point2::HandleRef point) {
+    ModelIndex::OwnedRef Handle_indexAt(HandleRef _this, Point::HandleRef point) {
         return MODELINDEX_HEAP_NEW(THIS->indexAt(QPOINT_VALUE(point)));
     }
 

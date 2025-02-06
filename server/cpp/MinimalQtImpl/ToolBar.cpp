@@ -3,14 +3,14 @@
 
 #include "ActionInternal.h"
 #include "ObjectInternal.h"
-#include "Point2Internal.h"
+#include "PointInternal.h"
 #include "WidgetInternal.h"
 
 #include "util/convert.h"
 
 using namespace ::Object;
 using namespace ::Common;
-using namespace ::Point2;
+using namespace ::Point;
 using namespace ::Enums;
 using namespace ::Widget;
 using namespace ::Action;
@@ -19,7 +19,7 @@ using namespace ::Action;
 
 namespace ToolBar
 {
-    Action::HandleRef Handle_actionAt(HandleRef _this, Point2::HandleRef p) {
+    Action::HandleRef Handle_actionAt(HandleRef _this, Point::HandleRef p) {
         return reinterpret_cast<Action::HandleRef>(THIS->actionAt(QPOINT_VALUE(p)));
     }
 

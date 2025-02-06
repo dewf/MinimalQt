@@ -1,7 +1,7 @@
 module Polygon;
 
 import Common;
-import Point2;
+import Point;
 import Enums;
 
 fwdopaque PolygonF_Owned = PolygonF.Owned;
@@ -9,34 +9,34 @@ fwdopaque PolygonF_Owned = PolygonF.Owned;
 @nodispose
 opaque Handle {
     Rect boundingRect();
-    bool containsPoint(Point2.Handle point, FillRule fillRule);
+    bool containsPoint(Point.Handle point, FillRule fillRule);
     Owned intersected(Handle r);
     bool intersects(Handle p);
 
     // void point(int index, int *x, int *y) const
 
-    Point2.Owned point(int index);
-    void putPoints(int index, Array<Point2.Handle> points);
+    Point.Owned point(int index);
+    void putPoints(int index, Array<Point.Handle> points);
     void putPoints(int index, int nPoints, Handle fromPolygon, int fromIndex = 0);
     void setPoint(int index, int x, int y);
-    void setPoint(int index, Point2.Handle point);
+    void setPoint(int index, Point.Handle point);
 
     // void setPoints(int nPoints, const int *points)
     // void setPoints(int nPoints, int firstx, int firsty, ...)
-    void setPoints(Array<Point2.Handle> points);
+    void setPoints(Array<Point.Handle> points);
 
     Owned subtracted(Handle r);
 
     PolygonF_Owned toPolygonF();
 
     void translate(int dx, int dy);
-    void translate(Point2.Handle offset);
+    void translate(Point.Handle offset);
     Owned translated(int dx, int dy);
-    Owned translated(Point2.Handle offset);
+    Owned translated(Point.Handle offset);
     Owned united(Handle r);
 }
 opaque Owned extends Handle;
 
 Owned create();
-Owned create(Array<Point2.Handle> points);
+Owned create(Array<Point.Handle> points);
 Owned create(Rect rect, bool closed = false);

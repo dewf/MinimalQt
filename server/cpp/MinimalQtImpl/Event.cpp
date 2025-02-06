@@ -2,7 +2,7 @@
 #include "EventInternal.h"
 
 #include "LoggingInternal.h"
-#include "Point2Internal.h"
+#include "PointInternal.h"
 using namespace ::Logging;
 
 #include "MimeDataInternal.h"
@@ -13,7 +13,7 @@ using namespace ::Logging;
 
 using namespace ::Object;
 using namespace ::Common;
-using namespace ::Point2;
+using namespace ::Point;
 using namespace ::Enums;
 using namespace ::KeySequence;
 using namespace ::Region;
@@ -172,7 +172,7 @@ namespace Event
     // contextmenu event ===================================
 #define CONTEXTMENU_THIS (reinterpret_cast<QContextMenuEvent*>(_this))
 
-    Point2::OwnedRef ContextMenuEvent_globalPos(ContextMenuEventRef _this) {
+    Point::OwnedRef ContextMenuEvent_globalPos(ContextMenuEventRef _this) {
         return POINT_HEAP_NEW(CONTEXTMENU_THIS->globalPos());
     }
 
@@ -184,7 +184,7 @@ namespace Event
         return CONTEXTMENU_THIS->globalY();
     }
 
-    Point2::OwnedRef ContextMenuEvent_pos(ContextMenuEventRef _this) {
+    Point::OwnedRef ContextMenuEvent_pos(ContextMenuEventRef _this) {
         return POINT_HEAP_NEW(CONTEXTMENU_THIS->pos());
     }
 
@@ -315,7 +315,7 @@ namespace Event
     // wheel event =========================================
 #define WHEELEVENT_THIS (reinterpret_cast<QWheelEvent*>(_this))
 
-    Point2::OwnedRef WheelEvent_angleDelta(WheelEventRef _this) {
+    Point::OwnedRef WheelEvent_angleDelta(WheelEventRef _this) {
         return POINT_HEAP_NEW(WHEELEVENT_THIS->angleDelta());
     }
 
@@ -327,7 +327,7 @@ namespace Event
         return static_cast<ScrollPhase>(WHEELEVENT_THIS->phase());
     }
 
-    Point2::OwnedRef WheelEvent_pixelDelta(WheelEventRef _this) {
+    Point::OwnedRef WheelEvent_pixelDelta(WheelEventRef _this) {
         return POINT_HEAP_NEW(WHEELEVENT_THIS->pixelDelta());
     }
 }

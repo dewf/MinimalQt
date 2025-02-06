@@ -2,7 +2,7 @@ module Screen;
 
 import Object;
 import Common;
-import Point2;
+import Point;
 import Enums;
 import Pixmap;
 import Transform;
@@ -57,7 +57,7 @@ opaque Handle extends Object.Handle {
     Size size();
     Transform.Owned transformBetween(ScreenOrientation a, ScreenOrientation b, Rect target);
     Rect virtualGeometry();
-    Handle virtualSiblingAt(Point2.Handle point);
+    Handle virtualSiblingAt(Point.Handle point);
     Array<Handle> virtualSiblings();
     Size virtualSize();
 

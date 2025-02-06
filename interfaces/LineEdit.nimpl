@@ -3,7 +3,7 @@ module LineEdit;
 import Object;
 import Widget;
 import Common;
-import Point2;
+import Point;
 import Icon;
 import Enums;
 import Action;
@@ -39,7 +39,7 @@ opaque Handle extends Widget.Handle {
     void cursorForward(bool mark, int steps = 1);
     CursorMoveStyle cursorMoveStyle();
     int cursorPosition();
-    int cursorPositionAt(Point2.Handle pos);
+    int cursorPositionAt(Point.Handle pos);
     void cursorWordBackward(bool mark);
     void cursorWordForward(bool mark);
     void del();

@@ -2,7 +2,7 @@ module Menu;
 
 import Object;
 import Common;
-import Point2;
+import Point;
 import Widget;
 import Action;
 import Icon;
@@ -15,7 +15,7 @@ interface SignalHandler extends Widget.SignalHandler {
 }
 
 opaque Handle extends Widget.Handle {
-    Action.Handle actionAt(Point2.Handle pt);
+    Action.Handle actionAt(Point.Handle pt);
     Rect actionGeometry(Action.Handle act);
     Action.Handle activeAction();
     Action.Handle addMenu(Menu.Handle menu);
@@ -27,7 +27,7 @@ opaque Handle extends Widget.Handle {
     void clear();
     Action.Handle defaultAction();
     Action.Handle exec();
-    Action.Handle exec(Point2.Handle p, Action.Handle action = null);
+    Action.Handle exec(Point.Handle p, Action.Handle action = null);
     void hideTearOffMenu();
     Icon.Owned icon();
     Action.Handle insertMenu(Action.Handle before, Menu.Handle menu);
@@ -38,7 +38,7 @@ opaque Handle extends Widget.Handle {
     bool isTearOffEnabled();
     bool isTearOffMenuVisible();
     Action.Handle menuAction();
-    void popup(Point2.Handle p, Action.Handle atAction = null);
+    void popup(Point.Handle p, Action.Handle atAction = null);
     bool separatorsCollapsible();
     void setActiveAction(Action.Handle act);
 
@@ -51,7 +51,7 @@ opaque Handle extends Widget.Handle {
     void setTearOffEnabled(bool enabled);
     void setTitle(string title);
     void setToolTipsVisible(bool visible);
-    void showTearOffMenu(Point2.Handle pos);
+    void showTearOffMenu(Point.Handle pos);
     void showTearOffMenu();
     string title();
 
@@ -71,5 +71,5 @@ Handle create(string title, Widget.Handle parent = null);
 
 // static methods:
 
-Action.Handle exec(Array<Action.Handle> actions, Point2.Handle pos, Action.Handle at = null, Widget.Handle parent = null);
+Action.Handle exec(Array<Action.Handle> actions, Point.Handle pos, Action.Handle at = null, Widget.Handle parent = null);
 Handle menuInAction(Action.Handle action);

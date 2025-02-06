@@ -4,7 +4,7 @@
 #include "ObjectInternal.h"
 #include "CursorInternal.h"
 #include "IconInternal.h"
-#include "Point2Internal.h"
+#include "PointInternal.h"
 #include "RegionInternal.h"
 
 #include "util/convert.h"
@@ -13,7 +13,7 @@ using namespace ::Object;
 using namespace ::Enums;
 using namespace ::Screen;
 using namespace ::Common;
-using namespace ::Point2;
+using namespace ::Point;
 using namespace ::Cursor;
 using namespace ::Icon;
 using namespace ::Region;
@@ -66,7 +66,7 @@ namespace Window
         return toMargins(THIS->frameMargins());
     }
 
-    Point2::OwnedRef Handle_framePosition(HandleRef _this) {
+    Point::OwnedRef Handle_framePosition(HandleRef _this) {
         return POINT_HEAP_NEW(THIS->framePosition());
     }
 
@@ -110,7 +110,7 @@ namespace Window
         return toPointF(THIS->mapFromGlobal(toQPointF(pos)));
     }
 
-    Point2::OwnedRef Handle_mapFromGlobal(HandleRef _this, Point2::HandleRef pos) {
+    Point::OwnedRef Handle_mapFromGlobal(HandleRef _this, Point::HandleRef pos) {
         return POINT_HEAP_NEW(THIS->mapFromGlobal(QPOINT_VALUE(pos)));
     }
 
@@ -118,7 +118,7 @@ namespace Window
         return toPointF(THIS->mapToGlobal(toQPointF(pos)));
     }
 
-    Point2::OwnedRef Handle_mapToGlobal(HandleRef _this, Point2::HandleRef pos) {
+    Point::OwnedRef Handle_mapToGlobal(HandleRef _this, Point::HandleRef pos) {
         return POINT_HEAP_NEW(THIS->mapToGlobal(QPOINT_VALUE(pos)));
     }
 
@@ -162,7 +162,7 @@ namespace Window
         return reinterpret_cast<HandleRef>(THIS->parent(static_cast<QWindow::AncestorMode>(mode)));
     }
 
-    Point2::OwnedRef Handle_position(HandleRef _this) {
+    Point::OwnedRef Handle_position(HandleRef _this) {
         return POINT_HEAP_NEW(THIS->position());
     }
 
@@ -202,7 +202,7 @@ namespace Window
         THIS->setFlags(static_cast<Qt::WindowFlags>(flags_.value));
     }
 
-    void Handle_setFramePosition(HandleRef _this, Point2::HandleRef point) {
+    void Handle_setFramePosition(HandleRef _this, Point::HandleRef point) {
         THIS->setFramePosition(QPOINT_VALUE(point));
     }
 
@@ -242,7 +242,7 @@ namespace Window
         THIS->setParent(reinterpret_cast<QWindow*>(parent));
     }
 
-    void Handle_setPosition(HandleRef _this, Point2::HandleRef pt) {
+    void Handle_setPosition(HandleRef _this, Point::HandleRef pt) {
         THIS->setPosition(QPOINT_VALUE(pt));
     }
 

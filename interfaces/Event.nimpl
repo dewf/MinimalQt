@@ -2,7 +2,7 @@ module Event;
 
 import Object;
 import Common;
-import Point2;
+import Point;
 import Enums;
 import KeySequence;
 import Region;
@@ -91,10 +91,10 @@ opaque ContextMenuEvent extends InputEvent {
     static {
         enum Reason { Mouse, Keyboard, Other }
     }
-    Point2.Owned globalPos();
+    Point.Owned globalPos();
     int globalX();
     int globalY();
-    Point2.Owned pos();
+    Point.Owned pos();
     Reason getReason();
     int x();
     int y();
@@ -168,10 +168,10 @@ opaque MouseEvent extends SinglePointEvent {
 
 @nodispose
 opaque WheelEvent extends SinglePointEvent {
-    Point2.Owned angleDelta();
+    Point.Owned angleDelta();
     bool inverted();
     ScrollPhase phase();
-    Point2.Owned pixelDelta();
+    Point.Owned pixelDelta();
 }
 
 // Tier 5 events (inherit from Tier 4) ==========================================================================

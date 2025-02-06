@@ -2,7 +2,7 @@ module AbstractItemView;
 
 import Object;
 import Common;
-import Point2;
+import Point;
 import Enums;
 import Icon;
 import AbstractScrollArea;
@@ -81,7 +81,7 @@ opaque Handle extends AbstractScrollArea.Handle {
     bool hasAutoScroll();
     ScrollMode horizontalScrollMode();
     Size iconSize();
-    ModelIndex.Owned indexAt(Point2.Handle point);
+    ModelIndex.Owned indexAt(Point.Handle point);
     Widget.Handle indexWidget(ModelIndex.Handle index);
     bool isPersistentEditorOpen(ModelIndex.Handle index);
     AbstractItemDelegate.Handle itemDelegate();

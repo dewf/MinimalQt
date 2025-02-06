@@ -1,4 +1,4 @@
-module Point2;
+module Point;
 
 import Common;
 //fwdopaque PointF_Owned = PointF.Owned;

@@ -3,7 +3,7 @@ module PlainTextEdit;
 import Object;
 import Widget;
 import Common;
-import Point2;
+import Point;
 import Icon;
 import Enums;
 import AbstractScrollArea;
@@ -36,15 +36,15 @@ enum LineWrapMode {
 }
 
 opaque Handle extends AbstractScrollArea.Handle {
-    string anchorAt(Point2.Handle pos);
+    string anchorAt(Point.Handle pos);
     bool backgroundVisible();
     int blockCount();
     bool canPaste();
     bool centerOnScroll();
     Menu.Handle createStandardContextMenu();
-    Menu.Handle createStandardContextMenu(Point2.Handle position);
+    Menu.Handle createStandardContextMenu(Point.Handle position);
     TextCharFormat.Owned currentCharFormat();
-    TextCursor.Owned cursorForPosition(Point2.Handle pos);
+    TextCursor.Owned cursorForPosition(Point.Handle pos);
     Rect cursorRect();
     Rect cursorRect(TextCursor.Handle cursor);
     int cursorWidth();

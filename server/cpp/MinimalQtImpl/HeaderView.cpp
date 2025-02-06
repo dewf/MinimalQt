@@ -2,7 +2,7 @@
 #include "HeaderViewInternal.h"
 
 #include "ObjectInternal.h"
-#include "Point2Internal.h"
+#include "PointInternal.h"
 #include "WidgetInternal.h"
 
 #include "util/convert.h"
@@ -12,7 +12,7 @@ using namespace ::AbstractItemView;
 using namespace ::Enums;
 using namespace ::Widget;
 using namespace ::Common;
-using namespace ::Point2;
+using namespace ::Point;
 
 #define THIS (reinterpret_cast<QHeaderView*>(_this))
 
@@ -70,7 +70,7 @@ namespace HeaderView
         return THIS->logicalIndex(visualIndex);
     }
 
-    int32_t Handle_logicalIndexAt(HandleRef _this, Point2::HandleRef pos) {
+    int32_t Handle_logicalIndexAt(HandleRef _this, Point::HandleRef pos) {
         return THIS->logicalIndexAt(QPOINT_VALUE(pos));
     }
 

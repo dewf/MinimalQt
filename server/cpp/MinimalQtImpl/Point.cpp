@@ -1,5 +1,5 @@
-#include "generated/Point2.h"
-#include "Point2Internal.h"
+#include "generated/Point.h"
+#include "PointInternal.h"
 
 #include "util/convert.h"
 
@@ -7,7 +7,7 @@ using namespace ::Common;
 
 #define THIS (AS_QPOINT_PTR(_this))
 
-namespace Point2
+namespace Point
 {
     bool Handle_isNull(HandleRef _this) {
         return THIS->isNull();

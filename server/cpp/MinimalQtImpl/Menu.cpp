@@ -5,13 +5,13 @@
 #include "WidgetInternal.h"
 #include "ActionInternal.h"
 #include "IconInternal.h"
-#include "Point2Internal.h"
+#include "PointInternal.h"
 
 #include "util/convert.h"
 
 using namespace ::Object;
 using namespace ::Common;
-using namespace ::Point2;
+using namespace ::Point;
 using namespace ::Widget;
 using namespace ::Action;
 using namespace ::Icon;
@@ -20,7 +20,7 @@ using namespace ::Icon;
 
 namespace Menu
 {
-    Action::HandleRef Handle_actionAt(HandleRef _this, Point2::HandleRef pt) {
+    Action::HandleRef Handle_actionAt(HandleRef _this, Point::HandleRef pt) {
         return reinterpret_cast<Action::HandleRef>(THIS->actionAt(QPOINT_VALUE(pt)));
     }
 
@@ -68,7 +68,7 @@ namespace Menu
         return reinterpret_cast<Action::HandleRef>(THIS->exec());
     }
 
-    Action::HandleRef Handle_exec(HandleRef _this, Point2::HandleRef p, Action::HandleRef action /* nullptr */) {
+    Action::HandleRef Handle_exec(HandleRef _this, Point::HandleRef p, Action::HandleRef action /* nullptr */) {
         return reinterpret_cast<Action::HandleRef>(THIS->exec(QPOINT_VALUE(p), reinterpret_cast<QAction*>(action)));
     }
 
@@ -112,7 +112,7 @@ namespace Menu
         return reinterpret_cast<Action::HandleRef>(THIS->menuAction());
     }
 
-    void Handle_popup(HandleRef _this, Point2::HandleRef p, Action::HandleRef atAction /* nullptr */) {
+    void Handle_popup(HandleRef _this, Point::HandleRef p, Action::HandleRef atAction /* nullptr */) {
         THIS->popup(QPOINT_VALUE(p), reinterpret_cast<QAction*>(atAction));
     }
 
@@ -152,7 +152,7 @@ namespace Menu
         THIS->setToolTipsVisible(visible);
     }
 
-    void Handle_showTearOffMenu(HandleRef _this, Point2::HandleRef pos) {
+    void Handle_showTearOffMenu(HandleRef _this, Point::HandleRef pos) {
         THIS->showTearOffMenu(QPOINT_VALUE(pos));
     }
 
@@ -208,7 +208,7 @@ namespace Menu
         return reinterpret_cast<HandleRef>(new QMenu(QString::fromStdString(title), AS_QWIDGET_PTR(parent)));
     }
 
-    Action::HandleRef exec(const std::vector<Action::HandleRef>& actions, Point2::HandleRef pos, Action::HandleRef at /* nullptr */, Widget::HandleRef parent /* nullptr */) {
+    Action::HandleRef exec(const std::vector<Action::HandleRef>& actions, Point::HandleRef pos, Action::HandleRef at /* nullptr */, Widget::HandleRef parent /* nullptr */) {
         const auto qActionList = toQList<Action::HandleRef,QAction*>(actions, [](auto a) {
             return AS_QACTION_PTR(a);
         });

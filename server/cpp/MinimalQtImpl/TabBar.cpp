@@ -4,7 +4,7 @@
 #include "ColorInternal.h"
 #include "ObjectInternal.h"
 #include "IconInternal.h"
-#include "Point2Internal.h"
+#include "PointInternal.h"
 #include "VariantInternal.h"
 #include "WidgetInternal.h"
 
@@ -12,7 +12,7 @@
 
 using namespace ::Object;
 using namespace ::Common;
-using namespace ::Point2;
+using namespace ::Point;
 using namespace ::Icon;
 using namespace ::Widget;
 using namespace ::Enums;
@@ -195,7 +195,7 @@ namespace TabBar
         return static_cast<Shape>(THIS->shape());
     }
 
-    int32_t Handle_tabAt(HandleRef _this, Point2::HandleRef position) {
+    int32_t Handle_tabAt(HandleRef _this, Point::HandleRef position) {
         return THIS->tabAt(QPOINT_VALUE(position));
     }
 

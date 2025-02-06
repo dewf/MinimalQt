@@ -4,7 +4,7 @@
 #include "ObjectInternal.h"
 #include "MimeDataInternal.h"
 #include "PixmapInternal.h"
-#include "Point2Internal.h"
+#include "PointInternal.h"
 
 #include "util/convert.h"
 
@@ -12,7 +12,7 @@ using namespace ::Object;
 using namespace ::Enums;
 using namespace ::Pixmap;
 using namespace ::Common;
-using namespace ::Point2;
+using namespace ::Point;
 using namespace ::MimeData;
 
 #define THIS (AS_QDRAG_PTR(_this))
@@ -36,7 +36,7 @@ namespace Drag
         return static_cast<DropAction>(result);
     }
 
-    Point2::OwnedRef Handle_hotSpot(HandleRef _this) {
+    Point::OwnedRef Handle_hotSpot(HandleRef _this) {
         return POINT_HEAP_NEW(THIS->hotSpot());
     }
 
@@ -52,7 +52,7 @@ namespace Drag
         THIS->setDragCursor(QPIXMAP_VALUE(cursor), static_cast<Qt::DropAction>(action));
     }
 
-    void Handle_setHotSpot(HandleRef _this, Point2::HandleRef hotspot) {
+    void Handle_setHotSpot(HandleRef _this, Point::HandleRef hotspot) {
         THIS->setHotSpot(QPOINT_VALUE(hotspot));
     }
 

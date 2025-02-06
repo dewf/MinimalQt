@@ -2,7 +2,7 @@ module ToolBar;
 
 import Object;
 import Common;
-import Point2;
+import Point;
 import Enums;
 import Widget;
 import Action;
@@ -19,7 +19,7 @@ interface SignalHandler extends Widget.SignalHandler {
 }
 
 opaque Handle extends Widget.Handle {
-    Action.Handle actionAt(Point2.Handle p);
+    Action.Handle actionAt(Point.Handle p);
     Action.Handle actionAt(int x, int y);
     Action.Handle addSeparator();
     Action.Handle addWidget(Widget.Handle widget);

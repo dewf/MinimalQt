@@ -1,6 +1,6 @@
 #include "generated/Region.h"
 
-#include "Point2Internal.h"
+#include "PointInternal.h"
 #include "RegionInternal.h"
 
 #include "PolygonInternal.h"
@@ -8,7 +8,7 @@
 #include "util/convert.h"
 
 using namespace ::Common;
-using namespace ::Point2;
+using namespace ::Point;
 using namespace ::Polygon;
 using namespace ::Enums;
 
@@ -20,7 +20,7 @@ namespace Region
         return toRect(THIS->boundingRect());
     }
 
-    bool Handle_contains(HandleRef _this, Point2::HandleRef p) {
+    bool Handle_contains(HandleRef _this, Point::HandleRef p) {
         return THIS->contains(QPOINT_VALUE(p));
     }
 
@@ -73,7 +73,7 @@ namespace Region
         THIS->translate(dx, dy);
     }
 
-    void Handle_translate(HandleRef _this, Point2::HandleRef point) {
+    void Handle_translate(HandleRef _this, Point::HandleRef point) {
         THIS->translate(QPOINT_VALUE(point));
     }
 
@@ -81,7 +81,7 @@ namespace Region
         return REGION_HEAP_NEW(THIS->translated(dx, dy));
     }
 
-    OwnedRef Handle_translated(HandleRef _this, Point2::HandleRef p) {
+    OwnedRef Handle_translated(HandleRef _this, Point::HandleRef p) {
         return REGION_HEAP_NEW(THIS->translated(QPOINT_VALUE(p)));
     }
 

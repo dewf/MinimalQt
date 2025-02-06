@@ -2,7 +2,7 @@
 #include "CursorInternal.h"
 
 #include "PixmapInternal.h"
-#include "Point2Internal.h"
+#include "PointInternal.h"
 #include "ScreenInternal.h"
 
 #include "util/convert.h"
@@ -11,13 +11,13 @@ using namespace ::Pixmap;
 using namespace ::Enums;
 using namespace ::Screen;
 using namespace ::Common;
-using namespace ::Point2;
+using namespace ::Point;
 
 #define THIS (AS_QCURSOR_PTR(_this))
 
 namespace Cursor
 {
-    Point2::OwnedRef Handle_hotSpot(HandleRef _this) {
+    Point::OwnedRef Handle_hotSpot(HandleRef _this) {
         return POINT_HEAP_NEW(THIS->hotSpot());
     }
 
@@ -55,11 +55,11 @@ namespace Cursor
     }
 
     // static methods ==================================
-    Point2::OwnedRef pos() {
+    Point::OwnedRef pos() {
         return POINT_HEAP_NEW(QCursor::pos());
     }
 
-    Point2::OwnedRef pos(Screen::HandleRef screen) {
+    Point::OwnedRef pos(Screen::HandleRef screen) {
         return POINT_HEAP_NEW(QCursor::pos(AS_QSCREEN_PTR(screen)));
     }
 
@@ -71,11 +71,11 @@ namespace Cursor
         QCursor::setPos(AS_QSCREEN_PTR(screen), x, y);
     }
 
-    void setPos(Point2::HandleRef p) {
+    void setPos(Point::HandleRef p) {
         QCursor::setPos(QPOINT_VALUE(p));
     }
 
-    void setPos(Screen::HandleRef screen, Point2::HandleRef p) {
+    void setPos(Screen::HandleRef screen, Point::HandleRef p) {
         QCursor::setPos(AS_QSCREEN_PTR(screen), QPOINT_VALUE(p));
     }
 }

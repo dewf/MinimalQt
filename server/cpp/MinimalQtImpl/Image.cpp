@@ -2,14 +2,14 @@
 
 #include "ColorInternal.h"
 #include "ImageInternal.h"
-#include "Point2Internal.h"
+#include "PointInternal.h"
 #include "TransformInternal.h"
 
 #include "util/convert.h"
 
 using namespace ::PaintDevice;
 using namespace ::Common;
-using namespace ::Point2;
+using namespace ::Point;
 using namespace ::Enums;
 using namespace ::Color;
 using namespace ::Transform;
@@ -173,11 +173,11 @@ namespace Image
         return IMAGE_HEAP_NEW(THIS->mirrored(horizontal, vertical));
     }
 
-    Point2::OwnedRef Handle_offset(HandleRef _this) {
+    Point::OwnedRef Handle_offset(HandleRef _this) {
         return POINT_HEAP_NEW(THIS->offset());
     }
 
-    Rgb Handle_pixel(HandleRef _this, Point2::HandleRef position) {
+    Rgb Handle_pixel(HandleRef _this, Point::HandleRef position) {
         return THIS->pixel(QPOINT_VALUE(position));
     }
 
@@ -185,7 +185,7 @@ namespace Image
         return THIS->pixel(x, y);
     }
 
-    Color::OwnedRef Handle_pixelColor(HandleRef _this, Point2::HandleRef position) {
+    Color::OwnedRef Handle_pixelColor(HandleRef _this, Point::HandleRef position) {
         return COLOR_HEAP_NEW(THIS->pixelColor(QPOINT_VALUE(position)));
     }
 
@@ -193,7 +193,7 @@ namespace Image
         return COLOR_HEAP_NEW(THIS->pixelColor(x, y));
     }
 
-    int32_t Handle_pixelIndex(HandleRef _this, Point2::HandleRef position) {
+    int32_t Handle_pixelIndex(HandleRef _this, Point::HandleRef position) {
         return THIS->pixelIndex(QPOINT_VALUE(position));
     }
 
@@ -275,11 +275,11 @@ namespace Image
         THIS->setDotsPerMeterY(y);
     }
 
-    void Handle_setOffset(HandleRef _this, Point2::HandleRef offset) {
+    void Handle_setOffset(HandleRef _this, Point::HandleRef offset) {
         THIS->setOffset(QPOINT_VALUE(offset));
     }
 
-    void Handle_setPixel(HandleRef _this, Point2::HandleRef position, uint32_t index_or_rgb) {
+    void Handle_setPixel(HandleRef _this, Point::HandleRef position, uint32_t index_or_rgb) {
         THIS->setPixel(QPOINT_VALUE(position), index_or_rgb);
     }
 
@@ -287,7 +287,7 @@ namespace Image
         THIS->setPixel(x, y, index_or_rgb);
     }
 
-    void Handle_setPixelColor(HandleRef _this, Point2::HandleRef position, Color::HandleRef color) {
+    void Handle_setPixelColor(HandleRef _this, Point::HandleRef position, Color::HandleRef color) {
         THIS->setPixelColor(QPOINT_VALUE(position), QCOLOR_VALUE(color));
     }
 
@@ -324,7 +324,7 @@ namespace Image
         return IMAGE_HEAP_NEW(THIS->transformed(QTRANSFORM_VALUE(matrix), static_cast<Qt::TransformationMode>(transformMode)));
     }
 
-    bool Handle_valid(HandleRef _this, Point2::HandleRef pos) {
+    bool Handle_valid(HandleRef _this, Point::HandleRef pos) {
         return THIS->valid(QPOINT_VALUE(pos));
     }
 
