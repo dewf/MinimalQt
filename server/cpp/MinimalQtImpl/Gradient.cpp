@@ -2,10 +2,12 @@
 #include "GradientInternal.h"
 
 #include "ColorInternal.h"
+#include "PointF2Internal.h"
 #include "util/convert.h"
 
 using namespace ::Color;
 using namespace ::Common;
+using namespace ::PointF2;
 
 #define GRAD_THIS (AS_QGRADIENT_PTR(_this))
 
@@ -67,16 +69,16 @@ namespace Gradient
             return CONICAL_THIS->angle();
         }
 
-        PointF Handle_center(HandleRef _this) {
-            return toPointF(CONICAL_THIS->center());
+        PointF2::OwnedRef Handle_center(HandleRef _this) {
+            return POINTF_HEAP_NEW(CONICAL_THIS->center());
         }
 
         void Handle_setAngle(HandleRef _this, double angle) {
             CONICAL_THIS->setAngle(angle);
         }
 
-        void Handle_setCenter(HandleRef _this, PointF center) {
-            CONICAL_THIS->setCenter(toQPointF(center));
+        void Handle_setCenter(HandleRef _this, PointF2::HandleRef center) {
+            CONICAL_THIS->setCenter(QPOINTF_VALUE(center));
         }
 
         void Handle_setCenter(HandleRef _this, double x, double y) {
@@ -91,8 +93,8 @@ namespace Gradient
             return CONICALGRADIENT_HEAP_NEW();
         }
 
-        OwnedRef create(PointF center, double angle) {
-            return CONICALGRADIENT_HEAP_NEW(toQPointF(center), angle);
+        OwnedRef create(PointF2::HandleRef center, double angle) {
+            return CONICALGRADIENT_HEAP_NEW(QPOINTF_VALUE(center), angle);
         }
 
         OwnedRef create(double cx, double cy, double angle) {
@@ -103,28 +105,28 @@ namespace Gradient
 #define LINEAR_THIS (AS_QLINEARGRADIENT_PTR(_this))
 
     namespace Linear {
-        PointF Handle_finalStop(HandleRef _this) {
-            return toPointF(LINEAR_THIS->finalStop());
+        PointF2::OwnedRef Handle_finalStop(HandleRef _this) {
+            return POINTF_HEAP_NEW(LINEAR_THIS->finalStop());
         }
 
-        void Handle_setFinalStop(HandleRef _this, PointF stop) {
-            LINEAR_THIS->setFinalStop(toQPointF(stop));
+        void Handle_setFinalStop(HandleRef _this, PointF2::HandleRef stop) {
+            LINEAR_THIS->setFinalStop(QPOINTF_VALUE(stop));
         }
 
         void Handle_setFinalStop(HandleRef _this, double x, double y) {
             LINEAR_THIS->setFinalStop(x, y);
         }
 
-        void Handle_setStart(HandleRef _this, PointF start) {
-            LINEAR_THIS->setStart(toQPointF(start));
+        void Handle_setStart(HandleRef _this, PointF2::HandleRef start) {
+            LINEAR_THIS->setStart(QPOINTF_VALUE(start));
         }
 
         void Handle_setStart(HandleRef _this, double x, double y) {
             LINEAR_THIS->setStart(x, y);
         }
 
-        PointF Handle_start(HandleRef _this) {
-            return toPointF(LINEAR_THIS->start());
+        PointF2::OwnedRef Handle_start(HandleRef _this) {
+            return POINTF_HEAP_NEW(LINEAR_THIS->start());
         }
 
         void Owned_dispose(OwnedRef _this) {
@@ -135,8 +137,8 @@ namespace Gradient
             return LINEARGRADIENT_HEAP_NEW();
         }
 
-        OwnedRef create(PointF start, PointF finalStop) {
-            return LINEARGRADIENT_HEAP_NEW(toQPointF(start), toQPointF(finalStop));
+        OwnedRef create(PointF2::HandleRef start, PointF2::HandleRef finalStop) {
+            return LINEARGRADIENT_HEAP_NEW(QPOINTF_VALUE(start), QPOINTF_VALUE(finalStop));
         }
 
         OwnedRef create(double x1, double y1, double x2, double y2) {
@@ -147,16 +149,16 @@ namespace Gradient
 #define RADIAL_THIS (AS_QRADIALGRADIENT_PTR(_this))
 
     namespace Radial {
-        PointF Handle_center(HandleRef _this) {
-            return toPointF(RADIAL_THIS->center());
+        PointF2::OwnedRef Handle_center(HandleRef _this) {
+            return POINTF_HEAP_NEW(RADIAL_THIS->center());
         }
 
         double Handle_centerRadius(HandleRef _this) {
             return RADIAL_THIS->centerRadius();
         }
 
-        PointF Handle_focalPoint(HandleRef _this) {
-            return toPointF(RADIAL_THIS->focalPoint());
+        PointF2::OwnedRef Handle_focalPoint(HandleRef _this) {
+            return POINTF_HEAP_NEW(RADIAL_THIS->focalPoint());
         }
 
         double Handle_focalRadius(HandleRef _this) {
@@ -167,8 +169,8 @@ namespace Gradient
             return RADIAL_THIS->radius();
         }
 
-        void Handle_setCenter(HandleRef _this, PointF center) {
-            RADIAL_THIS->setCenter(toQPointF(center));
+        void Handle_setCenter(HandleRef _this, PointF2::HandleRef center) {
+            RADIAL_THIS->setCenter(QPOINTF_VALUE(center));
         }
 
         void Handle_setCenter(HandleRef _this, double x, double y) {
@@ -179,8 +181,8 @@ namespace Gradient
             RADIAL_THIS->setCenterRadius(radius);
         }
 
-        void Handle_setFocalPoint(HandleRef _this, PointF focalPoint) {
-            RADIAL_THIS->setFocalPoint(toQPointF(focalPoint));
+        void Handle_setFocalPoint(HandleRef _this, PointF2::HandleRef focalPoint) {
+            RADIAL_THIS->setFocalPoint(QPOINTF_VALUE(focalPoint));
         }
 
         void Handle_setFocalPoint(HandleRef _this, double x, double y) {
@@ -203,20 +205,20 @@ namespace Gradient
             return RADIALGRADIENT_HEAP_NEW();
         }
 
-        OwnedRef create(PointF center, double radius) {
-            return RADIALGRADIENT_HEAP_NEW(toQPointF(center), radius);
+        OwnedRef create(PointF2::HandleRef center, double radius) {
+            return RADIALGRADIENT_HEAP_NEW(QPOINTF_VALUE(center), radius);
         }
 
-        OwnedRef create(PointF center, double radius, PointF focalPoint) {
-            return RADIALGRADIENT_HEAP_NEW(toQPointF(center), radius, toQPointF(focalPoint));
+        OwnedRef create(PointF2::HandleRef center, double radius, PointF2::HandleRef focalPoint) {
+            return RADIALGRADIENT_HEAP_NEW(QPOINTF_VALUE(center), radius, QPOINTF_VALUE(focalPoint));
         }
 
         OwnedRef create(double cx, double cy, double radius) {
             return RADIALGRADIENT_HEAP_NEW(cx, cy, radius);
         }
 
-        OwnedRef create(PointF center, double centerRadius, PointF focalPoint, double focalRadius) {
-            return RADIALGRADIENT_HEAP_NEW(toQPointF(center), centerRadius, toQPointF(focalPoint), focalRadius);
+        OwnedRef create(PointF2::HandleRef center, double centerRadius, PointF2::HandleRef focalPoint, double focalRadius) {
+            return RADIALGRADIENT_HEAP_NEW(QPOINTF_VALUE(center), centerRadius, QPOINTF_VALUE(focalPoint), focalRadius);
         }
 
         OwnedRef create(double cx, double cy, double radius, double fx, double fy) {

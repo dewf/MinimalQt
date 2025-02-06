@@ -2,6 +2,7 @@
 #include "EventInternal.h"
 
 #include "LoggingInternal.h"
+#include "PointF2Internal.h"
 #include "PointInternal.h"
 using namespace ::Logging;
 
@@ -14,6 +15,7 @@ using namespace ::Logging;
 using namespace ::Object;
 using namespace ::Common;
 using namespace ::Point;
+using namespace ::PointF2;
 using namespace ::Enums;
 using namespace ::KeySequence;
 using namespace ::Region;
@@ -92,8 +94,8 @@ namespace Event
         return KeyboardModifiers(DROPEVENT_THIS->modifiers());
     }
 
-    PointF DropEvent_position(DropEventRef _this) {
-        return toPointF(DROPEVENT_THIS->position());
+    PointF2::OwnedRef DropEvent_position(DropEventRef _this) {
+        return POINTF_HEAP_NEW(DROPEVENT_THIS->position());
     }
 
     DropActions DropEvent_possibleActions(DropEventRef _this) {
@@ -286,16 +288,16 @@ namespace Event
         return reinterpret_cast<Object::HandleRef>(SINGLEPOINT_THIS->exclusivePointGrabber());
     }
 
-    PointF SinglePointEvent_globalPosition(SinglePointEventRef _this) {
-        return toPointF(SINGLEPOINT_THIS->globalPosition());
+    PointF2::OwnedRef SinglePointEvent_globalPosition(SinglePointEventRef _this) {
+        return POINTF_HEAP_NEW(SINGLEPOINT_THIS->globalPosition());
     }
 
-    PointF SinglePointEvent_position(SinglePointEventRef _this) {
-        return toPointF(SINGLEPOINT_THIS->position());
+    PointF2::OwnedRef SinglePointEvent_position(SinglePointEventRef _this) {
+        return POINTF_HEAP_NEW(SINGLEPOINT_THIS->position());
     }
 
-    PointF SinglePointEvent_scenePosition(SinglePointEventRef _this) {
-        return toPointF(SINGLEPOINT_THIS->scenePosition());
+    PointF2::OwnedRef SinglePointEvent_scenePosition(SinglePointEventRef _this) {
+        return POINTF_HEAP_NEW(SINGLEPOINT_THIS->scenePosition());
     }
 
     void SinglePointEvent_setExclusivePointGrabber(SinglePointEventRef _this, Object::HandleRef exclusiveGrabber) {

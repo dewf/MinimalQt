@@ -1,10 +1,5 @@
 module Common;
 
-struct PointF {
-    double x;
-    double y;
-}
-
 struct Size {
     int width;
     int height;

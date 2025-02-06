@@ -3,6 +3,7 @@ module Event;
 import Object;
 import Common;
 import Point;
+import PointF2;
 import Enums;
 import KeySequence;
 import Region;
@@ -44,7 +45,7 @@ opaque DropEvent extends Handle {
     DropAction dropAction();
     MimeData.ConstHandle mimeData();
     KeyboardModifiers modifiers();
-    PointF position();
+    PointF2.Owned position();
     DropActions possibleActions();
     DropAction proposedAction();
     void setDropAction(DropAction action);
@@ -149,9 +150,9 @@ opaque SinglePointEvent extends PointerEvent {
     MouseButton button();
     MouseButtons buttons();
     Object.Handle exclusivePointGrabber();
-    PointF globalPosition();
-    PointF position();
-    PointF scenePosition();
+    PointF2.Owned globalPosition();
+    PointF2.Owned position();
+    PointF2.Owned scenePosition();
     void setExclusivePointGrabber(Object.Handle exclusiveGrabber);
 }
 

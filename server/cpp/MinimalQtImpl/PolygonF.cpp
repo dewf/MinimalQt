@@ -1,11 +1,13 @@
 #include "generated/PolygonF.h"
 #include "PolygonFInternal.h"
 
+#include "PointF2Internal.h"
 #include "PolygonInternal.h"
 
 #include "util/convert.h"
 
 using namespace ::Common;
+using namespace ::PointF2;
 using namespace ::Enums;
 
 #define THIS (AS_QPOLYGONF_PTR(_this))
@@ -16,8 +18,8 @@ namespace PolygonF
         return toRectF(THIS->boundingRect());
     }
 
-    bool Handle_containsPoint(HandleRef _this, PointF point, FillRule fillRule) {
-        return THIS->containsPoint(toQPointF(point), static_cast<Qt::FillRule>(fillRule));
+    bool Handle_containsPoint(HandleRef _this, PointF2::HandleRef point, FillRule fillRule) {
+        return THIS->containsPoint(QPOINTF_VALUE(point), static_cast<Qt::FillRule>(fillRule));
     }
 
     OwnedRef Handle_intersected(HandleRef _this, HandleRef r) {
@@ -41,16 +43,16 @@ namespace PolygonF
         return reinterpret_cast<Polygon_OwnedRef>(actual);
     }
 
-    void Handle_translate(HandleRef _this, PointF offset) {
-        THIS->translate(toQPointF(offset));
+    void Handle_translate(HandleRef _this, PointF2::HandleRef offset) {
+        THIS->translate(QPOINTF_VALUE(offset));
     }
 
     void Handle_translate(HandleRef _this, double dx, double dy) {
         THIS->translate(dx, dy);
     }
 
-    OwnedRef Handle_translated(HandleRef _this, PointF offset) {
-        return POLYGONF_HEAP_NEW(THIS->translated(toQPointF(offset)));
+    OwnedRef Handle_translated(HandleRef _this, PointF2::HandleRef offset) {
+        return POLYGONF_HEAP_NEW(THIS->translated(QPOINTF_VALUE(offset)));
     }
 
     OwnedRef Handle_translated(HandleRef _this, double dx, double dy) {
@@ -69,8 +71,8 @@ namespace PolygonF
         return POLYGONF_HEAP_NEW();
     }
 
-    OwnedRef create(const std::vector<PointF>& points) {
-        const auto qPoints = toQList<PointF,QPointF>(points, toQPointF);
+    OwnedRef create(const std::vector<PointF2::HandleRef>& points) {
+        const auto qPoints = toQList<PointF2::HandleRef,QPointF>(points, [](auto p) { return QPOINTF_VALUE(p); });
         return POLYGONF_HEAP_NEW(qPoints);
     }
 

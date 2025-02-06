@@ -3,6 +3,7 @@ module Widget;
 import Object;
 import Common;
 import Point;
+import PointF2;
 import Layout;
 import Painter;
 import Icon;
@@ -72,7 +73,7 @@ opaque Handle extends Object.Handle {
     Size baseSize();
     Handle childAt(int x, int y);
     Handle childAt(Point.Handle p);
-    Handle childAt(PointF p);
+    Handle childAt(PointF2.Handle p);
     Rect childrenRect();
     Region.Owned childrenRegion();
     void clearFocus();
@@ -138,17 +139,17 @@ opaque Handle extends Object.Handle {
 
     // QLocale locale() const
 
-    PointF mapFrom(Handle parent, PointF pos);
+    PointF2.Owned mapFrom(Handle parent, PointF2.Handle pos);
     Point.Owned mapFrom(Handle parent, Point.Handle pos);
-    PointF mapFromGlobal(PointF pos);
+    PointF2.Owned mapFromGlobal(PointF2.Handle pos);
     Point.Owned mapFromGlobal(Point.Handle pos);
-    PointF mapFromParent(PointF pos);
+    PointF2.Owned mapFromParent(PointF2.Handle pos);
     Point.Owned mapFromParent(Point.Handle pos);
-    PointF mapTo(Handle parent, PointF pos);
+    PointF2.Owned mapTo(Handle parent, PointF2.Handle pos);
     Point.Owned mapTo(Handle parent, Point.Handle pos);
-    PointF mapToGlobal(PointF pos);
+    PointF2.Owned mapToGlobal(PointF2.Handle pos);
     Point.Owned mapToGlobal(Point.Handle pos);
-    PointF mapToParent(PointF pos);
+    PointF2.Owned mapToParent(PointF2.Handle pos);
     Point.Owned mapToParent(Point.Handle pos);
     Region.Owned mask();
     int maximumHeight();

@@ -1,7 +1,6 @@
 module Point;
 
-import Common;
-//fwdopaque PointF_Owned = PointF.Owned;
+fwdopaque PointF_Owned = PointF2.Owned;
 
 @nodispose
 opaque Handle {
@@ -17,7 +16,7 @@ opaque Handle {
 
     // CGPoint toCGPoint() const
 
-    PointF toPointF();
+    PointF_Owned toPointF();
     Owned transposed();
     int x();
     int y();

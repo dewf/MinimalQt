@@ -7,6 +7,7 @@
 #include "RegionInternal.h"
 
 // #include <functional>
+#include "PointF2Internal.h"
 #include "PointInternal.h"
 #include "util/convert.h"
 
@@ -122,8 +123,8 @@ namespace Transform
         return POINT_HEAP_NEW(THIS->map(QPOINT_VALUE(point)));
     }
 
-    PointF Handle_map(HandleRef _this, PointF p) {
-        return toPointF(THIS->map(toQPointF(p)));
+    PointF2::OwnedRef Handle_map(HandleRef _this, PointF2::HandleRef p) {
+        return POINTF_HEAP_NEW(THIS->map(QPOINTF_VALUE(p)));
     }
 
     Polygon::OwnedRef Handle_map(HandleRef _this, Polygon::HandleRef polygon) {

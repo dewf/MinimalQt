@@ -106,14 +106,6 @@ inline SizeF toSizeF(const QSizeF& sz) {
     return { sz.width(), sz.height() };
 }
 
-inline PointF toPointF(const QPointF& qPointF) {
-    return { qPointF.x(), qPointF.y() };
-}
-
-inline QPointF toQPointF(const PointF& p) {
-    return {p.x, p.y};
-}
-
 inline Rect toRect(const QRect& qRect) {
     return { qRect.left(), qRect.top(), qRect.width(), qRect.height() };
 }

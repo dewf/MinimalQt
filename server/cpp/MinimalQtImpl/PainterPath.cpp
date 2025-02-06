@@ -1,7 +1,8 @@
 #include "generated/PainterPath.h"
+#include "PainterPathInternal.h"
 
 #include "FontInternal.h"
-#include "PainterPathInternal.h"
+#include "PointF2Internal.h"
 #include "RegionInternal.h"
 #include "PolygonFInternal.h"
 #include "TransformInternal.h"
@@ -9,6 +10,7 @@
 #include "util/convert.h"
 
 using namespace ::Common;
+using namespace ::PointF2;
 using namespace ::Enums;
 using namespace ::Region;
 using namespace ::Font;
@@ -23,8 +25,8 @@ namespace PainterPath
         THIS->addEllipse(toQRectF(boundingRectangle));
     }
 
-    void Handle_addEllipse(HandleRef _this, PointF center, double rx, double ry) {
-        THIS->addEllipse(toQPointF(center), rx, ry);
+    void Handle_addEllipse(HandleRef _this, PointF2::HandleRef center, double rx, double ry) {
+        THIS->addEllipse(QPOINTF_VALUE(center), rx, ry);
     }
 
     void Handle_addEllipse(HandleRef _this, double x, double y, double width, double height) {
@@ -59,8 +61,8 @@ namespace PainterPath
         THIS->addRoundedRect(x, y, w, h, xRadius, yRadius, static_cast<Qt::SizeMode>(mode));
     }
 
-    void Handle_addText(HandleRef _this, PointF point, Font::HandleRef font, const std::string& text) {
-        THIS->addText(toQPointF(point), QFONT_VALUE(font), QString::fromStdString(text));
+    void Handle_addText(HandleRef _this, PointF2::HandleRef point, Font::HandleRef font, const std::string& text) {
+        THIS->addText(QPOINTF_VALUE(point), QFONT_VALUE(font), QString::fromStdString(text));
     }
 
     void Handle_addText(HandleRef _this, double x, double y, Font::HandleRef font, const std::string& text) {
@@ -111,8 +113,8 @@ namespace PainterPath
         return THIS->contains(QPAINTERPATH_VALUE(p));
     }
 
-    bool Handle_contains(HandleRef _this, PointF point) {
-        return THIS->contains(toQPointF(point));
+    bool Handle_contains(HandleRef _this, PointF2::HandleRef point) {
+        return THIS->contains(QPOINTF_VALUE(point));
     }
 
     bool Handle_contains(HandleRef _this, RectF rectangle) {
@@ -123,16 +125,16 @@ namespace PainterPath
         return toRectF(THIS->controlPointRect());
     }
 
-    void Handle_cubicTo(HandleRef _this, PointF c1, PointF c2, PointF endPoint) {
-        THIS->cubicTo(toQPointF(c1), toQPointF(c2), toQPointF(endPoint));
+    void Handle_cubicTo(HandleRef _this, PointF2::HandleRef c1, PointF2::HandleRef c2, PointF2::HandleRef endPoint) {
+        THIS->cubicTo(QPOINTF_VALUE(c1), QPOINTF_VALUE(c2), QPOINTF_VALUE(endPoint));
     }
 
     void Handle_cubicTo(HandleRef _this, double c1X, double c1Y, double c2X, double c2Y, double endPointX, double endPointY) {
         THIS->cubicTo(c1X, c1Y, c2X, c2Y, endPointX, endPointY);
     }
 
-    PointF Handle_currentPosition(HandleRef _this) {
-        return toPointF(THIS->currentPosition());
+    PointF2::OwnedRef Handle_currentPosition(HandleRef _this) {
+        return POINTF_HEAP_NEW(THIS->currentPosition());
     }
 
     int32_t Handle_elementCount(HandleRef _this) {
@@ -163,16 +165,16 @@ namespace PainterPath
         return THIS->length();
     }
 
-    void Handle_lineTo(HandleRef _this, PointF endPoint) {
-        THIS->lineTo(toQPointF(endPoint));
+    void Handle_lineTo(HandleRef _this, PointF2::HandleRef endPoint) {
+        THIS->lineTo(QPOINTF_VALUE(endPoint));
     }
 
     void Handle_lineTo(HandleRef _this, double x, double y) {
         THIS->lineTo(x, y);
     }
 
-    void Handle_moveTo(HandleRef _this, PointF point) {
-        THIS->moveTo(toQPointF(point));
+    void Handle_moveTo(HandleRef _this, PointF2::HandleRef point) {
+        THIS->moveTo(QPOINTF_VALUE(point));
     }
 
     void Handle_moveTo(HandleRef _this, double x, double y) {
@@ -183,12 +185,12 @@ namespace PainterPath
         return THIS->percentAtLength(len);
     }
 
-    PointF Handle_pointAtPercent(HandleRef _this, double t) {
-        return toPointF(THIS->pointAtPercent(t));
+    PointF2::OwnedRef Handle_pointAtPercent(HandleRef _this, double t) {
+        return POINTF_HEAP_NEW(THIS->pointAtPercent(t));
     }
 
-    void Handle_quadTo(HandleRef _this, PointF c, PointF endPoint) {
-        THIS->quadTo(toQPointF(c), toQPointF(endPoint));
+    void Handle_quadTo(HandleRef _this, PointF2::HandleRef c, PointF2::HandleRef endPoint) {
+        THIS->quadTo(QPOINTF_VALUE(c), QPOINTF_VALUE(endPoint));
     }
 
     void Handle_quadTo(HandleRef _this, double cx, double cy, double endPointX, double endPointY) {
@@ -245,16 +247,16 @@ namespace PainterPath
         THIS->translate(dx, dy);
     }
 
-    void Handle_translate(HandleRef _this, PointF offset) {
-        THIS->translate(toQPointF(offset));
+    void Handle_translate(HandleRef _this, PointF2::HandleRef offset) {
+        THIS->translate(QPOINTF_VALUE(offset));
     }
 
     OwnedRef Handle_translated(HandleRef _this, double dx, double dy) {
         return PAINTERPATH_HEAP_NEW(THIS->translated(dx, dy));
     }
 
-    OwnedRef Handle_translated(HandleRef _this, PointF offset) {
-        return PAINTERPATH_HEAP_NEW(THIS->translated(toQPointF(offset)));
+    OwnedRef Handle_translated(HandleRef _this, PointF2::HandleRef offset) {
+        return PAINTERPATH_HEAP_NEW(THIS->translated(QPOINTF_VALUE(offset)));
     }
 
     OwnedRef Handle_united(HandleRef _this, HandleRef p) {
@@ -269,8 +271,8 @@ namespace PainterPath
         return PAINTERPATH_HEAP_NEW();
     }
 
-    OwnedRef create(PointF startPoint) {
-        return PAINTERPATH_HEAP_NEW(toQPointF(startPoint));
+    OwnedRef create(PointF2::HandleRef startPoint) {
+        return PAINTERPATH_HEAP_NEW(QPOINTF_VALUE(startPoint));
     }
 
     OwnedRef create(HandleRef path) {

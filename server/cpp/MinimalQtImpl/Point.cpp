@@ -1,4 +1,6 @@
 #include "generated/Point.h"
+
+#include "PointF2Internal.h"
 #include "PointInternal.h"
 
 #include "util/convert.h"
@@ -25,8 +27,8 @@ namespace Point
         THIS->setY(y);
     }
 
-    PointF Handle_toPointF(HandleRef _this) {
-        return toPointF(THIS->toPointF());
+    PointF_OwnedRef Handle_toPointF(HandleRef _this) {
+        return reinterpret_cast<PointF_OwnedRef>(POINTF_HEAP_NEW(THIS->toPointF()));
     }
 
     OwnedRef Handle_transposed(HandleRef _this) {
