@@ -345,6 +345,11 @@ add_library(MinimalQtImpl STATIC
     ../Point.cpp
     ../PointInternal.h
 
+    ../generated/PointF2.h
+    ../generated/PointF2_wrappers.cpp
+    ../PointF2.cpp
+    ../PointF2Internal.h
+
     ../generated/Polygon.h
     ../generated/Polygon_wrappers.cpp
     ../Polygon.cpp
