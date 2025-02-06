@@ -1,10 +1,5 @@
 module Common;
 
-struct Point {
-    int x;
-    int y;
-}
-
 struct PointF {
     double x;
     double y;
