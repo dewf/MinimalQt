@@ -10,6 +10,10 @@ using namespace ::Enums;
 
 namespace Size
 {
+    int32_t Handle_hashCode(HandleRef _this) {
+        return static_cast<int32_t>(qHash(QSIZE_VALUE(_this)));
+    }
+
     OwnedRef Handle_boundedTo(HandleRef _this, HandleRef otherSize) {
         return SIZE_HEAP_NEW(THIS->boundedTo(QSIZE_VALUE(otherSize)));
     }

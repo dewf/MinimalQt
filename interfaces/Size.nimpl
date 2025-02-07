@@ -6,6 +6,8 @@ import Enums;
 @nodispose
 opaque Handle {
 
+    int hashCode();
+
     Owned boundedTo(Handle otherSize);
     Owned expandedTo(Handle otherSize);
     Owned grownBy(Margins margins);
