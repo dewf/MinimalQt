@@ -1,7 +1,7 @@
 module Pixmap;
 import PaintDevice;
 import Common;
-import Size2;
+import Size;
 import Enums;
 import Image;
 import Color;
@@ -47,7 +47,7 @@ opaque Handle {         // we don't directly inherit from PaintDevice, because t
     // bool save(QIODevice *device, const char *format = nullptr, int quality = -1) const
     // TODO
 
-    Owned scaled(Size2.Handle size, AspectRatioMode aspectRatioMode = IgnoreAspectRatio, TransformationMode transformMode = FastTransformation);
+    Owned scaled(Size.Handle size, AspectRatioMode aspectRatioMode = IgnoreAspectRatio, TransformationMode transformMode = FastTransformation);
     Owned scaled(int width, int height, AspectRatioMode aspectRatioMode = IgnoreAspectRatio, TransformationMode transformMode = FastTransformation);
     Owned scaledToHeight(int height, TransformationMode mode = FastTransformation);
     Owned scaledToWidth(int width, TransformationMode mode = FastTransformation);
@@ -58,7 +58,7 @@ opaque Handle {         // we don't directly inherit from PaintDevice, because t
     // void setMask(const QBitmap &mask)
     // TODO
 
-    Size2.Owned size();
+    Size.Owned size();
     void swap(Handle other);
     Image.Owned toImage();
     Owned transformed(Transform.Handle transform, TransformationMode mode = FastTransformation);
@@ -70,7 +70,7 @@ opaque Owned extends Handle;
 Owned create(Array<byte> xpm);
 Owned create(int width, int height);
 Owned create(string filename, Option<string> format, ImageConversionFlags flags_ = AutoColor);
-Owned create(Size2.Handle size);
+Owned create(Size.Handle size);
 Owned create(Handle other);
 
 // static methods:

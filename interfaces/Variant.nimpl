@@ -2,7 +2,7 @@ module Variant;
 
 import Icon;
 import Common;
-import Size2;
+import Size;
 import Enums;
 import Color;
 import DateTime;
@@ -18,7 +18,7 @@ opaque Handle {
     string toString2(); // toString() is a C# thing
     int toInt();
     DateTime.Owned toDateTime();
-    Size2.Owned toSize();
+    Size.Owned toSize();
 
     // convenience function, special values for toInt()
     CheckState toCheckState();
@@ -35,7 +35,7 @@ Owned create(string value);
 Owned create(int value);
 Owned create(DateTime.Handle value);
 Owned create(CheckState value); // convenience for int 0/1/2
-Owned create(Size2.Handle size);
+Owned create(Size.Handle size);
 Owned create(Icon.Handle icon);
 Owned create(Color.Handle color);
 Owned createAlign(Alignment align); // different name because just an int32_t typedef

@@ -4,11 +4,11 @@
 #include "ObjectInternal.h"
 #include "IconInternal.h"
 #include "KeySequenceInternal.h"
-#include "Size2Internal.h"
+#include "SizeInternal.h"
 
 using namespace ::Object;
 using namespace ::Common;
-using namespace ::Size2;
+using namespace ::Size;
 using namespace ::KeySequence;
 using namespace ::Widget;
 using namespace ::Icon;
@@ -39,7 +39,7 @@ namespace AbstractButton
         return ICON_HEAP_NEW(THIS->icon());
     }
 
-    Size2::OwnedRef Handle_iconSize(HandleRef _this) {
+    Size::OwnedRef Handle_iconSize(HandleRef _this) {
         return SIZE_HEAP_NEW(THIS->iconSize());
     }
 
@@ -111,7 +111,7 @@ namespace AbstractButton
         THIS->setChecked(state);
     }
 
-    void Handle_setIconSize(HandleRef _this, Size2::HandleRef size) {
+    void Handle_setIconSize(HandleRef _this, Size::HandleRef size) {
         THIS->setIconSize(QSIZE_VALUE(size));
     }
 

@@ -4,13 +4,13 @@
 #include "ModelIndexInternal.h"
 #include "ObjectInternal.h"
 #include "WidgetInternal.h"
-#include "Size2Internal.h"
+#include "SizeInternal.h"
 
 #include "util/convert.h"
 
 using namespace ::Object;
 using namespace ::Common;
-using namespace ::Size2;
+using namespace ::Size;
 using namespace ::Enums;
 using namespace ::Icon;
 using namespace ::AbstractListModel;
@@ -34,7 +34,7 @@ namespace ListView
         return static_cast<Flow>(THIS->flow());
     }
 
-    Size2::OwnedRef Handle_gridSize(HandleRef _this) {
+    Size::OwnedRef Handle_gridSize(HandleRef _this) {
         return SIZE_HEAP_NEW(THIS->gridSize());
     }
 
@@ -78,7 +78,7 @@ namespace ListView
         THIS->setFlow(static_cast<QListView::Flow>(flow));
     }
 
-    void Handle_setGridSize(HandleRef _this, Size2::HandleRef size) {
+    void Handle_setGridSize(HandleRef _this, Size::HandleRef size) {
         THIS->setGridSize(QSIZE_VALUE(size));
     }
 

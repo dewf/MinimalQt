@@ -2,7 +2,7 @@ module AbstractItemView;
 
 import Object;
 import Common;
-import Size2;
+import Size;
 import Point;
 import Enums;
 import Icon;
@@ -18,7 +18,7 @@ interface SignalHandler extends AbstractScrollArea.SignalHandler {
     void clicked(ModelIndex.Handle index);
     void doubleClicked(ModelIndex.Handle index);
     void entered(ModelIndex.Handle index);
-    void iconSizeChanged(Size2.Handle size);
+    void iconSizeChanged(Size.Handle size);
     void pressed(ModelIndex.Handle index);
     void viewportEntered();
 }
@@ -81,7 +81,7 @@ opaque Handle extends AbstractScrollArea.Handle {
     EditTriggers getEditTriggers();
     bool hasAutoScroll();
     ScrollMode horizontalScrollMode();
-    Size2.Owned iconSize();
+    Size.Owned iconSize();
     ModelIndex.Owned indexAt(Point.Handle point);
     Widget.Handle indexWidget(ModelIndex.Handle index);
     bool isPersistentEditorOpen(ModelIndex.Handle index);
@@ -109,7 +109,7 @@ opaque Handle extends AbstractScrollArea.Handle {
     void setDropIndicatorShown(bool enable);
     void setEditTriggers(EditTriggers triggers);
     void setHorizontalScrollMode(ScrollMode mode);
-    void setIconSize(Size2.Handle size);
+    void setIconSize(Size.Handle size);
     void setIndexWidget(ModelIndex.Handle index, Widget.Handle widget);
     void setItemDelegate(AbstractItemDelegate.Handle delegate_);
     void setItemDelegateForColumn(int column, AbstractItemDelegate.Handle delegate_);
@@ -123,7 +123,7 @@ opaque Handle extends AbstractScrollArea.Handle {
     void setVerticalScrollMode(ScrollMode mode);
     bool showDropIndicator();
     int sizeHintForColumn(int column);
-    Size2.Owned sizeHintForIndex(ModelIndex.Handle index);
+    Size.Owned sizeHintForIndex(ModelIndex.Handle index);
     int sizeHintForRow(int row);
     bool tabKeyNavigation();
     TextElideMode textElideMode();

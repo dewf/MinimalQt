@@ -2,7 +2,7 @@ module TabWidget;
 
 import Object;
 import Common;
-import Size2;
+import Size;
 import Icon;
 import Enums;
 import Widget;
@@ -28,7 +28,7 @@ opaque Handle extends Widget.Handle {
     Widget.Handle currentWidget();
     bool documentMode();
     TextElideMode elideMode();
-    Size2.Owned iconSize();
+    Size.Owned iconSize();
     int indexOf(Widget.Handle w);
     int insertTab(int index, Widget.Handle page, string label);
     int insertTab(int index, Widget.Handle page, Icon.Handle icon, string label);
@@ -39,7 +39,7 @@ opaque Handle extends Widget.Handle {
     void setCornerWidget(Widget.Handle widget, Corner corner = TopRightCorner);
     void setDocumentMode(bool set);
     void setElideMode(TextElideMode mode);
-    void setIconSize(Size2.Handle size);
+    void setIconSize(Size.Handle size);
     void setMovable(bool movable);
     void setTabBarAutoHide(bool enabled);
     void setTabEnabled(int index, bool enable);

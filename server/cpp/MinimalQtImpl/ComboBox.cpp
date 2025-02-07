@@ -6,14 +6,14 @@
 #include "VariantInternal.h"
 #include "IconInternal.h"
 #include "ModelIndexInternal.h"
-#include "Size2Internal.h"
+#include "SizeInternal.h"
 #include "ValidatorInternal.h"
 
 #include "util/convert.h"
 
 using namespace ::Object;
 using namespace ::Common;
-using namespace ::Size2;
+using namespace ::Size;
 using namespace ::Enums;
 using namespace ::Widget;
 using namespace ::Variant;
@@ -82,7 +82,7 @@ namespace ComboBox
         THIS->hidePopup();
     }
 
-    Size2::OwnedRef Handle_iconSize(HandleRef _this) {
+    Size::OwnedRef Handle_iconSize(HandleRef _this) {
         return SIZE_HEAP_NEW(THIS->iconSize());
     }
 
@@ -178,7 +178,7 @@ namespace ComboBox
         THIS->setFrame(hasFrame);
     }
 
-    void Handle_setIconSize(HandleRef _this, Size2::HandleRef size) {
+    void Handle_setIconSize(HandleRef _this, Size::HandleRef size) {
         THIS->setIconSize(QSIZE_VALUE(size));
     }
 

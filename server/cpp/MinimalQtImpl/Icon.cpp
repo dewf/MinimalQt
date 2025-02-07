@@ -3,13 +3,13 @@
 
 #include "PixmapInternal.h"
 #include "PainterInternal.h"
-#include "Size2Internal.h"
+#include "SizeInternal.h"
 
 #include "util/convert.h"
 
 using namespace ::Pixmap;
 using namespace ::Common;
-using namespace ::Size2;
+using namespace ::Size;
 using namespace ::Painter;
 using namespace ::Enums;
 
@@ -17,11 +17,11 @@ using namespace ::Enums;
 
 namespace Icon
 {
-    Size2::OwnedRef Handle_actualSize(HandleRef _this, Size2::HandleRef size, Mode mode /* Mode::Normal */, State state /* State::Off */) {
+    Size::OwnedRef Handle_actualSize(HandleRef _this, Size::HandleRef size, Mode mode /* Mode::Normal */, State state /* State::Off */) {
         return SIZE_HEAP_NEW(THIS->actualSize(QSIZE_VALUE(size), static_cast<QIcon::Mode>(mode), static_cast<QIcon::State>(state)));
     }
 
-    void Handle_addFile(HandleRef _this, const std::string& fileName, const std::optional<Size2::HandleRef>& size, Mode mode /* Mode::Normal */, State state /* State::Off */) {
+    void Handle_addFile(HandleRef _this, const std::string& fileName, const std::optional<Size::HandleRef>& size, Mode mode /* Mode::Normal */, State state /* State::Off */) {
         QSize qSize;
         if (size.has_value()) qSize = QSIZE_VALUE(size.value());
         THIS->addFile(QString::fromStdString(fileName), qSize, static_cast<QIcon::Mode>(mode), static_cast<QIcon::State>(state));
@@ -31,9 +31,9 @@ namespace Icon
         THIS->addPixmap(QPIXMAP_VALUE(pixmap), static_cast<QIcon::Mode>(mode), static_cast<QIcon::State>(state));
     }
 
-    std::vector<Size2::OwnedRef> Handle_availableSizes(HandleRef _this, Mode mode /* Mode::Normal */, State state /* State::Off */) {
+    std::vector<Size::OwnedRef> Handle_availableSizes(HandleRef _this, Mode mode /* Mode::Normal */, State state /* State::Off */) {
         const auto result = THIS->availableSizes(static_cast<QIcon::Mode>(mode), static_cast<QIcon::State>(state));
-        return fromQList<QSize,Size2::OwnedRef>(result, [](auto s) { return SIZE_HEAP_NEW(s); });
+        return fromQList<QSize,Size::OwnedRef>(result, [](auto s) { return SIZE_HEAP_NEW(s); });
     }
 
     int64_t Handle_cacheKey(HandleRef _this) {
@@ -60,7 +60,7 @@ namespace Icon
         THIS->paint(AS_QPAINTER_PTR(painter), x, y, w, h, static_cast<Qt::Alignment>(alignment.value), static_cast<QIcon::Mode>(mode), static_cast<QIcon::State>(state));
     }
 
-    Pixmap::OwnedRef Handle_pixmap(HandleRef _this, Size2::HandleRef size, Mode mode /* Mode::Normal */, State state /* State::Off */) {
+    Pixmap::OwnedRef Handle_pixmap(HandleRef _this, Size::HandleRef size, Mode mode /* Mode::Normal */, State state /* State::Off */) {
         return PIXMAP_HEAP_NEW(THIS->pixmap(QSIZE_VALUE(size), static_cast<QIcon::Mode>(mode), static_cast<QIcon::State>(state)));
     }
 
@@ -68,7 +68,7 @@ namespace Icon
         return PIXMAP_HEAP_NEW(THIS->pixmap(extent,  static_cast<QIcon::Mode>(mode), static_cast<QIcon::State>(state)));
     }
 
-    Pixmap::OwnedRef Handle_pixmap(HandleRef _this, Size2::HandleRef size, double devicePixelRatio, Mode mode /* Mode::Normal */, State state /* State::Off */) {
+    Pixmap::OwnedRef Handle_pixmap(HandleRef _this, Size::HandleRef size, double devicePixelRatio, Mode mode /* Mode::Normal */, State state /* State::Off */) {
         return PIXMAP_HEAP_NEW(THIS->pixmap(QSIZE_VALUE(size), devicePixelRatio, static_cast<QIcon::Mode>(mode), static_cast<QIcon::State>(state)));
     }
 

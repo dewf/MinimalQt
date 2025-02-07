@@ -2,7 +2,7 @@ module Event;
 
 import Object;
 import Common;
-import Size2;
+import Size;
 import Point;
 import PointF;
 import Enums;
@@ -32,8 +32,8 @@ opaque Handle {
 
 @nodispose
 opaque ResizeEvent extends Handle {
-    Size2.Owned oldSize();
-    Size2.Owned size();
+    Size.Owned oldSize();
+    Size.Owned size();
 }
 
 @nodispose

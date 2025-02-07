@@ -5,14 +5,14 @@
 #include "PixmapInternal.h"
 #include "PointInternal.h"
 #include "TransformInternal.h"
-#include "Size2Internal.h"
+#include "SizeInternal.h"
 
 #include "util/convert.h"
 
 using namespace ::Object;
 using namespace ::Common;
 using namespace ::Point;
-using namespace ::Size2;
+using namespace ::Size;
 using namespace ::Enums;
 using namespace ::Pixmap;
 using namespace ::Transform;
@@ -29,7 +29,7 @@ namespace Screen
         return toRect(THIS->availableGeometry());
     }
 
-    Size2::OwnedRef Handle_availableSize(HandleRef _this) {
+    Size::OwnedRef Handle_availableSize(HandleRef _this) {
         return SIZE_HEAP_NEW(THIS->availableSize());
     }
 
@@ -37,7 +37,7 @@ namespace Screen
         return toRect(THIS->availableVirtualGeometry());
     }
 
-    Size2::OwnedRef Handle_availableVirtualSize(HandleRef _this) {
+    Size::OwnedRef Handle_availableVirtualSize(HandleRef _this) {
         return SIZE_HEAP_NEW(THIS->availableVirtualSize());
     }
 
@@ -129,7 +129,7 @@ namespace Screen
         return THIS->serialNumber().toStdString();
     }
 
-    Size2::OwnedRef Handle_size(HandleRef _this) {
+    Size::OwnedRef Handle_size(HandleRef _this) {
         return SIZE_HEAP_NEW(THIS->size());
     }
 
@@ -149,7 +149,7 @@ namespace Screen
         return fromQList<QScreen*,HandleRef>(THIS->virtualSiblings(), [](auto scr) { return reinterpret_cast<HandleRef>(scr); });
     }
 
-    Size2::OwnedRef Handle_virtualSize(HandleRef _this) {
+    Size::OwnedRef Handle_virtualSize(HandleRef _this) {
         return SIZE_HEAP_NEW(THIS->virtualSize());
     }
 

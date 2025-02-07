@@ -4,13 +4,13 @@
 #include "ColorInternal.h"
 #include "PointInternal.h"
 #include "TransformInternal.h"
-#include "Size2Internal.h"
+#include "SizeInternal.h"
 
 #include "util/convert.h"
 
 using namespace ::PaintDevice;
 using namespace ::Common;
-using namespace ::Size2;
+using namespace ::Size;
 using namespace ::Point;
 using namespace ::Enums;
 using namespace ::Color;
@@ -225,7 +225,7 @@ namespace Image
         return THIS->save(QString::fromStdString(fileName), ccFormat, quality);
     }
 
-    OwnedRef Handle_scaled(HandleRef _this, Size2::HandleRef size, AspectRatioMode aspectRadioMode /* AspectRatioMode::IgnoreAspectRatio */, TransformationMode transformMode /* TransformationMode::FastTransformation */) {
+    OwnedRef Handle_scaled(HandleRef _this, Size::HandleRef size, AspectRatioMode aspectRadioMode /* AspectRatioMode::IgnoreAspectRatio */, TransformationMode transformMode /* TransformationMode::FastTransformation */) {
         return IMAGE_HEAP_NEW(THIS->scaled(QSIZE_VALUE(size), static_cast<Qt::AspectRatioMode>(aspectRadioMode), static_cast<Qt::TransformationMode>(transformMode)));
     }
 
@@ -301,7 +301,7 @@ namespace Image
         THIS->setText(QString::fromStdString(key), QString::fromStdString(text));
     }
 
-    Size2::OwnedRef Handle_size(HandleRef _this) {
+    Size::OwnedRef Handle_size(HandleRef _this) {
         return SIZE_HEAP_NEW(THIS->size());
     }
 
@@ -350,7 +350,7 @@ namespace Image
         return IMAGE_HEAP_NEW(reinterpret_cast<const char *>(xpm.data()));
     }
 
-    OwnedRef create(Size2::HandleRef size, Format format) {
+    OwnedRef create(Size::HandleRef size, Format format) {
         return IMAGE_HEAP_NEW(QSIZE_VALUE(size), static_cast<QImage::Format>(format));
     }
 

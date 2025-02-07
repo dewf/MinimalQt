@@ -2,7 +2,7 @@ module Layout;
 
 import Object;
 import Common;
-import Size2;
+import Size;
 import Enums;
 import LayoutItem;
 
@@ -62,4 +62,4 @@ opaque Handle extends Object.Handle {
 
 // no create because abstract
 
-Size2.Owned closestAcceptableSize(WidgetHandle widget, Size2.Handle size);
+Size.Owned closestAcceptableSize(WidgetHandle widget, Size.Handle size);

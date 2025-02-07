@@ -1,7 +1,7 @@
 module Image;
 import PaintDevice;
 import Common;
-import Size2;
+import Size;
 import Point;
 import Enums;
 import Color;
@@ -139,7 +139,7 @@ opaque Handle {
 
     // bool save(QIODevice *device, const char *format = nullptr, int quality = -1) const
 
-    Owned scaled(Size2.Handle size, AspectRatioMode aspectRadioMode = IgnoreAspectRatio, TransformationMode transformMode = FastTransformation);
+    Owned scaled(Size.Handle size, AspectRatioMode aspectRadioMode = IgnoreAspectRatio, TransformationMode transformMode = FastTransformation);
     Owned scaled(int width, int height, AspectRatioMode aspectRadioMode = IgnoreAspectRatio, TransformationMode transformMode = FastTransformation);
     Owned scaledToHeight(int height, TransformationMode transformMode = FastTransformation);
     Owned scaledToWidth(int width, TransformationMode transformMode = FastTransformation);
@@ -163,7 +163,7 @@ opaque Handle {
     void setPixelColor(Point.Handle position, Color.Handle color);
     void setPixelColor(int x, int y, Color.Handle color);
     void setText(string key, string text);
-    Size2.Owned size();
+    Size.Owned size();
     size_t sizeInBytes();
     void swap(Handle other);
     string text(Option<string> key);
@@ -184,7 +184,7 @@ opaque Owned extends Handle;
 // ctors:
 Owned create();
 Owned create(Array<byte> xpm);
-Owned create(Size2.Handle size, Format format);
+Owned create(Size.Handle size, Format format);
 Owned create(string filename, Option<string> format);
 Owned create(int width, int height, Format format);
 Owned create(Buffer<byte> data, int width, int height, Format format, Option<size_t> bytesPerLine);

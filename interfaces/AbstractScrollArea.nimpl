@@ -2,7 +2,7 @@ module AbstractScrollArea;
 
 import Object;
 import Common;
-import Size2;
+import Size;
 import Icon;
 import Frame;
 import Enums;
@@ -24,7 +24,7 @@ opaque Handle extends Frame.Handle {
     Widget.Handle cornerWidget();
     ScrollBar.Handle horizontalScrollBar();
     ScrollBarPolicy horizontalScrollBarPolicy();
-    Size2.Owned maximumViewportSize();
+    Size.Owned maximumViewportSize();
     Array<Widget.Handle> scrollBarWidgets(Alignment alignment);
     void setCornerWidget(Widget.Handle widget);
     void setHorizontalScrollBar(ScrollBar.Handle scrollBar);

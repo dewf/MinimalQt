@@ -5,7 +5,7 @@
 #include "ColorInternal.h"
 #include "IconInternal.h"
 #include "UrlInternal.h"
-#include "Size2Internal.h"
+#include "SizeInternal.h"
 
 #include "LoggingInternal.h"
 using namespace ::Logging;
@@ -14,7 +14,7 @@ using namespace ::Logging;
 
 using namespace ::Icon;
 using namespace ::Common;
-using namespace ::Size2;
+using namespace ::Size;
 using namespace ::Enums;
 using namespace ::Color;
 using namespace ::DateTime;
@@ -44,7 +44,7 @@ namespace Variant
         return DATETIME_HEAP_NEW(THIS->toDateTime());
     }
 
-    Size2::OwnedRef Handle_toSize(HandleRef _this) {
+    Size::OwnedRef Handle_toSize(HandleRef _this) {
         return SIZE_HEAP_NEW(THIS->toSize());
     }
 
@@ -114,7 +114,7 @@ namespace Variant
         return VARIANT_HEAP_NEW(static_cast<int>(value));
     }
 
-    OwnedRef create(Size2::HandleRef size) {
+    OwnedRef create(Size::HandleRef size) {
         return VARIANT_HEAP_NEW(QSIZE_VALUE(size));
     }
 

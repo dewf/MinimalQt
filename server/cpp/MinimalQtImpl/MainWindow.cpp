@@ -7,14 +7,14 @@
 #include "MenuInternal.h"
 #include "StatusBarInternal.h"
 #include "ToolBarInternal.h"
-#include "Size2Internal.h"
+#include "SizeInternal.h"
 
 #include "util/convert.h"
 #include <qevent.h>
 
 using namespace ::Object;
 using namespace ::Common;
-using namespace ::Size2;
+using namespace ::Size;
 using namespace ::Enums;
 using namespace ::Widget;
 using namespace ::Layout;
@@ -78,7 +78,7 @@ namespace MainWindow
         return THIS->documentMode();
     }
 
-    Size2::OwnedRef Handle_iconSize(HandleRef _this) {
+    Size::OwnedRef Handle_iconSize(HandleRef _this) {
         return SIZE_HEAP_NEW(THIS->iconSize());
     }
 
@@ -154,7 +154,7 @@ namespace MainWindow
         THIS->setDocumentMode(enabled);
     }
 
-    void Handle_setIconSize(HandleRef _this, Size2::HandleRef iconSize) {
+    void Handle_setIconSize(HandleRef _this, Size::HandleRef iconSize) {
         THIS->setIconSize(QSIZE_VALUE(iconSize));
     }
 
@@ -244,7 +244,7 @@ namespace MainWindow
     SignalConnectionRef Handle_connect_IconSizeChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QMainWindow::iconSizeChanged, [handler](const QSize& size) {
             // TODO: ConstHandle
-            handler->iconSizeChanged((Size2::HandleRef)&size);
+            handler->iconSizeChanged((Size::HandleRef)&size);
         });
         return new __SignalConnection { connection };
     }
@@ -289,7 +289,7 @@ namespace MainWindow
             if (mask & Resized) {
                 auto old = event->oldSize();
                 auto current = event->size();
-                methods->resized(reinterpret_cast<Size2::HandleRef>(&old), reinterpret_cast<Size2::HandleRef>(&current));
+                methods->resized(reinterpret_cast<Size::HandleRef>(&old), reinterpret_cast<Size::HandleRef>(&current));
                 event->accept();
             } else {
                 QMainWindow::resizeEvent(event);

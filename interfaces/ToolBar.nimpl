@@ -2,7 +2,7 @@ module ToolBar;
 
 import Object;
 import Common;
-import Size2;
+import Size;
 import Point;
 import Enums;
 import Widget;
@@ -11,7 +11,7 @@ import Action;
 interface SignalHandler extends Widget.SignalHandler {
     void actionTriggered(Action.Handle action);
     void allowedAreasChanged(ToolBarAreas allowed);
-    void iconSizeChanged(Size2.Handle size);
+    void iconSizeChanged(Size.Handle size);
     void movableChanged(bool movable);
     void orientationChanged(Orientation value);
     void toolButtonStyleChanged(ToolButtonStyle style);
@@ -26,7 +26,7 @@ opaque Handle extends Widget.Handle {
     Action.Handle addWidget(Widget.Handle widget);
     ToolBarAreas allowedAreas();
     void clear();
-    Size2.Owned iconSize();
+    Size.Owned iconSize();
     Action.Handle insertSeparator(Action.Handle before);
     Action.Handle insertWidget(Action.Handle before, Widget.Handle widget);
     bool isAreaAllowed(ToolBarArea area);
@@ -42,7 +42,7 @@ opaque Handle extends Widget.Handle {
     ToolButtonStyle getToolButtonStyle();
     Widget.Handle widgetForAction(Action.Handle action);
     
-    void setIconSize(Size2.Handle iconSize);
+    void setIconSize(Size.Handle iconSize);
     void setToolButtonStyle(ToolButtonStyle toolButtonStyle);
 
     // signals ============================

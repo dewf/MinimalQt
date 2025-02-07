@@ -3,11 +3,11 @@
 
 #include "ModelIndexInternal.h"
 #include "VariantInternal.h"
-#include "Size2Internal.h"
+#include "SizeInternal.h"
 
 using namespace ::ModelIndex;
 using namespace ::Variant;
-using namespace ::Size2;
+using namespace ::Size;
 
 namespace SafeReturn
 {
@@ -19,7 +19,7 @@ namespace SafeReturn
         _this->result = QVARIANT_VALUE(value);
     }
 
-    void SizeReturn_setResult(SizeReturnRef _this, Size2::HandleRef value) {
+    void SizeReturn_setResult(SizeReturnRef _this, Size::HandleRef value) {
         _this->result = QSIZE_VALUE(value);
     }
 }

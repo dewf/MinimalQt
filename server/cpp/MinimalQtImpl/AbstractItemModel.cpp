@@ -6,13 +6,13 @@
 #include "ModelIndexInternal.h"
 #include "VariantInternal.h"
 #include "SafeReturnInternal.h"
-#include "Size2Internal.h"
+#include "SizeInternal.h"
 
 #include "util/convert.h"
 
 using namespace ::Object;
 using namespace ::Common;
-using namespace ::Size2;
+using namespace ::Size;
 using namespace ::Enums;
 using namespace ::ModelIndex;
 using namespace ::PersistentModelIndex;
@@ -190,7 +190,7 @@ namespace AbstractItemModel
         THIS->sort(column, static_cast<Qt::SortOrder>(order2));
     }
 
-    Size2::OwnedRef Handle_span(HandleRef _this, ModelIndex::HandleRef index) {
+    Size::OwnedRef Handle_span(HandleRef _this, ModelIndex::HandleRef index) {
         return SIZE_HEAP_NEW(THIS->span(QMODELINDEX_VALUE(index)));
     }
 

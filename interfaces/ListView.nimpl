@@ -2,7 +2,7 @@ module ListView;
 
 import Object;
 import Common;
-import Size2;
+import Size;
 import Enums;
 import Icon;
 import AbstractListModel;
@@ -45,7 +45,7 @@ opaque Handle extends AbstractItemView.Handle {
     int batchSize();
     void clearPropertyFlags();
     Flow getFlow();
-    Size2.Owned gridSize();
+    Size.Owned gridSize();
     bool isRowHidden(int row);
     bool isSelectionRectVisible();
     bool isWrapping();
@@ -56,7 +56,7 @@ opaque Handle extends AbstractItemView.Handle {
     ResizeMode getResizeMode();
     void setBatchSize(int batchSize);
     void setFlow(Flow flow);
-    void setGridSize(Size2.Handle size);
+    void setGridSize(Size.Handle size);
     void setItemAlignment(Alignment alignment);
     void setLayoutMode(LayoutMode mode);
     void setModelColumn(int column);

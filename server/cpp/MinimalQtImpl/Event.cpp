@@ -3,7 +3,7 @@
 
 #include "PointFInternal.h"
 #include "PointInternal.h"
-#include "Size2Internal.h"
+#include "SizeInternal.h"
 #include "MimeDataInternal.h"
 #include "ObjectInternal.h"
 #include "RegionInternal.h"
@@ -15,7 +15,7 @@ using namespace ::Logging;
 
 using namespace ::Object;
 using namespace ::Common;
-using namespace ::Size2;
+using namespace ::Size;
 using namespace ::Point;
 using namespace ::PointF;
 using namespace ::Enums;
@@ -62,11 +62,11 @@ namespace Event
     // resize event ========================================
 #define RESIZE_THIS (reinterpret_cast<QResizeEvent*>(_this))
 
-    Size2::OwnedRef ResizeEvent_oldSize(ResizeEventRef _this) {
+    Size::OwnedRef ResizeEvent_oldSize(ResizeEventRef _this) {
         return SIZE_HEAP_NEW(RESIZE_THIS->oldSize());
     }
 
-    Size2::OwnedRef ResizeEvent_size(ResizeEventRef _this) {
+    Size::OwnedRef ResizeEvent_size(ResizeEventRef _this) {
         return SIZE_HEAP_NEW(RESIZE_THIS->size());
     }
 

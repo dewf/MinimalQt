@@ -2,7 +2,7 @@ module AbstractItemModel;
 
 import Object;
 import Common;
-import Size2;
+import Size;
 import Enums;
 import ModelIndex;
 import PersistentModelIndex;
@@ -93,7 +93,7 @@ opaque Handle extends Object.Handle {
     bool setItemData(ModelIndex.Handle index, Map<int, Variant.Handle> roles);
     ModelIndex.Owned sibling(int row, int column, ModelIndex.Handle index);
     void sort(int column, Option<SortOrder> order);
-    Size2.Owned span(ModelIndex.Handle index);
+    Size.Owned span(ModelIndex.Handle index);
     DropActions supportedDragActions();
     DropActions supportedDropActions();
 

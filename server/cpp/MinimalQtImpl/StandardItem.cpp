@@ -6,7 +6,7 @@
 #include "IconInternal.h"
 #include "VariantInternal.h"
 #include "ModelIndexInternal.h"
-#include "Size2Internal.h"
+#include "SizeInternal.h"
 
 #include "util/convert.h"
 
@@ -17,7 +17,7 @@ using namespace ::ModelIndex;
 using namespace ::Brush;
 using namespace ::Font;
 using namespace ::Common;
-using namespace ::Size2;
+using namespace ::Size;
 
 #define THIS ((QStandardItem*)_this)
 #define AS_ITEM(x) (reinterpret_cast<QStandardItem*>(x))
@@ -274,7 +274,7 @@ namespace StandardItem
         THIS->setSelectable(selectable);
     }
 
-    void Handle_setSizeHint(HandleRef _this, Size2::HandleRef size) {
+    void Handle_setSizeHint(HandleRef _this, Size::HandleRef size) {
         THIS->setSizeHint(QSIZE_VALUE(size));
     }
 
@@ -302,7 +302,7 @@ namespace StandardItem
         THIS->setWhatsThis(QString::fromStdString(whatsThis));
     }
 
-    Size2::OwnedRef Handle_sizeHint(HandleRef _this) {
+    Size::OwnedRef Handle_sizeHint(HandleRef _this) {
         return SIZE_HEAP_NEW(THIS->sizeHint());
     }
 

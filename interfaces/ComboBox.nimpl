@@ -2,7 +2,7 @@ module ComboBox;
 
 import Object;
 import Common;
-import Size2;
+import Size;
 import Enums;
 import Widget;
 import Variant;
@@ -55,7 +55,7 @@ opaque Handle extends Widget.Handle {
     int findText(string text, MatchFlags flags_ = MatchExactly | MatchCaseSensitive);
     bool hasFrame();
     void hidePopup();
-    Size2.Owned iconSize();
+    Size.Owned iconSize();
     void insertItem(int index, string text, Option<Variant.Handle> userData);
     void insertItem(int index, Icon.Handle icon, string text, Option<Variant.Handle> userData);
     void insertItems(int index, Array<string> list);
@@ -79,7 +79,7 @@ opaque Handle extends Widget.Handle {
     void setDuplicatesEnabled(bool enable);
     void setEditable(bool editable);
     void setFrame(bool hasFrame);
-    void setIconSize(Size2.Handle size);
+    void setIconSize(Size.Handle size);
     void setInsertPolicy(InsertPolicy policy);
     void setItemData(int index, Variant.Handle value, ItemDataRole role = UserRole); // should be int
     void setItemDelegate(AbstractItemDelegate.Handle delegate_);

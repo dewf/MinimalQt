@@ -3,7 +3,7 @@ module AbstractItemDelegate;
 import Object;
 import Widget;
 import Common;
-import Size2;
+import Size;
 import ModelIndex;
 import StyleOptionViewItem;
 import Event;
@@ -35,7 +35,7 @@ opaque Handle extends Object.Handle {
     void paint(Painter.Handle painter, StyleOptionViewItem.Handle option, ModelIndex.Handle index);
     void setEditorData(Widget.Handle editor, ModelIndex.Handle index);
     void setModelData(Widget.Handle editor, AbstractItemModel.Handle model, ModelIndex.Handle index);
-    Size2.Owned sizeHint(StyleOptionViewItem.Handle option, ModelIndex.Handle index);
+    Size.Owned sizeHint(StyleOptionViewItem.Handle option, ModelIndex.Handle index);
     void updateEditorGeometry(Widget.Handle editor, StyleOptionViewItem.Handle option, ModelIndex.Handle index);
 
     // signals ============================

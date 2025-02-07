@@ -8,13 +8,13 @@
 #include "ModelIndexInternal.h"
 #include "PointInternal.h"
 #include "WidgetInternal.h"
-#include "Size2Internal.h"
+#include "SizeInternal.h"
 
 #include "util/convert.h"
 
 using namespace ::Object;
 using namespace ::Common;
-using namespace ::Size2;
+using namespace ::Size;
 using namespace ::Point;
 using namespace ::Enums;
 using namespace ::Icon;
@@ -73,7 +73,7 @@ namespace AbstractItemView
         return static_cast<ScrollMode>(THIS->horizontalScrollMode());
     }
 
-    Size2::OwnedRef Handle_iconSize(HandleRef _this) {
+    Size::OwnedRef Handle_iconSize(HandleRef _this) {
         return SIZE_HEAP_NEW(THIS->iconSize());
     }
 
@@ -185,7 +185,7 @@ namespace AbstractItemView
         THIS->setHorizontalScrollMode(static_cast<QAbstractItemView::ScrollMode>(mode));
     }
 
-    void Handle_setIconSize(HandleRef _this, Size2::HandleRef size) {
+    void Handle_setIconSize(HandleRef _this, Size::HandleRef size) {
         THIS->setIconSize(QSIZE_VALUE(size));
     }
 
@@ -241,7 +241,7 @@ namespace AbstractItemView
         return THIS->sizeHintForColumn(column);
     }
 
-    Size2::OwnedRef Handle_sizeHintForIndex(HandleRef _this, ModelIndex::HandleRef index) {
+    Size::OwnedRef Handle_sizeHintForIndex(HandleRef _this, ModelIndex::HandleRef index) {
         return SIZE_HEAP_NEW(THIS->sizeHintForIndex(QMODELINDEX_VALUE(index)));
     }
 
@@ -336,7 +336,7 @@ namespace AbstractItemView
     SignalConnectionRef Handle_connect_IconSizeChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QAbstractItemView::iconSizeChanged, [handler](const QSize &size) {
             // TODO: ConstHandle
-            handler->iconSizeChanged((Size2::HandleRef)&size);
+            handler->iconSizeChanged((Size::HandleRef)&size);
         });
         return new __SignalConnection { connection };
     }

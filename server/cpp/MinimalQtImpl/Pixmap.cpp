@@ -5,13 +5,13 @@
 #include "ImageInternal.h"
 #include "RegionInternal.h"
 #include "TransformInternal.h"
-#include "Size2Internal.h"
+#include "SizeInternal.h"
 
 #include "util/convert.h"
 
 using namespace ::PaintDevice;
 using namespace ::Common;
-using namespace ::Size2;
+using namespace ::Size;
 using namespace ::Enums;
 using namespace ::Image;
 using namespace ::Color;
@@ -119,7 +119,7 @@ namespace Pixmap
         return THIS->save(QString::fromStdString(fileName),qFormat, quality);
     }
 
-    OwnedRef Handle_scaled(HandleRef _this, Size2::HandleRef size, AspectRatioMode aspectRatioMode /* AspectRatioMode::IgnoreAspectRatio */, TransformationMode transformMode /* TransformationMode::FastTransformation */) {
+    OwnedRef Handle_scaled(HandleRef _this, Size::HandleRef size, AspectRatioMode aspectRatioMode /* AspectRatioMode::IgnoreAspectRatio */, TransformationMode transformMode /* TransformationMode::FastTransformation */) {
         return PIXMAP_HEAP_NEW(THIS->scaled(QSIZE_VALUE(size), static_cast<Qt::AspectRatioMode>(aspectRatioMode), static_cast<Qt::TransformationMode>(transformMode)));
     }
 
@@ -151,7 +151,7 @@ namespace Pixmap
         THIS->setDevicePixelRatio(scaleFactor);
     }
 
-    Size2::OwnedRef Handle_size(HandleRef _this) {
+    Size::OwnedRef Handle_size(HandleRef _this) {
         return SIZE_HEAP_NEW(THIS->size());
     }
 
@@ -192,7 +192,7 @@ namespace Pixmap
         return PIXMAP_HEAP_NEW(QString::fromStdString(filename), ccFormat, static_cast<Qt::ImageConversionFlags>(flags_.value));
     }
 
-    OwnedRef create(Size2::HandleRef size) {
+    OwnedRef create(Size::HandleRef size) {
         return PIXMAP_HEAP_NEW(QSIZE_VALUE(size));
     }
 

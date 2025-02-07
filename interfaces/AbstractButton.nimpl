@@ -2,7 +2,7 @@ module AbstractButton;
 
 import Object;
 import Common;
-import Size2;
+import Size;
 import KeySequence;
 import Widget;
 import Icon;
@@ -24,7 +24,7 @@ opaque Handle extends Widget.Handle {
     // QButtonGroup * group() const
 
     Icon.Owned icon();
-    Size2.Owned iconSize();
+    Size.Owned iconSize();
     bool isCheckable();
     bool isChecked();
     bool isDown();
@@ -43,7 +43,7 @@ opaque Handle extends Widget.Handle {
     void animateClick();
     void click();
     void setChecked(bool state);
-    void setIconSize(Size2.Handle size);
+    void setIconSize(Size.Handle size);
     void toggle();
 
     // signals ============================

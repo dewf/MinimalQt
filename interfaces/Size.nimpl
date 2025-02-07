@@ -1,4 +1,4 @@
-module Size2;
+module Size;
 
 import Common;
 import Enums;

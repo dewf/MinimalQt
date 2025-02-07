@@ -2,7 +2,7 @@ module SafeReturn;
 
 import ModelIndex;
 import Variant;
-import Size2;
+import Size;
 
 @nodispose
 opaque ModelIndexReturn {
@@ -16,5 +16,5 @@ opaque VariantReturn {
 
 @nodispose
 opaque SizeReturn {
-    void setResult(Size2.Handle value);
+    void setResult(Size.Handle value);
 }

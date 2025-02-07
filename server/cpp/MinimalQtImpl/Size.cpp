@@ -1,5 +1,5 @@
-#include "generated/Size2.h"
-#include "Size2Internal.h"
+#include "generated/Size.h"
+#include "SizeInternal.h"
 
 #include "util/convert.h"
 
@@ -8,7 +8,7 @@ using namespace ::Enums;
 
 #define THIS (AS_QSIZE_PTR(_this))
 
-namespace Size2
+namespace Size
 {
     OwnedRef Handle_boundedTo(HandleRef _this, HandleRef otherSize) {
         return SIZE_HEAP_NEW(THIS->boundedTo(QSIZE_VALUE(otherSize)));

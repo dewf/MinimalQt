@@ -3,13 +3,13 @@
 
 #include "WidgetInternal.h"
 #include "LayoutItemInternal.h"
-#include "Size2Internal.h"
+#include "SizeInternal.h"
 
 #include "util/convert.h"
 
 using namespace ::Object;
 using namespace ::Common;
-using namespace ::Size2;
+using namespace ::Size;
 using namespace ::Enums;
 using namespace ::LayoutItem;
 
@@ -135,7 +135,7 @@ namespace Layout
         THIS->update();
     }
 
-    OwnedRef closestAcceptableSize(WidgetHandleRef widget, Size2::HandleRef size) {
+    OwnedRef closestAcceptableSize(WidgetHandleRef widget, Size::HandleRef size) {
         return SIZE_HEAP_NEW(QLayout::closestAcceptableSize(AS_QWIDGET_PTR(widget), QSIZE_VALUE(size)));
     }
 }
