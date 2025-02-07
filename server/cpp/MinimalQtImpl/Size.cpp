@@ -1,6 +1,8 @@
 #include "generated/Size.h"
 #include "SizeInternal.h"
 
+#include "SizeF2Internal.h"
+
 #include "util/convert.h"
 
 using namespace ::Common;
@@ -70,8 +72,9 @@ namespace Size
         return SIZE_HEAP_NEW(THIS->shrunkBy(toQMargins(margins)));
     }
 
-    SizeF Handle_toSizeF(HandleRef _this) {
-        return toSizeF(THIS->toSizeF());
+    SizeF_OwnedRef Handle_toSizeF(HandleRef _this) {
+        const auto result = SIZEF_HEAP_NEW(THIS->toSizeF());
+        return reinterpret_cast<SizeF_OwnedRef>(result); // fwdopaque cast
     }
 
     void Handle_transpose(HandleRef _this) {

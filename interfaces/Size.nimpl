@@ -3,6 +3,8 @@ module Size;
 import Common;
 import Enums;
 
+fwdopaque SizeF_Owned = SizeF2.Owned;
+
 @nodispose
 opaque Handle {
 
@@ -29,7 +31,7 @@ opaque Handle {
 
     // CGSize toCGSize() const
 
-    SizeF toSizeF();
+    SizeF_Owned toSizeF();
     void transpose();
     Owned transposed();
     int width();

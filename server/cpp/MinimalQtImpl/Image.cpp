@@ -5,12 +5,14 @@
 #include "PointInternal.h"
 #include "TransformInternal.h"
 #include "SizeInternal.h"
+#include "SizeF2Internal.h"
 
 #include "util/convert.h"
 
 using namespace ::PaintDevice;
 using namespace ::Common;
 using namespace ::Size;
+using namespace ::SizeF2;
 using namespace ::Point;
 using namespace ::Enums;
 using namespace ::Color;
@@ -101,8 +103,8 @@ namespace Image
         return THIS->depth();
     }
 
-    SizeF Handle_deviceIndependentSize(HandleRef _this) {
-        return toSizeF(THIS->deviceIndependentSize());
+    SizeF2::OwnedRef Handle_deviceIndependentSize(HandleRef _this) {
+        return SIZEF_HEAP_NEW(THIS->deviceIndependentSize());
     }
 
     double Handle_devicePixelRatio(HandleRef _this) {

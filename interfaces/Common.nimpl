@@ -1,9 +1,6 @@
 module Common;
 
-struct SizeF {
-    double width;
-    double height;
-}
+typedef uint32 Rgb;
 
 struct Rect {
     int x;
@@ -18,8 +15,6 @@ struct RectF {
     double width;
     double height;
 }
-
-typedef uint32 Rgb;
 
 struct Margins {
     int left;

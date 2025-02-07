@@ -94,10 +94,6 @@ inline Margins toMargins(const QMargins& qm) {
     return Margins { qm.left(), qm.top(), qm.right(), qm.bottom() };
 }
 
-inline SizeF toSizeF(const QSizeF& sz) {
-    return { sz.width(), sz.height() };
-}
-
 inline Rect toRect(const QRect& qRect) {
     return { qRect.left(), qRect.top(), qRect.width(), qRect.height() };
 }

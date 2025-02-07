@@ -6,6 +6,7 @@
 #include "PointInternal.h"
 #include "TransformInternal.h"
 #include "SizeInternal.h"
+#include "SizeF2Internal.h"
 
 #include "util/convert.h"
 
@@ -13,6 +14,7 @@ using namespace ::Object;
 using namespace ::Common;
 using namespace ::Point;
 using namespace ::Size;
+using namespace ::SizeF2;
 using namespace ::Enums;
 using namespace ::Pixmap;
 using namespace ::Transform;
@@ -113,8 +115,8 @@ namespace Screen
         return THIS->physicalDotsPerInchY();
     }
 
-    SizeF Handle_physicalSize(HandleRef _this) {
-        return toSizeF(THIS->physicalSize());
+    SizeF2::OwnedRef Handle_physicalSize(HandleRef _this) {
+        return SIZEF_HEAP_NEW(THIS->physicalSize());
     }
 
     ScreenOrientation Handle_primaryOrientation(HandleRef _this) {
@@ -190,7 +192,8 @@ namespace Screen
 
     SignalConnectionRef Handle_connect_PhysicalSizeChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QScreen::physicalSizeChanged, [handler](const QSizeF &size) {
-            handler->physicalSizeChanged(toSizeF(size));
+            // TODO: ConstHandle or whatever
+            handler->physicalSizeChanged((SizeF2::HandleRef)&size);
         });
         return new __SignalConnection { connection };
     }

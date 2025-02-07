@@ -2,6 +2,7 @@ module Pixmap;
 import PaintDevice;
 import Common;
 import Size;
+import SizeF2;
 import Enums;
 import Image;
 import Color;
@@ -26,7 +27,7 @@ opaque Handle {         // we don't directly inherit from PaintDevice, because t
 
     int depth();
     void detach();
-    SizeF deviceIndependentSize();
+    SizeF2.Owned deviceIndependentSize();
     double devicePixelRatio();
     void fill(Option<Color.Handle> color);
     bool hasAlpha();
