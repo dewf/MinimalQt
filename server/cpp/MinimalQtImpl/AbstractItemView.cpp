@@ -8,11 +8,13 @@
 #include "ModelIndexInternal.h"
 #include "PointInternal.h"
 #include "WidgetInternal.h"
+#include "Size2Internal.h"
 
 #include "util/convert.h"
 
 using namespace ::Object;
 using namespace ::Common;
+using namespace ::Size2;
 using namespace ::Point;
 using namespace ::Enums;
 using namespace ::Icon;
@@ -71,8 +73,8 @@ namespace AbstractItemView
         return static_cast<ScrollMode>(THIS->horizontalScrollMode());
     }
 
-    Size Handle_iconSize(HandleRef _this) {
-        return toSize(THIS->iconSize());
+    Size2::OwnedRef Handle_iconSize(HandleRef _this) {
+        return SIZE_HEAP_NEW(THIS->iconSize());
     }
 
     ModelIndex::OwnedRef Handle_indexAt(HandleRef _this, Point::HandleRef point) {
@@ -183,8 +185,8 @@ namespace AbstractItemView
         THIS->setHorizontalScrollMode(static_cast<QAbstractItemView::ScrollMode>(mode));
     }
 
-    void Handle_setIconSize(HandleRef _this, Size size) {
-        THIS->setIconSize(toQSize(size));
+    void Handle_setIconSize(HandleRef _this, Size2::HandleRef size) {
+        THIS->setIconSize(QSIZE_VALUE(size));
     }
 
     void Handle_setIndexWidget(HandleRef _this, ModelIndex::HandleRef index, Widget::HandleRef widget) {
@@ -239,8 +241,8 @@ namespace AbstractItemView
         return THIS->sizeHintForColumn(column);
     }
 
-    Size Handle_sizeHintForIndex(HandleRef _this, ModelIndex::HandleRef index) {
-        return toSize(THIS->sizeHintForIndex(QMODELINDEX_VALUE(index)));
+    Size2::OwnedRef Handle_sizeHintForIndex(HandleRef _this, ModelIndex::HandleRef index) {
+        return SIZE_HEAP_NEW(THIS->sizeHintForIndex(QMODELINDEX_VALUE(index)));
     }
 
     int32_t Handle_sizeHintForRow(HandleRef _this, int32_t row) {
@@ -333,7 +335,8 @@ namespace AbstractItemView
 
     SignalConnectionRef Handle_connect_IconSizeChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QAbstractItemView::iconSizeChanged, [handler](const QSize &size) {
-            handler->iconSizeChanged(toSize(size));
+            // TODO: ConstHandle
+            handler->iconSizeChanged((Size2::HandleRef)&size);
         });
         return new __SignalConnection { connection };
     }

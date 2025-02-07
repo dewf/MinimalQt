@@ -2,6 +2,7 @@ module TabBar;
 
 import Object;
 import Common;
+import Size2;
 import Point;
 import Icon;
 import Widget;
@@ -52,7 +53,7 @@ opaque Handle extends Widget.Handle {
     bool drawBase();
     TextElideMode elideMode();
     bool expanding();
-    Size iconSize();
+    Size2.Owned iconSize();
     int insertTab(int index, string text);
     int insertTab(int index, Icon.Handle icon, string text);
     bool isMovable();
@@ -68,7 +69,7 @@ opaque Handle extends Widget.Handle {
     void setDrawBase(bool drawTheBase);
     void setElideMode(TextElideMode mode);
     void setExpanding(bool enabled);
-    void setIconSize(Size size);
+    void setIconSize(Size2.Handle size);
     void setMovable(bool movable);
     void setSelectionBehaviorOnRemove(SelectionBehavior behavior);
     void setShape(Shape shape);

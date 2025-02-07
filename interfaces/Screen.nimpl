@@ -3,6 +3,7 @@ module Screen;
 import Object;
 import Common;
 import Point;
+import Size2;
 import Enums;
 import Pixmap;
 import Transform;
@@ -23,9 +24,9 @@ interface SignalHandler extends Object.SignalHandler {
 opaque Handle extends Object.Handle {
     int angleBetween(ScreenOrientation a, ScreenOrientation b);
     Rect availableGeometry();
-    Size availableSize();
+    Size2.Owned availableSize();
     Rect availableVirtualGeometry();
-    Size availableVirtualSize();
+    Size2.Owned availableVirtualSize();
     int depth();
     double devicePixelRatio();
     Rect geometry();
@@ -54,12 +55,12 @@ opaque Handle extends Object.Handle {
     ScreenOrientation primaryOrientation();
     double refreshRate();
     string serialNumber();
-    Size size();
+    Size2.Owned size();
     Transform.Owned transformBetween(ScreenOrientation a, ScreenOrientation b, Rect target);
     Rect virtualGeometry();
     Handle virtualSiblingAt(Point.Handle point);
     Array<Handle> virtualSiblings();
-    Size virtualSize();
+    Size2.Owned virtualSize();
 
     SignalConnection connect_AvailableGeometryChanged(SignalHandler handler);
     SignalConnection connect_GeometryChanged(SignalHandler handler);

@@ -5,11 +5,13 @@
 #include "ImageInternal.h"
 #include "RegionInternal.h"
 #include "TransformInternal.h"
+#include "Size2Internal.h"
 
 #include "util/convert.h"
 
 using namespace ::PaintDevice;
 using namespace ::Common;
+using namespace ::Size2;
 using namespace ::Enums;
 using namespace ::Image;
 using namespace ::Color;
@@ -117,8 +119,8 @@ namespace Pixmap
         return THIS->save(QString::fromStdString(fileName),qFormat, quality);
     }
 
-    OwnedRef Handle_scaled(HandleRef _this, Size size, AspectRatioMode aspectRatioMode /* AspectRatioMode::IgnoreAspectRatio */, TransformationMode transformMode /* TransformationMode::FastTransformation */) {
-        return PIXMAP_HEAP_NEW(THIS->scaled(toQSize(size), static_cast<Qt::AspectRatioMode>(aspectRatioMode), static_cast<Qt::TransformationMode>(transformMode)));
+    OwnedRef Handle_scaled(HandleRef _this, Size2::HandleRef size, AspectRatioMode aspectRatioMode /* AspectRatioMode::IgnoreAspectRatio */, TransformationMode transformMode /* TransformationMode::FastTransformation */) {
+        return PIXMAP_HEAP_NEW(THIS->scaled(QSIZE_VALUE(size), static_cast<Qt::AspectRatioMode>(aspectRatioMode), static_cast<Qt::TransformationMode>(transformMode)));
     }
 
     OwnedRef Handle_scaled(HandleRef _this, int32_t width, int32_t height, AspectRatioMode aspectRatioMode /* AspectRatioMode::IgnoreAspectRatio */, TransformationMode transformMode /* TransformationMode::FastTransformation */) {
@@ -149,8 +151,8 @@ namespace Pixmap
         THIS->setDevicePixelRatio(scaleFactor);
     }
 
-    Size Handle_size(HandleRef _this) {
-        return toSize(THIS->size());
+    Size2::OwnedRef Handle_size(HandleRef _this) {
+        return SIZE_HEAP_NEW(THIS->size());
     }
 
     void Handle_swap(HandleRef _this, HandleRef other) {
@@ -190,8 +192,8 @@ namespace Pixmap
         return PIXMAP_HEAP_NEW(QString::fromStdString(filename), ccFormat, static_cast<Qt::ImageConversionFlags>(flags_.value));
     }
 
-    OwnedRef create(Size size) {
-        return PIXMAP_HEAP_NEW(toQSize(size));
+    OwnedRef create(Size2::HandleRef size) {
+        return PIXMAP_HEAP_NEW(QSIZE_VALUE(size));
     }
 
     OwnedRef create(HandleRef other) {

@@ -5,12 +5,14 @@
 #include "ObjectInternal.h"
 #include "ModelIndexInternal.h"
 #include "PainterInternal.h"
+#include "Size2Internal.h"
 #include "StyleOptionViewItemInternal.h"
 #include "WidgetInternal.h"
 
 using namespace ::Object;
 using namespace ::Widget;
 using namespace ::Common;
+using namespace ::Size2;
 using namespace ::ModelIndex;
 using namespace ::StyleOptionViewItem;
 using namespace ::Event;
@@ -51,8 +53,8 @@ namespace AbstractItemDelegate
         THIS->setModelData(AS_QWIDGET_PTR(editor), reinterpret_cast<QAbstractItemModel*>(model), QMODELINDEX_VALUE(index));
     }
 
-    Size Handle_sizeHint(HandleRef _this, StyleOptionViewItem::HandleRef option, ModelIndex::HandleRef index) {
-        return toSize(THIS->sizeHint(QSTYLEOPTIONVIEWITEM_VALUE(option), QMODELINDEX_VALUE(index)));
+    Size2::OwnedRef Handle_sizeHint(HandleRef _this, StyleOptionViewItem::HandleRef option, ModelIndex::HandleRef index) {
+        return SIZE_HEAP_NEW(THIS->sizeHint(QSTYLEOPTIONVIEWITEM_VALUE(option), QMODELINDEX_VALUE(index)));
     }
 
     void Handle_updateEditorGeometry(HandleRef _this, Widget::HandleRef editor, StyleOptionViewItem::HandleRef option, ModelIndex::HandleRef index) {

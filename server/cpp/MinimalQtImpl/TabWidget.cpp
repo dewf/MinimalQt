@@ -4,11 +4,13 @@
 #include "IconInternal.h"
 #include "ObjectInternal.h"
 #include "WidgetInternal.h"
+#include "Size2Internal.h"
 
 #include "util/convert.h"
 
 using namespace ::Object;
 using namespace ::Common;
+using namespace ::Size2;
 using namespace ::Icon;
 using namespace ::Enums;
 using namespace ::Widget;
@@ -54,8 +56,8 @@ namespace TabWidget
         return static_cast<TextElideMode>(THIS->elideMode());
     }
 
-    Size Handle_iconSize(HandleRef _this) {
-        return toSize(THIS->iconSize());
+    Size2::OwnedRef Handle_iconSize(HandleRef _this) {
+        return SIZE_HEAP_NEW(THIS->iconSize());
     }
 
     int32_t Handle_indexOf(HandleRef _this, Widget::HandleRef w) {
@@ -98,8 +100,8 @@ namespace TabWidget
         THIS->setElideMode(static_cast<Qt::TextElideMode>(mode));
     }
 
-    void Handle_setIconSize(HandleRef _this, Size size) {
-        THIS->setIconSize(toQSize(size));
+    void Handle_setIconSize(HandleRef _this, Size2::HandleRef size) {
+        THIS->setIconSize(QSIZE_VALUE(size));
     }
 
     void Handle_setMovable(HandleRef _this, bool state) {

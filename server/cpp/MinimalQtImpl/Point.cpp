@@ -12,7 +12,7 @@ using namespace ::Common;
 namespace Point
 {
     int32_t Handle_hashCode(HandleRef _this) {
-        return qHash(QPOINT_VALUE(_this));
+        return static_cast<int32_t>(qHash(QPOINT_VALUE(_this)));
     }
 
     bool Handle_isNull(HandleRef _this) {

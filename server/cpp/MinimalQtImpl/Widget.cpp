@@ -17,6 +17,8 @@
 #include "VariantInternal.h"
 #include "PointFInternal.h"
 #include "PointInternal.h"
+#include "Size2Internal.h"
+#include "SafeReturnInternal.h"
 
 #include <QPaintEvent>
 
@@ -26,6 +28,7 @@ using namespace ::Object;
 using namespace ::Common;
 using namespace ::Point;
 using namespace ::PointF;
+using namespace ::Size2;
 using namespace ::Layout;
 using namespace ::Painter;
 using namespace ::Icon;
@@ -44,7 +47,7 @@ using namespace ::Variant;
 using namespace ::Event;
 using namespace ::Window;
 using namespace ::Screen;
-
+using namespace ::SafeReturn;
 
 #define THIS (reinterpret_cast<QWidget*>(_this))
 
@@ -113,8 +116,8 @@ namespace Widget
         return THIS->autoFillBackground();
     }
 
-    Size Handle_baseSize(HandleRef _this) {
-        return toSize(THIS->baseSize());
+    Size2::OwnedRef Handle_baseSize(HandleRef _this) {
+        return SIZE_HEAP_NEW(THIS->baseSize());
     }
 
     HandleRef Handle_childAt(HandleRef _this, int32_t x, int32_t y) {
@@ -189,8 +192,8 @@ namespace Widget
         return toRect(THIS->frameGeometry());
     }
 
-    Size Handle_frameSize(HandleRef _this) {
-        return toSize(THIS->frameSize());
+    Size2::OwnedRef Handle_frameSize(HandleRef _this) {
+        return SIZE_HEAP_NEW(THIS->frameSize());
     }
 
     Rect Handle_geometry(HandleRef _this) {
@@ -391,8 +394,8 @@ namespace Widget
         return THIS->maximumHeight();
     }
 
-    Size Handle_maximumSize(HandleRef _this) {
-        return toSize(THIS->maximumSize());
+    Size2::OwnedRef Handle_maximumSize(HandleRef _this) {
+        return SIZE_HEAP_NEW(THIS->maximumSize());
     }
 
     int32_t Handle_maximumWidth(HandleRef _this) {
@@ -403,12 +406,12 @@ namespace Widget
         return THIS->minimumHeight();
     }
 
-    Size Handle_minimumSize(HandleRef _this) {
-        return toSize(THIS->minimumSize());
+    Size2::OwnedRef Handle_minimumSize(HandleRef _this) {
+        return SIZE_HEAP_NEW(THIS->minimumSize());
     }
 
-    Size Handle_minimumSizeHint(HandleRef _this) {
-        return toSize(THIS->minimumSizeHint());
+    Size2::OwnedRef Handle_minimumSizeHint(HandleRef _this) {
+        return SIZE_HEAP_NEW(THIS->minimumSizeHint());
     }
 
     int32_t Handle_minimumWidth(HandleRef _this) {
@@ -499,8 +502,8 @@ namespace Widget
         THIS->repaint(x, y, w, h);
     }
 
-    void Handle_resize(HandleRef _this, Size size) {
-        THIS->resize(toQSize(size));
+    void Handle_resize(HandleRef _this, Size2::HandleRef size) {
+        THIS->resize(QSIZE_VALUE(size));
     }
 
     void Handle_resize(HandleRef _this, int32_t w, int32_t h) {
@@ -550,8 +553,8 @@ namespace Widget
         THIS->setAutoFillBackground(enabled);
     }
 
-    void Handle_setBaseSize(HandleRef _this, Size size) {
-        THIS->setBaseSize(toQSize(size));
+    void Handle_setBaseSize(HandleRef _this, Size2::HandleRef size) {
+        THIS->setBaseSize(QSIZE_VALUE(size));
     }
 
     void Handle_setBaseSize(HandleRef _this, int32_t basew, int32_t baseh) {
@@ -582,8 +585,8 @@ namespace Widget
         THIS->setFixedHeight(h);
     }
 
-    void Handle_setFixedSize(HandleRef _this, Size s) {
-        THIS->setFixedSize(toQSize(s));
+    void Handle_setFixedSize(HandleRef _this, Size2::HandleRef s) {
+        THIS->setFixedSize(QSIZE_VALUE(s));
     }
 
     void Handle_setFixedSize(HandleRef _this, int32_t w, int32_t h) {
@@ -642,8 +645,8 @@ namespace Widget
         THIS->setMaximumHeight(maxh);
     }
 
-    void Handle_setMaximumSize(HandleRef _this, Size size) {
-        THIS->setMaximumSize(toQSize(size));
+    void Handle_setMaximumSize(HandleRef _this, Size2::HandleRef size) {
+        THIS->setMaximumSize(QSIZE_VALUE(size));
     }
 
     void Handle_setMaximumSize(HandleRef _this, int32_t maxw, int32_t maxh) {
@@ -658,8 +661,8 @@ namespace Widget
         THIS->setMinimumHeight(minh);
     }
 
-    void Handle_setMinimumSize(HandleRef _this, Size size) {
-        THIS->setMinimumSize(toQSize(size));
+    void Handle_setMinimumSize(HandleRef _this, Size2::HandleRef size) {
+        THIS->setMinimumSize(QSIZE_VALUE(size));
     }
 
     void Handle_setMinimumSize(HandleRef _this, int32_t minw, int32_t minh) {
@@ -694,8 +697,8 @@ namespace Widget
         THIS->setShortcutEnabled(id, enable);
     }
 
-    void Handle_setSizeIncrement(HandleRef _this, Size size) {
-        THIS->setSizeIncrement(toQSize(size));
+    void Handle_setSizeIncrement(HandleRef _this, Size2::HandleRef size) {
+        THIS->setSizeIncrement(QSIZE_VALUE(size));
     }
 
     void Handle_setSizeIncrement(HandleRef _this, int32_t w, int32_t h) {
@@ -770,16 +773,16 @@ namespace Widget
     //     // only for UI-designed widgets
     // }
 
-    Size Handle_size(HandleRef _this) {
-        return toSize(THIS->size());
+    Size2::OwnedRef Handle_size(HandleRef _this) {
+        return SIZE_HEAP_NEW(THIS->size());
     }
 
-    Size Handle_sizeHint(HandleRef _this) {
-        return toSize(THIS->sizeHint());
+    Size2::OwnedRef Handle_sizeHint(HandleRef _this) {
+        return SIZE_HEAP_NEW(THIS->sizeHint());
     }
 
-    Size Handle_sizeIncrement(HandleRef _this) {
-        return toSize(THIS->sizeIncrement());
+    Size2::OwnedRef Handle_sizeIncrement(HandleRef _this) {
+        return SIZE_HEAP_NEW(THIS->sizeIncrement());
     }
 
     SizePolicy::OwnedRef Handle_sizePolicy(HandleRef _this) {
@@ -1039,7 +1042,9 @@ namespace Widget
     // public virtual overrides:
         [[nodiscard]] QSize sizeHint() const override {
             if (methodMask & SizeHint) {
-                return toQSize(methods->sizeHint());
+                __SizeReturn ret;
+                methods->sizeHint(&ret);
+                return ret.result;
             } else {
                 return QWidget::sizeHint();
             }

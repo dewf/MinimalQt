@@ -1,19 +1,20 @@
 #include "generated/MainWindow.h"
-
-#include <qevent.h>
+#include "MainWindowInternal.h"
 
 #include "ObjectInternal.h"
 #include "DockWidgetInternal.h"
-#include "MainWindowInternal.h"
 #include "MenuBarInternal.h"
 #include "MenuInternal.h"
 #include "StatusBarInternal.h"
 #include "ToolBarInternal.h"
+#include "Size2Internal.h"
 
 #include "util/convert.h"
+#include <qevent.h>
 
 using namespace ::Object;
 using namespace ::Common;
+using namespace ::Size2;
 using namespace ::Enums;
 using namespace ::Widget;
 using namespace ::Layout;
@@ -77,8 +78,8 @@ namespace MainWindow
         return THIS->documentMode();
     }
 
-    Size Handle_iconSize(HandleRef _this) {
-        return toSize(THIS->iconSize());
+    Size2::OwnedRef Handle_iconSize(HandleRef _this) {
+        return SIZE_HEAP_NEW(THIS->iconSize());
     }
 
     void Handle_insertToolBar(HandleRef _this, ToolBar::HandleRef before, ToolBar::HandleRef toolbar) {
@@ -153,8 +154,8 @@ namespace MainWindow
         THIS->setDocumentMode(enabled);
     }
 
-    void Handle_setIconSize(HandleRef _this, Size iconSize) {
-        THIS->setIconSize(toQSize(iconSize));
+    void Handle_setIconSize(HandleRef _this, Size2::HandleRef iconSize) {
+        THIS->setIconSize(QSIZE_VALUE(iconSize));
     }
 
     void Handle_setMenuBar(HandleRef _this, MenuBar::HandleRef menuBar) {
@@ -242,7 +243,8 @@ namespace MainWindow
 
     SignalConnectionRef Handle_connect_IconSizeChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QMainWindow::iconSizeChanged, [handler](const QSize& size) {
-            handler->iconSizeChanged(toSize(size));
+            // TODO: ConstHandle
+            handler->iconSizeChanged((Size2::HandleRef)&size);
         });
         return new __SignalConnection { connection };
     }
@@ -285,7 +287,9 @@ namespace MainWindow
     protected:
         void resizeEvent(QResizeEvent *event) override {
             if (mask & Resized) {
-                methods->resized(toSize(event->oldSize()), toSize(event->size()));
+                auto old = event->oldSize();
+                auto current = event->size();
+                methods->resized(reinterpret_cast<Size2::HandleRef>(&old), reinterpret_cast<Size2::HandleRef>(&current));
                 event->accept();
             } else {
                 QMainWindow::resizeEvent(event);

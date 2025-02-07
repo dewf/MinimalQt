@@ -1,14 +1,16 @@
 #include "generated/Image.h"
+#include "ImageInternal.h"
 
 #include "ColorInternal.h"
-#include "ImageInternal.h"
 #include "PointInternal.h"
 #include "TransformInternal.h"
+#include "Size2Internal.h"
 
 #include "util/convert.h"
 
 using namespace ::PaintDevice;
 using namespace ::Common;
+using namespace ::Size2;
 using namespace ::Point;
 using namespace ::Enums;
 using namespace ::Color;
@@ -223,8 +225,8 @@ namespace Image
         return THIS->save(QString::fromStdString(fileName), ccFormat, quality);
     }
 
-    OwnedRef Handle_scaled(HandleRef _this, Size size, AspectRatioMode aspectRadioMode /* AspectRatioMode::IgnoreAspectRatio */, TransformationMode transformMode /* TransformationMode::FastTransformation */) {
-        return IMAGE_HEAP_NEW(THIS->scaled(toQSize(size), static_cast<Qt::AspectRatioMode>(aspectRadioMode), static_cast<Qt::TransformationMode>(transformMode)));
+    OwnedRef Handle_scaled(HandleRef _this, Size2::HandleRef size, AspectRatioMode aspectRadioMode /* AspectRatioMode::IgnoreAspectRatio */, TransformationMode transformMode /* TransformationMode::FastTransformation */) {
+        return IMAGE_HEAP_NEW(THIS->scaled(QSIZE_VALUE(size), static_cast<Qt::AspectRatioMode>(aspectRadioMode), static_cast<Qt::TransformationMode>(transformMode)));
     }
 
     OwnedRef Handle_scaled(HandleRef _this, int32_t width, int32_t height, AspectRatioMode aspectRadioMode /* AspectRatioMode::IgnoreAspectRatio */, TransformationMode transformMode /* TransformationMode::FastTransformation */) {
@@ -299,8 +301,8 @@ namespace Image
         THIS->setText(QString::fromStdString(key), QString::fromStdString(text));
     }
 
-    Size Handle_size(HandleRef _this) {
-        return toSize(THIS->size());
+    Size2::OwnedRef Handle_size(HandleRef _this) {
+        return SIZE_HEAP_NEW(THIS->size());
     }
 
     size_t Handle_sizeInBytes(HandleRef _this) {
@@ -348,8 +350,8 @@ namespace Image
         return IMAGE_HEAP_NEW(reinterpret_cast<const char *>(xpm.data()));
     }
 
-    OwnedRef create(Size size, Format format) {
-        return IMAGE_HEAP_NEW(toQSize(size), static_cast<QImage::Format>(format));
+    OwnedRef create(Size2::HandleRef size, Format format) {
+        return IMAGE_HEAP_NEW(QSIZE_VALUE(size), static_cast<QImage::Format>(format));
     }
 
     OwnedRef create(const std::string& filename, const std::optional<std::string>& format) {

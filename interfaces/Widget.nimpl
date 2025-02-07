@@ -4,6 +4,7 @@ import Object;
 import Common;
 import Point;
 import PointF;
+import Size2;
 import Layout;
 import Painter;
 import Icon;
@@ -22,6 +23,7 @@ import Variant;
 import Event;
 import Window;
 import Screen;
+import SafeReturn;
 
 int WIDGET_SIZE_MAX;   // pass-through of QWIDGETSIZE_MAX
 
@@ -70,7 +72,7 @@ opaque Handle extends Object.Handle {
     // QPalette::ColorRole backgroundRole() const
     // QBackingStore * backingStore() const
 
-    Size baseSize();
+    Size2.Owned baseSize();
     Handle childAt(int x, int y);
     Handle childAt(Point.Handle p);
     Handle childAt(PointF.Handle p);
@@ -96,7 +98,7 @@ opaque Handle extends Object.Handle {
     // QPalette::ColorRole foregroundRole() const
 
     Rect frameGeometry();
-    Size frameSize();
+    Size2.Owned frameSize();
     Rect geometry();
     Pixmap.Owned grab(Option<Rect> rectangle); // = QRect(QPoint(0, 0), QSize(-1, -1))
     void grabGesture(GestureType gesture, GestureFlags flags_ = 0);
@@ -153,11 +155,11 @@ opaque Handle extends Object.Handle {
     Point.Owned mapToParent(Point.Handle pos);
     Region.Owned mask();
     int maximumHeight();
-    Size maximumSize();
+    Size2.Owned maximumSize();
     int maximumWidth();
     int minimumHeight();
-    Size minimumSize();
-    Size minimumSizeHint();
+    Size2.Owned minimumSize();
+    Size2.Owned minimumSizeHint();
     int minimumWidth();
     void move(Point.Handle p);
     void move(int x, int y);
@@ -181,7 +183,7 @@ opaque Handle extends Object.Handle {
     void repaint(Rect rect);
     void repaint(Region.Handle rgn);
     void repaint(int x, int y, int w, int h);
-    void resize(Size size);
+    void resize(Size2.Handle size);
     void resize(int w, int h);
     bool restoreGeometry(Array<byte> geometry);
     Array<byte> saveGeometry();
@@ -196,7 +198,7 @@ opaque Handle extends Object.Handle {
 
     // void setBackgroundRole(QPalette::ColorRole role)
 
-    void setBaseSize(Size size);
+    void setBaseSize(Size2.Handle size);
     void setBaseSize(int basew, int baseh);
     void setContentsMargins(int left, int top, int right, int bottom);
     void setContentsMargins(Margins margins);
@@ -207,7 +209,7 @@ opaque Handle extends Object.Handle {
     // (only for embedded linux)
 
     void setFixedHeight(int h);
-    void setFixedSize(Size s);
+    void setFixedSize(Size2.Handle s);
     void setFixedSize(int w, int h);
     void setFixedWidth(int w);
     void setFocus(FocusReason reason);
@@ -229,11 +231,11 @@ opaque Handle extends Object.Handle {
 
     void setMask(Region.Handle region);
     void setMaximumHeight(int maxh);
-    void setMaximumSize(Size size);
+    void setMaximumSize(Size2.Handle size);
     void setMaximumSize(int maxw, int maxh);
     void setMaximumWidth(int maxw);
     void setMinimumHeight(int minh);
-    void setMinimumSize(Size size);
+    void setMinimumSize(Size2.Handle size);
     void setMinimumSize(int minw, int minh);
     void setMinimumWidth(int minw);
     void setMouseTracking(bool enable);
@@ -245,7 +247,7 @@ opaque Handle extends Object.Handle {
     void setScreen(Screen.Handle screen);
     void setShortcutAutoRepeat(int id, bool enable = true);
     void setShortcutEnabled(int id, bool enable = true);
-    void setSizeIncrement(Size size);
+    void setSizeIncrement(Size2.Handle size);
     void setSizeIncrement(int w, int h);
     void setSizePolicy(SizePolicy.Handle policy);
     void setSizePolicy(SizePolicy.Policy horizontal, SizePolicy.Policy vertical);
@@ -270,9 +272,9 @@ opaque Handle extends Object.Handle {
     // void setupUi(QWidget *widget)
     // only for Designer-created things
 
-    Size size();
-    Size sizeHint();
-    Size sizeIncrement();
+    Size2.Owned size();
+    Size2.Owned sizeHint();
+    Size2.Owned sizeIncrement();
     SizePolicy.Owned sizePolicy();
     void stackUnder(Handle w);
     string statusTip();
@@ -367,7 +369,7 @@ namedbits MethodMask {
 interface DelegateMethods {
 
     // virtual public ===================================
-    Size sizeHint();
+    void sizeHint(SizeReturn ret);
 
     // protected ========================================
 

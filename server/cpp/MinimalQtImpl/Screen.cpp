@@ -5,12 +5,14 @@
 #include "PixmapInternal.h"
 #include "PointInternal.h"
 #include "TransformInternal.h"
+#include "Size2Internal.h"
 
 #include "util/convert.h"
 
 using namespace ::Object;
 using namespace ::Common;
 using namespace ::Point;
+using namespace ::Size2;
 using namespace ::Enums;
 using namespace ::Pixmap;
 using namespace ::Transform;
@@ -27,16 +29,16 @@ namespace Screen
         return toRect(THIS->availableGeometry());
     }
 
-    Size Handle_availableSize(HandleRef _this) {
-        return toSize(THIS->availableSize());
+    Size2::OwnedRef Handle_availableSize(HandleRef _this) {
+        return SIZE_HEAP_NEW(THIS->availableSize());
     }
 
     Rect Handle_availableVirtualGeometry(HandleRef _this) {
         return toRect(THIS->availableVirtualGeometry());
     }
 
-    Size Handle_availableVirtualSize(HandleRef _this) {
-        return toSize(THIS->availableVirtualSize());
+    Size2::OwnedRef Handle_availableVirtualSize(HandleRef _this) {
+        return SIZE_HEAP_NEW(THIS->availableVirtualSize());
     }
 
     int32_t Handle_depth(HandleRef _this) {
@@ -127,8 +129,8 @@ namespace Screen
         return THIS->serialNumber().toStdString();
     }
 
-    Size Handle_size(HandleRef _this) {
-        return toSize(THIS->size());
+    Size2::OwnedRef Handle_size(HandleRef _this) {
+        return SIZE_HEAP_NEW(THIS->size());
     }
 
     Transform::OwnedRef Handle_transformBetween(HandleRef _this, ScreenOrientation a, ScreenOrientation b, Rect target) {
@@ -147,8 +149,8 @@ namespace Screen
         return fromQList<QScreen*,HandleRef>(THIS->virtualSiblings(), [](auto scr) { return reinterpret_cast<HandleRef>(scr); });
     }
 
-    Size Handle_virtualSize(HandleRef _this) {
-        return toSize(THIS->virtualSize());
+    Size2::OwnedRef Handle_virtualSize(HandleRef _this) {
+        return SIZE_HEAP_NEW(THIS->virtualSize());
     }
 
     SignalConnectionRef Handle_connect_AvailableGeometryChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {

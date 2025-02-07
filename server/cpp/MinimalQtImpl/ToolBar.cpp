@@ -5,11 +5,13 @@
 #include "ObjectInternal.h"
 #include "PointInternal.h"
 #include "WidgetInternal.h"
+#include "Size2Internal.h"
 
 #include "util/convert.h"
 
 using namespace ::Object;
 using namespace ::Common;
+using namespace ::Size2;
 using namespace ::Point;
 using namespace ::Enums;
 using namespace ::Widget;
@@ -43,8 +45,8 @@ namespace ToolBar
         THIS->clear();
     }
 
-    Size Handle_iconSize(HandleRef _this) {
-        return toSize(THIS->iconSize());
+    Size2::OwnedRef Handle_iconSize(HandleRef _this) {
+        return SIZE_HEAP_NEW(THIS->iconSize());
     }
 
     Action::HandleRef Handle_insertSeparator(HandleRef _this, Action::HandleRef before) {
@@ -103,8 +105,8 @@ namespace ToolBar
         return reinterpret_cast<Widget::HandleRef>(THIS->widgetForAction(AS_QACTION_PTR(action)));
     }
 
-    void Handle_setIconSize(HandleRef _this, Size iconSize) {
-        THIS->setIconSize(toQSize(iconSize));
+    void Handle_setIconSize(HandleRef _this, Size2::HandleRef iconSize) {
+        THIS->setIconSize(QSIZE_VALUE(iconSize));
     }
 
     void Handle_setToolButtonStyle(HandleRef _this, ToolButtonStyle toolButtonStyle) {
@@ -127,7 +129,8 @@ namespace ToolBar
 
     SignalConnectionRef Handle_connect_IconSizeChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QToolBar::iconSizeChanged, [handler](const QSize& size) {
-            handler->iconSizeChanged(toSize(size));
+            // TODO: ConstHandle
+            handler->iconSizeChanged((Size2::HandleRef)&size);
         });
         return new __SignalConnection { connection };
     }

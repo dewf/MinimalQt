@@ -1,15 +1,17 @@
 #include "generated/AbstractButton.h"
 #include "AbstractButtonInternal.h"
 
-using namespace ::Object;
-using namespace ::Common;
-using namespace ::KeySequence;
-using namespace ::Widget;
-using namespace ::Icon;
-
 #include "ObjectInternal.h"
 #include "IconInternal.h"
 #include "KeySequenceInternal.h"
+#include "Size2Internal.h"
+
+using namespace ::Object;
+using namespace ::Common;
+using namespace ::Size2;
+using namespace ::KeySequence;
+using namespace ::Widget;
+using namespace ::Icon;
 
 #include "util/convert.h"
 
@@ -37,8 +39,8 @@ namespace AbstractButton
         return ICON_HEAP_NEW(THIS->icon());
     }
 
-    Size Handle_iconSize(HandleRef _this) {
-        return toSize(THIS->iconSize());
+    Size2::OwnedRef Handle_iconSize(HandleRef _this) {
+        return SIZE_HEAP_NEW(THIS->iconSize());
     }
 
     bool Handle_isCheckable(HandleRef _this) {
@@ -109,8 +111,8 @@ namespace AbstractButton
         THIS->setChecked(state);
     }
 
-    void Handle_setIconSize(HandleRef _this, Size size) {
-        THIS->setIconSize(toQSize(size));
+    void Handle_setIconSize(HandleRef _this, Size2::HandleRef size) {
+        THIS->setIconSize(QSIZE_VALUE(size));
     }
 
     void Handle_toggle(HandleRef _this) {

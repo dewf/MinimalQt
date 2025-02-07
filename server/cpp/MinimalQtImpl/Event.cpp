@@ -1,19 +1,21 @@
 #include "generated/Event.h"
 #include "EventInternal.h"
 
-#include "LoggingInternal.h"
 #include "PointFInternal.h"
 #include "PointInternal.h"
-using namespace ::Logging;
-
+#include "Size2Internal.h"
 #include "MimeDataInternal.h"
 #include "ObjectInternal.h"
 #include "RegionInternal.h"
+
+#include "LoggingInternal.h"
+using namespace ::Logging;
 
 #include "util/convert.h"
 
 using namespace ::Object;
 using namespace ::Common;
+using namespace ::Size2;
 using namespace ::Point;
 using namespace ::PointF;
 using namespace ::Enums;
@@ -60,12 +62,12 @@ namespace Event
     // resize event ========================================
 #define RESIZE_THIS (reinterpret_cast<QResizeEvent*>(_this))
 
-    Size ResizeEvent_oldSize(ResizeEventRef _this) {
-        return toSize(RESIZE_THIS->oldSize());
+    Size2::OwnedRef ResizeEvent_oldSize(ResizeEventRef _this) {
+        return SIZE_HEAP_NEW(RESIZE_THIS->oldSize());
     }
 
-    Size ResizeEvent_size(ResizeEventRef _this) {
-        return toSize(RESIZE_THIS->size());
+    Size2::OwnedRef ResizeEvent_size(ResizeEventRef _this) {
+        return SIZE_HEAP_NEW(RESIZE_THIS->size());
     }
 
     // help event ==========================================

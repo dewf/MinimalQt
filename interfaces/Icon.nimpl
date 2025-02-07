@@ -2,6 +2,7 @@ module Icon;
 
 import Pixmap;
 import Common;
+import Size2;
 import Painter;
 import Enums;
 
@@ -167,19 +168,19 @@ enum ThemeIcon {
 
 @nodispose
 opaque Handle {
-    Size actualSize(Size size, Mode mode = Normal, State state = Off);
-    void addFile(string fileName, Option<Size> size, Mode mode = Normal, State state = Off);
+    Size2.Owned actualSize(Size2.Handle size, Mode mode = Normal, State state = Off);
+    void addFile(string fileName, Option<Size2.Handle> size, Mode mode = Normal, State state = Off);
     void addPixmap(Pixmap.Handle pixmap, Mode mode = Normal, State state = Off);
-    Array<Size> availableSizes(Mode mode = Normal, State state = Off);
+    Array<Size2.Owned> availableSizes(Mode mode = Normal, State state = Off);
     int64 cacheKey();
     bool isMask();
     bool isNull();
     string name();
     void paint(Painter.Handle painter, Rect rect, Alignment alignment = AlignCenter, Mode mode = Normal, State state = Off);
     void paint(Painter.Handle painter, int x, int y, int w, int h, Alignment alignment = AlignCenter, Mode mode = Normal, State state = Off);
-    Pixmap.Owned pixmap(Size size, Mode mode = Normal, State state = Off);
+    Pixmap.Owned pixmap(Size2.Handle size, Mode mode = Normal, State state = Off);
     Pixmap.Owned pixmap(int extent, Mode mode = Normal, State state = Off);
-    Pixmap.Owned pixmap(Size size, double devicePixelRatio, Mode mode = Normal, State state = Off);
+    Pixmap.Owned pixmap(Size2.Handle size, double devicePixelRatio, Mode mode = Normal, State state = Off);
     Pixmap.Owned pixmap(int w, int h, Mode mode = Normal, State state = Off);
     void setIsMask(bool isMask);
     void swap(Handle other);

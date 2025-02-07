@@ -1,10 +1,13 @@
 #include "generated/LayoutItem.h"
 #include "LayoutItemInternal.h"
 
+#include "Size2Internal.h"
+
 #include "util/convert.h"
 
 using namespace ::Enums;
 using namespace ::Common;
+using namespace ::Size2;
 using namespace ::SizePolicy;
 
 #define THIS (reinterpret_cast<QLayoutItem*>(_this))
@@ -47,16 +50,16 @@ namespace LayoutItem
         return reinterpret_cast<LayoutHandleRef>(THIS->layout());
     }
 
-    Size Handle_maximumSize(HandleRef _this) {
-        return toSize(THIS->maximumSize());
+    Size2::OwnedRef Handle_maximumSize(HandleRef _this) {
+        return SIZE_HEAP_NEW(THIS->maximumSize());
     }
 
     int32_t Handle_minimumHeightForWidth(HandleRef _this, int32_t width) {
         return THIS->minimumHeightForWidth(width);
     }
 
-    Size Handle_minimumSize(HandleRef _this) {
-        return toSize(THIS->minimumSize());
+    Size2::OwnedRef Handle_minimumSize(HandleRef _this) {
+        return SIZE_HEAP_NEW(THIS->minimumSize());
     }
 
     void Handle_setAlignment(HandleRef _this, Alignment alignment) {
@@ -67,8 +70,8 @@ namespace LayoutItem
         THIS->setGeometry(toQRect(r));
     }
 
-    Size Handle_sizeHint(HandleRef _this) {
-        return toSize(THIS->sizeHint());
+    Size2::OwnedRef Handle_sizeHint(HandleRef _this) {
+        return SIZE_HEAP_NEW(THIS->sizeHint());
     }
 
     WidgetHandleRef Handle_widget(HandleRef _this) {

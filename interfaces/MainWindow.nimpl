@@ -2,6 +2,7 @@ module MainWindow;
 
 import Object;
 import Common;
+import Size2;
 import Enums;
 import Widget;
 import Layout;
@@ -14,7 +15,7 @@ import StatusBar;
 import TabWidget;
 
 interface SignalHandler extends Widget.SignalHandler {
-    void iconSizeChanged(Size iconSize);
+    void iconSizeChanged(Size2.Handle iconSize);
     void tabifiedDockWidgetActivated(DockWidget.Handle dockWidget);
     void toolButtonStyleChanged(ToolButtonStyle style);
 }
@@ -42,7 +43,7 @@ opaque Handle extends Widget.Handle {
     DockOptions getDockOptions();
     DockWidgetArea dockWidgetArea(DockWidget.Handle dockwidget);
     bool documentMode();
-    Size iconSize();
+    Size2.Owned iconSize();
     void insertToolBar(ToolBar.Handle before, ToolBar.Handle toolbar);
     void insertToolBarBreak(ToolBar.Handle before);
     bool isAnimated();
@@ -60,7 +61,7 @@ opaque Handle extends Widget.Handle {
     void setCorner(Corner corner, DockWidgetArea area);
     void setDockOptions(DockOptions options_);
     void setDocumentMode(bool enabled);
-    void setIconSize(Size iconSize);
+    void setIconSize(Size2.Handle iconSize);
     void setMenuBar(MenuBar.Handle menuBar);
     void setMenuWidget(Widget.Handle menuBar);
     void setStatusBar(StatusBar.Handle statusbar);
@@ -102,7 +103,7 @@ namedbits DelegatedMethodMask {
 interface DelegatedMethods {
     bool canClose();
     void closed();
-    void resized(Size oldSize, Size newSize);
+    void resized(Size2.Handle oldSize, Size2.Handle newSize);
 }
 
 opaque Delegated extends Handle;

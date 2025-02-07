@@ -6,77 +6,37 @@ import Enums;
 @nodispose
 opaque Handle {
 
-    // QSize boundedTo(const QSize &otherSize) const
     Owned boundedTo(Handle otherSize);
-
-    // QSize expandedTo(const QSize &otherSize) const
     Owned expandedTo(Handle otherSize);
-
-    // QSize grownBy(QMargins margins) const
     Owned grownBy(Margins margins);
-
-    // int height() const
     int height();
-
-    // bool isEmpty() const
     bool isEmpty();
-
-    // bool isNull() const
     bool isNull();
-
-    // bool isValid() const
     bool isValid();
 
     // int & rheight()
     // int & rwidth()
 
-    // void scale(int width, int height, Qt::AspectRatioMode mode)
     void scale(int width, int height, AspectRatioMode mode);
-
-    // void scale(const QSize &size, Qt::AspectRatioMode mode)
     void scale(Handle size, AspectRatioMode mode);
-
-    // QSize scaled(int width, int height, Qt::AspectRatioMode mode) const
     Owned scaled(int width, int height, AspectRatioMode mode);
-
-    // QSize scaled(const QSize &s, Qt::AspectRatioMode mode) const
     Owned scaled(Handle s, AspectRatioMode mode);
-
-    // void setHeight(int height)
     void setHeight(int height);
-
-    // void setWidth(int width)
     void setWidth(int width);
-
-    // QSize shrunkBy(QMargins margins) const
     Owned shrunkBy(Margins margins);
 
     // CGSize toCGSize() const
 
-    // (since 6.4) QSizeF toSizeF() const
     SizeF toSizeF();
-
-    // void transpose()
     void transpose();
-
-    // QSize transposed() const
     Owned transposed();
-
-    // int width() const
     int width();
 
     // the following return 'this':
 
-    // QSize & operator*=(qreal factor)
     Handle operator_multiplyBy(double factor);
-
-    // QSize & operator+=(const QSize &size)
     Handle operator_incrementBy(Handle size);
-
-    // QSize & operator-=(const QSize &size)
     Handle operator_decrementBy(Handle size);
-
-    // QSize & operator/=(qreal divisor)
     Handle operator_divideBy(double divisor);
 }
 opaque Owned extends Handle;
@@ -86,26 +46,17 @@ Owned create(int width, int height);
 
 // operators ======================================
 
-// bool operator!=(const QSize &lhs, const QSize &rhs)
 bool operator_notEqual(Handle lhs, Handle rhs);
-
-// QSize operator*(const QSize &size, qreal factor)
 Owned operator_mul(Handle size, double factor);
 
 // QSize operator*(qreal factor, const QSize &size)
 
-// QSize operator+(const QSize &s1, const QSize &s2)
 Owned operator_add(Handle s1, Handle s2);
-
-// QSize operator-(const QSize &s1, const QSize &s2)
 Owned operator_sub(Handle s1, Handle s2);
-
-// QSize operator/(const QSize &size, qreal divisor)
 Owned operator_div(Handle size, double divisor);
 
 // QDataStream & operator<<(QDataStream &stream, const QSize &size)
 
-// bool operator==(const QSize &lhs, const QSize &rhs)
 bool operator_equal(Handle lhs, Handle rhs);
 
 // QDataStream & operator>>(QDataStream &stream, QSize &size)

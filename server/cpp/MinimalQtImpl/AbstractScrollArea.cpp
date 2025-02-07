@@ -2,10 +2,13 @@
 #include "AbstractScrollAreaInternal.h"
 
 #include "WidgetInternal.h"
+#include "Size2Internal.h"
+
 #include "util/convert.h"
 
 using namespace ::Object;
 using namespace ::Common;
+using namespace ::Size2;
 using namespace ::Icon;
 using namespace ::Frame;
 using namespace ::Enums;
@@ -32,8 +35,8 @@ namespace AbstractScrollArea
         return static_cast<ScrollBarPolicy>(THIS->horizontalScrollBarPolicy());
     }
 
-    Size Handle_maximumViewportSize(HandleRef _this) {
-        return toSize(THIS->maximumViewportSize());
+    Size2::OwnedRef Handle_maximumViewportSize(HandleRef _this) {
+        return SIZE_HEAP_NEW(THIS->maximumViewportSize());
     }
 
     std::vector<Widget::HandleRef> Handle_scrollBarWidgets(HandleRef _this, Alignment alignment) {

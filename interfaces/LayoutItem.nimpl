@@ -2,6 +2,7 @@ module LayoutItem;
 
 import Enums;
 import Common;
+import Size2;
 import SizePolicy;
 
 fwdopaque LayoutHandle = Layout.Handle;
@@ -21,12 +22,12 @@ opaque Handle {
     void invalidate();
     bool isEmpty();
     LayoutHandle layout();
-    Size maximumSize();
+    Size2.Owned maximumSize();
     int minimumHeightForWidth(int width);
-    Size minimumSize();
+    Size2.Owned minimumSize();
     void setAlignment(Alignment alignment);
     void setGeometry(Rect r);
-    Size sizeHint();
+    Size2.Owned sizeHint();
     
     // virtual QSpacerItem * spacerItem()
     // TODO

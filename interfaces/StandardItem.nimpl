@@ -7,6 +7,7 @@ import ModelIndex;
 import Brush;
 import Font;
 import Common;
+import Size2;
 
 enum ItemType { Type = 0, UserType = 1000 }
 
@@ -81,14 +82,14 @@ opaque Handle {
     void setIcon(Icon.Handle icon);
     void setRowCount(int rows);
     void setSelectable(bool selectable);
-    void setSizeHint(Size size);
+    void setSizeHint(Size2.Handle size);
     void setStatusTip(string statusTip);
     void setText(string text);
     void setTextAlignment(Alignment alignment);
     void setToolTip(string toolTip);
     void setUserTristate(bool tristate);
     void setWhatsThis(string whatsThis);
-    Size sizeHint();
+    Size2.Owned sizeHint();
     void sortChildren(int column, SortOrder order = AscendingOrder);
     string statusTip();
     Handle takeChild(int row, int column = 0);

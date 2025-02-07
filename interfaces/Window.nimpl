@@ -6,6 +6,7 @@ import Screen;
 import Common;
 import Point;
 import PointF;
+import Size2;
 import Cursor;
 import Icon;
 import Region;
@@ -47,7 +48,7 @@ interface SignalHandler extends Object.SignalHandler {
 }
 
 opaque Handle extends Object.Handle {
-    Size baseSize();
+    Size2.Owned baseSize();
     ScreenOrientation contentOrientation();
     void create();
     Cursor.Owned cursor();
@@ -74,10 +75,10 @@ opaque Handle extends Object.Handle {
     Point.Owned mapToGlobal(Point.Handle pos);
     Region.Owned mask();
     int maximumHeight();
-    Size maximumSize();
+    Size2.Owned maximumSize();
     int maximumWidth();
     int minimumHeight();
-    Size minimumSize();
+    Size2.Owned minimumSize();
     int minimumWidth();
     WindowModality modality();
     double opacity();
@@ -88,10 +89,10 @@ opaque Handle extends Object.Handle {
     // QSurfaceFormat requestedFormat() const
     // TODO
 
-    void resize(Size newSize);
+    void resize(Size2.Handle newSize);
     void resize(int w, int h);
     Screen.Handle screen();
-    void setBaseSize(Size size);
+    void setBaseSize(Size2.Handle size);
     void setCursor(Cursor.Handle cursor);
     void setFilePath(string filePath);
     void setFlag(WindowType flag, bool on = true);
@@ -104,8 +105,8 @@ opaque Handle extends Object.Handle {
     void setIcon(Icon.Handle icon);
     bool setKeyboardGrabEnabled(bool grab);
     void setMask(Region.Handle region);
-    void setMaximumSize(Size size);
-    void setMinimumSize(Size size);
+    void setMaximumSize(Size2.Handle size);
+    void setMinimumSize(Size2.Handle size);
     void setModality(WindowModality modality);
     bool setMouseGrabEnabled(bool grab);
     void setOpacity(double level);
@@ -113,7 +114,7 @@ opaque Handle extends Object.Handle {
     void setPosition(Point.Handle pt);
     void setPosition(int posx, int posy);
     void setScreen(Screen.Handle newScreen);
-    void setSizeIncrement(Size size);
+    void setSizeIncrement(Size2.Handle size);
 
     // void setSurfaceType(QSurface::SurfaceType surfaceType)
     // TODO
@@ -126,7 +127,7 @@ opaque Handle extends Object.Handle {
 
     void setWindowState(WindowState state);
     void setWindowStates(WindowStates states);
-    Size sizeIncrement();
+    Size2.Owned sizeIncrement();
     string title();
     Window.Handle transientParent();
     WindowType type();

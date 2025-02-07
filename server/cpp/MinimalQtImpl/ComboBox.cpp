@@ -6,12 +6,14 @@
 #include "VariantInternal.h"
 #include "IconInternal.h"
 #include "ModelIndexInternal.h"
+#include "Size2Internal.h"
 #include "ValidatorInternal.h"
 
 #include "util/convert.h"
 
 using namespace ::Object;
 using namespace ::Common;
+using namespace ::Size2;
 using namespace ::Enums;
 using namespace ::Widget;
 using namespace ::Variant;
@@ -80,8 +82,8 @@ namespace ComboBox
         THIS->hidePopup();
     }
 
-    Size Handle_iconSize(HandleRef _this) {
-        return toSize(THIS->iconSize());
+    Size2::OwnedRef Handle_iconSize(HandleRef _this) {
+        return SIZE_HEAP_NEW(THIS->iconSize());
     }
 
     void Handle_insertItem(HandleRef _this, int32_t index, const std::string& text, const std::optional<Variant::HandleRef>& userData) {
@@ -176,8 +178,8 @@ namespace ComboBox
         THIS->setFrame(hasFrame);
     }
 
-    void Handle_setIconSize(HandleRef _this, Size size) {
-        THIS->setIconSize(toQSize(size));
+    void Handle_setIconSize(HandleRef _this, Size2::HandleRef size) {
+        THIS->setIconSize(QSIZE_VALUE(size));
     }
 
     void Handle_setInsertPolicy(HandleRef _this, InsertPolicy policy) {

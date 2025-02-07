@@ -7,6 +7,7 @@
 #include "PointInternal.h"
 #include "PointFInternal.h"
 #include "RegionInternal.h"
+#include "Size2Internal.h"
 
 #include "util/convert.h"
 
@@ -16,6 +17,7 @@ using namespace ::Screen;
 using namespace ::Common;
 using namespace ::Point;
 using namespace ::PointF;
+using namespace ::Size2;
 using namespace ::Cursor;
 using namespace ::Icon;
 using namespace ::Region;
@@ -24,8 +26,8 @@ using namespace ::Region;
 
 namespace Window
 {
-    Size Handle_baseSize(HandleRef _this) {
-        return toSize(THIS->baseSize());
+    Size2::OwnedRef Handle_baseSize(HandleRef _this) {
+        return SIZE_HEAP_NEW(THIS->baseSize());
     }
 
     ScreenOrientation Handle_contentOrientation(HandleRef _this) {
@@ -132,8 +134,8 @@ namespace Window
         return THIS->maximumHeight();
     }
 
-    Size Handle_maximumSize(HandleRef _this) {
-        return toSize(THIS->maximumSize());
+    Size2::OwnedRef Handle_maximumSize(HandleRef _this) {
+        return SIZE_HEAP_NEW(THIS->maximumSize());
     }
 
     int32_t Handle_maximumWidth(HandleRef _this) {
@@ -144,8 +146,8 @@ namespace Window
         return THIS->minimumHeight();
     }
 
-    Size Handle_minimumSize(HandleRef _this) {
-        return toSize(THIS->minimumSize());
+    Size2::OwnedRef Handle_minimumSize(HandleRef _this) {
+        return SIZE_HEAP_NEW(THIS->minimumSize());
     }
 
     int32_t Handle_minimumWidth(HandleRef _this) {
@@ -172,8 +174,8 @@ namespace Window
         THIS->reportContentOrientationChange(static_cast<Qt::ScreenOrientation>(orientation));
     }
 
-    void Handle_resize(HandleRef _this, Size newSize) {
-        THIS->resize(toQSize(newSize));
+    void Handle_resize(HandleRef _this, Size2::HandleRef newSize) {
+        THIS->resize(QSIZE_VALUE(newSize));
     }
 
     void Handle_resize(HandleRef _this, int32_t w, int32_t h) {
@@ -184,8 +186,8 @@ namespace Window
         return reinterpret_cast<Screen::HandleRef>(THIS->screen());
     }
 
-    void Handle_setBaseSize(HandleRef _this, Size size) {
-        THIS->setBaseSize(toQSize(size));
+    void Handle_setBaseSize(HandleRef _this, Size2::HandleRef size) {
+        THIS->setBaseSize(QSIZE_VALUE(size));
     }
 
     void Handle_setCursor(HandleRef _this, Cursor::HandleRef cursor) {
@@ -220,12 +222,12 @@ namespace Window
         THIS->setMask(QREGION_VALUE(region));
     }
 
-    void Handle_setMaximumSize(HandleRef _this, Size size) {
-        THIS->setMaximumSize(toQSize(size));
+    void Handle_setMaximumSize(HandleRef _this, Size2::HandleRef size) {
+        THIS->setMaximumSize(QSIZE_VALUE(size));
     }
 
-    void Handle_setMinimumSize(HandleRef _this, Size size) {
-        THIS->setMinimumSize(toQSize(size));
+    void Handle_setMinimumSize(HandleRef _this, Size2::HandleRef size) {
+        THIS->setMinimumSize(QSIZE_VALUE(size));
     }
 
     void Handle_setModality(HandleRef _this, WindowModality modality) {
@@ -256,8 +258,8 @@ namespace Window
         THIS->setScreen(reinterpret_cast<QScreen*>(newScreen));
     }
 
-    void Handle_setSizeIncrement(HandleRef _this, Size size) {
-        THIS->setSizeIncrement(toQSize(size));
+    void Handle_setSizeIncrement(HandleRef _this, Size2::HandleRef size) {
+        THIS->setSizeIncrement(QSIZE_VALUE(size));
     }
 
     void Handle_setTransientParent(HandleRef _this, HandleRef parent) {
@@ -276,8 +278,8 @@ namespace Window
         THIS->setWindowStates(static_cast<Qt::WindowStates>(states.value));
     }
 
-    Size Handle_sizeIncrement(HandleRef _this) {
-        return toSize(THIS->sizeIncrement());
+    Size2::OwnedRef Handle_sizeIncrement(HandleRef _this) {
+        return SIZE_HEAP_NEW(THIS->sizeIncrement());
     }
 
     std::string Handle_title(HandleRef _this) {

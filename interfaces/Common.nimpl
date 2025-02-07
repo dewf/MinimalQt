@@ -1,10 +1,5 @@
 module Common;
 
-struct Size {
-    int width;
-    int height;
-}
-
 struct SizeF {
     double width;
     double height;
