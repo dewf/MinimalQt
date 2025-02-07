@@ -39,22 +39,22 @@ namespace PointF
         return THIS->y();
     }
 
-    HandleRef Handle_operator_mul(HandleRef _this, double factor) {
+    HandleRef Handle_operator_multiplyBy(HandleRef _this, double factor) {
         THIS->operator*=(factor);
         return _this;
     }
 
-    HandleRef Handle_operator_add(HandleRef _this, HandleRef point) {
+    HandleRef Handle_operator_incrementBy(HandleRef _this, HandleRef point) {
         THIS->operator+=(QPOINTF_VALUE(point));
         return _this;
     }
 
-    HandleRef Handle_operator_sub(HandleRef _this, HandleRef point) {
+    HandleRef Handle_operator_decrementBy(HandleRef _this, HandleRef point) {
         THIS->operator-=(QPOINTF_VALUE(point));
         return _this;
     }
 
-    HandleRef Handle_operator_div(HandleRef _this, double divisor) {
+    HandleRef Handle_operator_divideBy(HandleRef _this, double divisor) {
         THIS->operator/=(divisor);
         return _this;
     }
