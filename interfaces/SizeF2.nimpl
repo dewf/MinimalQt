@@ -1,0 +1,70 @@
+module SizeF2;
+
+import Common;
+import Size;
+import Enums;
+
+@nodispose
+opaque Handle {
+    // probably no qHash() support, like QPointF
+
+    Owned boundedTo(Handle otherSize);
+    Owned expandedTo(Handle otherSize);
+    Owned grownBy(MarginsF margins);
+    double height();
+    bool isEmpty();
+    bool isNull();
+    bool isValid();
+
+    // qreal & rheight()
+    // qreal & rwidth()
+
+    void scale(double width, double height, AspectRatioMode mode);
+    void scale(Handle size, AspectRatioMode mode);
+    Owned scaled(double width, double height, AspectRatioMode mode);
+    Owned scaled(Handle s, AspectRatioMode mode);
+    void setHeight(double height);
+    void setWidth(double width);
+    Owned shrunkBy(MarginsF margins);
+
+    // CGSize toCGSize() const
+
+    Size.Owned toSize();
+    void transpose();
+    Owned transposed();
+    double width();
+
+    // the following return 'this':
+    Handle operator_multiplyBy(double factor);
+    Handle operator_incrementBy(Handle size);
+    Handle operator_decrementBy(Handle size);
+    Handle operator_div(double divisor);
+}
+opaque Owned extends Handle;
+
+// ctors =================
+Owned create();
+Owned create(Size.Handle size);
+Owned create(double width, double height);
+
+// static methods ========
+// QSizeF fromCGSize(CGSize size)
+
+// operators =============
+
+bool fuzzyCompare(Handle lhs, Handle rhs);
+bool fuzzyIsNull(Handle size);
+bool operator_notEqual(Handle lhs, Handle rhs);
+Owned operator_mul(Handle size, double factor);
+
+// QSizeF operator*(qreal factor, const QSizeF &size)
+
+Owned operator_add(Handle s1, Handle s2);
+Owned operator_sub(Handle s1, Handle s2);
+Owned operator_div(Handle size, double divisor);
+
+// QDataStream & operator<<(QDataStream &stream, const QSizeF &size)
+
+bool operator_equal(Handle lhs, Handle rhs);
+
+// QDataStream & operator>>(QDataStream &stream, QSizeF &size)

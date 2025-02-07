@@ -420,6 +420,11 @@ add_library(MinimalQtImpl STATIC
     ../SizeInternal.h
     ../Size.cpp
 
+    ../generated/SizeF2.h
+    ../generated/SizeF2_wrappers.cpp
+    ../SizeF2Internal.h
+    ../SizeF2.cpp
+
     ../generated/SizePolicy.h
     ../generated/SizePolicy_wrappers.cpp
     ../SizePolicyInternal.h

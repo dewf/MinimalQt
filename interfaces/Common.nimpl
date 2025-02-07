@@ -27,3 +27,10 @@ struct Margins {
     int right;
     int bottom;
 }
+
+struct MarginsF {
+    double left;
+    double top;
+    double right;
+    double bottom;
+}
