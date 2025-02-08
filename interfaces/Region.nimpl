@@ -2,6 +2,7 @@ module Region;
 
 import Common;
 import Point;
+import Rect2;
 import Polygon;
 import Enums;
 
@@ -9,18 +10,18 @@ enum RegionType { Rectangle, Ellipse }
 
 @nodispose
 opaque Handle {
-    Rect boundingRect();
+    Rect2.Owned boundingRect();
     bool contains(Point.Handle p);
-    bool contains(Rect r);
-    Owned intersected(Rect rect);
+    bool contains(Rect2.Handle r);
+    Owned intersected(Rect2.Handle rect);
     Owned intersected(Handle r);
-    bool intersects(Rect rect);
+    bool intersects(Rect2.Handle rect);
     bool intersects(Handle region);
     bool isEmpty();
     bool isNull();
     int rectCount();
-    Array<Rect> rects();
-    void setRects(Array<Rect> rects);
+    Array<Rect2.Owned> rects();
+    void setRects(Array<Rect2.Handle> rects);
     Owned subtracted(Handle r);
 
     // void swap(QRegion &other)
@@ -30,7 +31,7 @@ opaque Handle {
     void translate(Point.Handle point);
     Owned translated(int dx, int dy);
     Owned translated(Point.Handle p);
-    Owned united(Rect rect);
+    Owned united(Rect2.Handle rect);
     Owned united(Handle r);
     Owned xored(Handle r);
 }
@@ -42,5 +43,5 @@ Owned create();
 
 Owned create(Polygon.Handle a, FillRule fillRule = OddEvenFill);
 Owned create(int x, int y, int w, int h, RegionType t = Rectangle);
-Owned create(Rect r, RegionType t = Rectangle);
+Owned create(Rect2.Handle r, RegionType t = Rectangle);
 Owned create(Handle other);

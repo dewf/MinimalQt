@@ -4,6 +4,7 @@ import Object;
 import Widget;
 import Common;
 import Point;
+import Rect2;
 import Enums;
 import AbstractScrollArea;
 import Menu;
@@ -64,8 +65,8 @@ opaque Handle extends AbstractScrollArea.Handle {
     TextCharFormat.Owned currentCharFormat();
     Font.Owned currentFont();
     TextCursor.Owned cursorForPosition(Point.Handle pos);
-    Rect cursorRect();
-    Rect cursorRect(TextCursor.Handle cursor);
+    Rect2.Owned cursorRect();
+    Rect2.Owned cursorRect(TextCursor.Handle cursor);
     int cursorWidth();
     TextDocument.Handle document();
     string documentTitle();

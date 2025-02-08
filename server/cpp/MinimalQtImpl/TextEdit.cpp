@@ -10,6 +10,7 @@
 #include "VariantInternal.h"
 #include "ObjectInternal.h"
 #include "PointInternal.h"
+#include "Rect2Internal.h"
 #include "WidgetInternal.h"
 
 #include "util/convert.h"
@@ -18,6 +19,7 @@ using namespace ::Object;
 using namespace ::Widget;
 using namespace ::Common;
 using namespace ::Point;
+using namespace ::Rect2;
 using namespace ::Enums;
 using namespace ::AbstractScrollArea;
 using namespace ::Menu;
@@ -99,12 +101,12 @@ namespace TextEdit
         return TEXTCURSOR_HEAP_NEW(THIS->cursorForPosition(QPOINT_VALUE(pos)));
     }
 
-    Rect Handle_cursorRect(HandleRef _this) {
-        return toRect(THIS->cursorRect());
+    Rect2::OwnedRef Handle_cursorRect(HandleRef _this) {
+        return RECT_HEAP_NEW(THIS->cursorRect());
     }
 
-    Rect Handle_cursorRect(HandleRef _this, TextCursor::HandleRef cursor) {
-        return toRect(THIS->cursorRect(QTEXTCURSOR_VALUE(cursor)));
+    Rect2::OwnedRef Handle_cursorRect(HandleRef _this, TextCursor::HandleRef cursor) {
+        return RECT_HEAP_NEW(THIS->cursorRect());
     }
 
     int32_t Handle_cursorWidth(HandleRef _this) {

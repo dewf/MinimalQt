@@ -6,6 +6,7 @@
 #include "TransformInternal.h"
 #include "SizeInternal.h"
 #include "SizeFInternal.h"
+#include "Rect2Internal.h"
 
 #include "util/convert.h"
 
@@ -14,6 +15,7 @@ using namespace ::Common;
 using namespace ::Size;
 using namespace ::SizeF;
 using namespace ::Point;
+using namespace ::Rect2;
 using namespace ::Enums;
 using namespace ::Color;
 using namespace ::Transform;
@@ -78,8 +80,9 @@ namespace Image
         return IMAGE_HEAP_NEW(result);
     }
 
-    OwnedRef Handle_copy(HandleRef _this, const std::optional<Rect>& rectangle) {
-        const auto qRect = optionalMap<Rect,QRect>(rectangle, toQRect).value_or(QRect());
+    OwnedRef Handle_copy(HandleRef _this, const std::optional<Rect2::HandleRef>& rectangle) {
+        QRect qRect;
+        if (rectangle.has_value()) qRect = QRECT_VALUE(rectangle.value());
         return IMAGE_HEAP_NEW(THIS->copy(qRect));
     }
 
@@ -205,8 +208,8 @@ namespace Image
         return THIS->pixelIndex(x, y);
     }
 
-    Rect Handle_rect(HandleRef _this) {
-        return toRect(THIS->rect());
+    Rect2::OwnedRef Handle_rect(HandleRef _this) {
+        return RECT_HEAP_NEW(THIS->rect());
     }
 
     bool Handle_reinterpretAsFormat(HandleRef _this, Format format) {

@@ -7,6 +7,7 @@
 #include "TransformInternal.h"
 #include "SizeInternal.h"
 #include "SizeFInternal.h"
+#include "Rect2Internal.h"
 
 #include "util/convert.h"
 
@@ -15,6 +16,7 @@ using namespace ::Common;
 using namespace ::Point;
 using namespace ::Size;
 using namespace ::SizeF;
+using namespace ::Rect2;
 using namespace ::Enums;
 using namespace ::Pixmap;
 using namespace ::Transform;
@@ -27,16 +29,16 @@ namespace Screen
         return THIS->angleBetween(static_cast<Qt::ScreenOrientation>(a), static_cast<Qt::ScreenOrientation>(b));
     }
 
-    Rect Handle_availableGeometry(HandleRef _this) {
-        return toRect(THIS->availableGeometry());
+    Rect2::OwnedRef Handle_availableGeometry(HandleRef _this) {
+        return RECT_HEAP_NEW(THIS->availableGeometry());
     }
 
     Size::OwnedRef Handle_availableSize(HandleRef _this) {
         return SIZE_HEAP_NEW(THIS->availableSize());
     }
 
-    Rect Handle_availableVirtualGeometry(HandleRef _this) {
-        return toRect(THIS->availableVirtualGeometry());
+    Rect2::OwnedRef Handle_availableVirtualGeometry(HandleRef _this) {
+        return RECT_HEAP_NEW(THIS->availableVirtualGeometry());
     }
 
     Size::OwnedRef Handle_availableVirtualSize(HandleRef _this) {
@@ -51,8 +53,8 @@ namespace Screen
         return THIS->devicePixelRatio();
     }
 
-    Rect Handle_geometry(HandleRef _this) {
-        return toRect(THIS->geometry());
+    Rect2::OwnedRef Handle_geometry(HandleRef _this) {
+        return RECT_HEAP_NEW(THIS->geometry());
     }
 
     Pixmap::OwnedRef Handle_grabWindow(HandleRef _this, size_t window /* 0 */, int32_t x /* 0 */, int32_t y /* 0 */, int32_t width /* -1 */, int32_t height /* -1 */) {
@@ -83,8 +85,9 @@ namespace Screen
         return THIS->manufacturer().toStdString();
     }
 
-    Rect Handle_mapBetween(HandleRef _this, ScreenOrientation a, ScreenOrientation b, Rect rect) {
-        return toRect(THIS->mapBetween(static_cast<Qt::ScreenOrientation>(a), static_cast<Qt::ScreenOrientation>(b), toQRect(rect)));
+    Rect2::OwnedRef Handle_mapBetween(HandleRef _this, ScreenOrientation a, ScreenOrientation b, Rect2::HandleRef rect) {
+        const auto result = THIS->mapBetween(static_cast<Qt::ScreenOrientation>(a), static_cast<Qt::ScreenOrientation>(b), QRECT_VALUE(rect));
+        return RECT_HEAP_NEW(result);
     }
 
     std::string Handle_model(HandleRef _this) {
@@ -135,12 +138,12 @@ namespace Screen
         return SIZE_HEAP_NEW(THIS->size());
     }
 
-    Transform::OwnedRef Handle_transformBetween(HandleRef _this, ScreenOrientation a, ScreenOrientation b, Rect target) {
-        return TRANSFORM_HEAP_NEW(THIS->transformBetween(static_cast<Qt::ScreenOrientation>(a), static_cast<Qt::ScreenOrientation>(b), toQRect(target)));
+    Transform::OwnedRef Handle_transformBetween(HandleRef _this, ScreenOrientation a, ScreenOrientation b, Rect2::HandleRef target) {
+        return TRANSFORM_HEAP_NEW(THIS->transformBetween(static_cast<Qt::ScreenOrientation>(a), static_cast<Qt::ScreenOrientation>(b), QRECT_VALUE(target)));
     }
 
-    Rect Handle_virtualGeometry(HandleRef _this) {
-        return toRect(THIS->virtualGeometry());
+    Rect2::OwnedRef Handle_virtualGeometry(HandleRef _this) {
+        return RECT_HEAP_NEW(THIS->virtualGeometry());
     }
 
     HandleRef Handle_virtualSiblingAt(HandleRef _this, Point::HandleRef point) {
@@ -157,14 +160,16 @@ namespace Screen
 
     SignalConnectionRef Handle_connect_AvailableGeometryChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QScreen::availableGeometryChanged, [handler](const QRect &geometry) {
-            handler->availableGeometryChanged(toRect(geometry));
+            // TODO: ConstHandle
+            handler->availableGeometryChanged((Rect2::HandleRef)&geometry);
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_GeometryChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QScreen::geometryChanged, [handler](const QRect &geometry) {
-            handler->geometryChanged(toRect(geometry));
+            // TODO: ConstHandle
+            handler->geometryChanged((Rect2::HandleRef)&geometry);
         });
         return new __SignalConnection { connection };
     }
@@ -192,7 +197,7 @@ namespace Screen
 
     SignalConnectionRef Handle_connect_PhysicalSizeChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QScreen::physicalSizeChanged, [handler](const QSizeF &size) {
-            // TODO: ConstHandle or whatever
+            // TODO: ConstHandle
             handler->physicalSizeChanged((SizeF::HandleRef)&size);
         });
         return new __SignalConnection { connection };
@@ -214,7 +219,8 @@ namespace Screen
 
     SignalConnectionRef Handle_connect_VirtualGeometryChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QScreen::virtualGeometryChanged, [handler](const QRect &rect) {
-            handler->virtualGeometryChanged(toRect(rect));
+            // TODO: ConstHandle
+            handler->virtualGeometryChanged((Rect2::HandleRef)&rect);
         });
         return new __SignalConnection { connection };
     }

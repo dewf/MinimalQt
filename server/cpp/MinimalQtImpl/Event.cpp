@@ -7,6 +7,7 @@
 #include "MimeDataInternal.h"
 #include "ObjectInternal.h"
 #include "RegionInternal.h"
+#include "Rect2Internal.h"
 
 #include "LoggingInternal.h"
 using namespace ::Logging;
@@ -18,6 +19,7 @@ using namespace ::Common;
 using namespace ::Size;
 using namespace ::Point;
 using namespace ::PointF;
+using namespace ::Rect2;
 using namespace ::Enums;
 using namespace ::KeySequence;
 using namespace ::Region;
@@ -162,8 +164,8 @@ namespace Event
     // paint event =========================================
 #define PAINTEVENT_THIS (reinterpret_cast<QPaintEvent*>(_this))
 
-    Rect PaintEvent_rect(PaintEventRef _this) {
-        return toRect(PAINTEVENT_THIS->rect());
+    Rect2::OwnedRef PaintEvent_rect(PaintEventRef _this) {
+        return RECT_HEAP_NEW(PAINTEVENT_THIS->rect());
     }
 
     Region::OwnedRef PaintEvent_region(PaintEventRef _this) {
@@ -207,20 +209,20 @@ namespace Event
     // dragmove event ======================================
 #define DRAGMOVE_THIS (reinterpret_cast<QDragMoveEvent*>(_this))
 
-    void DragMoveEvent_accept(DragMoveEventRef _this, Rect rectangle) {
-        DRAGMOVE_THIS->accept(toQRect(rectangle));
+    void DragMoveEvent_accept(DragMoveEventRef _this, Rect2::HandleRef rectangle) {
+        DRAGMOVE_THIS->accept(QRECT_VALUE(rectangle));
     }
 
     void DragMoveEvent_accept(DragMoveEventRef _this) {
         DRAGMOVE_THIS->accept();
     }
 
-    Rect DragMoveEvent_answerRect(DragMoveEventRef _this) {
-        return toRect(DRAGMOVE_THIS->answerRect());
+    Rect2::OwnedRef DragMoveEvent_answerRect(DragMoveEventRef _this) {
+        return RECT_HEAP_NEW(DRAGMOVE_THIS->answerRect());
     }
 
-    void DragMoveEvent_ignore(DragMoveEventRef _this, Rect rectangle) {
-        DRAGMOVE_THIS->ignore(toQRect(rectangle));
+    void DragMoveEvent_ignore(DragMoveEventRef _this, Rect2::HandleRef rectangle) {
+        DRAGMOVE_THIS->ignore(QRECT_VALUE(rectangle));
     }
 
     void DragMoveEvent_ignore(DragMoveEventRef _this) {

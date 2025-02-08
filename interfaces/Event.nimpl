@@ -5,6 +5,7 @@ import Common;
 import Size;
 import Point;
 import PointF;
+import Rect2;
 import Enums;
 import KeySequence;
 import Region;
@@ -78,7 +79,7 @@ opaque ShowEvent extends Handle;
 
 @nodispose
 opaque PaintEvent extends Handle {
-    Rect rect();
+    Rect2.Owned rect();
     Region.Owned region();
 }
 
@@ -104,13 +105,13 @@ opaque ContextMenuEvent extends InputEvent {
 
 @nodispose
 opaque DragMoveEvent extends DropEvent {
-    void accept(Rect rectangle);
+    void accept(Rect2.Handle rectangle);
     
     @shadows
     void accept();
 
-    Rect answerRect();
-    void ignore(Rect rectangle);
+    Rect2.Owned answerRect();
+    void ignore(Rect2.Handle rectangle);
 
     @shadows
     void ignore();

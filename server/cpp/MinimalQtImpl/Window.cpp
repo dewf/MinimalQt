@@ -8,6 +8,7 @@
 #include "PointFInternal.h"
 #include "RegionInternal.h"
 #include "SizeInternal.h"
+#include "Rect2Internal.h"
 
 #include "util/convert.h"
 
@@ -18,6 +19,7 @@ using namespace ::Common;
 using namespace ::Point;
 using namespace ::PointF;
 using namespace ::Size;
+using namespace ::Rect2;
 using namespace ::Cursor;
 using namespace ::Icon;
 using namespace ::Region;
@@ -62,8 +64,8 @@ namespace Window
         return reinterpret_cast<Object::HandleRef>(THIS->focusObject());
     }
 
-    Rect Handle_frameGeometry(HandleRef _this) {
-        return toRect(THIS->frameGeometry());
+    Rect2::OwnedRef Handle_frameGeometry(HandleRef _this) {
+        return RECT_HEAP_NEW(THIS->frameGeometry());
     }
 
     Margins Handle_frameMargins(HandleRef _this) {
@@ -74,8 +76,8 @@ namespace Window
         return POINT_HEAP_NEW(THIS->framePosition());
     }
 
-    Rect Handle_geometry(HandleRef _this) {
-        return toRect(THIS->geometry());
+    Rect2::OwnedRef Handle_geometry(HandleRef _this) {
+        return RECT_HEAP_NEW(THIS->geometry());
     }
 
     int32_t Handle_height(HandleRef _this) {
@@ -356,8 +358,8 @@ namespace Window
         THIS->requestUpdate();
     }
 
-    void Handle_setGeometry(HandleRef _this, Rect rect) {
-        THIS->setGeometry(toQRect(rect));
+    void Handle_setGeometry(HandleRef _this, Rect2::HandleRef rect) {
+        THIS->setGeometry(QRECT_VALUE(rect));
     }
 
     void Handle_setGeometry(HandleRef _this, int32_t posx, int32_t posy, int32_t w, int32_t h) {

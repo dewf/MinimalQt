@@ -2,13 +2,14 @@ module Polygon;
 
 import Common;
 import Point;
+import Rect2;
 import Enums;
 
 fwdopaque PolygonF_Owned = PolygonF.Owned;
 
 @nodispose
 opaque Handle {
-    Rect boundingRect();
+    Rect2.Owned boundingRect();
     bool containsPoint(Point.Handle point, FillRule fillRule);
     Owned intersected(Handle r);
     bool intersects(Handle p);
@@ -39,4 +40,4 @@ opaque Owned extends Handle;
 
 Owned create();
 Owned create(Array<Point.Handle> points);
-Owned create(Rect rect, bool closed = false);
+Owned create(Rect2.Handle rect, bool closed = false);

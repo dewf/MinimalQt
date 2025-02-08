@@ -8,6 +8,7 @@
 #include "VariantInternal.h"
 #include "WidgetInternal.h"
 #include "SizeInternal.h"
+#include "Rect2Internal.h"
 
 #include "util/convert.h"
 
@@ -15,6 +16,7 @@ using namespace ::Object;
 using namespace ::Common;
 using namespace ::Size;
 using namespace ::Point;
+using namespace ::Rect2;
 using namespace ::Icon;
 using namespace ::Widget;
 using namespace ::Enums;
@@ -213,8 +215,8 @@ namespace TabBar
         return ICON_HEAP_NEW(THIS->tabIcon(index));
     }
 
-    Rect Handle_tabRect(HandleRef _this, int32_t index) {
-        return toRect(THIS->tabRect(index));
+    Rect2::OwnedRef Handle_tabRect(HandleRef _this, int32_t index) {
+        return RECT_HEAP_NEW(THIS->tabRect(index));
     }
 
     std::string Handle_tabText(HandleRef _this, int32_t index) {

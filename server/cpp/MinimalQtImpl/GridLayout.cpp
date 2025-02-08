@@ -4,11 +4,13 @@
 #include "LayoutInternal.h"
 #include "LayoutItemInternal.h"
 #include "WidgetInternal.h"
+#include "Rect2Internal.h"
 
 #include "util/convert.h"
 
 using namespace ::Object;
 using namespace ::Common;
+using namespace ::Rect2;
 using namespace ::Widget;
 using namespace ::Layout;
 using namespace ::Enums;
@@ -37,8 +39,8 @@ namespace GridLayout {
         THIS->addWidget(AS_QWIDGET_PTR(widget), fromRow, fromColumn, rowSpan, columnSpan, static_cast<Qt::Alignment>(alignment.value));
     }
 
-    Rect Handle_cellRect(HandleRef _this, int32_t row, int32_t column) {
-        return toRect(THIS->cellRect(row, column));
+    OwnedRef Handle_cellRect(HandleRef _this, int32_t row, int32_t column) {
+        return RECT_HEAP_NEW(THIS->cellRect(row, column));
     }
 
     int32_t Handle_columnCount(HandleRef _this) {

@@ -4,12 +4,14 @@
 #include "PixmapInternal.h"
 #include "PainterInternal.h"
 #include "SizeInternal.h"
+#include "Rect2Internal.h"
 
 #include "util/convert.h"
 
 using namespace ::Pixmap;
 using namespace ::Common;
 using namespace ::Size;
+using namespace ::Rect2;
 using namespace ::Painter;
 using namespace ::Enums;
 
@@ -52,8 +54,8 @@ namespace Icon
         return THIS->name().toStdString();
     }
 
-    void Handle_paint(HandleRef _this, Painter::HandleRef painter, Rect rect, Alignment alignment /* Alignment::AlignCenter */, Mode mode /* Mode::Normal */, State state /* State::Off */) {
-        THIS->paint(AS_QPAINTER_PTR(painter), toQRect(rect), static_cast<Qt::Alignment>(alignment.value), static_cast<QIcon::Mode>(mode), static_cast<QIcon::State>(state));
+    void Handle_paint(HandleRef _this, Painter::HandleRef painter, Rect2::HandleRef rect, Alignment alignment /* Alignment::AlignCenter */, Mode mode /* Mode::Normal */, State state /* State::Off */) {
+        THIS->paint(AS_QPAINTER_PTR(painter), QRECT_VALUE(rect), static_cast<Qt::Alignment>(alignment.value), static_cast<QIcon::Mode>(mode), static_cast<QIcon::State>(state));
     }
 
     void Handle_paint(HandleRef _this, Painter::HandleRef painter, int32_t x, int32_t y, int32_t w, int32_t h, Alignment alignment /* Alignment::AlignCenter */, Mode mode /* Mode::Normal */, State state /* State::Off */) {

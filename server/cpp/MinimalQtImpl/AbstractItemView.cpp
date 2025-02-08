@@ -9,6 +9,7 @@
 #include "PointInternal.h"
 #include "WidgetInternal.h"
 #include "SizeInternal.h"
+#include "Rect2Internal.h"
 
 #include "util/convert.h"
 
@@ -16,6 +17,7 @@ using namespace ::Object;
 using namespace ::Common;
 using namespace ::Size;
 using namespace ::Point;
+using namespace ::Rect2;
 using namespace ::Enums;
 using namespace ::Icon;
 using namespace ::AbstractScrollArea;
@@ -261,8 +263,8 @@ namespace AbstractItemView
         return static_cast<ScrollMode>(THIS->verticalScrollMode());
     }
 
-    Rect Handle_visualRect(HandleRef _this, ModelIndex::HandleRef index) {
-        return toRect(THIS->visualRect(QMODELINDEX_VALUE(index)));
+    Rect2::OwnedRef Handle_visualRect(HandleRef _this, ModelIndex::HandleRef index) {
+        return RECT_HEAP_NEW(THIS->visualRect(QMODELINDEX_VALUE(index)));
     }
 
     void Handle_clearSelection(HandleRef _this) {

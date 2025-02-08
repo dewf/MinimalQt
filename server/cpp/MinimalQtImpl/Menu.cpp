@@ -6,12 +6,14 @@
 #include "ActionInternal.h"
 #include "IconInternal.h"
 #include "PointInternal.h"
+#include "Rect2Internal.h"
 
 #include "util/convert.h"
 
 using namespace ::Object;
 using namespace ::Common;
 using namespace ::Point;
+using namespace ::Rect2;
 using namespace ::Widget;
 using namespace ::Action;
 using namespace ::Icon;
@@ -24,8 +26,8 @@ namespace Menu
         return reinterpret_cast<Action::HandleRef>(THIS->actionAt(QPOINT_VALUE(pt)));
     }
 
-    Rect Handle_actionGeometry(HandleRef _this, Action::HandleRef act) {
-        return toRect(THIS->actionGeometry(AS_QACTION_PTR(act)));
+    Rect2::OwnedRef Handle_actionGeometry(HandleRef _this, Action::HandleRef act) {
+        return RECT_HEAP_NEW(THIS->actionGeometry(AS_QACTION_PTR(act)));
     }
 
     Action::HandleRef Handle_activeAction(HandleRef _this) {

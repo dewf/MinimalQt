@@ -5,6 +5,7 @@ import Common;
 import Point;
 import PointF;
 import Size;
+import Rect2;
 import Layout;
 import Painter;
 import Icon;
@@ -76,12 +77,12 @@ opaque Handle extends Object.Handle {
     Handle childAt(int x, int y);
     Handle childAt(Point.Handle p);
     Handle childAt(PointF.Handle p);
-    Rect childrenRect();
+    Rect2.Owned childrenRect();
     Region.Owned childrenRegion();
     void clearFocus();
     void clearMask();
     Margins contentsMargins();
-    Rect contentsRect();
+    Rect2.Owned contentsRect();
     ContextMenuPolicy contextMenuPolicy();
     Cursor.Owned cursor();
 
@@ -97,10 +98,10 @@ opaque Handle extends Object.Handle {
     // QFontMetrics fontMetrics() const
     // QPalette::ColorRole foregroundRole() const
 
-    Rect frameGeometry();
+    Rect2.Owned frameGeometry();
     Size.Owned frameSize();
-    Rect geometry();
-    Pixmap.Owned grab(Option<Rect> rectangle); // = QRect(QPoint(0, 0), QSize(-1, -1))
+    Rect2.Owned geometry();
+    Pixmap.Owned grab(Option<Rect2.Handle> rectangle); // = QRect(QPoint(0, 0), QSize(-1, -1))
     void grabGesture(GestureType gesture, GestureFlags flags_ = 0);
     void grabKeyboard();
     void grabMouse();
@@ -165,7 +166,7 @@ opaque Handle extends Object.Handle {
     void move(int x, int y);
     Handle nativeParentWidget();
     Handle nextInFocusChain();
-    Rect normalGeometry();
+    Rect2.Owned normalGeometry();
     void overrideWindowFlags(WindowFlags flags_);
 
     // const QPalette & palette() const
@@ -173,14 +174,14 @@ opaque Handle extends Object.Handle {
     Handle parentWidget();
     Point.Owned pos();
     Handle previousInFocusChain();
-    Rect rect();
+    Rect2.Owned rect();
     void releaseKeyboard();
     void releaseMouse();
     void releaseShortcut(int id);
     void removeAction(Action.Handle action);
     void render(PaintDevice.Handle target, Option<Point.Handle> targetOffset, Option<Region.Handle> sourceRegion, RenderFlags renderFlags = DrawWindowBackground | DrawChildren);
     void render(Painter.Handle painter, Option<Point.Handle> targetOffset, Option<Region.Handle> sourceRegion, RenderFlags renderFlags = DrawWindowBackground | DrawChildren);
-    void repaint(Rect rect);
+    void repaint(Rect2.Handle rect);
     void repaint(Region.Handle rgn);
     void repaint(int x, int y, int w, int h);
     void resize(Size.Handle size);
@@ -189,7 +190,7 @@ opaque Handle extends Object.Handle {
     Array<byte> saveGeometry();
     Screen.Handle screen();
     void scroll(int dx, int dy);
-    void scroll(int dx, int dy, Rect r);
+    void scroll(int dx, int dy, Rect2.Handle r);
     void setAcceptDrops(bool on);
     void setAccessibleDescription(string description);
     void setAccessibleName(string name);
@@ -219,7 +220,7 @@ opaque Handle extends Object.Handle {
 
     // void setForegroundRole(QPalette::ColorRole role)
 
-    void setGeometry(Rect r);
+    void setGeometry(Rect2.Handle r);
     void setGeometry(int x, int y, int w, int h);
     void setGraphicsEffect(GraphicsEffect.Handle effect);
     void setInputMethodHints(InputMethodHints hints);
@@ -290,7 +291,7 @@ opaque Handle extends Object.Handle {
     void unsetCursor();
     void unsetLayoutDirection();
     void unsetLocale();
-    void update(Rect rect);
+    void update(Rect2.Handle rect);
     void update(Region.Handle rgn);
     void update(int x, int y, int w, int h);
     void updateGeometry();

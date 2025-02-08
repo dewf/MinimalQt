@@ -5,14 +5,15 @@
 #include "PolygonFInternal.h"
 #include "PolygonInternal.h"
 #include "RegionInternal.h"
-
-// #include <functional>
 #include "PointFInternal.h"
 #include "PointInternal.h"
+#include "Rect2Internal.h"
+
 #include "util/convert.h"
 
 using namespace ::Common;
 using namespace ::Point;
+using namespace ::Rect2;
 using namespace ::Polygon;
 using namespace ::PolygonF;
 using namespace ::Region;
@@ -149,12 +150,12 @@ namespace Transform
         return toRectF(THIS->mapRect(toQRectF(rectangle)));
     }
 
-    Rect Handle_mapRect(HandleRef _this, Rect rectangle) {
-        return toRect(THIS->mapRect(toQRect(rectangle)));
+    Rect2::OwnedRef Handle_mapRect(HandleRef _this, Rect2::HandleRef rectangle) {
+        return RECT_HEAP_NEW(THIS->mapRect(QRECT_VALUE(rectangle)));
     }
 
-    Polygon::OwnedRef Handle_mapToPolygon(HandleRef _this, Rect rectangle) {
-        return POLYGON_HEAP_NEW(THIS->mapToPolygon(toQRect(rectangle)));
+    Polygon::OwnedRef Handle_mapToPolygon(HandleRef _this, Rect2::HandleRef rectangle) {
+        return POLYGON_HEAP_NEW(THIS->mapToPolygon(QRECT_VALUE(rectangle)));
     }
 
     void Handle_reset(HandleRef _this) {

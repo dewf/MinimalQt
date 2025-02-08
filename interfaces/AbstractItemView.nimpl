@@ -4,6 +4,7 @@ import Object;
 import Common;
 import Size;
 import Point;
+import Rect2;
 import Enums;
 import Icon;
 import AbstractScrollArea;
@@ -128,7 +129,7 @@ opaque Handle extends AbstractScrollArea.Handle {
     bool tabKeyNavigation();
     TextElideMode textElideMode();
     ScrollMode verticalScrollMode();
-    Rect visualRect(ModelIndex.Handle index);
+    Rect2.Owned visualRect(ModelIndex.Handle index);
 
     void clearSelection();
     void edit(ModelIndex.Handle index);

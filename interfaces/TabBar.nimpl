@@ -4,6 +4,7 @@ import Object;
 import Common;
 import Size;
 import Point;
+import Rect2;
 import Icon;
 import Widget;
 import Enums;
@@ -89,7 +90,7 @@ opaque Handle extends Widget.Handle {
     Widget.Handle tabButton(int index, ButtonPosition position);
     Variant.Owned tabData(int index);
     Icon.Owned tabIcon(int index);
-    Rect tabRect(int index);
+    Rect2.Owned tabRect(int index);
     string tabText(int index);
     Color.Owned tabTextColor(int index);
     string tabToolTip(int index);

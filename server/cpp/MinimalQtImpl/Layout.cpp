@@ -4,12 +4,14 @@
 #include "WidgetInternal.h"
 #include "LayoutItemInternal.h"
 #include "SizeInternal.h"
+#include "Rect2Internal.h"
 
 #include "util/convert.h"
 
 using namespace ::Object;
 using namespace ::Common;
 using namespace ::Size;
+using namespace ::Rect2;
 using namespace ::Enums;
 using namespace ::LayoutItem;
 
@@ -39,12 +41,18 @@ namespace Layout
         return Margins { left, top, right, bottom };
     }
 
-    Rect Handle_contentsRect(HandleRef _this) {
-        return toRect(THIS->contentsRect());
+    Rect2::OwnedRef Handle_contentsRect(HandleRef _this) {
+        return RECT_HEAP_NEW(THIS->contentsRect());
     }
 
     int32_t Handle_count(HandleRef _this) {
         return THIS->count();
+    }
+
+    std::tuple<int32_t,int32_t,int32_t,int32_t> Handle_getContentsMargins(HandleRef _this) {
+        int left, top, right, bottom;
+        THIS->getContentsMargins(&left, &top, &right, &bottom);
+        return std::tuple{ left, top, right, bottom };
     }
 
     int32_t Handle_indexOf(HandleRef _this, LayoutItem::HandleRef layoutItem) {
@@ -135,7 +143,7 @@ namespace Layout
         THIS->update();
     }
 
-    OwnedRef closestAcceptableSize(WidgetHandleRef widget, Size::HandleRef size) {
+    Size::OwnedRef closestAcceptableSize(WidgetHandleRef widget, Size::HandleRef size) {
         return SIZE_HEAP_NEW(QLayout::closestAcceptableSize(AS_QWIDGET_PTR(widget), QSIZE_VALUE(size)));
     }
 }
