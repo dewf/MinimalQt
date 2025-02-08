@@ -3,7 +3,7 @@ module Layout;
 import Object;
 import Common;
 import Size;
-import Rect2;
+import Rect;
 import Enums;
 import LayoutItem;
 
@@ -31,7 +31,7 @@ opaque Handle extends Object.Handle {
     void addItem(LayoutItem.Handle item);
     void addWidget(WidgetHandle w);
     Margins contentsMargins();
-    Rect2.Owned contentsRect();
+    Rect.Owned contentsRect();
     int count();
     Tuple<int,int,int,int> getContentsMargins();
     int indexOf(LayoutItem.Handle layoutItem);

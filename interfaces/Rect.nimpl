@@ -1,4 +1,4 @@
-module Rect2;
+module Rect;
 
 import Common;
 import Point;

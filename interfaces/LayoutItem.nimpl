@@ -3,7 +3,7 @@ module LayoutItem;
 import Enums;
 import Common;
 import Size;
-import Rect2;
+import Rect;
 import SizePolicy;
 
 fwdopaque LayoutHandle = Layout.Handle;
@@ -17,7 +17,7 @@ opaque Handle {
     Alignment alignment();
     SizePolicy.ControlTypes controlTypes();
     Orientations expandingDirections();
-    Rect2.Owned geometry();
+    Rect.Owned geometry();
     bool hasHeightForWidth();
     int heightForWidth(int width);
     void invalidate();
@@ -27,7 +27,7 @@ opaque Handle {
     int minimumHeightForWidth(int width);
     Size.Owned minimumSize();
     void setAlignment(Alignment alignment);
-    void setGeometry(Rect2.Handle r);
+    void setGeometry(Rect.Handle r);
     Size.Owned sizeHint();
     
     // virtual QSpacerItem * spacerItem()

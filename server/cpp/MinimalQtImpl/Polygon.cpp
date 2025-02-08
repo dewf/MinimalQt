@@ -3,13 +3,13 @@
 #include "PointInternal.h"
 #include "PolygonInternal.h"
 #include "PolygonFInternal.h"
-#include "Rect2Internal.h"
+#include "RectInternal.h"
 
 #include "util/convert.h"
 
 using namespace ::Common;
 using namespace ::Point;
-using namespace ::Rect2;
+using namespace ::Rect;
 using namespace ::Enums;
 
 #define THIS (AS_QPOLYGON_PTR(_this))
@@ -26,7 +26,7 @@ namespace Polygon
         return ret;
     }
 
-    Rect2::OwnedRef Handle_boundingRect(HandleRef _this) {
+    Rect::OwnedRef Handle_boundingRect(HandleRef _this) {
         return RECT_HEAP_NEW(THIS->boundingRect());
     }
 
@@ -110,7 +110,7 @@ namespace Polygon
         return POLYGON_HEAP_NEW(qPoints);
     }
 
-    OwnedRef create(Rect2::HandleRef rect, bool closed /* false */) {
+    OwnedRef create(Rect::HandleRef rect, bool closed /* false */) {
         return POLYGON_HEAP_NEW(QRECT_VALUE(rect), closed);
     }
 }

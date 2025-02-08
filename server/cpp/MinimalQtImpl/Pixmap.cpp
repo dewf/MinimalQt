@@ -7,7 +7,7 @@
 #include "TransformInternal.h"
 #include "SizeInternal.h"
 #include "SizeFInternal.h"
-#include "Rect2Internal.h"
+#include "RectInternal.h"
 
 #include "util/convert.h"
 
@@ -15,7 +15,7 @@ using namespace ::PaintDevice;
 using namespace ::Common;
 using namespace ::Size;
 using namespace ::SizeF;
-using namespace ::Rect2;
+using namespace ::Rect;
 using namespace ::Enums;
 using namespace ::Image;
 using namespace ::Color;
@@ -39,7 +39,7 @@ namespace Pixmap
         return THIS->convertFromImage(QIMAGE_VALUE(image), static_cast<Qt::ImageConversionFlags>(flags_.value));
     }
 
-    OwnedRef Handle_copy(HandleRef _this, const std::optional<Rect2::HandleRef>& rect) {
+    OwnedRef Handle_copy(HandleRef _this, const std::optional<Rect::HandleRef>& rect) {
         QRect qRect;
         if (rect.has_value()) qRect = QRECT_VALUE(rect.value());
         return PIXMAP_HEAP_NEW(THIS->copy(qRect));
@@ -113,7 +113,7 @@ namespace Pixmap
         return THIS->loadFromData(qBytes, ccFormat, static_cast<Qt::ImageConversionFlags>(flags_.value));
     }
 
-    Rect2::OwnedRef Handle_rect(HandleRef _this) {
+    Rect::OwnedRef Handle_rect(HandleRef _this) {
         return RECT_HEAP_NEW(THIS->rect());
     }
 
@@ -139,7 +139,7 @@ namespace Pixmap
         return PIXMAP_HEAP_NEW(THIS->scaledToWidth(width,  static_cast<Qt::TransformationMode>(mode)));
     }
 
-    void Handle_scroll(HandleRef _this, int32_t dx, int32_t dy, Rect2::HandleRef rect, const std::optional<Region::HandleRef>& exposed) {
+    void Handle_scroll(HandleRef _this, int32_t dx, int32_t dy, Rect::HandleRef rect, const std::optional<Region::HandleRef>& exposed) {
         QRegion *qExposed = nullptr;
         if (exposed.has_value()) qExposed = AS_QREGION_PTR(exposed.value());
         THIS->scroll(dx, dy, QRECT_VALUE(rect), qExposed);

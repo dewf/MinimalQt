@@ -3,7 +3,7 @@ module Icon;
 import Pixmap;
 import Common;
 import Size;
-import Rect2;
+import Rect;
 import Painter;
 import Enums;
 
@@ -177,7 +177,7 @@ opaque Handle {
     bool isMask();
     bool isNull();
     string name();
-    void paint(Painter.Handle painter, Rect2.Handle rect, Alignment alignment = AlignCenter, Mode mode = Normal, State state = Off);
+    void paint(Painter.Handle painter, Rect.Handle rect, Alignment alignment = AlignCenter, Mode mode = Normal, State state = Off);
     void paint(Painter.Handle painter, int x, int y, int w, int h, Alignment alignment = AlignCenter, Mode mode = Normal, State state = Off);
     Pixmap.Owned pixmap(Size.Handle size, Mode mode = Normal, State state = Off);
     Pixmap.Owned pixmap(int extent, Mode mode = Normal, State state = Off);

@@ -2,14 +2,14 @@
 #include "LayoutItemInternal.h"
 
 #include "SizeInternal.h"
-#include "Rect2Internal.h"
+#include "RectInternal.h"
 
 #include "util/convert.h"
 
 using namespace ::Enums;
 using namespace ::Common;
 using namespace ::Size;
-using namespace ::Rect2;
+using namespace ::Rect;
 using namespace ::SizePolicy;
 
 #define THIS (reinterpret_cast<QLayoutItem*>(_this))
@@ -28,7 +28,7 @@ namespace LayoutItem
         return Orientations(THIS->expandingDirections());
     }
 
-    Rect2::OwnedRef Handle_geometry(HandleRef _this) {
+    Rect::OwnedRef Handle_geometry(HandleRef _this) {
         return RECT_HEAP_NEW(THIS->geometry());
     }
 
@@ -68,7 +68,7 @@ namespace LayoutItem
         THIS->setAlignment(static_cast<Qt::Alignment>(alignment.value));
     }
 
-    void Handle_setGeometry(HandleRef _this, Rect2::HandleRef r) {
+    void Handle_setGeometry(HandleRef _this, Rect::HandleRef r) {
         THIS->setGeometry(QRECT_VALUE(r));
     }
 

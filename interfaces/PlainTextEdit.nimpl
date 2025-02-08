@@ -4,7 +4,7 @@ import Object;
 import Widget;
 import Common;
 import Point;
-import Rect2;
+import Rect;
 import Icon;
 import Enums;
 import AbstractScrollArea;
@@ -28,7 +28,7 @@ interface SignalHandler extends AbstractScrollArea.SignalHandler {
     void selectionChanged();
     void textChanged();
     void undoAvailable(bool available);
-    void updateRequest(Rect2.Handle rect, int dy);
+    void updateRequest(Rect.Handle rect, int dy);
 }
 
 enum LineWrapMode {
@@ -46,8 +46,8 @@ opaque Handle extends AbstractScrollArea.Handle {
     Menu.Handle createStandardContextMenu(Point.Handle position);
     TextCharFormat.Owned currentCharFormat();
     TextCursor.Owned cursorForPosition(Point.Handle pos);
-    Rect2.Owned cursorRect();
-    Rect2.Owned cursorRect(TextCursor.Handle cursor);
+    Rect.Owned cursorRect();
+    Rect.Owned cursorRect(TextCursor.Handle cursor);
     int cursorWidth();
     TextDocument.Handle document();
     string documentTitle();

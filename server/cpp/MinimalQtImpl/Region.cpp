@@ -3,13 +3,13 @@
 
 #include "PointInternal.h"
 #include "PolygonInternal.h"
-#include "Rect2Internal.h"
+#include "RectInternal.h"
 
 #include "util/convert.h"
 
 using namespace ::Common;
 using namespace ::Point;
-using namespace ::Rect2;
+using namespace ::Rect;
 using namespace ::Polygon;
 using namespace ::Enums;
 
@@ -17,7 +17,7 @@ using namespace ::Enums;
 
 namespace Region
 {
-    Rect2::OwnedRef Handle_boundingRect(HandleRef _this) {
+    Rect::OwnedRef Handle_boundingRect(HandleRef _this) {
         return RECT_HEAP_NEW(THIS->boundingRect());
     }
 
@@ -25,11 +25,11 @@ namespace Region
         return THIS->contains(QPOINT_VALUE(p));
     }
 
-    bool Handle_contains(HandleRef _this, Rect2::HandleRef r) {
+    bool Handle_contains(HandleRef _this, Rect::HandleRef r) {
         return THIS->contains(QRECT_VALUE(r));
     }
 
-    OwnedRef Handle_intersected(HandleRef _this, Rect2::HandleRef rect) {
+    OwnedRef Handle_intersected(HandleRef _this, Rect::HandleRef rect) {
         return REGION_HEAP_NEW(THIS->intersected(QRECT_VALUE(rect)));
     }
 
@@ -37,7 +37,7 @@ namespace Region
         return REGION_HEAP_NEW(THIS->intersected(QREGION_VALUE(r)));
     }
 
-    bool Handle_intersects(HandleRef _this, Rect2::HandleRef rect) {
+    bool Handle_intersects(HandleRef _this, Rect::HandleRef rect) {
         return THIS->intersects(QRECT_VALUE(rect));
     }
 
@@ -57,12 +57,12 @@ namespace Region
         return THIS->rectCount();
     }
 
-    std::vector<Rect2::OwnedRef> Handle_rects(HandleRef _this) {
-        return fromQSpan<const QRect,Rect2::OwnedRef>(THIS->rects(), [](auto r) { return RECT_HEAP_NEW(r); });
+    std::vector<Rect::OwnedRef> Handle_rects(HandleRef _this) {
+        return fromQSpan<const QRect,Rect::OwnedRef>(THIS->rects(), [](auto r) { return RECT_HEAP_NEW(r); });
     }
 
-    void Handle_setRects(HandleRef _this, const std::vector<Rect2::HandleRef>& rects) {
-        const auto qVec = vectorMap<Rect2::HandleRef,QRect>(rects, [](auto r) { return QRECT_VALUE(r); });
+    void Handle_setRects(HandleRef _this, const std::vector<Rect::HandleRef>& rects) {
+        const auto qVec = vectorMap<Rect::HandleRef,QRect>(rects, [](auto r) { return QRECT_VALUE(r); });
         THIS->setRects(qVec);
     }
 
@@ -86,7 +86,7 @@ namespace Region
         return REGION_HEAP_NEW(THIS->translated(QPOINT_VALUE(p)));
     }
 
-    OwnedRef Handle_united(HandleRef _this, Rect2::HandleRef rect) {
+    OwnedRef Handle_united(HandleRef _this, Rect::HandleRef rect) {
         return REGION_HEAP_NEW(THIS->united(QRECT_VALUE(rect)));
     }
 
@@ -114,7 +114,7 @@ namespace Region
         return REGION_HEAP_NEW(x, y, w, h, static_cast<QRegion::RegionType>(t));
     }
 
-    OwnedRef create(Rect2::HandleRef r, RegionType t /* RegionType::Rectangle */) {
+    OwnedRef create(Rect::HandleRef r, RegionType t /* RegionType::Rectangle */) {
         return REGION_HEAP_NEW(QRECT_VALUE(r), static_cast<QRegion::RegionType>(t));
     }
 

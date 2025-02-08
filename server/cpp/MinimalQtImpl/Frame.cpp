@@ -1,13 +1,13 @@
 #include "generated/Frame.h"
 #include "FrameInternal.h"
 
-#include "Rect2Internal.h"
+#include "RectInternal.h"
 
 #include "util/convert.h"
 
 using namespace ::Object;
 using namespace ::Common;
-using namespace ::Rect2;
+using namespace ::Rect;
 using namespace ::Icon;
 using namespace ::Widget;
 using namespace ::Enums;
@@ -16,7 +16,7 @@ using namespace ::Enums;
 
 namespace Frame
 {
-    Rect2::OwnedRef Handle_frameRect(HandleRef _this) {
+    Rect::OwnedRef Handle_frameRect(HandleRef _this) {
         return RECT_HEAP_NEW(THIS->frameRect());
     }
 
@@ -44,7 +44,7 @@ namespace Frame
         return THIS->midLineWidth();
     }
 
-    void Handle_setFrameRect(HandleRef _this, Rect2::HandleRef r) {
+    void Handle_setFrameRect(HandleRef _this, Rect::HandleRef r) {
         THIS->setFrameRect(QRECT_VALUE(r));
     }
 

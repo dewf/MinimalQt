@@ -19,7 +19,7 @@
 #include "PointInternal.h"
 #include "SizeInternal.h"
 #include "SafeReturnInternal.h"
-#include "Rect2Internal.h"
+#include "RectInternal.h"
 
 #include <QPaintEvent>
 
@@ -30,7 +30,7 @@ using namespace ::Common;
 using namespace ::Point;
 using namespace ::PointF;
 using namespace ::Size;
-using namespace ::Rect2;
+using namespace ::Rect;
 using namespace ::Layout;
 using namespace ::Painter;
 using namespace ::Icon;
@@ -134,7 +134,7 @@ namespace Widget
         return reinterpret_cast<HandleRef>(THIS->childAt(QPOINTF_VALUE(p)));
     }
 
-    Rect2::OwnedRef Handle_childrenRect(HandleRef _this) {
+    Rect::OwnedRef Handle_childrenRect(HandleRef _this) {
         return RECT_HEAP_NEW(THIS->childrenRect());
     }
 
@@ -154,7 +154,7 @@ namespace Widget
         return toMargins(THIS->contentsMargins());
     }
 
-    Rect2::OwnedRef Handle_contentsRect(HandleRef _this) {
+    Rect::OwnedRef Handle_contentsRect(HandleRef _this) {
         return RECT_HEAP_NEW(THIS->contentsRect());
     }
 
@@ -190,7 +190,7 @@ namespace Widget
         return FONT_HEAP_NEW(THIS->font());
     }
 
-    Rect2::OwnedRef Handle_frameGeometry(HandleRef _this) {
+    Rect::OwnedRef Handle_frameGeometry(HandleRef _this) {
         return RECT_HEAP_NEW(THIS->frameGeometry());
     }
 
@@ -198,11 +198,11 @@ namespace Widget
         return SIZE_HEAP_NEW(THIS->frameSize());
     }
 
-    Rect2::OwnedRef Handle_geometry(HandleRef _this) {
+    Rect::OwnedRef Handle_geometry(HandleRef _this) {
         return RECT_HEAP_NEW(THIS->geometry());
     }
 
-    Pixmap::OwnedRef Handle_grab(HandleRef _this, const std::optional<Rect2::HandleRef>& rectangle) {
+    Pixmap::OwnedRef Handle_grab(HandleRef _this, const std::optional<Rect::HandleRef>& rectangle) {
         auto qRect = QRect(QPoint(0, 0), QSize(-1, -1));
         if (rectangle.has_value()) qRect = QRECT_VALUE(rectangle.value());
         return PIXMAP_HEAP_NEW(THIS->grab(qRect));
@@ -436,7 +436,7 @@ namespace Widget
         return reinterpret_cast<HandleRef>(THIS->nextInFocusChain());
     }
 
-    Rect2::OwnedRef Handle_normalGeometry(HandleRef _this) {
+    Rect::OwnedRef Handle_normalGeometry(HandleRef _this) {
         return RECT_HEAP_NEW(THIS->normalGeometry());
     }
 
@@ -456,7 +456,7 @@ namespace Widget
         return reinterpret_cast<HandleRef>(THIS->previousInFocusChain());
     }
 
-    Rect2::OwnedRef Handle_rect(HandleRef _this) {
+    Rect::OwnedRef Handle_rect(HandleRef _this) {
         return RECT_HEAP_NEW(THIS->rect());
     }
 
@@ -492,7 +492,7 @@ namespace Widget
         THIS->render(reinterpret_cast<QPainter*>(painter), qTargetOffset, qSourceRegion, static_cast<QWidget::RenderFlags>(renderFlags.value));
     }
 
-    void Handle_repaint(HandleRef _this, Rect2::HandleRef rect) {
+    void Handle_repaint(HandleRef _this, Rect::HandleRef rect) {
         THIS->repaint(QRECT_VALUE(rect));
     }
 
@@ -531,7 +531,7 @@ namespace Widget
         THIS->scroll(dx, dy);
     }
 
-    void Handle_scroll(HandleRef _this, int32_t dx, int32_t dy, Rect2::HandleRef r) {
+    void Handle_scroll(HandleRef _this, int32_t dx, int32_t dy, Rect::HandleRef r) {
         THIS->scroll(dx, dy, QRECT_VALUE(r));
     }
 
@@ -615,7 +615,7 @@ namespace Widget
         THIS->setFont(QFONT_VALUE(font));
     }
 
-    void Handle_setGeometry(HandleRef _this, Rect2::HandleRef r) {
+    void Handle_setGeometry(HandleRef _this, Rect::HandleRef r) {
         THIS->setGeometry(QRECT_VALUE(r));
     }
 
@@ -835,7 +835,7 @@ namespace Widget
         THIS->unsetLocale();
     }
 
-    void Handle_update(HandleRef _this, Rect2::HandleRef rect) {
+    void Handle_update(HandleRef _this, Rect::HandleRef rect) {
         THIS->update(QRECT_VALUE(rect));
     }
 

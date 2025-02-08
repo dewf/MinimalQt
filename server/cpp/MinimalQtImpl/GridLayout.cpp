@@ -4,13 +4,13 @@
 #include "LayoutInternal.h"
 #include "LayoutItemInternal.h"
 #include "WidgetInternal.h"
-#include "Rect2Internal.h"
+#include "RectInternal.h"
 
 #include "util/convert.h"
 
 using namespace ::Object;
 using namespace ::Common;
-using namespace ::Rect2;
+using namespace ::Rect;
 using namespace ::Widget;
 using namespace ::Layout;
 using namespace ::Enums;

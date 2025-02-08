@@ -8,7 +8,7 @@
 #include "PointFInternal.h"
 #include "RegionInternal.h"
 #include "SizeInternal.h"
-#include "Rect2Internal.h"
+#include "RectInternal.h"
 
 #include "util/convert.h"
 
@@ -19,7 +19,7 @@ using namespace ::Common;
 using namespace ::Point;
 using namespace ::PointF;
 using namespace ::Size;
-using namespace ::Rect2;
+using namespace ::Rect;
 using namespace ::Cursor;
 using namespace ::Icon;
 using namespace ::Region;
@@ -64,7 +64,7 @@ namespace Window
         return reinterpret_cast<Object::HandleRef>(THIS->focusObject());
     }
 
-    Rect2::OwnedRef Handle_frameGeometry(HandleRef _this) {
+    Rect::OwnedRef Handle_frameGeometry(HandleRef _this) {
         return RECT_HEAP_NEW(THIS->frameGeometry());
     }
 
@@ -76,7 +76,7 @@ namespace Window
         return POINT_HEAP_NEW(THIS->framePosition());
     }
 
-    Rect2::OwnedRef Handle_geometry(HandleRef _this) {
+    Rect::OwnedRef Handle_geometry(HandleRef _this) {
         return RECT_HEAP_NEW(THIS->geometry());
     }
 
@@ -358,7 +358,7 @@ namespace Window
         THIS->requestUpdate();
     }
 
-    void Handle_setGeometry(HandleRef _this, Rect2::HandleRef rect) {
+    void Handle_setGeometry(HandleRef _this, Rect::HandleRef rect) {
         THIS->setGeometry(QRECT_VALUE(rect));
     }
 

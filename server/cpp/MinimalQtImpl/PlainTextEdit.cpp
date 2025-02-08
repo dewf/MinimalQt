@@ -10,7 +10,7 @@
 #include "UrlInternal.h"
 #include "VariantInternal.h"
 #include "WidgetInternal.h"
-#include "Rect2Internal.h"
+#include "RectInternal.h"
 
 #include "util/convert.h"
 
@@ -18,7 +18,7 @@ using namespace ::Object;
 using namespace ::Widget;
 using namespace ::Common;
 using namespace ::Point;
-using namespace ::Rect2;
+using namespace ::Rect;
 using namespace ::Icon;
 using namespace ::Enums;
 using namespace ::AbstractScrollArea;
@@ -73,11 +73,11 @@ namespace PlainTextEdit
         return TEXTCURSOR_HEAP_NEW(THIS->cursorForPosition(QPOINT_VALUE(pos)));
     }
 
-    Rect2::OwnedRef Handle_cursorRect(HandleRef _this) {
+    Rect::OwnedRef Handle_cursorRect(HandleRef _this) {
         return RECT_HEAP_NEW(THIS->cursorRect());
     }
 
-    Rect2::OwnedRef Handle_cursorRect(HandleRef _this, TextCursor::HandleRef cursor) {
+    Rect::OwnedRef Handle_cursorRect(HandleRef _this, TextCursor::HandleRef cursor) {
         return RECT_HEAP_NEW(THIS->cursorRect());
     }
 
@@ -361,7 +361,7 @@ namespace PlainTextEdit
     SignalConnectionRef Handle_connect_UpdateRequest(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QPlainTextEdit::updateRequest, [handler](const QRect &rect, int dy) {
             // TODO: ConstHandle
-            handler->updateRequest((Rect2::HandleRef)&rect, dy);
+            handler->updateRequest((Rect::HandleRef)&rect, dy);
         });
         return new __SignalConnection { connection };
     }

@@ -4,14 +4,14 @@
 #include "PixmapInternal.h"
 #include "PainterInternal.h"
 #include "SizeInternal.h"
-#include "Rect2Internal.h"
+#include "RectInternal.h"
 
 #include "util/convert.h"
 
 using namespace ::Pixmap;
 using namespace ::Common;
 using namespace ::Size;
-using namespace ::Rect2;
+using namespace ::Rect;
 using namespace ::Painter;
 using namespace ::Enums;
 
@@ -54,7 +54,7 @@ namespace Icon
         return THIS->name().toStdString();
     }
 
-    void Handle_paint(HandleRef _this, Painter::HandleRef painter, Rect2::HandleRef rect, Alignment alignment /* Alignment::AlignCenter */, Mode mode /* Mode::Normal */, State state /* State::Off */) {
+    void Handle_paint(HandleRef _this, Painter::HandleRef painter, Rect::HandleRef rect, Alignment alignment /* Alignment::AlignCenter */, Mode mode /* Mode::Normal */, State state /* State::Off */) {
         THIS->paint(AS_QPAINTER_PTR(painter), QRECT_VALUE(rect), static_cast<Qt::Alignment>(alignment.value), static_cast<QIcon::Mode>(mode), static_cast<QIcon::State>(state));
     }
 

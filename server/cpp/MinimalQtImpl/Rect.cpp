@@ -1,5 +1,5 @@
-#include "generated/Rect2.h"
-#include "Rect2Internal.h"
+#include "generated/Rect.h"
+#include "RectInternal.h"
 
 #include "PointInternal.h"
 #include "SizeInternal.h"
@@ -12,7 +12,7 @@ using namespace ::Size;
 
 #define THIS (AS_QRECT_PTR(_this))
 
-namespace Rect2
+namespace Rect
 {
     int32_t Handle_hashCode(HandleRef _this) {
         return static_cast<int32_t>(qHash(*THIS));

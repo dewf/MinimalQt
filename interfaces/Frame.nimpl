@@ -2,7 +2,7 @@ module Frame;
 
 import Object;
 import Common;
-import Rect2;
+import Rect;
 import Icon;
 import Widget;
 import Enums;
@@ -30,14 +30,14 @@ enum Shadow {
 
 opaque Handle extends Widget.Handle {
 
-    Rect2.Owned frameRect();
+    Rect.Owned frameRect();
     Shadow frameShadow();
     Shape frameShape();
     int frameStyle();
     int frameWidth();
     int lineWidth();
     int midLineWidth();
-    void setFrameRect(Rect2.Handle r);
+    void setFrameRect(Rect.Handle r);
     void setFrameShadow(Shadow shadow);
     void setFrameShape(Shape shape);
     void setFrameStyle(int style);

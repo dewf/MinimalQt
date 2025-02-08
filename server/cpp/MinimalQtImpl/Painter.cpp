@@ -15,14 +15,14 @@
 #include "RegionInternal.h"
 #include "TextOptionInternal.h"
 #include "TransformInternal.h"
-#include "Rect2Internal.h"
+#include "RectInternal.h"
 
 #include "util/convert.h"
 
 using namespace ::Common;
 using namespace ::Point;
 using namespace ::PointF;
-using namespace ::Rect2;
+using namespace ::Rect;
 using namespace ::Enums;
 using namespace ::Color;
 using namespace ::Pixmap;
@@ -74,7 +74,7 @@ namespace Painter
         return toRectF(THIS->boundingRect(toQRectF(rectangle), flags_, QString::fromStdString(text)));
     }
 
-    Rect2::OwnedRef Handle_boundingRect(HandleRef _this, Rect2::HandleRef rectangle, int32_t flags_, const std::string& text) {
+    Rect::OwnedRef Handle_boundingRect(HandleRef _this, Rect::HandleRef rectangle, int32_t flags_, const std::string& text) {
         return RECT_HEAP_NEW(THIS->boundingRect(QRECT_VALUE(rectangle), flags_, QString::fromStdString(text)));
     }
 
@@ -84,7 +84,7 @@ namespace Painter
         return toRectF(THIS->boundingRect(toQRectF(rectangle), QString::fromStdString(text), qOption));
     }
 
-    Rect2::OwnedRef Handle_boundingRect(HandleRef _this, int32_t x, int32_t y, int32_t w, int32_t h, int32_t flags_, const std::string& text) {
+    Rect::OwnedRef Handle_boundingRect(HandleRef _this, int32_t x, int32_t y, int32_t w, int32_t h, int32_t flags_, const std::string& text) {
         return RECT_HEAP_NEW(THIS->boundingRect(x, y, w, h, flags_, QString::fromStdString(text)));
     }
 
@@ -128,7 +128,7 @@ namespace Painter
         THIS->drawArc(toQRectF(rectangle), startAngle, spanAngle);
     }
 
-    void Handle_drawArc(HandleRef _this, Rect2::HandleRef rectangle, int32_t startAngle, int32_t spanAngle) {
+    void Handle_drawArc(HandleRef _this, Rect::HandleRef rectangle, int32_t startAngle, int32_t spanAngle) {
         THIS->drawArc(QRECT_VALUE(rectangle), startAngle, spanAngle);
     }
 
@@ -140,7 +140,7 @@ namespace Painter
         THIS->drawChord(toQRectF(rectangle), startAngle, spanAngle);
     }
 
-    void Handle_drawChord(HandleRef _this, Rect2::HandleRef rectangle, int32_t startAngle, int32_t spanAngle) {
+    void Handle_drawChord(HandleRef _this, Rect::HandleRef rectangle, int32_t startAngle, int32_t spanAngle) {
         THIS->drawChord(QRECT_VALUE(rectangle), startAngle, spanAngle);
     }
 
@@ -170,7 +170,7 @@ namespace Painter
         THIS->drawEllipse(toQRectF(rectangle));
     }
 
-    void Handle_drawEllipse(HandleRef _this, Rect2::HandleRef rectangle) {
+    void Handle_drawEllipse(HandleRef _this, Rect::HandleRef rectangle) {
         THIS->drawEllipse(QRECT_VALUE(rectangle));
     }
 
@@ -198,7 +198,7 @@ namespace Painter
         THIS->drawImage(QPOINTF_VALUE(point), QIMAGE_VALUE(image));
     }
 
-    void Handle_drawImage(HandleRef _this, Rect2::HandleRef rectangle, Image::HandleRef image) {
+    void Handle_drawImage(HandleRef _this, Rect::HandleRef rectangle, Image::HandleRef image) {
         THIS->drawImage(QRECT_VALUE(rectangle), QIMAGE_VALUE(image));
     }
 
@@ -206,7 +206,7 @@ namespace Painter
         THIS->drawImage(toQRectF(rectangle), QIMAGE_VALUE(image));
     }
 
-    void Handle_drawImage(HandleRef _this, Point::HandleRef point, Image::HandleRef image, Rect2::HandleRef source, ImageConversionFlags flags_ /* ImageConversionFlags::AutoColor */) {
+    void Handle_drawImage(HandleRef _this, Point::HandleRef point, Image::HandleRef image, Rect::HandleRef source, ImageConversionFlags flags_ /* ImageConversionFlags::AutoColor */) {
         THIS->drawImage(QPOINT_VALUE(point), QIMAGE_VALUE(image), QRECT_VALUE(source), static_cast<Qt::ImageConversionFlags>(flags_.value));
     }
 
@@ -214,7 +214,7 @@ namespace Painter
         THIS->drawImage(QPOINTF_VALUE(point), QIMAGE_VALUE(image), toQRectF(source), static_cast<Qt::ImageConversionFlags>(flags_.value));
     }
 
-    void Handle_drawImage(HandleRef _this, Rect2::HandleRef target, Image::HandleRef image, Rect2::HandleRef source, ImageConversionFlags flags_ /* ImageConversionFlags::AutoColor */) {
+    void Handle_drawImage(HandleRef _this, Rect::HandleRef target, Image::HandleRef image, Rect::HandleRef source, ImageConversionFlags flags_ /* ImageConversionFlags::AutoColor */) {
         THIS->drawImage(QRECT_VALUE(target), QIMAGE_VALUE(image), QRECT_VALUE(source), static_cast<Qt::ImageConversionFlags>(flags_.value));
     }
 
@@ -254,7 +254,7 @@ namespace Painter
         THIS->drawPie(toQRectF(rectangle), startAngle, spanAngle);
     }
 
-    void Handle_drawPie(HandleRef _this, Rect2::HandleRef rectangle, int32_t startAngle, int32_t spanAngle) {
+    void Handle_drawPie(HandleRef _this, Rect::HandleRef rectangle, int32_t startAngle, int32_t spanAngle) {
         THIS->drawPie(QRECT_VALUE(rectangle), startAngle, spanAngle);
     }
 
@@ -274,11 +274,11 @@ namespace Painter
         THIS->drawPixmap(QPOINTF_VALUE(point), QPIXMAP_VALUE(pixmap));
     }
 
-    void Handle_drawPixmap(HandleRef _this, Rect2::HandleRef rectangle, Pixmap::HandleRef pixmap) {
+    void Handle_drawPixmap(HandleRef _this, Rect::HandleRef rectangle, Pixmap::HandleRef pixmap) {
         THIS->drawPixmap(QRECT_VALUE(rectangle), QPIXMAP_VALUE(pixmap));
     }
 
-    void Handle_drawPixmap(HandleRef _this, Point::HandleRef point, Pixmap::HandleRef pixmap, Rect2::HandleRef source) {
+    void Handle_drawPixmap(HandleRef _this, Point::HandleRef point, Pixmap::HandleRef pixmap, Rect::HandleRef source) {
         THIS->drawPixmap(QPOINT_VALUE(point), QPIXMAP_VALUE(pixmap), QRECT_VALUE(source));
     }
 
@@ -286,7 +286,7 @@ namespace Painter
         THIS->drawPixmap(QPOINTF_VALUE(point), QPIXMAP_VALUE(pixmap), toQRectF(source));
     }
 
-    void Handle_drawPixmap(HandleRef _this, Rect2::HandleRef target, Pixmap::HandleRef pixmap, Rect2::HandleRef source) {
+    void Handle_drawPixmap(HandleRef _this, Rect::HandleRef target, Pixmap::HandleRef pixmap, Rect::HandleRef source) {
         THIS->drawPixmap(QRECT_VALUE(target), QPIXMAP_VALUE(pixmap), QRECT_VALUE(source));
     }
 
@@ -381,7 +381,7 @@ namespace Painter
         THIS->drawRect(toQRectF(rectangle));
     }
 
-    void Handle_drawRect(HandleRef _this, Rect2::HandleRef rectangle) {
+    void Handle_drawRect(HandleRef _this, Rect::HandleRef rectangle) {
         THIS->drawRect(QRECT_VALUE(rectangle));
     }
 
@@ -394,8 +394,8 @@ namespace Painter
         THIS->drawRects(qRects.data(), static_cast<int>(qRects.size()));
     }
 
-    void Handle_drawRects(HandleRef _this, const std::vector<Rect2::HandleRef>& rectangles) {
-        const auto qRects = vectorMap<Rect2::HandleRef,QRect>(rectangles, [](auto r) { return QRECT_VALUE(r); });
+    void Handle_drawRects(HandleRef _this, const std::vector<Rect::HandleRef>& rectangles) {
+        const auto qRects = vectorMap<Rect::HandleRef,QRect>(rectangles, [](auto r) { return QRECT_VALUE(r); });
         THIS->drawRects(qRects.data(), static_cast<int>(qRects.size()));
     }
 
@@ -403,7 +403,7 @@ namespace Painter
         THIS->drawRoundedRect(toQRectF(rect), xRadius, yRadius, static_cast<Qt::SizeMode>(mode));
     }
 
-    void Handle_drawRoundedRect(HandleRef _this, Rect2::HandleRef rect, double xRadius, double yRadius, SizeMode mode /* SizeMode::AbsoluteSize */) {
+    void Handle_drawRoundedRect(HandleRef _this, Rect::HandleRef rect, double xRadius, double yRadius, SizeMode mode /* SizeMode::AbsoluteSize */) {
         THIS->drawRoundedRect(QRECT_VALUE(rect), xRadius, yRadius, static_cast<Qt::SizeMode>(mode));
     }
 
@@ -429,7 +429,7 @@ namespace Painter
         THIS->drawText(x, y, QString::fromStdString(text));
     }
 
-    void Handle_drawText(HandleRef _this, Rect2::HandleRef rectangle, int32_t flags_, const std::string& text, const std::optional<Rect2::HandleRef>& boundingRect) {
+    void Handle_drawText(HandleRef _this, Rect::HandleRef rectangle, int32_t flags_, const std::string& text, const std::optional<Rect::HandleRef>& boundingRect) {
         QRect brValue;
         QRect *ptr = nullptr;
         if (boundingRect.has_value()) {
@@ -449,7 +449,7 @@ namespace Painter
         THIS->drawText(toQRectF(rectangle), flags_, QString::fromStdString(text), ptr);
     }
 
-    void Handle_drawText(HandleRef _this, int32_t x, int32_t y, int32_t width, int32_t height, int32_t flags_, const std::string& text, const std::optional<Rect2::HandleRef>& boundingRect) {
+    void Handle_drawText(HandleRef _this, int32_t x, int32_t y, int32_t width, int32_t height, int32_t flags_, const std::string& text, const std::optional<Rect::HandleRef>& boundingRect) {
         QRect brValue;
         QRect *ptr = nullptr;
         if (boundingRect.has_value()) {
@@ -465,7 +465,7 @@ namespace Painter
         THIS->drawTiledPixmap(toQRectF(rectangle), QPIXMAP_VALUE(pixmap), offset);
     }
 
-    void Handle_drawTiledPixmap(HandleRef _this, Rect2::HandleRef rectangle, Pixmap::HandleRef pixmap, const std::optional<Point::HandleRef>& position) {
+    void Handle_drawTiledPixmap(HandleRef _this, Rect::HandleRef rectangle, Pixmap::HandleRef pixmap, const std::optional<Point::HandleRef>& position) {
         QPoint offset;
         if (position.has_value()) offset = QPOINT_VALUE(position.value());
         THIS->drawTiledPixmap(QRECT_VALUE(rectangle), QPIXMAP_VALUE(pixmap), offset);
@@ -487,7 +487,7 @@ namespace Painter
         THIS->eraseRect(toQRectF(rectangle));
     }
 
-    void Handle_eraseRect(HandleRef _this, Rect2::HandleRef rectangle) {
+    void Handle_eraseRect(HandleRef _this, Rect::HandleRef rectangle) {
         THIS->eraseRect(QRECT_VALUE(rectangle));
     }
 
@@ -503,23 +503,23 @@ namespace Painter
         THIS->fillRect(toQRectF(rectangle), QBRUSH_VALUE(brush));
     }
 
-    void Handle_fillRect(HandleRef _this, Rect2::HandleRef rectangle, Preset preset) {
+    void Handle_fillRect(HandleRef _this, Rect::HandleRef rectangle, Preset preset) {
         THIS->fillRect(QRECT_VALUE(rectangle), static_cast<QGradient::Preset>(preset));
     }
 
-    void Handle_fillRect(HandleRef _this, Rect2::HandleRef rectangle, BrushStyle style) {
+    void Handle_fillRect(HandleRef _this, Rect::HandleRef rectangle, BrushStyle style) {
         THIS->fillRect(QRECT_VALUE(rectangle), static_cast<Qt::BrushStyle>(style));
     }
 
-    void Handle_fillRect(HandleRef _this, Rect2::HandleRef rectangle, GlobalColor color) {
+    void Handle_fillRect(HandleRef _this, Rect::HandleRef rectangle, GlobalColor color) {
         THIS->fillRect(QRECT_VALUE(rectangle), static_cast<Qt::GlobalColor>(color));
     }
 
-    void Handle_fillRect(HandleRef _this, Rect2::HandleRef rectangle, Brush::HandleRef brush) {
+    void Handle_fillRect(HandleRef _this, Rect::HandleRef rectangle, Brush::HandleRef brush) {
         THIS->fillRect(QRECT_VALUE(rectangle), QBRUSH_VALUE(brush));
     }
 
-    void Handle_fillRect(HandleRef _this, Rect2::HandleRef rectangle, Color::HandleRef color) {
+    void Handle_fillRect(HandleRef _this, Rect::HandleRef rectangle, Color::HandleRef color) {
         THIS->fillRect(QRECT_VALUE(rectangle), QCOLOR_VALUE(color));
     }
 
@@ -647,7 +647,7 @@ namespace Painter
         THIS->setClipRect(x, y, width, height, static_cast<Qt::ClipOperation>(operation));
     }
 
-    void Handle_setClipRect(HandleRef _this, Rect2::HandleRef rectangle, ClipOperation operation /* ClipOperation::ReplaceClip */) {
+    void Handle_setClipRect(HandleRef _this, Rect::HandleRef rectangle, ClipOperation operation /* ClipOperation::ReplaceClip */) {
         THIS->setClipRect(QRECT_VALUE(rectangle), static_cast<Qt::ClipOperation>(operation));
     }
 
@@ -703,7 +703,7 @@ namespace Painter
         THIS->setViewTransformEnabled(enable);
     }
 
-    void Handle_setViewport(HandleRef _this, Rect2::HandleRef rectangle) {
+    void Handle_setViewport(HandleRef _this, Rect::HandleRef rectangle) {
         THIS->setViewport(QRECT_VALUE(rectangle));
     }
 
@@ -711,7 +711,7 @@ namespace Painter
         THIS->setViewport(x, y, width, height);
     }
 
-    void Handle_setWindow(HandleRef _this, Rect2::HandleRef rectangle) {
+    void Handle_setWindow(HandleRef _this, Rect::HandleRef rectangle) {
         THIS->setWindow(QRECT_VALUE(rectangle));
     }
 
@@ -759,11 +759,11 @@ namespace Painter
         return THIS->viewTransformEnabled();
     }
 
-    Rect2::OwnedRef Handle_viewport(HandleRef _this) {
+    Rect::OwnedRef Handle_viewport(HandleRef _this) {
         return RECT_HEAP_NEW(THIS->viewport());
     }
 
-    Rect2::OwnedRef Handle_window(HandleRef _this) {
+    Rect::OwnedRef Handle_window(HandleRef _this) {
         return RECT_HEAP_NEW(THIS->window());
     }
 

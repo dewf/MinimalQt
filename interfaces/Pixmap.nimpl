@@ -3,7 +3,7 @@ import PaintDevice;
 import Common;
 import Size;
 import SizeF;
-import Rect2;
+import Rect;
 import Enums;
 import Image;
 import Color;
@@ -19,7 +19,7 @@ opaque Handle {         // we don't directly inherit from PaintDevice, because t
 
     int64 cacheKey();
     bool convertFromImage(Image.Handle image, ImageConversionFlags flags_ = AutoColor);
-    Owned copy(Option<Rect2.Handle> rect);
+    Owned copy(Option<Rect.Handle> rect);
     Owned copy(int x, int y, int width, int height);
 
     // QBitmap createHeuristicMask(bool clipTight = true) const
@@ -43,7 +43,7 @@ opaque Handle {         // we don't directly inherit from PaintDevice, because t
     // QBitmap mask() const
     // TODO
 
-    Rect2.Owned rect();
+    Rect.Owned rect();
     bool save(string fileName, Option<string> format, int quality = -1);
 
     // bool save(QIODevice *device, const char *format = nullptr, int quality = -1) const
@@ -53,7 +53,7 @@ opaque Handle {         // we don't directly inherit from PaintDevice, because t
     Owned scaled(int width, int height, AspectRatioMode aspectRatioMode = IgnoreAspectRatio, TransformationMode transformMode = FastTransformation);
     Owned scaledToHeight(int height, TransformationMode mode = FastTransformation);
     Owned scaledToWidth(int width, TransformationMode mode = FastTransformation);
-    void scroll(int dx, int dy, Rect2.Handle rect, Option<Region.Handle> exposed);
+    void scroll(int dx, int dy, Rect.Handle rect, Option<Region.Handle> exposed);
     void scroll(int dx, int dy, int x, int y, int width, int height, Option<Region.Handle> exposed);
     void setDevicePixelRatio(double scaleFactor);
 

@@ -5,33 +5,33 @@ import Common;
 import Point;
 import Size;
 import SizeF;
-import Rect2;
+import Rect;
 import Enums;
 import Pixmap;
 import Transform;
 
 interface SignalHandler extends Object.SignalHandler {
-    void availableGeometryChanged(Rect2.Handle geometry);
-    void geometryChanged(Rect2.Handle geometry);
+    void availableGeometryChanged(Rect.Handle geometry);
+    void geometryChanged(Rect.Handle geometry);
     void logicalDotsPerInchChanged(double dpi);
     void orientationChanged(ScreenOrientation orientation);
     void physicalDotsPerInchChanged(double dpi);
     void physicalSizeChanged(SizeF.Handle size);
     void primaryOrientationChanged(ScreenOrientation orientation);
     void refreshRateChanged(double refreshRate);
-    void virtualGeometryChanged(Rect2.Handle rect);
+    void virtualGeometryChanged(Rect.Handle rect);
 }
 
 @nodispose
 opaque Handle extends Object.Handle {
     int angleBetween(ScreenOrientation a, ScreenOrientation b);
-    Rect2.Owned availableGeometry();
+    Rect.Owned availableGeometry();
     Size.Owned availableSize();
-    Rect2.Owned availableVirtualGeometry();
+    Rect.Owned availableVirtualGeometry();
     Size.Owned availableVirtualSize();
     int depth();
     double devicePixelRatio();
-    Rect2.Owned geometry();
+    Rect.Owned geometry();
     Pixmap.Owned grabWindow(size_t window = 0, int x = 0, int y = 0, int width = -1, int height = -1);
 
     // QPlatformScreen * handle() const
@@ -42,7 +42,7 @@ opaque Handle extends Object.Handle {
     double logicalDotsPerInchX();
     double logicalDotsPerInchY();
     string manufacturer();
-    Rect2.Owned mapBetween(ScreenOrientation a, ScreenOrientation b, Rect2.Handle rect);
+    Rect.Owned mapBetween(ScreenOrientation a, ScreenOrientation b, Rect.Handle rect);
     string model();
     string name();
 
@@ -58,8 +58,8 @@ opaque Handle extends Object.Handle {
     double refreshRate();
     string serialNumber();
     Size.Owned size();
-    Transform.Owned transformBetween(ScreenOrientation a, ScreenOrientation b, Rect2.Handle target);
-    Rect2.Owned virtualGeometry();
+    Transform.Owned transformBetween(ScreenOrientation a, ScreenOrientation b, Rect.Handle target);
+    Rect.Owned virtualGeometry();
     Handle virtualSiblingAt(Point.Handle point);
     Array<Handle> virtualSiblings();
     Size.Owned virtualSize();

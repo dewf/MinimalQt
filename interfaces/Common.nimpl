@@ -2,13 +2,6 @@ module Common;
 
 typedef uint32 Rgb;
 
-struct Rect {
-    int x;
-    int y;
-    int width;
-    int height;
-}
-
 struct RectF {
     double x;
     double y;

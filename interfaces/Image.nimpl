@@ -4,7 +4,7 @@ import Common;
 import Size;
 import SizeF;
 import Point;
-import Rect2;
+import Rect;
 import Enums;
 import Color;
 import Transform;
@@ -97,7 +97,7 @@ opaque Handle {
     // QImage convertedToColorSpace(const QColorSpace &colorSpace, QImage::Format format, Qt::ImageConversionFlags flags = Qt::AutoColor) &&
     // QImage convertedToColorSpace(const QColorSpace &colorSpace, QImage::Format format, Qt::ImageConversionFlags flags = Qt::AutoColor) const &
 
-    Owned copy(Option<Rect2.Handle> rectangle);
+    Owned copy(Option<Rect.Handle> rectangle);
     Owned copy(int x, int y, int width, int height);
     Owned createAlphaMask(ImageConversionFlags flags_ = AutoColor);
     Owned createHeuristicMask(bool clipTight = true);
@@ -133,7 +133,7 @@ opaque Handle {
 
     int pixelIndex(Point.Handle position);
     int pixelIndex(int x, int y);
-    Rect2.Owned rect();
+    Rect.Owned rect();
     bool reinterpretAsFormat(Format format);
     void rgbSwap();
     Owned rgbSwapped();

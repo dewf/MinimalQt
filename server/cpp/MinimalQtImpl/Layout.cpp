@@ -4,14 +4,14 @@
 #include "WidgetInternal.h"
 #include "LayoutItemInternal.h"
 #include "SizeInternal.h"
-#include "Rect2Internal.h"
+#include "RectInternal.h"
 
 #include "util/convert.h"
 
 using namespace ::Object;
 using namespace ::Common;
 using namespace ::Size;
-using namespace ::Rect2;
+using namespace ::Rect;
 using namespace ::Enums;
 using namespace ::LayoutItem;
 
@@ -41,7 +41,7 @@ namespace Layout
         return Margins { left, top, right, bottom };
     }
 
-    Rect2::OwnedRef Handle_contentsRect(HandleRef _this) {
+    Rect::OwnedRef Handle_contentsRect(HandleRef _this) {
         return RECT_HEAP_NEW(THIS->contentsRect());
     }
 

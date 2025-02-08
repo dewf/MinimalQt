@@ -4,7 +4,7 @@
 #include "ModelIndexInternal.h"
 #include "ObjectInternal.h"
 #include "WidgetInternal.h"
-#include "Rect2Internal.h"
+#include "RectInternal.h"
 
 #include "util/convert.h"
 
@@ -15,7 +15,7 @@ using namespace ::AbstractItemView;
 using namespace ::Enums;
 using namespace ::Widget;
 using namespace ::Common;
-using namespace ::Rect2;
+using namespace ::Rect;
 
 #define THIS (reinterpret_cast<QCompleter*>(_this))
 
@@ -141,7 +141,7 @@ namespace Completer
         return THIS->wrapAround();
     }
 
-    void Handle_complete(HandleRef _this, const std::optional<Rect2::HandleRef>& rect) {
+    void Handle_complete(HandleRef _this, const std::optional<Rect::HandleRef>& rect) {
         QRect qRect;
         if (rect.has_value()) qRect = QRECT_VALUE(rect.value());
         THIS->complete(qRect);

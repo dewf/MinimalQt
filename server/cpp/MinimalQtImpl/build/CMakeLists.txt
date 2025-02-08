@@ -375,10 +375,10 @@ add_library(MinimalQtImpl STATIC
     ../RadioButton.cpp
     ../RadioButtonInternal.h
 
-    ../generated/Rect2.h
-    ../generated/Rect2_wrappers.cpp
-    ../Rect2.cpp
-    ../Rect2Internal.h
+    ../generated/Rect.h
+    ../generated/Rect_wrappers.cpp
+    ../Rect.cpp
+    ../RectInternal.h
 
     ../generated/Region.h
     ../generated/Region_wrappers.cpp

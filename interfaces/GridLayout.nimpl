@@ -2,7 +2,7 @@ module GridLayout;
 
 import Object;
 import Common;
-import Rect2;
+import Rect;
 import Widget;
 import Layout;
 import Enums;
@@ -23,7 +23,7 @@ opaque Handle extends Layout.Handle {
     void addLayout(Layout.Handle layout, int row, int column, int rowSpan, int columnSpan, Alignment alignment = 0);
     void addWidget(Widget.Handle widget, int row, int column, Alignment alignment = 0);
     void addWidget(Widget.Handle widget, int fromRow, int fromColumn, int rowSpan, int columnSpan, Alignment alignment = 0);
-    Rect2.Owned cellRect(int row, int column);
+    Rect.Owned cellRect(int row, int column);
     int columnCount();
     int columnMinimumWidth(int column);
     int columnStretch(int column);
