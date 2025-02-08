@@ -1,0 +1,125 @@
+module RectF2;
+
+import Common;
+import PointF;
+import SizeF;
+import Rect;
+
+@nodispose
+opaque Handle {
+
+    // int hashCode()
+    // assuming not present like with PointF/SizeF
+
+    void adjust(double dx1, double dy1, double dx2, double dy2);
+    Owned adjusted(double dx1, double dy1, double dx2, double dy2);
+    double bottom();
+    PointF.Owned bottomLeft();
+    PointF.Owned bottomRight();
+    PointF.Owned center();
+    bool contains(PointF.Handle point);
+    bool contains(Handle rectangle);
+    bool contains(double x, double y);
+    Tuple<double,double,double,double> getCoords();
+    Tuple<double,double,double,double> getRect();
+    double height();
+    Owned intersected(Handle rectangle);
+    bool intersects(Handle rectangle);
+    bool isEmpty();
+    bool isNull();
+    bool isValid();
+    double left();
+    Owned marginsAdded(MarginsF margins);
+    Owned marginsRemoved(MarginsF margins);
+    void moveBottom(double y);
+    void moveBottomLeft(PointF.Handle position);
+    void moveBottomRight(PointF.Handle position);
+    void moveCenter(PointF.Handle position);
+    void moveLeft(double x);
+    void moveRight(double x);
+    void moveTo(double x, double y);
+    void moveTo(PointF.Handle position);
+    void moveTop(double y);
+    void moveTopLeft(PointF.Handle position);
+    void moveTopRight(PointF.Handle position);
+    Owned normalized();
+    double right();
+    void setBottom(double y);
+    void setBottomLeft(PointF.Handle position);
+    void setBottomRight(PointF.Handle position);
+    void setCoords(double x1, double y1, double x2, double y2);
+    void setHeight(double height);
+    void setLeft(double x);
+    void setRect(double x, double y, double width, double height);
+    void setRight(double x);
+    void setSize(SizeF.Handle size);
+    void setTop(double y);
+    void setTopLeft(PointF.Handle position);
+    void setTopRight(PointF.Handle position);
+    void setWidth(double width);
+    void setX(double x);
+    void setY(double y);
+    SizeF.Owned size();
+    Rect.Owned toAlignedRect();
+
+    // CGRect toCGRect() const
+    // (since 6.5) emscripten::val toDOMRect() const
+
+    Rect.Owned toRect();
+    double top();
+    PointF.Owned topLeft();
+    PointF.Owned topRight();
+    void translate(double dx, double dy);
+    void translate(PointF.Handle offset);
+    Owned translated(double dx, double dy);
+    Owned translated(PointF.Handle offset);
+    Owned transposed();
+    Owned united(Handle rectangle);
+    double width();
+    double x();
+    double y();
+
+    // QRectF operator&(const QRectF &rectangle) const
+    // use 'intersected'
+
+    Handle operator_intersectWith(Handle rectangle); // returns 'this'
+    Handle operator_incrementBy(MarginsF margins); // returns 'this'
+    Handle operator_decrementBy(MarginsF margins); // returns 'this'
+
+    // QRectF operator|(const QRectF &rectangle) const
+    // use 'united'
+
+    Handle operator_uniteWith(Handle rectangle); // returns 'this'
+}
+opaque Owned extends Handle;
+
+Owned create();
+Owned create(Rect.Handle rectangle);
+Owned create(PointF.Handle topLeft, PointF.Handle bottomRight);
+Owned create(PointF.Handle topLeft, SizeF.Handle size);
+Owned create(double x, double y, double width, double height);
+
+// static methods =========================
+
+// QRectF fromCGRect(CGRect rect)
+// (since 6.5) QRectF fromDOMRect(emscripten::val domRect)
+
+bool fuzzyCompare(Handle lhs, Handle rhs);
+bool fuzzyIsNull(Handle rect);
+
+// operators ==============================
+
+bool operator_notEqual(Handle lhs, Handle rhs);
+
+// QRectF operator+(const QMarginsF &lhs, const QRectF &rhs)
+// use below
+
+Owned operator_add(Handle lhs, MarginsF rhs);
+
+Owned operator_sub(Handle lhs, MarginsF rhs);
+
+// QDataStream & operator<<(QDataStream &stream, const QRectF &rectangle)
+
+bool operator_equal(Handle lhs, Handle rhs);
+
+// QDataStream & operator>>(QDataStream &stream, QRectF &rectangle)
