@@ -4,7 +4,7 @@ import Object;
 import Common;
 import Point;
 import Size;
-import SizeF2;
+import SizeF;
 import Enums;
 import Pixmap;
 import Transform;
@@ -15,7 +15,7 @@ interface SignalHandler extends Object.SignalHandler {
     void logicalDotsPerInchChanged(double dpi);
     void orientationChanged(ScreenOrientation orientation);
     void physicalDotsPerInchChanged(double dpi);
-    void physicalSizeChanged(SizeF2.Handle size);
+    void physicalSizeChanged(SizeF.Handle size);
     void primaryOrientationChanged(ScreenOrientation orientation);
     void refreshRateChanged(double refreshRate);
     void virtualGeometryChanged(Rect rect);
@@ -52,7 +52,7 @@ opaque Handle extends Object.Handle {
     double physicalDotsPerInch();
     double physicalDotsPerInchX();
     double physicalDotsPerInchY();
-    SizeF2.Owned physicalSize();
+    SizeF.Owned physicalSize();
     ScreenOrientation primaryOrientation();
     double refreshRate();
     string serialNumber();

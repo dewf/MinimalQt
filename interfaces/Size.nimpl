@@ -3,7 +3,7 @@ module Size;
 import Common;
 import Enums;
 
-fwdopaque SizeF_Owned = SizeF2.Owned;
+fwdopaque SizeF_Owned = SizeF.Owned;
 
 @nodispose
 opaque Handle {

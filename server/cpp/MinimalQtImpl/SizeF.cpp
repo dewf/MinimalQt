@@ -1,5 +1,5 @@
-#include "generated/SizeF2.h"
-#include "SizeF2Internal.h"
+#include "generated/SizeF.h"
+#include "SizeFInternal.h"
 
 #include "SizeInternal.h"
 
@@ -11,7 +11,7 @@ using namespace ::Enums;
 
 #define THIS (AS_QSIZEF_PTR(_this))
 
-namespace SizeF2
+namespace SizeF
 {
     OwnedRef Handle_boundedTo(HandleRef _this, HandleRef otherSize) {
         return SIZEF_HEAP_NEW(THIS->boundedTo(QSIZEF_VALUE(otherSize)));
@@ -102,7 +102,7 @@ namespace SizeF2
         return _this;
     }
 
-    HandleRef Handle_operator_div(HandleRef _this, double divisor) {
+    HandleRef Handle_operator_divideBy(HandleRef _this, double divisor) {
         THIS->operator/=(divisor);
         return _this;
     }

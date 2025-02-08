@@ -1,7 +1,7 @@
 #include "generated/Size.h"
 #include "SizeInternal.h"
 
-#include "SizeF2Internal.h"
+#include "SizeFInternal.h"
 
 #include "util/convert.h"
 

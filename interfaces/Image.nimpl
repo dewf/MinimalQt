@@ -2,7 +2,7 @@ module Image;
 import PaintDevice;
 import Common;
 import Size;
-import SizeF2;
+import SizeF;
 import Point;
 import Enums;
 import Color;
@@ -102,7 +102,7 @@ opaque Handle {
     Owned createHeuristicMask(bool clipTight = true);
     Owned createMaskFromColor(Rgb color, MaskMode mode = MaskInColor);
     int depth();
-    SizeF2.Owned deviceIndependentSize();
+    SizeF.Owned deviceIndependentSize();
     double devicePixelRatio();
     int dotsPerMeterX();
     int dotsPerMeterY();

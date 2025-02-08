@@ -1,4 +1,4 @@
-module SizeF2;
+module SizeF;
 
 import Common;
 import Size;
@@ -38,7 +38,7 @@ opaque Handle {
     Handle operator_multiplyBy(double factor);
     Handle operator_incrementBy(Handle size);
     Handle operator_decrementBy(Handle size);
-    Handle operator_div(double divisor);
+    Handle operator_divideBy(double divisor);
 }
 opaque Owned extends Handle;
 
