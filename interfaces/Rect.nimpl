@@ -3,6 +3,7 @@ module Rect;
 import Common;
 import Point;
 import Size;
+import Margins2;
 
 fwdopaque RectF_Owned = RectF.Owned;
 
@@ -30,8 +31,8 @@ opaque Handle {
     bool isNull();
     bool isValid();
     int left();
-    Owned marginsAdded(Margins margins);
-    Owned marginsRemoved(Margins margins);
+    Owned marginsAdded(Margins2.Handle margins);
+    Owned marginsRemoved(Margins2.Handle margins);
     void moveBottom(int y);
     void moveBottomLeft(Point.Handle position);
     void moveBottomRight(Point.Handle position);
@@ -82,8 +83,8 @@ opaque Handle {
     // use 'intersected'
     
     Handle operator_intersectWith(Handle rectangle); // returns 'this'
-    Handle operator_incrementBy(Margins margins); // returns 'this'
-    Handle operator_decrementBy(Margins margins); // returns 'this'
+    Handle operator_incrementBy(Margins2.Handle margins); // returns 'this'
+    Handle operator_decrementBy(Margins2.Handle margins); // returns 'this'
 
     // QRect operator|(const QRect &rectangle) const
     // use 'united'
@@ -107,9 +108,9 @@ bool operator_notEqual(Handle lhs, Handle rhs);
 
 // QRect operator+(const QMargins &margins, const QRect &rectangle)
 
-Owned operator_add(Handle rectangle, Margins margins);
+Owned operator_add(Handle rectangle, Margins2.Handle margins);
 
-Owned operator_sub(Handle lhs, Margins rhs);
+Owned operator_sub(Handle lhs, Margins2.Handle rhs);
 
 // QDataStream & operator<<(QDataStream &stream, const QRect &rectangle)
 

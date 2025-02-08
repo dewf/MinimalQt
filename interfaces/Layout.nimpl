@@ -1,7 +1,7 @@
 module Layout;
 
 import Object;
-import Common;
+import Margins2;
 import Size;
 import Rect;
 import Enums;
@@ -30,7 +30,7 @@ opaque Handle extends Object.Handle {
     bool activate();
     void addItem(LayoutItem.Handle item);
     void addWidget(WidgetHandle w);
-    Margins contentsMargins();
+    Margins2.Owned contentsMargins();
     Rect.Owned contentsRect();
     int count();
     Tuple<int,int,int,int> getContentsMargins();
@@ -45,7 +45,7 @@ opaque Handle extends Object.Handle {
     LayoutItem.Handle replaceWidget(WidgetHandle from, WidgetHandle to, FindChildOptions options_ = FindChildrenRecursively);
     bool setAlignment(WidgetHandle w, Alignment alignment);
     bool setAlignment(Handle l, Alignment alignment);
-    void setContentsMargins(Margins margins);
+    void setContentsMargins(Margins2.Handle margins);
     void setContentsMargins(int left, int top, int right, int bottom);
     void setEnabled(bool enable);
     void setMenuBar(WidgetHandle widget);

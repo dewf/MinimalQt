@@ -4,60 +4,26 @@ import Common;
 
 @nodispose
 opaque Handle {
-    // int bottom() const
     int bottom();
-
-    // bool isNull() const
     bool isNull();
-
-    // int left() const
     int left();
-
-    // int right() const
     int right();
-
-    // void setBottom(int bottom)
     void setBottom(int bottom);
-
-    // void setLeft(int left)
     void setLeft(int left);
-
-    // void setRight(int right)
     void setRight(int right);
-
-    // void setTop(int Top)
     void setTop(int top);
-
-    // (since 6.4) QMarginsF toMarginsF() const
     MarginsF toMarginsF();
-
-    // int top() const
     int top();
     
     // the following return 'this':
 
-    // QMargins & operator*=(int factor)
     Handle operator_mul(int factor);
-
-    // QMargins & operator*=(qreal factor)
     Handle operator_mul(double factor);
-
-    // QMargins & operator+=(const QMargins &margins)
-    Handle operator_add(Margins margins);
-
-    // QMargins & operator+=(int addend)
+    Handle operator_add(Handle margins);
     Handle operator_add(int addend);
-
-    // QMargins & operator-=(const QMargins &margins)
-    Handle operator_sub(Margins margins);
-
-    // QMargins & operator-=(int subtrahend)
+    Handle operator_sub(Handle margins);
     Handle operator_sub(int subtrahend);
-
-    // QMargins & operator/=(int divisor)
     Handle operator_div(int divisor);
-
-    // QMargins & operator/=(qreal divisor)
     Handle operator_div(double divisor);
 }
 opaque Owned extends Handle;
@@ -67,50 +33,34 @@ Owned create(int left, int top, int right, int bottom);
 
 // operators ========================================
 
-// bool operator!=(const QMargins &lhs, const QMargins &rhs)
 bool operator_notEqual(Handle lhs, Handle rhs);
-
-// QMargins operator*(const QMargins &margins, int factor)
 Owned operator_mul(Handle margins, int factor);
-
-// QMargins operator*(const QMargins &margins, qreal factor)
 Owned operator_mul(Handle margins, double factor);
 
 // QMargins operator*(int factor, const QMargins &margins)
+// use above version
+
 // QMargins operator*(qreal factor, const QMargins &margins)
+// use above version
 
 // QMargins operator+(const QMargins &margins)
 
-// QMargins operator+(const QMargins &m1, const QMargins &m2)
 Owned operator_add(Handle m1, Handle m2);
-
-// QMargins operator+(const QMargins &lhs, int rhs)
 Owned operator_add(Handle lhs, int rhs);
 
 // QMargins operator+(int lhs, const QMargins &rhs)
 // see above
 
-// QMargins operator-(const QMargins &margins)
 Owned operator_negate(Handle margins);
-
-// QMargins operator-(const QMargins &m1, const QMargins &m2)
 Owned operator_sub(Handle m1, Handle m2);
-
-// QMargins operator-(const QMargins &lhs, int rhs)
 Owned operator_sub(Handle lhs, int rhs);
-
-// QMargins operator/(const QMargins &margins, int divisor)
 Owned operator_div(Handle margins, int divisor);
-
-// QMargins operator/(const QMargins &margins, qreal divisor)
 Owned operator_div(Handle margins, double divisor);
 
 // QDataStream & operator<<(QDataStream &stream, const QMargins &m)
 
-// bool operator==(const QMargins &lhs, const QMargins &rhs)
 bool operator_equal(Handle lhs, Handle rhs);
 
 // QDataStream & operator>>(QDataStream &stream, QMargins &m)
 
-// (since 6.0) QMargins operator|(const QMargins &m1, const QMargins &m2)
 Owned operator_or(Handle m1, Handle m2);

@@ -20,6 +20,7 @@
 #include "SizeInternal.h"
 #include "SafeReturnInternal.h"
 #include "RectInternal.h"
+#include "Margins2Internal.h"
 
 #include <QPaintEvent>
 
@@ -27,6 +28,7 @@
 
 using namespace ::Object;
 using namespace ::Common;
+using namespace ::Margins2;
 using namespace ::Point;
 using namespace ::PointF;
 using namespace ::Size;
@@ -150,8 +152,8 @@ namespace Widget
         THIS->clearMask();
     }
 
-    Margins Handle_contentsMargins(HandleRef _this) {
-        return toMargins(THIS->contentsMargins());
+    Margins2::OwnedRef Handle_contentsMargins(HandleRef _this) {
+        return MARGINS_HEAP_NEW(THIS->contentsMargins());
     }
 
     Rect::OwnedRef Handle_contentsRect(HandleRef _this) {
@@ -567,8 +569,8 @@ namespace Widget
         THIS->setContentsMargins(left, top, right, bottom);
     }
 
-    void Handle_setContentsMargins(HandleRef _this, Margins margins) {
-        THIS->setContentsMargins(toQMargins(margins));
+    void Handle_setContentsMargins(HandleRef _this, Margins2::HandleRef margins) {
+        THIS->setContentsMargins(QMARGINS_VALUE(margins));
     }
 
     void Handle_setContextMenuPolicy(HandleRef _this, ContextMenuPolicy policy) {

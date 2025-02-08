@@ -59,8 +59,8 @@ namespace Margins2
         return _this;
     }
 
-    HandleRef Handle_operator_add(HandleRef _this, Margins margins) {
-        THIS->operator+=(toQMargins(margins));
+    HandleRef Handle_operator_add(HandleRef _this, HandleRef margins) {
+        THIS->operator+=(QMARGINS_VALUE(margins));
         return _this;
     }
 
@@ -69,8 +69,8 @@ namespace Margins2
         return _this;
     }
 
-    HandleRef Handle_operator_sub(HandleRef _this, Margins margins) {
-        THIS->operator-=(toQMargins(margins));
+    HandleRef Handle_operator_sub(HandleRef _this, HandleRef margins) {
+        THIS->operator-=(QMARGINS_VALUE(margins));
         return _this;
     }
 
