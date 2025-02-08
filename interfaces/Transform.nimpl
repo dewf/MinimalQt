@@ -4,6 +4,7 @@ import Common;
 import Point;
 import PointF;
 import Rect;
+import RectF2;
 import Polygon;
 import PolygonF;
 import Region;
@@ -56,7 +57,7 @@ opaque Handle {
     PolygonF.Owned map(PolygonF.Handle polygon);
     Region.Owned map(Region.Handle region);
     Tuple<int,int> map(int x, int y);
-    RectF mapRect(RectF rectangle);
+    RectF2.Owned mapRect(RectF2.Handle rectangle);
     Rect.Owned mapRect(Rect.Handle rectangle);
     Polygon.Owned mapToPolygon(Rect.Handle rectangle);
     void reset();

@@ -4,6 +4,8 @@ import Common;
 import Point;
 import Size;
 
+fwdopaque RectF_Owned = RectF2.Owned;
+
 @nodispose
 opaque Handle {
 
@@ -62,7 +64,7 @@ opaque Handle {
 
     // CGRect toCGRect() const
 
-    RectF toRectF();
+    RectF_Owned toRectF();
     int top();
     Point.Owned topLeft();
     Point.Owned topRight();

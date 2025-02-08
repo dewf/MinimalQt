@@ -2,21 +2,24 @@
 #include "GraphicsEffectInternal.h"
 
 #include "ObjectInternal.h"
+#include "RectF2Internal.h"
+
 #include "util/convert.h"
 
 using namespace ::Object;
 using namespace ::Common;
+using namespace ::RectF2;
 
 #define THIS (reinterpret_cast<QGraphicsEffect*>(_this))
 
 namespace GraphicsEffect
 {
-    RectF Handle_boundingRect(HandleRef _this) {
-        return toRectF(THIS->boundingRect());
+    OwnedRef Handle_boundingRect(HandleRef _this) {
+        return RECTF_HEAP_NEW(THIS->boundingRect());
     }
 
-    RectF Handle_boundingRectFor(HandleRef _this, RectF rect) {
-        return toRectF(THIS->boundingRectFor(toQRectF(rect)));
+    OwnedRef Handle_boundingRectFor(HandleRef _this, RectF2::HandleRef rect) {
+        return RECTF_HEAP_NEW(THIS->boundingRectFor(QRECTF_VALUE(rect)));
     }
 
     bool Handle_isEnabled(HandleRef _this) {

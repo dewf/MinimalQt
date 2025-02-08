@@ -6,11 +6,13 @@
 #include "RegionInternal.h"
 #include "PolygonFInternal.h"
 #include "TransformInternal.h"
+#include "RectF2Internal.h"
 
 #include "util/convert.h"
 
 using namespace ::Common;
 using namespace ::PointF;
+using namespace ::RectF2;
 using namespace ::Enums;
 using namespace ::Region;
 using namespace ::Font;
@@ -21,8 +23,8 @@ using namespace ::Transform;
 
 namespace PainterPath
 {
-    void Handle_addEllipse(HandleRef _this, RectF boundingRectangle) {
-        THIS->addEllipse(toQRectF(boundingRectangle));
+    void Handle_addEllipse(HandleRef _this, RectF2::HandleRef boundingRectangle) {
+        THIS->addEllipse(QRECTF_VALUE(boundingRectangle));
     }
 
     void Handle_addEllipse(HandleRef _this, PointF::HandleRef center, double rx, double ry) {
@@ -41,8 +43,8 @@ namespace PainterPath
         THIS->addPolygon(QPOLYGONF_VALUE(polygon));
     }
 
-    void Handle_addRect(HandleRef _this, RectF rectangle) {
-        THIS->addRect(toQRectF(rectangle));
+    void Handle_addRect(HandleRef _this, RectF2::HandleRef rectangle) {
+        THIS->addRect(QRECTF_VALUE(rectangle));
     }
 
     void Handle_addRect(HandleRef _this, double x, double y, double width, double height) {
@@ -53,8 +55,8 @@ namespace PainterPath
         THIS->addRegion(QREGION_VALUE(region));
     }
 
-    void Handle_addRoundedRect(HandleRef _this, RectF rect, double xRadius, double yRadius, SizeMode mode /* SizeMode::AbsoluteSize */) {
-        THIS->addRoundedRect(toQRectF(rect), xRadius, yRadius, static_cast<Qt::SizeMode>(mode));
+    void Handle_addRoundedRect(HandleRef _this, RectF2::HandleRef rect, double xRadius, double yRadius, SizeMode mode /* SizeMode::AbsoluteSize */) {
+        THIS->addRoundedRect(QRECTF_VALUE(rect), xRadius, yRadius, static_cast<Qt::SizeMode>(mode));
     }
 
     void Handle_addRoundedRect(HandleRef _this, double x, double y, double w, double h, double xRadius, double yRadius, SizeMode mode /* SizeMode::AbsoluteSize */) {
@@ -73,24 +75,24 @@ namespace PainterPath
         return THIS->angleAtPercent(t);
     }
 
-    void Handle_arcMoveTo(HandleRef _this, RectF rectangle, double angle) {
-        THIS->arcMoveTo(toQRectF(rectangle), angle);
+    void Handle_arcMoveTo(HandleRef _this, RectF2::HandleRef rectangle, double angle) {
+        THIS->arcMoveTo(QRECTF_VALUE(rectangle), angle);
     }
 
     void Handle_arcMoveTo(HandleRef _this, double x, double y, double width, double height, double angle) {
         THIS->arcMoveTo(x, y, width, height, angle);
     }
 
-    void Handle_arcTo(HandleRef _this, RectF rectangle, double startAngle, double sweepLength) {
-        THIS->arcTo(toQRectF(rectangle), startAngle, sweepLength);
+    void Handle_arcTo(HandleRef _this, RectF2::HandleRef rectangle, double startAngle, double sweepLength) {
+        THIS->arcTo(QRECTF_VALUE(rectangle), startAngle, sweepLength);
     }
 
     void Handle_arcTo(HandleRef _this, double x, double y, double width, double height, double startAngle, double sweepLength) {
         THIS->arcTo(x, y, width, height, startAngle, sweepLength);
     }
 
-    RectF Handle_boundingRect(HandleRef _this) {
-        return toRectF(THIS->boundingRect());
+    RectF2::OwnedRef Handle_boundingRect(HandleRef _this) {
+        return RECTF_HEAP_NEW(THIS->boundingRect());
     }
 
     int32_t Handle_capacity(HandleRef _this) {
@@ -117,12 +119,12 @@ namespace PainterPath
         return THIS->contains(QPOINTF_VALUE(point));
     }
 
-    bool Handle_contains(HandleRef _this, RectF rectangle) {
-        return THIS->contains(toQRectF(rectangle));
+    bool Handle_contains(HandleRef _this, RectF2::HandleRef rectangle) {
+        return THIS->contains(QRECTF_VALUE(rectangle));
     }
 
-    RectF Handle_controlPointRect(HandleRef _this) {
-        return toRectF(THIS->controlPointRect());
+    RectF2::OwnedRef Handle_controlPointRect(HandleRef _this) {
+        return RECTF_HEAP_NEW(THIS->controlPointRect());
     }
 
     void Handle_cubicTo(HandleRef _this, PointF::HandleRef c1, PointF::HandleRef c2, PointF::HandleRef endPoint) {
@@ -153,8 +155,8 @@ namespace PainterPath
         return THIS->intersects(QPAINTERPATH_VALUE(p));
     }
 
-    bool Handle_intersects(HandleRef _this, RectF rectangle) {
-        return THIS->intersects(toQRectF(rectangle));
+    bool Handle_intersects(HandleRef _this, RectF2::HandleRef rectangle) {
+        return THIS->intersects(QRECTF_VALUE(rectangle));
     }
 
     bool Handle_isEmpty(HandleRef _this) {

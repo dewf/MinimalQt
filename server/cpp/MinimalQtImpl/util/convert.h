@@ -97,11 +97,3 @@ inline QMarginsF toQMarginsF(const MarginsF& margins) {
 inline Margins toMargins(const QMargins& qm) {
     return Margins { qm.left(), qm.top(), qm.right(), qm.bottom() };
 }
-
-inline RectF toRectF(const QRectF& qRectF) {
-    return { qRectF.left(), qRectF.top(), qRectF.width(), qRectF.height() };
-}
-
-inline QRectF toQRectF(const RectF& r) {
-    return { r.x, r.y, r.width, r.height };
-}

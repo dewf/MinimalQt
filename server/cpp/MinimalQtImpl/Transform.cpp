@@ -8,12 +8,14 @@
 #include "PointFInternal.h"
 #include "PointInternal.h"
 #include "RectInternal.h"
+#include "RectF2Internal.h"
 
 #include "util/convert.h"
 
 using namespace ::Common;
 using namespace ::Point;
 using namespace ::Rect;
+using namespace ::RectF2;
 using namespace ::Polygon;
 using namespace ::PolygonF;
 using namespace ::Region;
@@ -146,8 +148,8 @@ namespace Transform
         return { tx, ty };
     }
 
-    RectF Handle_mapRect(HandleRef _this, RectF rectangle) {
-        return toRectF(THIS->mapRect(toQRectF(rectangle)));
+    RectF2::OwnedRef Handle_mapRect(HandleRef _this, RectF2::HandleRef rectangle) {
+        return RECTF_HEAP_NEW(THIS->mapRect(QRECTF_VALUE(rectangle)));
     }
 
     Rect::OwnedRef Handle_mapRect(HandleRef _this, Rect::HandleRef rectangle) {

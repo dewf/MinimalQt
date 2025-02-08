@@ -3,19 +3,21 @@
 
 #include "PointFInternal.h"
 #include "PolygonInternal.h"
+#include "RectF2Internal.h"
 
 #include "util/convert.h"
 
 using namespace ::Common;
 using namespace ::PointF;
+using namespace ::RectF2;
 using namespace ::Enums;
 
 #define THIS (AS_QPOLYGONF_PTR(_this))
 
 namespace PolygonF
 {
-    RectF Handle_boundingRect(HandleRef _this) {
-        return toRectF(THIS->boundingRect());
+    RectF2::OwnedRef Handle_boundingRect(HandleRef _this) {
+        return RECTF_HEAP_NEW(THIS->boundingRect());
     }
 
     bool Handle_containsPoint(HandleRef _this, PointF::HandleRef point, FillRule fillRule) {
@@ -80,7 +82,7 @@ namespace PolygonF
         return POLYGONF_HEAP_NEW(QPOLYGON_VALUE(polygon));
     }
 
-    OwnedRef create(RectF rectangle) {
-        return POLYGONF_HEAP_NEW(toQRectF(rectangle));
+    OwnedRef create(RectF2::HandleRef rectangle) {
+        return POLYGONF_HEAP_NEW(QRECTF_VALUE(rectangle));
     }
 }

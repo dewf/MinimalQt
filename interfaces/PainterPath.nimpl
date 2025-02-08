@@ -2,6 +2,7 @@ module PainterPath;
 
 import Common;
 import PointF;
+import RectF2;
 import Enums;
 import Region;
 import Font;
@@ -10,32 +11,32 @@ import Transform;
 
 @nodispose
 opaque Handle {
-    void addEllipse(RectF boundingRectangle);
+    void addEllipse(RectF2.Handle boundingRectangle);
     void addEllipse(PointF.Handle center, double rx, double ry);
     void addEllipse(double x, double y, double width, double height);
     void addPath(Handle path);
     void addPolygon(PolygonF.Handle polygon);
-    void addRect(RectF rectangle);
+    void addRect(RectF2.Handle rectangle);
     void addRect(double x, double y, double width, double height);
     void addRegion(Region.Handle region);
-    void addRoundedRect(RectF rect, double xRadius, double yRadius, SizeMode mode = AbsoluteSize);
+    void addRoundedRect(RectF2.Handle rect, double xRadius, double yRadius, SizeMode mode = AbsoluteSize);
     void addRoundedRect(double x, double y, double w, double h, double xRadius, double yRadius, SizeMode mode = AbsoluteSize);
     void addText(PointF.Handle point, Font.Handle font, string text);
     void addText(double x, double y, Font.Handle font, string text);
     double angleAtPercent(double t);
-    void arcMoveTo(RectF rectangle, double angle);
+    void arcMoveTo(RectF2.Handle rectangle, double angle);
     void arcMoveTo(double x, double y, double width, double height, double angle);
-    void arcTo(RectF rectangle, double startAngle, double sweepLength);
+    void arcTo(RectF2.Handle rectangle, double startAngle, double sweepLength);
     void arcTo(double x, double y, double width, double height, double startAngle, double sweepLength);
-    RectF boundingRect();
+    RectF2.Owned boundingRect();
     int capacity();
     void clear();
     void closeSubpath();
     void connectPath(Handle path);
     bool contains(Handle p);
     bool contains(PointF.Handle point);
-    bool contains(RectF rectangle);
-    RectF controlPointRect();
+    bool contains(RectF2.Handle rectangle);
+    RectF2.Owned controlPointRect();
     void cubicTo(PointF.Handle c1, PointF.Handle c2, PointF.Handle endPoint);
     void cubicTo(double c1X, double c1Y, double c2X, double c2Y, double endPointX, double endPointY);
     PointF.Owned currentPosition();
@@ -46,7 +47,7 @@ opaque Handle {
     FillRule fillRule();
     Owned intersected(Handle p);
     bool intersects(Handle p);
-    bool intersects(RectF rectangle);
+    bool intersects(RectF2.Handle rectangle);
     bool isEmpty();
     double length();
     void lineTo(PointF.Handle endPoint);

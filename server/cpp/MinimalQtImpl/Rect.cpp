@@ -3,6 +3,7 @@
 
 #include "PointInternal.h"
 #include "SizeInternal.h"
+#include "RectF2Internal.h"
 
 #include "util/convert.h"
 
@@ -222,8 +223,10 @@ namespace Rect
         return SIZE_HEAP_NEW(THIS->size());
     }
 
-    RectF Handle_toRectF(HandleRef _this) {
-        return toRectF(THIS->toRectF());
+    RectF_OwnedRef Handle_toRectF(HandleRef _this) {
+        const auto result = RECTF_HEAP_NEW(THIS->toRectF());
+        // fwd opaque cast:
+        return reinterpret_cast<RectF_OwnedRef>(result);
     }
 
     int32_t Handle_top(HandleRef _this) {
