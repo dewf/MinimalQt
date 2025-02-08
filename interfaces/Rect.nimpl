@@ -4,7 +4,7 @@ import Common;
 import Point;
 import Size;
 
-fwdopaque RectF_Owned = RectF2.Owned;
+fwdopaque RectF_Owned = RectF.Owned;
 
 @nodispose
 opaque Handle {

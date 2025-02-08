@@ -3,7 +3,7 @@
 
 #include "PointInternal.h"
 #include "SizeInternal.h"
-#include "RectF2Internal.h"
+#include "RectFInternal.h"
 
 #include "util/convert.h"
 

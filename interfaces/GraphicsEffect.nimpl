@@ -2,7 +2,7 @@ module GraphicsEffect;
 
 import Object;
 import Common;
-import RectF2;
+import RectF;
 
 interface SignalHandler {
     void enabledChanged(bool enabled);
@@ -24,8 +24,8 @@ enum PixmapPadMode {
 
 @nodispose
 opaque Handle extends Object.Handle {
-    RectF2.Owned boundingRect();
-    RectF2.Owned boundingRectFor(RectF2.Handle rect);
+    RectF.Owned boundingRect();
+    RectF.Owned boundingRectFor(RectF.Handle rect);
     bool isEnabled();
 
     void setEnabled(bool enable);

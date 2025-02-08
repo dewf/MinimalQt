@@ -1,5 +1,5 @@
-#include "generated/RectF2.h"
-#include "RectF2Internal.h"
+#include "generated/RectF.h"
+#include "RectFInternal.h"
 
 #include "PointFInternal.h"
 #include "SizeFInternal.h"
@@ -14,7 +14,7 @@ using namespace ::Rect;
 
 #define THIS (AS_QRECTF_PTR(_this))
 
-namespace RectF2
+namespace RectF
 {
     void Handle_adjust(HandleRef _this, double dx1, double dy1, double dx2, double dy2) {
         THIS->adjust(dx1, dy1, dx2, dy2);

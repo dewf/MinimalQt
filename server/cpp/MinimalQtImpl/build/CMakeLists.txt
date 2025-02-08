@@ -380,10 +380,10 @@ add_library(MinimalQtImpl STATIC
     ../Rect.cpp
     ../RectInternal.h
 
-    ../generated/RectF2.h
-    ../generated/RectF2_wrappers.cpp
-    ../RectF2.cpp
-    ../RectF2Internal.h
+    ../generated/RectF.h
+    ../generated/RectF_wrappers.cpp
+    ../RectF.cpp
+    ../RectFInternal.h
 
     ../generated/Region.h
     ../generated/Region_wrappers.cpp

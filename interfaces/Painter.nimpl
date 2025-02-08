@@ -4,7 +4,7 @@ import Common;
 import Point;
 import PointF;
 import Rect;
-import RectF2;
+import RectF;
 import Enums;
 import Color;
 import Pixmap;
@@ -89,7 +89,7 @@ group PixmapFragment {
         OpaqueHint = 0x01
     }
 
-    Owned create(PointF.Handle pos, RectF2.Handle sourceRect, double scaleX = 1, double scaleY = 1, double rotation = 0, double opacity = 1);
+    Owned create(PointF.Handle pos, RectF.Handle sourceRect, double scaleX = 1, double scaleY = 1, double rotation = 0, double opacity = 1);
 }
 
 
@@ -99,30 +99,30 @@ opaque Handle {
     BGMode backgroundMode();
     bool begin(PaintDevice.Handle device);
     void beginNativePainting();
-    RectF2.Owned boundingRect(RectF2.Handle rectangle, int flags_, string text);
+    RectF.Owned boundingRect(RectF.Handle rectangle, int flags_, string text);
     Rect.Owned boundingRect(Rect.Handle rectangle, int flags_, string text);
-    RectF2.Owned boundingRect(RectF2.Handle rectangle, string text, Option<TextOption.Handle> option);
+    RectF.Owned boundingRect(RectF.Handle rectangle, string text, Option<TextOption.Handle> option);
     Rect.Owned boundingRect(int x, int y, int w, int h, int flags_, string text);
     Brush.Owned brush();
     Point.Owned brushOrigin();
-    RectF2.Owned clipBoundingRect();
+    RectF.Owned clipBoundingRect();
     PainterPath.Owned clipPath();
     Region.Owned clipRegion();
     Transform.Owned combinedTransform();
     CompositionMode getCompositionMode();
     PaintDevice.Handle device();
     Transform.Owned deviceTransform();
-    void drawArc(RectF2.Handle rectangle, int startAngle, int spanAngle);
+    void drawArc(RectF.Handle rectangle, int startAngle, int spanAngle);
     void drawArc(Rect.Handle rectangle, int startAngle, int spanAngle);
     void drawArc(int x, int y, int width, int height, int startAngle, int spanAngle);
-    void drawChord(RectF2.Handle rectangle, int startAngle, int spanAngle);
+    void drawChord(RectF.Handle rectangle, int startAngle, int spanAngle);
     void drawChord(Rect.Handle rectangle, int startAngle, int spanAngle);
     void drawChord(int x, int y, int width, int height, int startAngle, int spanAngle);
     void drawConvexPolygon(Array<PointF.Handle> points);
     void drawConvexPolygon(Polygon.Handle polygon);
     void drawConvexPolygon(PolygonF.Handle polygon);
     void drawConvexPolygon(Array<Point.Handle> points);
-    void drawEllipse(RectF2.Handle rectangle);
+    void drawEllipse(RectF.Handle rectangle);
     void drawEllipse(Rect.Handle rectangle);
     void drawEllipse(Point.Handle center, int rx, int ry);
     void drawEllipse(PointF.Handle center, double rx, double ry);
@@ -130,13 +130,13 @@ opaque Handle {
 
     // void drawGlyphRun(const QPointF &position, const QGlyphRun &glyphs)
 
-    void drawImage(RectF2.Handle target, Image.Handle image, RectF2.Handle source, ImageConversionFlags flags_ = AutoColor);
+    void drawImage(RectF.Handle target, Image.Handle image, RectF.Handle source, ImageConversionFlags flags_ = AutoColor);
     void drawImage(Point.Handle point, Image.Handle image);
     void drawImage(PointF.Handle point, Image.Handle image);
     void drawImage(Rect.Handle rectangle, Image.Handle image);
-    void drawImage(RectF2.Handle rectangle, Image.Handle image);
+    void drawImage(RectF.Handle rectangle, Image.Handle image);
     void drawImage(Point.Handle point, Image.Handle image, Rect.Handle source, ImageConversionFlags flags_ = AutoColor);
-    void drawImage(PointF.Handle point, Image.Handle image, RectF2.Handle source, ImageConversionFlags flags_ = AutoColor);
+    void drawImage(PointF.Handle point, Image.Handle image, RectF.Handle source, ImageConversionFlags flags_ = AutoColor);
     void drawImage(Rect.Handle target, Image.Handle image, Rect.Handle source, ImageConversionFlags flags_ = AutoColor);
     void drawImage(int x, int y, Image.Handle image, int sx = 0, int sy = 0, int sw = -1, int sh = -1, ImageConversionFlags flags_ = AutoColor);
 
@@ -162,15 +162,15 @@ opaque Handle {
     // void drawPicture(const QPoint &point, const QPicture &picture)
     // void drawPicture(int x, int y, const QPicture &picture)
 
-    void drawPie(RectF2.Handle rectangle, int startAngle, int spanAngle);
+    void drawPie(RectF.Handle rectangle, int startAngle, int spanAngle);
     void drawPie(Rect.Handle rectangle, int startAngle, int spanAngle);
     void drawPie(int x, int y, int width, int height, int startAngle, int spanAngle);
-    void drawPixmap(RectF2.Handle target, Pixmap.Handle pixmap, RectF2.Handle source);
+    void drawPixmap(RectF.Handle target, Pixmap.Handle pixmap, RectF.Handle source);
     void drawPixmap(Point.Handle point, Pixmap.Handle pixmap);
     void drawPixmap(PointF.Handle point, Pixmap.Handle pixmap);
     void drawPixmap(Rect.Handle rectangle, Pixmap.Handle pixmap);
     void drawPixmap(Point.Handle point, Pixmap.Handle pixmap, Rect.Handle source);
-    void drawPixmap(PointF.Handle point, Pixmap.Handle pixmap, RectF2.Handle source);
+    void drawPixmap(PointF.Handle point, Pixmap.Handle pixmap, RectF.Handle source);
     void drawPixmap(Rect.Handle target, Pixmap.Handle pixmap, Rect.Handle source);
     void drawPixmap(int x, int y, Pixmap.Handle pixmap);
     void drawPixmap(int x, int y, int width, int height, Pixmap.Handle pixmap);
@@ -192,12 +192,12 @@ opaque Handle {
     void drawPolyline(Polygon.Handle points);
     void drawPolyline(PolygonF.Handle points);
     void drawPolyline(Array<Point.Handle> points);
-    void drawRect(RectF2.Handle rectangle);
+    void drawRect(RectF.Handle rectangle);
     void drawRect(Rect.Handle rectangle);
     void drawRect(int x, int y, int width, int height);
-    void drawRects(Array<RectF2.Handle> rectangles);
+    void drawRects(Array<RectF.Handle> rectangles);
     void drawRects(Array<Rect.Handle> rectangles);
-    void drawRoundedRect(RectF2.Handle rect, double xRadius, double yRadius, SizeMode mode = AbsoluteSize);
+    void drawRoundedRect(RectF.Handle rect, double xRadius, double yRadius, SizeMode mode = AbsoluteSize);
     void drawRoundedRect(Rect.Handle rect, double xRadius, double yRadius, SizeMode mode = AbsoluteSize);
     void drawRoundedRect(int x, int y, int w, int h, double xRadius, double yRadius, SizeMode mode = AbsoluteSize);
 
@@ -207,30 +207,30 @@ opaque Handle {
 
     void drawText(PointF.Handle position, string text);
     void drawText(Point.Handle position, string text);
-    void drawText(RectF2.Handle rectangle, string text, Option<TextOption.Handle> option);
+    void drawText(RectF.Handle rectangle, string text, Option<TextOption.Handle> option);
     void drawText(int x, int y, string text);
     void drawText(Rect.Handle rectangle, int flags_, string text, Option<Rect.Handle> boundingRect);
-    void drawText(RectF2.Handle rectangle, int flags_, string text, Option<RectF2.Handle> boundingRect);
+    void drawText(RectF.Handle rectangle, int flags_, string text, Option<RectF.Handle> boundingRect);
     void drawText(int x, int y, int width, int height, int flags_, string text, Option<Rect.Handle> boundingRect);
-    void drawTiledPixmap(RectF2.Handle rectangle, Pixmap.Handle pixmap, Option<PointF.Handle> position);
+    void drawTiledPixmap(RectF.Handle rectangle, Pixmap.Handle pixmap, Option<PointF.Handle> position);
     void drawTiledPixmap(Rect.Handle rectangle, Pixmap.Handle pixmap, Option<Point.Handle> position);
     void drawTiledPixmap(int x, int y, int width, int height, Pixmap.Handle pixmap, int sx = 0, int sy = 0);
     bool end();
     void endNativePainting();
-    void eraseRect(RectF2.Handle rectangle);
+    void eraseRect(RectF.Handle rectangle);
     void eraseRect(Rect.Handle rectangle);
     void eraseRect(int x, int y, int width, int height);
     void fillPath(PainterPath.Handle path, Brush.Handle brush);
-    void fillRect(RectF2.Handle rectangle, Brush.Handle brush);
+    void fillRect(RectF.Handle rectangle, Brush.Handle brush);
     void fillRect(Rect.Handle rectangle, Gradient.Preset preset);
     void fillRect(Rect.Handle rectangle, BrushStyle style);
     void fillRect(Rect.Handle rectangle, GlobalColor color);
     void fillRect(Rect.Handle rectangle, Brush.Handle brush);
     void fillRect(Rect.Handle rectangle, Color.Handle color);
-    void fillRect(RectF2.Handle rectangle, Gradient.Preset preset);
-    void fillRect(RectF2.Handle rectangle, BrushStyle style);
-    void fillRect(RectF2.Handle rectangle, GlobalColor color);
-    void fillRect(RectF2.Handle rectangle, Color.Handle color);
+    void fillRect(RectF.Handle rectangle, Gradient.Preset preset);
+    void fillRect(RectF.Handle rectangle, BrushStyle style);
+    void fillRect(RectF.Handle rectangle, GlobalColor color);
+    void fillRect(RectF.Handle rectangle, Color.Handle color);
     void fillRect(int x, int y, int width, int height, Gradient.Preset preset);
     void fillRect(int x, int y, int width, int height, BrushStyle style);
     void fillRect(int x, int y, int width, int height, GlobalColor color);
@@ -263,7 +263,7 @@ opaque Handle {
     void setBrushOrigin(Point.Handle position);
     void setBrushOrigin(int x, int y);
     void setClipPath(PainterPath.Handle path, ClipOperation operation = ReplaceClip);
-    void setClipRect(RectF2.Handle rectangle, ClipOperation operation = ReplaceClip);
+    void setClipRect(RectF.Handle rectangle, ClipOperation operation = ReplaceClip);
     void setClipRect(int x, int y, int width, int height, ClipOperation operation = ReplaceClip);
     void setClipRect(Rect.Handle rectangle, ClipOperation operation = ReplaceClip);
     void setClipRegion(Region.Handle region, ClipOperation operation = ReplaceClip);
