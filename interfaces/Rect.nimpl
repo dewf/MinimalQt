@@ -76,11 +76,16 @@ opaque Handle {
     int x();
     int y();
 
-    Owned operator_and(Handle rectangle);
+    // QRect operator&(const QRect &rectangle) const
+    // use 'intersected'
+    
     Handle operator_intersectWith(Handle rectangle); // returns 'this'
     Handle operator_incrementBy(Margins margins); // returns 'this'
     Handle operator_decrementBy(Margins margins); // returns 'this'
-    Owned operator_or(Handle rectangle);
+
+    // QRect operator|(const QRect &rectangle) const
+    // use 'united'
+
     Handle operator_uniteWith(Handle rectangle); // returns 'this'
 }
 opaque Owned extends Handle;

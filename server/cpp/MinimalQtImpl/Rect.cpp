@@ -274,10 +274,6 @@ namespace Rect
         return THIS->y();
     }
 
-    OwnedRef Handle_operator_and(HandleRef _this, HandleRef rectangle) {
-        return RECT_HEAP_NEW(THIS->operator&(QRECT_VALUE(rectangle)));
-    }
-
     HandleRef Handle_operator_intersectWith(HandleRef _this, HandleRef rectangle) {
         THIS->operator&=(QRECT_VALUE(rectangle));
         return _this;
@@ -291,10 +287,6 @@ namespace Rect
     HandleRef Handle_operator_decrementBy(HandleRef _this, Margins margins) {
         THIS->operator-=(toQMargins(margins));
         return _this;
-    }
-
-    OwnedRef Handle_operator_or(HandleRef _this, HandleRef rectangle) {
-        return RECT_HEAP_NEW(THIS->operator|(QRECT_VALUE(rectangle)));
     }
 
     HandleRef Handle_operator_uniteWith(HandleRef _this, HandleRef rectangle) {
