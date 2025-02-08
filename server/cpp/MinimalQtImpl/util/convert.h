@@ -97,3 +97,7 @@ inline QMarginsF toQMarginsF(const MarginsF& margins) {
 inline Margins toMargins(const QMargins& qm) {
     return Margins { qm.left(), qm.top(), qm.right(), qm.bottom() };
 }
+
+inline MarginsF toMarginsF(const QMarginsF& qm) {
+    return MarginsF { qm.left(), qm.top(), qm.right(), qm.bottom() };
+}
