@@ -4,7 +4,7 @@ import Object;
 import Enums;
 import Screen;
 import Common;
-import Margins2;
+import Margins;
 import Point;
 import PointF;
 import Size;
@@ -60,7 +60,7 @@ opaque Handle extends Object.Handle {
     WindowFlags flags_();
     Object.Handle focusObject();
     Rect.Owned frameGeometry();
-    Margins2.Owned frameMargins();
+    Margins.Owned frameMargins();
     Point.Owned framePosition();
     Rect.Owned geometry();
     int height();

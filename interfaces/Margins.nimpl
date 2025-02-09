@@ -1,4 +1,4 @@
-module Margins2;
+module Margins;
 
 import Common;
 

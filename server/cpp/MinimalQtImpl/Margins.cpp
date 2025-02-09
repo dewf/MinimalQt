@@ -1,5 +1,5 @@
-#include "generated/Margins2.h"
-#include "Margins2Internal.h"
+#include "generated/Margins.h"
+#include "MarginsInternal.h"
 
 #include "util/convert.h"
 
@@ -7,7 +7,7 @@ using namespace ::Common;
 
 #define THIS (AS_QMARGINS_PTR(_this))
 
-namespace Margins2
+namespace Margins
 {
     int32_t Handle_bottom(HandleRef _this) {
         return THIS->bottom();

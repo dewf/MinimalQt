@@ -3,7 +3,7 @@ module LineEdit;
 import Object;
 import Widget;
 import Common;
-import Margins2;
+import Margins;
 import Point;
 import Icon;
 import Enums;
@@ -80,11 +80,11 @@ opaque Handle extends Widget.Handle {
     void setPlaceholderText(string text);
     void setReadOnly(bool state);
     void setSelection(int start, int length);
-    void setTextMargins(Margins2.Handle margins);
+    void setTextMargins(Margins.Handle margins);
     void setTextMargins(int left, int top, int right, int bottom);
     void setValidator(Validator.ConstHandle validator);
     string text();
-    Margins2.Owned textMargins();
+    Margins.Owned textMargins();
     Validator.ConstHandle validator();
 
     void clear();

@@ -7,12 +7,12 @@
 #include "IconInternal.h"
 #include "PointInternal.h"
 #include "ValidatorInternal.h"
-#include "Margins2Internal.h"
+#include "MarginsInternal.h"
 
 using namespace ::Object;
 using namespace ::Widget;
 using namespace ::Common;
-using namespace ::Margins2;
+using namespace ::Margins;
 using namespace ::Point;
 using namespace ::Icon;
 using namespace ::Enums;
@@ -228,7 +228,7 @@ namespace LineEdit
         THIS->setSelection(start, length);
     }
 
-    void Handle_setTextMargins(HandleRef _this, Margins2::HandleRef margins) {
+    void Handle_setTextMargins(HandleRef _this, Margins::HandleRef margins) {
         THIS->setTextMargins(QMARGINS_VALUE(margins));
     }
 
@@ -244,7 +244,7 @@ namespace LineEdit
         return THIS->text().toStdString();
     }
 
-    Margins2::OwnedRef Handle_textMargins(HandleRef _this) {
+    Margins::OwnedRef Handle_textMargins(HandleRef _this) {
         return MARGINS_HEAP_NEW(THIS->textMargins());
     }
 

@@ -2,7 +2,7 @@ module Widget;
 
 import Object;
 import Common;
-import Margins2;
+import Margins;
 import Point;
 import PointF;
 import Size;
@@ -82,7 +82,7 @@ opaque Handle extends Object.Handle {
     Region.Owned childrenRegion();
     void clearFocus();
     void clearMask();
-    Margins2.Owned contentsMargins();
+    Margins.Owned contentsMargins();
     Rect.Owned contentsRect();
     ContextMenuPolicy contextMenuPolicy();
     Cursor.Owned cursor();
@@ -203,7 +203,7 @@ opaque Handle extends Object.Handle {
     void setBaseSize(Size.Handle size);
     void setBaseSize(int basew, int baseh);
     void setContentsMargins(int left, int top, int right, int bottom);
-    void setContentsMargins(Margins2.Handle margins);
+    void setContentsMargins(Margins.Handle margins);
     void setContextMenuPolicy(ContextMenuPolicy policy);
     void setCursor(Cursor.Handle cursor);
 

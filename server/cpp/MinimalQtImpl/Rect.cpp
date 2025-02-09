@@ -4,14 +4,14 @@
 #include "PointInternal.h"
 #include "SizeInternal.h"
 #include "RectFInternal.h"
-#include "Margins2Internal.h"
+#include "MarginsInternal.h"
 
 #include "util/convert.h"
 
 using namespace ::Common;
 using namespace ::Point;
 using namespace ::Size;
-using namespace ::Margins2;
+using namespace ::Margins;
 
 #define THIS (AS_QRECT_PTR(_this))
 
@@ -101,11 +101,11 @@ namespace Rect
         return THIS->left();
     }
 
-    OwnedRef Handle_marginsAdded(HandleRef _this, Margins2::HandleRef margins) {
+    OwnedRef Handle_marginsAdded(HandleRef _this, Margins::HandleRef margins) {
         return RECT_HEAP_NEW(THIS->marginsAdded(QMARGINS_VALUE(margins)));
     }
 
-    OwnedRef Handle_marginsRemoved(HandleRef _this, Margins2::HandleRef margins) {
+    OwnedRef Handle_marginsRemoved(HandleRef _this, Margins::HandleRef margins) {
         return RECT_HEAP_NEW(THIS->marginsRemoved(QMARGINS_VALUE(margins)));
     }
 
@@ -284,12 +284,12 @@ namespace Rect
         return _this;
     }
 
-    HandleRef Handle_operator_incrementBy(HandleRef _this, Margins2::HandleRef margins) {
+    HandleRef Handle_operator_incrementBy(HandleRef _this, Margins::HandleRef margins) {
         THIS->operator+=(QMARGINS_VALUE(margins));
         return _this;
     }
 
-    HandleRef Handle_operator_decrementBy(HandleRef _this, Margins2::HandleRef margins) {
+    HandleRef Handle_operator_decrementBy(HandleRef _this, Margins::HandleRef margins) {
         THIS->operator-=(QMARGINS_VALUE(margins));
         return _this;
     }
@@ -327,11 +327,11 @@ namespace Rect
         return QRECT_VALUE(lhs) != QRECT_VALUE(rhs);
     }
 
-    OwnedRef operator_add(HandleRef rectangle, Margins2::HandleRef margins) {
+    OwnedRef operator_add(HandleRef rectangle, Margins::HandleRef margins) {
         return RECT_HEAP_NEW(QRECT_VALUE(rectangle) + QMARGINS_VALUE(margins));
     }
 
-    OwnedRef operator_sub(HandleRef lhs, Margins2::HandleRef rhs) {
+    OwnedRef operator_sub(HandleRef lhs, Margins::HandleRef rhs) {
         return RECT_HEAP_NEW(QRECT_VALUE(lhs) - QMARGINS_VALUE(rhs));
     }
 

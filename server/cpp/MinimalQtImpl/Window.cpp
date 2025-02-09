@@ -9,7 +9,7 @@
 #include "RegionInternal.h"
 #include "SizeInternal.h"
 #include "RectInternal.h"
-#include "Margins2Internal.h"
+#include "MarginsInternal.h"
 
 #include "util/convert.h"
 
@@ -17,7 +17,7 @@ using namespace ::Object;
 using namespace ::Enums;
 using namespace ::Screen;
 using namespace ::Common;
-using namespace ::Margins2;
+using namespace ::Margins;
 using namespace ::Point;
 using namespace ::PointF;
 using namespace ::Size;
@@ -70,7 +70,7 @@ namespace Window
         return RECT_HEAP_NEW(THIS->frameGeometry());
     }
 
-    Margins2::OwnedRef Handle_frameMargins(HandleRef _this) {
+    Margins::OwnedRef Handle_frameMargins(HandleRef _this) {
         return MARGINS_HEAP_NEW(THIS->frameMargins());
     }
 

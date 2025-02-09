@@ -2,7 +2,7 @@ module Size;
 
 import Common;
 import Enums;
-import Margins2;
+import Margins;
 
 fwdopaque SizeF_Owned = SizeF.Owned;
 
@@ -13,7 +13,7 @@ opaque Handle {
 
     Owned boundedTo(Handle otherSize);
     Owned expandedTo(Handle otherSize);
-    Owned grownBy(Margins2.Handle margins);
+    Owned grownBy(Margins.Handle margins);
     int height();
     bool isEmpty();
     bool isNull();
@@ -28,7 +28,7 @@ opaque Handle {
     Owned scaled(Handle s, AspectRatioMode mode);
     void setHeight(int height);
     void setWidth(int width);
-    Owned shrunkBy(Margins2.Handle margins);
+    Owned shrunkBy(Margins.Handle margins);
 
     // CGSize toCGSize() const
 

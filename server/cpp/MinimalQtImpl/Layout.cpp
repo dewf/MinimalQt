@@ -5,12 +5,12 @@
 #include "LayoutItemInternal.h"
 #include "SizeInternal.h"
 #include "RectInternal.h"
-#include "Margins2Internal.h"
+#include "MarginsInternal.h"
 
 #include "util/convert.h"
 
 using namespace ::Object;
-using namespace ::Margins2;
+using namespace ::Margins;
 using namespace ::Size;
 using namespace ::Rect;
 using namespace ::Enums;
@@ -36,7 +36,7 @@ namespace Layout
         THIS->addWidget(AS_QWIDGET_PTR(widget));
     }
 
-    Margins2::OwnedRef Handle_contentsMargins(HandleRef _this) {
+    Margins::OwnedRef Handle_contentsMargins(HandleRef _this) {
         return MARGINS_HEAP_NEW(THIS->contentsMargins());
     }
 
@@ -98,7 +98,7 @@ namespace Layout
         return THIS->setAlignment(AS_QLAYOUT_PTR(layout), static_cast<Qt::Alignment>(alignment.value));
     }
 
-    void Handle_setContentsMargins(HandleRef _this, Margins2::HandleRef margins) {
+    void Handle_setContentsMargins(HandleRef _this, Margins::HandleRef margins) {
         THIS->setContentsMargins(QMARGINS_VALUE(margins));
     }
 
