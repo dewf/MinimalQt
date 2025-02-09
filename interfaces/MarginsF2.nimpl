@@ -1,0 +1,118 @@
+module MarginsF2;
+
+import Margins;
+
+@nodispose
+opaque Handle {
+
+    // qreal bottom() const
+    double bottom();
+
+    // bool isNull() const
+    bool isNull();
+
+    // qreal left() const
+    double left();
+
+    // qreal right() const
+    double right();
+
+    // void setBottom(qreal abottom)
+    void setBottom(double abottom);
+
+    // void setLeft(qreal aleft)
+    void setLeft(double aleft);
+
+    // void setRight(qreal aright)
+    void setRight(double aright);
+
+    // void setTop(qreal atop)
+    void setTop(double atop);
+
+    // QMargins toMargins() const
+    Margins.Owned toMargins();
+
+    // qreal top() const
+    double top();
+
+    // QMarginsF & operator*=(qreal factor)
+    Handle operator_mul(double factor);
+
+    // QMarginsF & operator+=(const QMarginsF &margins)
+    Handle operator_add(Handle margins);
+
+    // QMarginsF & operator+=(qreal addend)
+    Handle operator_add(double addend);
+
+    // QMarginsF & operator-=(const QMarginsF &margins)
+    Handle operator_sub(Handle margins);
+
+    // QMarginsF & operator-=(qreal subtrahend)
+    Handle operator_sub(double subtrahend);
+
+    // QMarginsF & operator/=(qreal divisor)
+    Handle operator_div(double divisor);
+}
+opaque Owned extends Handle;
+
+// QMarginsF()
+Owned create();
+
+// QMarginsF(const QMargins &margins)
+Owned create(Margins.Handle margins);
+
+// QMarginsF(qreal left, qreal top, qreal right, qreal bottom)
+Owned create(double left, double top, double right, double bottom);
+
+// static methods =======================
+
+// (since 6.8) bool qFuzzyCompare(const QMarginsF &lhs, const QMarginsF &rhs)
+bool fuzzyCompare(Handle lhs, Handle rhs);
+
+// (since 6.8) bool qFuzzyIsNull(const QMarginsF &margins)
+bool fuzzyIsNull(Handle margins);
+
+// operators ============================
+
+// bool operator!=(const QMarginsF &lhs, const QMarginsF &rhs)
+bool operator_notEqual(Handle lhs, Handle rhs);
+
+// QMarginsF operator*(const QMarginsF &lhs, qreal rhs)
+Owned operator_mul(Handle lhs, double rhs);
+
+// QMarginsF operator*(qreal lhs, const QMarginsF &rhs)
+// see above
+
+// QMarginsF operator+(const QMarginsF &margins)
+// no-op
+
+// QMarginsF operator+(const QMarginsF &lhs, const QMarginsF &rhs)
+Owned operator_add(Handle lhs, Handle rhs);
+
+// QMarginsF operator+(const QMarginsF &lhs, qreal rhs)
+Owned operator_add(Handle lhs, double rhs);
+
+// QMarginsF operator+(qreal lhs, const QMarginsF &rhs)
+// see above
+
+// QMarginsF operator-(const QMarginsF &margins)
+Owned operator_negate(Handle margins);
+
+// QMarginsF operator-(const QMarginsF &lhs, const QMarginsF &rhs)
+Owned operator_sub(Handle lhs, Handle rhs);
+
+// QMarginsF operator-(const QMarginsF &lhs, qreal rhs)
+Owned operator_sub(Handle lhs, double rhs);
+
+// QMarginsF operator/(const QMarginsF &lhs, qreal rhs)
+Owned operator_div(Handle lhs, double rhs);
+
+// QDataStream & operator<<(QDataStream &stream, const QMarginsF &m)
+
+// bool operator==(const QMarginsF &lhs, const QMarginsF &rhs)
+bool operator_equal(Handle lhs, Handle rhs);
+
+// QDataStream & operator>>(QDataStream &stream, QMarginsF &m)
+
+// (since 6.0) QMarginsF operator|(const QMarginsF &m1, const QMarginsF &m2)
+Owned operator_or(Handle m1, Handle m2);

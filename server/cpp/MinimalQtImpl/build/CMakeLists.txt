@@ -280,6 +280,11 @@ add_library(MinimalQtImpl STATIC
     ../Margins.cpp
     ../MarginsInternal.h
 
+    ../generated/MarginsF2.h
+    ../generated/MarginsF2_wrappers.cpp
+    ../MarginsF2.cpp
+    ../MarginsF2Internal.h
+
     ../generated/Menu.h
     ../generated/Menu_wrappers.cpp
     ../Menu.cpp
