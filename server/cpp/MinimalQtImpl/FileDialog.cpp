@@ -8,7 +8,6 @@
 #include "util/convert.h"
 
 using namespace ::Object;
-using namespace ::Common;
 using namespace ::Icon;
 using namespace ::Dialog;
 using namespace ::Widget;

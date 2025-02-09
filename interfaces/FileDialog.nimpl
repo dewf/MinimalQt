@@ -1,7 +1,6 @@
 module FileDialog;
 
 import Object;
-import Common;
 import Icon;
 import Dialog;
 import Widget;

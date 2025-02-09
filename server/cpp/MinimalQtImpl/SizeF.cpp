@@ -2,12 +2,13 @@
 #include "SizeFInternal.h"
 
 #include "SizeInternal.h"
+#include "MarginsFInternal.h"
 
 #include "util/convert.h"
 
-using namespace ::Common;
 using namespace ::Size;
 using namespace ::Enums;
+using namespace ::MarginsF;
 
 #define THIS (AS_QSIZEF_PTR(_this))
 
@@ -21,9 +22,8 @@ namespace SizeF
         return SIZEF_HEAP_NEW(THIS->expandedTo(QSIZEF_VALUE(otherSize)));
     }
 
-    OwnedRef Handle_grownBy(HandleRef _this, MarginsF margins) {
-        // TODO, when we have a MarginsF
-        return SIZEF_HEAP_NEW(-12345, -12345);
+    OwnedRef Handle_grownBy(HandleRef _this, MarginsF::HandleRef margins) {
+        return SIZEF_HEAP_NEW(THIS->grownBy(QMARGINSF_VALUE(margins)));
     }
 
     double Handle_height(HandleRef _this) {
@@ -66,9 +66,8 @@ namespace SizeF
         THIS->setWidth(width);
     }
 
-    OwnedRef Handle_shrunkBy(HandleRef _this, MarginsF margins) {
-        // TODO, when we have a MarginsF
-        return SIZEF_HEAP_NEW(-12345, -12345);
+    OwnedRef Handle_shrunkBy(HandleRef _this, MarginsF::HandleRef margins) {
+        return SIZEF_HEAP_NEW(THIS->shrunkBy(QMARGINSF_VALUE(margins)));
     }
 
     Size::OwnedRef Handle_toSize(HandleRef _this) {

@@ -1,7 +1,6 @@
 module AbstractButton;
 
 import Object;
-import Common;
 import Size;
 import KeySequence;
 import Widget;

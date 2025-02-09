@@ -1,6 +1,5 @@
 module Region;
 
-import Common;
 import Point;
 import Rect;
 import Polygon;

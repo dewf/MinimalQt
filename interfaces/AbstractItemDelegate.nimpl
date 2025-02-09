@@ -2,7 +2,6 @@ module AbstractItemDelegate;
 
 import Object;
 import Widget;
-import Common;
 import Size;
 import ModelIndex;
 import StyleOptionViewItem;

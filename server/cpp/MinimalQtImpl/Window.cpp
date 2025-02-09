@@ -16,7 +16,6 @@
 using namespace ::Object;
 using namespace ::Enums;
 using namespace ::Screen;
-using namespace ::Common;
 using namespace ::Margins;
 using namespace ::Point;
 using namespace ::PointF;

@@ -1,11 +1,6 @@
 #pragma once
 
-#include <QRect>
-#include <QPoint>
 #include <QList>
-
-#include "../generated/Common.h"
-using namespace Common;
 
 #include "../generated/Enums.h"
 using namespace Enums;
@@ -84,12 +79,4 @@ inline std::vector<std::string> toVectorStrings(const QStringList& qStrings) {
 
 inline QStringList toQStringList(const std::vector<std::string>& strings) {
     return toQList<std::string,QString>(strings, [](const std::string& str) { return QString::fromStdString(str); });
-}
-
-inline QMarginsF toQMarginsF(const MarginsF& margins) {
-    return {margins.left, margins.top, margins.right, margins.bottom};
-}
-
-inline MarginsF toMarginsF(const QMarginsF& qm) {
-    return MarginsF { qm.left(), qm.top(), qm.right(), qm.bottom() };
 }

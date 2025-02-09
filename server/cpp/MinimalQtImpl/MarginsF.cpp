@@ -1,5 +1,5 @@
-#include "generated/MarginsF2.h"
-#include "MarginsF2Internal.h"
+#include "generated/MarginsF.h"
+#include "MarginsFInternal.h"
 
 #include "MarginsInternal.h"
 
@@ -7,7 +7,7 @@ using namespace ::Margins;
 
 #define THIS (AS_QMARGINSF_PTR(_this))
 
-namespace MarginsF2
+namespace MarginsF
 {
     double Handle_bottom(HandleRef _this) {
         return THIS->bottom();

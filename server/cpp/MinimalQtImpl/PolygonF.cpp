@@ -7,7 +7,6 @@
 
 #include "util/convert.h"
 
-using namespace ::Common;
 using namespace ::PointF;
 using namespace ::RectF;
 using namespace ::Enums;

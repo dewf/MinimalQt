@@ -6,10 +6,7 @@
 #include "WidgetInternal.h"
 #include "RectInternal.h"
 
-#include "util/convert.h"
-
 using namespace ::Object;
-using namespace ::Common;
 using namespace ::Rect;
 using namespace ::Widget;
 using namespace ::Layout;

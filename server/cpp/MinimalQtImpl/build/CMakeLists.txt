@@ -102,11 +102,6 @@ add_library(MinimalQtImpl STATIC
     ../ComboBox.cpp
     ../ComboBoxInternal.h
 
-    ../generated/Common.h
-    ../generated/Common_wrappers.cpp
-    ../Common.cpp
-    ../CommonInternal.h
-
     ../generated/Completer.h
     ../generated/Completer_wrappers.cpp
     ../Completer.cpp
@@ -280,10 +275,10 @@ add_library(MinimalQtImpl STATIC
     ../Margins.cpp
     ../MarginsInternal.h
 
-    ../generated/MarginsF2.h
-    ../generated/MarginsF2_wrappers.cpp
-    ../MarginsF2.cpp
-    ../MarginsF2Internal.h
+    ../generated/MarginsF.h
+    ../generated/MarginsF_wrappers.cpp
+    ../MarginsF.cpp
+    ../MarginsFInternal.h
 
     ../generated/Menu.h
     ../generated/Menu_wrappers.cpp

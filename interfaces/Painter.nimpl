@@ -1,6 +1,5 @@
 module Painter;
 
-import Common;
 import Point;
 import PointF;
 import Rect;

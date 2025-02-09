@@ -1,6 +1,5 @@
 module Size;
 
-import Common;
 import Enums;
 import Margins;
 

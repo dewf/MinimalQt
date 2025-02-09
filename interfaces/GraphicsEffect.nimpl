@@ -1,7 +1,6 @@
 module GraphicsEffect;
 
 import Object;
-import Common;
 import RectF;
 
 interface SignalHandler {

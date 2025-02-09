@@ -14,7 +14,6 @@ using namespace ::AbstractItemModel;
 using namespace ::AbstractItemView;
 using namespace ::Enums;
 using namespace ::Widget;
-using namespace ::Common;
 using namespace ::Rect;
 
 #define THIS (reinterpret_cast<QCompleter*>(_this))

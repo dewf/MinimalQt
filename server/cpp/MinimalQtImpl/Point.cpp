@@ -5,8 +5,6 @@
 
 #include "util/convert.h"
 
-using namespace ::Common;
-
 #define THIS (AS_QPOINT_PTR(_this))
 
 namespace Point

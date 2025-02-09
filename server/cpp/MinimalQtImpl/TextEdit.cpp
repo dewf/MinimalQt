@@ -17,7 +17,6 @@
 
 using namespace ::Object;
 using namespace ::Widget;
-using namespace ::Common;
 using namespace ::Point;
 using namespace ::Rect;
 using namespace ::Enums;

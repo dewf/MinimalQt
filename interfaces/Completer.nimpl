@@ -6,7 +6,6 @@ import AbstractItemModel;
 import AbstractItemView;
 import Enums;
 import Widget;
-import Common;
 import Rect;
 
 interface SignalHandler extends Object.SignalHandler {

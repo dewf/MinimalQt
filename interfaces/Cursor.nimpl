@@ -3,7 +3,6 @@ module Cursor;
 import Pixmap;
 import Enums;
 import Screen;
-import Common;
 import Point;
 
 @nodispose

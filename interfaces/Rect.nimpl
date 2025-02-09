@@ -1,6 +1,5 @@
 module Rect;
 
-import Common;
 import Point;
 import Size;
 import Margins;

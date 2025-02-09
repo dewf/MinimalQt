@@ -1,7 +1,6 @@
 module Frame;
 
 import Object;
-import Common;
 import Rect;
 import Icon;
 import Widget;

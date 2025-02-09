@@ -1,7 +1,6 @@
 module Screen;
 
 import Object;
-import Common;
 import Point;
 import Size;
 import SizeF;

@@ -5,7 +5,6 @@
 #include "LayoutInternal.h"
 #include "WidgetInternal.h"
 
-using namespace ::Common;
 using namespace ::Widget;
 using namespace ::Layout;
 using namespace ::Enums;

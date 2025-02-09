@@ -11,7 +11,6 @@
 #include "util/convert.h"
 
 using namespace ::Object;
-using namespace ::Common;
 using namespace ::Point;
 using namespace ::Rect;
 using namespace ::Widget;

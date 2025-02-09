@@ -2,7 +2,6 @@ module PlainTextEdit;
 
 import Object;
 import Widget;
-import Common;
 import Point;
 import Rect;
 import Icon;

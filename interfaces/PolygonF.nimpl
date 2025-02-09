@@ -1,6 +1,5 @@
 module PolygonF;
 
-import Common;
 import PointF;
 import RectF;
 import Enums;

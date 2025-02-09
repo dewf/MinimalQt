@@ -5,7 +5,6 @@
 #include "ObjectInternal.h"
 
 using namespace ::Object;
-using namespace ::Common;
 using namespace ::Frame;
 using namespace ::Icon;
 using namespace ::Enums;

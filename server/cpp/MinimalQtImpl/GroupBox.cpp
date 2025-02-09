@@ -5,7 +5,6 @@
 #include "WidgetInternal.h"
 
 using namespace ::Object;
-using namespace ::Common;
 using namespace ::Icon;
 using namespace ::Enums;
 using namespace ::Widget;

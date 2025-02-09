@@ -3,10 +3,10 @@
 
 #include "ColorInternal.h"
 #include "PointFInternal.h"
+
 #include "util/convert.h"
 
 using namespace ::Color;
-using namespace ::Common;
 using namespace ::PointF;
 
 #define GRAD_THIS (AS_QGRADIENT_PTR(_this))

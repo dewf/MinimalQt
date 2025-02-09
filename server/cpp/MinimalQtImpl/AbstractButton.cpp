@@ -7,7 +7,6 @@
 #include "SizeInternal.h"
 
 using namespace ::Object;
-using namespace ::Common;
 using namespace ::Size;
 using namespace ::KeySequence;
 using namespace ::Widget;

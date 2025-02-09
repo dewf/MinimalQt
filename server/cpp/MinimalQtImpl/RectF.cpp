@@ -4,13 +4,14 @@
 #include "PointFInternal.h"
 #include "SizeFInternal.h"
 #include "RectInternal.h"
+#include "MarginsFInternal.h"
 
 #include "util/convert.h"
 
-using namespace ::Common;
 using namespace ::PointF;
 using namespace ::SizeF;
 using namespace ::Rect;
+using namespace ::MarginsF;
 
 #define THIS (AS_QRECTF_PTR(_this))
 
@@ -92,12 +93,12 @@ namespace RectF
         return THIS->left();
     }
 
-    OwnedRef Handle_marginsAdded(HandleRef _this, MarginsF margins) {
-        return RECTF_HEAP_NEW(THIS->marginsAdded(toQMarginsF(margins)));
+    OwnedRef Handle_marginsAdded(HandleRef _this, MarginsF::HandleRef margins) {
+        return RECTF_HEAP_NEW(THIS->marginsAdded(QMARGINSF_VALUE(margins)));
     }
 
-    OwnedRef Handle_marginsRemoved(HandleRef _this, MarginsF margins) {
-        return RECTF_HEAP_NEW(THIS->marginsRemoved(toQMarginsF(margins)));
+    OwnedRef Handle_marginsRemoved(HandleRef _this, MarginsF::HandleRef margins) {
+        return RECTF_HEAP_NEW(THIS->marginsRemoved(QMARGINSF_VALUE(margins)));
     }
 
     void Handle_moveBottom(HandleRef _this, double y) {
@@ -277,13 +278,13 @@ namespace RectF
         return _this;
     }
 
-    HandleRef Handle_operator_incrementBy(HandleRef _this, MarginsF margins) {
-        THIS->operator+=(toQMarginsF(margins));
+    HandleRef Handle_operator_incrementBy(HandleRef _this, MarginsF::HandleRef margins) {
+        THIS->operator+=(QMARGINSF_VALUE(margins));
         return _this;
     }
 
-    HandleRef Handle_operator_decrementBy(HandleRef _this, MarginsF margins) {
-        THIS->operator-=(toQMarginsF(margins));
+    HandleRef Handle_operator_decrementBy(HandleRef _this, MarginsF::HandleRef margins) {
+        THIS->operator-=(QMARGINSF_VALUE(margins));
         return _this;
     }
 
@@ -328,12 +329,12 @@ namespace RectF
         return QRECT_VALUE(lhs) != QRECT_VALUE(rhs);
     }
 
-    OwnedRef operator_add(HandleRef lhs, MarginsF rhs) {
-        return RECTF_HEAP_NEW(QRECTF_VALUE(lhs) + toQMarginsF(rhs));
+    OwnedRef operator_add(HandleRef lhs, MarginsF::HandleRef rhs) {
+        return RECTF_HEAP_NEW(QRECTF_VALUE(lhs) + QMARGINSF_VALUE(rhs));
     }
 
-    OwnedRef operator_sub(HandleRef lhs, MarginsF rhs) {
-        return RECTF_HEAP_NEW(QRECTF_VALUE(lhs) - toQMarginsF(rhs));
+    OwnedRef operator_sub(HandleRef lhs, MarginsF::HandleRef rhs) {
+        return RECTF_HEAP_NEW(QRECTF_VALUE(lhs) - QMARGINSF_VALUE(rhs));
     }
 
     bool operator_equal(HandleRef lhs, HandleRef rhs) {

@@ -7,7 +7,6 @@
 #include "util/convert.h"
 
 using namespace ::Enums;
-using namespace ::Common;
 using namespace ::Size;
 using namespace ::Rect;
 using namespace ::SizePolicy;

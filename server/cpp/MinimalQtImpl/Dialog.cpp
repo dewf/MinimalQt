@@ -4,7 +4,6 @@
 #include "ObjectInternal.h"
 
 using namespace ::Object;
-using namespace ::Common;
 using namespace ::Icon;
 using namespace ::Widget;
 using namespace ::Enums;

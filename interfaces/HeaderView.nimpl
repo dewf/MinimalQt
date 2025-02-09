@@ -4,7 +4,6 @@ import Object;
 import AbstractItemView;
 import Enums;
 import Widget;
-import Common;
 import Point;
 
 interface SignalHandler extends AbstractItemView.SignalHandler {

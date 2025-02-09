@@ -27,7 +27,6 @@
 #include "util/convert.h"
 
 using namespace ::Object;
-using namespace ::Common;
 using namespace ::Margins;
 using namespace ::Point;
 using namespace ::PointF;

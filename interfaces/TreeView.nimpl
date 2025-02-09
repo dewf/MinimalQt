@@ -2,7 +2,6 @@ module TreeView;
 
 import Object;
 import Widget;
-import Common;
 import Icon;
 import Enums;
 import AbstractItemView;

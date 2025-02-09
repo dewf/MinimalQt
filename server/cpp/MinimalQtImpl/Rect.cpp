@@ -8,7 +8,6 @@
 
 #include "util/convert.h"
 
-using namespace ::Common;
 using namespace ::Point;
 using namespace ::Size;
 using namespace ::Margins;

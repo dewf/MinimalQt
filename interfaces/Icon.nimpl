@@ -1,7 +1,6 @@
 module Icon;
 
 import Pixmap;
-import Common;
 import Size;
 import Rect;
 import Painter;

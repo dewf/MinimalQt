@@ -6,7 +6,6 @@
 
 #include "util/convert.h"
 
-using namespace ::Common;
 using namespace ::Enums;
 using namespace ::Margins;
 

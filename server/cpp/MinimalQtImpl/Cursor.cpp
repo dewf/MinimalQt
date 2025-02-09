@@ -5,12 +5,9 @@
 #include "PointInternal.h"
 #include "ScreenInternal.h"
 
-#include "util/convert.h"
-
 using namespace ::Pixmap;
 using namespace ::Enums;
 using namespace ::Screen;
-using namespace ::Common;
 using namespace ::Point;
 
 #define THIS (AS_QCURSOR_PTR(_this))

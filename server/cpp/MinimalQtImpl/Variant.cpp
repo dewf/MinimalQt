@@ -10,10 +10,7 @@
 #include "LoggingInternal.h"
 using namespace ::Logging;
 
-#include "util/convert.h"
-
 using namespace ::Icon;
-using namespace ::Common;
 using namespace ::Size;
 using namespace ::Enums;
 using namespace ::Color;

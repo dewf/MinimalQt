@@ -1,7 +1,6 @@
 module Widget;
 
 import Object;
-import Common;
 import Margins;
 import Point;
 import PointF;

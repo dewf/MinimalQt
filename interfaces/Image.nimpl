@@ -1,6 +1,5 @@
 module Image;
 import PaintDevice;
-import Common;
 import Size;
 import SizeF;
 import Point;

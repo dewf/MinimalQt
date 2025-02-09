@@ -6,7 +6,6 @@ import Variant;
 import ModelIndex;
 import Brush;
 import Font;
-import Common;
 import Size;
 
 enum ItemType { Type = 0, UserType = 1000 }

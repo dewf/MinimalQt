@@ -6,10 +6,7 @@
 #include "WidgetInternal.h"
 #include "SizeInternal.h"
 
-#include "util/convert.h"
-
 using namespace ::Object;
-using namespace ::Common;
 using namespace ::Size;
 using namespace ::Icon;
 using namespace ::Enums;

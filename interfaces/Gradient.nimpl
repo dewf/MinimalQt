@@ -1,7 +1,6 @@
 module Gradient;
 
 import Color;
-import Common;
 import PointF;
 
 enum Type {

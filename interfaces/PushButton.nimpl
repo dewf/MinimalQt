@@ -1,7 +1,6 @@
 module PushButton;
 
 import Object;
-import Common;
 import Widget;
 import Icon;
 import AbstractButton;

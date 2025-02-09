@@ -1,7 +1,6 @@
 module ProgressBar;
 
 import Object;
-import Common;
 import Enums;
 import Icon;
 import Widget;

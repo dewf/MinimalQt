@@ -16,7 +16,6 @@ using namespace ::Variant;
 using namespace ::ModelIndex;
 using namespace ::Brush;
 using namespace ::Font;
-using namespace ::Common;
 using namespace ::Size;
 
 #define THIS ((QStandardItem*)_this)

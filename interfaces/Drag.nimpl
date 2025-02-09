@@ -3,7 +3,6 @@ module Drag;
 import Object;
 import Enums;
 import Pixmap;
-import Common;
 import Point;
 import MimeData;
 

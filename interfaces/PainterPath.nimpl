@@ -1,6 +1,5 @@
 module PainterPath;
 
-import Common;
 import PointF;
 import RectF;
 import Enums;

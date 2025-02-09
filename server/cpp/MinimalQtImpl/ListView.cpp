@@ -9,7 +9,6 @@
 #include "util/convert.h"
 
 using namespace ::Object;
-using namespace ::Common;
 using namespace ::Size;
 using namespace ::Enums;
 using namespace ::Icon;

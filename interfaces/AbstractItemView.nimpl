@@ -1,7 +1,6 @@
 module AbstractItemView;
 
 import Object;
-import Common;
 import Size;
 import Point;
 import Rect;

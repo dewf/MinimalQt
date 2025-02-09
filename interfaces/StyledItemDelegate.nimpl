@@ -2,7 +2,6 @@ module StyledItemDelegate;
 
 import Object;
 import AbstractItemDelegate;
-import Common;
 import Widget;
 import AbstractItemModel;
 import ModelIndex;

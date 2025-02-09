@@ -4,10 +4,7 @@
 #include "ObjectInternal.h"
 #include "RectFInternal.h"
 
-#include "util/convert.h"
-
 using namespace ::Object;
-using namespace ::Common;
 using namespace ::RectF;
 
 #define THIS (reinterpret_cast<QGraphicsEffect*>(_this))

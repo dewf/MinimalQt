@@ -1,9 +1,9 @@
 #include "generated/Margins.h"
 #include "MarginsInternal.h"
 
-#include "util/convert.h"
+#include "MarginsFInternal.h"
 
-using namespace ::Common;
+#include "util/convert.h"
 
 #define THIS (AS_QMARGINS_PTR(_this))
 
@@ -41,8 +41,10 @@ namespace Margins
         THIS->setTop(top);
     }
 
-    MarginsF Handle_toMarginsF(HandleRef _this) {
-        return toMarginsF(THIS->toMarginsF());
+    MarginsF_OwnedRef Handle_toMarginsF(HandleRef _this) {
+        const auto result = MARGINSF_HEAP_NEW(THIS->toMarginsF());
+        // fwd opaque cast:
+        return reinterpret_cast<MarginsF_OwnedRef>(result);
     }
 
     int32_t Handle_top(HandleRef _this) {

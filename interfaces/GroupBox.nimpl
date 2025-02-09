@@ -1,7 +1,6 @@
 module GroupBox;
 
 import Object;
-import Common;
 import Icon;
 import Enums;
 import Widget;

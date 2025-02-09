@@ -1,6 +1,6 @@
 module Margins;
 
-import Common;
+fwdopaque MarginsF_Owned = MarginsF.Owned;
 
 @nodispose
 opaque Handle {
@@ -12,7 +12,7 @@ opaque Handle {
     void setLeft(int left);
     void setRight(int right);
     void setTop(int top);
-    MarginsF toMarginsF();
+    MarginsF_Owned toMarginsF();
     int top();
     
     // the following return 'this':

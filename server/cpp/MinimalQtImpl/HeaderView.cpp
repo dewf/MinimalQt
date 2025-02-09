@@ -11,7 +11,6 @@ using namespace ::Object;
 using namespace ::AbstractItemView;
 using namespace ::Enums;
 using namespace ::Widget;
-using namespace ::Common;
 using namespace ::Point;
 
 #define THIS (reinterpret_cast<QHeaderView*>(_this))

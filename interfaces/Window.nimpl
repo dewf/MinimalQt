@@ -3,7 +3,6 @@ module Window;
 import Object;
 import Enums;
 import Screen;
-import Common;
 import Margins;
 import Point;
 import PointF;

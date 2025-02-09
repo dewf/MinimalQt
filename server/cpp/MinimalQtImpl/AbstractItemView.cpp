@@ -14,7 +14,6 @@
 #include "util/convert.h"
 
 using namespace ::Object;
-using namespace ::Common;
 using namespace ::Size;
 using namespace ::Point;
 using namespace ::Rect;

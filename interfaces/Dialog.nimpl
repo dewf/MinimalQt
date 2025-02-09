@@ -1,7 +1,6 @@
 module Dialog;
 
 import Object;
-import Common;
 import Icon;
 import Widget;
 import Enums;

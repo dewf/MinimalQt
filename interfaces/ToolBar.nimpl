@@ -1,7 +1,6 @@
 module ToolBar;
 
 import Object;
-import Common;
 import Size;
 import Point;
 import Enums;

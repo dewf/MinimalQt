@@ -1,6 +1,6 @@
 module Pixmap;
+
 import PaintDevice;
-import Common;
 import Size;
 import SizeF;
 import Rect;

@@ -1,7 +1,6 @@
 module AbstractItemModel;
 
 import Object;
-import Common;
 import Size;
 import Enums;
 import ModelIndex;

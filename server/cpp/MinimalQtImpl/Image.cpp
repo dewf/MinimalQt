@@ -11,7 +11,6 @@
 #include "util/convert.h"
 
 using namespace ::PaintDevice;
-using namespace ::Common;
 using namespace ::Size;
 using namespace ::SizeF;
 using namespace ::Point;

@@ -9,7 +9,6 @@
 #include "util/convert.h"
 
 using namespace ::Pixmap;
-using namespace ::Common;
 using namespace ::Size;
 using namespace ::Rect;
 using namespace ::Painter;

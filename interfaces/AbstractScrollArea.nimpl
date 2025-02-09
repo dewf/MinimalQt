@@ -1,7 +1,6 @@
 module AbstractScrollArea;
 
 import Object;
-import Common;
 import Size;
 import Icon;
 import Frame;

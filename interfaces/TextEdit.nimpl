@@ -2,7 +2,6 @@ module TextEdit;
 
 import Object;
 import Widget;
-import Common;
 import Point;
 import Rect;
 import Enums;
