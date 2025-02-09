@@ -6,6 +6,7 @@
 #include "IconInternal.h"
 #include "UrlInternal.h"
 #include "SizeInternal.h"
+#include "TransformInternal.h"
 
 #include "LoggingInternal.h"
 using namespace ::Logging;
@@ -16,6 +17,7 @@ using namespace ::Enums;
 using namespace ::Color;
 using namespace ::DateTime;
 using namespace ::Url;
+using namespace ::Transform;
 
 #define THIS (AS_QVARIANT_PTR(_this))
 
@@ -78,6 +80,15 @@ namespace Variant
         throw VariantConversionFailure();
     }
 
+    Transform::OwnedRef Handle_toTransform(HandleRef _this) { // throws VariantConversionFailure
+        if (THIS->isValid() && THIS->canConvert<QTransform>()) {
+            const auto matrix = THIS->value<QTransform>();
+            return TRANSFORM_HEAP_NEW(matrix);
+        }
+        // else
+        throw VariantConversionFailure();
+    }
+
     void Owned_dispose(OwnedRef _this) {
         delete THIS;
     }
@@ -130,5 +141,11 @@ namespace Variant
 
     OwnedRef create(Url::HandleRef url) {
         return VARIANT_HEAP_NEW(QURL_VALUE(url));
+    }
+
+    // convenience constructors ============================
+    OwnedRef create(Transform::HandleRef transform) {
+        const QVariant value = QTRANSFORM_VALUE(transform);
+        return VARIANT_HEAP_NEW(value);
     }
 }

@@ -24,6 +24,8 @@ enum TransformationType {
 @nodispose
 opaque Handle {
 
+    int hashCode();
+
     double m11();
     double m12();
     double m13();
@@ -71,16 +73,21 @@ opaque Handle {
     Owned transposed();
     TransformationType type();
 
-    // operator overloads =================================
+    // operators ====================================
+    
+    // QVariant operator QVariant() const
+    // we'll just use a convenience (fake) constructor on Variant
 
-    bool operator_equal(Handle other);
-    int hashCode();
-
+    bool operator_notEqual(Handle matrix);
     Owned operator_mul(Handle matrix);
-    Owned operator_mul(double scalar);
-    Owned operator_plus(double scalar);
-    Owned operator_minus(double scalar);
-    Owned operator_div(double scalar);
+
+    Handle operator_multiplyBy(Handle matrix); // returns 'this'
+    Handle operator_multiplyBy(double scalar); // returns 'this'
+    Handle operator_incrementBy(double scalar); // returns 'this'
+    Handle operator_decrementBy(double scalar); // returns 'this'
+    Handle operator_divideBy(double scalar); // returns 'this'
+    Handle operator_assign(Handle matrix); // returns 'this'
+    bool operator_equal(Handle matrix);
 }
 opaque Owned extends Handle;
 
@@ -95,3 +102,23 @@ Owned fromTranslate(double dx, double dy);
 Option<Owned> quadToQuad(PolygonF.Handle one, PolygonF.Handle two);
 Option<Owned> quadToSquare(PolygonF.Handle quad);
 Option<Owned> squareToQuad(PolygonF.Handle quad);
+
+bool fuzzyCompare(Handle t1, Handle t2);
+
+// size_t qHash(const QTransform &key, size_t seed = 0)
+// see hashCode() method
+
+// operators ====================
+
+// QLine operator*(const QLine &line, const QTransform &matrix)
+// QLineF operator*(const QLineF &line, const QTransform &matrix)
+
+PainterPath_Owned operator_mul(PainterPath_Handle path, Handle matrix);
+Point.Owned operator_mul(Point.Handle point, Handle matrix);
+PointF.Owned operator_mul(PointF.Handle point, Handle matrix);
+Polygon.Owned operator_mul(Polygon.Handle polygon, Handle matrix);
+PolygonF.Owned operator_mul(PolygonF.Handle polygon, Handle matrix);
+Region.Owned operator_mul(Region.Handle region, Handle matrix);
+
+// QDataStream & operator<<(QDataStream &stream, const QTransform &matrix)
+// QDataStream & operator>>(QDataStream &stream, QTransform &matrix)

@@ -13,6 +13,7 @@
 #include "util/convert.h"
 
 using namespace ::Point;
+using namespace ::PointF;
 using namespace ::Rect;
 using namespace ::RectF;
 using namespace ::Polygon;
@@ -24,6 +25,10 @@ using namespace ::Enums;
 
 namespace Transform
 {
+    int32_t Handle_hashCode(HandleRef _this) {
+        return static_cast<int32_t>(qHash(*THIS));
+    }
+
     double Handle_m11(HandleRef _this) {
         return THIS->m11();
     }
@@ -205,32 +210,48 @@ namespace Transform
 
     // operator overloads ================================================
 
-    bool Handle_operator_equal(HandleRef _this, HandleRef other) {
-        return QTRANSFORM_VALUE(_this) == QTRANSFORM_VALUE(other);
+    // not sure why this is defined here and not statically ...
+    bool Handle_operator_notEqual(HandleRef _this, HandleRef matrix) {
+        return QTRANSFORM_VALUE(_this) != QTRANSFORM_VALUE(matrix);
     }
 
-    int32_t Handle_hashCode(HandleRef _this) {
-        return static_cast<int32_t>(qHash(QTRANSFORM_VALUE(_this)));
-    }
-
+    // likewise ...
     OwnedRef Handle_operator_mul(HandleRef _this, HandleRef matrix) {
         return TRANSFORM_HEAP_NEW(QTRANSFORM_VALUE(_this) * QTRANSFORM_VALUE(matrix));
     }
 
-    OwnedRef Handle_operator_mul(HandleRef _this, double scalar) {
-        return TRANSFORM_HEAP_NEW(QTRANSFORM_VALUE(_this) * scalar);
+    HandleRef Handle_operator_multiplyBy(HandleRef _this, HandleRef matrix) {
+        THIS->operator*=(QTRANSFORM_VALUE(matrix));
+        return _this;
     }
 
-    OwnedRef Handle_operator_plus(HandleRef _this, double scalar) {
-        return TRANSFORM_HEAP_NEW(QTRANSFORM_VALUE(_this) + scalar);
+    HandleRef Handle_operator_multiplyBy(HandleRef _this, double scalar) {
+        THIS->operator*=(scalar);
+        return _this;
     }
 
-    OwnedRef Handle_operator_minus(HandleRef _this, double scalar) {
-        return TRANSFORM_HEAP_NEW(QTRANSFORM_VALUE(_this) - scalar);
+    HandleRef Handle_operator_incrementBy(HandleRef _this, double scalar) {
+        THIS->operator+=(scalar);
+        return _this;
     }
 
-    OwnedRef Handle_operator_div(HandleRef _this, double scalar) {
-        return TRANSFORM_HEAP_NEW(QTRANSFORM_VALUE(_this) / scalar);
+    HandleRef Handle_operator_decrementBy(HandleRef _this, double scalar) {
+        THIS->operator-=(scalar);
+        return _this;
+    }
+
+    HandleRef Handle_operator_divideBy(HandleRef _this, double scalar) {
+        THIS->operator/=(scalar);
+        return _this;
+    }
+
+    HandleRef Handle_operator_assign(HandleRef _this, HandleRef matrix) {
+        THIS->operator=(QTRANSFORM_VALUE(matrix));
+        return _this;
+    }
+
+    bool Handle_operator_equal(HandleRef _this, HandleRef matrix) {
+        return QTRANSFORM_VALUE(_this) == QTRANSFORM_VALUE(matrix);
     }
 
     // disposal ===========================================================
@@ -283,5 +304,35 @@ namespace Transform
             ret = TRANSFORM_HEAP_NEW(result);
         }
         return ret;
+    }
+
+    bool fuzzyCompare(HandleRef t1, HandleRef t2) {
+        return qFuzzyCompare(QTRANSFORM_VALUE(t1), QTRANSFORM_VALUE(t2));
+    }
+
+    PainterPath_OwnedRef operator_mul(PainterPath_HandleRef path, HandleRef matrix) {
+        const auto result = PAINTERPATH_HEAP_NEW(QPAINTERPATH_VALUE(path) * QTRANSFORM_VALUE(matrix));
+        // fwdopaque cast:
+        return reinterpret_cast<PainterPath_OwnedRef>(result);
+    }
+
+    Point::OwnedRef operator_mul(Point::HandleRef point, HandleRef matrix) {
+        return POINT_HEAP_NEW(QPOINT_VALUE(point) * QTRANSFORM_VALUE(matrix));
+    }
+
+    PointF::OwnedRef operator_mul(PointF::HandleRef point, HandleRef matrix) {
+        return POINTF_HEAP_NEW(QPOINTF_VALUE(point) * QTRANSFORM_VALUE(matrix));
+    }
+
+    Polygon::OwnedRef operator_mul(Polygon::HandleRef polygon, HandleRef matrix) {
+        return POLYGON_HEAP_NEW(QPOLYGON_VALUE(polygon) * QTRANSFORM_VALUE(matrix));
+    }
+
+    PolygonF::OwnedRef operator_mul(PolygonF::HandleRef polygon, HandleRef matrix) {
+        return POLYGONF_HEAP_NEW(QPOLYGONF_VALUE(polygon) * QTRANSFORM_VALUE(matrix));
+    }
+
+    Region::OwnedRef operator_mul(Region::HandleRef region, HandleRef matrix) {
+        return REGION_HEAP_NEW(QREGION_VALUE(region) * QTRANSFORM_VALUE(matrix));
     }
 }
