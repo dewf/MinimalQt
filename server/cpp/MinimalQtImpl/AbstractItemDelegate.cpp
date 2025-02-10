@@ -76,8 +76,9 @@ namespace AbstractItemDelegate
 
     SignalConnectionRef Handle_connect_SizeHintChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QAbstractItemDelegate::sizeHintChanged, [handler](const QModelIndex &index) {
-            QModelIndex index2(index); // until we fix this with proxies or whatever we decide ...
-            handler->sizeHintChanged(reinterpret_cast<ModelIndex::HandleRef>(&index2));
+            // make a disposable non-const copy (keeps the C# API simple and clean, never having to worry about const-anything for the most part)
+            QModelIndex indexCopy(index);
+            handler->sizeHintChanged(reinterpret_cast<ModelIndex::HandleRef>(&indexCopy));
         });
         return new __SignalConnection { connection };
     }

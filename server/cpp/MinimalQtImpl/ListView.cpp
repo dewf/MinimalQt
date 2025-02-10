@@ -50,7 +50,7 @@ namespace ListView
     }
 
     Alignment Handle_itemAlignment(HandleRef _this) {
-        return Alignment(THIS->itemAlignment());
+        return static_cast<Alignment>(THIS->itemAlignment());
     }
 
     LayoutMode Handle_getLayoutMode(HandleRef _this) {
@@ -147,11 +147,8 @@ namespace ListView
 
     SignalConnectionRef Handle_connect_IndexesMoved(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QListView::indexesMoved, [handler](const QModelIndexList &indexes) {
-            // non-const indexes first:
-            const auto indexes2 = fromQList<QModelIndex,QModelIndex>(indexes, idFunc<QModelIndex>);
-            // and the pointers to them:
-            const auto ptrs = vectorMap<QModelIndex,ModelIndex::HandleRef>(indexes2, [](auto mi) { return reinterpret_cast<ModelIndex::HandleRef>(&mi); });
-            handler->indexesMoved(ptrs);
+            QModelIndexList indexes2(indexes);
+            handler->indexesMoved(reinterpret_cast<ModelIndex::ListRef>(&indexes2));
         });
         return new __SignalConnection { connection };
     }
@@ -164,4 +161,3 @@ namespace ListView
         return reinterpret_cast<HandleRef>(new QListView(AS_QWIDGET_PTR(parent)));
     }
 }
-

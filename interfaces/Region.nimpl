@@ -19,7 +19,7 @@ opaque Handle {
     bool isEmpty();
     bool isNull();
     int rectCount();
-    Array<Rect.Owned> rects();
+    Array<Rect.Owned> rects(); // TODO: Rect.OwnedList?
     void setRects(Array<Rect.Handle> rects);
     Owned subtracted(Handle r);
 

@@ -423,8 +423,8 @@ namespace TextEdit
 
     SignalConnectionRef Handle_connect_CurrentCharFormatChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QTextEdit::currentCharFormatChanged, [handler](const QTextCharFormat &format) {
-            QTextCharFormat copy(format); // copy because we don't support const right now
-            handler->currentCharFormatChanged(reinterpret_cast<TextCharFormat::HandleRef>(&copy));
+            QTextCharFormat format2(format);
+            handler->currentCharFormatChanged(reinterpret_cast<TextCharFormat::HandleRef>(&format2));
         });
         return new __SignalConnection { connection };
     }

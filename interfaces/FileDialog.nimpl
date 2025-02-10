@@ -85,7 +85,7 @@ opaque Handle extends Dialog.Handle {
     Array<string> selectedFiles();
     string selectedMimeTypeFilter();
     string selectedNameFilter();
-    Url.List selectedUrls();
+    Url.OwnedList selectedUrls();
     void setAcceptMode(AcceptMode mode);
     void setDefaultSuffix(string suffix);
     void setDirectory(string directory);
@@ -109,7 +109,7 @@ opaque Handle extends Dialog.Handle {
     void setSidebarUrls(Url.List urls);
     void setSupportedSchemes(Array<string> schemes);
     void setViewMode(ViewMode mode);
-    Url.List sidebarUrls();
+    Url.OwnedList sidebarUrls();
     Array<string> supportedSchemes();
     bool testOption(OptionEnum option);
     ViewMode getViewMode();
@@ -222,7 +222,7 @@ options GetOpenFileUrlsOpts {
     Array<string> supportedSchemes;
 }
 struct GetOpenFileUrlsResult {
-    Array<Url.Owned> urls;
+    Url.OwnedList urls;
     string selectedFilterOutput;
 }
 GetOpenFileUrlsResult getOpenFileUrls(GetOpenFileUrlsOpts opts);

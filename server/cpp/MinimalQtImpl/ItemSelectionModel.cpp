@@ -50,22 +50,16 @@ namespace ItemSelectionModel
         return THIS->rowIntersectsSelection(row, fromOptionalIndex(parent));
     }
 
-    std::vector<ModelIndex::OwnedRef> Handle_selectedColumns(HandleRef _this, int32_t row /* 0 */) {
-        return fromQList<QModelIndex,ModelIndex::OwnedRef>(THIS->selectedColumns(row), [](auto index) {
-            return MODELINDEX_HEAP_NEW(index);
-        });
+    OwnedListRef Handle_selectedColumns(HandleRef _this, int32_t row /* 0 */) {
+        return MODELINDEX_LIST_HEAP_NEW(THIS->selectedColumns(row));
     }
 
-    std::vector<ModelIndex::OwnedRef> Handle_selectedIndexes(HandleRef _this) {
-        return fromQList<QModelIndex,ModelIndex::OwnedRef>(THIS->selectedIndexes(), [](auto index) {
-            return MODELINDEX_HEAP_NEW(index);
-        });
+    OwnedListRef Handle_selectedIndexes(HandleRef _this) {
+        return MODELINDEX_LIST_HEAP_NEW(THIS->selectedIndexes());
     }
 
-    std::vector<ModelIndex::OwnedRef> Handle_selectedRows(HandleRef _this, int32_t column /* 0 */) {
-        return fromQList<QModelIndex,ModelIndex::OwnedRef>(THIS->selectedRows(column), [](auto index) {
-            return MODELINDEX_HEAP_NEW(index);
-        });
+    OwnedListRef Handle_selectedRows(HandleRef _this, int32_t column /* 0 */) {
+        return MODELINDEX_LIST_HEAP_NEW(THIS->selectedRows(column));
     }
 
     ItemSelection::OwnedRef Handle_selection(HandleRef _this) {
@@ -140,7 +134,9 @@ namespace ItemSelectionModel
 
     SignalConnectionRef Handle_connect_SelectionChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QItemSelectionModel::selectionChanged, [handler](const QItemSelection &selected, const QItemSelection &deselected) {
-            handler->selectionChanged((ItemSelection::HandleRef)&selected, (ItemSelection::HandleRef)&deselected);
+            QItemSelection selected2(selected);
+            QItemSelection deselected2(deselected);
+            handler->selectionChanged(reinterpret_cast<ItemSelection::HandleRef>(&selected2), reinterpret_cast<ItemSelection::HandleRef>(&deselected2));
         });
         return new __SignalConnection { connection };
     }

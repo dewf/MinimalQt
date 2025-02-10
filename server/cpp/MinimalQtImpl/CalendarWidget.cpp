@@ -189,14 +189,16 @@ namespace CalendarWidget
 
     SignalConnectionRef Handle_connect_Activated(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QCalendarWidget::activated, [handler](const QDate& date) {
-            handler->activated((Date::HandleRef)&date);
+            QDate date2(date);
+            handler->activated(reinterpret_cast<Date::HandleRef>(&date2));
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_Clicked(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QCalendarWidget::clicked, [handler](const QDate& date) {
-            handler->activated((Date::HandleRef)&date);
+            QDate date2(date);
+            handler->clicked(reinterpret_cast<Date::HandleRef>(&date2));
         });
         return new __SignalConnection { connection };
     }

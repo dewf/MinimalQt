@@ -107,8 +107,8 @@ namespace FileDialog
         return THIS->selectedNameFilter().toStdString();
     }
 
-    ListRef Handle_selectedUrls(HandleRef _this) {
-        return new Url::__List { THIS->selectedUrls() };
+    OwnedListRef Handle_selectedUrls(HandleRef _this) {
+        return URL_LIST_HEAP_NEW(THIS->selectedUrls());
     }
 
     void Handle_setAcceptMode(HandleRef _this, AcceptMode mode) {
@@ -176,7 +176,7 @@ namespace FileDialog
     }
 
     void Handle_setSidebarUrls(HandleRef _this, ListRef urls) {
-        THIS->setSidebarUrls(urls->qList);
+        THIS->setSidebarUrls(QURL_LIST_VALUE(urls));
     }
 
     void Handle_setSupportedSchemes(HandleRef _this, const std::vector<std::string>& schemes) {
@@ -187,8 +187,8 @@ namespace FileDialog
         THIS->setViewMode(static_cast<QFileDialog::ViewMode>(mode));
     }
 
-    ListRef Handle_sidebarUrls(HandleRef _this) {
-        return new __List { THIS->sidebarUrls() };
+    OwnedListRef Handle_sidebarUrls(HandleRef _this) {
+        return URL_LIST_HEAP_NEW(THIS->sidebarUrls());
     }
 
     std::vector<std::string> Handle_supportedSchemes(HandleRef _this) {
@@ -212,7 +212,8 @@ namespace FileDialog
 
     SignalConnectionRef Handle_connect_CurrentUrlChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QFileDialog::currentUrlChanged, [handler](const QUrl &url) {
-            handler->currentUrlChanged((Url::HandleRef)&url);
+            QUrl url2(url);
+            handler->currentUrlChanged(reinterpret_cast<Url::HandleRef>(&url2));
         });
         return new __SignalConnection { connection };
     }
@@ -226,7 +227,8 @@ namespace FileDialog
 
     SignalConnectionRef Handle_connect_DirectoryUrlEntered(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QFileDialog::directoryUrlEntered, [handler](const QUrl &directory) {
-            handler->directoryUrlEntered((Url::HandleRef)&directory);
+            QUrl directory2(directory);
+            handler->directoryUrlEntered(reinterpret_cast<Url::HandleRef>(&directory2));
         });
         return new __SignalConnection { connection };
     }
@@ -254,15 +256,16 @@ namespace FileDialog
 
     SignalConnectionRef Handle_connect_UrlSelected(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QFileDialog::urlSelected, [handler](const QUrl &url) {
-            handler->urlSelected((Url::HandleRef)&url);
+            QUrl url2(url);
+            handler->urlSelected(reinterpret_cast<Url::HandleRef>(&url2));
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_UrlsSelected(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QFileDialog::urlsSelected, [handler](const QList<QUrl> &urls) {
-            Url::__List urlList { urls };
-            handler->urlsSelected(&urlList);
+            QList<QUrl> urls2(urls);
+            handler->urlsSelected(reinterpret_cast<Url::ListRef>(&urls2));
         });
         return new __SignalConnection { connection };
     }
@@ -402,9 +405,7 @@ namespace FileDialog
         //
         const auto urls = QFileDialog::getOpenFileUrls(parent, caption, dir, filter, selectedFilter, options, supportedSchemes);
         GetOpenFileUrlsResult result;
-        for (auto &url : urls) {
-            result.urls.push_back(URL_HEAP_NEW(url));
-        }
+        result.urls = URL_LIST_HEAP_NEW(urls);
         if (selectedFilter != nullptr) {
             result.selectedFilterOutput = selectedFilter->toStdString();
         }

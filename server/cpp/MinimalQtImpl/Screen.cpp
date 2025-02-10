@@ -159,16 +159,16 @@ namespace Screen
 
     SignalConnectionRef Handle_connect_AvailableGeometryChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QScreen::availableGeometryChanged, [handler](const QRect &geometry) {
-            // TODO: ConstHandle
-            handler->availableGeometryChanged((Rect::HandleRef)&geometry);
+            QRect geometry2(geometry);
+            handler->availableGeometryChanged(reinterpret_cast<Rect::HandleRef>(&geometry2));
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_GeometryChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QScreen::geometryChanged, [handler](const QRect &geometry) {
-            // TODO: ConstHandle
-            handler->geometryChanged((Rect::HandleRef)&geometry);
+            QRect geometry2(geometry);
+            handler->geometryChanged(reinterpret_cast<Rect::HandleRef>(&geometry2));
         });
         return new __SignalConnection { connection };
     }
@@ -196,8 +196,8 @@ namespace Screen
 
     SignalConnectionRef Handle_connect_PhysicalSizeChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QScreen::physicalSizeChanged, [handler](const QSizeF &size) {
-            // TODO: ConstHandle
-            handler->physicalSizeChanged((SizeF::HandleRef)&size);
+            QSizeF size2(size);
+            handler->physicalSizeChanged(reinterpret_cast<SizeF::HandleRef>(&size2));
         });
         return new __SignalConnection { connection };
     }
@@ -218,8 +218,8 @@ namespace Screen
 
     SignalConnectionRef Handle_connect_VirtualGeometryChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QScreen::virtualGeometryChanged, [handler](const QRect &rect) {
-            // TODO: ConstHandle
-            handler->virtualGeometryChanged((Rect::HandleRef)&rect);
+            QRect rect2(rect);
+            handler->virtualGeometryChanged(reinterpret_cast<Rect::HandleRef>(&rect2));
         });
         return new __SignalConnection { connection };
     }

@@ -10,9 +10,13 @@ Owned createFromAbsolute(string absoluteUrl);
 
 // list ===============================
 
+@nodispose
 opaque List {
-    Array<Handle> items();
+    int count();
+    Owned itemAt(int index);
+    Array<Owned> items();
     Array<string> itemsAbsolute();
 }
+opaque OwnedList extends List;
 
-List createFromAbsoluteList(Array<string> absoluteUrls);
+OwnedList createFromAbsoluteList(Array<string> absoluteUrls);

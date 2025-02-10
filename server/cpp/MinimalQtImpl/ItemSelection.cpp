@@ -14,8 +14,8 @@ namespace ItemSelection {
         return THIS->contains(QMODELINDEX_VALUE(index));
     }
 
-    std::vector<ModelIndex::OwnedRef> Handle_indexes(HandleRef _this) {
-        return fromQList<QModelIndex,ModelIndex::OwnedRef>(THIS->indexes(), [](auto mi) { return MODELINDEX_HEAP_NEW(mi); });
+    OwnedListRef Handle_indexes(HandleRef _this) {
+        return MODELINDEX_LIST_HEAP_NEW(THIS->indexes());
     }
 
     void Handle_merge(HandleRef _this, HandleRef other, SelectionFlags command) {

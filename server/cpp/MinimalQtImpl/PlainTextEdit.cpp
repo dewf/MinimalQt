@@ -359,8 +359,8 @@ namespace PlainTextEdit
 
     SignalConnectionRef Handle_connect_UpdateRequest(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QPlainTextEdit::updateRequest, [handler](const QRect &rect, int dy) {
-            // TODO: ConstHandle
-            handler->updateRequest((Rect::HandleRef)&rect, dy);
+            QRect rect2(rect);
+            handler->updateRequest(reinterpret_cast<Rect::HandleRef>(&rect2), dy);
         });
         return new __SignalConnection { connection };
     }

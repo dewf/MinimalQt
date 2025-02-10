@@ -7,6 +7,8 @@
 #define QMODELINDEX_VALUE(x) (*AS_QMODELINDEX_PTR(x))
 #define MODELINDEX_HEAP_NEW(...) (reinterpret_cast<ModelIndex::OwnedRef>(new QModelIndex(__VA_ARGS__)))
 
+#define MODELINDEX_LIST_HEAP_NEW(...) (reinterpret_cast<ModelIndex::OwnedListRef>(new QModelIndexList(__VA_ARGS__)))
+
 namespace ModelIndex {
     inline QModelIndex fromOptionalIndex(const std::optional<HandleRef>& x) {
         QModelIndex ret;

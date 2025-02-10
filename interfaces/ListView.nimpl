@@ -10,7 +10,7 @@ import AbstractItemView;
 import Widget;
 
 interface SignalHandler extends AbstractItemView.SignalHandler {
-    void indexesMoved(Array<ModelIndex.Handle> indexes);
+    void indexesMoved(ModelIndex.List indexes);
 }
 
 enum Movement {

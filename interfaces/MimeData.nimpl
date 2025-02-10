@@ -21,7 +21,7 @@ opaque ConstHandle extends Object.Handle {
     string html();
     Variant.Owned imageData();
     string text();
-    Url.List urls();
+    Url.OwnedList urls();
 }
 
 opaque Handle extends ConstHandle {

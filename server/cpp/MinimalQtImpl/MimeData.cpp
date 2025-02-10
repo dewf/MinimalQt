@@ -72,8 +72,8 @@ namespace MimeData
         return CONST_THIS->text().toStdString();
     }
 
-    ListRef ConstHandle_urls(ConstHandleRef _this) {
-        return new __List { CONST_THIS->urls() };
+    OwnedListRef ConstHandle_urls(ConstHandleRef _this) {
+        return URL_LIST_HEAP_NEW(CONST_THIS->urls());
     }
 
     // non-const methods ==========================================================================================
@@ -110,7 +110,7 @@ namespace MimeData
     }
 
     void Handle_setUrls(HandleRef _this, ListRef urls) {
-        MUTABLE_THIS->setUrls(urls->qList);
+        MUTABLE_THIS->setUrls(QURL_LIST_VALUE(urls));
     }
 
     void Handle_dispose(HandleRef _this) {

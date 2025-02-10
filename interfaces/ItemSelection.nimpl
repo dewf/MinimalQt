@@ -6,7 +6,7 @@ import ItemSelectionCommon;
 @nodispose
 opaque Handle {
     bool contains(ModelIndex.Handle index);
-    Array<ModelIndex.Owned> indexes();
+    ModelIndex.OwnedList indexes();
     void merge(Handle other, SelectionFlags command);
     void select(ModelIndex.Handle topLeft, ModelIndex.Handle bottomRight);
 }

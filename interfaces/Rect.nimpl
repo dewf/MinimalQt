@@ -108,7 +108,6 @@ bool operator_notEqual(Handle lhs, Handle rhs);
 // QRect operator+(const QMargins &margins, const QRect &rectangle)
 
 Owned operator_add(Handle rectangle, Margins.Handle margins);
-
 Owned operator_sub(Handle lhs, Margins.Handle rhs);
 
 // QDataStream & operator<<(QDataStream &stream, const QRect &rectangle)

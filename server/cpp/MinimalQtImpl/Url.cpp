@@ -1,6 +1,9 @@
 #include "generated/Url.h"
 #include "UrlInternal.h"
+
 #include "util/convert.h"
+
+#include <QList>
 
 #define THIS (AS_QURL_PTR(_this))
 
@@ -19,25 +22,32 @@ namespace Url
     }
 
     // list ====================================================
-    std::vector<HandleRef> List_items(ListRef _this) {
-        std::vector<HandleRef> ret;
-        for (auto i = 0; i< _this->qList.count(); i++) {
-            const auto x = &_this->qList.at(i);
-            ret.push_back((HandleRef)x);
-        }
-        return ret;
+#define LIST_THIS (reinterpret_cast<QList<QUrl>*>(_this))
+
+    int32_t List_count(ListRef _this) {
+        return LIST_THIS->count();
+    }
+
+    OwnedRef List_itemAt(ListRef _this, int32_t index) {
+        return URL_HEAP_NEW(LIST_THIS->at(index));
+    }
+
+    std::vector<OwnedRef> List_items(ListRef _this) {
+        return fromQList<QUrl,OwnedRef>(*LIST_THIS, [](const auto& url) {
+            return URL_HEAP_NEW(url);
+        });
     }
 
     std::vector<std::string> List_itemsAbsolute(ListRef _this) {
-        return fromQList<QUrl,std::string>(_this->qList, [](auto url) { return url.toString().toStdString(); });
+        return fromQList<QUrl,std::string>(*LIST_THIS, [](const auto& url) { return url.toString().toStdString(); });
     }
 
-    void List_dispose(ListRef _this) {
-        delete _this;
+    void OwnedList_dispose(OwnedListRef _this) {
+        delete LIST_THIS;
     }
 
-    ListRef createFromAbsoluteList(const std::vector<std::string>& absoluteUrls) {
-        const auto qUrls = toQList<std::string,QUrl>(absoluteUrls, [](auto url) { return QUrl(QString::fromStdString(url)); });
-        return new __List { qUrls };
+    OwnedListRef createFromAbsoluteList(const std::vector<std::string>& absoluteUrls) {
+        const auto qUrls = toQList<std::string,QUrl>(absoluteUrls, [](const auto& url) { return QUrl(QString::fromStdString(url)); });
+        return URL_LIST_HEAP_NEW(qUrls);
     }
 }

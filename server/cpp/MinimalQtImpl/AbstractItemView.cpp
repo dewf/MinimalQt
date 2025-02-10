@@ -336,8 +336,8 @@ namespace AbstractItemView
 
     SignalConnectionRef Handle_connect_IconSizeChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QAbstractItemView::iconSizeChanged, [handler](const QSize &size) {
-            // TODO: ConstHandle
-            handler->iconSizeChanged((Size::HandleRef)&size);
+            QSize size2(size);
+            handler->iconSizeChanged(reinterpret_cast<Size::HandleRef>(&size2));
         });
         return new __SignalConnection { connection };
     }

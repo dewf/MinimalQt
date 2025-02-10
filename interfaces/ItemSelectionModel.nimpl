@@ -23,9 +23,9 @@ opaque Handle extends Object.Handle {
     bool isSelected(ModelIndex.Handle index);
     AbstractItemModel.Handle model();
     bool rowIntersectsSelection(int row, Option<ModelIndex.Handle> parent);
-    Array<ModelIndex.Owned> selectedColumns(int row = 0);
-    Array<ModelIndex.Owned> selectedIndexes();
-    Array<ModelIndex.Owned> selectedRows(int column = 0);
+    ModelIndex.OwnedList selectedColumns(int row = 0);
+    ModelIndex.OwnedList selectedIndexes();
+    ModelIndex.OwnedList selectedRows(int column = 0);
     ItemSelection.Owned selection();
     void setModel(AbstractItemModel.Handle model);
     void clear();
