@@ -32,8 +32,8 @@ interface SignalHandler extends Object.SignalHandler {
     void columnsRemoved(ModelIndex.Handle parent, int first, int last);
     void dataChanged(ModelIndex.Handle topLeft, ModelIndex.Handle bottomRight, Array<ItemDataRole> roles);
     void headerDataChanged(Orientation orientation, int first, int last);
-    void layoutAboutToBeChanged(Array<PersistentModelIndex.Handle> parents, LayoutChangeHint hint);
-    void layoutChanged(Array<PersistentModelIndex.Handle> parents, LayoutChangeHint hint);
+    void layoutAboutToBeChanged(PersistentModelIndex.List parents, LayoutChangeHint hint);
+    void layoutChanged(PersistentModelIndex.List parents, LayoutChangeHint hint);
     void modelAboutToBeReset();
     void modelReset();
     void rowsAboutToBeInserted(ModelIndex.Handle parent, int start, int end);

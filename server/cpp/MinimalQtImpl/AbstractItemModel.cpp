@@ -211,6 +211,7 @@ namespace AbstractItemModel
 
     SignalConnectionRef Handle_connect_ColumnsAboutToBeInserted(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QAbstractItemModel::columnsAboutToBeInserted, [handler](const QModelIndex &parent, int first, int last) {
+            // here and below in other signals, just copy to prevent any modifications to the const QModelIndexes
             QModelIndex parent2(parent);
             handler->columnsAboutToBeInserted(reinterpret_cast<ModelIndex::HandleRef>(&parent2), first, last);
         });
@@ -280,9 +281,8 @@ namespace AbstractItemModel
 
     SignalConnectionRef Handle_connect_LayoutAboutToBeChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QAbstractItemModel::layoutAboutToBeChanged, [handler](const QList<QPersistentModelIndex> &parents, QAbstractItemModel::LayoutChangeHint hint) {
-            const auto parents2 = fromQList<QPersistentModelIndex,PersistentModelIndex::HandleRef>(parents, [](auto pmi) {
-                return PMODELINDEX(pmi);
-            });
+            // as of now, our PMI List wrapper is immutable, so just forcibly cast:
+            const auto parents2 = (PersistentModelIndex::ListRef)&parents;
             handler->layoutAboutToBeChanged(parents2, static_cast<LayoutChangeHint>(hint));
         });
         return new __SignalConnection { connection };
@@ -290,9 +290,8 @@ namespace AbstractItemModel
 
     SignalConnectionRef Handle_connect_LayoutChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QAbstractItemModel::layoutChanged, [handler](const QList<QPersistentModelIndex> &parents, QAbstractItemModel::LayoutChangeHint hint) {
-            const auto parents2 = fromQList<QPersistentModelIndex,PersistentModelIndex::HandleRef>(parents, [](auto pmi) {
-                return PMODELINDEX(pmi);
-            });
+            // as of now, our PMI List wrapper is immutable, so just forcibly cast:
+            const auto parents2 = (PersistentModelIndex::ListRef)&parents;
             handler->layoutChanged(parents2, static_cast<LayoutChangeHint>(hint));
         });
         return new __SignalConnection { connection };
