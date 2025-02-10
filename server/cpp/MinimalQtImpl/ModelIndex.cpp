@@ -3,6 +3,9 @@
 
 #include "VariantInternal.h"
 
+#include "util/convert.h"
+#include <QList>
+
 using namespace ::Variant;
 using namespace ::Enums;
 
@@ -10,6 +13,10 @@ using namespace ::Enums;
 
 namespace ModelIndex
 {
+    int32_t Handle_hashCode(HandleRef _this) {
+        return static_cast<int32_t>(qHash(*THIS));
+    }
+
     int32_t Handle_column(HandleRef _this) {
         return THIS->column();
     }
@@ -24,7 +31,7 @@ namespace ModelIndex
     }
 
     ItemFlags Handle_getFlags(HandleRef _this) {
-        return ItemFlags(THIS->flags());
+        return static_cast<ItemFlags>(THIS->flags());
     }
 
     size_t Handle_internalId(HandleRef _this) {
@@ -36,6 +43,7 @@ namespace ModelIndex
     }
 
     AbstractItemModelHandleRef Handle_model(HandleRef _this) {
+        // TODO: Const cast situation
         return (AbstractItemModelHandleRef)THIS->model();
     }
 
@@ -65,5 +73,38 @@ namespace ModelIndex
 
     OwnedRef create() {
         return MODELINDEX_HEAP_NEW();
+    }
+
+    bool operator_notEqual(HandleRef lhs, HandleRef rhs) {
+        return QMODELINDEX_VALUE(lhs) != QMODELINDEX_VALUE(rhs);
+    }
+
+    bool operator_lessThan(HandleRef lhs, HandleRef rhs) {
+        return QMODELINDEX_VALUE(lhs) < QMODELINDEX_VALUE(rhs);
+    }
+
+    bool operator_equal(HandleRef lhs, HandleRef rhs) {
+        return QMODELINDEX_VALUE(lhs) == QMODELINDEX_VALUE(rhs);
+    }
+
+    // list ========================================================
+#define LIST_THIS (reinterpret_cast<QList<QModelIndex>*>(_this))
+
+    int32_t List_count(ListRef _this) {
+        return LIST_THIS->count();
+    }
+
+    OwnedRef List_itemAt(ListRef _this, int32_t index) {
+        return MODELINDEX_HEAP_NEW(LIST_THIS->at(index));
+    }
+
+    std::vector<OwnedRef> List_items(ListRef _this) {
+        return fromQList<QModelIndex,OwnedRef>(*LIST_THIS, [](const auto &item) {
+            return MODELINDEX_HEAP_NEW(item);
+        });
+    }
+
+    void OwnedList_dispose(OwnedListRef _this) {
+        delete LIST_THIS;
     }
 }
