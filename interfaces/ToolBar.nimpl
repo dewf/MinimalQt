@@ -10,7 +10,7 @@ import Action;
 interface SignalHandler extends Widget.SignalHandler {
     void actionTriggered(Action.Handle action);
     void allowedAreasChanged(ToolBarAreas allowed);
-    void iconSizeChanged(Size.Handle size);
+    void iconSizeChanged(Size.Owned size);
     void movableChanged(bool movable);
     void orientationChanged(Orientation value);
     void toolButtonStyleChanged(ToolButtonStyle style);

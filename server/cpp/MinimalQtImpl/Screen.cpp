@@ -159,16 +159,14 @@ namespace Screen
 
     SignalConnectionRef Handle_connect_AvailableGeometryChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QScreen::availableGeometryChanged, [handler](const QRect &geometry) {
-            QRect geometry2(geometry);
-            handler->availableGeometryChanged(reinterpret_cast<Rect::HandleRef>(&geometry2));
+            handler->availableGeometryChanged(RECT_HEAP_NEW(geometry));
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_GeometryChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QScreen::geometryChanged, [handler](const QRect &geometry) {
-            QRect geometry2(geometry);
-            handler->geometryChanged(reinterpret_cast<Rect::HandleRef>(&geometry2));
+            handler->geometryChanged(RECT_HEAP_NEW(geometry));
         });
         return new __SignalConnection { connection };
     }
@@ -196,8 +194,7 @@ namespace Screen
 
     SignalConnectionRef Handle_connect_PhysicalSizeChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QScreen::physicalSizeChanged, [handler](const QSizeF &size) {
-            QSizeF size2(size);
-            handler->physicalSizeChanged(reinterpret_cast<SizeF::HandleRef>(&size2));
+            handler->physicalSizeChanged(SIZEF_HEAP_NEW(size));
         });
         return new __SignalConnection { connection };
     }
@@ -218,8 +215,7 @@ namespace Screen
 
     SignalConnectionRef Handle_connect_VirtualGeometryChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QScreen::virtualGeometryChanged, [handler](const QRect &rect) {
-            QRect rect2(rect);
-            handler->virtualGeometryChanged(reinterpret_cast<Rect::HandleRef>(&rect2));
+            handler->virtualGeometryChanged(RECT_HEAP_NEW(rect));
         });
         return new __SignalConnection { connection };
     }

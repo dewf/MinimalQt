@@ -242,8 +242,7 @@ namespace MainWindow
 
     SignalConnectionRef Handle_connect_IconSizeChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QMainWindow::iconSizeChanged, [handler](const QSize& size) {
-            QSize size2(size);
-            handler->iconSizeChanged(reinterpret_cast<Size::HandleRef>(&size2));
+            handler->iconSizeChanged(SIZE_HEAP_NEW(size));
         });
         return new __SignalConnection { connection };
     }
@@ -286,9 +285,7 @@ namespace MainWindow
     protected:
         void resizeEvent(QResizeEvent *event) override {
             if (mask & Resized) {
-                auto old = event->oldSize();
-                auto current = event->size();
-                methods->resized(reinterpret_cast<Size::HandleRef>(&old), reinterpret_cast<Size::HandleRef>(&current));
+                methods->resized(SIZE_HEAP_NEW(event->oldSize()), SIZE_HEAP_NEW(event->size()));
                 event->accept();
             } else {
                 QMainWindow::resizeEvent(event);

@@ -29,8 +29,8 @@ import SafeReturn;
 int WIDGET_SIZE_MAX;   // pass-through of QWIDGETSIZE_MAX
 
 interface SignalHandler extends Object.SignalHandler {
-    void customContextMenuRequested(Point.Handle pos);
-    void windowIconChanged(Icon.Handle icon);
+    void customContextMenuRequested(Point.Owned pos);
+    void windowIconChanged(Icon.Owned icon);
     void windowTitleChanged(string title);
 }
 

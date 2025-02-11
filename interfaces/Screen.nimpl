@@ -10,15 +10,15 @@ import Pixmap;
 import Transform;
 
 interface SignalHandler extends Object.SignalHandler {
-    void availableGeometryChanged(Rect.Handle geometry);
-    void geometryChanged(Rect.Handle geometry);
+    void availableGeometryChanged(Rect.Owned geometry);
+    void geometryChanged(Rect.Owned geometry);
     void logicalDotsPerInchChanged(double dpi);
     void orientationChanged(ScreenOrientation orientation);
     void physicalDotsPerInchChanged(double dpi);
-    void physicalSizeChanged(SizeF.Handle size);
+    void physicalSizeChanged(SizeF.Owned size);
     void primaryOrientationChanged(ScreenOrientation orientation);
     void refreshRateChanged(double refreshRate);
-    void virtualGeometryChanged(Rect.Handle rect);
+    void virtualGeometryChanged(Rect.Owned rect);
 }
 
 @nodispose

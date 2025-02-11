@@ -27,7 +27,7 @@ interface SignalHandler extends AbstractScrollArea.SignalHandler {
     void selectionChanged();
     void textChanged();
     void undoAvailable(bool available);
-    void updateRequest(Rect.Handle rect, int dy);
+    void updateRequest(Rect.Owned rect, int dy);
 }
 
 enum LineWrapMode {

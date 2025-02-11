@@ -1002,16 +1002,14 @@ namespace Widget
 
     SignalConnectionRef Handle_connect_CustomContextMenuRequested(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QWidget::customContextMenuRequested, [handler](const QPoint& pos) {
-            QPoint pos2(pos);
-            handler->customContextMenuRequested(reinterpret_cast<Point::HandleRef>(&pos2));
+            handler->customContextMenuRequested(POINT_HEAP_NEW(pos));
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_WindowIconChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QWidget::windowIconChanged, [handler](const QIcon& icon) {
-            QIcon icon2(icon);
-            handler->windowIconChanged(reinterpret_cast<Icon::HandleRef>(&icon2));
+            handler->windowIconChanged(ICON_HEAP_NEW(icon));
         });
         return new __SignalConnection { connection };
     }

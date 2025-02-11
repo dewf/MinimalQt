@@ -128,8 +128,7 @@ namespace ToolBar
 
     SignalConnectionRef Handle_connect_IconSizeChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QToolBar::iconSizeChanged, [handler](const QSize& size) {
-            QSize size2(size);
-            handler->iconSizeChanged(reinterpret_cast<Size::HandleRef>(&size2));
+            handler->iconSizeChanged(SIZE_HEAP_NEW(size));
         });
         return new __SignalConnection { connection };
     }
