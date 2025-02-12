@@ -1065,8 +1065,8 @@ namespace Widget
         void dragEnterEvent(QDragEnterEvent *event) override {
             if (methodMask & DragEnterEvent) {
                 methods->dragEnterEvent(reinterpret_cast<DragEnterEventRef>(event));
-                // other side needs to call acceptProposedAction if it's OK, otherwise ... .ignore?
-                event->accept();
+                // do NOT accept() by default, in this context it means you want the drop
+                // event->accept();
             } else {
                 QWidget::dragEnterEvent(event);
             }
@@ -1075,6 +1075,7 @@ namespace Widget
         void dragLeaveEvent(QDragLeaveEvent *event) override {
             if (methodMask & DragLeaveEvent) {
                 methods->dragLeaveEvent(reinterpret_cast<DragLeaveEventRef>(event));
+                // since it's a 'leave' (vs enter or move) event we always accept
                 event->accept();
             } else {
                 QWidget::dragLeaveEvent(event);
@@ -1084,8 +1085,8 @@ namespace Widget
         void dragMoveEvent(QDragMoveEvent *event) override {
             if (methodMask & DragMoveEvent) {
                 methods->dragMoveEvent(reinterpret_cast<DragMoveEventRef>(event));
-                // other side needs to call acceptProposedAction if it's OK, otherwise ... .ignore?
-                event->accept();
+                // do NOT accept() by default, in this context it means you want the drop
+                // event->accept();
             } else {
                 QWidget::dragMoveEvent(event);
             }
@@ -1094,9 +1095,8 @@ namespace Widget
         void dropEvent(QDropEvent *event) override {
             if (methodMask & DropEvent) {
                 methods->dropEvent(reinterpret_cast<DropEventRef>(event));
-                // ?? forget why this was being called originally, seemes like the implementer's responsibility:
-                // event->acceptProposedAction();
-                event->accept();
+                // not sure if accept() matters at this point - isn't it already a done deal?
+                // event->accept();
             } else {
                 QWidget::dropEvent(event);
             }
