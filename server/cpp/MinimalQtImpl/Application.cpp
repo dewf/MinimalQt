@@ -27,14 +27,17 @@ namespace Application
         delete THIS;
     }
 
+    // we have to store these long-term, because QApplication takes its sweet time to read them! (on Linux, anyway)
+    static int _argc = -1;
+    static char** _argv = nullptr;
+
     HandleRef create(const std::vector<std::string>& args) {
-        auto argc = static_cast<int>(args.size());
-        const auto argv = new char*[argc];
-        for (int i = 0; i< argc; i++) {
-            argv[i] = const_cast<char*>(args[i].c_str());
+        _argc = static_cast<int>(args.size());
+        _argv = new char*[_argc];
+        for (int i = 0; i< _argc; i++) {
+            _argv[i] = const_cast<char*>(args[i].c_str());
         }
-        const auto ret = new QApplication(argc, argv);
-        delete[] argv;
+        const auto ret = new QApplication(_argc, _argv);
         return reinterpret_cast<HandleRef>(ret);
     }
 
