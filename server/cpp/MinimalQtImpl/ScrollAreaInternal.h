@@ -2,7 +2,7 @@
 
 #include "generated/ScrollArea.h"
 
-#include <QSCrollArea>
+#include <QScrollArea>
 
 namespace ScrollArea {
 }
