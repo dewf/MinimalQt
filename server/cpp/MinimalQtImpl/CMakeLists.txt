@@ -12,8 +12,8 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 set(CMAKE_VISIBILITY_INLINES_HIDDEN YES)
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
+#find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
+find_package(Qt6 REQUIRED COMPONENTS Widgets)
 
 add_library(MinimalQtImpl STATIC)
 
@@ -605,4 +605,4 @@ target_sources(MinimalQtImpl
         generated/Library.cpp
 )
 
-target_link_libraries(MinimalQtImpl PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(MinimalQtImpl PRIVATE Qt6::Widgets)
