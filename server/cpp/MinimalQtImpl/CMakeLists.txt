@@ -1,5 +1,5 @@
 # generated file - any edits will be overwritten!
-cmake_minimum_required(VERSION 4.2)
+cmake_minimum_required(VERSION 3.22)
 project(MinimalQtImpl LANGUAGES CXX)
 
 set(CMAKE_AUTOUIC ON)
