@@ -1,7 +1,7 @@
 module Enums;
 
-typedef size_t WIN_ID; // because Qt already calls it WId
-typedef uint32 Rgb;
+alias WIN_ID = size_t; // because Qt already calls it WId
+alias Rgb = uint32;
 
 @withflags(WindowFlags)
 enum WindowType : uint32 {
