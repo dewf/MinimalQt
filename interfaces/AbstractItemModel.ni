@@ -49,7 +49,7 @@ opaque Handle extends Object.Handle {
     ModelIndex.Owned buddy(ModelIndex.Handle index);
     bool canDropMimeData(MimeData.Handle data, DropAction action, int row, int column, ModelIndex.Handle parent);
     bool canFetchMore(ModelIndex.Handle parent);
-    bool checkIndex(ModelIndex.Handle index, Option<CheckIndexOptions> options_);
+    bool checkIndex(ModelIndex.Handle index, CheckIndexOptions options_ = CheckIndexOptions.NoOption);
     bool clearItemData(ModelIndex.Handle index);
     int columnCount(Option<ModelIndex.Handle> parent);
     Variant.Owned data(ModelIndex.Handle index, Option<int> role);

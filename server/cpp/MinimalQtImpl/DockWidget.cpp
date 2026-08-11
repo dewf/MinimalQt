@@ -12,12 +12,12 @@ using namespace ::Action;
 
 namespace DockWidget
 {
-    DockWidgetAreas Handle_allowedAreas(HandleRef _this) {
-        return DockWidgetAreas(THIS->allowedAreas());
+    Flags<DockWidgetAreas> Handle_allowedAreas(HandleRef _this) {
+        return static_cast<Flags<DockWidgetAreas>>(THIS->allowedAreas());
     }
 
-    DockWidgetFeatures Handle_features(HandleRef _this) {
-        return DockWidgetFeatures(THIS->features());
+    Flags<DockWidgetFeatures> Handle_features(HandleRef _this) {
+        return static_cast<Flags<DockWidgetFeatures>>(THIS->features());
     }
 
     bool Handle_isAreaAllowed(HandleRef _this, DockWidgetArea area) {
@@ -28,12 +28,12 @@ namespace DockWidget
         return THIS->isFloating();
     }
 
-    void Handle_setAllowedAreas(HandleRef _this, DockWidgetAreas areas) {
-        THIS->setAllowedAreas(static_cast<Qt::DockWidgetAreas>(areas.value));
+    void Handle_setAllowedAreas(HandleRef _this, Flags<DockWidgetAreas> areas) {
+        THIS->setAllowedAreas(static_cast<Qt::DockWidgetAreas>(areas.value()));
     }
 
-    void Handle_setFeatures(HandleRef _this, DockWidgetFeatures features) {
-        THIS->setFeatures(static_cast<QDockWidget::DockWidgetFeatures>(features.value));
+    void Handle_setFeatures(HandleRef _this, Flags<DockWidgetFeatures> features) {
+        THIS->setFeatures(static_cast<QDockWidget::DockWidgetFeatures>(features.value()));
     }
 
     void Handle_setFloating(HandleRef _this, bool floating) {
@@ -62,7 +62,7 @@ namespace DockWidget
 
     SignalConnectionRef Handle_connect_AllowedAreasChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QDockWidget::allowedAreasChanged, [handler](Qt::DockWidgetAreas allowedAreas) {
-            handler->allowedAreasChanged(DockWidgetAreas(allowedAreas));
+            handler->allowedAreasChanged(static_cast<Flags<DockWidgetAreas>>(allowedAreas));
         });
         return new __SignalConnection { connection };
     }
@@ -76,7 +76,7 @@ namespace DockWidget
 
     SignalConnectionRef Handle_connect_FeaturesChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QDockWidget::featuresChanged, [handler](QDockWidget::DockWidgetFeatures features) {
-            handler->featuresChanged(DockWidgetFeatures(features));
+            handler->featuresChanged(static_cast<Flags<DockWidgetFeatures>>(features));
         });
         return new __SignalConnection { connection };
     }
@@ -95,11 +95,13 @@ namespace DockWidget
         return new __SignalConnection { connection };
     }
 
-    HandleRef create(Widget::HandleRef parent /* nullptr */, WindowFlags flags_ /* 0 */) {
-        return reinterpret_cast<HandleRef>(new QDockWidget(AS_QWIDGET_PTR(parent), static_cast<Qt::WindowFlags>(flags_.value)));
+    HandleRef create(Widget::HandleRef parent /* nullptr */, Flags<WindowFlags> flags_ /* 0 */) {
+        auto intFlags = std::bit_cast<int>(flags_.value());
+        return reinterpret_cast<HandleRef>(new QDockWidget(AS_QWIDGET_PTR(parent), static_cast<Qt::WindowFlags>(intFlags)));
     }
 
-    HandleRef create(const std::string& title, Widget::HandleRef parent /* nullptr */, WindowFlags flags_ /* 0 */) {
-        return reinterpret_cast<HandleRef>(new QDockWidget(QString::fromStdString(title), AS_QWIDGET_PTR(parent), static_cast<Qt::WindowFlags>(flags_.value)));
+    HandleRef create(const std::string& title, Widget::HandleRef parent /* nullptr */, Flags<WindowFlags> flags_ /* 0 */) {
+        auto intFlags = std::bit_cast<int>(flags_.value());
+        return reinterpret_cast<HandleRef>(new QDockWidget(QString::fromStdString(title), AS_QWIDGET_PTR(parent), static_cast<Qt::WindowFlags>(intFlags)));
     }
 }

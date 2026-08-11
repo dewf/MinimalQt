@@ -26,12 +26,12 @@ namespace Drag
         return PIXMAP_HEAP_NEW(THIS->dragCursor(static_cast<Qt::DropAction>(action)));
     }
 
-    DropAction Handle_exec(HandleRef _this, DropActions supportedActions /* DropActions::MoveAction */) {
-        return static_cast<DropAction>(THIS->exec(static_cast<Qt::DropActions>(supportedActions.value)));
+    DropAction Handle_exec(HandleRef _this, Flags<DropActions> supportedActions /* DropActions::MoveAction */) {
+        return static_cast<DropAction>(THIS->exec(static_cast<Qt::DropActions>(supportedActions.value())));
     }
 
-    DropAction Handle_exec(HandleRef _this, DropActions supportedActions, DropAction defaultDropAction) {
-        const auto result = THIS->exec(static_cast<Qt::DropActions>(supportedActions.value), static_cast<Qt::DropAction>(defaultDropAction));
+    DropAction Handle_exec(HandleRef _this, Flags<DropActions> supportedActions, DropAction defaultDropAction) {
+        const auto result = THIS->exec(static_cast<Qt::DropActions>(supportedActions.value()), static_cast<Qt::DropAction>(defaultDropAction));
         return static_cast<DropAction>(result);
     }
 
@@ -67,8 +67,8 @@ namespace Drag
         return reinterpret_cast<Object::HandleRef>(THIS->source());
     }
 
-    DropActions Handle_supportedActions(HandleRef _this) {
-        return DropActions(THIS->supportedActions());
+    Flags<DropActions> Handle_supportedActions(HandleRef _this) {
+        return static_cast<Flags<DropActions>>(THIS->supportedActions());
     }
 
     Object::HandleRef Handle_target(HandleRef _this) {

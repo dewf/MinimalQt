@@ -23,9 +23,9 @@ namespace AbstractListModel
     class Implementation : public QAbstractListModel {
     private:
         std::shared_ptr<ImplementationMethods> methodDelegate;
-        ImplementedMethodMask methodMask;
+        Flags<ImplementedMethodMask> methodMask;
     public:
-        Implementation(const std::shared_ptr<ImplementationMethods> &methodDelegate, ImplementedMethodMask methodMask)
+        Implementation(const std::shared_ptr<ImplementationMethods> &methodDelegate, Flags<ImplementedMethodMask> methodMask)
             : methodDelegate(methodDelegate), methodMask(methodMask) {}
 
         // ==== must-implement abstract methods ===========================
@@ -46,7 +46,7 @@ namespace AbstractListModel
         // ==== optional methods ==========================================
         [[nodiscard]]
         QVariant headerData(int section, Qt::Orientation orientation, int role) const override {
-            if (methodMask & HeaderData) {
+            if (methodMask & ImplementedMethodMask::HeaderData) {
                 __VariantReturn safeRet;
                 methodDelegate->headerData(section, static_cast<Orientation>(orientation), static_cast<ItemDataRole>(role), &safeRet);
                 return safeRet.result;
@@ -58,17 +58,17 @@ namespace AbstractListModel
         [[nodiscard]]
         Qt::ItemFlags flags(const QModelIndex &index) const override {
             auto baseFlags = QAbstractListModel::flags(index);
-            if (methodMask & Flags) {
+            if (methodMask & ImplementedMethodMask::Flags) {
                 QModelIndex index2(index);
-                const auto result = methodDelegate->getFlags(reinterpret_cast<ModelIndex::HandleRef>(&index2), ItemFlags(baseFlags));
-                return static_cast<Qt::ItemFlags>(result.value);
+                const auto result = methodDelegate->getFlags(reinterpret_cast<ModelIndex::HandleRef>(&index2), static_cast<Flags<ItemFlags>>(baseFlags));
+                return static_cast<Qt::ItemFlags>(result.value());
             } else {
                 return baseFlags;
             }
         }
 
         bool setData(const QModelIndex &index, const QVariant &value, int role) override {
-            if (methodMask & SetData) {
+            if (methodMask & ImplementedMethodMask::SetData) {
                 QModelIndex index2(index);
                 QVariant value2(value);
                 return methodDelegate->setData(reinterpret_cast<ModelIndex::HandleRef>(&index2), reinterpret_cast<Variant::HandleRef>(&value2), static_cast<ItemDataRole>(role));
@@ -79,7 +79,7 @@ namespace AbstractListModel
 
         [[nodiscard]]
         int columnCount(const QModelIndex &parent) const override {
-            if (methodMask & ColumnCount) {
+            if (methodMask & ImplementedMethodMask::ColumnCount) {
                 QModelIndex parent2(parent);
                 return methodDelegate->columnCount(reinterpret_cast<ModelIndex::HandleRef>(&parent2));
             } else {
@@ -146,7 +146,7 @@ namespace AbstractListModel
         delete SUBCLASSED_THIS;
     }
 
-    InteriorRef createImplementation(const std::shared_ptr<ImplementationMethods>& methods, ImplementedMethodMask mask) {
+    InteriorRef createImplementation(const std::shared_ptr<ImplementationMethods>& methods, Flags<ImplementedMethodMask> mask) {
         return reinterpret_cast<InteriorRef>(new Implementation(methods, mask));
     }
 }

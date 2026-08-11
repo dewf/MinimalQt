@@ -25,8 +25,8 @@ namespace HeaderView
         return THIS->count();
     }
 
-    Alignment Handle_defaultAlignment(HandleRef _this) {
-        return Alignment(THIS->defaultAlignment());
+    Flags<Alignment> Handle_defaultAlignment(HandleRef _this) {
+        return static_cast<Flags<Alignment>>(THIS->defaultAlignment());
     }
 
     int32_t Handle_defaultSectionSize(HandleRef _this) {
@@ -165,8 +165,8 @@ namespace HeaderView
         THIS->setCascadingSectionResizes(enable);
     }
 
-    void Handle_setDefaultAlignment(HandleRef _this, Alignment align) {
-        THIS->setDefaultAlignment(static_cast<Qt::Alignment>(align.value));
+    void Handle_setDefaultAlignment(HandleRef _this, Flags<Alignment> align) {
+        THIS->setDefaultAlignment(static_cast<Qt::Alignment>(align.value()));
     }
 
     void Handle_setDefaultSectionSize(HandleRef _this, int32_t size) {

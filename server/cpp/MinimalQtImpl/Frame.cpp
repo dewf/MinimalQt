@@ -71,7 +71,8 @@ namespace Frame
         delete THIS;
     }
 
-    HandleRef create(Widget::HandleRef parent /* nullptr */, WindowFlags f /* 0 */) {
-        return reinterpret_cast<HandleRef>(new QFrame(AS_QWIDGET_PTR(parent), static_cast<Qt::WindowFlags>(f.value)));
+    HandleRef create(Widget::HandleRef parent /* nullptr */, Flags<WindowFlags> f /* 0 */) {
+        auto intFlags = std::bit_cast<int>(f.value()); // Qt flags silliness
+        return reinterpret_cast<HandleRef>(new QFrame(AS_QWIDGET_PTR(parent), static_cast<Qt::WindowFlags>(intFlags)));
     }
 }

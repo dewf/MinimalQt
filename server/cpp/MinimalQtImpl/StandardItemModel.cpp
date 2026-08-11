@@ -107,7 +107,7 @@ namespace StandardItemModel
         THIS->setItemPrototype(AS_ITEM(item));
     }
 
-    void Handle_setItemRoleNames(HandleRef _this, std::map<int32_t,std::vector<uint8_t>> roleNames) {
+    void Handle_setItemRoleNames(HandleRef _this, const std::map<int32_t,std::vector<uint8_t>>& roleNames) {
         QHash<int, QByteArray> qRoleNames;
         for (auto i = roleNames.begin(); i != roleNames.end(); ++i) {
             qRoleNames[i->first] = toQByteArray(i->second);

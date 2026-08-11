@@ -18,8 +18,8 @@ using namespace ::Widget;
 
 namespace AbstractScrollArea
 {
-    void Handle_addScrollBarWidget(HandleRef _this, Widget::HandleRef widget, Alignment alignment) {
-        THIS->addScrollBarWidget(AS_QWIDGET_PTR(widget), static_cast<Qt::Alignment>(alignment.value));
+    void Handle_addScrollBarWidget(HandleRef _this, Widget::HandleRef widget, Flags<Alignment> alignment) {
+        THIS->addScrollBarWidget(AS_QWIDGET_PTR(widget), static_cast<Qt::Alignment>(alignment.value()));
     }
 
     Widget::HandleRef Handle_cornerWidget(HandleRef _this) {
@@ -38,8 +38,8 @@ namespace AbstractScrollArea
         return SIZE_HEAP_NEW(THIS->maximumViewportSize());
     }
 
-    std::vector<Widget::HandleRef> Handle_scrollBarWidgets(HandleRef _this, Alignment alignment) {
-        const auto qList = THIS->scrollBarWidgets(static_cast<Qt::Alignment>(alignment.value));
+    std::vector<Widget::HandleRef> Handle_scrollBarWidgets(HandleRef _this, Flags<Alignment> alignment) {
+        const auto qList = THIS->scrollBarWidgets(static_cast<Qt::Alignment>(alignment.value()));
         return fromQList<QWidget*,Widget::HandleRef>(qList, [](auto w) { return reinterpret_cast<Widget::HandleRef>(w); });
     }
 

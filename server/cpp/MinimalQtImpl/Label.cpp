@@ -15,8 +15,8 @@ using namespace ::Widget;
 
 namespace Label
 {
-    Alignment Handle_alignment(HandleRef _this) {
-        return Alignment(THIS->alignment());
+    Flags<Alignment> Handle_alignment(HandleRef _this) {
+        return static_cast<Flags<Alignment>>(THIS->alignment());
     }
 
     Widget::HandleRef Handle_buddy(HandleRef _this) {
@@ -55,8 +55,8 @@ namespace Label
         return THIS->selectionStart();
     }
 
-    void Handle_setAlignment(HandleRef _this, Alignment align) {
-        THIS->setAlignment(static_cast<Qt::AlignmentFlag>(align.value));
+    void Handle_setAlignment(HandleRef _this,  Flags<Alignment> align) {
+        THIS->setAlignment(static_cast<Qt::Alignment>(align.value()));
     }
 
     void Handle_setBuddy(HandleRef _this, Widget::HandleRef buddy) {
@@ -87,8 +87,8 @@ namespace Label
         THIS->setTextFormat(static_cast<Qt::TextFormat>(format));
     }
 
-    void Handle_setTextInteractionFlags(HandleRef _this, TextInteractionFlags interactionFlags) {
-        THIS->setTextInteractionFlags(static_cast<Qt::TextInteractionFlags>(interactionFlags.value));
+    void Handle_setTextInteractionFlags(HandleRef _this, Flags<TextInteractionFlags> interactionFlags) {
+        THIS->setTextInteractionFlags(static_cast<Qt::TextInteractionFlags>(interactionFlags.value()));
     }
 
     void Handle_setWordWrap(HandleRef _this, bool state) {
@@ -103,8 +103,8 @@ namespace Label
         return static_cast<TextFormatEnum>(THIS->textFormat());
     }
 
-    TextInteractionFlags Handle_textInteractionFlags(HandleRef _this) {
-        return TextInteractionFlags(THIS->textInteractionFlags());
+    Flags<TextInteractionFlags> Handle_textInteractionFlags(HandleRef _this) {
+        return static_cast<Flags<TextInteractionFlags>>(THIS->textInteractionFlags());
     }
 
     bool Handle_wordWrap(HandleRef _this) {
@@ -149,11 +149,13 @@ namespace Label
         delete THIS;
     }
 
-    HandleRef create(Widget::HandleRef parent /* nullptr */, WindowFlags flags_ /* 0 */) {
-        return reinterpret_cast<HandleRef>(new QLabel(AS_QWIDGET_PTR(parent), static_cast<Qt::WindowFlags>(flags_.value)));
+    HandleRef create(Widget::HandleRef parent /* nullptr */, Flags<WindowFlags> flags_ /* 0 */) {
+        auto intValue = std::bit_cast<int>(flags_.value()); // Qt flags silliness
+        return reinterpret_cast<HandleRef>(new QLabel(AS_QWIDGET_PTR(parent), static_cast<Qt::WindowFlags>(intValue)));
     }
 
-    HandleRef create(const std::string& text, Widget::HandleRef parent /* nullptr */, WindowFlags flags_ /* 0 */) {
-        return reinterpret_cast<HandleRef>(new QLabel(QString::fromStdString(text), AS_QWIDGET_PTR(parent), static_cast<Qt::WindowFlags>(flags_.value)));
+    HandleRef create(const std::string& text, Widget::HandleRef parent /* nullptr */, Flags<::Enums::WindowFlags> flags_ /* 0 */) {
+        auto intValue = std::bit_cast<int>(flags_.value()); // Qt flags silliness
+        return reinterpret_cast<HandleRef>(new QLabel(QString::fromStdString(text), AS_QWIDGET_PTR(parent), static_cast<Qt::WindowFlags>(intValue)));
     }
 }

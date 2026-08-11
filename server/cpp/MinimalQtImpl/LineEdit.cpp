@@ -35,8 +35,8 @@ namespace LineEdit
         return reinterpret_cast<Action::HandleRef>(action);
     }
 
-    Alignment Handle_alignment(HandleRef _this) {
-        return Alignment(THIS->alignment());
+    Flags<Alignment> Handle_alignment(HandleRef _this) {
+        return static_cast<Flags<Alignment>>(THIS->alignment());
     }
 
     void Handle_backspace(HandleRef _this) {
@@ -171,8 +171,8 @@ namespace LineEdit
         return THIS->selectionStart();
     }
 
-    void Handle_setAlignment(HandleRef _this, Enums::Alignment align) {
-        THIS->setAlignment(static_cast<Qt::Alignment>(align.value));
+    void Handle_setAlignment(HandleRef _this, Flags<Alignment> align) {
+        THIS->setAlignment(static_cast<Qt::Alignment>(align.value()));
     }
 
     void Handle_setClearButtonEnabled(HandleRef _this, bool enabled) {

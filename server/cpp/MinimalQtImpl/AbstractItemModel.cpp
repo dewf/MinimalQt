@@ -39,9 +39,8 @@ namespace AbstractItemModel
         return THIS->canFetchMore(QMODELINDEX_VALUE(parent));
     }
 
-    bool Handle_checkIndex(HandleRef _this, ModelIndex::HandleRef index, const std::optional<CheckIndexOptions>& options_) {
-        CheckIndexOptions optionsArg = options_.value_or(CheckIndexOptions::NoOption);
-        return THIS->checkIndex(QMODELINDEX_VALUE(index), static_cast<QAbstractItemModel::CheckIndexOption>(optionsArg.value));
+    bool Handle_checkIndex(HandleRef _this, ModelIndex::HandleRef index,  Flags<CheckIndexOptions> options_) {
+        return THIS->checkIndex(QMODELINDEX_VALUE(index), static_cast<QAbstractItemModel::CheckIndexOptions>(options_.value()));
     }
 
     bool Handle_clearItemData(HandleRef _this, ModelIndex::HandleRef index) {
@@ -64,8 +63,8 @@ namespace AbstractItemModel
         THIS->fetchMore(QMODELINDEX_VALUE(parent));
     }
 
-    ItemFlags Handle_flags_(HandleRef _this, ModelIndex::HandleRef index) {
-        return ItemFlags(THIS->flags(QMODELINDEX_VALUE(index)));
+    Flags<ItemFlags> Handle_flags_(HandleRef _this, ModelIndex::HandleRef index) {
+        return static_cast<Flags<ItemFlags>>(THIS->flags(QMODELINDEX_VALUE(index)));
     }
 
     bool Handle_hasChildren(HandleRef _this, const std::optional<ModelIndex::HandleRef>& parent) {
@@ -109,9 +108,9 @@ namespace AbstractItemModel
         return retMap;
     }
 
-    std::vector<ModelIndex::OwnedRef> Handle_match(HandleRef _this, ModelIndex::HandleRef start, int32_t role, Variant::HandleRef value, int32_t hits /* 1 */, MatchFlags flags_ /* MatchFlags::MatchStartsWith | MatchFlags::MatchWrap */) {
+    std::vector<ModelIndex::OwnedRef> Handle_match(HandleRef _this, ModelIndex::HandleRef start, int32_t role, Variant::HandleRef value, int32_t hits /* 1 */, Flags<MatchFlags> flags_ /* MatchFlags::MatchStartsWith | MatchFlags::MatchWrap */) {
         std::vector<ModelIndex::OwnedRef> ret;
-        const auto result = THIS->match(QMODELINDEX_VALUE(start), role, QVARIANT_VALUE(value), hits, static_cast<Qt::MatchFlags>(flags_.value));
+        const auto result = THIS->match(QMODELINDEX_VALUE(start), role, QVARIANT_VALUE(value), hits, static_cast<Qt::MatchFlags>(flags_.value()));
         return fromQList<QModelIndex,ModelIndex::OwnedRef>(result, [](const QModelIndex &index) { return MODELINDEX_HEAP_NEW(index); });
     }
 
@@ -172,7 +171,7 @@ namespace AbstractItemModel
         return THIS->setHeaderData(section, static_cast<Qt::Orientation>(orientation), QVARIANT_VALUE(value), role.value_or(Qt::EditRole));
     }
 
-    bool Handle_setItemData(HandleRef _this, ModelIndex::HandleRef index, std::map<int32_t,Variant::HandleRef> roles) {
+    bool Handle_setItemData(HandleRef _this, ModelIndex::HandleRef index, const std::map<int32_t,Variant::HandleRef>& roles) {
         const QMap<int, QVariant> qRoles;
         for (auto i = roles.begin(); i != roles.end(); ++i) {
             qRoles[i->first] = QVARIANT_VALUE(i->second);
@@ -193,12 +192,12 @@ namespace AbstractItemModel
         return SIZE_HEAP_NEW(THIS->span(QMODELINDEX_VALUE(index)));
     }
 
-    DropActions Handle_supportedDragActions(HandleRef _this) {
-        return DropActions(THIS->supportedDragActions());
+    Flags<DropActions> Handle_supportedDragActions(HandleRef _this) {
+        return static_cast<Flags<DropActions>>(THIS->supportedDragActions());
     }
 
-    DropActions Handle_supportedDropActions(HandleRef _this) {
-        return DropActions(THIS->supportedDropActions());
+    Flags<DropActions> Handle_supportedDropActions(HandleRef _this) {
+        return static_cast<Flags<DropActions>>(THIS->supportedDropActions());
     }
 
     void Handle_revert(HandleRef _this) {
@@ -365,10 +364,10 @@ namespace AbstractItemModel
     class Implementation : public QAbstractItemModel {
     private:
         std::shared_ptr<ImplementationMethods> methodDelegate;
-        ImplementationMask methodMask;
+        Flags<ImplementationMask> methodMask;
     public:
-        Implementation(const std::shared_ptr<ImplementationMethods> &methods, ImplementationMask method_mask)
-            : methodDelegate(methods), methodMask(method_mask) {}
+        Implementation(const std::shared_ptr<ImplementationMethods> &methods, Flags<ImplementationMask> methodMask)
+            : methodDelegate(methods), methodMask(methodMask) {}
 
         // ===== must-implement abstract methods ================================
         [[nodiscard]]
@@ -410,7 +409,7 @@ namespace AbstractItemModel
         // ===== optional methods ==================================================
         [[nodiscard]]
         bool hasChildren(const QModelIndex &parent) const override {
-            if (methodMask & HasChildren) {
+            if (methodMask & ImplementationMask::HasChildren) {
                 QModelIndex parent2(parent);
                 return methodDelegate->hasChildren(reinterpret_cast<ModelIndex::HandleRef>(&parent2));
             } else {
@@ -419,7 +418,7 @@ namespace AbstractItemModel
         }
 
         bool setData(const QModelIndex &index, const QVariant &value, int role) override {
-            if (methodMask & SetData) {
+            if (methodMask & ImplementationMask::SetData) {
                 QModelIndex index2(index);
                 QVariant value2(value); // non-const, until we figure out "proxies" or whatever
                 return methodDelegate->setData(reinterpret_cast<ModelIndex::HandleRef>(&index2), reinterpret_cast<Variant::HandleRef>(&value2), role);
@@ -431,10 +430,10 @@ namespace AbstractItemModel
         [[nodiscard]]
         Qt::ItemFlags flags(const QModelIndex &index) const override {
             auto baseFlags = QAbstractItemModel::flags(index);
-            if (methodMask & Flags) {
+            if (methodMask & ImplementationMask::Flags) {
                 QModelIndex index2(index);
-                const auto result = methodDelegate->getFlags(reinterpret_cast<ModelIndex::HandleRef>(&index2), ItemFlags(baseFlags));
-                return static_cast<Qt::ItemFlags>(result.value);
+                const auto result = methodDelegate->getFlags(reinterpret_cast<ModelIndex::HandleRef>(&index2), static_cast<Flags<ItemFlags>>(baseFlags)); // ItemFlags(baseFlags)
+                return static_cast<Qt::ItemFlags>(result.value());
             } else {
                 return baseFlags;
             }
@@ -442,7 +441,7 @@ namespace AbstractItemModel
 
         [[nodiscard]]
         QVariant headerData(int section, Qt::Orientation orientation, int role) const override {
-            if (methodMask & HeaderData) {
+            if (methodMask & ImplementationMask::HeaderData) {
                 __VariantReturn safeRet;
                 methodDelegate->headerData(section, static_cast<Orientation>(orientation), role, &safeRet);
                 return safeRet.result;
@@ -452,7 +451,7 @@ namespace AbstractItemModel
         }
 
         bool setHeaderData(int section, Qt::Orientation orientation, const QVariant &value, int role) override {
-            if (methodMask & HeaderData) {
+            if (methodMask & ImplementationMask::HeaderData) {
                 QVariant value2(value); // non-const, until we figure out "proxies" or whatever
                 return methodDelegate->setHeaderData(section, static_cast<Orientation>(orientation), reinterpret_cast<Variant::HandleRef>(&value2), role);
             } else {
@@ -461,7 +460,7 @@ namespace AbstractItemModel
         }
 
         void sort(int column, Qt::SortOrder order) override {
-            if (methodMask & Sort) {
+            if (methodMask & ImplementationMask::Sort) {
                 return methodDelegate->sort(column, static_cast<SortOrder>(order));
             } else {
                 return QAbstractItemModel::sort(column, order);
@@ -532,7 +531,7 @@ namespace AbstractItemModel
         delete SUBCLASSED_THIS;
     }
 
-    InteriorRef createImplementation(const std::shared_ptr<ImplementationMethods>& methods, ImplementationMask mask) {
+    InteriorRef createImplementation(const std::shared_ptr<ImplementationMethods>& methods, Flags<ImplementationMask> mask) {
         return reinterpret_cast<InteriorRef>(new Implementation(methods, mask));
     }
 }

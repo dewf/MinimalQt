@@ -24,8 +24,7 @@ namespace MimeData
     std::shared_ptr<NativeBuffer<uint8_t>> ConstHandle_data(ConstHandleRef _this, const std::string& mimeType) {
         const auto qBytes = CONST_THIS->data(QString::fromStdString(mimeType));
         // allocate destination buffer
-        std::vector bufferDims = { static_cast<int>(qBytes.size()) };
-        const auto retBuffer = std::make_shared<ServerBuffer<uint8_t>>(bufferDims);
+        const auto retBuffer = std::make_shared<ServerBuffer<uint8_t>>(static_cast<int>(qBytes.size()));
         // perform the copy
         std::memcpy(retBuffer->getSpan(nullptr), qBytes.data(), qBytes.size());
         // bye

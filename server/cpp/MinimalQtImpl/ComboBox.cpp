@@ -65,12 +65,12 @@ namespace ComboBox
         return THIS->duplicatesEnabled();
     }
 
-    int32_t Handle_findData(HandleRef _this, Variant::HandleRef data, ItemDataRole role /* ItemDataRole::UserRole */, MatchFlags flags_ /* MatchFlags::MatchExactly | MatchFlags::MatchCaseSensitive */) {
-        return THIS->findData(QVARIANT_VALUE(data), static_cast<int>(role), static_cast<Qt::MatchFlags>(flags_.value));
+    int32_t Handle_findData(HandleRef _this, Variant::HandleRef data, ItemDataRole role /* ItemDataRole::UserRole */, Flags<MatchFlags> flags_ /* MatchFlags::MatchExactly | MatchFlags::MatchCaseSensitive */) {
+        return THIS->findData(QVARIANT_VALUE(data), static_cast<int>(role), static_cast<Qt::MatchFlags>(flags_.value()));
     }
 
-    int32_t Handle_findText(HandleRef _this, const std::string& text, MatchFlags flags_ /* MatchFlags::MatchExactly | MatchFlags::MatchCaseSensitive */) {
-        return THIS->findText(QString::fromStdString(text), static_cast<Qt::MatchFlags>(flags_.value));
+    int32_t Handle_findText(HandleRef _this, const std::string& text, Flags<MatchFlags> flags_ /* MatchFlags::MatchExactly | MatchFlags::MatchCaseSensitive */) {
+        return THIS->findText(QString::fromStdString(text), static_cast<Qt::MatchFlags>(flags_.value()));
     }
 
     bool Handle_hasFrame(HandleRef _this) {

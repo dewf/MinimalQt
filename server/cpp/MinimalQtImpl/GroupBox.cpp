@@ -11,10 +11,10 @@ using namespace ::Widget;
 
 #define THIS (reinterpret_cast<QGroupBox*>(_this))
 
-namespace GroupBox {
-
-    Alignment Handle_alignment(HandleRef _this) {
-        return Alignment(THIS->alignment());
+namespace GroupBox
+{
+    Flags<Alignment> Handle_alignment(HandleRef _this) {
+        return static_cast<Flags<Alignment>>(THIS->alignment());
     }
 
     bool Handle_isCheckable(HandleRef _this) {

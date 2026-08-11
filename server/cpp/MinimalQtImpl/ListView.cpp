@@ -49,8 +49,8 @@ namespace ListView
         return THIS->isWrapping();
     }
 
-    Alignment Handle_itemAlignment(HandleRef _this) {
-        return static_cast<Alignment>(THIS->itemAlignment());
+    Flags<Alignment> Handle_itemAlignment(HandleRef _this) {
+        return static_cast<Flags<Alignment>>(THIS->itemAlignment());
     }
 
     LayoutMode Handle_getLayoutMode(HandleRef _this) {
@@ -81,8 +81,8 @@ namespace ListView
         THIS->setGridSize(QSIZE_VALUE(size));
     }
 
-    void Handle_setItemAlignment(HandleRef _this, Alignment align) {
-        THIS->setItemAlignment(static_cast<Qt::Alignment>(align.value));
+    void Handle_setItemAlignment(HandleRef _this, Flags<Alignment> align) {
+        THIS->setItemAlignment(static_cast<Qt::Alignment>(align.value()));
     }
 
     void Handle_setLayoutMode(HandleRef _this, LayoutMode mode) {

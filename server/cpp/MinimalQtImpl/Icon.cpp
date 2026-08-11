@@ -53,12 +53,12 @@ namespace Icon
         return THIS->name().toStdString();
     }
 
-    void Handle_paint(HandleRef _this, Painter::HandleRef painter, Rect::HandleRef rect, Alignment alignment /* Alignment::AlignCenter */, Mode mode /* Mode::Normal */, State state /* State::Off */) {
-        THIS->paint(AS_QPAINTER_PTR(painter), QRECT_VALUE(rect), static_cast<Qt::Alignment>(alignment.value), static_cast<QIcon::Mode>(mode), static_cast<QIcon::State>(state));
+    void Handle_paint(HandleRef _this, Painter::HandleRef painter, Rect::HandleRef rect, Flags<Alignment> alignment /* Alignment::AlignCenter */, Mode mode /* Mode::Normal */, State state /* State::Off */) {
+        THIS->paint(AS_QPAINTER_PTR(painter), QRECT_VALUE(rect), static_cast<Qt::Alignment>(alignment.value()), static_cast<QIcon::Mode>(mode), static_cast<QIcon::State>(state));
     }
 
-    void Handle_paint(HandleRef _this, Painter::HandleRef painter, int32_t x, int32_t y, int32_t w, int32_t h, Alignment alignment /* Alignment::AlignCenter */, Mode mode /* Mode::Normal */, State state /* State::Off */) {
-        THIS->paint(AS_QPAINTER_PTR(painter), x, y, w, h, static_cast<Qt::Alignment>(alignment.value), static_cast<QIcon::Mode>(mode), static_cast<QIcon::State>(state));
+    void Handle_paint(HandleRef _this, Painter::HandleRef painter, int32_t x, int32_t y, int32_t w, int32_t h, Flags<Alignment> alignment /* Alignment::AlignCenter */, Mode mode /* Mode::Normal */, State state /* State::Off */) {
+        THIS->paint(AS_QPAINTER_PTR(painter), x, y, w, h, static_cast<Qt::Alignment>(alignment.value()), static_cast<QIcon::Mode>(mode), static_cast<QIcon::State>(state));
     }
 
     Pixmap::OwnedRef Handle_pixmap(HandleRef _this, Size::HandleRef size, Mode mode /* Mode::Normal */, State state /* State::Off */) {

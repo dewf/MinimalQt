@@ -16,24 +16,24 @@ using namespace ::LayoutItem;
 #define THIS (reinterpret_cast<QGridLayout*>(_this))
 
 namespace GridLayout {
-    void Handle_addItem(HandleRef _this, LayoutItem::HandleRef item, int32_t row, int32_t column, int32_t rowSpan /* 1 */, int32_t columnSpan /* 1 */, Alignment alignment /* 0 */) {
-        THIS->addItem(AS_QLAYOUTITEM_PTR(item), row, column, rowSpan, columnSpan, static_cast<Qt::Alignment>(alignment.value));
+    void Handle_addItem(HandleRef _this, LayoutItem::HandleRef item, int32_t row, int32_t column, int32_t rowSpan /* 1 */, int32_t columnSpan /* 1 */, Flags<Alignment> alignment /* 0 */) {
+        THIS->addItem(AS_QLAYOUTITEM_PTR(item), row, column, rowSpan, columnSpan, static_cast<Qt::Alignment>(alignment.value()));
     }
 
-    void Handle_addLayout(HandleRef _this, Layout::HandleRef layout, int32_t row, int32_t column, Alignment alignment /* 0 */) {
-        THIS->addLayout(AS_QLAYOUT_PTR(layout), row, column, static_cast<Qt::Alignment>(alignment.value));
+    void Handle_addLayout(HandleRef _this, Layout::HandleRef layout, int32_t row, int32_t column, Flags<Alignment> alignment /* 0 */) {
+        THIS->addLayout(AS_QLAYOUT_PTR(layout), row, column, static_cast<Qt::Alignment>(alignment.value()));
     }
 
-    void Handle_addLayout(HandleRef _this, Layout::HandleRef layout, int32_t row, int32_t column, int32_t rowSpan, int32_t columnSpan, Alignment alignment /* 0 */) {
-        THIS->addLayout(AS_QLAYOUT_PTR(layout), row, column, rowSpan, columnSpan, static_cast<Qt::Alignment>(alignment.value));
+    void Handle_addLayout(HandleRef _this, Layout::HandleRef layout, int32_t row, int32_t column, int32_t rowSpan, int32_t columnSpan, Flags<Alignment> alignment /* 0 */) {
+        THIS->addLayout(AS_QLAYOUT_PTR(layout), row, column, rowSpan, columnSpan, static_cast<Qt::Alignment>(alignment.value()));
     }
 
-    void Handle_addWidget(HandleRef _this, Widget::HandleRef widget, int32_t row, int32_t column, Alignment alignment /* 0 */) {
-        THIS->addWidget(AS_QWIDGET_PTR(widget), row, column, static_cast<Qt::Alignment>(alignment.value));
+    void Handle_addWidget(HandleRef _this, Widget::HandleRef widget, int32_t row, int32_t column, Flags<Alignment> alignment /* 0 */) {
+        THIS->addWidget(AS_QWIDGET_PTR(widget), row, column, static_cast<Qt::Alignment>(alignment.value()));
     }
 
-    void Handle_addWidget(HandleRef _this, Widget::HandleRef widget, int32_t fromRow, int32_t fromColumn, int32_t rowSpan, int32_t columnSpan, Alignment alignment /* 0 */) {
-        THIS->addWidget(AS_QWIDGET_PTR(widget), fromRow, fromColumn, rowSpan, columnSpan, static_cast<Qt::Alignment>(alignment.value));
+    void Handle_addWidget(HandleRef _this, Widget::HandleRef widget, int32_t fromRow, int32_t fromColumn, int32_t rowSpan, int32_t columnSpan, Flags<Alignment> alignment /* 0 */) {
+        THIS->addWidget(AS_QWIDGET_PTR(widget), fromRow, fromColumn, rowSpan, columnSpan, static_cast<Qt::Alignment>(alignment.value()));
     }
 
     OwnedRef Handle_cellRect(HandleRef _this, int32_t row, int32_t column) {

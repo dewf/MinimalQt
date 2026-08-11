@@ -62,8 +62,8 @@ namespace AbstractItemView
         return THIS->dragEnabled();
     }
 
-    EditTriggers Handle_getEditTriggers(HandleRef _this) {
-        return EditTriggers(THIS->editTriggers());
+    Flags<EditTriggers> Handle_getEditTriggers(HandleRef _this) {
+        return static_cast<Flags<EditTriggers>>(THIS->editTriggers());
     }
 
     bool Handle_hasAutoScroll(HandleRef _this) {
@@ -178,8 +178,8 @@ namespace AbstractItemView
         THIS->setDropIndicatorShown(state);
     }
 
-    void Handle_setEditTriggers(HandleRef _this, EditTriggers triggers) {
-        THIS->setEditTriggers(static_cast<QAbstractItemView::EditTriggers>(triggers.value));
+    void Handle_setEditTriggers(HandleRef _this, Flags<EditTriggers> triggers) {
+        THIS->setEditTriggers(static_cast<QAbstractItemView::EditTriggers>(triggers.value()));
     }
 
     void Handle_setHorizontalScrollMode(HandleRef _this, ScrollMode mode) {

@@ -86,16 +86,16 @@ namespace Layout
         THIS->removeWidget(AS_QWIDGET_PTR(widget));
     }
 
-    LayoutItem::HandleRef Handle_replaceWidget(HandleRef _this, WidgetHandleRef from, WidgetHandleRef to, FindChildOptions options_ /* FindChildOptions::FindChildrenRecursively */) {
-        return reinterpret_cast<LayoutItem::HandleRef>(THIS->replaceWidget(AS_QWIDGET_PTR(from), AS_QWIDGET_PTR(to), static_cast<Qt::FindChildOptions>(options_.value)));
+    LayoutItem::HandleRef Handle_replaceWidget(HandleRef _this, WidgetHandleRef from, WidgetHandleRef to, Flags<FindChildOptions> options_ /* FindChildOptions::FindChildrenRecursively */) {
+        return reinterpret_cast<LayoutItem::HandleRef>(THIS->replaceWidget(AS_QWIDGET_PTR(from), AS_QWIDGET_PTR(to), static_cast<Qt::FindChildOptions>(options_.value())));
     }
 
-    bool Handle_setAlignment(HandleRef _this, WidgetHandleRef widget, Alignment alignment) {
-        return THIS->setAlignment(AS_QWIDGET_PTR(widget), static_cast<Qt::Alignment>(alignment.value));
+    bool Handle_setAlignment(HandleRef _this, WidgetHandleRef widget, Flags<Alignment> alignment) {
+        return THIS->setAlignment(AS_QWIDGET_PTR(widget), static_cast<Qt::Alignment>(alignment.value()));
     }
 
-    bool Handle_setAlignment(HandleRef _this, HandleRef layout, Alignment alignment) {
-        return THIS->setAlignment(AS_QLAYOUT_PTR(layout), static_cast<Qt::Alignment>(alignment.value));
+    bool Handle_setAlignment(HandleRef _this, HandleRef layout, Flags<Alignment> alignment) {
+        return THIS->setAlignment(AS_QLAYOUT_PTR(layout), static_cast<Qt::Alignment>(alignment.value()));
     }
 
     void Handle_setContentsMargins(HandleRef _this, Margins::HandleRef margins) {

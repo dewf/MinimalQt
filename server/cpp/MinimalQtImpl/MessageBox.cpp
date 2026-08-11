@@ -81,8 +81,8 @@ namespace MessageBox
         return THIS->informativeText().toStdString();
     }
 
-    OptionEnumSet Handle_getOptions(HandleRef _this) {
-        return OptionEnumSet(THIS->options());
+    Flags<OptionEnumSet> Handle_getOptions(HandleRef _this) {
+        return static_cast<Flags<OptionEnumSet>>(THIS->options());
     }
 
     void Handle_removeButton(HandleRef _this, AbstractButton::HandleRef button) {
@@ -129,12 +129,12 @@ namespace MessageBox
         THIS->setOption(static_cast<QMessageBox::Option>(option), on);
     }
 
-    void Handle_setOptions(HandleRef _this, OptionEnumSet opts) {
-        THIS->setOptions(static_cast<QMessageBox::Options>(opts.value));
+    void Handle_setOptions(HandleRef _this, Flags<OptionEnumSet> opts) {
+        THIS->setOptions(static_cast<QMessageBox::Options>(opts.value()));
     }
 
-    void Handle_setStandardButtons(HandleRef _this, StandardButtons buttons) {
-        THIS->setStandardButtons(static_cast<QMessageBox::StandardButtons>(buttons.value));
+    void Handle_setStandardButtons(HandleRef _this, Flags<StandardButtons> buttons) {
+        THIS->setStandardButtons(static_cast<QMessageBox::StandardButtons>(buttons.value()));
     }
 
     void Handle_setText(HandleRef _this, const std::string& text) {
@@ -145,8 +145,8 @@ namespace MessageBox
         THIS->setTextFormat(static_cast<Qt::TextFormat>(format));
     }
 
-    void Handle_setTextInteractionFlags(HandleRef _this, TextInteractionFlags tiFlags) {
-        THIS->setTextInteractionFlags(static_cast<Qt::TextInteractionFlags>(tiFlags.value));
+    void Handle_setTextInteractionFlags(HandleRef _this, Flags<TextInteractionFlags> tiFlags) {
+        THIS->setTextInteractionFlags(static_cast<Qt::TextInteractionFlags>(tiFlags.value()));
     }
 
     void Handle_setWindowModality(HandleRef _this, WindowModality windowModality) {
@@ -161,8 +161,8 @@ namespace MessageBox
         return static_cast<StandardButton>(THIS->standardButton(AS_QABSTRACTBUTTON_PTR(button)));
     }
 
-    StandardButtons Handle_getStandardButtons(HandleRef _this) {
-        return StandardButtons(THIS->standardButtons());
+    Flags<StandardButtons> Handle_getStandardButtons(HandleRef _this) {
+        return static_cast<Flags<StandardButtons>>(THIS->standardButtons());
     }
 
     bool Handle_testOption(HandleRef _this, OptionEnum option) {
@@ -177,8 +177,8 @@ namespace MessageBox
         return static_cast<TextFormatEnum>(THIS->textFormat());
     }
 
-    TextInteractionFlags Handle_textInteractionFlags(HandleRef _this) {
-        return TextInteractionFlags(THIS->textInteractionFlags());
+    Flags<TextInteractionFlags> Handle_textInteractionFlags(HandleRef _this) {
+        return static_cast<Flags<TextInteractionFlags>>(THIS->textInteractionFlags());
     }
 
     SignalConnectionRef Handle_connect_ButtonClicked(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
@@ -196,9 +196,10 @@ namespace MessageBox
         return reinterpret_cast<HandleRef>(new QMessageBox(AS_QWIDGET_PTR(parent)));
     }
 
-    HandleRef create(Icon icon, const std::string& title, const std::string& text, StandardButtons buttons /* StandardButtons::NoButton */, Widget::HandleRef parent /* nullptr */, WindowFlags flags_ /* WindowFlags::Dialog | WindowFlags::MSWindowsFixedSizeDialogHint */) {
+    HandleRef create(Icon icon, const std::string& title, const std::string& text, Flags<StandardButtons> buttons /* StandardButtons::NoButton */, Widget::HandleRef parent /* nullptr */, Flags<WindowFlags> flags_ /* WindowFlags::Dialog | WindowFlags::MSWindowsFixedSizeDialogHint */) {
+        auto intFlags = std::bit_cast<int>(flags_.value()); // Qt flags silliness
         return reinterpret_cast<HandleRef>(new QMessageBox(static_cast<QMessageBox::Icon>(icon), QString::fromStdString(title), QString::fromStdString(text),
-            static_cast<QMessageBox::StandardButtons>(buttons.value), AS_QWIDGET_PTR(parent), static_cast<Qt::WindowFlags>(flags_.value)));
+            static_cast<QMessageBox::StandardButtons>(buttons.value()), AS_QWIDGET_PTR(parent), static_cast<Qt::WindowFlags>(intFlags)));
     }
 
     void about(Widget::HandleRef parent, const std::string& title, const std::string& text) {
@@ -212,23 +213,23 @@ namespace MessageBox
         QMessageBox::aboutQt(qParent, qTitle);
     }
 
-    StandardButton critical(Widget::HandleRef parent, const std::string& title, const std::string& text, StandardButtons buttons /* StandardButtons::Ok */, StandardButton defaultButton /* StandardButton::NoButton */) {
+    StandardButton critical(Widget::HandleRef parent, const std::string& title, const std::string& text, Flags<StandardButtons> buttons /* StandardButtons::Ok */, StandardButton defaultButton /* StandardButton::NoButton */) {
         return static_cast<StandardButton>(QMessageBox::critical(AS_QWIDGET_PTR(parent), QString::fromStdString(title), QString::fromStdString(text),
-            static_cast<QMessageBox::StandardButtons>(buttons.value), static_cast<QMessageBox::StandardButton>(defaultButton)));
+            static_cast<QMessageBox::StandardButtons>(buttons.value()), static_cast<QMessageBox::StandardButton>(defaultButton)));
     }
 
-    StandardButton information(Widget::HandleRef parent, const std::string& title, const std::string& text, StandardButtons buttons /* StandardButtons::Ok */, StandardButton defaultButton /* StandardButton::NoButton */) {
+    StandardButton information(Widget::HandleRef parent, const std::string& title, const std::string& text, Flags<StandardButtons> buttons /* StandardButtons::Ok */, StandardButton defaultButton /* StandardButton::NoButton */) {
         return static_cast<StandardButton>(QMessageBox::information(AS_QWIDGET_PTR(parent), QString::fromStdString(title), QString::fromStdString(text),
-            static_cast<QMessageBox::StandardButtons>(buttons.value), static_cast<QMessageBox::StandardButton>(defaultButton)));
+            static_cast<QMessageBox::StandardButtons>(buttons.value()), static_cast<QMessageBox::StandardButton>(defaultButton)));
     }
 
-    StandardButton question(Widget::HandleRef parent, const std::string& title, const std::string& text, StandardButtons buttons /* StandardButtons::Yes | StandardButtons::No */, StandardButton defaultButton /* StandardButton::NoButton */) {
+    StandardButton question(Widget::HandleRef parent, const std::string& title, const std::string& text, Flags<StandardButtons> buttons /* StandardButtons::Yes | StandardButtons::No */, StandardButton defaultButton /* StandardButton::NoButton */) {
         return static_cast<StandardButton>(QMessageBox::question(AS_QWIDGET_PTR(parent), QString::fromStdString(title), QString::fromStdString(text),
-            static_cast<QMessageBox::StandardButtons>(buttons.value), static_cast<QMessageBox::StandardButton>(defaultButton)));
+            static_cast<QMessageBox::StandardButtons>(buttons.value()), static_cast<QMessageBox::StandardButton>(defaultButton)));
     }
 
-    StandardButton warning(Widget::HandleRef parent, const std::string& title, const std::string& text, StandardButtons buttons /* StandardButtons::Ok */, StandardButton defaultButton /* StandardButton::NoButton */) {
+    StandardButton warning(Widget::HandleRef parent, const std::string& title, const std::string& text, Flags<StandardButtons> buttons /* StandardButtons::Ok */, StandardButton defaultButton /* StandardButton::NoButton */) {
         return static_cast<StandardButton>(QMessageBox::warning(AS_QWIDGET_PTR(parent), QString::fromStdString(title), QString::fromStdString(text),
-            static_cast<QMessageBox::StandardButtons>(buttons.value), static_cast<QMessageBox::StandardButton>(defaultButton)));
+            static_cast<QMessageBox::StandardButtons>(buttons.value()), static_cast<QMessageBox::StandardButton>(defaultButton)));
     }
 }

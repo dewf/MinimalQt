@@ -60,8 +60,8 @@ namespace Completer
         return THIS->currentRow();
     }
 
-    MatchFlags Handle_filterMode(HandleRef _this) {
-        return static_cast<MatchFlags>(THIS->filterMode());
+    Flags<MatchFlags> Handle_filterMode(HandleRef _this) {
+        return static_cast<Flags<MatchFlags>>(THIS->filterMode());
     }
 
     int32_t Handle_maxVisibleItems(HandleRef _this) {
@@ -104,8 +104,8 @@ namespace Completer
         return THIS->setCurrentRow(row);
     }
 
-    void Handle_setFilterMode(HandleRef _this, MatchFlags filterMode) {
-        THIS->setFilterMode(static_cast<Qt::MatchFlags>(filterMode.value));
+    void Handle_setFilterMode(HandleRef _this, Flags<MatchFlags> filterMode) {
+        THIS->setFilterMode(static_cast<Qt::MatchFlags>(filterMode.value()));
     }
 
     void Handle_setMaxVisibleItems(HandleRef _this, int32_t maxItems) {

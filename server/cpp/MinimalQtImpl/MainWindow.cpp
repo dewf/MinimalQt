@@ -65,8 +65,8 @@ namespace MainWindow
         return reinterpret_cast<Menu::HandleRef>(THIS->createPopupMenu());
     }
 
-    DockOptions Handle_getDockOptions(HandleRef _this) {
-        return DockOptions(THIS->dockOptions());
+    Flags<DockOptions> Handle_getDockOptions(HandleRef _this) {
+        return static_cast<Flags<DockOptions>>(THIS->dockOptions());
     }
 
     DockWidgetArea Handle_dockWidgetArea(HandleRef _this, DockWidget::HandleRef dockwidget) {
@@ -145,8 +145,8 @@ namespace MainWindow
         THIS->setCorner(static_cast<Qt::Corner>(corner), static_cast<Qt::DockWidgetArea>(area));
     }
 
-    void Handle_setDockOptions(HandleRef _this, DockOptions options_) {
-        THIS->setDockOptions(static_cast<QMainWindow::DockOptions>(options_.value));
+    void Handle_setDockOptions(HandleRef _this, Flags<DockOptions> options_) {
+        THIS->setDockOptions(static_cast<QMainWindow::DockOptions>(options_.value()));
     }
 
     void Handle_setDocumentMode(HandleRef _this, bool enabled) {
@@ -169,8 +169,8 @@ namespace MainWindow
         THIS->setStatusBar(reinterpret_cast<QStatusBar*>(statusbar));
     }
 
-    void Handle_setTabPosition(HandleRef _this, DockWidgetAreas areas, TabPosition tabPosition) {
-        THIS->setTabPosition(static_cast<Qt::DockWidgetAreas>(areas.value), static_cast<QTabWidget::TabPosition>(tabPosition));
+    void Handle_setTabPosition(HandleRef _this, Flags<DockWidgetAreas> areas, TabPosition tabPosition) {
+        THIS->setTabPosition(static_cast<Qt::DockWidgetAreas>(areas.value()), static_cast<QTabWidget::TabPosition>(tabPosition));
     }
 
     void Handle_setTabShape(HandleRef _this, TabShape tabShape) {
@@ -265,8 +265,8 @@ namespace MainWindow
         delete THIS;
     }
 
-    HandleRef create(Widget::HandleRef parent /* nullptr */, WindowFlags flags_ /* 0 */) {
-        return reinterpret_cast<HandleRef>(new QMainWindow(AS_QWIDGET_PTR(parent), static_cast<Qt::WindowFlags>(flags_.value)));
+    HandleRef create(Widget::HandleRef parent /* nullptr */, Flags<WindowFlags> flags_ /* 0 */) {
+        return reinterpret_cast<HandleRef>(new QMainWindow(AS_QWIDGET_PTR(parent), static_cast<Qt::WindowFlags>(flags_.value())));
     }
 
     // delegated ================================================================================================================
@@ -275,16 +275,15 @@ namespace MainWindow
 
     class Delegated : public QMainWindow {
         std::shared_ptr<DelegatedMethods> methods;
-        DelegatedMethodMask mask = 0;
+        Flags<DelegatedMethodMask> mask = 0;
     public:
-        Delegated(QWidget *parent, const Qt::WindowFlags &flags, const std::shared_ptr<DelegatedMethods> &methods,
-            DelegatedMethodMask mask)
+        Delegated(QWidget *parent, const Qt::WindowFlags &flags, const std::shared_ptr<DelegatedMethods> &methods, Flags<DelegatedMethodMask> mask)
             : QMainWindow(parent, flags),
               methods(methods),
               mask(mask) {}
     protected:
         void resizeEvent(QResizeEvent *event) override {
-            if (mask & Resized) {
+            if (mask & DelegatedMethodMask::Resized) {
                 methods->resized(SIZE_HEAP_NEW(event->oldSize()), SIZE_HEAP_NEW(event->size()));
                 event->accept();
             } else {
@@ -292,15 +291,15 @@ namespace MainWindow
             }
         }
         void closeEvent(QCloseEvent *event) override {
-            if (mask & (CanClose | Closed)) {
+            if (mask & (DelegatedMethodMask::CanClose | DelegatedMethodMask::Closed)) {
                 // potentially custom behavior
                 bool canClose = true;
-                if (mask & CanClose) {
+                if (mask & DelegatedMethodMask::CanClose) {
                     canClose = methods->canClose();
                 }
                 if (canClose) {
                     // definitely going to close
-                    if (mask & Closed) {
+                    if (mask & DelegatedMethodMask::Closed) {
                         methods->closed();
                     }
                     event->accept();
@@ -319,7 +318,8 @@ namespace MainWindow
         delete DELEGATED_THIS;
     }
 
-    DelegatedRef createDelegated(const std::shared_ptr<DelegatedMethods>& methods, DelegatedMethodMask mask, Widget::HandleRef parent /* nullptr */, WindowFlags flags_ /* 0 */) {
-        return reinterpret_cast<DelegatedRef>(new Delegated(AS_QWIDGET_PTR(parent), static_cast<Qt::WindowFlags>(flags_.value), methods, mask));
+    DelegatedRef createDelegated(const std::shared_ptr<DelegatedMethods>& methods, Flags<DelegatedMethodMask> mask, Widget::HandleRef parent /* nullptr */, Flags<WindowFlags> flags_ /* 0 */) {
+        auto intFlags = std::bit_cast<int>(flags_.value()); // Qt flags silliness
+        return reinterpret_cast<DelegatedRef>(new Delegated(AS_QWIDGET_PTR(parent), static_cast<Qt::WindowFlags>(intFlags), methods, mask));
     }
 }

@@ -31,8 +31,8 @@ namespace BoxLayout
         THIS->addStrut(size);
     }
 
-    void Handle_addWidget(HandleRef _this, Widget::HandleRef widget, int32_t stretch /* 0 */, Alignment alignment /* 0 */) {
-        THIS->addWidget(AS_QWIDGET_PTR(widget), stretch, static_cast<Qt::Alignment>(alignment.value));
+    void Handle_addWidget(HandleRef _this, Widget::HandleRef widget, int32_t stretch /* 0 */, Flags<Alignment> alignment /* 0 */) {
+        THIS->addWidget(AS_QWIDGET_PTR(widget), stretch, static_cast<Qt::Alignment>(alignment.value()));
     }
 
     Direction Handle_getDirection(HandleRef _this) {
@@ -55,8 +55,8 @@ namespace BoxLayout
         THIS->insertStretch(index, stretch);
     }
 
-    void Handle_insertWidget(HandleRef _this, int32_t index, Widget::HandleRef widget, int32_t stretch /* 0 */, Alignment alignment /* 0 */) {
-        THIS->insertWidget(index, AS_QWIDGET_PTR(widget), stretch, static_cast<Qt::Alignment>(alignment.value));
+    void Handle_insertWidget(HandleRef _this, int32_t index, Widget::HandleRef widget, int32_t stretch /* 0 */, Flags<Alignment> alignment /* 0 */) {
+        THIS->insertWidget(index, AS_QWIDGET_PTR(widget), stretch, static_cast<Qt::Alignment>(alignment.value()));
     }
 
     void Handle_setDirection(HandleRef _this, Direction direction) {

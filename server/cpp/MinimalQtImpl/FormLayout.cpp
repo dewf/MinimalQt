@@ -44,8 +44,8 @@ namespace FormLayout
         return static_cast<FieldGrowthPolicy>(THIS->fieldGrowthPolicy());
     }
 
-    Alignment Handle_formAlignment(HandleRef _this) {
-        return static_cast<Alignment>(THIS->formAlignment());
+    Flags<Alignment> Handle_formAlignment(HandleRef _this) {
+        return static_cast<Flags<Alignment>>(THIS->formAlignment());
     }
 
     PositionResult Handle_getItemPosition(HandleRef _this, int32_t index) {
@@ -113,8 +113,8 @@ namespace FormLayout
         return reinterpret_cast<LayoutItem::HandleRef>(THIS->itemAt(row, static_cast<QFormLayout::ItemRole>(role)));
     }
 
-    Alignment Handle_labelAlignment(HandleRef _this) {
-        return static_cast<Alignment>(THIS->labelAlignment());
+    Flags<Alignment> Handle_labelAlignment(HandleRef _this) {
+        return static_cast<Flags<Alignment>>(THIS->labelAlignment());
     }
 
     Widget::HandleRef Handle_labelForField(HandleRef _this, Widget::HandleRef field) {
@@ -149,8 +149,8 @@ namespace FormLayout
         THIS->setFieldGrowthPolicy(static_cast<QFormLayout::FieldGrowthPolicy>(policy));
     }
 
-    void Handle_setFormAlignment(HandleRef _this, Alignment alignment) {
-        THIS->setFormAlignment(static_cast<Qt::Alignment>(alignment.value));
+    void Handle_setFormAlignment(HandleRef _this, Flags<Alignment> alignment) {
+        THIS->setFormAlignment(static_cast<Qt::Alignment>(alignment.value()));
     }
 
     void Handle_setHorizontalSpacing(HandleRef _this, int32_t spacing) {
@@ -161,8 +161,8 @@ namespace FormLayout
         THIS->setItem(row, static_cast<QFormLayout::ItemRole>(role), AS_QLAYOUTITEM_PTR(item));
     }
 
-    void Handle_setLabelAlignment(HandleRef _this, Alignment alignment) {
-        THIS->setLabelAlignment(static_cast<Qt::Alignment>(alignment.value));
+    void Handle_setLabelAlignment(HandleRef _this, Flags<Alignment> alignment) {
+        THIS->setLabelAlignment(static_cast<Qt::Alignment>(alignment.value()));
     }
 
     void Handle_setLayout(HandleRef _this, int32_t row, ItemRole role, Layout::HandleRef layout) {

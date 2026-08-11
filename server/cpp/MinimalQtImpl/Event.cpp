@@ -81,8 +81,8 @@ namespace Event
         DROPEVENT_THIS->acceptProposedAction();
     }
 
-    MouseButtons DropEvent_buttons(DropEventRef _this) {
-        return MouseButtons(DROPEVENT_THIS->buttons());
+    Flags<MouseButtons> DropEvent_buttons(DropEventRef _this) {
+        return static_cast<Flags<MouseButtons>>(DROPEVENT_THIS->buttons());
     }
 
     DropAction DropEvent_dropAction(DropEventRef _this) {
@@ -93,16 +93,16 @@ namespace Event
         return AS_MIMEDATA_CONST(DROPEVENT_THIS->mimeData()); // const!!
     }
 
-    KeyboardModifiers DropEvent_modifiers(DropEventRef _this) {
-        return KeyboardModifiers(DROPEVENT_THIS->modifiers());
+    Flags<KeyboardModifiers> DropEvent_modifiers(DropEventRef _this) {
+        return static_cast<Flags<KeyboardModifiers>>(DROPEVENT_THIS->modifiers());
     }
 
     PointF::OwnedRef DropEvent_position(DropEventRef _this) {
         return POINTF_HEAP_NEW(DROPEVENT_THIS->position());
     }
 
-    DropActions DropEvent_possibleActions(DropEventRef _this) {
-        return DropActions(DROPEVENT_THIS->possibleActions());
+    Flags<DropActions> DropEvent_possibleActions(DropEventRef _this) {
+        return static_cast<Flags<DropActions>>(DROPEVENT_THIS->possibleActions());
     }
 
     DropAction DropEvent_proposedAction(DropEventRef _this) {
@@ -134,8 +134,8 @@ namespace Event
     // input event =========================================
 #define INPUTEVENT_THIS (reinterpret_cast<QInputEvent*>(_this))
 
-    KeyboardModifiers InputEvent_modifiers(InputEventRef _this) {
-        return KeyboardModifiers(INPUTEVENT_THIS->modifiers());
+    Flags<KeyboardModifiers> InputEvent_modifiers(InputEventRef _this) {
+        return static_cast<Flags<KeyboardModifiers>>(INPUTEVENT_THIS->modifiers());
     }
 
     uint64_t InputEvent_timestamp(InputEventRef _this) {
@@ -247,8 +247,8 @@ namespace Event
         return KEYEVENT_THIS->matches(static_cast<QKeySequence::StandardKey>(key));
     }
 
-    KeyboardModifiers KeyEvent_modifiers(KeyEventRef _this) {
-        return KeyboardModifiers(KEYEVENT_THIS->modifiers());
+    Flags<KeyboardModifiers> KeyEvent_modifiers(KeyEventRef _this) {
+        return static_cast<Flags<KeyboardModifiers>>(KEYEVENT_THIS->modifiers());
     }
 
     uint32_t KeyEvent_nativeModifiers(KeyEventRef _this) {
@@ -283,8 +283,8 @@ namespace Event
         return static_cast<MouseButton>(SINGLEPOINT_THIS->button());
     }
 
-    MouseButtons SinglePointEvent_buttons(SinglePointEventRef _this) {
-        return MouseButtons(SINGLEPOINT_THIS->buttons());
+    Flags<MouseButtons> SinglePointEvent_buttons(SinglePointEventRef _this) {
+        return static_cast<Flags<MouseButtons>>(SINGLEPOINT_THIS->buttons());
     }
 
     Object::HandleRef SinglePointEvent_exclusivePointGrabber(SinglePointEventRef _this) {
@@ -313,8 +313,8 @@ namespace Event
     // mouse event =========================================
 #define MOUSEEVENT_THIS (reinterpret_cast<QMouseEvent*>(_this))
 
-    MouseEventFlags MouseEvent_flags_(MouseEventRef _this) {
-        return MouseEventFlags(MOUSEEVENT_THIS->flags());
+    Flags<MouseEventFlags> MouseEvent_flags_(MouseEventRef _this) {
+        return static_cast<Flags<MouseEventFlags>>(MOUSEEVENT_THIS->flags());
     }
 
     // wheel event =========================================

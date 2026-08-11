@@ -12,8 +12,8 @@ using namespace ::Validator;
 
 namespace AbstractSpinBox
 {
-    Alignment Handle_getAlignment(HandleRef _this) {
-        return static_cast<Alignment>(THIS->alignment());
+    Flags<Alignment> Handle_getAlignment(HandleRef _this) {
+        return static_cast<Flags<Alignment>>(THIS->alignment());
     }
 
     ButtonSymbols Handle_getButtonSymbols(HandleRef _this) {
@@ -63,8 +63,8 @@ namespace AbstractSpinBox
         THIS->setAccelerated(on);
     }
 
-    void Handle_setAlignment(HandleRef _this, Alignment flag) {
-        THIS->setAlignment(static_cast<Qt::Alignment>(flag.value));
+    void Handle_setAlignment(HandleRef _this, Flags<Alignment> flag) {
+        THIS->setAlignment(static_cast<Qt::Alignment>(flag.value()));
     }
 
     void Handle_setButtonSymbols(HandleRef _this, ButtonSymbols bs) {
