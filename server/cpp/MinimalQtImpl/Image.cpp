@@ -59,23 +59,23 @@ namespace Image
         return fromQList<QRgb,Rgb>(THIS->colorTable(), [](auto v) { return static_cast<Rgb>(v); });
     }
 
-    void Handle_convertTo(HandleRef _this, Format format, ImageConversionFlags flags_ /* ImageConversionFlags::AutoColor */) {
-        THIS->convertTo(static_cast<QImage::Format>(format), static_cast<Qt::ImageConversionFlags>(flags_.value));
+    void Handle_convertTo(HandleRef _this, Format format, Flags<ImageConversionFlags> flags_ /* ImageConversionFlags::AutoColor */) {
+        THIS->convertTo(static_cast<QImage::Format>(format), static_cast<Qt::ImageConversionFlags>(flags_.value()));
     }
 
-    OwnedRef Handle_convertToFormat(HandleRef _this, Format format, ImageConversionFlags flags_ /* ImageConversionFlags::AutoColor */) {
-        const auto result = THIS->convertToFormat(static_cast<QImage::Format>(format), static_cast<Qt::ImageConversionFlags>(flags_.value));
+    OwnedRef Handle_convertToFormat(HandleRef _this, Format format, Flags<ImageConversionFlags> flags_ /* ImageConversionFlags::AutoColor */) {
+        const auto result = THIS->convertToFormat(static_cast<QImage::Format>(format), static_cast<Qt::ImageConversionFlags>(flags_.value()));
         return IMAGE_HEAP_NEW(result);
     }
 
-    OwnedRef Handle_convertToFormat(HandleRef _this, Format format, const std::vector<Rgb>& colorTable, ImageConversionFlags flags_ /* ImageConversionFlags::AutoColor */) {
+    OwnedRef Handle_convertToFormat(HandleRef _this, Format format, const std::vector<Rgb>& colorTable, Flags<ImageConversionFlags> flags_ /* ImageConversionFlags::AutoColor */) {
         const auto qColorTable = toQList<Rgb,QRgb>(colorTable, [](auto c) { return static_cast<QRgb>(c); });
-        const auto result = THIS->convertToFormat(static_cast<QImage::Format>(format), qColorTable, static_cast<Qt::ImageConversionFlags>(flags_.value));
+        const auto result = THIS->convertToFormat(static_cast<QImage::Format>(format), qColorTable, static_cast<Qt::ImageConversionFlags>(flags_.value()));
         return IMAGE_HEAP_NEW(result);
     }
 
-    OwnedRef Handle_convertedTo(HandleRef _this, Format format, ImageConversionFlags flags_ /* ImageConversionFlags::AutoColor */) {
-        const auto result = THIS->convertedTo(static_cast<QImage::Format>(format), static_cast<Qt::ImageConversionFlags>(flags_.value));
+    OwnedRef Handle_convertedTo(HandleRef _this, Format format, Flags<ImageConversionFlags> flags_ /* ImageConversionFlags::AutoColor */) {
+        const auto result = THIS->convertedTo(static_cast<QImage::Format>(format), static_cast<Qt::ImageConversionFlags>(flags_.value()));
         return IMAGE_HEAP_NEW(result);
     }
 
@@ -89,8 +89,8 @@ namespace Image
         return IMAGE_HEAP_NEW(THIS->copy(x, y, width, height));
     }
 
-    OwnedRef Handle_createAlphaMask(HandleRef _this, ImageConversionFlags flags_ /* ImageConversionFlags::AutoColor */) {
-        return IMAGE_HEAP_NEW(THIS->createAlphaMask(static_cast<Qt::ImageConversionFlags>(flags_.value)));
+    OwnedRef Handle_createAlphaMask(HandleRef _this, Flags<ImageConversionFlags> flags_ /* ImageConversionFlags::AutoColor */) {
+        return IMAGE_HEAP_NEW(THIS->createAlphaMask(static_cast<Qt::ImageConversionFlags>(flags_.value())));
     }
 
     OwnedRef Handle_createHeuristicMask(HandleRef _this, bool clipTight /* true */) {
@@ -246,11 +246,13 @@ namespace Image
     }
 
     std::shared_ptr<NativeBuffer<uint32_t>> Handle_scanLine32(HandleRef _this, int32_t i) {
-        return std::make_shared<ServerBuffer<uint32_t>>(THIS->scanLine(i), THIS->bytesPerLine() / 4);
+        auto ptr = THIS->scanLine(i);
+        return std::make_shared<ServerBuffer<uint32_t>>(reinterpret_cast<uint32_t*>(ptr), THIS->bytesPerLine() / 4);
     }
 
     std::shared_ptr<NativeBuffer<uint64_t>> Handle_scanLine64(HandleRef _this, int32_t i) {
-        return std::make_shared<ServerBuffer<uint64_t>>(THIS->scanLine(i), THIS->bytesPerLine() / 8);
+        auto ptr = THIS->scanLine(i);
+        return std::make_shared<ServerBuffer<uint64_t>>(reinterpret_cast<uint64_t*>(ptr), THIS->bytesPerLine() / 8);
     }
 
     void Handle_setAlphaChannel(HandleRef _this, HandleRef alphaChannel) {

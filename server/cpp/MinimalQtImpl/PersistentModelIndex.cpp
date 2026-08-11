@@ -28,8 +28,8 @@ namespace PersistentModelIndex
         return VARIANT_HEAP_NEW(THIS->data(static_cast<int>(role)));
     }
 
-    ItemFlags Handle_flags_(HandleRef _this) {
-        return static_cast<ItemFlags>(THIS->flags());
+    Flags<ItemFlags> Handle_flags_(HandleRef _this) {
+        return static_cast<Flags<ItemFlags>>(THIS->flags());
     }
 
     bool Handle_isValid(HandleRef _this) {

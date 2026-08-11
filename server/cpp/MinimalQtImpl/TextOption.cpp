@@ -7,8 +7,8 @@ using namespace ::Enums;
 
 namespace TextOption
 {
-    Alignment Handle_alignment(HandleRef _this) {
-        return Alignment(THIS->alignment());
+    Flags<Alignment> Handle_alignment(HandleRef _this) {
+        return static_cast<Flags<Alignment>>(THIS->alignment());
     }
 
     void Owned_dispose(OwnedRef _this) {

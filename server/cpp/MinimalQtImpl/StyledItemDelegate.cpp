@@ -29,15 +29,15 @@ namespace StyledItemDelegate
 
     class Delegated : public QStyledItemDelegate {
         std::shared_ptr<DelegatedMethods> methods;
-        MethodMask mask;
+        Flags<MethodMask> mask;
     public:
-        Delegated(QObject *parent, const std::shared_ptr<DelegatedMethods> &methods, MethodMask mask)
+        Delegated(QObject *parent, const std::shared_ptr<DelegatedMethods> &methods, Flags<MethodMask> mask)
             : QStyledItemDelegate(parent),
               methods(methods),
               mask(mask) {}
     protected:
         QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const override {
-            if (mask & CreateEditor) {
+            if (mask & MethodMask::CreateEditor) {
                 QStyleOptionViewItem option2(option);
                 QModelIndex index2(index);
                 const auto result = methods->createEditor(reinterpret_cast<Widget::HandleRef>(parent), reinterpret_cast<StyleOptionViewItem::HandleRef>(&option2), reinterpret_cast<ModelIndex::HandleRef>(&index2));
@@ -48,7 +48,7 @@ namespace StyledItemDelegate
         }
 
         void setEditorData(QWidget *editor, const QModelIndex &index) const override {
-            if (mask & SetEditorData) {
+            if (mask & MethodMask::SetEditorData) {
                 QModelIndex index2(index);
                 methods->setEditorData(reinterpret_cast<Widget::HandleRef>(editor), reinterpret_cast<ModelIndex::HandleRef>(&index2));
             } else {
@@ -57,7 +57,7 @@ namespace StyledItemDelegate
         }
 
         void setModelData(QWidget *editor, QAbstractItemModel *model, const QModelIndex &index) const override {
-            if (mask & SetModelData) {
+            if (mask & MethodMask::SetModelData) {
                 QModelIndex index2(index);
                 methods->setModelData(reinterpret_cast<Widget::HandleRef>(editor), reinterpret_cast<AbstractItemModel::HandleRef>(model), reinterpret_cast<ModelIndex::HandleRef>(&index2));
             } else {
@@ -66,7 +66,7 @@ namespace StyledItemDelegate
         }
 
         void destroyEditor(QWidget *editor, const QModelIndex &index) const override {
-            if (mask & DestroyEditor) {
+            if (mask & MethodMask::DestroyEditor) {
                 QModelIndex index2(index);
                 methods->destroyEditor(reinterpret_cast<Widget::HandleRef>(editor), reinterpret_cast<ModelIndex::HandleRef>(&index2));
             } else {
@@ -76,7 +76,7 @@ namespace StyledItemDelegate
 
     public:
         void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const override {
-            if (mask & UpdateEditorGeometry) {
+            if (mask & MethodMask::UpdateEditorGeometry) {
                 QStyleOptionViewItem option2(option);
                 QModelIndex index2(index);
                 methods->updateEditorGeometry(reinterpret_cast<Widget::HandleRef>(editor), reinterpret_cast<StyleOptionViewItem::HandleRef>(&option2), reinterpret_cast<ModelIndex::HandleRef>(&index2));
@@ -90,7 +90,7 @@ namespace StyledItemDelegate
         delete DELEGATED_THIS;
     }
 
-    DelegatedRef createDelegated(const std::shared_ptr<DelegatedMethods>& methods, MethodMask mask, Object::HandleRef parent /* nullptr */) {
+    DelegatedRef createDelegated(const std::shared_ptr<DelegatedMethods>& methods, Flags<MethodMask> mask, Object::HandleRef parent /* nullptr */) {
         return reinterpret_cast<DelegatedRef>(new Delegated(AS_QOBJECT_PTR(parent), methods, mask));
     }
 }

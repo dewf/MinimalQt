@@ -64,16 +64,16 @@ namespace TextEdit
         return THIS->acceptRichText();
     }
 
-    Alignment Handle_alignment(HandleRef _this) {
-        return static_cast<Alignment>(THIS->alignment());
+    Flags<Alignment> Handle_alignment(HandleRef _this) {
+        return static_cast<Flags<Alignment>>(THIS->alignment());
     }
 
     std::string Handle_anchorAt(HandleRef _this, Point::HandleRef pos) {
         return THIS->anchorAt(QPOINT_VALUE(pos)).toStdString();
     }
 
-    AutoFormatting Handle_getAutoFormatting(HandleRef _this) {
-        return static_cast<AutoFormatting>(THIS->autoFormatting());
+    Flags<AutoFormatting> Handle_getAutoFormatting(HandleRef _this) {
+        return static_cast<Flags<AutoFormatting>>(THIS->autoFormatting());
     }
 
     bool Handle_canPaste(HandleRef _this) {
@@ -131,12 +131,12 @@ namespace TextEdit
             });
     }
 
-    bool Handle_find(HandleRef _this, const std::string& exp, FindFlags options_ /* 0 */) {
-        return THIS->find(QString::fromStdString(exp), static_cast<QTextDocument::FindFlags>(options_.value));
+    bool Handle_find(HandleRef _this, const std::string& exp, Flags<FindFlags> options_ /* 0 */) {
+        return THIS->find(QString::fromStdString(exp), static_cast<QTextDocument::FindFlags>(options_.value()));
     }
 
-    bool Handle_find(HandleRef _this, RegularExpression::HandleRef exp, FindFlags options_ /* 0 */) {
-        return THIS->find(QREGEX_VALUE(exp), static_cast<QTextDocument::FindFlags>(options_.value));
+    bool Handle_find(HandleRef _this, RegularExpression::HandleRef exp, Flags<FindFlags> options_ /* 0 */) {
+        return THIS->find(QREGEX_VALUE(exp), static_cast<QTextDocument::FindFlags>(options_.value()));
     }
 
     std::string Handle_fontFamily(HandleRef _this) {
@@ -199,8 +199,8 @@ namespace TextEdit
         THIS->setAcceptRichText(accept);
     }
 
-    void Handle_setAutoFormatting(HandleRef _this, AutoFormatting features) {
-        THIS->setAutoFormatting(static_cast<QTextEdit::AutoFormatting>(features.value));
+    void Handle_setAutoFormatting(HandleRef _this,  Flags<AutoFormatting> features) {
+        THIS->setAutoFormatting(static_cast<QTextEdit::AutoFormatting>(features.value())); // Qt uint/int nonsense
     }
 
     void Handle_setCurrentCharFormat(HandleRef _this, TextCharFormat::HandleRef format) {
@@ -258,8 +258,8 @@ namespace TextEdit
         THIS->setTextCursor(QTEXTCURSOR_VALUE(cursor));
     }
 
-    void Handle_setTextInteractionFlags(HandleRef _this, TextInteractionFlags flags_) {
-        THIS->setTextInteractionFlags(static_cast<Qt::TextInteractionFlags>(flags_.value));
+    void Handle_setTextInteractionFlags(HandleRef _this, Flags<TextInteractionFlags> flags_) {
+        THIS->setTextInteractionFlags(static_cast<Qt::TextInteractionFlags>(flags_.value()));
     }
 
     void Handle_setUndoRedoEnabled(HandleRef _this, bool enable) {
@@ -290,16 +290,16 @@ namespace TextEdit
         return TEXTCURSOR_HEAP_NEW(THIS->textCursor());
     }
 
-    TextInteractionFlags Handle_textInteractionFlags(HandleRef _this) {
-        return static_cast<TextInteractionFlags>(THIS->textInteractionFlags());
+    Flags<TextInteractionFlags> Handle_textInteractionFlags(HandleRef _this) {
+        return static_cast<Flags<TextInteractionFlags>>(THIS->textInteractionFlags());
     }
 
     std::string Handle_toHtml(HandleRef _this) {
         return THIS->toHtml().toStdString();
     }
 
-    std::string Handle_toMarkdown(HandleRef _this, MarkdownFeatures features /* MarkDownFeatures::MarkdownDialectGitHub */) {
-        return THIS->toMarkdown(static_cast<QTextDocument::MarkdownFeatures>(features.value)).toStdString();
+    std::string Handle_toMarkdown(HandleRef _this, Flags<MarkdownFeatures> features /* MarkDownFeatures::MarkdownDialectGitHub */) {
+        return THIS->toMarkdown(static_cast<QTextDocument::MarkdownFeatures>(features.value())).toStdString();
     }
 
     std::string Handle_toPlainText(HandleRef _this) {
@@ -350,8 +350,8 @@ namespace TextEdit
         THIS->selectAll();
     }
 
-    void Handle_setAlignment(HandleRef _this, Alignment a) {
-        THIS->setAlignment(static_cast<Qt::Alignment>(a.value));
+    void Handle_setAlignment(HandleRef _this, Flags<Alignment> a) {
+        THIS->setAlignment(static_cast<Qt::Alignment>(a.value()));
     }
 
     void Handle_setCurrentFont(HandleRef _this, Font::HandleRef f) {

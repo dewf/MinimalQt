@@ -86,16 +86,16 @@ namespace ItemSelectionModel
         THIS->reset();
     }
 
-    void Handle_select(HandleRef _this, ItemSelection::HandleRef selection, SelectionFlags command) {
-        THIS->select(QITEMSELECTION_VALUE(selection), static_cast<QItemSelectionModel::SelectionFlags>(command.value));
+    void Handle_select(HandleRef _this, ItemSelection::HandleRef selection, Flags<SelectionFlags> command) {
+        THIS->select(QITEMSELECTION_VALUE(selection), static_cast<QItemSelectionModel::SelectionFlags>(command.value()));
     }
 
-    void Handle_select(HandleRef _this, ModelIndex::HandleRef index, SelectionFlags command) {
-        THIS->select(QMODELINDEX_VALUE(index), static_cast<QItemSelectionModel::SelectionFlags>(command.value));
+    void Handle_select(HandleRef _this, ModelIndex::HandleRef index, Flags<SelectionFlags> command) {
+        THIS->select(QMODELINDEX_VALUE(index), static_cast<QItemSelectionModel::SelectionFlags>(command.value()));
     }
 
-    void Handle_setCurrentIndex(HandleRef _this, ModelIndex::HandleRef index, SelectionFlags command) {
-        THIS->setCurrentIndex(QMODELINDEX_VALUE(index), static_cast<QItemSelectionModel::SelectionFlags>(command.value));
+    void Handle_setCurrentIndex(HandleRef _this, ModelIndex::HandleRef index, Flags<SelectionFlags> command) {
+        THIS->setCurrentIndex(QMODELINDEX_VALUE(index), static_cast<QItemSelectionModel::SelectionFlags>(command.value()));
     }
 
     SignalConnectionRef Handle_connect_CurrentChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {

@@ -187,8 +187,8 @@ namespace Painter
         THIS->drawEllipse(x, y, width, height);
     }
 
-    void Handle_drawImage(HandleRef _this, RectF::HandleRef target, Image::HandleRef image, RectF::HandleRef source, ImageConversionFlags flags_ /* ImageConversionFlags::AutoColor */) {
-        THIS->drawImage(QRECTF_VALUE(target), QIMAGE_VALUE(image), QRECTF_VALUE(source), static_cast<Qt::ImageConversionFlags>(flags_.value));
+    void Handle_drawImage(HandleRef _this, RectF::HandleRef target, Image::HandleRef image, RectF::HandleRef source, Flags<ImageConversionFlags> flags_ /* ImageConversionFlags::AutoColor */) {
+        THIS->drawImage(QRECTF_VALUE(target), QIMAGE_VALUE(image), QRECTF_VALUE(source), static_cast<Qt::ImageConversionFlags>(flags_.value()));
     }
 
     void Handle_drawImage(HandleRef _this, Point::HandleRef point, Image::HandleRef image) {
@@ -207,20 +207,20 @@ namespace Painter
         THIS->drawImage(QRECTF_VALUE(rectangle), QIMAGE_VALUE(image));
     }
 
-    void Handle_drawImage(HandleRef _this, Point::HandleRef point, Image::HandleRef image, Rect::HandleRef source, ImageConversionFlags flags_ /* ImageConversionFlags::AutoColor */) {
-        THIS->drawImage(QPOINT_VALUE(point), QIMAGE_VALUE(image), QRECT_VALUE(source), static_cast<Qt::ImageConversionFlags>(flags_.value));
+    void Handle_drawImage(HandleRef _this, Point::HandleRef point, Image::HandleRef image, Rect::HandleRef source, Flags<ImageConversionFlags> flags_ /* ImageConversionFlags::AutoColor */) {
+        THIS->drawImage(QPOINT_VALUE(point), QIMAGE_VALUE(image), QRECT_VALUE(source), static_cast<Qt::ImageConversionFlags>(flags_.value()));
     }
 
-    void Handle_drawImage(HandleRef _this, PointF::HandleRef point, Image::HandleRef image, RectF::HandleRef source, ImageConversionFlags flags_ /* ImageConversionFlags::AutoColor */) {
-        THIS->drawImage(QPOINTF_VALUE(point), QIMAGE_VALUE(image), QRECTF_VALUE(source), static_cast<Qt::ImageConversionFlags>(flags_.value));
+    void Handle_drawImage(HandleRef _this, PointF::HandleRef point, Image::HandleRef image, RectF::HandleRef source, Flags<ImageConversionFlags> flags_ /* ImageConversionFlags::AutoColor */) {
+        THIS->drawImage(QPOINTF_VALUE(point), QIMAGE_VALUE(image), QRECTF_VALUE(source), static_cast<Qt::ImageConversionFlags>(flags_.value()));
     }
 
-    void Handle_drawImage(HandleRef _this, Rect::HandleRef target, Image::HandleRef image, Rect::HandleRef source, ImageConversionFlags flags_ /* ImageConversionFlags::AutoColor */) {
-        THIS->drawImage(QRECT_VALUE(target), QIMAGE_VALUE(image), QRECT_VALUE(source), static_cast<Qt::ImageConversionFlags>(flags_.value));
+    void Handle_drawImage(HandleRef _this, Rect::HandleRef target, Image::HandleRef image, Rect::HandleRef source, Flags<ImageConversionFlags> flags_ /* ImageConversionFlags::AutoColor */) {
+        THIS->drawImage(QRECT_VALUE(target), QIMAGE_VALUE(image), QRECT_VALUE(source), static_cast<Qt::ImageConversionFlags>(flags_.value()));
     }
 
-    void Handle_drawImage(HandleRef _this, int32_t x, int32_t y, Image::HandleRef image, int32_t sx /* 0 */, int32_t sy /* 0 */, int32_t sw /* -1 */, int32_t sh /* -1 */, ImageConversionFlags flags_ /* ImageConversionFlags::AutoColor */) {
-        THIS->drawImage(x, y, QIMAGE_VALUE(image), sx, sy, sw, sh, static_cast<Qt::ImageConversionFlags>(flags_.value));
+    void Handle_drawImage(HandleRef _this, int32_t x, int32_t y, Image::HandleRef image, int32_t sx /* 0 */, int32_t sy /* 0 */, int32_t sw /* -1 */, int32_t sh /* -1 */, Flags<ImageConversionFlags> flags_ /* ImageConversionFlags::AutoColor */) {
+        THIS->drawImage(x, y, QIMAGE_VALUE(image), sx, sy, sw, sh, static_cast<Qt::ImageConversionFlags>(flags_.value()));
     }
 
     void Handle_drawLine(HandleRef _this, Point::HandleRef p1, Point::HandleRef p2) {
@@ -307,9 +307,9 @@ namespace Painter
         THIS->drawPixmap(x, y, w, h, QPIXMAP_VALUE(pixmap), sx, sy, sw, sh);
     }
 
-    void Handle_drawPixmapFragments(HandleRef _this, const std::vector<PixmapFragment::HandleRef>& fragments, Pixmap::HandleRef pixmap, PixmapFragment::Hints hints /* 0 */) {
+    void Handle_drawPixmapFragments(HandleRef _this, const std::vector<PixmapFragment::HandleRef>& fragments, Pixmap::HandleRef pixmap, Flags<PixmapFragment::Hints> hints /* 0 */) {
         const auto qFragments = vectorMap<PixmapFragment::HandleRef,QPainter::PixmapFragment>(fragments, [](auto f) { return QPIXMAPFRAGMENT_VALUE(f); });
-        THIS->drawPixmapFragments(qFragments.data(), static_cast<int>(qFragments.size()), QPIXMAP_VALUE(pixmap), static_cast<QPainter::PixmapFragmentHints>(hints.value));
+        THIS->drawPixmapFragments(qFragments.data(), static_cast<int>(qFragments.size()), QPIXMAP_VALUE(pixmap), static_cast<QPainter::PixmapFragmentHints>(hints.value()));
     }
 
     void Handle_drawPoint(HandleRef _this, PointF::HandleRef position) {
@@ -584,8 +584,8 @@ namespace Painter
         return PEN_HEAP_NEW(THIS->pen());
     }
 
-    RenderHints Handle_renderHints(HandleRef _this) {
-        return RenderHints(THIS->renderHints());
+    Flags<RenderHints> Handle_renderHints(HandleRef _this) {
+        return static_cast<Flags<RenderHints>>(THIS->renderHints());
     }
 
     void Handle_resetTransform(HandleRef _this) {
@@ -692,8 +692,8 @@ namespace Painter
         THIS->setRenderHint(static_cast<QPainter::RenderHint>(hint), on);
     }
 
-    void Handle_setRenderHints(HandleRef _this, RenderHints hints, bool on /* true */) {
-        THIS->setRenderHints(static_cast<QPainter::RenderHints>(hints.value), on);
+    void Handle_setRenderHints(HandleRef _this, Flags<RenderHints> hints, bool on /* true */) {
+        THIS->setRenderHints(static_cast<QPainter::RenderHints>(hints.value()), on);
     }
 
     void Handle_setTransform(HandleRef _this, Transform::HandleRef transform, bool combine /* false */) {

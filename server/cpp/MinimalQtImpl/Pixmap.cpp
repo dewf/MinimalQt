@@ -34,8 +34,8 @@ namespace Pixmap
         return THIS->cacheKey();
     }
 
-    bool Handle_convertFromImage(HandleRef _this, Image::HandleRef image, ImageConversionFlags flags_ /* ImageConversionFlags::AutoColor */) {
-        return THIS->convertFromImage(QIMAGE_VALUE(image), static_cast<Qt::ImageConversionFlags>(flags_.value));
+    bool Handle_convertFromImage(HandleRef _this, Image::HandleRef image, Flags<ImageConversionFlags> flags_ /* ImageConversionFlags::AutoColor */) {
+        return THIS->convertFromImage(QIMAGE_VALUE(image), static_cast<Qt::ImageConversionFlags>(flags_.value()));
     }
 
     OwnedRef Handle_copy(HandleRef _this, const std::optional<Rect::HandleRef>& rect) {
@@ -90,26 +90,26 @@ namespace Pixmap
         return THIS->isQBitmap();
     }
 
-    bool Handle_load(HandleRef _this, const std::string& fileName, const std::optional<std::string>& format, ImageConversionFlags flags_ /* ImageConversionFlags::AutoColor */) {
+    bool Handle_load(HandleRef _this, const std::string& fileName, const std::optional<std::string>& format, Flags<ImageConversionFlags> flags_ /* ImageConversionFlags::AutoColor */) {
         const char *ccFormat = nullptr;
         if (format.has_value()) ccFormat = format.value().c_str();
-        return THIS->load(QString::fromStdString(fileName), ccFormat, static_cast<Qt::ImageConversionFlags>(flags_.value));
+        return THIS->load(QString::fromStdString(fileName), ccFormat, static_cast<Qt::ImageConversionFlags>(flags_.value()));
     }
 
-    bool Handle_loadFromData(HandleRef _this, const std::shared_ptr<NativeBuffer<uint8_t>>& data, const std::optional<std::string>& format, ImageConversionFlags flags_ /* ImageConversionFlags::AutoColor */) {
+    bool Handle_loadFromData(HandleRef _this, const std::shared_ptr<NativeBuffer<uint8_t>>& data, const std::optional<std::string>& format, Flags<ImageConversionFlags> flags_ /* ImageConversionFlags::AutoColor */) {
         const char *ccFormat = nullptr;
         if (format.has_value()) ccFormat = format.value().c_str();
         size_t length;
         const auto span = data->getSpan(&length);
-        return THIS->loadFromData(span, static_cast<int>(length), ccFormat, static_cast<Qt::ImageConversionFlags>(flags_.value));
+        return THIS->loadFromData(span, static_cast<int>(length), ccFormat, static_cast<Qt::ImageConversionFlags>(flags_.value()));
         return false;
     }
 
-    bool Handle_loadFromData(HandleRef _this, const std::vector<uint8_t>& data, const std::optional<std::string>& format, ImageConversionFlags flags_ /* ImageConversionFlags::AutoColor */) {
+    bool Handle_loadFromData(HandleRef _this, const std::vector<uint8_t>& data, const std::optional<std::string>& format, Flags<ImageConversionFlags> flags_ /* ImageConversionFlags::AutoColor */) {
         const char *ccFormat = nullptr;
         if (format.has_value()) ccFormat = format.value().c_str();
         const QByteArray qBytes(reinterpret_cast<const char *>(data.data()), static_cast<qsizetype>(data.size()));
-        return THIS->loadFromData(qBytes, ccFormat, static_cast<Qt::ImageConversionFlags>(flags_.value));
+        return THIS->loadFromData(qBytes, ccFormat, static_cast<Qt::ImageConversionFlags>(flags_.value()));
     }
 
     Rect::OwnedRef Handle_rect(HandleRef _this) {
@@ -189,10 +189,10 @@ namespace Pixmap
         return PIXMAP_HEAP_NEW(width, height);
     }
 
-    OwnedRef create(const std::string& filename, const std::optional<std::string>& format, ImageConversionFlags flags_ /* ImageConversionFlags::AutoColor */) {
+    OwnedRef create(const std::string& filename, const std::optional<std::string>& format, Flags<ImageConversionFlags> flags_ /* ImageConversionFlags::AutoColor */) {
         const char *ccFormat = nullptr;
         if (format.has_value()) ccFormat = format.value().c_str();
-        return PIXMAP_HEAP_NEW(QString::fromStdString(filename), ccFormat, static_cast<Qt::ImageConversionFlags>(flags_.value));
+        return PIXMAP_HEAP_NEW(QString::fromStdString(filename), ccFormat, static_cast<Qt::ImageConversionFlags>(flags_.value()));
     }
 
     OwnedRef create(Size::HandleRef size) {
@@ -207,8 +207,8 @@ namespace Pixmap
         return QPixmap::defaultDepth();
     }
 
-    OwnedRef fromImage(Image::HandleRef image, ImageConversionFlags flags_ /* ImageConversionFlags::AutoColor */) {
-        return PIXMAP_HEAP_NEW(QPixmap::fromImage(QIMAGE_VALUE(image), static_cast<Qt::ImageConversionFlags>(flags_.value)));
+    OwnedRef fromImage(Image::HandleRef image, Flags<ImageConversionFlags> flags_ /* ImageConversionFlags::AutoColor */) {
+        return PIXMAP_HEAP_NEW(QPixmap::fromImage(QIMAGE_VALUE(image), static_cast<Qt::ImageConversionFlags>(flags_.value())));
     }
 
     Transform::OwnedRef trueMatrix(Transform::HandleRef matrix, int32_t width, int32_t height) {

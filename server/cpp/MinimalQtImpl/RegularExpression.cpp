@@ -13,8 +13,8 @@ namespace RegularExpression
         return REGEX_HEAP_NEW();
     }
 
-    OwnedRef create(const std::string& pattern, PatternOptions options_ /* PatternOptions::NoPatternOption */) {
-        return REGEX_HEAP_NEW(QString::fromStdString(pattern), static_cast<QRegularExpression::PatternOptions>(options_.value));
+    OwnedRef create(const std::string& pattern, Flags<PatternOptions> options_ /* PatternOptions::NoPatternOption */) {
+        return REGEX_HEAP_NEW(QString::fromStdString(pattern), static_cast<QRegularExpression::PatternOptions>(options_.value()));
     }
 
     OwnedRef create(HandleRef other) {

@@ -30,8 +30,8 @@ namespace ModelIndex
         return VARIANT_HEAP_NEW(THIS->data(qRole));
     }
 
-    ItemFlags Handle_getFlags(HandleRef _this) {
-        return static_cast<ItemFlags>(THIS->flags());
+    Flags<ItemFlags> Handle_getFlags(HandleRef _this) {
+        return static_cast<Flags<ItemFlags>>(THIS->flags());
     }
 
     size_t Handle_internalId(HandleRef _this) {
@@ -43,8 +43,8 @@ namespace ModelIndex
     }
 
     AbstractItemModelHandleRef Handle_model(HandleRef _this) {
-        // TODO: Const cast situation
-        return (AbstractItemModelHandleRef)THIS->model();
+        // TODO: are we cool here? did the 'const' matter? (been too long)
+        return reinterpret_cast<AbstractItemModelHandleRef>(const_cast<QAbstractItemModel*>(THIS->model()));
     }
 
     OwnedRef Handle_parent(HandleRef _this) {

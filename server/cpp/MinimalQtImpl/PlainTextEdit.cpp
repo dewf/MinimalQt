@@ -102,12 +102,12 @@ namespace PlainTextEdit
         });
     }
 
-    bool Handle_find(HandleRef _this, const std::string& exp, FindFlags options_ /* 0 */) {
-        return THIS->find(QString::fromStdString(exp), static_cast<QTextDocument::FindFlags>(options_.value));
+    bool Handle_find(HandleRef _this, const std::string& exp, Flags<FindFlags> options_ /* 0 */) {
+        return THIS->find(QString::fromStdString(exp), static_cast<QTextDocument::FindFlags>(options_.value()));
     }
 
-    bool Handle_find(HandleRef _this, RegularExpression::HandleRef exp, FindFlags options_ /* 0 */) {
-        return THIS->find(QREGEX_VALUE(exp), static_cast<QTextDocument::FindFlags>(options_.value));
+    bool Handle_find(HandleRef _this, RegularExpression::HandleRef exp, Flags<FindFlags> options_ /* 0 */) {
+        return THIS->find(QREGEX_VALUE(exp), static_cast<QTextDocument::FindFlags>(options_.value()));
     }
 
     bool Handle_isReadOnly(HandleRef _this) {
@@ -209,8 +209,8 @@ namespace PlainTextEdit
         THIS->setTextCursor(QTEXTCURSOR_VALUE(cursor));
     }
 
-    void Handle_setTextInteractionFlags(HandleRef _this, TextInteractionFlags tiFlags) {
-        THIS->setTextInteractionFlags(static_cast<Qt::TextInteractionFlags>(tiFlags.value));
+    void Handle_setTextInteractionFlags(HandleRef _this, Flags<TextInteractionFlags> tiFlags) {
+        THIS->setTextInteractionFlags(static_cast<Qt::TextInteractionFlags>(tiFlags.value()));
     }
 
     void Handle_setUndoRedoEnabled(HandleRef _this, bool enabled) {
@@ -233,8 +233,8 @@ namespace PlainTextEdit
         return TEXTCURSOR_HEAP_NEW(THIS->textCursor());
     }
 
-    TextInteractionFlags Handle_getTextInteractionFlags(HandleRef _this) {
-        return TextInteractionFlags(THIS->textInteractionFlags());
+    Flags<TextInteractionFlags> Handle_getTextInteractionFlags(HandleRef _this) {
+        return static_cast<Flags<TextInteractionFlags>>(THIS->textInteractionFlags());
     }
 
     std::string Handle_toPlainText(HandleRef _this) {

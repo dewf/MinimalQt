@@ -36,8 +36,8 @@ namespace ToolBar
         return reinterpret_cast<Action::HandleRef>(THIS->addWidget(AS_QWIDGET_PTR(widget)));
     }
 
-    ToolBarAreas Handle_allowedAreas(HandleRef _this) {
-        return ToolBarAreas(THIS->allowedAreas());
+    Flags<ToolBarAreas> Handle_allowedAreas(HandleRef _this) {
+        return static_cast<Flags<ToolBarAreas>>(THIS->allowedAreas());
     }
 
     void Handle_clear(HandleRef _this) {
@@ -76,8 +76,8 @@ namespace ToolBar
         return static_cast<Orientation>(THIS->orientation());
     }
 
-    void Handle_setAllowedAreas(HandleRef _this, ToolBarAreas areas) {
-        return THIS->setAllowedAreas(static_cast<Qt::ToolBarAreas>(areas.value));
+    void Handle_setAllowedAreas(HandleRef _this,  Flags<ToolBarAreas> areas) {
+        return THIS->setAllowedAreas(static_cast<Qt::ToolBarAreas>(areas.value()));
     }
 
     void Handle_setFloatable(HandleRef _this, bool floatable) {
@@ -121,7 +121,7 @@ namespace ToolBar
 
     SignalConnectionRef Handle_connect_AllowedAreasChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QToolBar::allowedAreasChanged, [handler](Qt::ToolBarAreas allowed) {
-            handler->allowedAreasChanged(ToolBarAreas(allowed));
+            handler->allowedAreasChanged(static_cast<Flags<ToolBarAreas>>(allowed));
         });
         return new __SignalConnection { connection };
     }

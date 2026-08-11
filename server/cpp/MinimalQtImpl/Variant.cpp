@@ -134,8 +134,8 @@ namespace Variant
         return VARIANT_HEAP_NEW(QCOLOR_VALUE(color));
     }
 
-    OwnedRef createAlign(Alignment align) {
-        const auto qAlign = static_cast<Qt::Alignment>(align.value);
+    OwnedRef createAlign(Flags<Alignment> align) {
+        const auto qAlign = static_cast<Qt::Alignment>(align.value());
         return VARIANT_HEAP_NEW(qAlign);
     }
 

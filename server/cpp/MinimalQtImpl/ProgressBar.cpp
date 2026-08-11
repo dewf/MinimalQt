@@ -15,8 +15,8 @@ using namespace ::Widget;
 
 namespace ProgressBar
 {
-    Alignment Handle_getAlignment(HandleRef _this) {
-        return Alignment(THIS->alignment());
+    Flags<Alignment> Handle_getAlignment(HandleRef _this) {
+        return static_cast<Flags<Alignment>>(THIS->alignment());
     }
 
     std::string Handle_format(HandleRef _this) {
@@ -47,8 +47,8 @@ namespace ProgressBar
         return THIS->resetFormat();
     }
 
-    void Handle_setAlignment(HandleRef _this, Alignment align) {
-        THIS->setAlignment(static_cast<Qt::Alignment>(align.value));
+    void Handle_setAlignment(HandleRef _this, Flags<Alignment> align) {
+        THIS->setAlignment(static_cast<Qt::Alignment>(align.value()));
     }
 
     void Handle_setFormat(HandleRef _this, const std::string& format) {

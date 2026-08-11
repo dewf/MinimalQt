@@ -175,8 +175,8 @@ namespace Widget
         THIS->ensurePolished();
     }
 
-    FocusPolicy Handle_focusPolicy(HandleRef _this) {
-        return THIS->focusPolicy();
+    Flags<FocusPolicy> Handle_focusPolicy(HandleRef _this) {
+        return static_cast<Flags<FocusPolicy>>(THIS->focusPolicy());
     }
 
     HandleRef Handle_focusProxy(HandleRef _this) {
@@ -209,8 +209,8 @@ namespace Widget
         return PIXMAP_HEAP_NEW(THIS->grab(qRect));
     }
 
-    void Handle_grabGesture(HandleRef _this, GestureType gesture, GestureFlags flags_ /* 0 */) {
-        THIS->grabGesture(static_cast<Qt::GestureType>(gesture), static_cast<Qt::GestureFlags>(flags_.value));
+    void Handle_grabGesture(HandleRef _this, GestureType gesture, Flags<GestureFlags> flags_ /* 0 */) {
+        THIS->grabGesture(static_cast<Qt::GestureType>(gesture), static_cast<Qt::GestureFlags>(flags_.value()));
     }
 
     void Handle_grabKeyboard(HandleRef _this) {
@@ -262,8 +262,8 @@ namespace Widget
         return THIS->heightForWidth(w);
     }
 
-    InputMethodHints Handle_inputMethodHints(HandleRef _this) {
-        return InputMethodHints(THIS->inputMethodHints());
+    Flags<InputMethodHints> Handle_inputMethodHints(HandleRef _this) {
+        return static_cast<Flags<InputMethodHints>>(THIS->inputMethodHints());
     }
 
     Variant::OwnedRef Handle_inputMethodQuery(HandleRef _this, InputMethodQuery query) {
@@ -441,8 +441,9 @@ namespace Widget
         return RECT_HEAP_NEW(THIS->normalGeometry());
     }
 
-    void Handle_overrideWindowFlags(HandleRef _this, WindowFlags flags_) {
-        THIS->overrideWindowFlags(static_cast<Qt::WindowFlags>(flags_.value));
+    void Handle_overrideWindowFlags(HandleRef _this, Flags<WindowFlags> flags_) {
+        auto intFlags = std::bit_cast<int>(flags_.value()); // Qt flags silliness
+        THIS->overrideWindowFlags(static_cast<Qt::WindowFlags>(intFlags));
     }
 
     HandleRef Handle_parentWidget(HandleRef _this) {
@@ -477,20 +478,20 @@ namespace Widget
         THIS->removeAction(AS_QACTION_PTR(action));
     }
 
-    void Handle_render(HandleRef _this, PaintDevice::HandleRef target, const std::optional<Point::HandleRef>& targetOffset, const std::optional<Region::HandleRef>& sourceRegion, RenderFlags renderFlags /* RenderFlags::DrawWindowBackground | RenderFlags::DrawChildren */) {
+    void Handle_render(HandleRef _this, PaintDevice::HandleRef target, const std::optional<Point::HandleRef>& targetOffset, const std::optional<Region::HandleRef>& sourceRegion, Flags<RenderFlags> renderFlags /* RenderFlags::DrawWindowBackground | RenderFlags::DrawChildren */) {
         QPoint qTargetOffset;
         if (targetOffset.has_value()) qTargetOffset = QPOINT_VALUE(targetOffset.value());
         QRegion qSourceRegion;
         if (sourceRegion.has_value()) qSourceRegion = QREGION_VALUE(sourceRegion.value());
-        THIS->render(reinterpret_cast<QPaintDevice*>(target), qTargetOffset, qSourceRegion, static_cast<QWidget::RenderFlags>(renderFlags.value));
+        THIS->render(reinterpret_cast<QPaintDevice*>(target), qTargetOffset, qSourceRegion, static_cast<QWidget::RenderFlags>(renderFlags.value()));
     }
 
-    void Handle_render(HandleRef _this, Painter::HandleRef painter, const std::optional<Point::HandleRef>& targetOffset, const std::optional<Region::HandleRef>& sourceRegion, RenderFlags renderFlags /* RenderFlags::DrawWindowBackground | RenderFlags::DrawChildren */) {
+    void Handle_render(HandleRef _this, Painter::HandleRef painter, const std::optional<Point::HandleRef>& targetOffset, const std::optional<Region::HandleRef>& sourceRegion, Flags<RenderFlags> renderFlags /* RenderFlags::DrawWindowBackground | RenderFlags::DrawChildren */) {
         QPoint qTargetOffset;
         if (targetOffset.has_value()) qTargetOffset = QPOINT_VALUE(targetOffset.value());
         QRegion qSourceRegion;
         if (sourceRegion.has_value()) qSourceRegion = QREGION_VALUE(sourceRegion.value());
-        THIS->render(reinterpret_cast<QPainter*>(painter), qTargetOffset, qSourceRegion, static_cast<QWidget::RenderFlags>(renderFlags.value));
+        THIS->render(reinterpret_cast<QPainter*>(painter), qTargetOffset, qSourceRegion, static_cast<QWidget::RenderFlags>(renderFlags.value()));
     }
 
     void Handle_repaint(HandleRef _this, Rect::HandleRef rect) {
@@ -604,8 +605,8 @@ namespace Widget
         THIS->setFocus(static_cast<Qt::FocusReason>(reason));
     }
 
-    void Handle_setFocusPolicy(HandleRef _this, FocusPolicy policy) {
-        THIS->setFocusPolicy(static_cast<Qt::FocusPolicy>(policy.value));
+    void Handle_setFocusPolicy(HandleRef _this, Flags<FocusPolicy> policy) {
+        THIS->setFocusPolicy(static_cast<Qt::FocusPolicy>(policy.value()));
     }
 
     void Handle_setFocusProxy(HandleRef _this, HandleRef w) {
@@ -628,8 +629,9 @@ namespace Widget
         THIS->setGraphicsEffect(reinterpret_cast<QGraphicsEffect*>(effect));
     }
 
-    void Handle_setInputMethodHints(HandleRef _this, InputMethodHints hints) {
-        THIS->setInputMethodHints(static_cast<Qt::InputMethodHints>(hints.value));
+    void Handle_setInputMethodHints(HandleRef _this, Flags<InputMethodHints> hints) {
+        auto intHints = std::bit_cast<int>(hints.value()); // Qt flags silliness
+        THIS->setInputMethodHints(static_cast<Qt::InputMethodHints>(intHints));
     }
 
     void Handle_setLayout(HandleRef _this, Layout::HandleRef layout) {
@@ -684,8 +686,9 @@ namespace Widget
         THIS->setParent(AS_QWIDGET_PTR(parent));
     }
 
-    void Handle_setParent(HandleRef _this, HandleRef parent, WindowFlags f) {
-        THIS->setParent(AS_QWIDGET_PTR(parent), static_cast<Qt::WindowFlags>(f.value));
+    void Handle_setParent(HandleRef _this, HandleRef parent, Flags<WindowFlags> f) {
+        auto intFlags = std::bit_cast<int>(f.value()); // Qt flag silliness
+        THIS->setParent(AS_QWIDGET_PTR(parent), static_cast<Qt::WindowFlags>(intFlags));
     }
 
     void Handle_setScreen(HandleRef _this, Screen::HandleRef screen) {
@@ -712,8 +715,8 @@ namespace Widget
         THIS->setSizePolicy(QSIZEPOLICY_VALUE(policy));
     }
 
-    void Handle_setSizePolicy(HandleRef _this, Policy horizontal, Policy vertical) {
-        THIS->setSizePolicy(static_cast<QSizePolicy::Policy>(horizontal.value), static_cast<QSizePolicy::Policy>(vertical.value));
+    void Handle_setSizePolicy(HandleRef _this, Flags<Policy> horizontal, Flags<Policy> vertical) {
+        THIS->setSizePolicy(static_cast<QSizePolicy::Policy>(horizontal.value()), static_cast<QSizePolicy::Policy>(vertical.value()));
     }
 
     void Handle_setStatusTip(HandleRef _this, const std::string& tip) {
@@ -748,8 +751,9 @@ namespace Widget
         THIS->setWindowFlag(static_cast<Qt::WindowType>(flag), on);
     }
 
-    void Handle_setWindowFlags(HandleRef _this, WindowFlags type_) {
-        THIS->setWindowFlags(static_cast<Qt::WindowFlags>(type_.value));
+    void Handle_setWindowFlags(HandleRef _this, Flags<WindowFlags> type_) {
+        auto intFlags = std::bit_cast<int>(type_.value()); // Qt flags silliness
+        THIS->setWindowFlags(static_cast<Qt::WindowFlags>(intFlags));
     }
 
     void Handle_setWindowIcon(HandleRef _this, Icon::HandleRef icon) {
@@ -768,8 +772,8 @@ namespace Widget
         THIS->setWindowRole(QString::fromStdString(role));
     }
 
-    void Handle_setWindowState(HandleRef _this, WindowStates windowState) {
-        THIS->setWindowState(static_cast<Qt::WindowStates>(windowState.value));
+    void Handle_setWindowState(HandleRef _this, Flags<WindowStates> windowState) {
+        THIS->setWindowState(static_cast<Qt::WindowStates>(windowState.value()));
     }
 
     // void Handle_setupUi(HandleRef _this, HandleRef widget) {
@@ -880,8 +884,8 @@ namespace Widget
         return THIS->windowFilePath().toStdString();
     }
 
-    WindowFlags Handle_getWindowFlags(HandleRef _this) {
-        return WindowFlags(THIS->windowFlags());
+    Flags<WindowFlags> Handle_getWindowFlags(HandleRef _this) {
+        return static_cast<Flags<WindowFlags>>(THIS->windowFlags());
     }
 
     Window::HandleRef Handle_windowHandle(HandleRef _this) {
@@ -904,8 +908,8 @@ namespace Widget
         return THIS->windowRole().toStdString();
     }
 
-    WindowStates Handle_windowState(HandleRef _this) {
-        return WindowStates(THIS->windowState());
+    Flags<WindowStates> Handle_windowState(HandleRef _this) {
+        return static_cast<Flags<WindowStates>>(THIS->windowState());
     }
 
     std::string Handle_windowTitle(HandleRef _this) {
@@ -1025,8 +1029,9 @@ namespace Widget
         delete THIS;
     }
 
-    HandleRef create(HandleRef parent /* nullptr */, WindowFlags flags_ /* 0 */) {
-        return reinterpret_cast<HandleRef>(new QWidget(AS_QWIDGET_PTR(parent), static_cast<Qt::WindowFlags>(flags_.value)));
+    HandleRef create(HandleRef parent /* nullptr */, Flags<WindowFlags> flags_ /* 0 */) {
+        auto intFlags = std::bit_cast<int>(flags_.value()); // Qt flags silliness
+        return reinterpret_cast<HandleRef>(new QWidget(AS_QWIDGET_PTR(parent), static_cast<Qt::WindowFlags>(intFlags)));
     }
 
     // subclass/delegated stuff ==========================================================
@@ -1035,16 +1040,16 @@ namespace Widget
 
     class Delegated : public QWidget {
         std::shared_ptr<DelegateMethods> methods;
-        MethodMask methodMask = 0;
+        Flags<MethodMask> methodMask;
     public:
-        Delegated(QWidget *parent, const Qt::WindowFlags &f, const std::shared_ptr<DelegateMethods> &methods, const MethodMask method_mask)
+        Delegated(QWidget *parent, const Qt::WindowFlags &f, const std::shared_ptr<DelegateMethods> &methods, Flags<MethodMask> methodMask)
             : QWidget(parent, f),
               methods(methods),
-              methodMask(method_mask) {}
+              methodMask(methodMask) {}
 
     // public virtual overrides:
         [[nodiscard]] QSize sizeHint() const override {
-            if (methodMask & SizeHint) {
+            if (methodMask & MethodMask::SizeHint) {
                 __SizeReturn ret;
                 methods->sizeHint(&ret);
                 return ret.result;
@@ -1054,7 +1059,7 @@ namespace Widget
         }
     protected:
         void contextMenuEvent(QContextMenuEvent *event) override {
-            if (methodMask & ContextMenuEvent) {
+            if (methodMask & MethodMask::ContextMenuEvent) {
                 methods->contextMenuEvent(reinterpret_cast<ContextMenuEventRef>(event));
                 event->accept();
             } else {
@@ -1063,7 +1068,7 @@ namespace Widget
         }
 
         void dragEnterEvent(QDragEnterEvent *event) override {
-            if (methodMask & DragEnterEvent) {
+            if (methodMask & MethodMask::DragEnterEvent) {
                 methods->dragEnterEvent(reinterpret_cast<DragEnterEventRef>(event));
                 // do NOT accept() by default, in this context it means you want the drop
                 // event->accept();
@@ -1073,7 +1078,7 @@ namespace Widget
         }
 
         void dragLeaveEvent(QDragLeaveEvent *event) override {
-            if (methodMask & DragLeaveEvent) {
+            if (methodMask & MethodMask::DragLeaveEvent) {
                 methods->dragLeaveEvent(reinterpret_cast<DragLeaveEventRef>(event));
                 // since it's a 'leave' (vs enter or move) event we always accept
                 event->accept();
@@ -1083,7 +1088,7 @@ namespace Widget
         }
 
         void dragMoveEvent(QDragMoveEvent *event) override {
-            if (methodMask & DragMoveEvent) {
+            if (methodMask & MethodMask::DragMoveEvent) {
                 methods->dragMoveEvent(reinterpret_cast<DragMoveEventRef>(event));
                 // do NOT accept() by default, in this context it means you want the drop
                 // event->accept();
@@ -1093,7 +1098,7 @@ namespace Widget
         }
 
         void dropEvent(QDropEvent *event) override {
-            if (methodMask & DropEvent) {
+            if (methodMask & MethodMask::DropEvent) {
                 methods->dropEvent(reinterpret_cast<DropEventRef>(event));
                 // not sure if accept() matters at this point - isn't it already a done deal?
                 // event->accept();
@@ -1103,7 +1108,7 @@ namespace Widget
         }
 
         void enterEvent(QEnterEvent *event) override {
-            if (methodMask & EnterEvent) {
+            if (methodMask & MethodMask::EnterEvent) {
                 methods->enterEvent(reinterpret_cast<EnterEventRef>(event));
                 event->accept();
             } else {
@@ -1112,7 +1117,7 @@ namespace Widget
         }
 
         void focusInEvent(QFocusEvent *event) override {
-            if (methodMask & FocusInEvent) {
+            if (methodMask & MethodMask::FocusInEvent) {
                 methods->focusInEvent(reinterpret_cast<FocusEventRef>(event));
                 event->accept();
             } else {
@@ -1121,7 +1126,7 @@ namespace Widget
         }
 
         void focusOutEvent(QFocusEvent *event) override {
-            if (methodMask & FocusOutEvent) {
+            if (methodMask & MethodMask::FocusOutEvent) {
                 methods->focusOutEvent(reinterpret_cast<FocusEventRef>(event));
                 event->accept();
             } else {
@@ -1130,7 +1135,7 @@ namespace Widget
         }
 
         void keyPressEvent(QKeyEvent *event) override {
-            if (methodMask & KeyPressEvent) {
+            if (methodMask & MethodMask::KeyPressEvent) {
                 methods->keyPressEvent(reinterpret_cast<KeyEventRef>(event));
                 // don't need to accept() per docs
             } else {
@@ -1139,7 +1144,7 @@ namespace Widget
         }
 
         void keyReleaseEvent(QKeyEvent *event) override {
-            if (methodMask & KeyReleaseEvent) {
+            if (methodMask & MethodMask::KeyReleaseEvent) {
                 methods->keyReleaseEvent(reinterpret_cast<KeyEventRef>(event));
                 // don't need to accept() per docs
             } else {
@@ -1148,7 +1153,7 @@ namespace Widget
         }
 
         void leaveEvent(QEvent *event) override {
-            if (methodMask & LeaveEvent) {
+            if (methodMask & MethodMask::LeaveEvent) {
                 methods->leaveEvent(reinterpret_cast<Event::HandleRef>(event));
                 event->accept();
             } else {
@@ -1157,7 +1162,7 @@ namespace Widget
         }
 
         void mouseDoubleClickEvent(QMouseEvent *event) override {
-            if (methodMask & MouseDoubleClickEvent) {
+            if (methodMask & MethodMask::MouseDoubleClickEvent) {
                 methods->mouseDoubleClickEvent(reinterpret_cast<MouseEventRef>(event));
                 event->accept();
             } else {
@@ -1166,7 +1171,7 @@ namespace Widget
         }
 
         void mouseMoveEvent(QMouseEvent *event) override {
-            if (methodMask & MouseMoveEvent) {
+            if (methodMask & MethodMask::MouseMoveEvent) {
                 methods->mouseMoveEvent(reinterpret_cast<MouseEventRef>(event));
                 // prevent from propagating, see notes above
                 event->accept();
@@ -1176,7 +1181,7 @@ namespace Widget
         }
 
         void mousePressEvent(QMouseEvent *event) override {
-            if (methodMask & MousePressEvent) {
+            if (methodMask & MethodMask::MousePressEvent) {
                 methods->mousePressEvent(reinterpret_cast<MouseEventRef>(event));
                 // prevent from propagating, see notes above
                 event->accept();
@@ -1186,7 +1191,7 @@ namespace Widget
         }
 
         void mouseReleaseEvent(QMouseEvent *event) override {
-            if (methodMask & MouseReleaseEvent) {
+            if (methodMask & MethodMask::MouseReleaseEvent) {
                 methods->mouseReleaseEvent(reinterpret_cast<MouseEventRef>(event));
                 event->accept();
             } else {
@@ -1195,7 +1200,7 @@ namespace Widget
         }
 
         void paintEvent(QPaintEvent *event) override {
-            if (methodMask & PaintEvent) {
+            if (methodMask & MethodMask::PaintEvent) {
                 QPainter painter(this);
                 methods->paintEvent(reinterpret_cast<Painter::HandleRef>(&painter), reinterpret_cast<PaintEventRef>(event));
                 // prevent it from propagating:
@@ -1207,7 +1212,7 @@ namespace Widget
         }
 
         void resizeEvent(QResizeEvent *event) override {
-            if (methodMask & ResizeEvent) {
+            if (methodMask & MethodMask::ResizeEvent) {
                 methods->resizeEvent(reinterpret_cast<ResizeEventRef>(event));
                 event->accept();
             } else {
@@ -1216,7 +1221,7 @@ namespace Widget
         }
 
         void showEvent(QShowEvent *event) override {
-            if (methodMask & ShowEvent) {
+            if (methodMask & MethodMask::ShowEvent) {
                 methods->showEvent(reinterpret_cast<ShowEventRef>(event));
                 event->accept();
             } else {
@@ -1225,7 +1230,7 @@ namespace Widget
         }
 
         void wheelEvent(QWheelEvent *event) override {
-            if (methodMask & WheelEvent) {
+            if (methodMask & MethodMask::WheelEvent) {
                 methods->wheelEvent(reinterpret_cast<WheelEventRef>(event));
                 event->accept();
             } else {
@@ -1238,7 +1243,8 @@ namespace Widget
         delete DELEGATED_THIS;
     }
 
-    DelegatedRef createDelegated(const std::shared_ptr<DelegateMethods>& methods, MethodMask methodMask, HandleRef parent /* nullptr */, WindowFlags flags_ /* 0 */) {
-        return reinterpret_cast<DelegatedRef>(new Delegated(AS_QWIDGET_PTR(parent), static_cast<Qt::WindowFlags>(flags_.value), methods, methodMask));
+    DelegatedRef createDelegated(const std::shared_ptr<DelegateMethods>& methods, Flags<MethodMask> methodMask, HandleRef parent /* nullptr */, Flags<WindowFlags> flags_ /* 0 */) {
+        auto intFlags = std::bit_cast<int>(flags_.value()); // Qt flags silliness
+        return reinterpret_cast<DelegatedRef>(new Delegated(AS_QWIDGET_PTR(parent), static_cast<Qt::WindowFlags>(intFlags), methods, methodMask));
     }
 }

@@ -57,8 +57,8 @@ namespace Window
         return THIS->filePath().toStdString();
     }
 
-    WindowFlags Handle_flags_(HandleRef _this) {
-        return WindowFlags(THIS->flags());
+    Flags<WindowFlags> Handle_flags_(HandleRef _this) {
+        return static_cast<Flags<WindowFlags>>(THIS->flags());
     }
 
     Object::HandleRef Handle_focusObject(HandleRef _this) {
@@ -205,8 +205,8 @@ namespace Window
         THIS->setFlag(static_cast<Qt::WindowType>(flag), on);
     }
 
-    void Handle_setFlags(HandleRef _this, WindowFlags flags_) {
-        THIS->setFlags(static_cast<Qt::WindowFlags>(flags_.value));
+    void Handle_setFlags(HandleRef _this, Flags<WindowFlags> flags_) {
+        THIS->setFlags(static_cast<Qt::WindowFlags>(flags_.value())); // warning: typical uint/int nonsense with Qt::WindowFlags
     }
 
     void Handle_setFramePosition(HandleRef _this, Point::HandleRef point) {
@@ -277,8 +277,8 @@ namespace Window
         THIS->setWindowState(static_cast<Qt::WindowState>(state));
     }
 
-    void Handle_setWindowStates(HandleRef _this, WindowStates states) {
-        THIS->setWindowStates(static_cast<Qt::WindowStates>(states.value));
+    void Handle_setWindowStates(HandleRef _this,  Flags<WindowStates> states) {
+        THIS->setWindowStates(static_cast<Qt::WindowStates>(states.value()));
     }
 
     Size::OwnedRef Handle_sizeIncrement(HandleRef _this) {
@@ -317,8 +317,8 @@ namespace Window
         return static_cast<WindowState>(THIS->windowState());
     }
 
-    WindowStates Handle_getWindowStates(HandleRef _this) {
-        return WindowStates(THIS->windowStates());
+    Flags<WindowStates> Handle_getWindowStates(HandleRef _this) {
+        return static_cast<Flags<WindowStates>>(THIS->windowStates());
     }
 
     int32_t Handle_x(HandleRef _this) {
@@ -431,8 +431,8 @@ namespace Window
         return THIS->startSystemMove();
     }
 
-    bool Handle_startSystemResize(HandleRef _this, Edges edges) {
-        return THIS->startSystemResize(static_cast<Qt::Edges>(edges.value));
+    bool Handle_startSystemResize(HandleRef _this, Flags<Edges> edges) {
+        return THIS->startSystemResize(static_cast<Qt::Edges>(edges.value()));
     }
 
     SignalConnectionRef Handle_connect_ActiveChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {

@@ -34,8 +34,8 @@ namespace StandardItemModel
         THIS->clear();
     }
 
-    std::vector<StandardItem::HandleRef> Handle_findItems(HandleRef _this, const std::string& text, MatchFlags flags_ /* MatchFlags::MatchExactly */, int32_t column /* 0 */) {
-        return listToArray(THIS->findItems(QString::fromStdString(text), static_cast<Qt::MatchFlags>(flags_.value), column));
+    std::vector<StandardItem::HandleRef> Handle_findItems(HandleRef _this, const std::string& text, Flags<MatchFlags> flags_ /* MatchFlags::MatchExactly */, int32_t column /* 0 */) {
+        return listToArray(THIS->findItems(QString::fromStdString(text), static_cast<Qt::MatchFlags>(flags_.value()), column));
     }
 
     StandardItem::HandleRef Handle_horizontalHeaderItem(HandleRef _this, int32_t column) {

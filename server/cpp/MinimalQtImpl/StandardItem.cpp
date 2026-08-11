@@ -81,8 +81,8 @@ namespace StandardItem
         return VARIANT_HEAP_NEW(THIS->data(static_cast<int>(role)));
     }
 
-    ItemFlags Handle_getFlags(HandleRef _this) {
-        return ItemFlags(THIS->flags());
+    Flags<ItemFlags> Handle_getFlags(HandleRef _this) {
+        return static_cast<Flags<ItemFlags>>(THIS->flags());
     }
 
     Font::OwnedRef Handle_font(HandleRef _this) {
@@ -249,8 +249,8 @@ namespace StandardItem
         THIS->setEnabled(enabled);
     }
 
-    void Handle_setFlags(HandleRef _this, ItemFlags flags_) {
-        THIS->setFlags(static_cast<Qt::ItemFlags>(flags_.value));
+    void Handle_setFlags(HandleRef _this, Flags<ItemFlags> flags_) {
+        THIS->setFlags(static_cast<Qt::ItemFlags>(flags_.value()));
     }
 
     void Handle_setFont(HandleRef _this, Font::HandleRef font) {
@@ -285,8 +285,8 @@ namespace StandardItem
         THIS->setText(QString::fromStdString(text));
     }
 
-    void Handle_setTextAlignment(HandleRef _this, Alignment alignment) {
-        THIS->setTextAlignment(static_cast<Qt::Alignment>(alignment.value));
+    void Handle_setTextAlignment(HandleRef _this, Flags<Alignment> alignment) {
+        THIS->setTextAlignment(static_cast<Qt::Alignment>(alignment.value()));
     }
 
     void Handle_setToolTip(HandleRef _this, const std::string& toolTip) {
@@ -329,8 +329,8 @@ namespace StandardItem
         return THIS->text().toStdString();
     }
 
-    Alignment Handle_textAlignment(HandleRef _this) {
-        return Alignment(THIS->textAlignment());
+    Flags<Alignment> Handle_textAlignment(HandleRef _this) {
+        return static_cast<Flags<Alignment>>(THIS->textAlignment());
     }
 
     std::string Handle_toolTip(HandleRef _this) {

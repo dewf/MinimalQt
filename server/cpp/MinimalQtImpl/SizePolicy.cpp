@@ -11,8 +11,8 @@ namespace SizePolicy
         return static_cast<ControlType>(THIS->controlType());
     }
 
-    Orientations Handle_expandingDirections(HandleRef _this) {
-        return Orientations(THIS->expandingDirections());
+    Flags<Orientations> Handle_expandingDirections(HandleRef _this) {
+        return static_cast<Flags<Orientations>>(THIS->expandingDirections());
     }
 
     bool Handle_hasHeightForWidth(HandleRef _this) {
@@ -23,8 +23,8 @@ namespace SizePolicy
         return THIS->hasWidthForHeight();
     }
 
-    Policy Handle_horizontalPolicy(HandleRef _this) {
-        return THIS->horizontalPolicy();
+    Flags<Policy> Handle_horizontalPolicy(HandleRef _this) {
+        return static_cast<Flags<Policy>>(THIS->horizontalPolicy());
     }
 
     int32_t Handle_horizontalStretch(HandleRef _this) {
@@ -43,8 +43,8 @@ namespace SizePolicy
         THIS->setHeightForWidth(dependent);
     }
 
-    void Handle_setHorizontalPolicy(HandleRef _this, Policy policy) {
-        THIS->setHorizontalPolicy(static_cast<QSizePolicy::Policy>(policy.value));
+    void Handle_setHorizontalPolicy(HandleRef _this, Flags<Policy> policy) {
+        THIS->setHorizontalPolicy(static_cast<QSizePolicy::Policy>(policy.value()));
     }
 
     void Handle_setHorizontalStretch(HandleRef _this, int32_t stretchFactor) {
@@ -55,8 +55,8 @@ namespace SizePolicy
         THIS->setRetainSizeWhenHidden(retainSize);
     }
 
-    void Handle_setVerticalPolicy(HandleRef _this, Policy policy) {
-        THIS->setVerticalPolicy(static_cast<QSizePolicy::Policy>(policy.value));
+    void Handle_setVerticalPolicy(HandleRef _this, Flags<Policy> policy) {
+        THIS->setVerticalPolicy(static_cast<QSizePolicy::Policy>(policy.value()));
     }
 
     void Handle_setVerticalStretch(HandleRef _this, int32_t stretchFactor) {
@@ -75,8 +75,8 @@ namespace SizePolicy
         return SIZEPOLICY_HEAP_NEW(THIS->transposed());
     }
 
-    Policy Handle_verticalPolicy(HandleRef _this) {
-        return THIS->verticalPolicy();
+    Flags<Policy> Handle_verticalPolicy(HandleRef _this) {
+        return static_cast<Flags<Policy>>(THIS->verticalPolicy());
     }
 
     int32_t Handle_verticalStretch(HandleRef _this) {
@@ -91,8 +91,8 @@ namespace SizePolicy
         return SIZEPOLICY_HEAP_NEW();
     }
 
-    OwnedRef create(Policy horizontal, Policy vertical, ControlType type_ /* ControlType::DefaultType */) {
+    OwnedRef create(Flags<Policy> horizontal, Flags<Policy> vertical, ControlType type_ /* ControlType::DefaultType */) {
         const auto qType = static_cast<QSizePolicy::ControlType>(type_);
-        return SIZEPOLICY_HEAP_NEW(static_cast<QSizePolicy::Policy>(horizontal.value), static_cast<QSizePolicy::Policy>(vertical.value), qType);
+        return SIZEPOLICY_HEAP_NEW(static_cast<QSizePolicy::Policy>(horizontal.value()), static_cast<QSizePolicy::Policy>(vertical.value()), qType);
     }
 }

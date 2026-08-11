@@ -184,17 +184,17 @@ namespace SortFilterProxyModel
 
     class Delegated : public QSortFilterProxyModel {
     private:
-        MethodMask methodMask = 0;
+        Flags<MethodMask> methodMask;
         std::shared_ptr<MethodDelegate> methodDelegate;
     public:
-        void setDelegate(const std::shared_ptr<MethodDelegate> &methodDelegate, MethodMask methodMask) {
+        void setDelegate(const std::shared_ptr<MethodDelegate> &methodDelegate, Flags<MethodMask> methodMask) {
             this->methodDelegate = methodDelegate;
             this->methodMask = methodMask;
         }
     protected:
         [[nodiscard]]
         bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override {
-            if (methodMask & FilterAcceptsRow) {
+            if (methodMask & MethodMask::FilterAcceptsRow) {
                 QModelIndex source2(source_parent);
                 return methodDelegate->filterAcceptsRow(source_row, reinterpret_cast<ModelIndex::HandleRef>(&source2));
             } else {
@@ -203,7 +203,7 @@ namespace SortFilterProxyModel
         }
         [[nodiscard]]
         bool filterAcceptsColumn(int source_column, const QModelIndex &source_parent) const override {
-            if (methodMask & FilterAcceptsColumn) {
+            if (methodMask & MethodMask::FilterAcceptsColumn) {
                 QModelIndex source2(source_parent);
                 return methodDelegate->filterAcceptsColumn(source_column, reinterpret_cast<ModelIndex::HandleRef>(&source2));
             } else {
@@ -212,7 +212,7 @@ namespace SortFilterProxyModel
         }
         [[nodiscard]]
         bool lessThan(const QModelIndex &source_left, const QModelIndex &source_right) const override {
-            if (methodMask & LessThan) {
+            if (methodMask & MethodMask::LessThan) {
                 QModelIndex left2(source_left), right2(source_right);
                 return methodDelegate->lessThan(reinterpret_cast<ModelIndex::HandleRef>(&left2), reinterpret_cast<ModelIndex::HandleRef>(&right2));
             } else {
@@ -237,7 +237,7 @@ namespace SortFilterProxyModel
         DELEGATED_THIS->invalidateFilter();
     }
 
-    void Delegated_setDelegate(DelegatedRef _this, const std::shared_ptr<MethodDelegate>& methodDelegate, MethodMask methodMask) {
+    void Delegated_setDelegate(DelegatedRef _this, const std::shared_ptr<MethodDelegate>& methodDelegate, Flags<MethodMask> methodMask) {
         DELEGATED_THIS->setDelegate(methodDelegate, methodMask);
     }
 

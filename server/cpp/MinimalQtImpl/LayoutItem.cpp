@@ -15,16 +15,16 @@ using namespace ::SizePolicy;
 
 namespace LayoutItem
 {
-    Alignment Handle_alignment(HandleRef _this) {
-        return static_cast<Alignment>(THIS->alignment());
+    Flags<Alignment> Handle_alignment(HandleRef _this) {
+        return static_cast<Flags<Alignment>>(THIS->alignment());
     }
 
-    ControlTypes Handle_controlTypes(HandleRef _this) {
-        return ControlTypes(THIS->controlTypes());
+     Flags<ControlTypes> Handle_controlTypes(HandleRef _this) {
+        return static_cast<Flags<ControlTypes>>(THIS->controlTypes());
     }
 
-    Orientations Handle_expandingDirections(HandleRef _this) {
-        return Orientations(THIS->expandingDirections());
+    Flags<Orientations> Handle_expandingDirections(HandleRef _this) {
+        return static_cast<Flags<Orientations>>(THIS->expandingDirections());
     }
 
     Rect::OwnedRef Handle_geometry(HandleRef _this) {
@@ -63,8 +63,8 @@ namespace LayoutItem
         return SIZE_HEAP_NEW(THIS->minimumSize());
     }
 
-    void Handle_setAlignment(HandleRef _this, Alignment alignment) {
-        THIS->setAlignment(static_cast<Qt::Alignment>(alignment.value));
+    void Handle_setAlignment(HandleRef _this, Flags<Alignment> alignment) {
+        THIS->setAlignment(static_cast<Qt::Alignment>(alignment.value()));
     }
 
     void Handle_setGeometry(HandleRef _this, Rect::HandleRef r) {
