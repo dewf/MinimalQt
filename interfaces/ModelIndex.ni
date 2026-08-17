@@ -14,7 +14,7 @@ opaque Handle {
     bool isValid();
 
     // moved to AbstractItemModel.ni as extension method
-    // AbstractItemModelHandle model(); // TODO: should be const
+    // AbstractItemModelHandle model();
 
     // void multiData(...) TODO
 

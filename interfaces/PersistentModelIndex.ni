@@ -14,7 +14,7 @@ opaque Handle {
     bool isValid();
 
     // moved to AbstractItemModel.ni extension method
-    // AbstractItemModel_Handle model(); // TODO: const
+    // AbstractItemModel_Handle model();
 
     // (since 6.0) void multiData(QModelRoleDataSpan roleDataSpan) const
     // TODO

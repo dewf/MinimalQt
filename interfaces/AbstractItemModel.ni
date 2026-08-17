@@ -45,59 +45,37 @@ interface SignalHandler extends Object.SignalHandler {
 }
 
 @nodispose
-opaque Handle extends Object.Handle {
+opaque ConstHandle extends Object.Handle {
     ModelIndex.Owned buddy(ModelIndex.Handle index);
     bool canDropMimeData(MimeData.Handle data, DropAction action, int row, int column, ModelIndex.Handle parent);
     bool canFetchMore(ModelIndex.Handle parent);
     bool checkIndex(ModelIndex.Handle index, CheckIndexOptions options_ = CheckIndexOptions.NoOption);
-    bool clearItemData(ModelIndex.Handle index);
     int columnCount(Option<ModelIndex.Handle> parent);
     Variant.Owned data(ModelIndex.Handle index, Option<int> role);
-    bool dropMimeData(MimeData.Handle data, DropAction action, int row, int column, ModelIndex.Handle parent);
-    void fetchMore(ModelIndex.Handle parent);
     ItemFlags flags_(ModelIndex.Handle index);
     bool hasChildren(Option<ModelIndex.Handle> parent);
     bool hasIndex(int row, int column, Option<ModelIndex.Handle> parent);
     Variant.Owned headerData(int section, Orientation orientation, Option<int> role);
     ModelIndex.Owned index(int row, int column, Option<ModelIndex.Handle> parent);
-    bool insertColumn(int column, Option<ModelIndex.Handle> parent);
-    bool insertColumns(int column, int count, Option<ModelIndex.Handle> parent);
-    bool insertRow(int row, Option<ModelIndex.Handle> parent);
-    bool insertRows(int row, int count, Option<ModelIndex.Handle> parent);
     Map<int, Variant.Owned> itemData(ModelIndex.Handle index);
     Array<ModelIndex.Owned> match(ModelIndex.Handle start, int role, Variant.Handle value, int hits = 1, MatchFlags flags_ = MatchStartsWith | MatchWrap);
     MimeData.Handle getMimeData(Array<ModelIndex.Handle> indexes);
     Array<string> mimeTypes();
-    bool moveColumn(ModelIndex.Handle sourceParent, int sourceColumn, ModelIndex.Handle destinationParent, int destinationChild);
-    bool moveColumns(ModelIndex.Handle sourceParent, int sourceColumn, int count, ModelIndex.Handle destinationParent, int destinationChild);
-    bool moveRow(ModelIndex.Handle sourceParent, int sourceRow, ModelIndex.Handle destinationParent, int destinationChild);
-    bool moveRows(ModelIndex.Handle sourceParent, int sourceRow, int count, ModelIndex.Handle destinationParent, int destinationChild);
 
     // void multiData(const QModelIndex &index, QModelRoleDataSpan roleDataSpan)
     // TODO
 
     ModelIndex.Owned parent(ModelIndex.Handle index);
-    bool removeColumn(int column, Option<ModelIndex.Handle> parent);
-    bool removeColumns(int column, int count, Option<ModelIndex.Handle> parent);
-    bool removeRow(int row, Option<ModelIndex.Handle> parent);
-    bool removeRows(int row, int count, Option<ModelIndex.Handle> parent);
 
     // QHash<int, QByteArray> roleNames()
     // for what?
     // Map<int, Array<byte>> roleNames();
 
     int rowCount(Option<ModelIndex.Handle> parent);
-    bool setData(ModelIndex.Handle index, Variant.Handle value, Option<int> role);
-    bool setHeaderData(int section, Orientation orientation, Variant.Handle value, Option<int> role);
-    bool setItemData(ModelIndex.Handle index, Map<int, Variant.Handle> roles);
     ModelIndex.Owned sibling(int row, int column, ModelIndex.Handle index);
-    void sort(int column, Option<SortOrder> order);
     Size.Owned span(ModelIndex.Handle index);
     DropActions supportedDragActions();
     DropActions supportedDropActions();
-
-    void revert();
-    void submit();
 
     // signals ============================
     SignalConnection connect_ColumnsAboutToBeInserted(SignalHandler handler);
@@ -118,6 +96,33 @@ opaque Handle extends Object.Handle {
     SignalConnection connect_RowsInserted(SignalHandler handler);
     SignalConnection connect_RowsMoved(SignalHandler handler);
     SignalConnection connect_RowsRemoved(SignalHandler handler);
+}
+
+// IIRC, @nodispose because these are abstract and we can't create them?
+@nodispose
+opaque Handle extends ConstHandle {
+    bool clearItemData(ModelIndex.Handle index);
+    bool dropMimeData(MimeData.Handle data, DropAction action, int row, int column, ModelIndex.Handle parent);
+    void fetchMore(ModelIndex.Handle parent);
+    bool insertColumn(int column, Option<ModelIndex.Handle> parent);
+    bool insertColumns(int column, int count, Option<ModelIndex.Handle> parent);
+    bool insertRow(int row, Option<ModelIndex.Handle> parent);
+    bool insertRows(int row, int count, Option<ModelIndex.Handle> parent);
+    bool moveColumn(ModelIndex.Handle sourceParent, int sourceColumn, ModelIndex.Handle destinationParent, int destinationChild);
+    bool moveColumns(ModelIndex.Handle sourceParent, int sourceColumn, int count, ModelIndex.Handle destinationParent, int destinationChild);
+    bool moveRow(ModelIndex.Handle sourceParent, int sourceRow, ModelIndex.Handle destinationParent, int destinationChild);
+    bool moveRows(ModelIndex.Handle sourceParent, int sourceRow, int count, ModelIndex.Handle destinationParent, int destinationChild);
+    bool removeColumn(int column, Option<ModelIndex.Handle> parent);
+    bool removeColumns(int column, int count, Option<ModelIndex.Handle> parent);
+    bool removeRow(int row, Option<ModelIndex.Handle> parent);
+    bool removeRows(int row, int count, Option<ModelIndex.Handle> parent);
+    bool setData(ModelIndex.Handle index, Variant.Handle value, Option<int> role);
+    bool setHeaderData(int section, Orientation orientation, Variant.Handle value, Option<int> role);
+    bool setItemData(ModelIndex.Handle index, Map<int, Variant.Handle> roles);
+    void sort(int column, Option<SortOrder> order);
+    // slots ==============================
+    void revert();
+    void submit();
 }
 
 // subclass (implementation) stuff ================================================================================
@@ -176,11 +181,9 @@ Interior createImplementation(ImplementationMethods methods, ImplementationMask 
 
 // to break circular dependency:
 extmethods ModelIndex.Handle {
-    // TODO: should return ConstHandle !!
-    Handle model();
+    ConstHandle model();
 }
 
 extmethods PersistentModelIndex.Handle {
-    // TODO: should return ConstHandle !!
-    Handle model();
+    ConstHandle model();
 }

@@ -237,7 +237,7 @@ namespace ComboBox
         THIS->setSizeAdjustPolicy(static_cast<QComboBox::SizeAdjustPolicy>(policy));
     }
 
-    void Handle_setValidator(HandleRef _this, ConstHandleRef validator) {
+    void Handle_setValidator(HandleRef _this, Validator::ConstHandleRef validator) {
         THIS->setValidator(AS_QVALIDATOR_CONSTPTR(validator));
     }
 
@@ -253,7 +253,7 @@ namespace ComboBox
         return static_cast<SizeAdjustPolicy>(THIS->sizeAdjustPolicy());
     }
 
-    ConstHandleRef Handle_validator(HandleRef _this) {
+    Validator::ConstHandleRef Handle_validator(HandleRef _this) {
         return AS_VALIDATOR_CONSTHANDLE(THIS->validator());
     }
 
