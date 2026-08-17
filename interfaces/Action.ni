@@ -19,23 +19,21 @@ interface SignalHandler extends Object.SignalHandler {
 
 enum ActionEvent { Trigger, Hover }
 
-enum MenuRole { 
-    NoRole = 0, 
-    TextHeuristicRole, 
-    ApplicationSpecificRole, 
-    AboutQtRole, 
-    AboutRole, 
-    PreferencesRole, 
+enum MenuRole {
+    NoRole = 0,
+    TextHeuristicRole,
+    ApplicationSpecificRole,
+    AboutQtRole,
+    AboutRole,
+    PreferencesRole,
     QuitRole
 }
 
 enum Priority {
-    LowPriority = 0, 
+    LowPriority = 0,
     NormalPriority = 128,
     HighPriority = 256
 }
-
-fwdopaque Menu_Handle = Menu.Handle;
 
 opaque Handle extends Object.Handle {
 
@@ -56,7 +54,10 @@ opaque Handle extends Object.Handle {
     bool isSeparator();
     bool isShortcutVisibleInContextMenu();
     bool isVisible();
-    Menu_Handle menu();
+
+    // now an extension method in Menu.ni:
+    // Menu_Handle menu();
+
     MenuRole getMenuRole();
     Priority getPriority();
 
@@ -70,7 +71,10 @@ opaque Handle extends Object.Handle {
     void setIcon(Icon.Handle icon);
     void setIconText(string text);
     void setIconVisibleInMenu(bool visible);
-    void setMenu(Menu_Handle menu);
+
+    // now an extension method in Menu.ni:
+    // void setMenu(Menu_Handle menu);
+
     void setMenuRole(MenuRole menuRole);
     void setPriority(Priority priority);
     void setSeparator(bool b);

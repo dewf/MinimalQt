@@ -1,7 +1,6 @@
 module PointF;
 
-fwdopaque Point_Handle = Point.Handle;
-fwdopaque Point_Owned = Point.Owned;
+import Point;
 
 @nodispose
 opaque Handle {
@@ -19,7 +18,7 @@ opaque Handle {
 
     // CGPoint toCGPoint() const
 
-    Point_Owned toPoint();
+    Point.Owned toPoint();
     Owned transposed();
     double x();
     double y();
@@ -34,7 +33,7 @@ opaque Handle {
 opaque Owned extends Handle;
 
 Owned create();
-Owned create(Point_Handle point);
+Owned create(Point.Handle point);
 Owned create(double xpos, double ypos);
 
 // static methods ==================================
@@ -64,3 +63,9 @@ Owned operator_div(Handle point, double divisor);
 bool operator_equal(Handle lhs, Handle rhs);
 
 // QDataStream & operator>>(QDataStream &stream, QPointF &point)
+
+
+// to break circular depdendency:
+extmethods Point.Handle {
+    Owned toPointF();
+}

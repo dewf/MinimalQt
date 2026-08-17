@@ -23,8 +23,8 @@ namespace PointF
         THIS->setY(y);
     }
 
-    Point_OwnedRef Handle_toPoint(HandleRef _this) {
-        return reinterpret_cast<Point_OwnedRef>(POINT_HEAP_NEW(THIS->toPoint()));
+    Point::OwnedRef Handle_toPoint(HandleRef _this) {
+        return POINT_HEAP_NEW(THIS->toPoint());
     }
 
     OwnedRef Handle_transposed(HandleRef _this) {
@@ -67,7 +67,7 @@ namespace PointF
         return POINTF_HEAP_NEW();
     }
 
-    OwnedRef create(Point_HandleRef point) {
+    OwnedRef create(Point::HandleRef point) {
         return POINTF_HEAP_NEW(QPOINT_VALUE(point));
     }
 
@@ -114,4 +114,10 @@ namespace PointF
     bool operator_equal(HandleRef lhs, HandleRef rhs) {
         return QPOINTF_VALUE(lhs) == QPOINTF_VALUE(rhs);
     }
+
+    // ext methods block for: Point::HandleRef ====
+    OwnedRef ext__Point_Handle_toPointF(Point::HandleRef _this) {
+        return POINTF_HEAP_NEW(AS_QPOINT_PTR(_this)->toPointF());
+    }
+    // ==============================
 }

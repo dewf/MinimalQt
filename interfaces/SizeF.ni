@@ -68,3 +68,8 @@ Owned operator_div(Handle size, double divisor);
 bool operator_equal(Handle lhs, Handle rhs);
 
 // QDataStream & operator>>(QDataStream &stream, QSizeF &size)
+
+// to break circular dependency:
+extmethods Size.Handle {
+    Owned toSizeF();
+}

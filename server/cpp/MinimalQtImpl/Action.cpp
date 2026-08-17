@@ -78,10 +78,6 @@ namespace Action
         return THIS->isVisible();
     }
 
-    Menu_HandleRef Handle_menu(HandleRef _this) {
-        return reinterpret_cast<Menu_HandleRef>(THIS->menu<>());
-    }
-
     MenuRole Handle_getMenuRole(HandleRef _this) {
         return static_cast<MenuRole>(THIS->menuRole());
     }
@@ -118,16 +114,8 @@ namespace Action
         THIS->setIconVisibleInMenu(visible);
     }
 
-    void Handle_setMenu(HandleRef _this, Menu_HandleRef menu) {
-        THIS->setMenu(AS_QMENU_PTR(menu));
-    }
-
     void Handle_setMenuRole(HandleRef _this, MenuRole role) {
         THIS->setMenuRole(static_cast<QAction::MenuRole>(role));
-    }
-
-    MenuRole Handle_menuRole(HandleRef _this) {
-        return static_cast<MenuRole>(THIS->menuRole());
     }
 
     void Handle_setPriority(HandleRef _this, Priority priority) {

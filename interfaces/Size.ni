@@ -3,8 +3,6 @@ module Size;
 import Enums;
 import Margins;
 
-fwdopaque SizeF_Owned = SizeF.Owned;
-
 @nodispose
 opaque Handle {
 
@@ -31,7 +29,9 @@ opaque Handle {
 
     // CGSize toCGSize() const
 
-    SizeF_Owned toSizeF();
+    // moved to extension method in SizeF.ni
+    // SizeF_Owned toSizeF();
+
     void transpose();
     Owned transposed();
     int width();

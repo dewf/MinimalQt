@@ -3,6 +3,7 @@
 
 #include "WidgetInternal.h"
 #include "ObjectInternal.h"
+#include "SplitterHandleInternal.h"
 
 #include "util/convert.h"
 
@@ -133,4 +134,10 @@ namespace Splitter
     HandleRef create(Orientation orientation, Widget::HandleRef parent /* nullptr */) {
         return reinterpret_cast<HandleRef>(new QSplitter(static_cast<Qt::Orientation>(orientation), AS_QWIDGET_PTR(parent)));
     }
+
+    // ext methods block for: SplitterHandle::HandleRef ====
+    HandleRef ext__SplitterHandle_Handle_splitter(SplitterHandle::HandleRef _this) {
+        return reinterpret_cast<HandleRef>(AS_QSPLITTERHANDLE_PTR(_this)->splitter());
+    }
+    // ==============================
 }

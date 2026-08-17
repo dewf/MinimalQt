@@ -9,9 +9,6 @@ import PolygonF;
 import Region;
 import Enums;
 
-fwdopaque PainterPath_Handle = PainterPath.Handle;
-fwdopaque PainterPath_Owned = PainterPath.Owned;
-
 enum TransformationType {
     TxNone      = 0x00,
     TxTranslate = 0x01,
@@ -51,7 +48,9 @@ opaque Handle {
     // QLine map(const QLine &l) const
     // QLineF map(const QLineF &line) const
 
-    PainterPath_Owned map(PainterPath_Handle path);
+    // moved to extension method in PainterPath.ni
+    // PainterPath_Owned map(PainterPath_Handle path);
+
     Point.Owned map(Point.Handle point);
     PointF.Owned map(PointF.Handle p);
     Polygon.Owned map(Polygon.Handle polygon);
@@ -74,7 +73,7 @@ opaque Handle {
     TransformationType type();
 
     // operators ====================================
-    
+
     // QVariant operator QVariant() const
     // we'll just use a convenience (fake) constructor on Variant
 
@@ -113,7 +112,9 @@ bool fuzzyCompare(Handle t1, Handle t2);
 // QLine operator*(const QLine &line, const QTransform &matrix)
 // QLineF operator*(const QLineF &line, const QTransform &matrix)
 
-PainterPath_Owned operator_mul(PainterPath_Handle path, Handle matrix);
+// moved to PainterPath.ni
+// PainterPath_Owned operator_mul(PainterPath_Handle path, Handle matrix);
+
 Point.Owned operator_mul(Point.Handle point, Handle matrix);
 PointF.Owned operator_mul(PointF.Handle point, Handle matrix);
 Polygon.Owned operator_mul(Polygon.Handle polygon, Handle matrix);

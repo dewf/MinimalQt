@@ -42,11 +42,6 @@ namespace ModelIndex
         return THIS->isValid();
     }
 
-    AbstractItemModelHandleRef Handle_model(HandleRef _this) {
-        // TODO: are we cool here? did the 'const' matter? (been too long)
-        return reinterpret_cast<AbstractItemModelHandleRef>(const_cast<QAbstractItemModel*>(THIS->model()));
-    }
-
     OwnedRef Handle_parent(HandleRef _this) {
         return MODELINDEX_HEAP_NEW(THIS->parent());
     }

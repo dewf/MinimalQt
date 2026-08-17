@@ -36,11 +36,6 @@ namespace PersistentModelIndex
         return THIS->isValid();
     }
 
-    AbstractItemModel_HandleRef Handle_model(HandleRef _this) {
-        // TODO: deal with const
-        return reinterpret_cast<AbstractItemModel_HandleRef>(const_cast<QAbstractItemModel*>(THIS->model()));
-    }
-
     ModelIndex::OwnedRef Handle_parent(HandleRef _this) {
         return MODELINDEX_HEAP_NEW(THIS->parent());
     }

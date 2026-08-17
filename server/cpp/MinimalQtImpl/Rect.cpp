@@ -224,12 +224,6 @@ namespace Rect
         return SIZE_HEAP_NEW(THIS->size());
     }
 
-    RectF_OwnedRef Handle_toRectF(HandleRef _this) {
-        const auto result = RECTF_HEAP_NEW(THIS->toRectF());
-        // fwd opaque cast:
-        return reinterpret_cast<RectF_OwnedRef>(result);
-    }
-
     int32_t Handle_top(HandleRef _this) {
         return THIS->top();
     }

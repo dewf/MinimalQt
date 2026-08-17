@@ -153,4 +153,10 @@ namespace SizeF
     bool operator_equal(HandleRef lhs, HandleRef rhs) {
         return QSIZEF_VALUE(lhs) == QSIZEF_VALUE(rhs);
     }
+
+    // ext methods block for: Size::HandleRef ====
+    OwnedRef ext__Size_Handle_toSizeF(Size::HandleRef _this) {
+        return SIZEF_HEAP_NEW(AS_QSIZE_PTR(_this)->toSizeF());
+    }
+    // ==============================
 }

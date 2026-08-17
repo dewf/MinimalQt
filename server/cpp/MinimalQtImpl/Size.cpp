@@ -73,11 +73,6 @@ namespace Size
         return SIZE_HEAP_NEW(THIS->shrunkBy(QMARGINS_VALUE(margins)));
     }
 
-    SizeF_OwnedRef Handle_toSizeF(HandleRef _this) {
-        const auto result = SIZEF_HEAP_NEW(THIS->toSizeF());
-        return reinterpret_cast<SizeF_OwnedRef>(result); // fwdopaque cast
-    }
-
     void Handle_transpose(HandleRef _this) {
         THIS->transpose();
     }

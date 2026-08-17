@@ -29,10 +29,6 @@ namespace Point
         THIS->setY(y);
     }
 
-    PointF_OwnedRef Handle_toPointF(HandleRef _this) {
-        return reinterpret_cast<PointF_OwnedRef>(POINTF_HEAP_NEW(THIS->toPointF()));
-    }
-
     OwnedRef Handle_transposed(HandleRef _this) {
         return POINT_HEAP_NEW(THIS->transposed());
     }

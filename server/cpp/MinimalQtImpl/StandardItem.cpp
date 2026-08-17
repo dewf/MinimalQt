@@ -161,10 +161,6 @@ namespace StandardItem
         return THIS->isUserTristate();
     }
 
-    StandardItemModel_HandleRef Handle_model(HandleRef _this) {
-        return reinterpret_cast<StandardItemModel_HandleRef>(THIS->model());
-    }
-
     HandleRef Handle_parent(HandleRef _this) {
         return reinterpret_cast<HandleRef>(THIS->parent());
     }

@@ -1,23 +1,23 @@
 module Point;
 
-fwdopaque PointF_Owned = PointF.Owned;
-
 @nodispose
 opaque Handle {
     int hashCode();
-    
+
     bool isNull();
     int manhattanLength();
 
     // int & rx()
     // int & ry()
-    
+
     void setX(int x);
     void setY(int y);
 
     // CGPoint toCGPoint() const
 
-    PointF_Owned toPointF();
+    // moved to PointF.ni as extension method
+    // PointF_Owned toPointF();
+
     Owned transposed();
     int x();
     int y();

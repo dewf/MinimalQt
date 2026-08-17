@@ -142,4 +142,10 @@ namespace MarginsF
     OwnedRef operator_or(HandleRef m1, HandleRef m2) {
         return MARGINSF_HEAP_NEW(QMARGINSF_VALUE(m1) | QMARGINSF_VALUE(m2));
     }
+
+    // ext methods block for: Margins::HandleRef ====
+    OwnedRef ext__Margins_Handle_toMarginsF(Margins::HandleRef _this) {
+        return MARGINSF_HEAP_NEW(AS_QMARGINS_PTR(_this)->toMarginsF());
+    }
+    // ==============================
 }

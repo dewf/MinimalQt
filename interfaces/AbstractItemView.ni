@@ -12,6 +12,9 @@ import ModelIndex;
 import AbstractItemDelegate;
 import ItemSelectionModel;
 import Widget;
+// for ext methods:
+import Event;
+import StyleOptionViewItem;
 
 interface SignalHandler extends AbstractScrollArea.SignalHandler {
     void activated(ModelIndex.Handle index);
@@ -148,4 +151,8 @@ opaque Handle extends AbstractScrollArea.Handle {
     SignalConnection connect_IconSizeChanged(SignalHandler handler);
     SignalConnection connect_Pressed(SignalHandler handler);
     SignalConnection connect_ViewportEntered(SignalHandler handler);
+}
+
+extmethods AbstractItemDelegate.Handle {
+    bool helpEvent(HelpEvent event_, Handle view, StyleOptionViewItem.Handle option, ModelIndex.Handle index);
 }

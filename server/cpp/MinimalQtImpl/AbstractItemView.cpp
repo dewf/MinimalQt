@@ -11,6 +11,9 @@
 #include "SizeInternal.h"
 #include "RectInternal.h"
 
+#include "EventInternal.h"
+#include "StyleOptionViewItemInternal.h"
+
 #include "util/convert.h"
 
 using namespace ::Object;
@@ -25,6 +28,8 @@ using namespace ::ModelIndex;
 using namespace ::AbstractItemDelegate;
 using namespace ::ItemSelectionModel;
 using namespace ::Widget;
+using namespace ::Event;
+using namespace ::StyleOptionViewItem;
 
 #define THIS (reinterpret_cast<QAbstractItemView*>(_this))
 
@@ -356,4 +361,14 @@ namespace AbstractItemView
         });
         return new __SignalConnection { connection };
     }
+
+    // ext methods block for: AbstractItemDelegate::HandleRef ====
+    bool ext__AbstractItemDelegate_Handle_helpEvent(AbstractItemDelegate::HandleRef _this, HelpEventRef event_, HandleRef view, StyleOptionViewItem::HandleRef option, ModelIndex::HandleRef index) {
+        return AS_QABSTRACTITEMDELEGATE_PTR(_this)->helpEvent(
+            AS_QHELPEVENT_PTR(event_),
+            AS_QABSTRACTITEMVIEW_PTR(view),
+            QSTYLEOPTIONVIEWITEM_VALUE(option),
+            QMODELINDEX_VALUE(index));
+    }
+    // ==============================
 }

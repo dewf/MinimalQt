@@ -15,6 +15,7 @@ using namespace ::Size;
 using namespace ::Rect;
 using namespace ::Enums;
 using namespace ::LayoutItem;
+using namespace ::Widget;
 
 #define THIS (reinterpret_cast<QLayout*>(_this))
 
@@ -32,7 +33,7 @@ namespace Layout
         THIS->addItem(AS_QLAYOUTITEM_PTR(item));
     }
 
-    void Handle_addWidget(HandleRef _this, WidgetHandleRef widget) {
+    void Handle_addWidget(HandleRef _this, Widget::HandleRef widget) {
         THIS->addWidget(AS_QWIDGET_PTR(widget));
     }
 
@@ -58,7 +59,7 @@ namespace Layout
         return THIS->indexOf(AS_QLAYOUTITEM_PTR(layoutItem));
     }
 
-    int32_t Handle_indexOf(HandleRef _this, WidgetHandleRef widget) {
+    int32_t Handle_indexOf(HandleRef _this, Widget::HandleRef widget) {
         return THIS->indexOf(AS_QWIDGET_PTR(widget));
     }
 
@@ -70,27 +71,27 @@ namespace Layout
         return reinterpret_cast<LayoutItem::HandleRef>(THIS->itemAt(index));
     }
 
-    WidgetHandleRef Handle_menuBar(HandleRef _this) {
-        return reinterpret_cast<WidgetHandleRef>(THIS->menuBar());
+    Widget::HandleRef Handle_menuBar(HandleRef _this) {
+        return reinterpret_cast<Widget::HandleRef>(THIS->menuBar());
     }
 
-    WidgetHandleRef Handle_parentWidget(HandleRef _this) {
-        return reinterpret_cast<WidgetHandleRef>(THIS->parentWidget());
+    Widget::HandleRef Handle_parentWidget(HandleRef _this) {
+        return reinterpret_cast<Widget::HandleRef>(THIS->parentWidget());
     }
 
     void Handle_removeItem(HandleRef _this, LayoutItem::HandleRef item) {
         THIS->removeItem(AS_QLAYOUTITEM_PTR(item));
     }
 
-    void Handle_removeWidget(HandleRef _this, WidgetHandleRef widget) {
+    void Handle_removeWidget(HandleRef _this, Widget::HandleRef widget) {
         THIS->removeWidget(AS_QWIDGET_PTR(widget));
     }
 
-    LayoutItem::HandleRef Handle_replaceWidget(HandleRef _this, WidgetHandleRef from, WidgetHandleRef to, Flags<FindChildOptions> options_ /* FindChildOptions::FindChildrenRecursively */) {
+    LayoutItem::HandleRef Handle_replaceWidget(HandleRef _this, Widget::HandleRef from, Widget::HandleRef to, Flags<FindChildOptions> options_ /* FindChildOptions::FindChildrenRecursively */) {
         return reinterpret_cast<LayoutItem::HandleRef>(THIS->replaceWidget(AS_QWIDGET_PTR(from), AS_QWIDGET_PTR(to), static_cast<Qt::FindChildOptions>(options_.value())));
     }
 
-    bool Handle_setAlignment(HandleRef _this, WidgetHandleRef widget, Flags<Alignment> alignment) {
+    bool Handle_setAlignment(HandleRef _this, Widget::HandleRef widget, Flags<Alignment> alignment) {
         return THIS->setAlignment(AS_QWIDGET_PTR(widget), static_cast<Qt::Alignment>(alignment.value()));
     }
 
@@ -110,7 +111,7 @@ namespace Layout
         THIS->setEnabled(enabled);
     }
 
-    void Handle_setMenuBar(HandleRef _this, WidgetHandleRef widget) {
+    void Handle_setMenuBar(HandleRef _this, Widget::HandleRef widget) {
         THIS->setMenuBar(AS_QWIDGET_PTR(widget));
     }
 
@@ -142,7 +143,23 @@ namespace Layout
         THIS->update();
     }
 
-    Size::OwnedRef closestAcceptableSize(WidgetHandleRef widget, Size::HandleRef size) {
+    Size::OwnedRef closestAcceptableSize(Widget::HandleRef widget, Size::HandleRef size) {
         return SIZE_HEAP_NEW(QLayout::closestAcceptableSize(AS_QWIDGET_PTR(widget), QSIZE_VALUE(size)));
     }
+
+    // ext methods block for: Widget::HandleRef ====
+    HandleRef ext__Widget_Handle_layout(Widget::HandleRef _this) {
+        return reinterpret_cast<HandleRef>(AS_QWIDGET_PTR(_this)->layout());
+    }
+    void ext__Widget_Handle_setLayout(Widget::HandleRef _this, HandleRef layout) {
+        AS_QWIDGET_PTR(_this)->setLayout(AS_QLAYOUT_PTR(layout));
+    }
+    // ==============================
+
+
+    // ext methods block for: LayoutItem::HandleRef ====
+    HandleRef ext__LayoutItem_Handle_layout(LayoutItem::HandleRef _this) {
+        return reinterpret_cast<HandleRef>(AS_QLAYOUTITEM_PTR(_this)->layout());
+    }
+    // ==============================
 }

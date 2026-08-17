@@ -6,6 +6,7 @@ import Size;
 import Rect;
 import Enums;
 import LayoutItem;
+import Widget;
 
 interface SignalHandler extends Object.SignalHandler;
 // none of our own
@@ -19,8 +20,6 @@ enum SizeConstraint {
     SetMinAndMaxSize
 }
 
-fwdopaque WidgetHandle = Widget.Handle;
-
 @nodispose
 opaque Handle extends Object.Handle {
     // interfaces =============================
@@ -29,26 +28,26 @@ opaque Handle extends Object.Handle {
     // methods and properties =================
     bool activate();
     void addItem(LayoutItem.Handle item);
-    void addWidget(WidgetHandle w);
+    void addWidget(Widget.Handle w);
     Margins.Owned contentsMargins();
     Rect.Owned contentsRect();
     int count();
     Tuple<int,int,int,int> getContentsMargins();
     int indexOf(LayoutItem.Handle layoutItem);
-    int indexOf(WidgetHandle widget);
+    int indexOf(Widget.Handle widget);
     bool isEnabled();
     LayoutItem.Handle itemAt(int index);
-    WidgetHandle menuBar();
-    WidgetHandle parentWidget();
+    Widget.Handle menuBar();
+    Widget.Handle parentWidget();
     void removeItem(LayoutItem.Handle item);
-    void removeWidget(WidgetHandle widget);
-    LayoutItem.Handle replaceWidget(WidgetHandle from, WidgetHandle to, FindChildOptions options_ = FindChildrenRecursively);
-    bool setAlignment(WidgetHandle w, Alignment alignment);
+    void removeWidget(Widget.Handle widget);
+    LayoutItem.Handle replaceWidget(Widget.Handle from, Widget.Handle to, FindChildOptions options_ = FindChildrenRecursively);
+    bool setAlignment(Widget.Handle w, Alignment alignment);
     bool setAlignment(Handle l, Alignment alignment);
     void setContentsMargins(Margins.Handle margins);
     void setContentsMargins(int left, int top, int right, int bottom);
     void setEnabled(bool enable);
-    void setMenuBar(WidgetHandle widget);
+    void setMenuBar(Widget.Handle widget);
     void setSizeConstraint(SizeConstraint sizeConstraint);
     void setSpacing(int spacing);
     SizeConstraint getSizeConstraint();
@@ -60,4 +59,17 @@ opaque Handle extends Object.Handle {
 
 // no create because abstract
 
-Size.Owned closestAcceptableSize(WidgetHandle widget, Size.Handle size);
+Size.Owned closestAcceptableSize(Widget.Handle widget, Size.Handle size);
+
+// extension methods below,
+// to break circular references between Widget, Layout, LayoutItem
+
+extmethods Widget.Handle {
+    Handle layout();
+    void setLayout(Handle layout);
+}
+
+extmethods LayoutItem.Handle {
+    Handle layout();
+    // Widget.Handle widget(); // we could also have put this in Widget.ni, but it otherwise has no layout/layoutitem dependence. YOLO
+}

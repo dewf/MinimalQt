@@ -10,8 +10,6 @@ import Size;
 
 enum ItemType { Type = 0, UserType = 1000 }
 
-fwdopaque StandardItemModel_Handle = StandardItemModel.Handle;
-
 opaque Handle {
     string accessibleDescription();
     string accessibleText();
@@ -47,7 +45,9 @@ opaque Handle {
     bool isEnabled();
     bool isSelectable();
     bool isUserTristate();
-    StandardItemModel_Handle model();
+
+    // moved to StandardItemModel extension method
+    // StandardItemModel_Handle model();
 
     // (since 6.0) virtual void multiData(QModelRoleDataSpan roleDataSpan) const
 

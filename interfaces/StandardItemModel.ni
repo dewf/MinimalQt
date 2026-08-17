@@ -61,3 +61,8 @@ opaque Handle extends AbstractItemModel.Handle {
 
 Handle create(Object.Handle parent = null);
 Handle create(int rows, int columns, Object.Handle parent = null);
+
+// to break circular dependency:
+extmethods StandardItem.Handle {
+    Handle model();
+}

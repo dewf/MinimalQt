@@ -3,8 +3,6 @@ module ModelIndex;
 import Variant;
 import Enums;
 
-fwdopaque AbstractItemModelHandle = AbstractItemModel.Handle;
-
 @nodispose
 opaque Handle {
     int hashCode();
@@ -14,11 +12,12 @@ opaque Handle {
     ItemFlags getFlags();
     size_t internalId(); // is there any real difference between this and internalPointer?
     bool isValid();
-    
-    AbstractItemModelHandle model(); // TODO: should be const
+
+    // moved to AbstractItemModel.ni as extension method
+    // AbstractItemModelHandle model(); // TODO: should be const
 
     // void multiData(...) TODO
-    
+
     Owned parent();
     int row();
     Owned sibling(int row, int column);

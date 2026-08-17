@@ -21,10 +21,6 @@ namespace SplitterHandle
         THIS->setOrientation(static_cast<Qt::Orientation>(orientation));
     }
 
-    Splitter_HandleRef Handle_splitter(HandleRef _this) {
-        return reinterpret_cast<Splitter_HandleRef>(THIS->splitter());
-    }
-
     void Handle_dispose(HandleRef _this) {
         delete THIS;
     }

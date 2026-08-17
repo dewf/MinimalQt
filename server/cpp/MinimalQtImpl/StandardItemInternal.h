@@ -3,6 +3,8 @@
 #include "generated/StandardItem.h"
 #include <QStandardItem>
 
+#define AS_QSTANDARDITEM_PTR(x) (reinterpret_cast<QStandardItem*>(x))
+
 namespace StandardItem {
     inline QList<QStandardItem*> arrayToList(const std::vector<HandleRef>& input) {
         QList<QStandardItem*> ret;

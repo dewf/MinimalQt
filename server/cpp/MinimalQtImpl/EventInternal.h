@@ -17,5 +17,7 @@
 //
 // #define AS_QKEYEVENT_PTR(x) (reinterpret_cast<QKeyEvent*>(x))
 
+#define AS_QHELPEVENT_PTR(x) (reinterpret_cast<QHelpEvent*>(x))
+
 namespace Event {
 }

@@ -177,4 +177,10 @@ namespace StandardItemModel
     HandleRef create(int32_t rows, int32_t columns, Object::HandleRef parent /* nullptr */) {
         return reinterpret_cast<HandleRef>(new QStandardItemModel(rows, columns, AS_QOBJECT_PTR(parent)));
     }
+
+    // ext methods block for: StandardItem::HandleRef ====
+    HandleRef ext__StandardItem_Handle_model(StandardItem::HandleRef _this) {
+        return reinterpret_cast<HandleRef>(AS_QSTANDARDITEM_PTR(_this)->model());
+    }
+    // ==============================
 }

@@ -9,8 +9,6 @@ import Event;
 import AbstractItemModel;
 import Painter;
 
-fwdopaque AbstractItemViewHandle = AbstractItemView.Handle;
-
 enum EndEditHint {
     NoHint,
     EditNextItem,
@@ -30,7 +28,10 @@ opaque Handle extends Object.Handle {
     Widget.Handle createEditor(Widget.Handle parent, StyleOptionViewItem.Handle option, ModelIndex.Handle index);
     void destroyEditor(Widget.Handle editor, ModelIndex.Handle index);
     bool editorEvent(Event.Handle event_, AbstractItemModel.Handle model, StyleOptionViewItem.Handle option, ModelIndex.Handle index);
-    bool helpEvent(HelpEvent event_, AbstractItemViewHandle view, StyleOptionViewItem.Handle option, ModelIndex.Handle index);
+
+    // moved to AbstractItemView.ni as extension method
+    // bool helpEvent(HelpEvent event_, AbstractItemViewHandle view, StyleOptionViewItem.Handle option, ModelIndex.Handle index);
+
     void paint(Painter.Handle painter, StyleOptionViewItem.Handle option, ModelIndex.Handle index);
     void setEditorData(Widget.Handle editor, ModelIndex.Handle index);
     void setModelData(Widget.Handle editor, AbstractItemModel.Handle model, ModelIndex.Handle index);

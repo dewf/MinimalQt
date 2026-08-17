@@ -71,11 +71,6 @@ namespace Polygon
         return POLYGON_HEAP_NEW(THIS->subtracted(QPOLYGON_VALUE(r)));
     }
 
-    PolygonF_OwnedRef Handle_toPolygonF(HandleRef _this) {
-        const auto actual = POLYGONF_HEAP_NEW(THIS->toPolygonF());
-        return reinterpret_cast<PolygonF_OwnedRef>(actual);
-    }
-
     void Handle_translate(HandleRef _this, int32_t dx, int32_t dy) {
         THIS->translate(dx, dy);
     }

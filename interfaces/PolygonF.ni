@@ -1,11 +1,9 @@
 module PolygonF;
 
+import Polygon;
 import PointF;
 import RectF;
 import Enums;
-
-fwdopaque Polygon_Handle = Polygon.Handle;
-fwdopaque Polygon_Owned = Polygon.Owned;
 
 @nodispose
 opaque Handle {
@@ -15,7 +13,7 @@ opaque Handle {
     bool intersects(Handle p);
     bool isClosed();
     Owned subtracted(Handle r);
-    Polygon_Owned toPolygon();
+    Polygon.Owned toPolygon();
     void translate(PointF.Handle offset);
     void translate(double dx, double dy);
     Owned translated(PointF.Handle offset);
@@ -26,5 +24,10 @@ opaque Owned extends Handle;
 
 Owned create();
 Owned create(Array<PointF.Handle> points);
-Owned create(Polygon_Handle polygon);
+Owned create(Polygon.Handle polygon);
 Owned create(RectF.Handle rectangle);
+
+// to break circular dependency:
+extmethods Polygon.Handle {
+    Owned toPolygonF();
+}

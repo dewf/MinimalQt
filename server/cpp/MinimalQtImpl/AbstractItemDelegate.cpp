@@ -36,10 +36,6 @@ namespace AbstractItemDelegate
         return THIS->editorEvent(reinterpret_cast<QEvent*>(event_), reinterpret_cast<QAbstractItemModel*>(model), QSTYLEOPTIONVIEWITEM_VALUE(option), QMODELINDEX_VALUE(index));
     }
 
-    bool Handle_helpEvent(HandleRef _this, HelpEventRef event_, AbstractItemViewHandleRef view, StyleOptionViewItem::HandleRef option, ModelIndex::HandleRef index) {
-        return THIS->helpEvent(reinterpret_cast<QHelpEvent*>(event_), reinterpret_cast<QAbstractItemView*>(view), QSTYLEOPTIONVIEWITEM_VALUE(option), QMODELINDEX_VALUE(index));
-    }
-
     void Handle_paint(HandleRef _this, Painter::HandleRef painter, StyleOptionViewItem::HandleRef option, ModelIndex::HandleRef index) {
         THIS->paint(AS_QPAINTER_PTR(painter), QSTYLEOPTIONVIEWITEM_VALUE(option), QMODELINDEX_VALUE(index));
     }

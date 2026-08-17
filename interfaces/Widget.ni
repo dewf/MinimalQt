@@ -6,7 +6,6 @@ import Point;
 import PointF;
 import Size;
 import Rect;
-import Layout;
 import Painter;
 import Icon;
 import Enums;
@@ -137,7 +136,10 @@ opaque Handle extends Object.Handle {
     bool isVisibleTo(Handle ancestor);
     bool isWindow();
     bool isWindowModified();
-    Layout.Handle layout();
+
+    // moved to Layout.ni (extension method)
+    // Layout.Handle layout();
+
     LayoutDirection layoutDirection();
 
     // QLocale locale() const
@@ -224,7 +226,10 @@ opaque Handle extends Object.Handle {
     void setGeometry(int x, int y, int w, int h);
     void setGraphicsEffect(GraphicsEffect.Handle effect);
     void setInputMethodHints(InputMethodHints hints);
-    void setLayout(Layout.Handle layout);
+
+    // moved to Layout.ni (extension method)
+    // void setLayout(Layout.Handle layout);
+
     void setLayoutDirection(LayoutDirection direction);
 
     // void setLocale(const QLocale &locale)

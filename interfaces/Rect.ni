@@ -4,8 +4,6 @@ import Point;
 import Size;
 import Margins;
 
-fwdopaque RectF_Owned = RectF.Owned;
-
 @nodispose
 opaque Handle {
 
@@ -64,7 +62,9 @@ opaque Handle {
 
     // CGRect toCGRect() const
 
-    RectF_Owned toRectF();
+    // moved to RectF.ni as extension method
+    // RectF_Owned toRectF();
+
     int top();
     Point.Owned topLeft();
     Point.Owned topRight();
@@ -80,7 +80,7 @@ opaque Handle {
 
     // QRect operator&(const QRect &rectangle) const
     // use 'intersected'
-    
+
     Handle operator_intersectWith(Handle rectangle); // returns 'this'
     Handle operator_incrementBy(Margins.Handle margins); // returns 'this'
     Handle operator_decrementBy(Margins.Handle margins); // returns 'this'

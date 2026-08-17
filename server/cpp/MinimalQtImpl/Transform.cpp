@@ -1,7 +1,6 @@
 #include "generated/Transform.h"
 #include "TransformInternal.h"
 
-#include "PainterPathInternal.h"
 #include "PolygonFInternal.h"
 #include "PolygonInternal.h"
 #include "RegionInternal.h"
@@ -119,11 +118,6 @@ namespace Transform
         double tx, ty;
         THIS->map(x, y, &tx, &ty);
         return { tx, ty };
-    }
-
-    PainterPath_OwnedRef Handle_map(HandleRef _this, PainterPath_HandleRef path) {
-        const auto result = PAINTERPATH_HEAP_NEW(THIS->map(QPAINTERPATH_VALUE(path)));
-        return reinterpret_cast<PainterPath_OwnedRef>(result);
     }
 
     Point::OwnedRef Handle_map(HandleRef _this, Point::HandleRef point) {
@@ -308,12 +302,6 @@ namespace Transform
 
     bool fuzzyCompare(HandleRef t1, HandleRef t2) {
         return qFuzzyCompare(QTRANSFORM_VALUE(t1), QTRANSFORM_VALUE(t2));
-    }
-
-    PainterPath_OwnedRef operator_mul(PainterPath_HandleRef path, HandleRef matrix) {
-        const auto result = PAINTERPATH_HEAP_NEW(QPAINTERPATH_VALUE(path) * QTRANSFORM_VALUE(matrix));
-        // fwdopaque cast:
-        return reinterpret_cast<PainterPath_OwnedRef>(result);
     }
 
     Point::OwnedRef operator_mul(Point::HandleRef point, HandleRef matrix) {

@@ -24,6 +24,7 @@
 
 #include <QPaintEvent>
 
+#include "LayoutItemInternal.h"
 #include "util/convert.h"
 
 using namespace ::Object;
@@ -333,10 +334,6 @@ namespace Widget
         return THIS->isWindowModified();
     }
 
-    Layout::HandleRef Handle_layout(HandleRef _this) {
-        return reinterpret_cast<Layout::HandleRef>(THIS->layout());
-    }
-
     LayoutDirection Handle_layoutDirection(HandleRef _this) {
         return static_cast<LayoutDirection>(THIS->layoutDirection());
     }
@@ -632,10 +629,6 @@ namespace Widget
     void Handle_setInputMethodHints(HandleRef _this, Flags<InputMethodHints> hints) {
         auto intHints = std::bit_cast<int>(hints.value()); // Qt flags silliness
         THIS->setInputMethodHints(static_cast<Qt::InputMethodHints>(intHints));
-    }
-
-    void Handle_setLayout(HandleRef _this, Layout::HandleRef layout) {
-        THIS->setLayout(AS_QLAYOUT_PTR(layout));
     }
 
     void Handle_setLayoutDirection(HandleRef _this, LayoutDirection direction) {

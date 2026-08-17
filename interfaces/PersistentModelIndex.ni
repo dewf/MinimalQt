@@ -4,8 +4,6 @@ import ModelIndex;
 import Variant;
 import Enums;
 
-fwdopaque AbstractItemModel_Handle = AbstractItemModel.Handle;
-
 @nodispose
 opaque Handle {
     int hashCode();
@@ -14,7 +12,9 @@ opaque Handle {
     Variant.Owned data(ItemDataRole role = DisplayRole); // should be 'int'
     ItemFlags flags_();
     bool isValid();
-    AbstractItemModel_Handle model(); // TODO: const
+
+    // moved to AbstractItemModel.ni extension method
+    // AbstractItemModel_Handle model(); // TODO: const
 
     // (since 6.0) void multiData(QModelRoleDataSpan roleDataSpan) const
     // TODO

@@ -123,3 +123,9 @@ Owned operator_sub(Handle lhs, MarginsF.Handle rhs);
 bool operator_equal(Handle lhs, Handle rhs);
 
 // QDataStream & operator>>(QDataStream &stream, QRectF &rectangle)
+
+
+// to break circular dependency:
+extmethods Rect.Handle {
+    Owned toRectF();
+}

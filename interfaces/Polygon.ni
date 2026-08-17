@@ -4,8 +4,6 @@ import Point;
 import Rect;
 import Enums;
 
-fwdopaque PolygonF_Owned = PolygonF.Owned;
-
 @nodispose
 opaque Handle {
     Rect.Owned boundingRect();
@@ -27,7 +25,8 @@ opaque Handle {
 
     Owned subtracted(Handle r);
 
-    PolygonF_Owned toPolygonF();
+    // moved to PolygonF.ni as extension method
+    // PolygonF_Owned toPolygonF();
 
     void translate(int dx, int dy);
     void translate(Point.Handle offset);

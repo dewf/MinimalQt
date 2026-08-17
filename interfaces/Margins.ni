@@ -1,7 +1,5 @@
 module Margins;
 
-fwdopaque MarginsF_Owned = MarginsF.Owned;
-
 @nodispose
 opaque Handle {
     int bottom();
@@ -12,9 +10,12 @@ opaque Handle {
     void setLeft(int left);
     void setRight(int right);
     void setTop(int top);
-    MarginsF_Owned toMarginsF();
+
+    // moved to MarginsF.ni as extension method
+    // MarginsF_Owned toMarginsF();
+
     int top();
-    
+
     // the following return 'this':
 
     Handle operator_mul(int factor);

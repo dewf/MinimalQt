@@ -79,3 +79,10 @@ opaque Owned extends Handle;
 Owned create();
 Owned create(PointF.Handle startPoint);
 Owned create(Handle path);
+
+// Transform-related stuff ======================
+extmethods Transform.Handle {
+    Owned map(Handle path);
+}
+Owned operator_mul(Handle path, Transform.Handle matrix);
+// end Transform-related stuff ==================

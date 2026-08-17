@@ -41,12 +41,6 @@ namespace Margins
         THIS->setTop(top);
     }
 
-    MarginsF_OwnedRef Handle_toMarginsF(HandleRef _this) {
-        const auto result = MARGINSF_HEAP_NEW(THIS->toMarginsF());
-        // fwd opaque cast:
-        return reinterpret_cast<MarginsF_OwnedRef>(result);
-    }
-
     int32_t Handle_top(HandleRef _this) {
         return THIS->top();
     }

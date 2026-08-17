@@ -16,7 +16,6 @@ struct RangeResult {
 }
 
 opaque Handle extends Frame.Handle {
-
     void addWidget(Widget.Handle widget);
     bool childrenCollapsible();
     int count();
@@ -48,3 +47,9 @@ opaque Handle extends Frame.Handle {
 
 Handle create(Widget.Handle parent = null);
 Handle create(Orientation orientation, Widget.Handle parent = null);
+
+// to break circular dependency
+// also: holy confusing!
+extmethods SplitterHandle.Handle {
+    Handle splitter();
+}

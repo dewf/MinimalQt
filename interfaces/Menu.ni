@@ -73,3 +73,9 @@ Handle create(string title, Widget.Handle parent = null);
 
 Action.Handle exec(Array<Action.Handle> actions, Point.Handle pos, Action.Handle at = null, Widget.Handle parent = null);
 Handle menuInAction(Action.Handle action);
+
+// some Action methods to avoid circular references:
+extmethods Action.Handle {
+    Handle menu();
+    void setMenu(Handle menu);
+}

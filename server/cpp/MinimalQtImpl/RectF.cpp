@@ -340,4 +340,10 @@ namespace RectF
     bool operator_equal(HandleRef lhs, HandleRef rhs) {
         return QRECTF_VALUE(lhs) == QRECTF_VALUE(rhs);
     }
+
+    // ext methods block for: Rect::HandleRef ====
+    OwnedRef ext__Rect_Handle_toRectF(Rect::HandleRef _this) {
+        return RECTF_HEAP_NEW(AS_QRECT_PTR(_this)->toRectF());
+    }
+    // ==============================
 }

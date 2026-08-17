@@ -14,6 +14,8 @@ using namespace ::Widget;
 using namespace ::Enums;
 using namespace ::Dir;
 using namespace ::Url;
+using namespace ::AbstractItemDelegate;
+using namespace ::AbstractProxyModel;
 
 #define THIS (reinterpret_cast<QFileDialog*>(_this))
 
@@ -47,8 +49,8 @@ namespace FileDialog
         return toVectorStrings(THIS->history());
     }
 
-    AbstractItemDelegate_HandleRef Handle_itemDelegate(HandleRef _this) {
-        return reinterpret_cast<AbstractItemDelegate_HandleRef>(THIS->itemDelegate());
+    AbstractItemDelegate::HandleRef Handle_itemDelegate(HandleRef _this) {
+        return reinterpret_cast<AbstractItemDelegate::HandleRef>(THIS->itemDelegate());
     }
 
     std::string Handle_labelText(HandleRef _this, DialogLabel label) {
@@ -67,8 +69,8 @@ namespace FileDialog
         return static_cast<Flags<Options>>(THIS->options());
     }
 
-    AbstractProxyModel_HandleRef Handle_proxyModel(HandleRef _this) {
-        return reinterpret_cast<AbstractProxyModel_HandleRef>(THIS->proxyModel());
+    AbstractProxyModel::HandleRef Handle_proxyModel(HandleRef _this) {
+        return reinterpret_cast<AbstractProxyModel::HandleRef>(THIS->proxyModel());
     }
 
     bool Handle_restoreState(HandleRef _this, const std::vector<uint8_t>& state) {
@@ -143,7 +145,7 @@ namespace FileDialog
         THIS->setHistory(toQStringList(paths));
     }
 
-    void Handle_setItemDelegate(HandleRef _this, AbstractItemDelegate_HandleRef delegate_) {
+    void Handle_setItemDelegate(HandleRef _this, AbstractItemDelegate::HandleRef delegate_) {
         THIS->setItemDelegate(reinterpret_cast<QAbstractItemDelegate*>(delegate_));
     }
 
@@ -171,7 +173,7 @@ namespace FileDialog
         THIS->setOptions(static_cast<QFileDialog::Options>(options_.value()));
     }
 
-    void Handle_setProxyModel(HandleRef _this, AbstractProxyModel_HandleRef proxyModel) {
+    void Handle_setProxyModel(HandleRef _this, AbstractProxyModel::HandleRef proxyModel) {
         THIS->setProxyModel(reinterpret_cast<QAbstractProxyModel*>(proxyModel));
     }
 

@@ -4,6 +4,7 @@
 #include "ObjectInternal.h"
 #include "MimeDataInternal.h"
 #include "ModelIndexInternal.h"
+#include "PersistentModelIndexInternal.h"
 #include "VariantInternal.h"
 #include "SafeReturnInternal.h"
 #include "SizeInternal.h"
@@ -534,4 +535,20 @@ namespace AbstractItemModel
     InteriorRef createImplementation(const std::shared_ptr<ImplementationMethods>& methods, Flags<ImplementationMask> mask) {
         return reinterpret_cast<InteriorRef>(new Implementation(methods, mask));
     }
+
+    // ext methods block for: ModelIndex::HandleRef ====
+    HandleRef ext__ModelIndex_Handle_model(ModelIndex::HandleRef _this) {
+        // TODO: need ConstHandle for AbstractItemModel's const-only methods
+        const auto result = const_cast<QAbstractItemModel*>(AS_QMODELINDEX_PTR(_this)->model());
+        return reinterpret_cast<HandleRef>(result);
+    }
+    // ==============================
+
+    // ext methods block for: PersistentModelIndex::HandleRef ====
+    HandleRef ext__PersistentModelIndex_Handle_model(PersistentModelIndex::HandleRef _this) {
+        // TODO: need ConstHandle for AbstractItemModel's const-only methods
+        const auto result = const_cast<QAbstractItemModel*>(AS_QPERSISTENTMODELINDEX_PTR(_this)->model());
+        return reinterpret_cast<HandleRef>(result);
+    }
+    // ==============================
 }

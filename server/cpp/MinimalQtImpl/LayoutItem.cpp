@@ -47,10 +47,6 @@ namespace LayoutItem
         return THIS->isEmpty();
     }
 
-    LayoutHandleRef Handle_layout(HandleRef _this) {
-        return reinterpret_cast<LayoutHandleRef>(THIS->layout());
-    }
-
     Size::OwnedRef Handle_maximumSize(HandleRef _this) {
         return SIZE_HEAP_NEW(THIS->maximumSize());
     }
@@ -75,7 +71,7 @@ namespace LayoutItem
         return SIZE_HEAP_NEW(THIS->sizeHint());
     }
 
-    WidgetHandleRef Handle_widget(HandleRef _this) {
-        return reinterpret_cast<WidgetHandleRef>(THIS->widget());
+    Widget::HandleRef Handle_widget(HandleRef _this) {
+        return reinterpret_cast<Widget::HandleRef>(THIS->widget());
     }
 }

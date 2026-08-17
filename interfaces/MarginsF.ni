@@ -63,3 +63,8 @@ bool operator_equal(Handle lhs, Handle rhs);
 // QDataStream & operator>>(QDataStream &stream, QMarginsF &m)
 
 Owned operator_or(Handle m1, Handle m2);
+
+// to break circular dependency:
+extmethods Margins.Handle {
+    Owned toMarginsF();
+}

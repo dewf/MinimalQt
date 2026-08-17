@@ -279,4 +279,16 @@ namespace PainterPath
     OwnedRef create(HandleRef path) {
         return PAINTERPATH_HEAP_NEW(QPAINTERPATH_VALUE(path));
     }
+
+    // ext methods block for: Transform::HandleRef ====
+    OwnedRef ext__Transform_Handle_map(Transform::HandleRef _this, HandleRef path) {
+        const auto result = AS_QTRANSFORM_PTR(_this)->map(QPAINTERPATH_VALUE(path));
+        return PAINTERPATH_HEAP_NEW(result);
+    }
+
+    // ==============================
+    OwnedRef operator_mul(HandleRef path, Transform::HandleRef matrix) {
+        const auto result = QPAINTERPATH_VALUE(path) * QTRANSFORM_VALUE(matrix);
+        return PAINTERPATH_HEAP_NEW(result);
+    }
 }

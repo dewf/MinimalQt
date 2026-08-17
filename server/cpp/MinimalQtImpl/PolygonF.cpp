@@ -7,6 +7,7 @@
 
 #include "util/convert.h"
 
+using namespace ::Polygon;
 using namespace ::PointF;
 using namespace ::RectF;
 using namespace ::Enums;
@@ -39,9 +40,8 @@ namespace PolygonF
         return POLYGONF_HEAP_NEW(THIS->subtracted(QPOLYGONF_VALUE(r)));
     }
 
-    Polygon_OwnedRef Handle_toPolygon(HandleRef _this) {
-        const auto actual = POLYGON_HEAP_NEW(THIS->toPolygon());
-        return reinterpret_cast<Polygon_OwnedRef>(actual);
+    Polygon::OwnedRef Handle_toPolygon(HandleRef _this) {
+        return POLYGON_HEAP_NEW(THIS->toPolygon());
     }
 
     void Handle_translate(HandleRef _this, PointF::HandleRef offset) {
@@ -77,11 +77,17 @@ namespace PolygonF
         return POLYGONF_HEAP_NEW(qPoints);
     }
 
-    OwnedRef create(Polygon_HandleRef polygon) {
+    OwnedRef create(Polygon::HandleRef polygon) {
         return POLYGONF_HEAP_NEW(QPOLYGON_VALUE(polygon));
     }
 
     OwnedRef create(RectF::HandleRef rectangle) {
         return POLYGONF_HEAP_NEW(QRECTF_VALUE(rectangle));
     }
+
+    // ext methods block for: Polygon::HandleRef ====
+    OwnedRef ext__Polygon_Handle_toPolygonF(Polygon::HandleRef _this) {
+        return POLYGONF_HEAP_NEW(AS_QPOLYGON_PTR(_this)->toPolygonF());
+    }
+    // ==============================
 }

@@ -7,9 +7,8 @@ import Widget;
 import Enums;
 import Dir;
 import Url;
-
-fwdopaque AbstractItemDelegate_Handle = AbstractItemDelegate.Handle;
-fwdopaque AbstractProxyModel_Handle = AbstractProxyModel.Handle;
+import AbstractItemDelegate;
+import AbstractProxyModel;
 
 interface SignalHandler extends Dialog.SignalHandler {
     void currentChanged(string path);
@@ -66,7 +65,7 @@ opaque Handle extends Dialog.Handle {
     // QAbstractFileIconProvider * iconProvider() const
     // TODO
 
-    AbstractItemDelegate_Handle itemDelegate();
+    AbstractItemDelegate.Handle itemDelegate();
     string labelText(DialogLabel label);
     Array<string> mimeTypeFilters();
     Array<string> nameFilters();
@@ -75,7 +74,7 @@ opaque Handle extends Dialog.Handle {
     // hmmm
 
     Options getOptions();
-    AbstractProxyModel_Handle proxyModel();
+    AbstractProxyModel.Handle proxyModel();
     bool restoreState(Array<byte> state);
     Array<byte> saveState();
     void selectFile(string filename);
@@ -98,14 +97,14 @@ opaque Handle extends Dialog.Handle {
     // void setIconProvider(QAbstractFileIconProvider *provider)
     // TODO
 
-    void setItemDelegate(AbstractItemDelegate_Handle delegate_);
+    void setItemDelegate(AbstractItemDelegate.Handle delegate_);
     void setLabelText(DialogLabel label, string text);
     void setMimeTypeFilters(Array<string> filters);
     void setNameFilter(string filter);
     void setNameFilters(Array<string> filters);
     void setOption(OptionEnum option, bool on = true);
     void setOptions(Options options_);
-    void setProxyModel(AbstractProxyModel_Handle proxyModel);
+    void setProxyModel(AbstractProxyModel.Handle proxyModel);
     void setSidebarUrls(Url.List urls);
     void setSupportedSchemes(Array<string> schemes);
     void setViewMode(ViewMode mode);
