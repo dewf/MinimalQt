@@ -20,589 +20,589 @@ add_library(MinimalQtImpl STATIC)
 target_sources(MinimalQtImpl
         PRIVATE
         # support
-        support/CoreStuff.h
-        support/NativeImplServer.h
-        support/NativeImplServer.cpp
-        support/result.h
+        source/support/CoreStuff.h
+        source/support/NativeImplServer.h
+        source/support/NativeImplServer.cpp
+        source/support/result.h
 
         # util
-        util/convert.h
-        util/convert.cpp
-        util/SignalStuff.h
+        source/util/convert.h
+        source/util/convert.cpp
+        source/util/SignalStuff.h
 
         # module Window
-        generated/Window.h
-        generated/Window_wrappers.h
-        generated/Window_wrappers.cpp
-        Window.cpp
+        source/generated/Window.h
+        source/generated/Window_wrappers.h
+        source/generated/Window_wrappers.cpp
+        source/Window.cpp
         # module Widget
-        generated/Widget.h
-        generated/Widget_wrappers.h
-        generated/Widget_wrappers.cpp
-        Widget.cpp
+        source/generated/Widget.h
+        source/generated/Widget_wrappers.h
+        source/generated/Widget_wrappers.cpp
+        source/Widget.cpp
         # module Variant
-        generated/Variant.h
-        generated/Variant_wrappers.h
-        generated/Variant_wrappers.cpp
-        Variant.cpp
+        source/generated/Variant.h
+        source/generated/Variant_wrappers.h
+        source/generated/Variant_wrappers.cpp
+        source/Variant.cpp
         # module Validator
-        generated/Validator.h
-        generated/Validator_wrappers.h
-        generated/Validator_wrappers.cpp
-        Validator.cpp
+        source/generated/Validator.h
+        source/generated/Validator_wrappers.h
+        source/generated/Validator_wrappers.cpp
+        source/Validator.cpp
         # module Url
-        generated/Url.h
-        generated/Url_wrappers.h
-        generated/Url_wrappers.cpp
-        Url.cpp
+        source/generated/Url.h
+        source/generated/Url_wrappers.h
+        source/generated/Url_wrappers.cpp
+        source/Url.cpp
         # module TreeView
-        generated/TreeView.h
-        generated/TreeView_wrappers.h
-        generated/TreeView_wrappers.cpp
-        TreeView.cpp
+        source/generated/TreeView.h
+        source/generated/TreeView_wrappers.h
+        source/generated/TreeView_wrappers.cpp
+        source/TreeView.cpp
         # module Transform
-        generated/Transform.h
-        generated/Transform_wrappers.h
-        generated/Transform_wrappers.cpp
-        Transform.cpp
+        source/generated/Transform.h
+        source/generated/Transform_wrappers.h
+        source/generated/Transform_wrappers.cpp
+        source/Transform.cpp
         # module ToolBar
-        generated/ToolBar.h
-        generated/ToolBar_wrappers.h
-        generated/ToolBar_wrappers.cpp
-        ToolBar.cpp
+        source/generated/ToolBar.h
+        source/generated/ToolBar_wrappers.h
+        source/generated/ToolBar_wrappers.cpp
+        source/ToolBar.cpp
         # module Timer
-        generated/Timer.h
-        generated/Timer_wrappers.h
-        generated/Timer_wrappers.cpp
-        Timer.cpp
+        source/generated/Timer.h
+        source/generated/Timer_wrappers.h
+        source/generated/Timer_wrappers.cpp
+        source/Timer.cpp
         # module TextOption
-        generated/TextOption.h
-        generated/TextOption_wrappers.h
-        generated/TextOption_wrappers.cpp
-        TextOption.cpp
+        source/generated/TextOption.h
+        source/generated/TextOption_wrappers.h
+        source/generated/TextOption_wrappers.cpp
+        source/TextOption.cpp
         # module TextFormat
-        generated/TextFormat.h
-        generated/TextFormat_wrappers.h
-        generated/TextFormat_wrappers.cpp
-        TextFormat.cpp
+        source/generated/TextFormat.h
+        source/generated/TextFormat_wrappers.h
+        source/generated/TextFormat_wrappers.cpp
+        source/TextFormat.cpp
         # module TextEdit
-        generated/TextEdit.h
-        generated/TextEdit_wrappers.h
-        generated/TextEdit_wrappers.cpp
-        TextEdit.cpp
+        source/generated/TextEdit.h
+        source/generated/TextEdit_wrappers.h
+        source/generated/TextEdit_wrappers.cpp
+        source/TextEdit.cpp
         # module TextDocument
-        generated/TextDocument.h
-        generated/TextDocument_wrappers.h
-        generated/TextDocument_wrappers.cpp
-        TextDocument.cpp
+        source/generated/TextDocument.h
+        source/generated/TextDocument_wrappers.h
+        source/generated/TextDocument_wrappers.cpp
+        source/TextDocument.cpp
         # module TextCursor
-        generated/TextCursor.h
-        generated/TextCursor_wrappers.h
-        generated/TextCursor_wrappers.cpp
-        TextCursor.cpp
+        source/generated/TextCursor.h
+        source/generated/TextCursor_wrappers.h
+        source/generated/TextCursor_wrappers.cpp
+        source/TextCursor.cpp
         # module TextCharFormat
-        generated/TextCharFormat.h
-        generated/TextCharFormat_wrappers.h
-        generated/TextCharFormat_wrappers.cpp
-        TextCharFormat.cpp
+        source/generated/TextCharFormat.h
+        source/generated/TextCharFormat_wrappers.h
+        source/generated/TextCharFormat_wrappers.cpp
+        source/TextCharFormat.cpp
         # module TabWidget
-        generated/TabWidget.h
-        generated/TabWidget_wrappers.h
-        generated/TabWidget_wrappers.cpp
-        TabWidget.cpp
+        source/generated/TabWidget.h
+        source/generated/TabWidget_wrappers.h
+        source/generated/TabWidget_wrappers.cpp
+        source/TabWidget.cpp
         # module TabBar
-        generated/TabBar.h
-        generated/TabBar_wrappers.h
-        generated/TabBar_wrappers.cpp
-        TabBar.cpp
+        source/generated/TabBar.h
+        source/generated/TabBar_wrappers.h
+        source/generated/TabBar_wrappers.cpp
+        source/TabBar.cpp
         # module StyledItemDelegate
-        generated/StyledItemDelegate.h
-        generated/StyledItemDelegate_wrappers.h
-        generated/StyledItemDelegate_wrappers.cpp
-        StyledItemDelegate.cpp
+        source/generated/StyledItemDelegate.h
+        source/generated/StyledItemDelegate_wrappers.h
+        source/generated/StyledItemDelegate_wrappers.cpp
+        source/StyledItemDelegate.cpp
         # module StyleOptionViewItem
-        generated/StyleOptionViewItem.h
-        generated/StyleOptionViewItem_wrappers.h
-        generated/StyleOptionViewItem_wrappers.cpp
-        StyleOptionViewItem.cpp
+        source/generated/StyleOptionViewItem.h
+        source/generated/StyleOptionViewItem_wrappers.h
+        source/generated/StyleOptionViewItem_wrappers.cpp
+        source/StyleOptionViewItem.cpp
         # module StyleOption
-        generated/StyleOption.h
-        generated/StyleOption_wrappers.h
-        generated/StyleOption_wrappers.cpp
-        StyleOption.cpp
+        source/generated/StyleOption.h
+        source/generated/StyleOption_wrappers.h
+        source/generated/StyleOption_wrappers.cpp
+        source/StyleOption.cpp
         # module StatusBar
-        generated/StatusBar.h
-        generated/StatusBar_wrappers.h
-        generated/StatusBar_wrappers.cpp
-        StatusBar.cpp
+        source/generated/StatusBar.h
+        source/generated/StatusBar_wrappers.h
+        source/generated/StatusBar_wrappers.cpp
+        source/StatusBar.cpp
         # module StandardItemModel
-        generated/StandardItemModel.h
-        generated/StandardItemModel_wrappers.h
-        generated/StandardItemModel_wrappers.cpp
-        StandardItemModel.cpp
+        source/generated/StandardItemModel.h
+        source/generated/StandardItemModel_wrappers.h
+        source/generated/StandardItemModel_wrappers.cpp
+        source/StandardItemModel.cpp
         # module StandardItem
-        generated/StandardItem.h
-        generated/StandardItem_wrappers.h
-        generated/StandardItem_wrappers.cpp
-        StandardItem.cpp
+        source/generated/StandardItem.h
+        source/generated/StandardItem_wrappers.h
+        source/generated/StandardItem_wrappers.cpp
+        source/StandardItem.cpp
         # module SplitterHandle
-        generated/SplitterHandle.h
-        generated/SplitterHandle_wrappers.h
-        generated/SplitterHandle_wrappers.cpp
-        SplitterHandle.cpp
+        source/generated/SplitterHandle.h
+        source/generated/SplitterHandle_wrappers.h
+        source/generated/SplitterHandle_wrappers.cpp
+        source/SplitterHandle.cpp
         # module Splitter
-        generated/Splitter.h
-        generated/Splitter_wrappers.h
-        generated/Splitter_wrappers.cpp
-        Splitter.cpp
+        source/generated/Splitter.h
+        source/generated/Splitter_wrappers.h
+        source/generated/Splitter_wrappers.cpp
+        source/Splitter.cpp
         # module SpinBox
-        generated/SpinBox.h
-        generated/SpinBox_wrappers.h
-        generated/SpinBox_wrappers.cpp
-        SpinBox.cpp
+        source/generated/SpinBox.h
+        source/generated/SpinBox_wrappers.h
+        source/generated/SpinBox_wrappers.cpp
+        source/SpinBox.cpp
         # module SortFilterProxyModel
-        generated/SortFilterProxyModel.h
-        generated/SortFilterProxyModel_wrappers.h
-        generated/SortFilterProxyModel_wrappers.cpp
-        SortFilterProxyModel.cpp
+        source/generated/SortFilterProxyModel.h
+        source/generated/SortFilterProxyModel_wrappers.h
+        source/generated/SortFilterProxyModel_wrappers.cpp
+        source/SortFilterProxyModel.cpp
         # module Slider
-        generated/Slider.h
-        generated/Slider_wrappers.h
-        generated/Slider_wrappers.cpp
-        Slider.cpp
+        source/generated/Slider.h
+        source/generated/Slider_wrappers.h
+        source/generated/Slider_wrappers.cpp
+        source/Slider.cpp
         # module SizePolicy
-        generated/SizePolicy.h
-        generated/SizePolicy_wrappers.h
-        generated/SizePolicy_wrappers.cpp
-        SizePolicy.cpp
+        source/generated/SizePolicy.h
+        source/generated/SizePolicy_wrappers.h
+        source/generated/SizePolicy_wrappers.cpp
+        source/SizePolicy.cpp
         # module SizeF
-        generated/SizeF.h
-        generated/SizeF_wrappers.h
-        generated/SizeF_wrappers.cpp
-        SizeF.cpp
+        source/generated/SizeF.h
+        source/generated/SizeF_wrappers.h
+        source/generated/SizeF_wrappers.cpp
+        source/SizeF.cpp
         # module Size
-        generated/Size.h
-        generated/Size_wrappers.h
-        generated/Size_wrappers.cpp
-        Size.cpp
+        source/generated/Size.h
+        source/generated/Size_wrappers.h
+        source/generated/Size_wrappers.cpp
+        source/Size.cpp
         # module SessionManager
-        generated/SessionManager.h
-        generated/SessionManager_wrappers.h
-        generated/SessionManager_wrappers.cpp
-        SessionManager.cpp
+        source/generated/SessionManager.h
+        source/generated/SessionManager_wrappers.h
+        source/generated/SessionManager_wrappers.cpp
+        source/SessionManager.cpp
         # module ScrollBar
-        generated/ScrollBar.h
-        generated/ScrollBar_wrappers.h
-        generated/ScrollBar_wrappers.cpp
-        ScrollBar.cpp
+        source/generated/ScrollBar.h
+        source/generated/ScrollBar_wrappers.h
+        source/generated/ScrollBar_wrappers.cpp
+        source/ScrollBar.cpp
         # module ScrollArea
-        generated/ScrollArea.h
-        generated/ScrollArea_wrappers.h
-        generated/ScrollArea_wrappers.cpp
-        ScrollArea.cpp
+        source/generated/ScrollArea.h
+        source/generated/ScrollArea_wrappers.h
+        source/generated/ScrollArea_wrappers.cpp
+        source/ScrollArea.cpp
         # module Screen
-        generated/Screen.h
-        generated/Screen_wrappers.h
-        generated/Screen_wrappers.cpp
-        Screen.cpp
+        source/generated/Screen.h
+        source/generated/Screen_wrappers.h
+        source/generated/Screen_wrappers.cpp
+        source/Screen.cpp
         # module SafeReturn
-        generated/SafeReturn.h
-        generated/SafeReturn_wrappers.h
-        generated/SafeReturn_wrappers.cpp
-        SafeReturn.cpp
+        source/generated/SafeReturn.h
+        source/generated/SafeReturn_wrappers.h
+        source/generated/SafeReturn_wrappers.cpp
+        source/SafeReturn.cpp
         # module RegularExpressionValidator
-        generated/RegularExpressionValidator.h
-        generated/RegularExpressionValidator_wrappers.h
-        generated/RegularExpressionValidator_wrappers.cpp
-        RegularExpressionValidator.cpp
+        source/generated/RegularExpressionValidator.h
+        source/generated/RegularExpressionValidator_wrappers.h
+        source/generated/RegularExpressionValidator_wrappers.cpp
+        source/RegularExpressionValidator.cpp
         # module RegularExpression
-        generated/RegularExpression.h
-        generated/RegularExpression_wrappers.h
-        generated/RegularExpression_wrappers.cpp
-        RegularExpression.cpp
+        source/generated/RegularExpression.h
+        source/generated/RegularExpression_wrappers.h
+        source/generated/RegularExpression_wrappers.cpp
+        source/RegularExpression.cpp
         # module Region
-        generated/Region.h
-        generated/Region_wrappers.h
-        generated/Region_wrappers.cpp
-        Region.cpp
+        source/generated/Region.h
+        source/generated/Region_wrappers.h
+        source/generated/Region_wrappers.cpp
+        source/Region.cpp
         # module RectF
-        generated/RectF.h
-        generated/RectF_wrappers.h
-        generated/RectF_wrappers.cpp
-        RectF.cpp
+        source/generated/RectF.h
+        source/generated/RectF_wrappers.h
+        source/generated/RectF_wrappers.cpp
+        source/RectF.cpp
         # module Rect
-        generated/Rect.h
-        generated/Rect_wrappers.h
-        generated/Rect_wrappers.cpp
-        Rect.cpp
+        source/generated/Rect.h
+        source/generated/Rect_wrappers.h
+        source/generated/Rect_wrappers.cpp
+        source/Rect.cpp
         # module RadioButton
-        generated/RadioButton.h
-        generated/RadioButton_wrappers.h
-        generated/RadioButton_wrappers.cpp
-        RadioButton.cpp
+        source/generated/RadioButton.h
+        source/generated/RadioButton_wrappers.h
+        source/generated/RadioButton_wrappers.cpp
+        source/RadioButton.cpp
         # module PushButton
-        generated/PushButton.h
-        generated/PushButton_wrappers.h
-        generated/PushButton_wrappers.cpp
-        PushButton.cpp
+        source/generated/PushButton.h
+        source/generated/PushButton_wrappers.h
+        source/generated/PushButton_wrappers.cpp
+        source/PushButton.cpp
         # module ProgressBar
-        generated/ProgressBar.h
-        generated/ProgressBar_wrappers.h
-        generated/ProgressBar_wrappers.cpp
-        ProgressBar.cpp
+        source/generated/ProgressBar.h
+        source/generated/ProgressBar_wrappers.h
+        source/generated/ProgressBar_wrappers.cpp
+        source/ProgressBar.cpp
         # module PolygonF
-        generated/PolygonF.h
-        generated/PolygonF_wrappers.h
-        generated/PolygonF_wrappers.cpp
-        PolygonF.cpp
+        source/generated/PolygonF.h
+        source/generated/PolygonF_wrappers.h
+        source/generated/PolygonF_wrappers.cpp
+        source/PolygonF.cpp
         # module Polygon
-        generated/Polygon.h
-        generated/Polygon_wrappers.h
-        generated/Polygon_wrappers.cpp
-        Polygon.cpp
+        source/generated/Polygon.h
+        source/generated/Polygon_wrappers.h
+        source/generated/Polygon_wrappers.cpp
+        source/Polygon.cpp
         # module PointF
-        generated/PointF.h
-        generated/PointF_wrappers.h
-        generated/PointF_wrappers.cpp
-        PointF.cpp
+        source/generated/PointF.h
+        source/generated/PointF_wrappers.h
+        source/generated/PointF_wrappers.cpp
+        source/PointF.cpp
         # module Point
-        generated/Point.h
-        generated/Point_wrappers.h
-        generated/Point_wrappers.cpp
-        Point.cpp
+        source/generated/Point.h
+        source/generated/Point_wrappers.h
+        source/generated/Point_wrappers.cpp
+        source/Point.cpp
         # module PlainTextEdit
-        generated/PlainTextEdit.h
-        generated/PlainTextEdit_wrappers.h
-        generated/PlainTextEdit_wrappers.cpp
-        PlainTextEdit.cpp
+        source/generated/PlainTextEdit.h
+        source/generated/PlainTextEdit_wrappers.h
+        source/generated/PlainTextEdit_wrappers.cpp
+        source/PlainTextEdit.cpp
         # module Pixmap
-        generated/Pixmap.h
-        generated/Pixmap_wrappers.h
-        generated/Pixmap_wrappers.cpp
-        Pixmap.cpp
+        source/generated/Pixmap.h
+        source/generated/Pixmap_wrappers.h
+        source/generated/Pixmap_wrappers.cpp
+        source/Pixmap.cpp
         # module PersistentModelIndex
-        generated/PersistentModelIndex.h
-        generated/PersistentModelIndex_wrappers.h
-        generated/PersistentModelIndex_wrappers.cpp
-        PersistentModelIndex.cpp
+        source/generated/PersistentModelIndex.h
+        source/generated/PersistentModelIndex_wrappers.h
+        source/generated/PersistentModelIndex_wrappers.cpp
+        source/PersistentModelIndex.cpp
         # module Pen
-        generated/Pen.h
-        generated/Pen_wrappers.h
-        generated/Pen_wrappers.cpp
-        Pen.cpp
+        source/generated/Pen.h
+        source/generated/Pen_wrappers.h
+        source/generated/Pen_wrappers.cpp
+        source/Pen.cpp
         # module PainterPath
-        generated/PainterPath.h
-        generated/PainterPath_wrappers.h
-        generated/PainterPath_wrappers.cpp
-        PainterPath.cpp
+        source/generated/PainterPath.h
+        source/generated/PainterPath_wrappers.h
+        source/generated/PainterPath_wrappers.cpp
+        source/PainterPath.cpp
         # module Painter
-        generated/Painter.h
-        generated/Painter_wrappers.h
-        generated/Painter_wrappers.cpp
-        Painter.cpp
+        source/generated/Painter.h
+        source/generated/Painter_wrappers.h
+        source/generated/Painter_wrappers.cpp
+        source/Painter.cpp
         # module PaintDevice
-        generated/PaintDevice.h
-        generated/PaintDevice_wrappers.h
-        generated/PaintDevice_wrappers.cpp
-        PaintDevice.cpp
+        source/generated/PaintDevice.h
+        source/generated/PaintDevice_wrappers.h
+        source/generated/PaintDevice_wrappers.cpp
+        source/PaintDevice.cpp
         # module Object
-        generated/Object.h
-        generated/Object_wrappers.h
-        generated/Object_wrappers.cpp
-        Object.cpp
+        source/generated/Object.h
+        source/generated/Object_wrappers.h
+        source/generated/Object_wrappers.cpp
+        source/Object.cpp
         # module ModelIndex
-        generated/ModelIndex.h
-        generated/ModelIndex_wrappers.h
-        generated/ModelIndex_wrappers.cpp
-        ModelIndex.cpp
+        source/generated/ModelIndex.h
+        source/generated/ModelIndex_wrappers.h
+        source/generated/ModelIndex_wrappers.cpp
+        source/ModelIndex.cpp
         # module MimeData
-        generated/MimeData.h
-        generated/MimeData_wrappers.h
-        generated/MimeData_wrappers.cpp
-        MimeData.cpp
+        source/generated/MimeData.h
+        source/generated/MimeData_wrappers.h
+        source/generated/MimeData_wrappers.cpp
+        source/MimeData.cpp
         # module MessageBox
-        generated/MessageBox.h
-        generated/MessageBox_wrappers.h
-        generated/MessageBox_wrappers.cpp
-        MessageBox.cpp
+        source/generated/MessageBox.h
+        source/generated/MessageBox_wrappers.h
+        source/generated/MessageBox_wrappers.cpp
+        source/MessageBox.cpp
         # module MenuBar
-        generated/MenuBar.h
-        generated/MenuBar_wrappers.h
-        generated/MenuBar_wrappers.cpp
-        MenuBar.cpp
+        source/generated/MenuBar.h
+        source/generated/MenuBar_wrappers.h
+        source/generated/MenuBar_wrappers.cpp
+        source/MenuBar.cpp
         # module Menu
-        generated/Menu.h
-        generated/Menu_wrappers.h
-        generated/Menu_wrappers.cpp
-        Menu.cpp
+        source/generated/Menu.h
+        source/generated/Menu_wrappers.h
+        source/generated/Menu_wrappers.cpp
+        source/Menu.cpp
         # module MarginsF
-        generated/MarginsF.h
-        generated/MarginsF_wrappers.h
-        generated/MarginsF_wrappers.cpp
-        MarginsF.cpp
+        source/generated/MarginsF.h
+        source/generated/MarginsF_wrappers.h
+        source/generated/MarginsF_wrappers.cpp
+        source/MarginsF.cpp
         # module Margins
-        generated/Margins.h
-        generated/Margins_wrappers.h
-        generated/Margins_wrappers.cpp
-        Margins.cpp
+        source/generated/Margins.h
+        source/generated/Margins_wrappers.h
+        source/generated/Margins_wrappers.cpp
+        source/Margins.cpp
         # module MainWindow
-        generated/MainWindow.h
-        generated/MainWindow_wrappers.h
-        generated/MainWindow_wrappers.cpp
-        MainWindow.cpp
+        source/generated/MainWindow.h
+        source/generated/MainWindow_wrappers.h
+        source/generated/MainWindow_wrappers.cpp
+        source/MainWindow.cpp
         # module Logging
-        generated/Logging.h
-        generated/Logging_wrappers.h
-        generated/Logging_wrappers.cpp
-        Logging.cpp
+        source/generated/Logging.h
+        source/generated/Logging_wrappers.h
+        source/generated/Logging_wrappers.cpp
+        source/Logging.cpp
         # module ListView
-        generated/ListView.h
-        generated/ListView_wrappers.h
-        generated/ListView_wrappers.cpp
-        ListView.cpp
+        source/generated/ListView.h
+        source/generated/ListView_wrappers.h
+        source/generated/ListView_wrappers.cpp
+        source/ListView.cpp
         # module LineEdit
-        generated/LineEdit.h
-        generated/LineEdit_wrappers.h
-        generated/LineEdit_wrappers.cpp
-        LineEdit.cpp
+        source/generated/LineEdit.h
+        source/generated/LineEdit_wrappers.h
+        source/generated/LineEdit_wrappers.cpp
+        source/LineEdit.cpp
         # module LayoutItem
-        generated/LayoutItem.h
-        generated/LayoutItem_wrappers.h
-        generated/LayoutItem_wrappers.cpp
-        LayoutItem.cpp
+        source/generated/LayoutItem.h
+        source/generated/LayoutItem_wrappers.h
+        source/generated/LayoutItem_wrappers.cpp
+        source/LayoutItem.cpp
         # module Layout
-        generated/Layout.h
-        generated/Layout_wrappers.h
-        generated/Layout_wrappers.cpp
-        Layout.cpp
+        source/generated/Layout.h
+        source/generated/Layout_wrappers.h
+        source/generated/Layout_wrappers.cpp
+        source/Layout.cpp
         # module Label
-        generated/Label.h
-        generated/Label_wrappers.h
-        generated/Label_wrappers.cpp
-        Label.cpp
+        source/generated/Label.h
+        source/generated/Label_wrappers.h
+        source/generated/Label_wrappers.cpp
+        source/Label.cpp
         # module KeySequence
-        generated/KeySequence.h
-        generated/KeySequence_wrappers.h
-        generated/KeySequence_wrappers.cpp
-        KeySequence.cpp
+        source/generated/KeySequence.h
+        source/generated/KeySequence_wrappers.h
+        source/generated/KeySequence_wrappers.cpp
+        source/KeySequence.cpp
         # module ItemSelectionModel
-        generated/ItemSelectionModel.h
-        generated/ItemSelectionModel_wrappers.h
-        generated/ItemSelectionModel_wrappers.cpp
-        ItemSelectionModel.cpp
+        source/generated/ItemSelectionModel.h
+        source/generated/ItemSelectionModel_wrappers.h
+        source/generated/ItemSelectionModel_wrappers.cpp
+        source/ItemSelectionModel.cpp
         # module ItemSelectionCommon
-        generated/ItemSelectionCommon.h
-        generated/ItemSelectionCommon_wrappers.h
-        generated/ItemSelectionCommon_wrappers.cpp
-        ItemSelectionCommon.cpp
+        source/generated/ItemSelectionCommon.h
+        source/generated/ItemSelectionCommon_wrappers.h
+        source/generated/ItemSelectionCommon_wrappers.cpp
+        source/ItemSelectionCommon.cpp
         # module ItemSelection
-        generated/ItemSelection.h
-        generated/ItemSelection_wrappers.h
-        generated/ItemSelection_wrappers.cpp
-        ItemSelection.cpp
+        source/generated/ItemSelection.h
+        source/generated/ItemSelection_wrappers.h
+        source/generated/ItemSelection_wrappers.cpp
+        source/ItemSelection.cpp
         # module Image
-        generated/Image.h
-        generated/Image_wrappers.h
-        generated/Image_wrappers.cpp
-        Image.cpp
+        source/generated/Image.h
+        source/generated/Image_wrappers.h
+        source/generated/Image_wrappers.cpp
+        source/Image.cpp
         # module Icon
-        generated/Icon.h
-        generated/Icon_wrappers.h
-        generated/Icon_wrappers.cpp
-        Icon.cpp
+        source/generated/Icon.h
+        source/generated/Icon_wrappers.h
+        source/generated/Icon_wrappers.cpp
+        source/Icon.cpp
         # module HeaderView
-        generated/HeaderView.h
-        generated/HeaderView_wrappers.h
-        generated/HeaderView_wrappers.cpp
-        HeaderView.cpp
+        source/generated/HeaderView.h
+        source/generated/HeaderView_wrappers.h
+        source/generated/HeaderView_wrappers.cpp
+        source/HeaderView.cpp
         # module GuiApplication
-        generated/GuiApplication.h
-        generated/GuiApplication_wrappers.h
-        generated/GuiApplication_wrappers.cpp
-        GuiApplication.cpp
+        source/generated/GuiApplication.h
+        source/generated/GuiApplication_wrappers.h
+        source/generated/GuiApplication_wrappers.cpp
+        source/GuiApplication.cpp
         # module GroupBox
-        generated/GroupBox.h
-        generated/GroupBox_wrappers.h
-        generated/GroupBox_wrappers.cpp
-        GroupBox.cpp
+        source/generated/GroupBox.h
+        source/generated/GroupBox_wrappers.h
+        source/generated/GroupBox_wrappers.cpp
+        source/GroupBox.cpp
         # module GridLayout
-        generated/GridLayout.h
-        generated/GridLayout_wrappers.h
-        generated/GridLayout_wrappers.cpp
-        GridLayout.cpp
+        source/generated/GridLayout.h
+        source/generated/GridLayout_wrappers.h
+        source/generated/GridLayout_wrappers.cpp
+        source/GridLayout.cpp
         # module GraphicsEffect
-        generated/GraphicsEffect.h
-        generated/GraphicsEffect_wrappers.h
-        generated/GraphicsEffect_wrappers.cpp
-        GraphicsEffect.cpp
+        source/generated/GraphicsEffect.h
+        source/generated/GraphicsEffect_wrappers.h
+        source/generated/GraphicsEffect_wrappers.cpp
+        source/GraphicsEffect.cpp
         # module Gradient
-        generated/Gradient.h
-        generated/Gradient_wrappers.h
-        generated/Gradient_wrappers.cpp
-        Gradient.cpp
+        source/generated/Gradient.h
+        source/generated/Gradient_wrappers.h
+        source/generated/Gradient_wrappers.cpp
+        source/Gradient.cpp
         # module Frame
-        generated/Frame.h
-        generated/Frame_wrappers.h
-        generated/Frame_wrappers.cpp
-        Frame.cpp
+        source/generated/Frame.h
+        source/generated/Frame_wrappers.h
+        source/generated/Frame_wrappers.cpp
+        source/Frame.cpp
         # module FormLayout
-        generated/FormLayout.h
-        generated/FormLayout_wrappers.h
-        generated/FormLayout_wrappers.cpp
-        FormLayout.cpp
+        source/generated/FormLayout.h
+        source/generated/FormLayout_wrappers.h
+        source/generated/FormLayout_wrappers.cpp
+        source/FormLayout.cpp
         # module Font
-        generated/Font.h
-        generated/Font_wrappers.h
-        generated/Font_wrappers.cpp
-        Font.cpp
+        source/generated/Font.h
+        source/generated/Font_wrappers.h
+        source/generated/Font_wrappers.cpp
+        source/Font.cpp
         # module FileDialog
-        generated/FileDialog.h
-        generated/FileDialog_wrappers.h
-        generated/FileDialog_wrappers.cpp
-        FileDialog.cpp
+        source/generated/FileDialog.h
+        source/generated/FileDialog_wrappers.h
+        source/generated/FileDialog_wrappers.cpp
+        source/FileDialog.cpp
         # module Event
-        generated/Event.h
-        generated/Event_wrappers.h
-        generated/Event_wrappers.cpp
-        Event.cpp
+        source/generated/Event.h
+        source/generated/Event_wrappers.h
+        source/generated/Event_wrappers.cpp
+        source/Event.cpp
         # module Enums
-        generated/Enums.h
-        generated/Enums_wrappers.h
-        generated/Enums_wrappers.cpp
-        Enums.cpp
+        source/generated/Enums.h
+        source/generated/Enums_wrappers.h
+        source/generated/Enums_wrappers.cpp
+        source/Enums.cpp
         # module Drag
-        generated/Drag.h
-        generated/Drag_wrappers.h
-        generated/Drag_wrappers.cpp
-        Drag.cpp
+        source/generated/Drag.h
+        source/generated/Drag_wrappers.h
+        source/generated/Drag_wrappers.cpp
+        source/Drag.cpp
         # module DockWidget
-        generated/DockWidget.h
-        generated/DockWidget_wrappers.h
-        generated/DockWidget_wrappers.cpp
-        DockWidget.cpp
+        source/generated/DockWidget.h
+        source/generated/DockWidget_wrappers.h
+        source/generated/DockWidget_wrappers.cpp
+        source/DockWidget.cpp
         # module Dir
-        generated/Dir.h
-        generated/Dir_wrappers.h
-        generated/Dir_wrappers.cpp
-        Dir.cpp
+        source/generated/Dir.h
+        source/generated/Dir_wrappers.h
+        source/generated/Dir_wrappers.cpp
+        source/Dir.cpp
         # module Dialog
-        generated/Dialog.h
-        generated/Dialog_wrappers.h
-        generated/Dialog_wrappers.cpp
-        Dialog.cpp
+        source/generated/Dialog.h
+        source/generated/Dialog_wrappers.h
+        source/generated/Dialog_wrappers.cpp
+        source/Dialog.cpp
         # module DateTime
-        generated/DateTime.h
-        generated/DateTime_wrappers.h
-        generated/DateTime_wrappers.cpp
-        DateTime.cpp
+        source/generated/DateTime.h
+        source/generated/DateTime_wrappers.h
+        source/generated/DateTime_wrappers.cpp
+        source/DateTime.cpp
         # module Date
-        generated/Date.h
-        generated/Date_wrappers.h
-        generated/Date_wrappers.cpp
-        Date.cpp
+        source/generated/Date.h
+        source/generated/Date_wrappers.h
+        source/generated/Date_wrappers.cpp
+        source/Date.cpp
         # module Cursor
-        generated/Cursor.h
-        generated/Cursor_wrappers.h
-        generated/Cursor_wrappers.cpp
-        Cursor.cpp
+        source/generated/Cursor.h
+        source/generated/Cursor_wrappers.h
+        source/generated/Cursor_wrappers.cpp
+        source/Cursor.cpp
         # module CoreApplication
-        generated/CoreApplication.h
-        generated/CoreApplication_wrappers.h
-        generated/CoreApplication_wrappers.cpp
-        CoreApplication.cpp
+        source/generated/CoreApplication.h
+        source/generated/CoreApplication_wrappers.h
+        source/generated/CoreApplication_wrappers.cpp
+        source/CoreApplication.cpp
         # module Completer
-        generated/Completer.h
-        generated/Completer_wrappers.h
-        generated/Completer_wrappers.cpp
-        Completer.cpp
+        source/generated/Completer.h
+        source/generated/Completer_wrappers.h
+        source/generated/Completer_wrappers.cpp
+        source/Completer.cpp
         # module ComboBox
-        generated/ComboBox.h
-        generated/ComboBox_wrappers.h
-        generated/ComboBox_wrappers.cpp
-        ComboBox.cpp
+        source/generated/ComboBox.h
+        source/generated/ComboBox_wrappers.h
+        source/generated/ComboBox_wrappers.cpp
+        source/ComboBox.cpp
         # module Color
-        generated/Color.h
-        generated/Color_wrappers.h
-        generated/Color_wrappers.cpp
-        Color.cpp
+        source/generated/Color.h
+        source/generated/Color_wrappers.h
+        source/generated/Color_wrappers.cpp
+        source/Color.cpp
         # module CheckBox
-        generated/CheckBox.h
-        generated/CheckBox_wrappers.h
-        generated/CheckBox_wrappers.cpp
-        CheckBox.cpp
+        source/generated/CheckBox.h
+        source/generated/CheckBox_wrappers.h
+        source/generated/CheckBox_wrappers.cpp
+        source/CheckBox.cpp
         # module CalendarWidget
-        generated/CalendarWidget.h
-        generated/CalendarWidget_wrappers.h
-        generated/CalendarWidget_wrappers.cpp
-        CalendarWidget.cpp
+        source/generated/CalendarWidget.h
+        source/generated/CalendarWidget_wrappers.h
+        source/generated/CalendarWidget_wrappers.cpp
+        source/CalendarWidget.cpp
         # module Brush
-        generated/Brush.h
-        generated/Brush_wrappers.h
-        generated/Brush_wrappers.cpp
-        Brush.cpp
+        source/generated/Brush.h
+        source/generated/Brush_wrappers.h
+        source/generated/Brush_wrappers.cpp
+        source/Brush.cpp
         # module BoxLayout
-        generated/BoxLayout.h
-        generated/BoxLayout_wrappers.h
-        generated/BoxLayout_wrappers.cpp
-        BoxLayout.cpp
+        source/generated/BoxLayout.h
+        source/generated/BoxLayout_wrappers.h
+        source/generated/BoxLayout_wrappers.cpp
+        source/BoxLayout.cpp
         # module Application
-        generated/Application.h
-        generated/Application_wrappers.h
-        generated/Application_wrappers.cpp
-        Application.cpp
+        source/generated/Application.h
+        source/generated/Application_wrappers.h
+        source/generated/Application_wrappers.cpp
+        source/Application.cpp
         # module Action
-        generated/Action.h
-        generated/Action_wrappers.h
-        generated/Action_wrappers.cpp
-        Action.cpp
+        source/generated/Action.h
+        source/generated/Action_wrappers.h
+        source/generated/Action_wrappers.cpp
+        source/Action.cpp
         # module AbstractSpinBox
-        generated/AbstractSpinBox.h
-        generated/AbstractSpinBox_wrappers.h
-        generated/AbstractSpinBox_wrappers.cpp
-        AbstractSpinBox.cpp
+        source/generated/AbstractSpinBox.h
+        source/generated/AbstractSpinBox_wrappers.h
+        source/generated/AbstractSpinBox_wrappers.cpp
+        source/AbstractSpinBox.cpp
         # module AbstractSlider
-        generated/AbstractSlider.h
-        generated/AbstractSlider_wrappers.h
-        generated/AbstractSlider_wrappers.cpp
-        AbstractSlider.cpp
+        source/generated/AbstractSlider.h
+        source/generated/AbstractSlider_wrappers.h
+        source/generated/AbstractSlider_wrappers.cpp
+        source/AbstractSlider.cpp
         # module AbstractScrollArea
-        generated/AbstractScrollArea.h
-        generated/AbstractScrollArea_wrappers.h
-        generated/AbstractScrollArea_wrappers.cpp
-        AbstractScrollArea.cpp
+        source/generated/AbstractScrollArea.h
+        source/generated/AbstractScrollArea_wrappers.h
+        source/generated/AbstractScrollArea_wrappers.cpp
+        source/AbstractScrollArea.cpp
         # module AbstractProxyModel
-        generated/AbstractProxyModel.h
-        generated/AbstractProxyModel_wrappers.h
-        generated/AbstractProxyModel_wrappers.cpp
-        AbstractProxyModel.cpp
+        source/generated/AbstractProxyModel.h
+        source/generated/AbstractProxyModel_wrappers.h
+        source/generated/AbstractProxyModel_wrappers.cpp
+        source/AbstractProxyModel.cpp
         # module AbstractListModel
-        generated/AbstractListModel.h
-        generated/AbstractListModel_wrappers.h
-        generated/AbstractListModel_wrappers.cpp
-        AbstractListModel.cpp
+        source/generated/AbstractListModel.h
+        source/generated/AbstractListModel_wrappers.h
+        source/generated/AbstractListModel_wrappers.cpp
+        source/AbstractListModel.cpp
         # module AbstractItemView
-        generated/AbstractItemView.h
-        generated/AbstractItemView_wrappers.h
-        generated/AbstractItemView_wrappers.cpp
-        AbstractItemView.cpp
+        source/generated/AbstractItemView.h
+        source/generated/AbstractItemView_wrappers.h
+        source/generated/AbstractItemView_wrappers.cpp
+        source/AbstractItemView.cpp
         # module AbstractItemModel
-        generated/AbstractItemModel.h
-        generated/AbstractItemModel_wrappers.h
-        generated/AbstractItemModel_wrappers.cpp
-        AbstractItemModel.cpp
+        source/generated/AbstractItemModel.h
+        source/generated/AbstractItemModel_wrappers.h
+        source/generated/AbstractItemModel_wrappers.cpp
+        source/AbstractItemModel.cpp
         # module AbstractItemDelegate
-        generated/AbstractItemDelegate.h
-        generated/AbstractItemDelegate_wrappers.h
-        generated/AbstractItemDelegate_wrappers.cpp
-        AbstractItemDelegate.cpp
+        source/generated/AbstractItemDelegate.h
+        source/generated/AbstractItemDelegate_wrappers.h
+        source/generated/AbstractItemDelegate_wrappers.cpp
+        source/AbstractItemDelegate.cpp
         # module AbstractButton
-        generated/AbstractButton.h
-        generated/AbstractButton_wrappers.h
-        generated/AbstractButton_wrappers.cpp
-        AbstractButton.cpp
+        source/generated/AbstractButton.h
+        source/generated/AbstractButton_wrappers.h
+        source/generated/AbstractButton_wrappers.cpp
+        source/AbstractButton.cpp
 
         # library implementation
-        generated/Library.cpp
+        source/generated/Library.cpp
 )
 
 target_link_libraries(MinimalQtImpl PRIVATE Qt6::Widgets)

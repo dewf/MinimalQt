@@ -1,3 +1,5 @@
-*.cpp.new
-generated/
+source/**/*.cpp.new
+source/**/generated/
+source/**/support/
+CMakeLists.txt.new
 
