@@ -15,11 +15,12 @@ enum Direction {
     BottomToTop
 }
 
+@dlang_withoverloads(Layout.Handle, addWidget)
 opaque Handle extends Layout.Handle {
     void addLayout(Layout.Handle layout, int stretch = 0);
 
     // void addSpacerItem(QSpacerItem *spacerItem)
-    
+
     void addSpacing(int size);
     void addStretch(int stretch = 0);
     void addStrut(int size);

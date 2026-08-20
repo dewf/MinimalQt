@@ -40,6 +40,7 @@ enum RenderFlag {
     IgnoreMask = 0x4
 }
 
+@dlang_withoverloads(Object.Handle, setParent)
 opaque Handle extends Object.Handle {
     // interfaces:
     PaintDevice.Handle asPaintDevice();

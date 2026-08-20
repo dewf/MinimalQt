@@ -48,6 +48,7 @@ interface SignalHandler extends Object.SignalHandler {
     void yChanged(int arg);
 }
 
+@dlang_withoverloads(Object.Handle, setParent) // D-specific hack :(
 opaque Handle extends Object.Handle {
     Size.Owned baseSize();
     ScreenOrientation contentOrientation();
