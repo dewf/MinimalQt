@@ -4,7 +4,7 @@ module Object;
 opaque SignalConnection; // contains a MetaObject::Connection. @nodispose because they are automatically deleted on disconnection
 
 interface SignalHandler {
-    // internal use (always on)
+    // for internal use
     void destroyedByQt();
 
     void destroyed(Handle obj);
