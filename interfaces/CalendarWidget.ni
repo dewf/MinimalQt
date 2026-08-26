@@ -7,6 +7,7 @@ import Date;
 import Enums;
 import TextCharFormat;
 
+@methodprefix("sig_")
 interface SignalHandler extends Widget.SignalHandler {
     void activated(Date.Handle date);
     void clicked(Date.Handle date);

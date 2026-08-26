@@ -8,6 +8,7 @@ import RegularExpression;
 import ModelIndex;
 import PersistentModelIndex;
 
+@methodprefix("sig_")
 interface SignalHandler extends AbstractProxyModel.SignalHandler {
     void autoAcceptChildRowsChanged(bool autoAcceptChildRows);
     void filterCaseSensitivityChanged(CaseSensitivity filterCaseSensitivity);

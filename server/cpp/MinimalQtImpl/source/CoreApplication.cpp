@@ -19,35 +19,35 @@ namespace CoreApplication
 
     SignalConnectionRef Handle_connect_AboutToQuit(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QCoreApplication::aboutToQuit, [handler] {
-            handler->aboutToQuit();
+            handler->sig_aboutToQuit();
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_ApplicationNameChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QCoreApplication::applicationNameChanged, [handler] {
-            handler->applicationNameChanged();
+            handler->sig_applicationNameChanged();
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_ApplicationVersionChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QCoreApplication::applicationVersionChanged, [handler] {
-            handler->applicationVersionChanged();
+            handler->sig_applicationVersionChanged();
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_OrganizationDomainChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QCoreApplication::organizationDomainChanged, [handler] {
-            handler->organizationDomainChanged();
+            handler->sig_organizationDomainChanged();
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_OrganizationNameChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QCoreApplication::organizationNameChanged, [handler] {
-            handler->organizationNameChanged();
+            handler->sig_organizationNameChanged();
         });
         return new __SignalConnection { connection };
     }

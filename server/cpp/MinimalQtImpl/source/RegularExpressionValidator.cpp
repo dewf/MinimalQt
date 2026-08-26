@@ -23,7 +23,7 @@ namespace RegularExpressionValidator
     SignalConnectionRef Handle_connect_RegularExpressionChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QRegularExpressionValidator::regularExpressionChanged, [handler](const QRegularExpression &re) {
             QRegularExpression safeCopy(re); // copy for (non-)const purposes
-            handler->regularExpressionChanged(reinterpret_cast<RegularExpression::HandleRef>(&safeCopy));
+            handler->sig_regularExpressionChanged(reinterpret_cast<RegularExpression::HandleRef>(&safeCopy));
         });
         return new __SignalConnection { connection };
     }

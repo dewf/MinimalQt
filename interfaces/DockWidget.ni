@@ -18,6 +18,7 @@ enum DockWidgetFeature {
     Reserved              = 0xff
 }
 
+@methodprefix("sig_")
 interface SignalHandler extends Widget.SignalHandler {
     void allowedAreasChanged(DockWidgetAreas allowedAreas);
     void dockLocationChanged(DockWidgetArea area);

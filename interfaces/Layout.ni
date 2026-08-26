@@ -8,6 +8,7 @@ import Enums;
 import LayoutItem;
 import Widget;
 
+@methodprefix("sig_")
 interface SignalHandler extends Object.SignalHandler;
 // none of our own
 

@@ -33,6 +33,7 @@ struct PositionResult {
     ItemRole role;
 }
 
+@methodprefix("sig_")
 interface SignalHandler extends Layout.SignalHandler;
 // no signals
 

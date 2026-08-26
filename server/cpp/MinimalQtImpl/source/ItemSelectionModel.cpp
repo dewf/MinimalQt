@@ -102,7 +102,7 @@ namespace ItemSelectionModel
         const auto connection = QObject::connect(THIS, &QItemSelectionModel::currentChanged, [handler](const QModelIndex &current, const QModelIndex &previous) {
             QModelIndex current2(current);
             QModelIndex previous2(previous);
-            handler->currentChanged(reinterpret_cast<ModelIndex::HandleRef>(&current2), reinterpret_cast<ModelIndex::HandleRef>(reinterpret_cast<ModelIndex::HandleRef>(&previous2)));
+            handler->sig_currentChanged(reinterpret_cast<ModelIndex::HandleRef>(&current2), reinterpret_cast<ModelIndex::HandleRef>(reinterpret_cast<ModelIndex::HandleRef>(&previous2)));
         });
         return new __SignalConnection { connection };
     }
@@ -111,7 +111,7 @@ namespace ItemSelectionModel
         const auto connection = QObject::connect(THIS, &QItemSelectionModel::currentColumnChanged, [handler](const QModelIndex &current, const QModelIndex &previous) {
             QModelIndex current2(current);
             QModelIndex previous2(previous);
-            handler->currentColumnChanged(reinterpret_cast<ModelIndex::HandleRef>(&current2), reinterpret_cast<ModelIndex::HandleRef>(&previous2));
+            handler->sig_currentColumnChanged(reinterpret_cast<ModelIndex::HandleRef>(&current2), reinterpret_cast<ModelIndex::HandleRef>(&previous2));
         });
         return new __SignalConnection { connection };
     }
@@ -120,14 +120,14 @@ namespace ItemSelectionModel
         const auto connection = QObject::connect(THIS, &QItemSelectionModel::currentRowChanged, [handler](const QModelIndex &current, const QModelIndex &previous) {
             QModelIndex current2(current);
             QModelIndex previous2(previous);
-            handler->currentRowChanged(reinterpret_cast<ModelIndex::HandleRef>(&current2), reinterpret_cast<ModelIndex::HandleRef>(&previous2));
+            handler->sig_currentRowChanged(reinterpret_cast<ModelIndex::HandleRef>(&current2), reinterpret_cast<ModelIndex::HandleRef>(&previous2));
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_ModelChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QItemSelectionModel::modelChanged, [handler](QAbstractItemModel *model) {
-            handler->modelChanged(reinterpret_cast<AbstractItemModel::HandleRef>(model));
+            handler->sig_modelChanged(reinterpret_cast<AbstractItemModel::HandleRef>(model));
         });
         return new __SignalConnection { connection };
     }
@@ -136,7 +136,7 @@ namespace ItemSelectionModel
         const auto connection = QObject::connect(THIS, &QItemSelectionModel::selectionChanged, [handler](const QItemSelection &selected, const QItemSelection &deselected) {
             QItemSelection selected2(selected);
             QItemSelection deselected2(deselected);
-            handler->selectionChanged(reinterpret_cast<ItemSelection::HandleRef>(&selected2), reinterpret_cast<ItemSelection::HandleRef>(&deselected2));
+            handler->sig_selectionChanged(reinterpret_cast<ItemSelection::HandleRef>(&selected2), reinterpret_cast<ItemSelection::HandleRef>(&deselected2));
         });
         return new __SignalConnection { connection };
     }

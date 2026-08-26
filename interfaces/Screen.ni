@@ -9,6 +9,7 @@ import Enums;
 import Pixmap;
 import Transform;
 
+@methodprefix("sig_")
 interface SignalHandler extends Object.SignalHandler {
     void availableGeometryChanged(Rect.Owned geometry);
     void geometryChanged(Rect.Owned geometry);

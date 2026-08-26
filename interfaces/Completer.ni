@@ -8,6 +8,7 @@ import Enums;
 import Widget;
 import Rect;
 
+@methodprefix("sig_")
 interface SignalHandler extends Object.SignalHandler {
     void activatedIndex(ModelIndex.Handle index);
     void activatedString(string text);

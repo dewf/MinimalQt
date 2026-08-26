@@ -7,6 +7,7 @@ import Layout;
 import Enums;
 import LayoutItem;
 
+@methodprefix("sig_")
 interface SignalHandler extends Layout.SignalHandler;
 
 struct ItemPositionResult {

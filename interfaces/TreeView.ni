@@ -8,6 +8,7 @@ import AbstractItemView;
 import ModelIndex;
 import HeaderView;
 
+@methodprefix("sig_")
 interface SignalHandler extends AbstractItemView.SignalHandler {
     void collapsed(ModelIndex.Handle index);
     void expanded(ModelIndex.Handle index);

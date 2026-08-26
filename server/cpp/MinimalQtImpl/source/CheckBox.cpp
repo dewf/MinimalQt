@@ -31,7 +31,7 @@ namespace CheckBox
 
     SignalConnectionRef Handle_connect_CheckStateChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QCheckBox::checkStateChanged, [handler](Qt::CheckState state) {
-            handler->checkStateChanged(static_cast<CheckState>(state));
+            handler->sig_checkStateChanged(static_cast<CheckState>(state));
         });
         return new __SignalConnection { connection };
     }

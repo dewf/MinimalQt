@@ -9,6 +9,7 @@ import ModelIndex;
 import AbstractItemView;
 import Widget;
 
+@methodprefix("sig_")
 interface SignalHandler extends AbstractItemView.SignalHandler {
     void indexesMoved(ModelIndex.List indexes);
 }
@@ -40,7 +41,7 @@ enum ViewMode {
 }
 
 opaque Handle extends AbstractItemView.Handle {
-    
+
     int batchSize();
     void clearPropertyFlags();
     Flow getFlow();
@@ -72,7 +73,7 @@ opaque Handle extends AbstractItemView.Handle {
     bool uniformItemSizes();
     ViewMode getViewMode();
     bool wordWrap();
-    
+
     // signals ================
     SignalConnection connect_IndexesMoved(SignalHandler handler);
 }

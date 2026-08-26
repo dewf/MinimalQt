@@ -23,6 +23,7 @@ flags CheckIndexOptions {
     ParentIsInvalid  = 0x0004,
 }
 
+@methodprefix("sig_")
 interface SignalHandler extends Object.SignalHandler {
     void columnsAboutToBeInserted(ModelIndex.Handle parent, int first, int last);
     void columnsAboutToBeMoved(ModelIndex.Handle sourceParent, int sourceStart, int sourceEnd, ModelIndex.Handle destinationParent, int destinationColumn);

@@ -10,6 +10,7 @@ import CheckBox;
 import Widget;
 import Pixmap;
 
+@methodprefix("sig_")
 interface SignalHandler extends Dialog.SignalHandler {
     void buttonClicked(AbstractButton.Handle button);
 }
@@ -108,7 +109,7 @@ opaque Handle extends Dialog.Handle {
 
     @shadows
     void setWindowTitle(string title);
-    
+
     StandardButton getStandardButton(AbstractButton.Handle button);
     StandardButtons getStandardButtons();
     bool testOption(OptionEnum option);

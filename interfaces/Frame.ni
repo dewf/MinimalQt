@@ -6,6 +6,7 @@ import Icon;
 import Widget;
 import Enums;
 
+@methodprefix("sig_")
 interface SignalHandler extends Widget.SignalHandler;
 
 enum Shape {

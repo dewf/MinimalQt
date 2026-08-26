@@ -17,6 +17,7 @@ enum EndEditHint {
     RevertModelCache
 }
 
+@methodprefix("sig_")
 interface SignalHandler extends Object.SignalHandler {
     void closeEditor(Widget.Handle editor, EndEditHint hint);
     void commitData(Widget.Handle editor);

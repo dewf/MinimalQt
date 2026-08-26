@@ -4,6 +4,7 @@ import AbstractSlider;
 import Widget;
 import Enums;
 
+@methodprefix("sig_")
 interface SignalHandler extends AbstractSlider.SignalHandler;
 // no extra signals
 

@@ -159,63 +159,63 @@ namespace Screen
 
     SignalConnectionRef Handle_connect_AvailableGeometryChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QScreen::availableGeometryChanged, [handler](const QRect &geometry) {
-            handler->availableGeometryChanged(RECT_HEAP_NEW(geometry));
+            handler->sig_availableGeometryChanged(RECT_HEAP_NEW(geometry));
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_GeometryChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QScreen::geometryChanged, [handler](const QRect &geometry) {
-            handler->geometryChanged(RECT_HEAP_NEW(geometry));
+            handler->sig_geometryChanged(RECT_HEAP_NEW(geometry));
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_LogicalDotsPerInchChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QScreen::logicalDotsPerInchChanged, [handler](qreal dpi) {
-            handler->logicalDotsPerInchChanged(dpi);
+            handler->sig_logicalDotsPerInchChanged(dpi);
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_OrientationChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QScreen::orientationChanged, [handler](Qt::ScreenOrientation orientation) {
-            handler->orientationChanged(static_cast<ScreenOrientation>(orientation));
+            handler->sig_orientationChanged(static_cast<ScreenOrientation>(orientation));
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_PhysicalDotsPerInchChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QScreen::physicalDotsPerInchChanged, [handler](qreal dpi) {
-            handler->physicalDotsPerInchChanged(dpi);
+            handler->sig_physicalDotsPerInchChanged(dpi);
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_PhysicalSizeChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QScreen::physicalSizeChanged, [handler](const QSizeF &size) {
-            handler->physicalSizeChanged(SIZEF_HEAP_NEW(size));
+            handler->sig_physicalSizeChanged(SIZEF_HEAP_NEW(size));
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_PrimaryOrientationChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QScreen::primaryOrientationChanged, [handler](Qt::ScreenOrientation orientation) {
-            handler->primaryOrientationChanged(static_cast<ScreenOrientation>(orientation));
+            handler->sig_primaryOrientationChanged(static_cast<ScreenOrientation>(orientation));
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_RefreshRateChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QScreen::refreshRateChanged, [handler](qreal refreshRate) {
-            handler->refreshRateChanged(refreshRate);
+            handler->sig_refreshRateChanged(refreshRate);
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_VirtualGeometryChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QScreen::virtualGeometryChanged, [handler](const QRect &rect) {
-            handler->virtualGeometryChanged(RECT_HEAP_NEW(rect));
+            handler->sig_virtualGeometryChanged(RECT_HEAP_NEW(rect));
         });
         return new __SignalConnection { connection };
     }

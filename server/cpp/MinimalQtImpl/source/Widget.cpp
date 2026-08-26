@@ -999,21 +999,21 @@ namespace Widget
 
     SignalConnectionRef Handle_connect_CustomContextMenuRequested(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QWidget::customContextMenuRequested, [handler](const QPoint& pos) {
-            handler->customContextMenuRequested(POINT_HEAP_NEW(pos));
+            handler->sig_customContextMenuRequested(POINT_HEAP_NEW(pos));
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_WindowIconChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QWidget::windowIconChanged, [handler](const QIcon& icon) {
-            handler->windowIconChanged(ICON_HEAP_NEW(icon));
+            handler->sig_windowIconChanged(ICON_HEAP_NEW(icon));
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_WindowTitleChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QWidget::windowTitleChanged, [handler](const QString& title) {
-            handler->windowTitleChanged(title.toStdString());
+            handler->sig_windowTitleChanged(title.toStdString());
         });
         return new __SignalConnection { connection };
     }

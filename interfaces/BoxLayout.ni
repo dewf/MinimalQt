@@ -6,6 +6,7 @@ import Enums;
 import Object;
 import LayoutItem;
 
+@methodprefix("sig_")
 interface SignalHandler extends Layout.SignalHandler;
 
 enum Direction {

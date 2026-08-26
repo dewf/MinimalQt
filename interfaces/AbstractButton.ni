@@ -6,6 +6,7 @@ import KeySequence;
 import Widget;
 import Icon;
 
+@methodprefix("sig_")
 interface SignalHandler extends Widget.SignalHandler {
     void clicked(bool checkState);
     void pressed();

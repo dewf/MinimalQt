@@ -13,6 +13,7 @@ import ToolBar;
 import StatusBar;
 import TabWidget;
 
+@methodprefix("sig_")
 interface SignalHandler extends Widget.SignalHandler {
     void iconSizeChanged(Size.Owned iconSize);
     void tabifiedDockWidgetActivated(DockWidget.Handle dockWidget);

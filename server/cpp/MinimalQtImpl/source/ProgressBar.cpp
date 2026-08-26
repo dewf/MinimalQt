@@ -105,7 +105,7 @@ namespace ProgressBar
 
     SignalConnectionRef Handle_connect_ValueChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QProgressBar::valueChanged, [handler](int value) {
-            handler->valueChanged(value);
+            handler->sig_valueChanged(value);
         });
         return new __SignalConnection { connection };
     }

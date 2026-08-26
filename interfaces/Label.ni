@@ -7,7 +7,7 @@ import Enums;
 import Pixmap;
 import Widget;
 
-
+@methodprefix("sig_")
 interface SignalHandler extends Frame.SignalHandler {
     void linkActivated(string link);
     void linkHovered(string link);

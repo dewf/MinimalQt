@@ -6,6 +6,7 @@ import AbstractItemModel;
 import ItemSelectionCommon;
 import ItemSelection;
 
+@methodprefix("sig_")
 interface SignalHandler extends Object.SignalHandler {
     void currentChanged(ModelIndex.Handle current, ModelIndex.Handle previous);
     void currentColumnChanged(ModelIndex.Handle current, ModelIndex.Handle previous);

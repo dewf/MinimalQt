@@ -24,7 +24,7 @@ namespace Validator
 
     SignalConnectionRef ConstHandle_connect_Changed(ConstHandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QValidator::changed, [handler] {
-            handler->changed();
+            handler->sig_changed();
         });
         return new __SignalConnection { connection };
     }

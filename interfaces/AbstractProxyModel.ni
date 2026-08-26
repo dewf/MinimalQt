@@ -7,6 +7,7 @@ import ModelIndex;
 import PersistentModelIndex;
 import ItemSelection;
 
+@methodprefix("sig_")
 interface SignalHandler extends AbstractItemModel.SignalHandler {
     void sourceModelChanged();
 }

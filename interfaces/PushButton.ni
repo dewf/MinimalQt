@@ -6,6 +6,7 @@ import Icon;
 import AbstractButton;
 import Menu;
 
+@methodprefix("sig_")
 interface SignalHandler extends AbstractButton.SignalHandler;
 // none extra
 

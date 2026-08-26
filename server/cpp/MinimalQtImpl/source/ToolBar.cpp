@@ -114,56 +114,56 @@ namespace ToolBar
 
     SignalConnectionRef Handle_connect_ActionTriggered(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QToolBar::actionTriggered, [handler](QAction *action) {
-            handler->actionTriggered(reinterpret_cast<Action::HandleRef>(action));
+            handler->sig_actionTriggered(reinterpret_cast<Action::HandleRef>(action));
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_AllowedAreasChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QToolBar::allowedAreasChanged, [handler](Qt::ToolBarAreas allowed) {
-            handler->allowedAreasChanged(static_cast<Flags<ToolBarAreas>>(allowed));
+            handler->sig_allowedAreasChanged(static_cast<Flags<ToolBarAreas>>(allowed));
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_IconSizeChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QToolBar::iconSizeChanged, [handler](const QSize& size) {
-            handler->iconSizeChanged(SIZE_HEAP_NEW(size));
+            handler->sig_iconSizeChanged(SIZE_HEAP_NEW(size));
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_MovableChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QToolBar::movableChanged, [handler](bool movable) {
-            handler->movableChanged(movable);
+            handler->sig_movableChanged(movable);
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_OrientationChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QToolBar::orientationChanged, [handler](Qt::Orientation value) {
-            handler->orientationChanged(static_cast<Enums::Orientation>(value));
+            handler->sig_orientationChanged(static_cast<Enums::Orientation>(value));
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_ToolButtonStyleChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QToolBar::toolButtonStyleChanged, [handler](Qt::ToolButtonStyle style) {
-            handler->toolButtonStyleChanged(static_cast<ToolButtonStyle>(style));
+            handler->sig_toolButtonStyleChanged(static_cast<ToolButtonStyle>(style));
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_TopLevelChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QToolBar::topLevelChanged, [handler](bool topLevel) {
-            handler->topLevelChanged(topLevel);
+            handler->sig_topLevelChanged(topLevel);
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_VisibilityChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QToolBar::visibilityChanged, [handler](bool visible) {
-            handler->visibilityChanged(visible);
+            handler->sig_visibilityChanged(visible);
         });
         return new __SignalConnection { connection };
     }

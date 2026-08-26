@@ -283,21 +283,21 @@ namespace ComboBox
 
     SignalConnectionRef Handle_connect_Activated(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QComboBox::activated, [handler](int index) {
-            handler->activated(index);
+            handler->sig_activated(index);
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_CurrentIndexChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QComboBox::currentIndexChanged, [handler](int index) {
-            handler->currentIndexChanged(index);
+            handler->sig_currentIndexChanged(index);
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_CurrentTextChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QComboBox::currentTextChanged, [handler](const QString& text) {
-            handler->currentTextChanged(text.toStdString());
+            handler->sig_currentTextChanged(text.toStdString());
 
         });
         return new __SignalConnection { connection };
@@ -305,28 +305,28 @@ namespace ComboBox
 
     SignalConnectionRef Handle_connect_EditTextChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QComboBox::editTextChanged, [handler](const QString& text) {
-            handler->editTextChanged(text.toStdString());
+            handler->sig_editTextChanged(text.toStdString());
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_Highlighted(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QComboBox::highlighted, [handler](int index) {
-            handler->highlighted(index);
+            handler->sig_highlighted(index);
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_TextActivated(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QComboBox::textActivated, [handler](const QString& text) {
-            handler->textActivated(text.toStdString());
+            handler->sig_textActivated(text.toStdString());
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_TextHighlighted(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QComboBox::textHighlighted, [handler](const QString& text) {
-            handler->textHighlighted(text.toStdString());
+            handler->sig_textHighlighted(text.toStdString());
         });
         return new __SignalConnection { connection };
     }

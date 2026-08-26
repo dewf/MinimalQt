@@ -225,7 +225,7 @@ namespace TreeView
     SignalConnectionRef Handle_connect_Collapsed(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QTreeView::collapsed, [handler](const QModelIndex& index) {
             QModelIndex index2(index);
-            handler->collapsed(reinterpret_cast<ModelIndex::HandleRef>(&index2));
+            handler->sig_collapsed(reinterpret_cast<ModelIndex::HandleRef>(&index2));
         });
         return new __SignalConnection { connection };
     }
@@ -233,7 +233,7 @@ namespace TreeView
     SignalConnectionRef Handle_connect_Expanded(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QTreeView::expanded, [handler](const QModelIndex& index) {
             QModelIndex index2(index);
-            handler->expanded(reinterpret_cast<ModelIndex::HandleRef>(&index2));
+            handler->sig_expanded(reinterpret_cast<ModelIndex::HandleRef>(&index2));
         });
         return new __SignalConnection { connection };
     }

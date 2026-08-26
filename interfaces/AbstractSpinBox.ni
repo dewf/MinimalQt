@@ -5,6 +5,7 @@ import Object;
 import Enums;
 import Validator;
 
+@methodprefix("sig_")
 interface SignalHandler extends Widget.SignalHandler {
     void editingFinished();
 }
@@ -30,7 +31,7 @@ opaque Handle extends Widget.Handle {
     Alignment getAlignment();
     ButtonSymbols getButtonSymbols();
     CorrectionMode getCorrectionMode();
-    
+
     string fixup(string input); // 'input' is actually a string ref, and function returns void
 
     bool hasAcceptableInput();

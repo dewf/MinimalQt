@@ -9,6 +9,7 @@ import Widget;
 import Menu;
 import Action;
 
+@methodprefix("sig_")
 interface SignalHandler extends Widget.SignalHandler {
     void hovered(Action.Handle action);
     void triggered(Action.Handle action);

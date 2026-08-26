@@ -77,14 +77,14 @@ namespace Drag
 
     SignalConnectionRef Handle_connect_ActionChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QDrag::actionChanged, [handler](Qt::DropAction action) {
-            handler->actionChanged(static_cast<DropAction>(action));
+            handler->sig_actionChanged(static_cast<DropAction>(action));
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_TargetChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QDrag::targetChanged, [handler](QObject *newTarget) {
-            handler->targetChanged(reinterpret_cast<Object::HandleRef>(newTarget));
+            handler->sig_targetChanged(reinterpret_cast<Object::HandleRef>(newTarget));
         });
         return new __SignalConnection { connection };
     }

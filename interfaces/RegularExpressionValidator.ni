@@ -4,6 +4,7 @@ import Object;
 import Validator;
 import RegularExpression;
 
+@methodprefix("sig_")
 interface SignalHandler extends Validator.SignalHandler {
     void regularExpressionChanged(RegularExpression.Handle re);
 }

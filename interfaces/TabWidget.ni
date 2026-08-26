@@ -7,6 +7,7 @@ import Enums;
 import Widget;
 import TabBar;
 
+@methodprefix("sig_")
 interface SignalHandler extends Widget.SignalHandler {
     void currentChanged(int index);
     void tabBarClicked(int index);
@@ -62,7 +63,7 @@ opaque Handle extends Widget.Handle {
     bool tabsClosable();
     bool usesScrollButtons();
     Widget.Handle widget(int index);
-    
+
     void setCurrentIndex(int index);
     void setCurrentWidget(Widget.Handle widget);
 

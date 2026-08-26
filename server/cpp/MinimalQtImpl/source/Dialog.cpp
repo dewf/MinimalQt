@@ -59,21 +59,21 @@ namespace Dialog
 
     SignalConnectionRef Handle_connect_Accepted(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QDialog::accepted, [handler] {
-            handler->accepted();
+            handler->sig_accepted();
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_Finished(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QDialog::finished, [handler](int result) {
-            handler->finished(result);
+            handler->sig_finished(result);
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_Rejected(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QDialog::rejected, [handler] {
-            handler->rejected();
+            handler->sig_rejected();
         });
         return new __SignalConnection { connection };
     }

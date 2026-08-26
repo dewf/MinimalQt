@@ -123,49 +123,49 @@ namespace SortFilterProxyModel
 
     SignalConnectionRef Handle_connect_AutoAcceptChildRowsChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QSortFilterProxyModel::autoAcceptChildRowsChanged, [handler](bool autoAcceptChildRows) {
-            handler->autoAcceptChildRowsChanged(autoAcceptChildRows);
+            handler->sig_autoAcceptChildRowsChanged(autoAcceptChildRows);
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_FilterCaseSensitivityChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QSortFilterProxyModel::filterCaseSensitivityChanged, [handler](Qt::CaseSensitivity filterCaseSensitivity) {
-            handler->filterCaseSensitivityChanged(static_cast<CaseSensitivity>(filterCaseSensitivity));
+            handler->sig_filterCaseSensitivityChanged(static_cast<CaseSensitivity>(filterCaseSensitivity));
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_FilterRoleChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QSortFilterProxyModel::filterRoleChanged, [handler](int filterRole) {
-            handler->filterRoleChanged(filterRole);
+            handler->sig_filterRoleChanged(filterRole);
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_RecursiveFilteringEnabledChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QSortFilterProxyModel::recursiveFilteringEnabledChanged, [handler](bool recursiveFilteringEnabled) {
-            handler->recursiveFilteringEnabledChanged(recursiveFilteringEnabled);
+            handler->sig_recursiveFilteringEnabledChanged(recursiveFilteringEnabled);
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_SortCaseSensitivityChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QSortFilterProxyModel::sortCaseSensitivityChanged, [handler](Qt::CaseSensitivity sortCaseSensitivity) {
-            handler->sortCaseSensitivityChanged(static_cast<CaseSensitivity>(sortCaseSensitivity));
+            handler->sig_sortCaseSensitivityChanged(static_cast<CaseSensitivity>(sortCaseSensitivity));
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_SortLocaleAwareChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QSortFilterProxyModel::sortLocaleAwareChanged, [handler](bool sortLocaleAware) {
-            handler->sortLocaleAwareChanged(sortLocaleAware);
+            handler->sig_sortLocaleAwareChanged(sortLocaleAware);
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_SortRoleChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QSortFilterProxyModel::sortRoleChanged, [handler](int sortRole) {
-            handler->sortRoleChanged(sortRole);
+            handler->sig_sortRoleChanged(sortRole);
         });
         return new __SignalConnection { connection };
     }

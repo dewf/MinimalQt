@@ -171,28 +171,28 @@ namespace Menu
 
     SignalConnectionRef Handle_connect_AboutToHide(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QMenu::aboutToHide, [handler] {
-            handler->aboutToHide();
+            handler->sig_aboutToHide();
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_AboutToShow(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QMenu::aboutToShow, [handler] {
-            handler->aboutToShow();
+            handler->sig_aboutToShow();
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_Hovered(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QMenu::hovered, [handler](QAction *action) {
-            handler->hovered(reinterpret_cast<Action::HandleRef>(action));
+            handler->sig_hovered(reinterpret_cast<Action::HandleRef>(action));
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_Triggered(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QMenu::triggered, [handler](QAction *action) {
-            handler->triggered(reinterpret_cast<Action::HandleRef>(action));
+            handler->sig_triggered(reinterpret_cast<Action::HandleRef>(action));
         });
         return new __SignalConnection { connection };
     }

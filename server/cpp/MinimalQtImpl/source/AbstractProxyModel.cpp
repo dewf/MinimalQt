@@ -45,7 +45,7 @@ namespace AbstractProxyModel
 
     SignalConnectionRef Handle_connect_SourceModelChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QAbstractProxyModel::sourceModelChanged, [handler] {
-            handler->sourceModelChanged();
+            handler->sig_sourceModelChanged();
         });
         return new __SignalConnection { connection };
     }

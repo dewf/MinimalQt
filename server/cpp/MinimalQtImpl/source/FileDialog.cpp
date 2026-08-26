@@ -207,7 +207,7 @@ namespace FileDialog
 
     SignalConnectionRef Handle_connect_CurrentChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QFileDialog::currentChanged, [handler](const QString &path) {
-            handler->currentChanged(path.toStdString());
+            handler->sig_currentChanged(path.toStdString());
         });
         return new __SignalConnection { connection };
     }
@@ -215,14 +215,14 @@ namespace FileDialog
     SignalConnectionRef Handle_connect_CurrentUrlChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QFileDialog::currentUrlChanged, [handler](const QUrl &url) {
             QUrl url2(url);
-            handler->currentUrlChanged(reinterpret_cast<Url::HandleRef>(&url2));
+            handler->sig_currentUrlChanged(reinterpret_cast<Url::HandleRef>(&url2));
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_DirectoryEntered(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QFileDialog::directoryEntered, [handler](const QString &directory) {
-            handler->directoryEntered(directory.toStdString());
+            handler->sig_directoryEntered(directory.toStdString());
         });
         return new __SignalConnection { connection };
     }
@@ -230,28 +230,28 @@ namespace FileDialog
     SignalConnectionRef Handle_connect_DirectoryUrlEntered(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QFileDialog::directoryUrlEntered, [handler](const QUrl &directory) {
             QUrl directory2(directory);
-            handler->directoryUrlEntered(reinterpret_cast<Url::HandleRef>(&directory2));
+            handler->sig_directoryUrlEntered(reinterpret_cast<Url::HandleRef>(&directory2));
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_FileSelected(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QFileDialog::fileSelected, [handler](const QString &file) {
-            handler->fileSelected(file.toStdString());
+            handler->sig_fileSelected(file.toStdString());
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_FilesSelected(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QFileDialog::filesSelected, [handler](const QStringList &selected) {
-            handler->filesSelected(toVectorStrings(selected));
+            handler->sig_filesSelected(toVectorStrings(selected));
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_FilterSelected(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QFileDialog::filterSelected, [handler](const QString &filter) {
-            handler->filterSelected(filter.toStdString());
+            handler->sig_filterSelected(filter.toStdString());
         });
         return new __SignalConnection { connection };
     }
@@ -259,7 +259,7 @@ namespace FileDialog
     SignalConnectionRef Handle_connect_UrlSelected(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QFileDialog::urlSelected, [handler](const QUrl &url) {
             QUrl url2(url);
-            handler->urlSelected(reinterpret_cast<Url::HandleRef>(&url2));
+            handler->sig_urlSelected(reinterpret_cast<Url::HandleRef>(&url2));
         });
         return new __SignalConnection { connection };
     }
@@ -267,7 +267,7 @@ namespace FileDialog
     SignalConnectionRef Handle_connect_UrlsSelected(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QFileDialog::urlsSelected, [handler](const QList<QUrl> &urls) {
             QList<QUrl> urls2(urls);
-            handler->urlsSelected(reinterpret_cast<Url::ListRef>(&urls2));
+            handler->sig_urlsSelected(reinterpret_cast<Url::ListRef>(&urls2));
         });
         return new __SignalConnection { connection };
     }

@@ -8,6 +8,7 @@ import Enums;
 import ScrollBar;
 import Widget;
 
+@methodprefix("sig_")
 interface SignalHandler extends Frame.SignalHandler;
 // no extra signals
 

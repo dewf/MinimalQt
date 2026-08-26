@@ -62,35 +62,35 @@ namespace DockWidget
 
     SignalConnectionRef Handle_connect_AllowedAreasChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QDockWidget::allowedAreasChanged, [handler](Qt::DockWidgetAreas allowedAreas) {
-            handler->allowedAreasChanged(static_cast<Flags<DockWidgetAreas>>(allowedAreas));
+            handler->sig_allowedAreasChanged(static_cast<Flags<DockWidgetAreas>>(allowedAreas));
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_DockLocationChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QDockWidget::dockLocationChanged, [handler](Qt::DockWidgetArea area) {
-            handler->dockLocationChanged(static_cast<DockWidgetArea>(area));
+            handler->sig_dockLocationChanged(static_cast<DockWidgetArea>(area));
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_FeaturesChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QDockWidget::featuresChanged, [handler](QDockWidget::DockWidgetFeatures features) {
-            handler->featuresChanged(static_cast<Flags<DockWidgetFeatures>>(features));
+            handler->sig_featuresChanged(static_cast<Flags<DockWidgetFeatures>>(features));
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_TopLevelChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QDockWidget::topLevelChanged, [handler](bool topLevel) {
-            handler->topLevelChanged(topLevel);
+            handler->sig_topLevelChanged(topLevel);
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_VisibilityChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QDockWidget::visibilityChanged, [handler](bool visible) {
-            handler->visibilityChanged(visible);
+            handler->sig_visibilityChanged(visible);
         });
         return new __SignalConnection { connection };
     }

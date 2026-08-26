@@ -4,6 +4,7 @@ import Object;
 import Url;
 import TextCursor;
 
+@methodprefix("sig_")
 interface SignalHandler {
     void baseUrlChanged(Url.Handle url);
     void blockCountChanged(int newBlockCount);

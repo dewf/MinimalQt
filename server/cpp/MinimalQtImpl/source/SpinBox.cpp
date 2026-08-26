@@ -86,14 +86,14 @@ namespace SpinBox
 
     SignalConnectionRef Handle_connect_TextChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QSpinBox::textChanged, [handler](const QString &value) {
-            handler->textChanged(value.toStdString());
+            handler->sig_textChanged(value.toStdString());
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_ValueChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QSpinBox::valueChanged, [handler](int value) {
-            handler->valueChanged(value);
+            handler->sig_valueChanged(value);
         });
         return new __SignalConnection { connection };
     }

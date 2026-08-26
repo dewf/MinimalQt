@@ -157,14 +157,14 @@ namespace Completer
     SignalConnectionRef Handle_connect_ActivatedIndex(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, qOverload<const QModelIndex&>(&QCompleter::activated), [handler](const QModelIndex &index) {
             QModelIndex index2(index);
-            handler->activatedIndex(reinterpret_cast<ModelIndex::HandleRef>(&index2));
+            handler->sig_activatedIndex(reinterpret_cast<ModelIndex::HandleRef>(&index2));
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_ActivatedString(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, qOverload<const QString&>(&QCompleter::activated), [handler](const QString& text) {
-            handler->activatedString(text.toStdString());
+            handler->sig_activatedString(text.toStdString());
         });
         return new __SignalConnection { connection };
     }
@@ -172,14 +172,14 @@ namespace Completer
     SignalConnectionRef Handle_connect_HighlightedIndex(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, qOverload<const QModelIndex&>(&QCompleter::highlighted), [handler](const QModelIndex& index) {
             QModelIndex index2(index);
-            handler->highlightedIndex(reinterpret_cast<ModelIndex::HandleRef>(&index2));
+            handler->sig_highlightedIndex(reinterpret_cast<ModelIndex::HandleRef>(&index2));
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_HighlightedString(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, qOverload<const QString&>(&QCompleter::highlighted), [handler](const QString& text) {
-            handler->highlightedString(text.toStdString());
+            handler->sig_highlightedString(text.toStdString());
         });
         return new __SignalConnection { connection };
     }

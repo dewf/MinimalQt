@@ -2,6 +2,7 @@ module Validator;
 
 import Object;
 
+@methodprefix("sig_")
 interface SignalHandler extends Object.SignalHandler {
     void changed();
 }

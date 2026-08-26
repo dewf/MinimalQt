@@ -109,42 +109,42 @@ namespace AbstractSlider
 
     SignalConnectionRef Handle_connect_ActionTriggered(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QAbstractSlider::actionTriggered, [handler](int action) {
-            handler->actionTriggered(static_cast<SliderAction>(action));
+            handler->sig_actionTriggered(static_cast<SliderAction>(action));
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_RangeChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QAbstractSlider::rangeChanged, [handler](int min, int max) {
-            handler->rangeChanged(min, max);
+            handler->sig_rangeChanged(min, max);
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_SliderMoved(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QAbstractSlider::sliderMoved, [handler](int value) {
-            handler->sliderMoved(value);
+            handler->sig_sliderMoved(value);
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_SliderPressed(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QAbstractSlider::sliderPressed, [handler] {
-            handler->sliderPressed();
+            handler->sig_sliderPressed();
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_SliderReleased(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QAbstractSlider::sliderReleased, [handler] {
-            handler->sliderReleased();
+            handler->sig_sliderReleased();
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_ValueChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QAbstractSlider::valueChanged, [handler](int value) {
-            handler->valueChanged(value);
+            handler->sig_valueChanged(value);
         });
         return new __SignalConnection { connection };
     }

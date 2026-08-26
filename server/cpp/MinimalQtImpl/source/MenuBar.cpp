@@ -99,14 +99,14 @@ namespace MenuBar
 
     SignalConnectionRef Handle_connect_Hovered(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QMenuBar::hovered, [handler](QAction* action) {
-            handler->hovered(reinterpret_cast<Action::HandleRef>(action));
+            handler->sig_hovered(reinterpret_cast<Action::HandleRef>(action));
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_Triggered(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QMenuBar::triggered, [handler](QAction* action) {
-            handler->triggered(reinterpret_cast<Action::HandleRef>(action));
+            handler->sig_triggered(reinterpret_cast<Action::HandleRef>(action));
         });
         return new __SignalConnection { connection };
     }

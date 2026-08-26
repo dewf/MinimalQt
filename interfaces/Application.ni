@@ -4,6 +4,7 @@ import GuiApplication;
 import Object;
 import Widget;
 
+@methodprefix("sig_")
 interface SignalHandler extends GuiApplication.SignalHandler {
     void focusChanged(Widget.Handle old, Widget.Handle new_);
 }

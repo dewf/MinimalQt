@@ -161,7 +161,7 @@ namespace StandardItemModel
 
     SignalConnectionRef Handle_connect_ItemChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QStandardItemModel::itemChanged, [handler](QStandardItem *item) {
-            handler->itemChanged(reinterpret_cast<StandardItem::HandleRef>(item));
+            handler->sig_itemChanged(reinterpret_cast<StandardItem::HandleRef>(item));
         });
         return new __SignalConnection { connection };
     }

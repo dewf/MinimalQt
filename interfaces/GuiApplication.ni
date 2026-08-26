@@ -7,6 +7,7 @@ import SessionManager;
 import Screen;
 import Window;
 
+@methodprefix("sig_")
 interface SignalHandler extends CoreApplication.SignalHandler {
     void applicationDisplayNameChanged();
     void applicationStateChanged(ApplicationState state);

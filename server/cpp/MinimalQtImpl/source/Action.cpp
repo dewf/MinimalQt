@@ -230,49 +230,49 @@ namespace Action
 
     SignalConnectionRef Handle_connect_Changed(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QAction::changed, [handler] {
-            handler->changed();
+            handler->sig_changed();
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_CheckableChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QAction::checkableChanged, [handler](bool checkable) {
-            handler->checkableChanged(checkable);
+            handler->sig_checkableChanged(checkable);
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_EnabledChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QAction::enabledChanged, [handler](bool enabled) {
-            handler->enabledChanged(enabled);
+            handler->sig_enabledChanged(enabled);
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_Hovered(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QAction::hovered, [handler] {
-            handler->hovered();
+            handler->sig_hovered();
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_Toggled(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QAction::toggled, [handler](bool checked_) {
-            handler->toggled(checked_);
+            handler->sig_toggled(checked_);
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_Triggered(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QAction::triggered, [handler](bool checked_) {
-            handler->triggered(checked_);
+            handler->sig_triggered(checked_);
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_VisibleChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QAction::visibleChanged, [handler] {
-            handler->visibleChanged();
+            handler->sig_visibleChanged();
         });
         return new __SignalConnection { connection };
     }

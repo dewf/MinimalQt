@@ -6,6 +6,7 @@ import Enums;
 import Widget;
 import Point;
 
+@methodprefix("sig_")
 interface SignalHandler extends AbstractItemView.SignalHandler {
     void geometriesChanged();
     void sectionClicked(int logicalIndex);

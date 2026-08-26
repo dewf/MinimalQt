@@ -64,7 +64,7 @@ namespace Timer
 
     SignalConnectionRef Handle_connect_Timeout(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QTimer::timeout, [handler] {
-            handler->timeout();
+            handler->sig_timeout();
         });
         return new __SignalConnection { connection };
     }

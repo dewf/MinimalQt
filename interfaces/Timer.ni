@@ -3,6 +3,7 @@ module Timer;
 import Object;
 import Enums;
 
+@methodprefix("sig_")
 interface SignalHandler extends Object.SignalHandler {
     void timeout();
 }
@@ -17,7 +18,7 @@ opaque Handle extends Object.Handle {
     bool isActive();
     bool isSingleShot();
     int remainingTime();
-    
+
     // std::chrono::milliseconds remainingTimeAsDuration() const
 
     void setInterval(int msec);
@@ -27,7 +28,7 @@ opaque Handle extends Object.Handle {
     void setSingleShot(bool singleShot);
 
     void setTimerType(TimerType atype);
-    
+
     // void start(std::chrono::milliseconds msec)
 
     int timerId();

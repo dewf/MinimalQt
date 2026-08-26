@@ -10,6 +10,7 @@ import Url;
 import AbstractItemDelegate;
 import AbstractProxyModel;
 
+@methodprefix("sig_")
 interface SignalHandler extends Dialog.SignalHandler {
     void currentChanged(string path);
     void currentUrlChanged(Url.Handle url);

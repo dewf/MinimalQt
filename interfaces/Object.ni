@@ -3,6 +3,7 @@ module Object;
 @nodispose
 opaque SignalConnection; // contains a MetaObject::Connection. @nodispose because they are automatically deleted on disconnection
 
+@methodprefix("sig_")
 interface SignalHandler {
     // for internal use
     void destroyedByQt();

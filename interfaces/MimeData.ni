@@ -4,6 +4,7 @@ import Object;
 import Variant;
 import Url;
 
+@methodprefix("sig_")
 interface SignalHandler extends Object.SignalHandler;
 // no extra signals
 

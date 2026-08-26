@@ -10,6 +10,7 @@ import Enums;
 import Variant;
 import Color;
 
+@methodprefix("sig_")
 interface SignalHandler extends Widget.SignalHandler {
     void currentChanged(int index);
     void tabBarClicked(int index);
@@ -41,7 +42,7 @@ enum Shape {
 }
 
 opaque Handle extends Widget.Handle {
-    
+
     string accessibleTabName(int index);
     int addTab(string text);
     int addTab(Icon.Handle icon, string text);

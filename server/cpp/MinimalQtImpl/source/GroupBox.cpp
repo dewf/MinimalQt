@@ -55,14 +55,14 @@ namespace GroupBox
 
     SignalConnectionRef Handle_connect_Clicked(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QGroupBox::clicked, [handler](bool checked_) {
-            handler->clicked(checked_);
+            handler->sig_clicked(checked_);
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_Toggled(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QGroupBox::toggled, [handler](bool state) {
-            handler->toggled(state);
+            handler->sig_toggled(state);
         });
         return new __SignalConnection { connection };
     }

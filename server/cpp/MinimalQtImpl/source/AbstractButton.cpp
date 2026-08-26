@@ -122,28 +122,28 @@ namespace AbstractButton
 
     SignalConnectionRef Handle_connect_Clicked(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QAbstractButton::clicked, [handler](const bool checkState) {
-            handler->clicked(checkState);
+            handler->sig_clicked(checkState);
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_Pressed(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QAbstractButton::pressed, [handler] {
-            handler->pressed();
+            handler->sig_pressed();
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_Released(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QAbstractButton::released, [handler] {
-            handler->released();
+            handler->sig_released();
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_Toggled(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QAbstractButton::toggled, [handler](const bool checkState) {
-            handler->toggled(checkState);
+            handler->sig_toggled(checkState);
         });
         return new __SignalConnection { connection };
     }

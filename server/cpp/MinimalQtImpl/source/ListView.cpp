@@ -148,7 +148,7 @@ namespace ListView
     SignalConnectionRef Handle_connect_IndexesMoved(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QListView::indexesMoved, [handler](const QModelIndexList &indexes) {
             QModelIndexList indexes2(indexes);
-            handler->indexesMoved(reinterpret_cast<ModelIndex::ListRef>(&indexes2));
+            handler->sig_indexesMoved(reinterpret_cast<ModelIndex::ListRef>(&indexes2));
         });
         return new __SignalConnection { connection };
     }

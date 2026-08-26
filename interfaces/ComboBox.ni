@@ -14,6 +14,7 @@ import LineEdit;
 import Validator;
 import ModelIndex;
 
+@methodprefix("sig_")
 interface SignalHandler extends Widget.SignalHandler {
     void activated(int index);
     void currentIndexChanged(int index);

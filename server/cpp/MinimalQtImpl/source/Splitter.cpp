@@ -118,7 +118,7 @@ namespace Splitter
 
     SignalConnectionRef Handle_connect_SplitterMoved(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QSplitter::splitterMoved, [handler](int index, int stretch) {
-            handler->splitterMoved(index, stretch);
+            handler->sig_splitterMoved(index, stretch);
         });
         return new __SignalConnection { connection };
     }

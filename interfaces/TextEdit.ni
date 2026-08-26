@@ -42,6 +42,7 @@ group ExtraSelection {
     Owned create(TextCursor.Handle cursor, TextCharFormat.Handle format);
 }
 
+@methodprefix("sig_")
 interface SignalHandler extends AbstractScrollArea.SignalHandler {
     void copyAvailable(bool yes);
     void currentCharFormatChanged(TextCharFormat.Handle f);

@@ -139,7 +139,7 @@ namespace AbstractSpinBox
 
     SignalConnectionRef Handle_connect_EditingFinished(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QAbstractSpinBox::editingFinished, [handler] {
-            handler->editingFinished();
+            handler->sig_editingFinished();
         });
         return new __SignalConnection { connection };
     }

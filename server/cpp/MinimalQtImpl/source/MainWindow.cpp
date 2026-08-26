@@ -242,21 +242,21 @@ namespace MainWindow
 
     SignalConnectionRef Handle_connect_IconSizeChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QMainWindow::iconSizeChanged, [handler](const QSize& size) {
-            handler->iconSizeChanged(SIZE_HEAP_NEW(size));
+            handler->sig_iconSizeChanged(SIZE_HEAP_NEW(size));
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_TabifiedDockWidgetActivated(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QMainWindow::tabifiedDockWidgetActivated, [handler](QDockWidget* dockWidget) {
-            handler->tabifiedDockWidgetActivated(reinterpret_cast<DockWidget::HandleRef>(dockWidget));
+            handler->sig_tabifiedDockWidgetActivated(reinterpret_cast<DockWidget::HandleRef>(dockWidget));
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_ToolButtonStyleChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QMainWindow::toolButtonStyleChanged, [handler](Qt::ToolButtonStyle style) {
-            handler->toolButtonStyleChanged(static_cast<ToolButtonStyle>(style));
+            handler->sig_toolButtonStyleChanged(static_cast<ToolButtonStyle>(style));
         });
         return new __SignalConnection { connection };
     }

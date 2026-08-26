@@ -17,7 +17,7 @@ import SafeReturn;
 // ======================================================================
 
 
-
+@methodprefix("sig_")
 interface SignalHandler extends AbstractItemModel.SignalHandler {
     // none extra
 }
@@ -43,13 +43,13 @@ interface ImplementationMethods {
     // required:
     int rowCount(ModelIndex.Handle parent);
     void data(ModelIndex.Handle index, ItemDataRole role, VariantReturn ret);
-    
+
     // optional (mask-activated):
     void headerData(int section, Orientation orientation, ItemDataRole role, VariantReturn ret);
     ItemFlags getFlags(ModelIndex.Handle index, ItemFlags baseFlags);
     bool setData(ModelIndex.Handle index, Variant.Handle value, ItemDataRole role);
-    
-    // technically supposed to use AbstractItemModel for multi-column stuff, 
+
+    // technically supposed to use AbstractItemModel for multi-column stuff,
     // but subclassing AbstractListModel and implementing columnCount() is a nice little shortcut
     int columnCount(ModelIndex.Handle parent);
 }

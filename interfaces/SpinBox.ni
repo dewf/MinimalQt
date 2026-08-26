@@ -4,6 +4,7 @@ import Object;
 import AbstractSpinBox;
 import Widget;
 
+@methodprefix("sig_")
 interface SignalHandler extends AbstractSpinBox.SignalHandler {
     void textChanged(string text);
     void valueChanged(int value);

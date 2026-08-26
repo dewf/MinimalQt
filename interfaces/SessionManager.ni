@@ -2,6 +2,7 @@ module SessionManager;
 
 import Object;
 
+@methodprefix("sig_")
 interface SignalHandler extends Object.SignalHandler;
 // no signals
 

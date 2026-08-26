@@ -3,6 +3,7 @@ module StatusBar;
 import Object;
 import Widget;
 
+@methodprefix("sig_")
 interface SignalHandler extends Widget.SignalHandler {
     void messageChanged(string message);
 }
@@ -16,7 +17,7 @@ opaque Handle extends Widget.Handle {
     bool isSizeGripEnabled();
     void removeWidget(Widget.Handle widget);
     void setSizeGripEnabled(bool enable);
-    
+
     void clearMessage();
     void showMessage(string message, int timeout = 0);
 

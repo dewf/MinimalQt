@@ -7,6 +7,7 @@ import Widget;
 import Action;
 import Icon;
 
+@methodprefix("sig_")
 interface SignalHandler extends Widget.SignalHandler {
     void aboutToHide();
     void aboutToShow();

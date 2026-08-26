@@ -7,6 +7,7 @@ import AbstractItemModel;
 import ModelIndex;
 import StyleOptionViewItem;
 
+@methodprefix("sig_")
 interface SignalHandler extends AbstractItemDelegate.SignalHandler;
 // none extra
 

@@ -5,6 +5,7 @@ import Widget;
 import Enums;
 import AbstractScrollArea;
 
+@methodprefix("sig_")
 interface SignalHandler extends AbstractScrollArea.SignalHandler;
 // none extra
 

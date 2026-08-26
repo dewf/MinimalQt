@@ -15,6 +15,7 @@ enum SliderAction {
     SliderMove
 }
 
+@methodprefix("sig_")
 interface SignalHandler extends Widget.SignalHandler {
     void actionTriggered(SliderAction action);
     void rangeChanged(int min, int max);

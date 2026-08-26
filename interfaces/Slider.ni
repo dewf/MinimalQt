@@ -5,6 +5,7 @@ import Widget;
 import Enums;
 import AbstractSlider;
 
+@methodprefix("sig_")
 interface SignalHandler extends AbstractSlider.SignalHandler;
 
 enum TickPosition {

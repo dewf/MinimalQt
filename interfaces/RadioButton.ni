@@ -4,6 +4,7 @@ import Object;
 import Widget;
 import AbstractButton;
 
+@methodprefix("sig_")
 interface SignalHandler extends AbstractButton.SignalHandler;
 // none extra
 

@@ -279,77 +279,77 @@ namespace HeaderView
 
     SignalConnectionRef Handle_connect_GeometriesChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QHeaderView::geometriesChanged, [handler] {
-            handler->geometriesChanged();
+            handler->sig_geometriesChanged();
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_SectionClicked(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QHeaderView::sectionClicked, [handler](int logicalIndex) {
-            handler->sectionClicked(logicalIndex);
+            handler->sig_sectionClicked(logicalIndex);
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_SectionCountChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QHeaderView::sectionCountChanged, [handler](int oldCount, int newCount) {
-            handler->sectionCountChanged(oldCount, newCount);
+            handler->sig_sectionCountChanged(oldCount, newCount);
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_SectionDoubleClicked(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QHeaderView::sectionDoubleClicked, [handler](int logicalIndex) {
-            handler->sectionDoubleClicked(logicalIndex);
+            handler->sig_sectionDoubleClicked(logicalIndex);
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_SectionEntered(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QHeaderView::sectionEntered, [handler](int logicalIndex) {
-            handler->sectionEntered(logicalIndex);
+            handler->sig_sectionEntered(logicalIndex);
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_SectionHandleDoubleClicked(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QHeaderView::sectionHandleDoubleClicked, [handler](int logicalIndex) {
-            handler->sectionHandleDoubleClicked(logicalIndex);
+            handler->sig_sectionHandleDoubleClicked(logicalIndex);
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_SectionMoved(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QHeaderView::sectionMoved, [handler](int logicalIndex, int oldVisualIndex, int newVisualIndex) {
-            handler->sectionMoved(logicalIndex, oldVisualIndex, newVisualIndex);
+            handler->sig_sectionMoved(logicalIndex, oldVisualIndex, newVisualIndex);
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_SectionPressed(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QHeaderView::sectionPressed, [handler](int logicalIndex) {
-            handler->sectionPressed(logicalIndex);
+            handler->sig_sectionPressed(logicalIndex);
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_SectionResized(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QHeaderView::sectionResized, [handler](int logicalIndex, int oldSize, int newSize) {
-            handler->sectionResized(logicalIndex, oldSize, newSize);
+            handler->sig_sectionResized(logicalIndex, oldSize, newSize);
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_SortIndicatorChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QHeaderView::sortIndicatorChanged, [handler](int logicalIndex, Qt::SortOrder order) {
-            handler->sortIndicatorChanged(logicalIndex, static_cast<SortOrder>(order));
+            handler->sig_sortIndicatorChanged(logicalIndex, static_cast<SortOrder>(order));
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_SortIndicatorClearableChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QHeaderView::sortIndicatorClearableChanged, [handler](bool clearable) {
-            handler->sortIndicatorClearableChanged(clearable);
+            handler->sig_sortIndicatorClearableChanged(clearable);
         });
         return new __SignalConnection { connection };
     }

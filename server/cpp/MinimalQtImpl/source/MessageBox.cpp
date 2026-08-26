@@ -183,7 +183,7 @@ namespace MessageBox
 
     SignalConnectionRef Handle_connect_ButtonClicked(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QMessageBox::buttonClicked, [handler](QAbstractButton *button) {
-            handler->buttonClicked(reinterpret_cast<AbstractButton::HandleRef>(button));
+            handler->sig_buttonClicked(reinterpret_cast<AbstractButton::HandleRef>(button));
         });
         return new __SignalConnection { connection };
     }

@@ -18,6 +18,7 @@ import RegularExpression;
 import Variant;
 import Url;
 
+@methodprefix("sig_")
 interface SignalHandler extends AbstractScrollArea.SignalHandler {
     void blockCountChanged(int newBlockCount);
     void copyAvailable(bool yes);

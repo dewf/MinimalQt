@@ -6,6 +6,7 @@ import Pixmap;
 import Point;
 import MimeData;
 
+@methodprefix("sig_")
 interface SignalHandler extends Object.SignalHandler {
     void actionChanged(DropAction action);
     void targetChanged(Object.Handle newTarget);

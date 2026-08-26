@@ -16,6 +16,7 @@ import Widget;
 import Event;
 import StyleOptionViewItem;
 
+@methodprefix("sig_")
 interface SignalHandler extends AbstractScrollArea.SignalHandler {
     void activated(ModelIndex.Handle index);
     void clicked(ModelIndex.Handle index);

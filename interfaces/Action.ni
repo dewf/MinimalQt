@@ -7,6 +7,7 @@ import Enums;
 import Font;
 import Variant;
 
+@methodprefix("sig_")
 interface SignalHandler extends Object.SignalHandler {
     void changed();
     void checkableChanged(bool checkable);

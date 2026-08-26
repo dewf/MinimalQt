@@ -6,6 +6,7 @@ import Frame;
 import Enums;
 import SplitterHandle;
 
+@methodprefix("sig_")
 interface SignalHandler extends Frame.SignalHandler {
     void splitterMoved(int pos, int index);
 }

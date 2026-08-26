@@ -5,6 +5,7 @@ import Icon;
 import Enums;
 import Widget;
 
+@methodprefix("sig_")
 interface SignalHandler extends Widget.SignalHandler {
     void clicked(bool checked_);
     void toggled(bool state);

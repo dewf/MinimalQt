@@ -33,7 +33,7 @@ namespace GraphicsEffect
 
     SignalConnectionRef Handle_connect_EnabledChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QGraphicsEffect::enabledChanged, [handler](bool enabled) {
-            handler->enabledChanged(enabled);
+            handler->sig_enabledChanged(enabled);
         });
         return new __SignalConnection { connection };
     }

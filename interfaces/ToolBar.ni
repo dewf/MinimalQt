@@ -7,6 +7,7 @@ import Enums;
 import Widget;
 import Action;
 
+@methodprefix("sig_")
 interface SignalHandler extends Widget.SignalHandler {
     void actionTriggered(Action.Handle action);
     void allowedAreasChanged(ToolBarAreas allowed);
@@ -40,7 +41,7 @@ opaque Handle extends Widget.Handle {
     Action.Handle toggleViewAction();
     ToolButtonStyle getToolButtonStyle();
     Widget.Handle widgetForAction(Action.Handle action);
-    
+
     void setIconSize(Size.Handle iconSize);
     void setToolButtonStyle(ToolButtonStyle toolButtonStyle);
 

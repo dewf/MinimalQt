@@ -285,49 +285,49 @@ namespace LineEdit
 
     SignalConnectionRef Handle_connect_CursorPositionChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QLineEdit::cursorPositionChanged, [handler](int oldPos, int newPos) {
-            handler->cursorPositionChanged(oldPos, newPos);
+            handler->sig_cursorPositionChanged(oldPos, newPos);
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_EditingFinished(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QLineEdit::editingFinished, [handler] {
-            handler->editingFinished();
+            handler->sig_editingFinished();
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_InputRejected(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QLineEdit::inputRejected, [handler] {
-            handler->inputRejected();
+            handler->sig_inputRejected();
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_ReturnPressed(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QLineEdit::returnPressed, [handler] {
-            handler->returnPressed();
+            handler->sig_returnPressed();
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_SelectionChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QLineEdit::selectionChanged, [handler] {
-            handler->selectionChanged();
+            handler->sig_selectionChanged();
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_TextChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QLineEdit::textChanged, [handler](const QString& text) {
-            handler->textChanged(text.toStdString());
+            handler->sig_textChanged(text.toStdString());
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_TextEdited(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QLineEdit::textEdited, [handler](const QString& text) {
-            handler->textEdited(text.toStdString());
+            handler->sig_textEdited(text.toStdString());
         });
         return new __SignalConnection { connection };
     }

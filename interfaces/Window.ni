@@ -26,6 +26,7 @@ enum AncestorMode {
     IncludeTransients
 }
 
+@methodprefix("sig_")
 interface SignalHandler extends Object.SignalHandler {
     void activeChanged();
     void contentOrientationChanged(ScreenOrientation orientation);

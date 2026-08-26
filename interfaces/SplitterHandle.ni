@@ -4,6 +4,7 @@ import Object;
 import Widget;
 import Enums;
 
+@methodprefix("sig_")
 interface SignalHandler extends Widget.SignalHandler;
 // no extra signals
 

@@ -133,14 +133,14 @@ namespace Label
 
     SignalConnectionRef Handle_connect_LinkActivated(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QLabel::linkActivated, [handler](const QString& link) {
-            handler->linkActivated(link.toStdString());
+            handler->sig_linkActivated(link.toStdString());
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_LinkHovered(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QLabel::linkHovered, [handler](const QString& link) {
-            handler->linkHovered(link.toStdString());
+            handler->sig_linkHovered(link.toStdString());
         });
         return new __SignalConnection { connection };
     }

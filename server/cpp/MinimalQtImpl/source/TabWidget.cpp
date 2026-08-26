@@ -203,28 +203,28 @@ namespace TabWidget
 
     SignalConnectionRef Handle_connect_CurrentChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QTabWidget::currentChanged, [handler](int index) {
-            handler->currentChanged(index);
+            handler->sig_currentChanged(index);
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_TabBarClicked(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QTabWidget::tabBarClicked, [handler](int index) {
-            handler->tabBarClicked(index);
+            handler->sig_tabBarClicked(index);
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_TabBarDoubleClicked(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QTabWidget::tabBarDoubleClicked, [handler](int index) {
-            handler->tabBarDoubleClicked(index);
+            handler->sig_tabBarDoubleClicked(index);
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_TabCloseRequested(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QTabWidget::tabCloseRequested, [handler](int index) {
-            handler->tabCloseRequested(index);
+            handler->sig_tabCloseRequested(index);
         });
         return new __SignalConnection { connection };
     }

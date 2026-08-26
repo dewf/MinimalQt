@@ -6,6 +6,7 @@ import StandardItem;
 import Enums;
 import ModelIndex;
 
+@methodprefix("sig_")
 interface SignalHandler extends AbstractItemModel.SignalHandler {
     void itemChanged(StandardItem.Handle item);
 }

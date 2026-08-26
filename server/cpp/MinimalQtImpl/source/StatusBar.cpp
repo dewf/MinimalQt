@@ -53,7 +53,7 @@ namespace StatusBar
 
     SignalConnectionRef Handle_connect_MessageChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QStatusBar::messageChanged, [handler](const QString& message) {
-            handler->messageChanged(message.toStdString());
+            handler->sig_messageChanged(message.toStdString());
         });
         return new __SignalConnection { connection };
     }

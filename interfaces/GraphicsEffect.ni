@@ -3,6 +3,7 @@ module GraphicsEffect;
 import Object;
 import RectF;
 
+@methodprefix("sig_")
 interface SignalHandler {
     void enabledChanged(bool enabled);
 }

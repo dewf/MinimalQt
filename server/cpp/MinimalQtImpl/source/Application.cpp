@@ -18,7 +18,7 @@ namespace Application
 {
     SignalConnectionRef Handle_connect_FocusChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QApplication::focusChanged, [handler](QWidget *old, QWidget *now) {
-            handler->focusChanged(reinterpret_cast<Widget::HandleRef>(old), reinterpret_cast<Widget::HandleRef>(now));
+            handler->sig_focusChanged(reinterpret_cast<Widget::HandleRef>(old), reinterpret_cast<Widget::HandleRef>(now));
         });
         return new __SignalConnection { connection };
     }

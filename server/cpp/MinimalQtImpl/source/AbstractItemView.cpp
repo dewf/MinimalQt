@@ -310,7 +310,7 @@ namespace AbstractItemView
     SignalConnectionRef Handle_connect_Activated(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QAbstractItemView::activated, [handler](const QModelIndex& index) {
             QModelIndex index2(index);
-            handler->activated(reinterpret_cast<ModelIndex::HandleRef>(&index2));
+            handler->sig_activated(reinterpret_cast<ModelIndex::HandleRef>(&index2));
         });
         return new __SignalConnection { connection };
     }
@@ -318,7 +318,7 @@ namespace AbstractItemView
     SignalConnectionRef Handle_connect_Clicked(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QAbstractItemView::clicked, [handler](const QModelIndex& index) {
             QModelIndex index2(index);
-            handler->clicked(reinterpret_cast<ModelIndex::HandleRef>(&index2));
+            handler->sig_clicked(reinterpret_cast<ModelIndex::HandleRef>(&index2));
         });
         return new __SignalConnection { connection };
     }
@@ -326,7 +326,7 @@ namespace AbstractItemView
     SignalConnectionRef Handle_connect_DoubleClicked(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QAbstractItemView::doubleClicked, [handler](const QModelIndex& index) {
             QModelIndex index2(index);
-            handler->doubleClicked(reinterpret_cast<ModelIndex::HandleRef>(&index2));
+            handler->sig_doubleClicked(reinterpret_cast<ModelIndex::HandleRef>(&index2));
         });
         return new __SignalConnection { connection };
     }
@@ -334,7 +334,7 @@ namespace AbstractItemView
     SignalConnectionRef Handle_connect_Entered(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QAbstractItemView::entered, [handler](const QModelIndex &index) {
             QModelIndex index2(index);
-            handler->entered(reinterpret_cast<ModelIndex::HandleRef>(&index2));
+            handler->sig_entered(reinterpret_cast<ModelIndex::HandleRef>(&index2));
         });
         return new __SignalConnection { connection };
     }
@@ -342,7 +342,7 @@ namespace AbstractItemView
     SignalConnectionRef Handle_connect_IconSizeChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QAbstractItemView::iconSizeChanged, [handler](const QSize &size) {
             QSize size2(size);
-            handler->iconSizeChanged(reinterpret_cast<Size::HandleRef>(&size2));
+            handler->sig_iconSizeChanged(reinterpret_cast<Size::HandleRef>(&size2));
         });
         return new __SignalConnection { connection };
     }
@@ -350,14 +350,14 @@ namespace AbstractItemView
     SignalConnectionRef Handle_connect_Pressed(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QAbstractItemView::pressed, [handler](const QModelIndex &index) {
             QModelIndex index2(index);
-            handler->pressed(reinterpret_cast<ModelIndex::HandleRef>(&index2));
+            handler->sig_pressed(reinterpret_cast<ModelIndex::HandleRef>(&index2));
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_ViewportEntered(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QAbstractItemView::viewportEntered, [handler] {
-            handler->viewportEntered();
+            handler->sig_viewportEntered();
         });
         return new __SignalConnection { connection };
     }

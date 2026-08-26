@@ -5,6 +5,7 @@ import Widget;
 import AbstractButton;
 import Enums;
 
+@methodprefix("sig_")
 interface SignalHandler extends AbstractButton.SignalHandler {
     void checkStateChanged(CheckState state);
 }

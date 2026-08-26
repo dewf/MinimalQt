@@ -2,6 +2,7 @@ module CoreApplication;
 
 import Object;
 
+@methodprefix("sig_")
 interface SignalHandler extends Object.SignalHandler {
     void aboutToQuit();
     void applicationNameChanged();

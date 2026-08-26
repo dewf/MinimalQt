@@ -11,6 +11,7 @@ import Menu;
 import Completer;
 import Validator;
 
+@methodprefix("sig_")
 interface SignalHandler extends Widget.SignalHandler {
     void cursorPositionChanged(int oldPos, int newPos);
     void editingFinished();

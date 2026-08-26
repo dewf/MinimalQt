@@ -190,7 +190,7 @@ namespace CalendarWidget
     SignalConnectionRef Handle_connect_Activated(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QCalendarWidget::activated, [handler](const QDate& date) {
             QDate date2(date);
-            handler->activated(reinterpret_cast<Date::HandleRef>(&date2));
+            handler->sig_activated(reinterpret_cast<Date::HandleRef>(&date2));
         });
         return new __SignalConnection { connection };
     }
@@ -198,21 +198,21 @@ namespace CalendarWidget
     SignalConnectionRef Handle_connect_Clicked(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QCalendarWidget::clicked, [handler](const QDate& date) {
             QDate date2(date);
-            handler->clicked(reinterpret_cast<Date::HandleRef>(&date2));
+            handler->sig_clicked(reinterpret_cast<Date::HandleRef>(&date2));
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_CurrentPageChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QCalendarWidget::currentPageChanged, [handler](int year, int month) {
-            handler->currentPageChanged(year, month);
+            handler->sig_currentPageChanged(year, month);
         });
         return new __SignalConnection { connection };
     }
 
     SignalConnectionRef Handle_connect_SelectionChanged(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QCalendarWidget::selectionChanged, [handler] {
-            handler->selectionChanged();
+            handler->sig_selectionChanged();
         });
         return new __SignalConnection { connection };
     }
