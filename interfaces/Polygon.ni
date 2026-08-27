@@ -12,6 +12,8 @@ opaque Handle {
     bool intersects(Handle p);
 
     // void point(int index, int *x, int *y) const
+    // changed name because we can't overload purely on result type, but Point.Owned point(int index) already exists below
+    Tuple<int,int> pointXY(int index);
 
     Point.Owned point(int index);
     void putPoints(int index, Array<Point.Handle> points);

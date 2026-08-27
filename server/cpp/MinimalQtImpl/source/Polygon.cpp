@@ -41,6 +41,12 @@ namespace Polygon
         return THIS->intersects(QPOLYGON_VALUE(p));
     }
 
+    std::tuple<int32_t,int32_t> Handle_pointXY(HandleRef _this, int32_t index) {
+        int x, y;
+        THIS->point(index, &x, &y);
+        return { x, y };
+    }
+
     Point::OwnedRef Handle_point(HandleRef _this, int32_t index) {
         return POINT_HEAP_NEW(THIS->point(index));
     }

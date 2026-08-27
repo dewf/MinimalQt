@@ -1,4 +1,5 @@
 module Image;
+
 import PaintDevice;
 import Size;
 import SizeF;
@@ -73,7 +74,7 @@ opaque Handle {
     // QColorSpace colorSpace();
 
     Array<Rgb> colorTable();
-    
+
     // QImage colorTransformed(QColorTransform &transform) &
     // QImage colorTransformed(QColorTransform &transform, QImage::Format toFormat, Qt::ImageConversionFlags flags = Qt::AutoColor) &
     // QImage colorTransformed(QColorTransform &transform) &&
@@ -173,7 +174,7 @@ opaque Handle {
     // CGImageRef toCGImage() const
     // HBITMAP toHBITMAP() const
     // HICON toHICON(const QImage &mask = {}) const
-    
+
     Owned transformed(Transform.Handle matrix, TransformationMode transformMode = FastTransformation);
     bool valid(Point.Handle pos);
     bool valid(int x, int y);

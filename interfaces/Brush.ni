@@ -14,6 +14,8 @@ opaque Handle {
     // const QGradient * gradient() const
     // this returns a pointer to a gradient, which we can't do anything with
     // (they apparently can't be cloned)
+    // [months later...] so why wouldn't a Gradient.Handle work? keep it Scoped<Gradient> for safety?
+    // or because we didn't bother with a gradient ConstHandle?
 
     bool isOpaque();
     void setColor(Color.Handle color);

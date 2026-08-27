@@ -213,12 +213,12 @@ struct GradientStopOutput {
 
 @nodispose
 opaque Handle {
-    CoordinateMode getCoordinateMode();
+    CoordinateMode getCoordinateMode();     // 'get' to avoid name collision in C# (IIRC)
     void setColorAt(double position, Color.Handle color);
     void setCoordinateMode(CoordinateMode mode);
     void setSpread(Spread method);
     void setStops(Array<GradientStopInput> stopPoints);
-    Spread getSpread();
+    Spread getSpread();                     // 'get' to avoid name collision in C# (IIRC)
     Array<GradientStopOutput> stops();
     Type getType2();                        // don't hide C# GetType()
 }
