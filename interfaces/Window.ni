@@ -31,22 +31,22 @@ interface SignalHandler extends Object.SignalHandler {
     void activeChanged();
     void contentOrientationChanged(ScreenOrientation orientation);
     void focusObjectChanged(Object.Handle obj);
-    void heightChanged(int arg);
-    void maximumHeightChanged(int arg);
-    void maximumWidthChanged(int arg);
-    void minimumHeightChanged(int arg);
-    void minimumWidthChanged(int arg);
+    void heightChanged(int height);
+    void maximumHeightChanged(int maximumHeight);
+    void maximumWidthChanged(int maximumWidth);
+    void minimumHeightChanged(int minimumHeight);
+    void minimumWidthChanged(int minimumWidth);
     void modalityChanged(WindowModality modality);
     void opacityChanged(double opacity);
     void screenChanged(Screen.Handle screen);
     void transientParentChanged(Handle transientParent);
     void visibilityChanged(Visibility visibility);
-    void visibleChanged(bool arg);
-    void widthChanged(int arg);
+    void visibleChanged(bool visible);
+    void widthChanged(int width);
     void windowStateChanged(WindowState windowState);
     void windowTitleChanged(string title);
-    void xChanged(int arg);
-    void yChanged(int arg);
+    void xChanged(int x);
+    void yChanged(int y);
 }
 
 @dlang_withoverloads(Object.Handle, setParent) // D-specific hack :(

@@ -1,5 +1,8 @@
 module Url;
 
+// don't actually create an idiomatic wrapper for this -
+// use it privately to convert your language-native Url representation
+
 @nodispose
 opaque Handle {
     string toAbsoluteInternal();
