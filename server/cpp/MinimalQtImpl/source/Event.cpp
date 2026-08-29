@@ -60,6 +60,10 @@ namespace Event
         return EVENT_THIS->spontaneous();
     }
 
+    Type Handle_type_(HandleRef _this) {
+        return static_cast<Type>(EVENT_THIS->type());
+    }
+
     // resize event ========================================
 #define RESIZE_THIS (reinterpret_cast<QResizeEvent*>(_this))
 
@@ -126,7 +130,7 @@ namespace Event
                 DROPEVENT_THIS->setDropAction(qtAction);
                 DROPEVENT_THIS->accept();
             } else {
-                clientLog(LogLevel::Warning, "DragMoveEvent_acceptDropAction: specified action was not in allowed set");
+                clientLog(LogLevel::Warning, "DropEvent_acceptDropAction: specified action was not in allowed set");
             }
         }
     }
