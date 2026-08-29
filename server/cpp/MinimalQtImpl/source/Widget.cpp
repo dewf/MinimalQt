@@ -1044,7 +1044,7 @@ namespace Widget
         [[nodiscard]] QSize sizeHint() const override {
             if (methodMask & MethodMask::SizeHint) {
                 __SizeReturn ret;
-                methods->sizeHint(&ret);
+                methods->dm_sizeHint(&ret);
                 return ret.result;
             } else {
                 return QWidget::sizeHint();
@@ -1053,7 +1053,7 @@ namespace Widget
     protected:
         void contextMenuEvent(QContextMenuEvent *event) override {
             if (methodMask & MethodMask::ContextMenuEvent) {
-                methods->contextMenuEvent(reinterpret_cast<ContextMenuEventRef>(event));
+                methods->dm_contextMenuEvent(reinterpret_cast<ContextMenuEventRef>(event));
                 event->accept();
             } else {
                 return QWidget::contextMenuEvent(event);
@@ -1062,7 +1062,7 @@ namespace Widget
 
         void dragEnterEvent(QDragEnterEvent *event) override {
             if (methodMask & MethodMask::DragEnterEvent) {
-                methods->dragEnterEvent(reinterpret_cast<DragEnterEventRef>(event));
+                methods->dm_dragEnterEvent(reinterpret_cast<DragEnterEventRef>(event));
                 // do NOT accept() by default, in this context it means you want the drop
                 // event->accept();
             } else {
@@ -1072,7 +1072,7 @@ namespace Widget
 
         void dragLeaveEvent(QDragLeaveEvent *event) override {
             if (methodMask & MethodMask::DragLeaveEvent) {
-                methods->dragLeaveEvent(reinterpret_cast<DragLeaveEventRef>(event));
+                methods->dm_dragLeaveEvent(reinterpret_cast<DragLeaveEventRef>(event));
                 // since it's a 'leave' (vs enter or move) event we always accept
                 event->accept();
             } else {
@@ -1082,7 +1082,7 @@ namespace Widget
 
         void dragMoveEvent(QDragMoveEvent *event) override {
             if (methodMask & MethodMask::DragMoveEvent) {
-                methods->dragMoveEvent(reinterpret_cast<DragMoveEventRef>(event));
+                methods->dm_dragMoveEvent(reinterpret_cast<DragMoveEventRef>(event));
                 // do NOT accept() by default, in this context it means you want the drop
                 // event->accept();
             } else {
@@ -1092,7 +1092,7 @@ namespace Widget
 
         void dropEvent(QDropEvent *event) override {
             if (methodMask & MethodMask::DropEvent) {
-                methods->dropEvent(reinterpret_cast<DropEventRef>(event));
+                methods->dm_dropEvent(reinterpret_cast<DropEventRef>(event));
                 // not sure if accept() matters at this point - isn't it already a done deal?
                 // event->accept();
             } else {
@@ -1102,7 +1102,7 @@ namespace Widget
 
         void enterEvent(QEnterEvent *event) override {
             if (methodMask & MethodMask::EnterEvent) {
-                methods->enterEvent(reinterpret_cast<EnterEventRef>(event));
+                methods->dm_enterEvent(reinterpret_cast<EnterEventRef>(event));
                 event->accept();
             } else {
                 QWidget::enterEvent(event);
@@ -1111,7 +1111,7 @@ namespace Widget
 
         void focusInEvent(QFocusEvent *event) override {
             if (methodMask & MethodMask::FocusInEvent) {
-                methods->focusInEvent(reinterpret_cast<FocusEventRef>(event));
+                methods->dm_focusInEvent(reinterpret_cast<FocusEventRef>(event));
                 event->accept();
             } else {
                 QWidget::focusInEvent(event);
@@ -1120,7 +1120,7 @@ namespace Widget
 
         void focusOutEvent(QFocusEvent *event) override {
             if (methodMask & MethodMask::FocusOutEvent) {
-                methods->focusOutEvent(reinterpret_cast<FocusEventRef>(event));
+                methods->dm_focusOutEvent(reinterpret_cast<FocusEventRef>(event));
                 event->accept();
             } else {
                 QWidget::focusOutEvent(event);
@@ -1129,7 +1129,7 @@ namespace Widget
 
         void keyPressEvent(QKeyEvent *event) override {
             if (methodMask & MethodMask::KeyPressEvent) {
-                methods->keyPressEvent(reinterpret_cast<KeyEventRef>(event));
+                methods->dm_keyPressEvent(reinterpret_cast<KeyEventRef>(event));
                 // don't need to accept() per docs
             } else {
                 QWidget::keyPressEvent(event);
@@ -1138,7 +1138,7 @@ namespace Widget
 
         void keyReleaseEvent(QKeyEvent *event) override {
             if (methodMask & MethodMask::KeyReleaseEvent) {
-                methods->keyReleaseEvent(reinterpret_cast<KeyEventRef>(event));
+                methods->dm_keyReleaseEvent(reinterpret_cast<KeyEventRef>(event));
                 // don't need to accept() per docs
             } else {
                 QWidget::keyReleaseEvent(event);
@@ -1147,7 +1147,7 @@ namespace Widget
 
         void leaveEvent(QEvent *event) override {
             if (methodMask & MethodMask::LeaveEvent) {
-                methods->leaveEvent(reinterpret_cast<Event::HandleRef>(event));
+                methods->dm_leaveEvent(reinterpret_cast<Event::HandleRef>(event));
                 event->accept();
             } else {
                 QWidget::leaveEvent(event);
@@ -1156,7 +1156,7 @@ namespace Widget
 
         void mouseDoubleClickEvent(QMouseEvent *event) override {
             if (methodMask & MethodMask::MouseDoubleClickEvent) {
-                methods->mouseDoubleClickEvent(reinterpret_cast<MouseEventRef>(event));
+                methods->dm_mouseDoubleClickEvent(reinterpret_cast<MouseEventRef>(event));
                 event->accept();
             } else {
                 QWidget::mouseDoubleClickEvent(event);
@@ -1165,7 +1165,7 @@ namespace Widget
 
         void mouseMoveEvent(QMouseEvent *event) override {
             if (methodMask & MethodMask::MouseMoveEvent) {
-                methods->mouseMoveEvent(reinterpret_cast<MouseEventRef>(event));
+                methods->dm_mouseMoveEvent(reinterpret_cast<MouseEventRef>(event));
                 // prevent from propagating, see notes above
                 event->accept();
             } else {
@@ -1175,7 +1175,7 @@ namespace Widget
 
         void mousePressEvent(QMouseEvent *event) override {
             if (methodMask & MethodMask::MousePressEvent) {
-                methods->mousePressEvent(reinterpret_cast<MouseEventRef>(event));
+                methods->dm_mousePressEvent(reinterpret_cast<MouseEventRef>(event));
                 // prevent from propagating, see notes above
                 event->accept();
             } else {
@@ -1185,7 +1185,7 @@ namespace Widget
 
         void mouseReleaseEvent(QMouseEvent *event) override {
             if (methodMask & MethodMask::MouseReleaseEvent) {
-                methods->mouseReleaseEvent(reinterpret_cast<MouseEventRef>(event));
+                methods->dm_mouseReleaseEvent(reinterpret_cast<MouseEventRef>(event));
                 event->accept();
             } else {
                 QWidget::mouseReleaseEvent(event);
@@ -1195,7 +1195,7 @@ namespace Widget
         void paintEvent(QPaintEvent *event) override {
             if (methodMask & MethodMask::PaintEvent) {
                 QPainter painter(this);
-                methods->paintEvent(reinterpret_cast<Painter::HandleRef>(&painter), reinterpret_cast<PaintEventRef>(event));
+                methods->dm_paintEvent(reinterpret_cast<Painter::HandleRef>(&painter), reinterpret_cast<PaintEventRef>(event));
                 // prevent it from propagating:
                 // do we allow this from the method delegate somehow?
                 event->accept();
@@ -1206,7 +1206,7 @@ namespace Widget
 
         void resizeEvent(QResizeEvent *event) override {
             if (methodMask & MethodMask::ResizeEvent) {
-                methods->resizeEvent(reinterpret_cast<ResizeEventRef>(event));
+                methods->dm_resizeEvent(reinterpret_cast<ResizeEventRef>(event));
                 event->accept();
             } else {
                 QWidget::resizeEvent(event);
@@ -1215,7 +1215,7 @@ namespace Widget
 
         void showEvent(QShowEvent *event) override {
             if (methodMask & MethodMask::ShowEvent) {
-                methods->showEvent(reinterpret_cast<ShowEventRef>(event));
+                methods->dm_showEvent(reinterpret_cast<ShowEventRef>(event));
                 event->accept();
             } else {
                 QWidget::showEvent(event);
@@ -1224,7 +1224,7 @@ namespace Widget
 
         void wheelEvent(QWheelEvent *event) override {
             if (methodMask & MethodMask::WheelEvent) {
-                methods->wheelEvent(reinterpret_cast<WheelEventRef>(event));
+                methods->dm_wheelEvent(reinterpret_cast<WheelEventRef>(event));
                 event->accept();
             } else {
                 QWidget::wheelEvent(event);
