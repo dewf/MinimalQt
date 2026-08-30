@@ -20,7 +20,13 @@ namespace KeySequence
     }
 
     void Handle_swap(HandleRef _this, HandleRef other) {
-        THIS->swap(QKEYSEQ_VALUE(other));
+        if (other != nullptr)
+        {
+            THIS->swap(*AS_QKEYSEQ_PTR(other));
+        } else
+        {
+            *THIS = QKeySequence();
+        }
     }
 
     std::string Handle_toString2(HandleRef _this, SequenceFormat format /* SequenceFormat::PortableText */) {

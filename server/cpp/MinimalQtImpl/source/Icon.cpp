@@ -82,7 +82,13 @@ namespace Icon
     }
 
     void Handle_swap(HandleRef _this, HandleRef other) {
-        THIS->swap(QICON_VALUE(other));
+        if (other != nullptr)
+        {
+            THIS->swap(*AS_QICON_PTR(other));
+        } else
+        {
+            *THIS = QIcon();
+        }
     }
 
     void Owned_dispose(OwnedRef _this) {

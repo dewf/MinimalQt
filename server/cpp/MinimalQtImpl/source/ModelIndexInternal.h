@@ -4,7 +4,7 @@
 #include <QModelIndex>
 
 #define AS_QMODELINDEX_PTR(x) (reinterpret_cast<QModelIndex*>(x))
-#define QMODELINDEX_VALUE(x) (*AS_QMODELINDEX_PTR(x))
+#define QMODELINDEX_VALUE(x) (x != nullptr ? *AS_QMODELINDEX_PTR(x) : QModelIndex())
 #define MODELINDEX_HEAP_NEW(...) (reinterpret_cast<ModelIndex::OwnedRef>(new QModelIndex(__VA_ARGS__)))
 
 #define MODELINDEX_LIST_HEAP_NEW(...) (reinterpret_cast<ModelIndex::OwnedListRef>(new QModelIndexList(__VA_ARGS__)))

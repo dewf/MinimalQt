@@ -316,7 +316,13 @@ namespace Image
     }
 
     void Handle_swap(HandleRef _this, HandleRef other) {
-        THIS->swap(QIMAGE_VALUE(other));
+        if (other != nullptr)
+        {
+            THIS->swap(*AS_QIMAGE_PTR(other));
+        } else
+        {
+            *THIS = QImage();
+        }
     }
 
     std::string Handle_text(HandleRef _this, const std::optional<std::string>& key) {

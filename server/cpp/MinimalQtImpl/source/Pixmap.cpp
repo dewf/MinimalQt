@@ -159,7 +159,13 @@ namespace Pixmap
     }
 
     void Handle_swap(HandleRef _this, HandleRef other) {
-        THIS->swap(QPIXMAP_VALUE(other));
+        if (other != nullptr)
+        {
+            THIS->swap(*AS_QPIXMAP_PTR(other));
+        } else
+        {
+            *THIS = QPixmap();
+        }
     }
 
     Image::OwnedRef Handle_toImage(HandleRef _this) {

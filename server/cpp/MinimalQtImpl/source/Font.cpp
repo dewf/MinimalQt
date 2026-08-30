@@ -241,7 +241,16 @@ namespace Font
     }
 
     void Handle_swap(HandleRef _this, HandleRef other) {
-        THIS->swap(QFONT_VALUE(other));
+        // a bit weird because of our strange heap-allocated value type null handling
+        // (null handle = default value)
+        if (other != nullptr)
+        {
+            THIS->swap(*AS_QFONT_PTR(other));
+        } else
+        {
+            // nothing to swap really
+            *THIS = QFont();
+        }
     }
 
     std::string Handle_toString2(HandleRef _this) {
