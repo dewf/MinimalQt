@@ -16,14 +16,14 @@ interface SignalHandler extends Object.SignalHandler {
 }
 
 opaque Handle extends Object.Handle {
-    bool columnIntersectsSelection(int column, Option<ModelIndex.Handle> parent);
+    bool columnIntersectsSelection(int column, ModelIndex.Handle parent = null);
     ModelIndex.Owned currentIndex();
     bool hasSelection();
-    bool isColumnSelected(int column, Option<ModelIndex.Handle> parent);
-    bool isRowSelected(int row, Option<ModelIndex.Handle> parent);
+    bool isColumnSelected(int column, ModelIndex.Handle parent = null);
+    bool isRowSelected(int row, ModelIndex.Handle parent = null);
     bool isSelected(ModelIndex.Handle index);
     AbstractItemModel.Handle model();
-    bool rowIntersectsSelection(int row, Option<ModelIndex.Handle> parent);
+    bool rowIntersectsSelection(int row, ModelIndex.Handle parent = null);
     ModelIndex.OwnedList selectedColumns(int row = 0);
     ModelIndex.OwnedList selectedIndexes();
     ModelIndex.OwnedList selectedRows(int column = 0);

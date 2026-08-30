@@ -163,7 +163,7 @@ sumtype FileContentResult {
     ContentReady(string filename, Array<byte> fileContent)
 }
 delegate void FileOpenCompletedFunc(FileContentResult result);
-void getOpenFileContent(string nameFilter, FileOpenCompletedFunc completedFunc, Option<Widget.Handle> parent);
+void getOpenFileContent(string nameFilter, FileOpenCompletedFunc completedFunc, Widget.Handle parent = null);
 
 // getOpenFileName =============================================================
 options GetOpenFileNameOpts {
@@ -259,4 +259,4 @@ struct GetSaveFileUrlResult {
 GetSaveFileUrlResult getSaveFileUrl(GetSaveFileUrlOpts opts);
 
 // saveFileContent ==============================================================
-void saveFileContent(Array<byte> fileContent, string fileNameHint, Option<Widget.Handle> parent);
+void saveFileContent(Array<byte> fileContent, string fileNameHint, Widget.Handle parent = null);

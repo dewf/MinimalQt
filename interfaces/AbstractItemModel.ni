@@ -51,13 +51,13 @@ opaque ConstHandle extends Object.Handle {
     bool canDropMimeData(MimeData.Handle data, DropAction action, int row, int column, ModelIndex.Handle parent);
     bool canFetchMore(ModelIndex.Handle parent);
     bool checkIndex(ModelIndex.Handle index, CheckIndexOptions options_ = CheckIndexOptions.NoOption);
-    int columnCount(Option<ModelIndex.Handle> parent);
+    int columnCount(ModelIndex.Handle parent = null);
     Variant.Owned data(ModelIndex.Handle index, Option<int> role);
     ItemFlags flags_(ModelIndex.Handle index);
-    bool hasChildren(Option<ModelIndex.Handle> parent);
-    bool hasIndex(int row, int column, Option<ModelIndex.Handle> parent);
+    bool hasChildren(ModelIndex.Handle parent = null);
+    bool hasIndex(int row, int column, ModelIndex.Handle parent = null);
     Variant.Owned headerData(int section, Orientation orientation, Option<int> role);
-    ModelIndex.Owned index(int row, int column, Option<ModelIndex.Handle> parent);
+    ModelIndex.Owned index(int row, int column, ModelIndex.Handle parent = null);
     Map<int, Variant.Owned> itemData(ModelIndex.Handle index);
     Array<ModelIndex.Owned> match(ModelIndex.Handle start, int role, Variant.Handle value, int hits = 1, MatchFlags flags_ = MatchStartsWith | MatchWrap);
     MimeData.Handle getMimeData(Array<ModelIndex.Handle> indexes);
@@ -72,7 +72,7 @@ opaque ConstHandle extends Object.Handle {
     // for what?
     // Map<int, Array<byte>> roleNames();
 
-    int rowCount(Option<ModelIndex.Handle> parent);
+    int rowCount(ModelIndex.Handle parent = null);
     ModelIndex.Owned sibling(int row, int column, ModelIndex.Handle index);
     Size.Owned span(ModelIndex.Handle index);
     DropActions supportedDragActions();
@@ -105,18 +105,18 @@ opaque Handle extends ConstHandle {
     bool clearItemData(ModelIndex.Handle index);
     bool dropMimeData(MimeData.Handle data, DropAction action, int row, int column, ModelIndex.Handle parent);
     void fetchMore(ModelIndex.Handle parent);
-    bool insertColumn(int column, Option<ModelIndex.Handle> parent);
-    bool insertColumns(int column, int count, Option<ModelIndex.Handle> parent);
-    bool insertRow(int row, Option<ModelIndex.Handle> parent);
-    bool insertRows(int row, int count, Option<ModelIndex.Handle> parent);
+    bool insertColumn(int column, ModelIndex.Handle parent = null);
+    bool insertColumns(int column, int count, ModelIndex.Handle parent = null);
+    bool insertRow(int row, ModelIndex.Handle parent = null);
+    bool insertRows(int row, int count, ModelIndex.Handle parent = null);
     bool moveColumn(ModelIndex.Handle sourceParent, int sourceColumn, ModelIndex.Handle destinationParent, int destinationChild);
     bool moveColumns(ModelIndex.Handle sourceParent, int sourceColumn, int count, ModelIndex.Handle destinationParent, int destinationChild);
     bool moveRow(ModelIndex.Handle sourceParent, int sourceRow, ModelIndex.Handle destinationParent, int destinationChild);
     bool moveRows(ModelIndex.Handle sourceParent, int sourceRow, int count, ModelIndex.Handle destinationParent, int destinationChild);
-    bool removeColumn(int column, Option<ModelIndex.Handle> parent);
-    bool removeColumns(int column, int count, Option<ModelIndex.Handle> parent);
-    bool removeRow(int row, Option<ModelIndex.Handle> parent);
-    bool removeRows(int row, int count, Option<ModelIndex.Handle> parent);
+    bool removeColumn(int column, ModelIndex.Handle parent = null);
+    bool removeColumns(int column, int count, ModelIndex.Handle parent = null);
+    bool removeRow(int row, ModelIndex.Handle parent = null);
+    bool removeRows(int row, int count, ModelIndex.Handle parent = null);
     bool setData(ModelIndex.Handle index, Variant.Handle value, Option<int> role);
     bool setHeaderData(int section, Orientation orientation, Variant.Handle value, Option<int> role);
     bool setItemData(ModelIndex.Handle index, Map<int, Variant.Handle> roles);

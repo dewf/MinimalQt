@@ -203,14 +203,12 @@ namespace MessageBox
     }
 
     void about(Widget::HandleRef parent, const std::string& title, const std::string& text) {
-        const auto qParent = Widget::fromOptionalHandle(parent);
-        QMessageBox::about(qParent, QString::fromStdString(title), QString::fromStdString(text));
+        QMessageBox::about(AS_QWIDGET_PTR(parent), QString::fromStdString(title), QString::fromStdString(text));
     }
 
     void aboutQt(Widget::HandleRef parent, const std::optional<std::string>& title) {
-        const auto qParent = Widget::fromOptionalHandle(parent);
         const auto qTitle = optionalMap<std::string,QString>(title, [](auto t) { return QString::fromStdString(t); }).value_or(QString());
-        QMessageBox::aboutQt(qParent, qTitle);
+        QMessageBox::aboutQt(AS_QWIDGET_PTR(parent), qTitle);
     }
 
     StandardButton critical(Widget::HandleRef parent, const std::string& title, const std::string& text, Flags<StandardButtons> buttons /* StandardButtons::Ok */, StandardButton defaultButton /* StandardButton::NoButton */) {

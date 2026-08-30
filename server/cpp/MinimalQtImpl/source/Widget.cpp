@@ -204,10 +204,8 @@ namespace Widget
         return RECT_HEAP_NEW(THIS->geometry());
     }
 
-    Pixmap::OwnedRef Handle_grab(HandleRef _this, const std::optional<Rect::HandleRef>& rectangle) {
-        auto qRect = QRect(QPoint(0, 0), QSize(-1, -1));
-        if (rectangle.has_value()) qRect = QRECT_VALUE(rectangle.value());
-        return PIXMAP_HEAP_NEW(THIS->grab(qRect));
+    Pixmap::OwnedRef Handle_grab(HandleRef _this, ::Rect::HandleRef rectangle) {
+        return PIXMAP_HEAP_NEW(THIS->grab(QRECT_VALUE(rectangle)));
     }
 
     void Handle_grabGesture(HandleRef _this, GestureType gesture, Flags<GestureFlags> flags_ /* 0 */) {
@@ -475,20 +473,12 @@ namespace Widget
         THIS->removeAction(AS_QACTION_PTR(action));
     }
 
-    void Handle_render(HandleRef _this, PaintDevice::HandleRef target, const std::optional<Point::HandleRef>& targetOffset, const std::optional<Region::HandleRef>& sourceRegion, Flags<RenderFlags> renderFlags /* RenderFlags::DrawWindowBackground | RenderFlags::DrawChildren */) {
-        QPoint qTargetOffset;
-        if (targetOffset.has_value()) qTargetOffset = QPOINT_VALUE(targetOffset.value());
-        QRegion qSourceRegion;
-        if (sourceRegion.has_value()) qSourceRegion = QREGION_VALUE(sourceRegion.value());
-        THIS->render(reinterpret_cast<QPaintDevice*>(target), qTargetOffset, qSourceRegion, static_cast<QWidget::RenderFlags>(renderFlags.value()));
+    void Handle_render(HandleRef _this, PaintDevice::HandleRef target, Point::HandleRef targetOffset /* nullptr */, Region::HandleRef sourceRegion /* nullptr */, Flags<RenderFlags> renderFlags /* RenderFlags::DrawWindowBackground | RenderFlags::DrawChildren */) {
+        THIS->render(reinterpret_cast<QPaintDevice*>(target), QPOINT_VALUE(targetOffset), QREGION_VALUE(sourceRegion), static_cast<QWidget::RenderFlags>(renderFlags.value()));
     }
 
-    void Handle_render(HandleRef _this, Painter::HandleRef painter, const std::optional<Point::HandleRef>& targetOffset, const std::optional<Region::HandleRef>& sourceRegion, Flags<RenderFlags> renderFlags /* RenderFlags::DrawWindowBackground | RenderFlags::DrawChildren */) {
-        QPoint qTargetOffset;
-        if (targetOffset.has_value()) qTargetOffset = QPOINT_VALUE(targetOffset.value());
-        QRegion qSourceRegion;
-        if (sourceRegion.has_value()) qSourceRegion = QREGION_VALUE(sourceRegion.value());
-        THIS->render(reinterpret_cast<QPainter*>(painter), qTargetOffset, qSourceRegion, static_cast<QWidget::RenderFlags>(renderFlags.value()));
+    void Handle_render(HandleRef _this, Painter::HandleRef painter, Point::HandleRef targetOffset /* nullptr */, Region::HandleRef sourceRegion /* nullptr */, Flags<RenderFlags> renderFlags /* RenderFlags::DrawWindowBackground | RenderFlags::DrawChildren */) {
+        THIS->render(reinterpret_cast<QPainter*>(painter), QPOINT_VALUE(targetOffset), QREGION_VALUE(sourceRegion), static_cast<QWidget::RenderFlags>(renderFlags.value()));
     }
 
     void Handle_repaint(HandleRef _this, Rect::HandleRef rect) {

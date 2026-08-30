@@ -18,8 +18,8 @@ using namespace ::ItemSelection;
 
 namespace ItemSelectionModel
 {
-    bool Handle_columnIntersectsSelection(HandleRef _this, int32_t column, const std::optional<ModelIndex::HandleRef>& parent) {
-        return THIS->columnIntersectsSelection(column, fromOptionalIndex(parent));
+    bool Handle_columnIntersectsSelection(HandleRef _this, int32_t column, ::ModelIndex::HandleRef parent) {
+        return THIS->columnIntersectsSelection(column, QMODELINDEX_VALUE(parent));
     }
 
     ModelIndex::OwnedRef Handle_currentIndex(HandleRef _this) {
@@ -30,12 +30,12 @@ namespace ItemSelectionModel
         return THIS->hasSelection();
     }
 
-    bool Handle_isColumnSelected(HandleRef _this, int32_t column, const std::optional<ModelIndex::HandleRef>& parent) {
-        return THIS->isColumnSelected(column, fromOptionalIndex(parent));
+    bool Handle_isColumnSelected(HandleRef _this, int32_t column, ::ModelIndex::HandleRef parent) {
+        return THIS->isColumnSelected(column, QMODELINDEX_VALUE(parent));
     }
 
-    bool Handle_isRowSelected(HandleRef _this, int32_t row, const std::optional<ModelIndex::HandleRef>& parent) {
-        return THIS->isRowSelected(row, fromOptionalIndex(parent));
+    bool Handle_isRowSelected(HandleRef _this, int32_t row, ::ModelIndex::HandleRef parent) {
+        return THIS->isRowSelected(row, QMODELINDEX_VALUE(parent));
     }
 
     bool Handle_isSelected(HandleRef _this, ModelIndex::HandleRef index) {
@@ -46,8 +46,8 @@ namespace ItemSelectionModel
         return reinterpret_cast<AbstractItemModel::HandleRef>(THIS->model());
     }
 
-    bool Handle_rowIntersectsSelection(HandleRef _this, int32_t row, const std::optional<ModelIndex::HandleRef>& parent) {
-        return THIS->rowIntersectsSelection(row, fromOptionalIndex(parent));
+    bool Handle_rowIntersectsSelection(HandleRef _this, int32_t row, ::ModelIndex::HandleRef parent) {
+        return THIS->rowIntersectsSelection(row, QMODELINDEX_VALUE(parent));
     }
 
     OwnedListRef Handle_selectedColumns(HandleRef _this, int32_t row /* 0 */) {

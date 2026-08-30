@@ -59,7 +59,7 @@ opaque Handle extends Object.Handle {
     Array<string> splitPath(string path);
     Widget.Handle widget();
     bool wrapAround();
-    void complete(Option<Rect.Handle> rect);
+    void complete(Rect.Handle rect = null);
     void setCompletionPrefix(string prefix);
     void setWrapAround(bool wrap);
 

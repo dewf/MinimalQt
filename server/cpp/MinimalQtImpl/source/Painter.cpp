@@ -79,10 +79,8 @@ namespace Painter
         return RECT_HEAP_NEW(THIS->boundingRect(QRECT_VALUE(rectangle), flags_, QString::fromStdString(text)));
     }
 
-    RectF::OwnedRef Handle_boundingRect(HandleRef _this, RectF::HandleRef rectangle, const std::string& text, const std::optional<TextOption::HandleRef>& option) {
-        QTextOption qOption;
-        if (option.has_value()) qOption = QTEXTOPTION_VALUE(option.value());
-        return RECTF_HEAP_NEW(THIS->boundingRect(QRECTF_VALUE(rectangle), QString::fromStdString(text), qOption));
+    RectF::OwnedRef Handle_boundingRect(HandleRef _this, RectF::HandleRef rectangle, const std::string& text, ::TextOption::HandleRef option) {
+        return RECTF_HEAP_NEW(THIS->boundingRect(QRECTF_VALUE(rectangle), QString::fromStdString(text), QTEXTOPTION_VALUE(option)));
     }
 
     Rect::OwnedRef Handle_boundingRect(HandleRef _this, int32_t x, int32_t y, int32_t w, int32_t h, int32_t flags_, const std::string& text) {
@@ -420,56 +418,32 @@ namespace Painter
         THIS->drawText(QPOINT_VALUE(position), QString::fromStdString(text));
     }
 
-    void Handle_drawText(HandleRef _this, RectF::HandleRef rectangle, const std::string& text, const std::optional<TextOption::HandleRef>& option) {
-        QTextOption qOption;
-        if (option.has_value()) qOption = QTEXTOPTION_VALUE(option.value());
-        THIS->drawText(QRECTF_VALUE(rectangle), QString::fromStdString(text), qOption);
+    void Handle_drawText(HandleRef _this, RectF::HandleRef rectangle, const std::string& text, ::TextOption::HandleRef option) {
+        THIS->drawText(QRECTF_VALUE(rectangle), QString::fromStdString(text), QTEXTOPTION_VALUE(option));
     }
 
     void Handle_drawText(HandleRef _this, int32_t x, int32_t y, const std::string& text) {
         THIS->drawText(x, y, QString::fromStdString(text));
     }
 
-    void Handle_drawText(HandleRef _this, Rect::HandleRef rectangle, int32_t flags_, const std::string& text, const std::optional<Rect::HandleRef>& boundingRect) {
-        QRect brValue;
-        QRect *ptr = nullptr;
-        if (boundingRect.has_value()) {
-            brValue = QRECT_VALUE(boundingRect.value());
-            ptr = &brValue;
-        }
-        THIS->drawText(QRECT_VALUE(rectangle), flags_, QString::fromStdString(text), ptr);
+    void Handle_drawText(HandleRef _this, Rect::HandleRef rectangle, int32_t flags_, const std::string& text, ::Rect::HandleRef outPtr_boundingRect) {
+        THIS->drawText(QRECT_VALUE(rectangle), flags_, QString::fromStdString(text), AS_QRECT_PTR(outPtr_boundingRect));
     }
 
-    void Handle_drawText(HandleRef _this, RectF::HandleRef rectangle, int32_t flags_, const std::string& text, const std::optional<RectF::HandleRef>& boundingRect) {
-        QRectF brValue;
-        QRectF *ptr = nullptr;
-        if (boundingRect.has_value()) {
-            brValue = QRECTF_VALUE(boundingRect.value());
-            ptr = &brValue;
-        }
-        THIS->drawText(QRECTF_VALUE(rectangle), flags_, QString::fromStdString(text), ptr);
+    void Handle_drawText(HandleRef _this, RectF::HandleRef rectangle, int32_t flags_, const std::string& text, ::RectF::HandleRef outPtr_boundingRect) {
+        THIS->drawText(QRECTF_VALUE(rectangle), flags_, QString::fromStdString(text), AS_QRECTF_PTR(outPtr_boundingRect));
     }
 
-    void Handle_drawText(HandleRef _this, int32_t x, int32_t y, int32_t width, int32_t height, int32_t flags_, const std::string& text, const std::optional<Rect::HandleRef>& boundingRect) {
-        QRect brValue;
-        QRect *ptr = nullptr;
-        if (boundingRect.has_value()) {
-            brValue = QRECT_VALUE(boundingRect.value());
-            ptr = &brValue;
-        }
-        THIS->drawText(x, y, width, height, flags_, QString::fromStdString(text), ptr);
+    void Handle_drawText(HandleRef _this, int32_t x, int32_t y, int32_t width, int32_t height, int32_t flags_, const std::string& text, ::Rect::HandleRef outPtr_boundingRect) {
+        THIS->drawText(x, y, width, height, flags_, QString::fromStdString(text), AS_QRECT_PTR(outPtr_boundingRect));
     }
 
-    void Handle_drawTiledPixmap(HandleRef _this, RectF::HandleRef rectangle, Pixmap::HandleRef pixmap, const std::optional<PointF::HandleRef>& position) {
-        QPointF offset;
-        if (position.has_value()) offset = QPOINTF_VALUE(position.value());
-        THIS->drawTiledPixmap(QRECTF_VALUE(rectangle), QPIXMAP_VALUE(pixmap), offset);
+    void Handle_drawTiledPixmap(HandleRef _this, RectF::HandleRef rectangle, Pixmap::HandleRef pixmap, ::PointF::HandleRef position) {
+        THIS->drawTiledPixmap(QRECTF_VALUE(rectangle), QPIXMAP_VALUE(pixmap), QPOINTF_VALUE(position));
     }
 
-    void Handle_drawTiledPixmap(HandleRef _this, Rect::HandleRef rectangle, Pixmap::HandleRef pixmap, const std::optional<Point::HandleRef>& position) {
-        QPoint offset;
-        if (position.has_value()) offset = QPOINT_VALUE(position.value());
-        THIS->drawTiledPixmap(QRECT_VALUE(rectangle), QPIXMAP_VALUE(pixmap), offset);
+    void Handle_drawTiledPixmap(HandleRef _this, Rect::HandleRef rectangle, Pixmap::HandleRef pixmap, ::Point::HandleRef position) {
+        THIS->drawTiledPixmap(QRECT_VALUE(rectangle), QPIXMAP_VALUE(pixmap), QPOINT_VALUE(position));
     }
 
     void Handle_drawTiledPixmap(HandleRef _this, int32_t x, int32_t y, int32_t width, int32_t height, Pixmap::HandleRef pixmap, int32_t sx /* 0 */, int32_t sy /* 0 */) {

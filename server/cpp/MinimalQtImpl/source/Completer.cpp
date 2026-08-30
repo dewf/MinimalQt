@@ -140,10 +140,8 @@ namespace Completer
         return THIS->wrapAround();
     }
 
-    void Handle_complete(HandleRef _this, const std::optional<Rect::HandleRef>& rect) {
-        QRect qRect;
-        if (rect.has_value()) qRect = QRECT_VALUE(rect.value());
-        THIS->complete(qRect);
+    void Handle_complete(HandleRef _this, ::Rect::HandleRef rect) {
+        THIS->complete(QRECT_VALUE(rect));
     }
 
     void Handle_setCompletionPrefix(HandleRef _this, const std::string& prefix) {

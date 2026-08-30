@@ -22,10 +22,8 @@ namespace Icon
         return SIZE_HEAP_NEW(THIS->actualSize(QSIZE_VALUE(size), static_cast<QIcon::Mode>(mode), static_cast<QIcon::State>(state)));
     }
 
-    void Handle_addFile(HandleRef _this, const std::string& fileName, const std::optional<Size::HandleRef>& size, Mode mode /* Mode::Normal */, State state /* State::Off */) {
-        QSize qSize;
-        if (size.has_value()) qSize = QSIZE_VALUE(size.value());
-        THIS->addFile(QString::fromStdString(fileName), qSize, static_cast<QIcon::Mode>(mode), static_cast<QIcon::State>(state));
+    void Handle_addFile(HandleRef _this, const std::string& fileName, Size::HandleRef size /* nullptr */, Mode mode /* Mode::Normal */, State state /* State::Off */) {
+        THIS->addFile(QString::fromStdString(fileName), QSIZE_VALUE(size), static_cast<QIcon::Mode>(mode), static_cast<QIcon::State>(state));
     }
 
     void Handle_addPixmap(HandleRef _this, Pixmap::HandleRef pixmap, Mode mode /* Mode::Normal */, State state /* State::Off */) {

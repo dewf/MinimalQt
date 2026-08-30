@@ -79,10 +79,8 @@ namespace Image
         return IMAGE_HEAP_NEW(result);
     }
 
-    OwnedRef Handle_copy(HandleRef _this, const std::optional<Rect::HandleRef>& rectangle) {
-        QRect qRect;
-        if (rectangle.has_value()) qRect = QRECT_VALUE(rectangle.value());
-        return IMAGE_HEAP_NEW(THIS->copy(qRect));
+    OwnedRef Handle_copy(HandleRef _this, ::Rect::HandleRef rectangle) {
+        return IMAGE_HEAP_NEW(THIS->copy(QRECT_VALUE(rectangle)));
     }
 
     OwnedRef Handle_copy(HandleRef _this, int32_t x, int32_t y, int32_t width, int32_t height) {

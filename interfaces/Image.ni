@@ -97,7 +97,7 @@ opaque Handle {
     // QImage convertedToColorSpace(const QColorSpace &colorSpace, QImage::Format format, Qt::ImageConversionFlags flags = Qt::AutoColor) &&
     // QImage convertedToColorSpace(const QColorSpace &colorSpace, QImage::Format format, Qt::ImageConversionFlags flags = Qt::AutoColor) const &
 
-    Owned copy(Option<Rect.Handle> rectangle);
+    Owned copy(Rect.Handle rectangle = null);
     Owned copy(int x, int y, int width, int height);
     Owned createAlphaMask(ImageConversionFlags flags_ = AutoColor);
     Owned createHeuristicMask(bool clipTight = true);

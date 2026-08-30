@@ -311,8 +311,7 @@ namespace FileDialog
         return URL_HEAP_NEW(result);
     }
 
-    void getOpenFileContent(const std::string& nameFilter, const std::function<FileOpenCompletedFunc>& completedFunc, const std::optional<Widget::HandleRef>& parent) {
-        const auto qParent = Widget::fromOptionalHandle(parent);
+    void getOpenFileContent(const std::string& nameFilter, const std::function<FileOpenCompletedFunc>& completedFunc, ::Widget::HandleRef parent) {
         auto fileContentsReady = [completedFunc](const QString& qFilename, const QByteArray& qBytes) {
             if (qFilename.isEmpty()) {
                 // nothin'
@@ -324,7 +323,7 @@ namespace FileDialog
                 completedFunc(std::make_shared<FileContentResult::ContentReady>(filename, bytes));
             }
         };
-        QFileDialog::getOpenFileContent(QString::fromStdString(nameFilter), fileContentsReady, qParent);
+        QFileDialog::getOpenFileContent(QString::fromStdString(nameFilter), fileContentsReady, AS_QWIDGET_PTR(parent));
     }
 
     GetOpenFileNameResult getOpenFileName(const GetOpenFileNameOpts& opts) {
@@ -459,10 +458,9 @@ namespace FileDialog
         return result;
     }
 
-    void saveFileContent(const std::vector<uint8_t>& fileContent, const std::string& fileNameHint, const std::optional<Widget::HandleRef>& parent) {
+    void saveFileContent(const std::vector<uint8_t>& fileContent, const std::string& fileNameHint, ::Widget::HandleRef parent) {
         QByteArray qFileContent(reinterpret_cast<const char*>(fileContent.data()), static_cast<qsizetype>(fileContent.size()));
         QString qFileNameHint = QString::fromStdString(fileNameHint);
-        const auto qParent = Widget::fromOptionalHandle(parent);
-        QFileDialog::saveFileContent(qFileContent, qFileNameHint, qParent);
+        QFileDialog::saveFileContent(qFileContent, qFileNameHint, AS_QWIDGET_PTR(parent));
     }
 }

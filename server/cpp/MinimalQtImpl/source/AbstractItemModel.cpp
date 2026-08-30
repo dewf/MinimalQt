@@ -23,8 +23,8 @@ using namespace ::SafeReturn;
 #define THIS (reinterpret_cast<QAbstractItemModel*>(_this))
 #define SUBCLASSED_THIS (reinterpret_cast<Implementation*>(_this))
 
-// TODO: replace with new macros
-#define PMODELINDEX(x) ((PersistentModelIndex::HandleRef)&x)
+// // TODO: replace with new macros
+// #define PMODELINDEX(x) ((PersistentModelIndex::HandleRef)&x)
 
 namespace AbstractItemModel
 {
@@ -45,8 +45,8 @@ namespace AbstractItemModel
         return THIS->checkIndex(QMODELINDEX_VALUE(index), static_cast<QAbstractItemModel::CheckIndexOptions>(options_.value()));
     }
 
-    int32_t ConstHandle_columnCount(ConstHandleRef _this, const std::optional<ModelIndex::HandleRef>& parent) {
-        return THIS->columnCount(fromOptionalIndex(parent));
+    int32_t ConstHandle_columnCount(ConstHandleRef _this, ::ModelIndex::HandleRef parent) {
+        return THIS->columnCount(QMODELINDEX_VALUE(parent));
     }
 
     Variant::OwnedRef ConstHandle_data(ConstHandleRef _this, ModelIndex::HandleRef index, const std::optional<int32_t>& role) {
@@ -57,20 +57,20 @@ namespace AbstractItemModel
         return static_cast<Flags<ItemFlags>>(THIS->flags(QMODELINDEX_VALUE(index)));
     }
 
-    bool ConstHandle_hasChildren(ConstHandleRef _this, const std::optional<ModelIndex::HandleRef>& parent) {
-        return THIS->hasChildren(fromOptionalIndex(parent));
+    bool ConstHandle_hasChildren(ConstHandleRef _this, ::ModelIndex::HandleRef parent) {
+        return THIS->hasChildren(QMODELINDEX_VALUE(parent));
     }
 
-    bool ConstHandle_hasIndex(ConstHandleRef _this, int32_t row, int32_t column, const std::optional<ModelIndex::HandleRef>& parent) {
-        return THIS->hasIndex(row, column, fromOptionalIndex(parent));
+    bool ConstHandle_hasIndex(ConstHandleRef _this, int32_t row, int32_t column, ::ModelIndex::HandleRef parent) {
+        return THIS->hasIndex(row, column, QMODELINDEX_VALUE(parent));
     }
 
     Variant::OwnedRef ConstHandle_headerData(ConstHandleRef _this, int32_t section, Orientation orientation, const std::optional<int32_t>& role) {
         return VARIANT_HEAP_NEW(THIS->headerData(section, static_cast<Qt::Orientation>(orientation), role.value_or(Qt::DisplayRole)));
     }
 
-    ModelIndex::OwnedRef ConstHandle_index(ConstHandleRef _this, int32_t row, int32_t column, const std::optional<ModelIndex::HandleRef>& parent) {
-        return MODELINDEX_HEAP_NEW(THIS->index(row, column, fromOptionalIndex(parent)));
+    ModelIndex::OwnedRef ConstHandle_index(ConstHandleRef _this, int32_t row, int32_t column, ::ModelIndex::HandleRef parent) {
+        return MODELINDEX_HEAP_NEW(THIS->index(row, column, QMODELINDEX_VALUE(parent)));
     }
 
     std::map<int32_t,Variant::OwnedRef> ConstHandle_itemData(ConstHandleRef _this, ModelIndex::HandleRef index) {
@@ -101,8 +101,8 @@ namespace AbstractItemModel
         return MODELINDEX_HEAP_NEW(THIS->parent(QMODELINDEX_VALUE(index)));
     }
 
-    int32_t ConstHandle_rowCount(ConstHandleRef _this, const std::optional<ModelIndex::HandleRef>& parent) {
-        return THIS->rowCount(fromOptionalIndex(parent));
+    int32_t ConstHandle_rowCount(ConstHandleRef _this, ::ModelIndex::HandleRef parent) {
+        return THIS->rowCount(QMODELINDEX_VALUE(parent));
     }
 
     ModelIndex::OwnedRef ConstHandle_sibling(ConstHandleRef _this, int32_t row, int32_t column, ModelIndex::HandleRef index) {
@@ -286,20 +286,20 @@ namespace AbstractItemModel
         THIS->fetchMore(QMODELINDEX_VALUE(parent));
     }
 
-    bool Handle_insertColumn(HandleRef _this, int32_t column, const std::optional<ModelIndex::HandleRef>& parent) {
-        return THIS->insertColumn(column, fromOptionalIndex(parent));
+    bool Handle_insertColumn(HandleRef _this, int32_t column, ::ModelIndex::HandleRef parent) {
+        return THIS->insertColumn(column, QMODELINDEX_VALUE(parent));
     }
 
-    bool Handle_insertColumns(HandleRef _this, int32_t column, int32_t count, const std::optional<ModelIndex::HandleRef>& parent) {
-        return THIS->insertColumns(column, count, fromOptionalIndex(parent));
+    bool Handle_insertColumns(HandleRef _this, int32_t column, int32_t count, ::ModelIndex::HandleRef parent) {
+        return THIS->insertColumns(column, count, QMODELINDEX_VALUE(parent));
     }
 
-    bool Handle_insertRow(HandleRef _this, int32_t row, const std::optional<ModelIndex::HandleRef>& parent) {
-        return THIS->insertRow(row, fromOptionalIndex(parent));
+    bool Handle_insertRow(HandleRef _this, int32_t row, ::ModelIndex::HandleRef parent) {
+        return THIS->insertRow(row, QMODELINDEX_VALUE(parent));
     }
 
-    bool Handle_insertRows(HandleRef _this, int32_t row, int32_t count, const std::optional<ModelIndex::HandleRef>& parent) {
-        return THIS->insertRows(row, count, fromOptionalIndex(parent));
+    bool Handle_insertRows(HandleRef _this, int32_t row, int32_t count, ::ModelIndex::HandleRef parent) {
+        return THIS->insertRows(row, count, QMODELINDEX_VALUE(parent));
     }
 
     bool Handle_moveColumn(HandleRef _this, ModelIndex::HandleRef sourceParent, int32_t sourceColumn, ModelIndex::HandleRef destinationParent, int32_t destinationChild) {
@@ -318,20 +318,20 @@ namespace AbstractItemModel
         return THIS->moveRows(QMODELINDEX_VALUE(sourceParent), sourceRow, count, QMODELINDEX_VALUE(destinationParent), destinationChild);
     }
 
-    bool Handle_removeColumn(HandleRef _this, int32_t column, const std::optional<ModelIndex::HandleRef>& parent) {
-        return THIS->removeColumn(column, fromOptionalIndex(parent));
+    bool Handle_removeColumn(HandleRef _this, int32_t column, ::ModelIndex::HandleRef parent) {
+        return THIS->removeColumn(column, QMODELINDEX_VALUE(parent));
     }
 
-    bool Handle_removeColumns(HandleRef _this, int32_t column, int32_t count, const std::optional<ModelIndex::HandleRef>& parent) {
-        return THIS->removeColumns(column, count, fromOptionalIndex(parent));
+    bool Handle_removeColumns(HandleRef _this, int32_t column, int32_t count, ::ModelIndex::HandleRef parent) {
+        return THIS->removeColumns(column, count, QMODELINDEX_VALUE(parent));
     }
 
-    bool Handle_removeRow(HandleRef _this, int32_t row, const std::optional<ModelIndex::HandleRef>& parent) {
-        return THIS->removeRow(row, fromOptionalIndex(parent));
+    bool Handle_removeRow(HandleRef _this, int32_t row, ::ModelIndex::HandleRef parent) {
+        return THIS->removeRow(row, QMODELINDEX_VALUE(parent));
     }
 
-    bool Handle_removeRows(HandleRef _this, int32_t row, int32_t count, const std::optional<ModelIndex::HandleRef>& parent) {
-        return THIS->removeRows(row, count, fromOptionalIndex(parent));
+    bool Handle_removeRows(HandleRef _this, int32_t row, int32_t count, ::ModelIndex::HandleRef parent) {
+        return THIS->removeRows(row, count, QMODELINDEX_VALUE(parent));
     }
 
     bool Handle_setData(HandleRef _this, ModelIndex::HandleRef index, Variant::HandleRef value, const std::optional<int32_t>& role) {

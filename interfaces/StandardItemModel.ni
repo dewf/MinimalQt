@@ -25,12 +25,12 @@ opaque Handle extends AbstractItemModel.Handle {
     void insertColumn(int column, Array<StandardItem.Handle> items);
 
     @shadows
-    bool insertColumn(int column, Option<ModelIndex.Handle> parent);
+    bool insertColumn(int column, ModelIndex.Handle parent = null);
 
     void insertRow(int row, Array<StandardItem.Handle> items);
 
     @shadows
-    bool insertRow(int row, Option<ModelIndex.Handle> parent);
+    bool insertRow(int row, ModelIndex.Handle parent = null);
 
     void insertRow(int row, StandardItem.Handle item);
     StandardItem.Handle invisibleRootItem();

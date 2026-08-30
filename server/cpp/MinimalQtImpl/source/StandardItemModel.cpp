@@ -50,16 +50,16 @@ namespace StandardItemModel
         THIS->insertColumn(column, arrayToList(items));
     }
 
-    bool Handle_insertColumn(HandleRef _this, int32_t column, const std::optional<ModelIndex::HandleRef>& parent) {
-        return THIS->insertColumn(column, fromOptionalIndex(parent));
+    bool Handle_insertColumn(HandleRef _this, int32_t column,::ModelIndex::HandleRef parent) {
+        return THIS->insertColumn(column, QMODELINDEX_VALUE(parent));
     }
 
     void Handle_insertRow(HandleRef _this, int32_t row, const std::vector<StandardItem::HandleRef>& items) {
         THIS->insertRow(row, arrayToList(items));
     }
 
-    bool Handle_insertRow(HandleRef _this, int32_t row, const std::optional<ModelIndex::HandleRef>& parent) {
-        return THIS->insertRow(row, fromOptionalIndex(parent));
+    bool Handle_insertRow(HandleRef _this, int32_t row, ::ModelIndex::HandleRef parent) {
+        return THIS->insertRow(row, QMODELINDEX_VALUE(parent));
     }
 
     void Handle_insertRow(HandleRef _this, int32_t row, StandardItem::HandleRef item) {
@@ -80,7 +80,8 @@ namespace StandardItemModel
 
     StandardItem::HandleRef Handle_itemPrototype(HandleRef _this) {
         // const trouble! can't clone either because then it will leak (unlike value types, where we auto-dispose Owned handles)
-        return (StandardItem::HandleRef)THIS->itemPrototype();
+        auto ret = const_cast<QStandardItem*>(THIS->itemPrototype());
+        return reinterpret_cast<StandardItem::HandleRef>(ret);
     }
 
     void Handle_setColumnCount(HandleRef _this, int32_t columns) {

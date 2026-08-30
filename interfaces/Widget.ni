@@ -102,7 +102,7 @@ opaque Handle extends Object.Handle {
     Rect.Owned frameGeometry();
     Size.Owned frameSize();
     Rect.Owned geometry();
-    Pixmap.Owned grab(Option<Rect.Handle> rectangle); // = QRect(QPoint(0, 0), QSize(-1, -1))
+    Pixmap.Owned grab(Rect.Handle rectangle = null); // docs show QRect(QPoint(0, 0), QSize(-1, -1)) instead of QRect(), but isn't that the same?
     void grabGesture(GestureType gesture, GestureFlags flags_ = 0);
     void grabKeyboard();
     void grabMouse();
@@ -183,8 +183,8 @@ opaque Handle extends Object.Handle {
     void releaseMouse();
     void releaseShortcut(int id);
     void removeAction(Action.Handle action);
-    void render(PaintDevice.Handle target, Option<Point.Handle> targetOffset, Option<Region.Handle> sourceRegion, RenderFlags renderFlags = DrawWindowBackground | DrawChildren);
-    void render(Painter.Handle painter, Option<Point.Handle> targetOffset, Option<Region.Handle> sourceRegion, RenderFlags renderFlags = DrawWindowBackground | DrawChildren);
+    void render(PaintDevice.Handle target, Point.Handle targetOffset = null, Region.Handle sourceRegion = null, RenderFlags renderFlags = DrawWindowBackground | DrawChildren);
+    void render(Painter.Handle painter, Point.Handle targetOffset = null, Region.Handle sourceRegion = null, RenderFlags renderFlags = DrawWindowBackground | DrawChildren);
     void repaint(Rect.Handle rect);
     void repaint(Region.Handle rgn);
     void repaint(int x, int y, int w, int h);

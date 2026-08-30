@@ -38,10 +38,8 @@ namespace Pixmap
         return THIS->convertFromImage(QIMAGE_VALUE(image), static_cast<Qt::ImageConversionFlags>(flags_.value()));
     }
 
-    OwnedRef Handle_copy(HandleRef _this, const std::optional<Rect::HandleRef>& rect) {
-        QRect qRect;
-        if (rect.has_value()) qRect = QRECT_VALUE(rect.value());
-        return PIXMAP_HEAP_NEW(THIS->copy(qRect));
+    OwnedRef Handle_copy(HandleRef _this, ::Rect::HandleRef rect) {
+        return PIXMAP_HEAP_NEW(THIS->copy(QRECT_VALUE(rect)));
     }
 
     OwnedRef Handle_copy(HandleRef _this, int32_t x, int32_t y, int32_t width, int32_t height) {
@@ -138,16 +136,12 @@ namespace Pixmap
         return PIXMAP_HEAP_NEW(THIS->scaledToWidth(width,  static_cast<Qt::TransformationMode>(mode)));
     }
 
-    void Handle_scroll(HandleRef _this, int32_t dx, int32_t dy, Rect::HandleRef rect, const std::optional<Region::HandleRef>& exposed) {
-        QRegion *qExposed = nullptr;
-        if (exposed.has_value()) qExposed = AS_QREGION_PTR(exposed.value());
-        THIS->scroll(dx, dy, QRECT_VALUE(rect), qExposed);
+    void Handle_scroll(HandleRef _this, int32_t dx, int32_t dy, Rect::HandleRef rect, ::Region::HandleRef outPtr_exposed) {
+        THIS->scroll(dx, dy, QRECT_VALUE(rect), AS_QREGION_PTR(outPtr_exposed));
     }
 
-    void Handle_scroll(HandleRef _this, int32_t dx, int32_t dy, int32_t x, int32_t y, int32_t width, int32_t height, const std::optional<Region::HandleRef>& exposed) {
-        QRegion *qExposed = nullptr;
-        if (exposed.has_value()) qExposed = AS_QREGION_PTR(exposed.value());
-        THIS->scroll(dx, dy, x, y, width, height, qExposed);
+    void Handle_scroll(HandleRef _this, int32_t dx, int32_t dy, int32_t x, int32_t y, int32_t width, int32_t height, ::Region::HandleRef outPtr_exposed) {
+        THIS->scroll(dx, dy, x, y, width, height, AS_QREGION_PTR(outPtr_exposed));
     }
 
     void Handle_setDevicePixelRatio(HandleRef _this, double scaleFactor) {

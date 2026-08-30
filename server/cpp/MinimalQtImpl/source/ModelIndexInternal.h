@@ -10,9 +10,10 @@
 #define MODELINDEX_LIST_HEAP_NEW(...) (reinterpret_cast<ModelIndex::OwnedListRef>(new QModelIndexList(__VA_ARGS__)))
 
 namespace ModelIndex {
-    inline QModelIndex fromOptionalIndex(const std::optional<HandleRef>& x) {
-        QModelIndex ret;
-        if (x.has_value()) ret = QMODELINDEX_VALUE(x.value());
-        return ret;
-    }
+    // from back when we used to use Option<ModelIndex.Handle> everywhere ... then we discovered a better pattern
+    // inline QModelIndex fromOptionalIndex(const std::optional<HandleRef>& x) {
+    //     QModelIndex ret;
+    //     if (x.has_value()) ret = QMODELINDEX_VALUE(x.value());
+    //     return ret;
+    // }
 }

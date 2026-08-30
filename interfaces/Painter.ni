@@ -100,7 +100,7 @@ opaque Handle {
     void beginNativePainting();
     RectF.Owned boundingRect(RectF.Handle rectangle, int flags_, string text);
     Rect.Owned boundingRect(Rect.Handle rectangle, int flags_, string text);
-    RectF.Owned boundingRect(RectF.Handle rectangle, string text, Option<TextOption.Handle> option);
+    RectF.Owned boundingRect(RectF.Handle rectangle, string text, TextOption.Handle option = null);
     Rect.Owned boundingRect(int x, int y, int w, int h, int flags_, string text);
     Brush.Owned brush();
     Point.Owned brushOrigin();
@@ -206,13 +206,13 @@ opaque Handle {
 
     void drawText(PointF.Handle position, string text);
     void drawText(Point.Handle position, string text);
-    void drawText(RectF.Handle rectangle, string text, Option<TextOption.Handle> option);
+    void drawText(RectF.Handle rectangle, string text, TextOption.Handle option = null);
     void drawText(int x, int y, string text);
-    void drawText(Rect.Handle rectangle, int flags_, string text, Option<Rect.Handle> boundingRect);
-    void drawText(RectF.Handle rectangle, int flags_, string text, Option<RectF.Handle> boundingRect);
-    void drawText(int x, int y, int width, int height, int flags_, string text, Option<Rect.Handle> boundingRect);
-    void drawTiledPixmap(RectF.Handle rectangle, Pixmap.Handle pixmap, Option<PointF.Handle> position);
-    void drawTiledPixmap(Rect.Handle rectangle, Pixmap.Handle pixmap, Option<Point.Handle> position);
+    void drawText(Rect.Handle rectangle, int flags_, string text, Rect.Handle outPtr_boundingRect = null);        // boundingRect is (optional) OUTPUT parameter!
+    void drawText(RectF.Handle rectangle, int flags_, string text, RectF.Handle outPtr_boundingRect);             // same
+    void drawText(int x, int y, int width, int height, int flags_, string text, Rect.Handle outPtr_boundingRect); // same
+    void drawTiledPixmap(RectF.Handle rectangle, Pixmap.Handle pixmap, PointF.Handle position = null);
+    void drawTiledPixmap(Rect.Handle rectangle, Pixmap.Handle pixmap, Point.Handle position = null);
     void drawTiledPixmap(int x, int y, int width, int height, Pixmap.Handle pixmap, int sx = 0, int sy = 0);
     bool end();
     void endNativePainting();

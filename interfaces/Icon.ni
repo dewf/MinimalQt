@@ -169,7 +169,7 @@ enum ThemeIcon {
 @nodispose
 opaque Handle {
     Size.Owned actualSize(Size.Handle size, Mode mode = Normal, State state = Off);
-    void addFile(string fileName, Option<Size.Handle> size, Mode mode = Normal, State state = Off);
+    void addFile(string fileName, Size.Handle size = null, Mode mode = Normal, State state = Off);
     void addPixmap(Pixmap.Handle pixmap, Mode mode = Normal, State state = Off);
     Array<Size.Owned> availableSizes(Mode mode = Normal, State state = Off);
     int64 cacheKey();
