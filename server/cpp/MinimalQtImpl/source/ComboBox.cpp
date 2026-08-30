@@ -29,12 +29,12 @@ using namespace ::ModelIndex;
 
 namespace ComboBox
 {
-    void Handle_addItem(HandleRef _this, const std::string& text, const std::optional<Variant::HandleRef>& userData) {
-        THIS->addItem(QString::fromStdString(text), Variant::fromOptional(userData));
+    void Handle_addItem(HandleRef _this, const std::string& text, ::Variant::HandleRef userData) {
+        THIS->addItem(QString::fromStdString(text), QVARIANT_VALUE(userData));
     }
 
-    void Handle_addItem(HandleRef _this, Icon::HandleRef icon, const std::string& text, const std::optional<Variant::HandleRef>& userData) {
-        THIS->addItem(QICON_VALUE(icon), QString::fromStdString(text), Variant::fromOptional(userData));
+    void Handle_addItem(HandleRef _this, Icon::HandleRef icon, const std::string& text, ::Variant::HandleRef userData) {
+        THIS->addItem(QICON_VALUE(icon), QString::fromStdString(text), QVARIANT_VALUE(userData));
     }
 
     void Handle_addItems(HandleRef _this, const std::vector<std::string>& texts) {
@@ -85,12 +85,12 @@ namespace ComboBox
         return SIZE_HEAP_NEW(THIS->iconSize());
     }
 
-    void Handle_insertItem(HandleRef _this, int32_t index, const std::string& text, const std::optional<Variant::HandleRef>& userData) {
-        THIS->insertItem(index, QString::fromStdString(text), Variant::fromOptional(userData));
+    void Handle_insertItem(HandleRef _this, int32_t index, const std::string& text, ::Variant::HandleRef userData) {
+        THIS->insertItem(index, QString::fromStdString(text), QVARIANT_VALUE(userData));
     }
 
-    void Handle_insertItem(HandleRef _this, int32_t index, Icon::HandleRef icon, const std::string& text, const std::optional<Variant::HandleRef>& userData) {
-        THIS->insertItem(index, QICON_VALUE(icon), QString::fromStdString(text), Variant::fromOptional(userData));
+    void Handle_insertItem(HandleRef _this, int32_t index, Icon::HandleRef icon, const std::string& text, ::Variant::HandleRef userData) {
+        THIS->insertItem(index, QICON_VALUE(icon), QString::fromStdString(text), QVARIANT_VALUE(userData));
     }
 
     void Handle_insertItems(HandleRef _this, int32_t index, const std::vector<std::string>& list) {

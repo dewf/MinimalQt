@@ -42,8 +42,8 @@ enum SizeAdjustPolicy {
 }
 
 opaque Handle extends Widget.Handle {
-    void addItem(string text, Option<Variant.Handle> userData);
-    void addItem(Icon.Handle icon, string text, Option<Variant.Handle> userData);
+    void addItem(string text, Variant.Handle userData = null);
+    void addItem(Icon.Handle icon, string text, Variant.Handle userData = null);
     void addItems(Array<string> texts);
     Completer.Handle completer();
     int count();
@@ -56,8 +56,8 @@ opaque Handle extends Widget.Handle {
     bool hasFrame();
     void hidePopup();
     Size.Owned iconSize();
-    void insertItem(int index, string text, Option<Variant.Handle> userData);
-    void insertItem(int index, Icon.Handle icon, string text, Option<Variant.Handle> userData);
+    void insertItem(int index, string text, Variant.Handle userData = null);
+    void insertItem(int index, Icon.Handle icon, string text, Variant.Handle userData = null);
     void insertItems(int index, Array<string> list);
     InsertPolicy getInsertPolicy();
     void insertSeparator(int index);
