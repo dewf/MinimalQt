@@ -76,7 +76,6 @@ Action.Handle exec(Array<Action.Handle> actions, Point.Handle pos, Action.Handle
 Handle menuInAction(Action.Handle action);
 
 // some Action methods to avoid circular references:
-extmethods Action.Handle {
-    Handle menu();
-    void setMenu(Handle menu);
-}
+
+Handle ext_Action_menu(Action.Handle this_);
+void ext_Action_setMenu(Action.Handle this_, Handle menu);

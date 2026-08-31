@@ -222,12 +222,10 @@ namespace Menu
     }
 
     // ext methods block for: Action::HandleRef ====
-    HandleRef ext__Action_Handle_menu(Action::HandleRef _this) {
-        return reinterpret_cast<HandleRef>(AS_QACTION_PTR(_this)->menu());
+    HandleRef ext_Action_menu(Action::HandleRef this_) {
+        return reinterpret_cast<HandleRef>(AS_QACTION_PTR(this_)->menu());
     }
-
-    void ext__Action_Handle_setMenu(Action::HandleRef _this, HandleRef menu) {
-        AS_QACTION_PTR(_this)->setMenu(AS_QMENU_PTR(menu));
+    void ext_Action_setMenu(Action::HandleRef this_, HandleRef menu) {
+        AS_QACTION_PTR(this_)->setMenu(AS_QMENU_PTR(menu));
     }
-    // ==============================
 }

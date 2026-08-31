@@ -136,8 +136,8 @@ namespace Splitter
     }
 
     // ext methods block for: SplitterHandle::HandleRef ====
-    HandleRef ext__SplitterHandle_Handle_splitter(SplitterHandle::HandleRef _this) {
-        return reinterpret_cast<HandleRef>(AS_QSPLITTERHANDLE_PTR(_this)->splitter());
+    HandleRef ext_SplitterHandle_splitter(SplitterHandle::HandleRef this_) {
+        return reinterpret_cast<HandleRef>(AS_QSPLITTERHANDLE_PTR(this_)->splitter());
     }
     // ==============================
 }

@@ -126,6 +126,4 @@ bool operator_equal(Handle lhs, Handle rhs);
 
 
 // to break circular dependency:
-extmethods Rect.Handle {
-    Owned toRectF();
-}
+Owned ext_Rect_toRectF(Rect.Handle this_);

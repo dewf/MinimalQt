@@ -148,18 +148,15 @@ namespace Layout
     }
 
     // ext methods block for: Widget::HandleRef ====
-    HandleRef ext__Widget_Handle_layout(Widget::HandleRef _this) {
-        return reinterpret_cast<HandleRef>(AS_QWIDGET_PTR(_this)->layout());
+    HandleRef ext_Widget_layout(Widget::HandleRef this_) {
+        return reinterpret_cast<HandleRef>(AS_QWIDGET_PTR(this_)->layout());
     }
-    void ext__Widget_Handle_setLayout(Widget::HandleRef _this, HandleRef layout) {
-        AS_QWIDGET_PTR(_this)->setLayout(AS_QLAYOUT_PTR(layout));
+    void ext_Widget_setLayout(Widget::HandleRef this_, HandleRef layout) {
+        AS_QWIDGET_PTR(this_)->setLayout(AS_QLAYOUT_PTR(layout));
     }
-    // ==============================
-
 
     // ext methods block for: LayoutItem::HandleRef ====
-    HandleRef ext__LayoutItem_Handle_layout(LayoutItem::HandleRef _this) {
-        return reinterpret_cast<HandleRef>(AS_QLAYOUTITEM_PTR(_this)->layout());
+    HandleRef ext_LayoutItem_layout(LayoutItem::HandleRef this_) {
+        return reinterpret_cast<HandleRef>(AS_QLAYOUTITEM_PTR(this_)->layout());
     }
-    // ==============================
 }

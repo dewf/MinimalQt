@@ -86,8 +86,8 @@ namespace PolygonF
     }
 
     // ext methods block for: Polygon::HandleRef ====
-    OwnedRef ext__Polygon_Handle_toPolygonF(Polygon::HandleRef _this) {
-        return POLYGONF_HEAP_NEW(AS_QPOLYGON_PTR(_this)->toPolygonF());
+    OwnedRef ext_Polygon_toPolygonF(Polygon::HandleRef this_) {
+        return POLYGONF_HEAP_NEW(AS_QPOLYGON_PTR(this_)->toPolygonF());
     }
     // ==============================
 }

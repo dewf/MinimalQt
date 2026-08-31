@@ -180,11 +180,10 @@ opaque Interior extends Handle {
 
 Interior createImplementation(ImplementationMethods methods, ImplementationMask mask);
 
-// to break circular dependency:
-extmethods ModelIndex.Handle {
-    ConstHandle model();
-}
+// extension methods to break circular dependencies ==============
 
-extmethods PersistentModelIndex.Handle {
-    ConstHandle model();
-}
+// ModelIndex extension methods:
+ConstHandle ext_ModelIndex_model(ModelIndex.Handle index);
+
+// PersistentModelIndex extension methods:
+ConstHandle ext_PersistentModelIndex_model(PersistentModelIndex.Handle index);

@@ -65,6 +65,5 @@ bool operator_equal(Handle lhs, Handle rhs);
 Owned operator_or(Handle m1, Handle m2);
 
 // to break circular dependency:
-extmethods Margins.Handle {
-    Owned toMarginsF();
-}
+
+Owned ext_Margins_toMarginsF(Margins.Handle this_);

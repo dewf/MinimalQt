@@ -155,8 +155,8 @@ namespace SizeF
     }
 
     // ext methods block for: Size::HandleRef ====
-    OwnedRef ext__Size_Handle_toSizeF(Size::HandleRef _this) {
-        return SIZEF_HEAP_NEW(AS_QSIZE_PTR(_this)->toSizeF());
+    OwnedRef ext_Size_toSizeF(Size::HandleRef this_) {
+        return SIZEF_HEAP_NEW(AS_QSIZE_PTR(this_)->toSizeF());
     }
     // ==============================
 }

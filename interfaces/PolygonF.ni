@@ -28,6 +28,4 @@ Owned create(Polygon.Handle polygon);
 Owned create(RectF.Handle rectangle);
 
 // to break circular dependency:
-extmethods Polygon.Handle {
-    Owned toPolygonF();
-}
+Owned ext_Polygon_toPolygonF(Polygon.Handle this_);

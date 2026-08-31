@@ -81,8 +81,9 @@ Owned create(PointF.Handle startPoint);
 Owned create(Handle path);
 
 // Transform-related stuff ======================
-extmethods Transform.Handle {
-    Owned map(Handle path);
-}
+
+// Transform extension method:
+Owned ext_Transform_map(Transform.Handle this_, Handle path);
+
 Owned operator_mul(Handle path, Transform.Handle matrix);
 // end Transform-related stuff ==================

@@ -154,6 +154,7 @@ opaque Handle extends AbstractScrollArea.Handle {
     SignalConnection connect_ViewportEntered(SignalHandler handler);
 }
 
-extmethods AbstractItemDelegate.Handle {
-    bool helpEvent(HelpEvent event_, Handle view, StyleOptionViewItem.Handle option, ModelIndex.Handle index);
-}
+// extension methods to break circular dependencies =======
+
+// AbstractItemDelegate extension methods:
+bool ext_AbstractItemDelegate_helpEvent(AbstractItemDelegate.Handle del, HelpEvent event_, Handle view, StyleOptionViewItem.Handle option, ModelIndex.Handle index);

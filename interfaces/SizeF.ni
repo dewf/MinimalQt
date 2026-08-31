@@ -70,6 +70,4 @@ bool operator_equal(Handle lhs, Handle rhs);
 // QDataStream & operator>>(QDataStream &stream, QSizeF &size)
 
 // to break circular dependency:
-extmethods Size.Handle {
-    Owned toSizeF();
-}
+Owned ext_Size_toSizeF(Size.Handle this_);

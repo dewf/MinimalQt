@@ -65,7 +65,5 @@ bool operator_equal(Handle lhs, Handle rhs);
 // QDataStream & operator>>(QDataStream &stream, QPointF &point)
 
 
-// to break circular depdendency:
-extmethods Point.Handle {
-    Owned toPointF();
-}
+// extension methods:
+Owned ext_Point_toPointF(Point.Handle this_);

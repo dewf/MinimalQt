@@ -363,12 +363,11 @@ namespace AbstractItemView
     }
 
     // ext methods block for: AbstractItemDelegate::HandleRef ====
-    bool ext__AbstractItemDelegate_Handle_helpEvent(AbstractItemDelegate::HandleRef _this, HelpEventRef event_, HandleRef view, StyleOptionViewItem::HandleRef option, ModelIndex::HandleRef index) {
-        return AS_QABSTRACTITEMDELEGATE_PTR(_this)->helpEvent(
+    bool ext_AbstractItemDelegate_helpEvent(AbstractItemDelegate::HandleRef del, HelpEventRef event_, HandleRef view, StyleOptionViewItem::HandleRef option, ModelIndex::HandleRef index) {
+        return AS_QABSTRACTITEMDELEGATE_PTR(del)->helpEvent(
             AS_QHELPEVENT_PTR(event_),
             AS_QABSTRACTITEMVIEW_PTR(view),
             QSTYLEOPTIONVIEWITEM_VALUE(option),
             QMODELINDEX_VALUE(index));
     }
-    // ==============================
 }

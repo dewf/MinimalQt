@@ -538,17 +538,13 @@ namespace AbstractItemModel
         return reinterpret_cast<InteriorRef>(new Implementation(methods, mask));
     }
 
-    // ext methods block for: ModelIndex::HandleRef ====
-    ConstHandleRef ext__ModelIndex_Handle_model(ModelIndex::HandleRef _this) {
-        const auto result = const_cast<QAbstractItemModel*>(AS_QMODELINDEX_PTR(_this)->model());
+    ConstHandleRef ext_ModelIndex_model(ModelIndex::HandleRef index) {
+        const auto result = const_cast<QAbstractItemModel*>(AS_QMODELINDEX_PTR(index)->model());
         return reinterpret_cast<ConstHandleRef>(result);
     }
-    // ==============================
 
-    // ext methods block for: PersistentModelIndex::HandleRef ====
-    ConstHandleRef ext__PersistentModelIndex_Handle_model(PersistentModelIndex::HandleRef _this) {
-        const auto result = const_cast<QAbstractItemModel*>(AS_QPERSISTENTMODELINDEX_PTR(_this)->model());
+    ConstHandleRef ext_PersistentModelIndex_model(PersistentModelIndex::HandleRef index) {
+        const auto result = const_cast<QAbstractItemModel*>(AS_QPERSISTENTMODELINDEX_PTR(index)->model());
         return reinterpret_cast<ConstHandleRef>(result);
     }
-    // ==============================
 }

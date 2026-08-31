@@ -65,12 +65,9 @@ Size.Owned closestAcceptableSize(Widget.Handle widget, Size.Handle size);
 // extension methods below,
 // to break circular references between Widget, Layout, LayoutItem
 
-extmethods Widget.Handle {
-    Handle layout();
-    void setLayout(Handle layout);
-}
+// Widget methods:
+Handle ext_Widget_layout(Widget.Handle this_);
+void ext_Widget_setLayout(Widget.Handle this_, Handle layout);
 
-extmethods LayoutItem.Handle {
-    Handle layout();
-    // Widget.Handle widget(); // moved back to LayoutItem?
-}
+// LayoutItem methods:
+Handle ext_LayoutItem_layout(LayoutItem.Handle this_);

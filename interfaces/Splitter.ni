@@ -51,6 +51,4 @@ Handle create(Orientation orientation, Widget.Handle parent = null);
 
 // to break circular dependency
 // also: holy confusing!
-extmethods SplitterHandle.Handle {
-    Handle splitter();
-}
+Handle ext_SplitterHandle_splitter(SplitterHandle.Handle this_);

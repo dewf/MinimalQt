@@ -144,8 +144,7 @@ namespace MarginsF
     }
 
     // ext methods block for: Margins::HandleRef ====
-    OwnedRef ext__Margins_Handle_toMarginsF(Margins::HandleRef _this) {
-        return MARGINSF_HEAP_NEW(AS_QMARGINS_PTR(_this)->toMarginsF());
+    OwnedRef ext_Margins_toMarginsF(Margins::HandleRef this_) {
+        return MARGINSF_HEAP_NEW(AS_QMARGINS_PTR(this_)->toMarginsF());
     }
-    // ==============================
 }

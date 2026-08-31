@@ -342,8 +342,8 @@ namespace RectF
     }
 
     // ext methods block for: Rect::HandleRef ====
-    OwnedRef ext__Rect_Handle_toRectF(Rect::HandleRef _this) {
-        return RECTF_HEAP_NEW(AS_QRECT_PTR(_this)->toRectF());
+    OwnedRef ext_Rect_toRectF(Rect::HandleRef this_) {
+        return RECTF_HEAP_NEW(AS_QRECT_PTR(this_)->toRectF());
     }
     // ==============================
 }

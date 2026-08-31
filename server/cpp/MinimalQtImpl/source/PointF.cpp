@@ -116,8 +116,8 @@ namespace PointF
     }
 
     // ext methods block for: Point::HandleRef ====
-    OwnedRef ext__Point_Handle_toPointF(Point::HandleRef _this) {
-        return POINTF_HEAP_NEW(AS_QPOINT_PTR(_this)->toPointF());
+    OwnedRef ext_Point_toPointF(Point::HandleRef this_) {
+        return POINTF_HEAP_NEW(AS_QPOINT_PTR(this_)->toPointF());
     }
     // ==============================
 }
