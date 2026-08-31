@@ -33,7 +33,7 @@ opaque Handle extends Object.Handle {
     Margins.Owned contentsMargins();
     Rect.Owned contentsRect();
     int count();
-    Tuple<int,int,int,int> getContentsMargins();
+    Tuple<int,int,int,int> getContentsMargins(); // getter for 4-argument setter below
     int indexOf(LayoutItem.Handle layoutItem);
     int indexOf(Widget.Handle widget);
     bool isEnabled();
@@ -72,5 +72,5 @@ extmethods Widget.Handle {
 
 extmethods LayoutItem.Handle {
     Handle layout();
-    // Widget.Handle widget(); // we could also have put this in Widget.ni, but it otherwise has no layout/layoutitem dependence. YOLO
+    // Widget.Handle widget(); // moved back to LayoutItem?
 }
