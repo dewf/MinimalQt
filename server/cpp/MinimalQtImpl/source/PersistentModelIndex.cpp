@@ -48,6 +48,16 @@ namespace PersistentModelIndex
         return MODELINDEX_HEAP_NEW(THIS->sibling(row, column));
     }
 
+    void Handle_swap(HandleRef _this, HandleRef other) {
+        if (other != nullptr)
+        {
+            THIS->swap(*AS_QPERSISTENTMODELINDEX_PTR(other));
+        } else
+        {
+            *THIS = QPersistentModelIndex();
+        }
+    }
+
     ModelIndex::OwnedRef Handle_asModelIndex(HandleRef _this) {
         return MODELINDEX_HEAP_NEW(*THIS);
     }

@@ -23,7 +23,8 @@ opaque Handle {
     int row();
     ModelIndex.Owned sibling(int row, int column);
 
-    // void swap(QPersistentModelIndex &other)
+    //void swap(QPersistentModelIndex &other)
+    void swap(Handle other);
 
     ModelIndex.Owned asModelIndex();
 
