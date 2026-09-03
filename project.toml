@@ -118,7 +118,7 @@ inputs = [
     "StatusBar",
     "StyledItemDelegate",
     "StyleOption",
-    "StyleOptionViewItem",
+    # "StyleOptionViewItem",
     "TabBar",
     "TabWidget",
     "TextEdit",

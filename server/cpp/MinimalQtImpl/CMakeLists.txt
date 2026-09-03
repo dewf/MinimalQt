@@ -120,11 +120,6 @@ target_sources(MinimalQtImpl
         source/generated/StyledItemDelegate_wrappers.h
         source/generated/StyledItemDelegate_wrappers.cpp
         source/StyledItemDelegate.cpp
-        # module StyleOptionViewItem
-        source/generated/StyleOptionViewItem.h
-        source/generated/StyleOptionViewItem_wrappers.h
-        source/generated/StyleOptionViewItem_wrappers.cpp
-        source/StyleOptionViewItem.cpp
         # module StyleOption
         source/generated/StyleOption.h
         source/generated/StyleOption_wrappers.h

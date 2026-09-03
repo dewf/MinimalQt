@@ -14,7 +14,7 @@ import ItemSelectionModel;
 import Widget;
 // for ext methods:
 import Event;
-import StyleOptionViewItem;
+import StyleOption; // ViewItem;
 
 @methodprefix("sig_")
 interface SignalHandler extends AbstractScrollArea.SignalHandler {
@@ -157,4 +157,4 @@ opaque Handle extends AbstractScrollArea.Handle {
 // extension methods to break circular dependencies =======
 
 // AbstractItemDelegate extension methods:
-bool ext_AbstractItemDelegate_helpEvent(AbstractItemDelegate.Handle del, HelpEvent event_, Handle view, StyleOptionViewItem.Handle option, ModelIndex.Handle index);
+bool ext_AbstractItemDelegate_helpEvent(AbstractItemDelegate.Handle del, HelpEvent event_, Handle view, StyleOption.ViewItem.Handle option, ModelIndex.Handle index);

@@ -5,7 +5,7 @@ import AbstractItemDelegate;
 import Widget;
 import AbstractItemModel;
 import ModelIndex;
-import StyleOptionViewItem;
+import StyleOption; // ViewItem;
 
 @methodprefix("sig_")
 interface SignalHandler extends AbstractItemDelegate.SignalHandler;
@@ -31,11 +31,11 @@ namedbits MethodMask {
 }
 
 interface DelegatedMethods {
-    Widget.Handle createEditor(Widget.Handle parent, StyleOptionViewItem.Handle option, ModelIndex.Handle index);
+    Widget.Handle createEditor(Widget.Handle parent, StyleOption.ViewItem.Handle option, ModelIndex.Handle index);
     void setEditorData(Widget.Handle editor, ModelIndex.Handle index);
     void setModelData(Widget.Handle editor, AbstractItemModel.Handle model, ModelIndex.Handle index);
     void destroyEditor(Widget.Handle editor, ModelIndex.Handle index);
-    void updateEditorGeometry(Widget.Handle editor, StyleOptionViewItem.Handle option, ModelIndex.Handle index);
+    void updateEditorGeometry(Widget.Handle editor, StyleOption.ViewItem.Handle option, ModelIndex.Handle index);
 }
 
 opaque Delegated extends Handle;

@@ -6,14 +6,14 @@
 #include "ModelIndexInternal.h"
 #include "PainterInternal.h"
 #include "SizeInternal.h"
-#include "StyleOptionViewItemInternal.h"
+#include "StyleOptionInternal.h"
 #include "WidgetInternal.h"
 
 using namespace ::Object;
 using namespace ::Widget;
 using namespace ::Size;
 using namespace ::ModelIndex;
-using namespace ::StyleOptionViewItem;
+using namespace ::StyleOption;
 using namespace ::Event;
 using namespace ::AbstractItemModel;
 using namespace ::Painter;
@@ -24,7 +24,7 @@ using namespace ::Painter;
 
 namespace AbstractItemDelegate
 {
-    Widget::HandleRef Handle_createEditor(HandleRef _this, Widget::HandleRef parent, StyleOptionViewItem::HandleRef option, ModelIndex::HandleRef index) {
+    Widget::HandleRef Handle_createEditor(HandleRef _this, Widget::HandleRef parent, StyleOption::ViewItem::HandleRef option, ModelIndex::HandleRef index) {
         return reinterpret_cast<Widget::HandleRef>(THIS->createEditor(AS_QWIDGET_PTR(parent), QSTYLEOPTIONVIEWITEM_VALUE(option), QMODELINDEX_VALUE(index)));
     }
 
@@ -32,11 +32,11 @@ namespace AbstractItemDelegate
         THIS->destroyEditor(AS_QWIDGET_PTR(editor), QMODELINDEX_VALUE(index));
     }
 
-    bool Handle_editorEvent(HandleRef _this, Event::HandleRef event_, AbstractItemModel::HandleRef model, StyleOptionViewItem::HandleRef option, ModelIndex::HandleRef index) {
+    bool Handle_editorEvent(HandleRef _this, Event::HandleRef event_, AbstractItemModel::HandleRef model, StyleOption::ViewItem::HandleRef option, ModelIndex::HandleRef index) {
         return THIS->editorEvent(reinterpret_cast<QEvent*>(event_), reinterpret_cast<QAbstractItemModel*>(model), QSTYLEOPTIONVIEWITEM_VALUE(option), QMODELINDEX_VALUE(index));
     }
 
-    void Handle_paint(HandleRef _this, Painter::HandleRef painter, StyleOptionViewItem::HandleRef option, ModelIndex::HandleRef index) {
+    void Handle_paint(HandleRef _this, Painter::HandleRef painter, StyleOption::ViewItem::HandleRef option, ModelIndex::HandleRef index) {
         THIS->paint(AS_QPAINTER_PTR(painter), QSTYLEOPTIONVIEWITEM_VALUE(option), QMODELINDEX_VALUE(index));
     }
 
@@ -48,11 +48,11 @@ namespace AbstractItemDelegate
         THIS->setModelData(AS_QWIDGET_PTR(editor), reinterpret_cast<QAbstractItemModel*>(model), QMODELINDEX_VALUE(index));
     }
 
-    Size::OwnedRef Handle_sizeHint(HandleRef _this, StyleOptionViewItem::HandleRef option, ModelIndex::HandleRef index) {
+    Size::OwnedRef Handle_sizeHint(HandleRef _this, StyleOption::ViewItem::HandleRef option, ModelIndex::HandleRef index) {
         return SIZE_HEAP_NEW(THIS->sizeHint(QSTYLEOPTIONVIEWITEM_VALUE(option), QMODELINDEX_VALUE(index)));
     }
 
-    void Handle_updateEditorGeometry(HandleRef _this, Widget::HandleRef editor, StyleOptionViewItem::HandleRef option, ModelIndex::HandleRef index) {
+    void Handle_updateEditorGeometry(HandleRef _this, Widget::HandleRef editor, StyleOption::ViewItem::HandleRef option, ModelIndex::HandleRef index) {
         THIS->updateEditorGeometry(AS_QWIDGET_PTR(editor), QSTYLEOPTIONVIEWITEM_VALUE(option), QMODELINDEX_VALUE(index));
     }
 

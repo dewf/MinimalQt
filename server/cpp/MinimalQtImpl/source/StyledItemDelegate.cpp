@@ -9,7 +9,7 @@ using namespace ::AbstractItemDelegate;
 using namespace ::Widget;
 using namespace ::AbstractItemModel;
 using namespace ::ModelIndex;
-using namespace ::StyleOptionViewItem;
+using namespace ::StyleOption;
 
 #define THIS (reinterpret_cast<QStyledItemDelegate*>(_this))
 
@@ -40,7 +40,7 @@ namespace StyledItemDelegate
             if (mask & MethodMask::CreateEditor) {
                 QStyleOptionViewItem option2(option);
                 QModelIndex index2(index);
-                const auto result = methods->createEditor(reinterpret_cast<Widget::HandleRef>(parent), reinterpret_cast<StyleOptionViewItem::HandleRef>(&option2), reinterpret_cast<ModelIndex::HandleRef>(&index2));
+                const auto result = methods->createEditor(reinterpret_cast<Widget::HandleRef>(parent), reinterpret_cast<StyleOption::ViewItem::HandleRef>(&option2), reinterpret_cast<ModelIndex::HandleRef>(&index2));
                 return reinterpret_cast<QWidget *>(result);
             } else {
                 return QStyledItemDelegate::createEditor(parent, option, index);
@@ -79,7 +79,7 @@ namespace StyledItemDelegate
             if (mask & MethodMask::UpdateEditorGeometry) {
                 QStyleOptionViewItem option2(option);
                 QModelIndex index2(index);
-                methods->updateEditorGeometry(reinterpret_cast<Widget::HandleRef>(editor), reinterpret_cast<StyleOptionViewItem::HandleRef>(&option2), reinterpret_cast<ModelIndex::HandleRef>(&index2));
+                methods->updateEditorGeometry(reinterpret_cast<Widget::HandleRef>(editor), reinterpret_cast<StyleOption::ViewItem::HandleRef>(&option2), reinterpret_cast<ModelIndex::HandleRef>(&index2));
             } else {
                 QStyledItemDelegate::updateEditorGeometry(editor, option, index);
             }
