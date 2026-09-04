@@ -5,7 +5,7 @@ import Enums;
 import AbstractItemModel;
 import ModelIndex;
 import PersistentModelIndex;
-import ItemSelection;
+import ItemSelectionModel;
 
 @methodprefix("sig_")
 interface SignalHandler extends AbstractItemModel.SignalHandler {

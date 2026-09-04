@@ -3,14 +3,14 @@
 
 #include "ObjectInternal.h"
 #include "ModelIndexInternal.h"
-#include "ItemSelectionInternal.h"
+#include "ItemSelectionModelInternal.h"
 
 using namespace ::Object;
 using namespace ::Enums;
 using namespace ::AbstractItemModel;
 using namespace ::ModelIndex;
 using namespace ::PersistentModelIndex;
-using namespace ::ItemSelection;
+using namespace ::ItemSelectionModel;
 
 #define THIS (reinterpret_cast<QAbstractProxyModel*>(_this))
 

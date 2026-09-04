@@ -18,8 +18,6 @@ inputs = [
     "DateTime",
     "Dir",
     "Event",
-    "ItemSelection",
-    "ItemSelectionCommon",
     "ItemSelectionModel",
     "Margins",
     "MarginsF",

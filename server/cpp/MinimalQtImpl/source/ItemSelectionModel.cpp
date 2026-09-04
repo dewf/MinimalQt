@@ -3,16 +3,12 @@
 
 #include "ObjectInternal.h"
 #include "ModelIndexInternal.h"
-#include "ItemSelectionInternal.h"
 
 #include "util/convert.h"
 
 using namespace ::Object;
 using namespace ::ModelIndex;
 using namespace ::AbstractItemModel;
-using namespace ::ItemSelectionCommon;
-using namespace ::ItemSelection;
-
 
 #define THIS (reinterpret_cast<QItemSelectionModel*>(_this))
 
@@ -152,4 +148,38 @@ namespace ItemSelectionModel
     HandleRef create(AbstractItemModel::HandleRef model, Object::HandleRef parent) {
         return reinterpret_cast<HandleRef>(new QItemSelectionModel(reinterpret_cast<QAbstractItemModel*>(model), AS_QOBJECT_PTR(parent)));
     }
+
+    // ItemSelection stuff ====================================================
+#define ITEMSELECTION_THIS (AS_QITEMSELECTION_PTR(_this))
+
+    namespace ItemSelection {
+        bool Handle_contains(HandleRef _this, ModelIndex::HandleRef index) {
+            return ITEMSELECTION_THIS->contains(QMODELINDEX_VALUE(index));
+        }
+
+        OwnedListRef Handle_indexes(HandleRef _this) {
+            return MODELINDEX_LIST_HEAP_NEW(ITEMSELECTION_THIS->indexes());
+        }
+
+        void Handle_merge(HandleRef _this, HandleRef other, Flags<SelectionFlags> command) {
+            ITEMSELECTION_THIS->merge(QITEMSELECTION_VALUE(other), static_cast<QItemSelectionModel::SelectionFlags>(command.value()));
+        }
+
+        void Handle_select(HandleRef _this, ModelIndex::HandleRef topLeft, ModelIndex::HandleRef bottomRight) {
+            ITEMSELECTION_THIS->select(QMODELINDEX_VALUE(topLeft), QMODELINDEX_VALUE(bottomRight));
+        }
+
+        void Owned_dispose(OwnedRef _this) {
+            delete ITEMSELECTION_THIS;
+        }
+
+        OwnedRef create() {
+            return ITEMSELECTION_HEAP_NEW();
+        }
+
+        OwnedRef create(ModelIndex::HandleRef topLeft, ModelIndex::HandleRef bottomRight) {
+            return ITEMSELECTION_HEAP_NEW(QMODELINDEX_VALUE(topLeft), QMODELINDEX_VALUE(bottomRight));
+        }
+    }
+
 }

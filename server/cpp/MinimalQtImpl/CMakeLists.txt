@@ -385,16 +385,6 @@ target_sources(MinimalQtImpl
         source/generated/ItemSelectionModel_wrappers.h
         source/generated/ItemSelectionModel_wrappers.cpp
         source/ItemSelectionModel.cpp
-        # module ItemSelectionCommon
-        source/generated/ItemSelectionCommon.h
-        source/generated/ItemSelectionCommon_wrappers.h
-        source/generated/ItemSelectionCommon_wrappers.cpp
-        source/ItemSelectionCommon.cpp
-        # module ItemSelection
-        source/generated/ItemSelection.h
-        source/generated/ItemSelection_wrappers.h
-        source/generated/ItemSelection_wrappers.cpp
-        source/ItemSelection.cpp
         # module Image
         source/generated/Image.h
         source/generated/Image_wrappers.h

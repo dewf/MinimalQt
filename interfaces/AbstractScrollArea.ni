@@ -34,7 +34,7 @@ opaque Handle extends Frame.Handle {
     void setVerticalScrollBarPolicy(ScrollBarPolicy policy);
     void setViewport(Widget.Handle widget);
     void setupViewport(Widget.Handle viewport);
-    SizeAdjustPolicy getSizeAdjustPolicy();
+    SizeAdjustPolicy getSizeAdjustPolicy(); // 'get' otherwise it conflicts with the enum in C#
     ScrollBar.Handle verticalScrollBar();
     ScrollBarPolicy verticalScrollBarPolicy();
     Widget.Handle viewport();

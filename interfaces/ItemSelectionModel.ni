@@ -3,8 +3,38 @@ module ItemSelectionModel;
 import Object;
 import ModelIndex;
 import AbstractItemModel;
-import ItemSelectionCommon;
-import ItemSelection;
+
+@withflags(SelectionFlags)
+enum SelectionFlag {
+    NoUpdate       = 0x0000,
+    Clear          = 0x0001,
+    Select         = 0x0002,
+    Deselect       = 0x0004,
+    Toggle         = 0x0008,
+    Current        = 0x0010,
+    Rows           = 0x0020,
+    Columns        = 0x0040,
+    SelectCurrent  = Select | Current,
+    ToggleCurrent  = Toggle | Current,
+    ClearAndSelect = Clear | Select
+}
+
+// ItemSelection ===========================================================
+group ItemSelection {
+    @nodispose
+    opaque Handle {
+        bool contains(ModelIndex.Handle index);
+        ModelIndex.OwnedList indexes();
+        void merge(Handle other, SelectionFlags command);
+        void select(ModelIndex.Handle topLeft, ModelIndex.Handle bottomRight);
+    }
+    opaque Owned extends Handle;
+
+    Owned create();
+    Owned create(ModelIndex.Handle topLeft, ModelIndex.Handle bottomRight);
+}
+
+// ItemSelectionModel =======================================================
 
 @methodprefix("sig_")
 interface SignalHandler extends Object.SignalHandler {
