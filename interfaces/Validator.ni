@@ -18,6 +18,9 @@ struct ValidateResult {
 @nodispose
 opaque ConstHandle extends Object.Handle {
     string fixup(string input);                         // potentially modifies the string, but not necessarily
+
+    // QLocale	locale() const
+
     ValidateResult validate(string input, int pos);
 
     // signals ======================
@@ -25,9 +28,9 @@ opaque ConstHandle extends Object.Handle {
 }
 
 // non-const methods:
+@nodispose
 opaque Handle extends ConstHandle {
-
-    // QLocale locale() const
     // void setLocale(const QLocale &locale)
-
 }
+
+// QValidator is abstract, no constructors

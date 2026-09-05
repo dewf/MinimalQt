@@ -118,4 +118,5 @@ opaque Handle extends Widget.Handle {
 
 Handle create(Widget.Handle parent = null);
 
+// utility method:
 Handle downcastFrom(Widget.Handle widget);

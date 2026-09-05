@@ -30,7 +30,5 @@ namespace Validator
     }
 
     // normal non-const methods =========================
-    void Handle_dispose(HandleRef _this) {
-        delete THIS;
-    }
+    // TODO:
 }
