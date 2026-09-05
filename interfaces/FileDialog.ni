@@ -158,12 +158,9 @@ options GetExistingDirectoryUrlOpts {
 Url.Owned getExistingDirectoryUrl(GetExistingDirectoryUrlOpts opts);
 
 // getOpenFileContent ==========================================================
-sumtype FileContentResult {
-    NoFileSelected,
-    ContentReady(string filename, Array<byte> fileContent)
-}
-delegate void FileOpenCompletedFunc(FileContentResult result);
-void getOpenFileContent(string nameFilter, FileOpenCompletedFunc completedFunc, Widget.Handle parent = null);
+delegate Array<byte> ContentThunk(); // consider return a Buffer<byte> instead so we're not making copies via the NI stack?
+delegate void FileOpenCompletedFunc(string fileName, ContentThunk fileContentThunk);
+void getOpenFileContent(string nameFilter, FileOpenCompletedFunc fileOpenCompleted, Widget.Handle parent = null);
 
 // getOpenFileName =============================================================
 options GetOpenFileNameOpts {
@@ -259,4 +256,4 @@ struct GetSaveFileUrlResult {
 GetSaveFileUrlResult getSaveFileUrl(GetSaveFileUrlOpts opts);
 
 // saveFileContent ==============================================================
-void saveFileContent(Array<byte> fileContent, string fileNameHint, Widget.Handle parent = null);
+void saveFileContent(Buffer<byte> fileContent, string fileNameHint, Widget.Handle parent = null);

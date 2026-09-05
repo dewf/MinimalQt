@@ -5,6 +5,9 @@
 #include "UrlInternal.h"
 #include "DirInternal.h"
 
+#include "LoggingInternal.h"
+using namespace ::Logging;
+
 #include "util/convert.h"
 
 using namespace ::Object;
@@ -311,16 +314,18 @@ namespace FileDialog
         return URL_HEAP_NEW(result);
     }
 
-    void getOpenFileContent(const std::string& nameFilter, const std::function<FileOpenCompletedFunc>& completedFunc, ::Widget::HandleRef parent) {
-        auto fileContentsReady = [completedFunc](const QString& qFilename, const QByteArray& qBytes) {
+    void getOpenFileContent(const std::string& nameFilter, const std::function<FileOpenCompletedFunc>& fileOpenCompleted, Widget::HandleRef parent /* nullptr */) {
+        auto fileContentsReady = [fileOpenCompleted](const QString& qFilename, const QByteArray& qBytes) {
             if (qFilename.isEmpty()) {
                 // nothin'
-                completedFunc(std::make_shared<FileContentResult::NoFileSelected>());
+                fileOpenCompleted("", [] { return std::vector<uint8_t>(); });
             } else {
                 // OK
                 const auto filename = qFilename.toStdString();
-                const auto bytes = std::vector<uint8_t>(qBytes.constData(), qBytes.constData() + qBytes.size());
-                completedFunc(std::make_shared<FileContentResult::ContentReady>(filename, bytes));
+                const QByteArray savedBytes = qBytes; // formally retain it for later, no doubt qBytes will not last long
+                fileOpenCompleted(filename, [savedBytes] {
+                    return std::vector<uint8_t>(savedBytes.constData(), savedBytes.constData() + savedBytes.size());
+                });
             }
         };
         QFileDialog::getOpenFileContent(QString::fromStdString(nameFilter), fileContentsReady, AS_QWIDGET_PTR(parent));
@@ -458,9 +463,17 @@ namespace FileDialog
         return result;
     }
 
-    void saveFileContent(const std::vector<uint8_t>& fileContent, const std::string& fileNameHint, ::Widget::HandleRef parent) {
-        QByteArray qFileContent(reinterpret_cast<const char*>(fileContent.data()), static_cast<qsizetype>(fileContent.size()));
-        QString qFileNameHint = QString::fromStdString(fileNameHint);
-        QFileDialog::saveFileContent(qFileContent, qFileNameHint, AS_QWIDGET_PTR(parent));
+    void saveFileContent(const std::shared_ptr<NativeBuffer<uint8_t>>& fileContent, const std::string& fileNameHint, Widget::HandleRef parent /* nullptr */) {
+        size_t len;
+        auto ptr = fileContent->getSpan(&len);
+        if (ptr != nullptr)
+        {
+            QByteArray qFileContent(reinterpret_cast<const char*>(ptr), static_cast<qsizetype>(len));
+            QString qFileNameHint = QString::fromStdString(fileNameHint);
+            QFileDialog::saveFileContent(qFileContent, qFileNameHint, AS_QWIDGET_PTR(parent));
+        } else
+        {
+            clientLog(LogLevel::Warning, "FileDialog::saveFileContent: buffer ptr was null, so did nothing");
+        }
     }
 }
