@@ -125,6 +125,11 @@ target_sources(MinimalQtImpl
         source/generated/StyleOption_wrappers.h
         source/generated/StyleOption_wrappers.cpp
         source/StyleOption.cpp
+        # module String
+        source/generated/String.h
+        source/generated/String_wrappers.h
+        source/generated/String_wrappers.cpp
+        source/String.cpp
         # module StatusBar
         source/generated/StatusBar.h
         source/generated/StatusBar_wrappers.h

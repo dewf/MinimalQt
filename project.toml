@@ -33,6 +33,7 @@ inputs = [
     "Size",
     "SizeF",
     "SortFilterProxyModel",
+    "String",
     "Timer",
     "Url",
     "Variant",
