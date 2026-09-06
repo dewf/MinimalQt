@@ -12,4 +12,9 @@
 #define URL_LIST_HEAP_NEW(...) (reinterpret_cast<Url::OwnedListRef>(new QList<QUrl>(__VA_ARGS__)))
 
 namespace Url {
+    inline QUrl::FormattingOptions toQFormattingOptions(const Flags<FormattingOptions>& flags)
+    {
+        auto intFlags = static_cast<int>(flags.value());
+        return static_cast<QUrl::FormattingOptions>(intFlags);
+    }
 }
