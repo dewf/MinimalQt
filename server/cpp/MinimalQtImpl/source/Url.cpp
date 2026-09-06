@@ -299,6 +299,15 @@ namespace Url
         delete LIST_THIS;
     }
 
+    OwnedListRef util_createFromArray(const std::vector<HandleRef>& urls) {
+        auto raw =
+            toQList<HandleRef,QUrl>(urls, [](HandleRef url)
+            {
+                return QURL_VALUE(url);
+            });
+        return URL_LIST_HEAP_NEW(raw);
+    }
+
     OwnedListRef util_createFromAbsoluteList(const std::vector<std::string>& absoluteUrls) {
         const auto qUrls = toQList<std::string,QUrl>(absoluteUrls, [](const auto& url)
         {

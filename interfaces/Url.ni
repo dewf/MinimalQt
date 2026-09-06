@@ -142,7 +142,7 @@ opaque Handle {
     // QUrl &	operator=(const QString &url)
     // QUrl &	operator=(const QUrl &url)
 
-    // utility func, might delete
+    // deprecated:
     string util_toAbsoluteInternal();
 }
 opaque Owned extends Handle;
@@ -188,8 +188,13 @@ opaque List {
     int count();
     Owned itemAt(int index);
     Array<Owned> items();
+
+    // deprecated:
     Array<string> util_itemsAbsolute();
 }
 opaque OwnedList extends List;
 
+OwnedList util_createFromArray(Array<Handle> urls);
+
+// deprecated:
 OwnedList util_createFromAbsoluteList(Array<string> absoluteUrls);
