@@ -22,7 +22,7 @@ namespace SessionManager
     }
 
     std::vector<std::string> Handle_discardCommand(HandleRef _this) {
-        return toVectorStrings(THIS->discardCommand());
+        return fromQStringList(THIS->discardCommand());
     }
 
     bool Handle_isPhase2(HandleRef _this) {
@@ -38,7 +38,7 @@ namespace SessionManager
     }
 
     std::vector<std::string> Handle_restartCommand(HandleRef _this) {
-        return toVectorStrings(THIS->restartCommand());
+        return fromQStringList(THIS->restartCommand());
     }
 
     RestartHint Handle_getRestartHint(HandleRef _this) {

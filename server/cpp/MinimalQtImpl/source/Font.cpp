@@ -41,7 +41,7 @@ namespace Font
     }
 
     std::vector<std::string> Handle_families(HandleRef _this) {
-        return toVectorStrings(THIS->families());
+        return fromQStringList(THIS->families());
     }
 
     std::string Handle_family(HandleRef _this) {

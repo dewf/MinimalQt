@@ -94,7 +94,7 @@ namespace AbstractItemModel
     }
 
     std::vector<std::string> ConstHandle_mimeTypes(ConstHandleRef _this) {
-        return toVectorStrings(THIS->mimeTypes());
+        return fromQStringList(THIS->mimeTypes());
     }
 
     ModelIndex::OwnedRef ConstHandle_parent(ConstHandleRef _this, ModelIndex::HandleRef index) {

@@ -329,7 +329,7 @@ namespace Image
     }
 
     std::vector<std::string> Handle_textKeys(HandleRef _this) {
-        return toVectorStrings(THIS->textKeys());
+        return fromQStringList(THIS->textKeys());
     }
 
     OwnedRef Handle_transformed(HandleRef _this, Transform::HandleRef matrix, TransformationMode transformMode /* TransformationMode::FastTransformation */) {

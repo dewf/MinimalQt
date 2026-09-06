@@ -129,7 +129,7 @@ namespace Completer
     }
 
     std::vector<std::string> Handle_splitPath(HandleRef _this, const std::string& path) {
-        return toVectorStrings(THIS->splitPath(QString::fromStdString(path)));
+        return fromQStringList(THIS->splitPath(QString::fromStdString(path)));
     }
 
     Widget::HandleRef Handle_widget(HandleRef _this) {

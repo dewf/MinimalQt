@@ -49,7 +49,7 @@ namespace FileDialog
     }
 
     std::vector<std::string> Handle_history(HandleRef _this) {
-        return toVectorStrings(THIS->history());
+        return fromQStringList(THIS->history());
     }
 
     AbstractItemDelegate::HandleRef Handle_itemDelegate(HandleRef _this) {
@@ -61,11 +61,11 @@ namespace FileDialog
     }
 
     std::vector<std::string> Handle_mimeTypeFilters(HandleRef _this) {
-        return toVectorStrings(THIS->mimeTypeFilters());
+        return fromQStringList(THIS->mimeTypeFilters());
     }
 
     std::vector<std::string> Handle_nameFilters(HandleRef _this) {
-        return toVectorStrings(THIS->nameFilters());
+        return fromQStringList(THIS->nameFilters());
     }
 
     Flags<Options> Handle_getOptions(HandleRef _this) {
@@ -101,7 +101,7 @@ namespace FileDialog
     }
 
     std::vector<std::string> Handle_selectedFiles(HandleRef _this) {
-        return toVectorStrings(THIS->selectedFiles());
+        return fromQStringList(THIS->selectedFiles());
     }
 
     std::string Handle_selectedMimeTypeFilter(HandleRef _this) {
@@ -197,7 +197,7 @@ namespace FileDialog
     }
 
     std::vector<std::string> Handle_supportedSchemes(HandleRef _this) {
-        return toVectorStrings(THIS->supportedSchemes());
+        return fromQStringList(THIS->supportedSchemes());
     }
 
     bool Handle_testOption(HandleRef _this, OptionEnum option) {
@@ -247,7 +247,7 @@ namespace FileDialog
 
     SignalConnectionRef Handle_connect_FilesSelected(HandleRef _this, const std::shared_ptr<SignalHandler>& handler) {
         const auto connection = QObject::connect(THIS, &QFileDialog::filesSelected, [handler](const QStringList &selected) {
-            handler->sig_filesSelected(toVectorStrings(selected));
+            handler->sig_filesSelected(fromQStringList(selected));
         });
         return new __SignalConnection { connection };
     }
@@ -366,7 +366,7 @@ namespace FileDialog
         const auto options = opts.mapOrDefaultOptions_([](auto x) { return static_cast<QFileDialog::Options>(x.value()); }, QFileDialog::Options());
         //
         GetOpenFileNamesResult result;
-        result.filenames = toVectorStrings(QFileDialog::getOpenFileNames(parent, caption, dir, filter, selectedFilter, options));
+        result.filenames = fromQStringList(QFileDialog::getOpenFileNames(parent, caption, dir, filter, selectedFilter, options));
         if (selectedFilter != nullptr) {
             result.selectedFilterOutput = selectedFilter->toStdString();
         }

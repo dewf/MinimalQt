@@ -73,10 +73,10 @@ QList<U> toQList(const std::vector<T>& source, const std::function<U(T)>& func) 
     return result;
 }
 
-inline std::vector<std::string> toVectorStrings(const QStringList& qStrings) {
-    return fromQList<QString,std::string>(qStrings, [](const QString& qStr) { return qStr.toStdString(); });
-}
-
 inline QStringList toQStringList(const std::vector<std::string>& strings) {
     return toQList<std::string,QString>(strings, [](const std::string& str) { return QString::fromStdString(str); });
+}
+
+inline std::vector<std::string> fromQStringList(const QStringList& qStrings) {
+    return fromQList<QString,std::string>(qStrings, [](const QString& qStr) { return qStr.toStdString(); });
 }

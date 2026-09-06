@@ -110,7 +110,7 @@ namespace Icon
     }
 
     std::vector<std::string> fallbackSearchPaths() {
-        return toVectorStrings(QIcon::fallbackSearchPaths());
+        return fromQStringList(QIcon::fallbackSearchPaths());
     }
 
     std::string fallbackThemeName() {
@@ -162,6 +162,6 @@ namespace Icon
     }
 
     std::vector<std::string> themeSearchPaths() {
-        return toVectorStrings(QIcon::themeSearchPaths());
+        return fromQStringList(QIcon::themeSearchPaths());
     }
 }

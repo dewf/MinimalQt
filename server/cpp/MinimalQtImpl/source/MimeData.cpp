@@ -32,7 +32,7 @@ namespace MimeData
     }
 
     std::vector<std::string> ConstHandle_formats(ConstHandleRef _this) {
-        return toVectorStrings(CONST_THIS->formats());
+        return fromQStringList(CONST_THIS->formats());
     }
 
     bool ConstHandle_hasColor(ConstHandleRef _this) {
