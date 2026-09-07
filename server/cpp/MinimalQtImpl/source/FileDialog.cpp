@@ -284,33 +284,32 @@ namespace FileDialog
         return reinterpret_cast<HandleRef>(new QFileDialog(reinterpret_cast<QWidget*>(parent), static_cast<Qt::WindowFlags>(intFlags)));
     }
 
-    HandleRef create(const CreateOpts& opts) {
-        const auto parent = opts.mapOrDefaultParent([](auto p) { return reinterpret_cast<QWidget*>(p); }, static_cast<QWidget*>(nullptr));
-        const auto caption = opts.mapOrDefaultCaption(QString::fromStdString, QString());
-        const auto directory = opts.mapOrDefaultDirectory(QString::fromStdString, QString());
-        const auto filter = opts.mapOrDefaultFilter(QString::fromStdString, QString());
-        //
-        return reinterpret_cast<HandleRef>(new QFileDialog(parent, caption, directory, filter));
+    HandleRef create(Widget::HandleRef parent /* nullptr */, const std::optional<std::string>& caption /* {} */, const std::optional<std::string>& directory /* {} */, const std::optional<std::string>& filter /* {} */) {
+        return reinterpret_cast<HandleRef>(
+            new QFileDialog(
+                AS_QWIDGET_PTR(parent),
+                qstringFromNullable(caption),
+                qstringFromNullable(directory),
+                qstringFromNullable(filter)));
     }
 
-    std::string getExistingDirectory(const GetExistingDirectoryOpts& opts) {
-        const auto parent = opts.mapOrDefaultParent([](auto p) { return reinterpret_cast<QWidget*>(p); }, static_cast<QWidget*>(nullptr));
-        const auto caption = opts.mapOrDefaultCaption(QString::fromStdString, QString());
-        const auto dir = opts.mapOrDefaultDir(QString::fromStdString, QString());
-        const auto options = opts.mapOrDefaultOptions_([](auto x) { return static_cast<QFileDialog::Options>(x.value()); }, static_cast<QFileDialog::Options>(QFileDialog::ShowDirsOnly));
-        //
-        const auto result = QFileDialog::getExistingDirectory(parent, caption, dir, options);
-        return result.toStdString();
+    std::string getExistingDirectory(Widget::HandleRef parent /* nullptr */, const std::optional<std::string>& caption /* {} */, const std::optional<std::string>& dir /* {} */, Flags<Options> options_ /* Options::ShowDirsOnly */) {
+        return QFileDialog::getExistingDirectory(
+            AS_QWIDGET_PTR(parent),
+            qstringFromNullable(caption),
+            qstringFromNullable(dir),
+            QFileDialog::Options::fromInt(options_.value())).toStdString();
     }
 
-    Url::OwnedRef getExistingDirectoryUrl(const GetExistingDirectoryUrlOpts& opts) {
-        const auto parent = opts.mapOrDefaultParent([](auto p) { return reinterpret_cast<QWidget*>(p); }, static_cast<QWidget*>(nullptr));
-        const auto caption = opts.mapOrDefaultCaption(QString::fromStdString, QString());
-        const auto dir = opts.mapOrDefaultDir([](auto urlHandle) { return QURL_VALUE(urlHandle); }, QUrl());
-        const auto options = opts.mapOrDefaultOptions_([](auto x) { return static_cast<QFileDialog::Options>(x.value()); }, static_cast<QFileDialog::Options>(QFileDialog::ShowDirsOnly));
-        const auto supportedSchemes = opts.mapOrDefaultSupportedSchemes(toQStringList, QStringList());
-        //
-        const auto result = QFileDialog::getExistingDirectoryUrl(parent, caption, dir, options, supportedSchemes);
+    Url::OwnedRef getExistingDirectoryUrl(Widget::HandleRef parent /* nullptr */, const std::optional<std::string>& caption /* {} */, Url::HandleRef dir /* nullptr */, Flags<Options> options_ /* Options::ShowDirsOnly */, const std::optional<std::vector<std::string>>& supportedSchemes /* {} */) {
+        auto qSchemes = supportedSchemes.transform(toQStringList).value_or(QStringList());
+        auto result =
+            QFileDialog::getExistingDirectoryUrl(
+                AS_QWIDGET_PTR(parent),
+                qstringFromNullable(caption),
+                QURL_VALUE(dir),
+                QFileDialog::Options::fromInt(options_.value()),
+                qSchemes);
         return URL_HEAP_NEW(result);
     }
 
@@ -331,134 +330,201 @@ namespace FileDialog
         QFileDialog::getOpenFileContent(QString::fromStdString(nameFilter), fileContentsReady, AS_QWIDGET_PTR(parent));
     }
 
-    GetOpenFileNameResult getOpenFileName(const GetOpenFileNameOpts& opts) {
-        const auto parent = opts.mapOrDefaultParent([](auto p) { return reinterpret_cast<QWidget*>(p); }, static_cast<QWidget*>(nullptr));
-        const auto caption = opts.mapOrDefaultCaption(QString::fromStdString, QString());
-        const auto dir = opts.mapOrDefaultDir(QString::fromStdString, QString());
-        const auto filter = opts.mapOrDefaultFilter(QString::fromStdString, QString());
+    GetOpenFileNameResult getOpenFileName(Widget::HandleRef parent /* nullptr */, const std::optional<std::string>& caption /* {} */, const std::optional<std::string>& dir /* {} */, const std::optional<std::string>& filter /* {} */, const std::optional<std::string>& selectedFilterInput /* {} */, const std::optional<Flags<Options>>& options_ /* {} */) {
         QString selectedFilterValue;
-        QString *selectedFilter = nullptr;
-        if (std::string value; opts.hasSelectedFilterInput(&value)) {
-            selectedFilterValue = QString::fromStdString(value);
-            selectedFilter = &selectedFilterValue;
+        QString *selectedFilterPtr = nullptr;
+        if (selectedFilterInput.has_value())
+        {
+            selectedFilterValue = QString::fromStdString(selectedFilterInput.value());
+            selectedFilterPtr = &selectedFilterValue;
         }
-        const auto options = opts.mapOrDefaultOptions_([](auto x) { return static_cast<QFileDialog::Options>(x.value()); }, QFileDialog::Options());
-        //
+        QFileDialog::Options qoptions;
+        if (options_.has_value())
+        {
+            qoptions = QFileDialog::Options::fromInt(options_.value().value());
+        }
+        auto qfilename =
+            QFileDialog::getOpenFileName(
+                AS_QWIDGET_PTR(parent),
+                qstringFromNullable(caption),
+                qstringFromNullable(dir),
+                qstringFromNullable(filter),
+                selectedFilterPtr,
+                qoptions);
         GetOpenFileNameResult result;
-        result.filename = QFileDialog::getOpenFileName(parent, caption, dir, filter, selectedFilter, options).toStdString();
-        if (selectedFilter != nullptr) {
-            result.selectedFilterOutput = selectedFilter->toStdString();
+        result.filename = qfilename.toStdString();
+        if (selectedFilterPtr != nullptr)
+        {
+            result.selectedFilterOutput = selectedFilterPtr->toStdString();
         }
         return result;
     }
 
-    GetOpenFileNamesResult getOpenFileNames(const GetOpenFileNamesOpts& opts) {
-        const auto parent = opts.mapOrDefaultParent([](auto p) { return reinterpret_cast<QWidget*>(p); }, static_cast<QWidget*>(nullptr));
-        const auto caption = opts.mapOrDefaultCaption(QString::fromStdString, QString());
-        const auto dir = opts.mapOrDefaultDir(QString::fromStdString, QString());
-        const auto filter = opts.mapOrDefaultFilter(QString::fromStdString, QString());
+    GetOpenFileNamesResult getOpenFileNames(Widget::HandleRef parent /* nullptr */, const std::optional<std::string>& caption /* {} */, const std::optional<std::string>& dir /* {} */, const std::optional<std::string>& filter /* {} */, const std::optional<std::string>& selectedFilterInput /* {} */, const std::optional<Flags<Options>>& options_ /* {} */) {
         QString selectedFilterValue;
-        QString *selectedFilter = nullptr;
-        if (std::string value; opts.hasSelectedFilterInput(&value)) {
-            selectedFilterValue = QString::fromStdString(value);
-            selectedFilter = &selectedFilterValue;
+        QString *selectedFilterPtr = nullptr;
+        if (selectedFilterInput.has_value())
+        {
+            selectedFilterValue = QString::fromStdString(selectedFilterInput.value());
+            selectedFilterPtr = &selectedFilterValue;
         }
-        const auto options = opts.mapOrDefaultOptions_([](auto x) { return static_cast<QFileDialog::Options>(x.value()); }, QFileDialog::Options());
-        //
+        QFileDialog::Options qoptions;
+        if (options_.has_value())
+        {
+            qoptions = QFileDialog::Options::fromInt(options_.value().value());
+        }
+        auto qfilenamelist =
+            QFileDialog::getOpenFileNames(
+                AS_QWIDGET_PTR(parent),
+                qstringFromNullable(caption),
+                qstringFromNullable(dir),
+                qstringFromNullable(filter),
+                selectedFilterPtr,
+                qoptions);
         GetOpenFileNamesResult result;
-        result.filenames = fromQStringList(QFileDialog::getOpenFileNames(parent, caption, dir, filter, selectedFilter, options));
-        if (selectedFilter != nullptr) {
-            result.selectedFilterOutput = selectedFilter->toStdString();
+        result.filenames = fromQStringList(qfilenamelist);
+        if (selectedFilterPtr != nullptr)
+        {
+            result.selectedFilterOutput = selectedFilterPtr->toStdString();
         }
         return result;
     }
 
-    GetOpenFileUrlResult getOpenFileUrl(const GetOpenFileUrlOpts& opts) {
-        const auto parent = opts.mapOrDefaultParent([](auto p) { return reinterpret_cast<QWidget*>(p); }, static_cast<QWidget*>(nullptr));
-        const auto caption = opts.mapOrDefaultCaption(QString::fromStdString, QString());
-        const auto dir = opts.mapOrDefaultDir([](auto x) { return QURL_VALUE(x); }, QUrl());
-        const auto filter = opts.mapOrDefaultFilter(QString::fromStdString, QString());
+    GetOpenFileUrlResult getOpenFileUrl(Widget::HandleRef parent /* nullptr */, const std::optional<std::string>& caption /* {} */, Url::HandleRef dir /* nullptr */, const std::optional<std::string>& filter /* {} */, const std::optional<std::string>& selectedFilterInput /* {} */, const std::optional<Flags<Options>>& options_ /* {} */, const std::optional<std::vector<std::string>>& supportedSchemes /* {} */) {
         QString selectedFilterValue;
-        QString *selectedFilter = nullptr;
-        if (std::string value; opts.hasSelectedFilterInput(&value)) {
-            selectedFilterValue = QString::fromStdString(value);
-            selectedFilter = &selectedFilterValue;
+        QString *selectedFilterPtr = nullptr;
+        if (selectedFilterInput.has_value())
+        {
+            selectedFilterValue = QString::fromStdString(selectedFilterInput.value());
+            selectedFilterPtr = &selectedFilterValue;
         }
-        const auto options = opts.mapOrDefaultOptions_([](auto x) { return static_cast<QFileDialog::Options>(x.value()); }, QFileDialog::Options());
-        const auto supportedSchemes = opts.mapOrDefaultSupportedSchemes(toQStringList, QStringList());
-        //
-        const auto url = QFileDialog::getOpenFileUrl(parent, caption, dir, filter, selectedFilter, options, supportedSchemes);
+        QFileDialog::Options qoptions;
+        if (options_.has_value())
+        {
+            qoptions = QFileDialog::Options::fromInt(options_.value().value());
+        }
+        QStringList qschemes;
+        if (supportedSchemes.has_value())
+        {
+            qschemes = toQStringList(supportedSchemes.value());
+        }
+        auto qurl =
+            QFileDialog::getOpenFileUrl(
+                AS_QWIDGET_PTR(parent),
+                qstringFromNullable(caption),
+                QURL_VALUE(dir),
+                qstringFromNullable(filter),
+                selectedFilterPtr,
+                qoptions,
+                qschemes);
         GetOpenFileUrlResult result;
-        result.url = URL_HEAP_NEW(url);
-        if (selectedFilter != nullptr) {
-            result.selectedFilterOutput = selectedFilter->toStdString();
+        result.url = URL_HEAP_NEW(qurl);
+        if (selectedFilterPtr != nullptr)
+        {
+            result.selectedFilterOutput = selectedFilterPtr->toStdString();
         }
         return result;
     }
 
-    GetOpenFileUrlsResult getOpenFileUrls(const GetOpenFileUrlsOpts& opts) {
-        const auto parent = opts.mapOrDefaultParent([](auto p) { return reinterpret_cast<QWidget*>(p); }, static_cast<QWidget*>(nullptr));
-        const auto caption = opts.mapOrDefaultCaption(QString::fromStdString, QString());
-        const auto dir = opts.mapOrDefaultDir([](auto x) { return QURL_VALUE(x); }, QUrl());
-        const auto filter = opts.mapOrDefaultFilter(QString::fromStdString, QString());
+    GetOpenFileUrlsResult getOpenFileUrls(Widget::HandleRef parent /* nullptr */, const std::optional<std::string>& caption /* {} */, Url::HandleRef dir /* nullptr */, const std::optional<std::string>& filter /* {} */, const std::optional<std::string>& selectedFilterInput /* {} */, const std::optional<Flags<Options>>& options_ /* {} */, const std::optional<std::vector<std::string>>& supportedSchemes /* {} */) {
         QString selectedFilterValue;
-        QString *selectedFilter = nullptr;
-        if (std::string value; opts.hasSelectedFilterInput(&value)) {
-            selectedFilterValue = QString::fromStdString(value);
-            selectedFilter = &selectedFilterValue;
+        QString *selectedFilterPtr = nullptr;
+        if (selectedFilterInput.has_value())
+        {
+            selectedFilterValue = QString::fromStdString(selectedFilterInput.value());
+            selectedFilterPtr = &selectedFilterValue;
         }
-        const auto options = opts.mapOrDefaultOptions_([](auto x) { return static_cast<QFileDialog::Options>(x.value()); }, QFileDialog::Options());
-        const auto supportedSchemes = opts.mapOrDefaultSupportedSchemes(toQStringList, QStringList());
-        //
-        const auto urls = QFileDialog::getOpenFileUrls(parent, caption, dir, filter, selectedFilter, options, supportedSchemes);
+        QFileDialog::Options qoptions;
+        if (options_.has_value())
+        {
+            qoptions = QFileDialog::Options::fromInt(options_.value().value());
+        }
+        QStringList qschemes;
+        if (supportedSchemes.has_value())
+        {
+            qschemes = toQStringList(supportedSchemes.value());
+        }
+        auto qurlList =
+            QFileDialog::getOpenFileUrls(
+                AS_QWIDGET_PTR(parent),
+                qstringFromNullable(caption),
+                QURL_VALUE(dir),
+                qstringFromNullable(filter),
+                selectedFilterPtr,
+                qoptions,
+                qschemes);
         GetOpenFileUrlsResult result;
-        result.urls = URL_LIST_HEAP_NEW(urls);
-        if (selectedFilter != nullptr) {
-            result.selectedFilterOutput = selectedFilter->toStdString();
+        result.urls = URL_LIST_HEAP_NEW(qurlList);
+        if (selectedFilterPtr != nullptr)
+        {
+            result.selectedFilterOutput = selectedFilterPtr->toStdString();
         }
         return result;
     }
 
-    GetSaveFileNameResult getSaveFileName(const GetSaveFileNameOpts& opts) {
-        const auto parent = opts.mapOrDefaultParent([](auto p) { return reinterpret_cast<QWidget*>(p); }, static_cast<QWidget*>(nullptr));
-        const auto caption = opts.mapOrDefaultCaption(QString::fromStdString, QString());
-        const auto dir = opts.mapOrDefaultDir(QString::fromStdString, QString());
-        const auto filter = opts.mapOrDefaultFilter(QString::fromStdString, QString());
+    GetSaveFileNameResult getSaveFileName(Widget::HandleRef parent /* nullptr */, const std::optional<std::string>& caption /* {} */, const std::optional<std::string>& dir /* {} */, const std::optional<std::string>& filter /* {} */, const std::optional<std::string>& selectedFilterInput /* {} */, const std::optional<Flags<Options>>& options_ /* {} */) {
         QString selectedFilterValue;
-        QString *selectedFilter = nullptr;
-        if (std::string value; opts.hasSelectedFilterInput(&value)) {
-            selectedFilterValue = QString::fromStdString(value);
-            selectedFilter = &selectedFilterValue;
+        QString *selectedFilterPtr = nullptr;
+        if (selectedFilterInput.has_value())
+        {
+            selectedFilterValue = QString::fromStdString(selectedFilterInput.value());
+            selectedFilterPtr = &selectedFilterValue;
         }
-        const auto options = opts.mapOrDefaultOptions_([](auto x) { return static_cast<QFileDialog::Options>(x.value()); }, QFileDialog::Options());
-        //
+        QFileDialog::Options qoptions;
+        if (options_.has_value())
+        {
+            qoptions = QFileDialog::Options::fromInt(options_.value().value());
+        }
+        auto qfilename =
+            QFileDialog::getSaveFileName(
+                AS_QWIDGET_PTR(parent),
+                qstringFromNullable(caption),
+                qstringFromNullable(dir),
+                qstringFromNullable(filter),
+                selectedFilterPtr,
+                qoptions);
         GetSaveFileNameResult result;
-        result.filename = QFileDialog::getSaveFileName(parent, caption, dir, filter, selectedFilter, options).toStdString();
-        if (selectedFilter != nullptr) {
-            result.selectedFilterOutput = selectedFilter->toStdString();
+        result.filename = qfilename.toStdString();
+        if (selectedFilterPtr != nullptr)
+        {
+            result.selectedFilterOutput = selectedFilterPtr->toStdString();
         }
         return result;
     }
 
-    GetSaveFileUrlResult getSaveFileUrl(const GetSaveFileUrlOpts& opts) {
-        const auto parent = opts.mapOrDefaultParent([](auto p) { return reinterpret_cast<QWidget*>(p); }, static_cast<QWidget*>(nullptr));
-        const auto caption = opts.mapOrDefaultCaption(QString::fromStdString, QString());
-        const auto dir = opts.mapOrDefaultDir([](auto x) { return QURL_VALUE(x); }, QUrl());
-        const auto filter = opts.mapOrDefaultFilter(QString::fromStdString, QString());
+    GetSaveFileUrlResult getSaveFileUrl(Widget::HandleRef parent /* nullptr */, const std::optional<std::string>& caption /* {} */, Url::HandleRef dir /* nullptr */, const std::optional<std::string>& filter /* {} */, const std::optional<std::string>& selectedFilterInput /* {} */, const std::optional<Flags<Options>>& options_ /* {} */, const std::optional<std::vector<std::string>>& supportedSchemes /* {} */)
+    {
         QString selectedFilterValue;
-        QString *selectedFilter = nullptr;
-        if (std::string value; opts.hasSelectedFilterInput(&value)) {
-            selectedFilterValue = QString::fromStdString(value);
-            selectedFilter = &selectedFilterValue;
+        QString *selectedFilterPtr = nullptr;
+        if (selectedFilterInput.has_value())
+        {
+            selectedFilterValue = QString::fromStdString(selectedFilterInput.value());
+            selectedFilterPtr = &selectedFilterValue;
         }
-        const auto options = opts.mapOrDefaultOptions_([](auto x) { return static_cast<QFileDialog::Options>(x.value()); }, QFileDialog::Options());
-        const auto supportedSchemes = opts.mapOrDefaultSupportedSchemes(toQStringList, QStringList());
-        //
-        const auto url = QFileDialog::getSaveFileUrl(parent, caption, dir, filter, selectedFilter, options, supportedSchemes);
+        QFileDialog::Options qoptions;
+        if (options_.has_value())
+        {
+            qoptions = QFileDialog::Options::fromInt(options_.value().value());
+        }
+        QStringList qschemes;
+        if (supportedSchemes.has_value())
+        {
+            qschemes = toQStringList(supportedSchemes.value());
+        }
+        auto qurl =
+            QFileDialog::getSaveFileUrl(
+                AS_QWIDGET_PTR(parent),
+                qstringFromNullable(caption),
+                QURL_VALUE(dir),
+                qstringFromNullable(filter),
+                selectedFilterPtr,
+                qoptions,
+                qschemes);
         GetSaveFileUrlResult result;
-        result.url = URL_HEAP_NEW(url);
-        if (selectedFilter != nullptr) {
-            result.selectedFilterOutput = selectedFilter->toStdString();
+        result.url = URL_HEAP_NEW(qurl);
+        if (selectedFilterPtr != nullptr)
+        {
+            result.selectedFilterOutput = selectedFilterPtr->toStdString();
         }
         return result;
     }

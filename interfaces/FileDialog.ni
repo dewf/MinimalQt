@@ -128,34 +128,20 @@ opaque Handle extends Dialog.Handle {
 
 // ctors
 Handle create(Widget.Handle parent, WindowFlags flags_);
-options CreateOpts {
-    Widget.Handle parent;
-    string caption;
-    string directory;
-    string filter;
-}
-Handle create(CreateOpts opts);
+Handle create(Widget.Handle parent = null, Option<string> caption = none, Option<string> directory = none, Option<string> filter = none);
 
 // static methods
 
 // getExistingDirectory ========================================================
-options GetExistingDirectoryOpts {
-    Widget.Handle parent;
-    string caption;
-    string dir;
-    Options options_;
-}
-string getExistingDirectory(GetExistingDirectoryOpts opts);
+string getExistingDirectory(Widget.Handle parent = null, Option<string> caption = none, Option<string> dir = none, Options options_ = ShowDirsOnly);
 
 // getExistingDirectoryUrl =====================================================
-options GetExistingDirectoryUrlOpts {
-    Widget.Handle parent;
-    string caption;
-    Url.Handle dir;
-    Options options_;
-    Array<string> supportedSchemes;
-}
-Url.Owned getExistingDirectoryUrl(GetExistingDirectoryUrlOpts opts);
+Url.Owned getExistingDirectoryUrl(
+    Widget.Handle parent = null,
+    Option<string> caption = none,
+    Url.Handle dir = null,
+    Options options_ = ShowDirsOnly,
+    Option<Array<string>> supportedSchemes = none);
 
 // getOpenFileContent ==========================================================
 delegate Array<byte> ContentThunk(); // consider return a Buffer<byte> instead so we're not making copies via the NI stack?
@@ -163,97 +149,90 @@ delegate void FileOpenCompletedFunc(string fileName, ContentThunk fileContentThu
 void getOpenFileContent(string nameFilter, FileOpenCompletedFunc fileOpenCompleted, Widget.Handle parent = null);
 
 // getOpenFileName =============================================================
-options GetOpenFileNameOpts {
-    Widget.Handle parent;
-    string caption;
-    string dir;
-    string filter;
-    string selectedFilterInput;
-    Options options_;
-}
 struct GetOpenFileNameResult {
     string filename;
     string selectedFilterOutput;
 }
-GetOpenFileNameResult getOpenFileName(GetOpenFileNameOpts opts);
+GetOpenFileNameResult getOpenFileName(
+    Widget.Handle parent = null,
+    Option<string> caption = none,
+    Option<string> dir = none,
+    Option<string> filter = none,
+    Option<string> selectedFilterInput = none,
+    Option<Options> options_ = none);
 
 // getOpenFileNames ============================================================
-options GetOpenFileNamesOpts {
-    Widget.Handle parent;
-    string caption;
-    string dir;
-    string filter;
-    string selectedFilterInput;
-    Options options_;
-}
 struct GetOpenFileNamesResult {
     Array<string> filenames;
     string selectedFilterOutput;
 }
-GetOpenFileNamesResult getOpenFileNames(GetOpenFileNamesOpts opts);
+GetOpenFileNamesResult getOpenFileNames(
+    Widget.Handle parent = null,
+    Option<string> caption = none,
+    Option<string> dir = none,
+    Option<string> filter = none,
+    Option<string> selectedFilterInput = none,
+    Option<Options> options_ = none
+);
 
 // getOpenFileUrl ==============================================================
-options GetOpenFileUrlOpts {
-    Widget.Handle parent;
-    string caption;
-    Url.Handle dir;
-    string filter;
-    string selectedFilterInput;
-    Options options_;
-    Array<string> supportedSchemes;
-}
 struct GetOpenFileUrlResult {
     Url.Owned url;
     string selectedFilterOutput;
 }
-GetOpenFileUrlResult getOpenFileUrl(GetOpenFileUrlOpts opts);
+GetOpenFileUrlResult getOpenFileUrl(
+    Widget.Handle parent = null,
+    Option<string> caption = none,
+    Url.Handle dir = null,
+    Option<string> filter = none,
+    Option<string> selectedFilterInput = none,
+    Option<Options> options_ = none,
+    Option<Array<string>> supportedSchemes = none
+);
 
 // getOpenFileUrls ==============================================================
-options GetOpenFileUrlsOpts {
-    Widget.Handle parent;
-    string caption;
-    Url.Handle dir;
-    string filter;
-    string selectedFilterInput;
-    Options options_;
-    Array<string> supportedSchemes;
-}
 struct GetOpenFileUrlsResult {
     Url.OwnedList urls;
     string selectedFilterOutput;
 }
-GetOpenFileUrlsResult getOpenFileUrls(GetOpenFileUrlsOpts opts);
+GetOpenFileUrlsResult getOpenFileUrls(
+    Widget.Handle parent = null,
+    Option<string> caption = none,
+    Url.Handle dir = null,
+    Option<string> filter = none,
+    Option<string> selectedFilterInput = none,
+    Option<Options> options_ = none,
+    Option<Array<string>> supportedSchemes = none
+);
 
 // getSaveFileName ==============================================================
-options GetSaveFileNameOpts {
-    Widget.Handle parent;
-    string caption;
-    string dir;
-    string filter;
-    string selectedFilterInput;
-    Options options_;
-}
 struct GetSaveFileNameResult {
     string filename;
     string selectedFilterOutput;
 }
-GetSaveFileNameResult getSaveFileName(GetSaveFileNameOpts opts);
+GetSaveFileNameResult getSaveFileName(
+    Widget.Handle parent = null,
+    Option<string> caption = none,
+    Option<string> dir = none,
+    Option<string> filter = none,
+    Option<string> selectedFilterInput = none,
+    Option<Options> options_ = none
+);
 
 // getSaveFileUrl ===============================================================
-options GetSaveFileUrlOpts {
-    Widget.Handle parent;
-    string caption;
-    Url.Handle dir;
-    string filter;
-    string selectedFilterInput;
-    Options options_;
-    Array<string> supportedSchemes;
-}
 struct GetSaveFileUrlResult {
     Url.Owned url;
     string selectedFilterOutput;
 }
-GetSaveFileUrlResult getSaveFileUrl(GetSaveFileUrlOpts opts);
+GetSaveFileUrlResult getSaveFileUrl(
+    Widget.Handle parent = null,
+    Option<string> caption = none,
+    Url.Handle dir = null,
+    Option<string> filter = none,
+    Option<string> selectedFilterInput = none,
+    Option<Options> options_ = none,
+    Option<Array<string>> supportedSchemes = none
+);
 
 // saveFileContent ==============================================================
 void saveFileContent(Buffer<byte> fileContent, string fileNameHint, Widget.Handle parent = null);

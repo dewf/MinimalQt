@@ -80,3 +80,8 @@ inline QStringList toQStringList(const std::vector<std::string>& strings) {
 inline std::vector<std::string> fromQStringList(const QStringList& qStrings) {
     return fromQList<QString,std::string>(qStrings, [](const QString& qStr) { return qStr.toStdString(); });
 }
+
+inline QString qstringFromNullable(const std::optional<std::string>& value)
+{
+    return value.transform(QString::fromStdString).value_or(QString());
+}
