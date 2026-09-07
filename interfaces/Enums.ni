@@ -130,7 +130,7 @@ enum CursorMoveStyle {
     VisualMoveStyle
 }
 
-enum TextFormatEnum {
+enum TextFormatEnum { // Qt::TextFormat, not sure why we suffixed 'Enum', presumably it was colliding with something?
     PlainText,
     RichText,
     AutoText,
