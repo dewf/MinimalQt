@@ -351,7 +351,7 @@ Handle create(Handle parent = null, WindowFlags flags_ = 0);
 
 // SUBCLASSING ===========================================================
 
-namedbits MethodMask {
+namedbits DelegatedMethodMask {
     SizeHint,
     ContextMenuEvent,
     DragEnterEvent,
@@ -375,7 +375,7 @@ namedbits MethodMask {
 }
 
 @methodprefix("dm_") // not strictly necessary, but nice for clarification (so they won't be confused with implemented versions)
-interface DelegateMethods {
+interface DelegatedMethods {
 
     // virtual public ===================================
     void sizeHint(SizeReturn ret);
@@ -430,4 +430,4 @@ interface DelegateMethods {
 opaque Delegated extends Handle;
 // no interior/protected methods yet
 
-Delegated createDelegated(DelegateMethods methods, MethodMask methodMask, Handle parent = null, WindowFlags flags_ = 0);
+Delegated createDelegated(DelegatedMethods methods, DelegatedMethodMask methodMask, Handle parent = null, WindowFlags flags_ = 0);

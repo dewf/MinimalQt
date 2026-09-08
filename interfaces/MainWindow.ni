@@ -100,6 +100,7 @@ namedbits DelegatedMethodMask {
     // TODO: CreatePopupMenu
 }
 
+@methodprefix("dm_") // not strictly necessary, but nice for clarification (so they won't be confused with implemented versions)
 interface DelegatedMethods {
     bool canClose();
     void closed();

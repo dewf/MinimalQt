@@ -284,7 +284,7 @@ namespace MainWindow
     protected:
         void resizeEvent(QResizeEvent *event) override {
             if (mask & DelegatedMethodMask::Resized) {
-                methods->resized(SIZE_HEAP_NEW(event->oldSize()), SIZE_HEAP_NEW(event->size()));
+                methods->dm_resized(SIZE_HEAP_NEW(event->oldSize()), SIZE_HEAP_NEW(event->size()));
                 event->accept();
             } else {
                 QMainWindow::resizeEvent(event);
@@ -295,12 +295,12 @@ namespace MainWindow
                 // potentially custom behavior
                 bool canClose = true;
                 if (mask & DelegatedMethodMask::CanClose) {
-                    canClose = methods->canClose();
+                    canClose = methods->dm_canClose();
                 }
                 if (canClose) {
                     // definitely going to close
                     if (mask & DelegatedMethodMask::Closed) {
-                        methods->closed();
+                        methods->dm_closed();
                     }
                     event->accept();
                 } else {
