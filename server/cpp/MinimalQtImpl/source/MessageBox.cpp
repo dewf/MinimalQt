@@ -206,8 +206,8 @@ namespace MessageBox
         QMessageBox::about(AS_QWIDGET_PTR(parent), QString::fromStdString(title), QString::fromStdString(text));
     }
 
-    void aboutQt(Widget::HandleRef parent, const std::optional<std::string>& title) {
-        const auto qTitle = optionalMap<std::string,QString>(title, [](auto t) { return QString::fromStdString(t); }).value_or(QString());
+    void aboutQt(Widget::HandleRef parent, const std::optional<std::string>& title /* {} */) {
+        const auto qTitle = title.transform(QString::fromStdString).value_or(QString());
         QMessageBox::aboutQt(AS_QWIDGET_PTR(parent), qTitle);
     }
 

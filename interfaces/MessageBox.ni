@@ -129,7 +129,7 @@ Handle create(Icon icon, string title, string text, StandardButtons buttons = No
 
 // static methods:
 void about(Widget.Handle parent, string title, string text);
-void aboutQt(Widget.Handle parent, Option<string> title);
+void aboutQt(Widget.Handle parent, Option<string> title = none);
 StandardButton critical(Widget.Handle parent, string title, string text, StandardButtons buttons = Ok, StandardButton defaultButton = NoButton);
 StandardButton information(Widget.Handle parent, string title, string text, StandardButtons buttons = Ok, StandardButton defaultButton = NoButton);
 StandardButton question(Widget.Handle parent, string title, string text, StandardButtons buttons = Yes | No, StandardButton defaultButton = NoButton);

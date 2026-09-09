@@ -168,7 +168,7 @@ opaque Handle {
     Size.Owned size();
     size_t sizeInBytes();
     void swap(Handle other);
-    string text(Option<string> key);
+    string text(Option<string> key = none);
     Array<string> textKeys();
 
     // CGImageRef toCGImage() const

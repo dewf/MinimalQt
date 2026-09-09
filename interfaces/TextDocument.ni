@@ -6,11 +6,11 @@ import TextCursor;
 
 @methodprefix("sig_")
 interface SignalHandler {
-    void baseUrlChanged(Url.Handle url);
+    void baseUrlChanged(Url.Owned url);
     void blockCountChanged(int newBlockCount);
     void contentsChange(int position, int charsRemoved, int charsAdded);
     void contentsChanged();
-    void cursorPositionChanged(TextCursor.Handle cursor);
+    void cursorPositionChanged(TextCursor.Owned cursor);
     void documentLayoutChanged();
     void modificationChanged(bool changed);
     void redoAvailable(bool available);
@@ -33,7 +33,24 @@ enum MarkdownFeature {
     MarkdownDialectGitHub = 0x0004 | 0x0008 | 0x0400 | 0x0100 | 0x0200 | 0x0800 | 0x4000 | 0x100000
 }
 
-@nodispose
 opaque Handle extends Object.Handle {
     // TODO
+
+    // signals ================================
+    SignalConnection connect_BaseUrlChanged(SignalHandler handler);
+    SignalConnection connect_BlockCountChanged(SignalHandler handler);
+    SignalConnection connect_ContentsChange(SignalHandler handler);
+    SignalConnection connect_ContentsChanged(SignalHandler handler);
+    SignalConnection connect_CursorPositionChanged(SignalHandler handler);
+    SignalConnection connect_DocumentLayoutChanged(SignalHandler handler);
+    SignalConnection connect_ModificationChanged(SignalHandler handler);
+    SignalConnection connect_RedoAvailable(SignalHandler handler);
+    SignalConnection connect_UndoAvailable(SignalHandler handler);
+    SignalConnection connect_UndoCommandAdded(SignalHandler handler);
 }
+
+Handle create(Object.Handle parent = null);
+Handle create(string text, Object.Handle parent = null);
+
+// static methods ===================
+// TODO

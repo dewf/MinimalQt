@@ -323,8 +323,8 @@ namespace Image
         }
     }
 
-    std::string Handle_text(HandleRef _this, const std::optional<std::string>& key) {
-        const auto qKey = optionalMap<std::string,QString>(key, QString::fromStdString).value_or(QString());
+    std::string Handle_text(HandleRef _this, const std::optional<std::string>& key /* {} */) {
+        const auto qKey = key.transform(QString::fromStdString).value_or(QString());
         return THIS->text(qKey).toStdString();
     }
 

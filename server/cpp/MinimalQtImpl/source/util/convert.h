@@ -35,13 +35,13 @@ std::vector<U> vectorMap(const std::vector<T>& input, const std::function<U(T)>&
     return result;
 }
 
-template <typename T, typename U>
-std::optional<U> optionalMap(const std::optional<T>& input, const std::function<U(T)>& mapFunc) {
-    if (input.has_value()) {
-        return mapFunc(input.value());
-    }
-    return std::optional<U>();
-}
+// template <typename T, typename U>
+// std::optional<U> optionalMap(const std::optional<T>& input, const std::function<U(T)>& mapFunc) {
+//     if (input.has_value()) {
+//         return mapFunc(input.value());
+//     }
+//     return std::optional<U>();
+// }
 
 template <typename T, typename U>
 U optionOrDefaultStaticCast(const std::optional<T>& input, U defaultValue) {
