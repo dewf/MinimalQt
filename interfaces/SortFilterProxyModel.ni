@@ -8,6 +8,13 @@ import RegularExpression;
 import ModelIndex;
 import PersistentModelIndex;
 
+@withflags(Directions)
+enum Direction {
+    Rows        = 0x01,
+    Columns     = 0x02,
+    Both        = Rows | Columns,
+}
+
 @methodprefix("sig_")
 interface SignalHandler extends AbstractProxyModel.SignalHandler {
     void autoAcceptChildRowsChanged(bool autoAcceptChildRows);
@@ -74,24 +81,23 @@ Handle create(Object.Handle parent = null);
 
 // subclassing ==============================================
 
-namedbits MethodMask {
+namedbits DelegatedMethodMask {
     FilterAcceptsColumn,
     FilterAcceptsRow,
     LessThan
 }
 
-interface MethodDelegate {
+@methodprefix("dm_")
+interface DelegatedMethods {
     bool filterAcceptsColumn(int sourceColumn, ModelIndex.Handle sourceParent);
     bool filterAcceptsRow(int sourceRow, ModelIndex.Handle sourceParent);
     bool lessThan(ModelIndex.Handle sourceLeft, ModelIndex.Handle sourceRight);
 }
 
 opaque Delegated extends Handle {
-    void invalidateColumnsFilter();
-    void invalidateRowsFilter();
-    void invalidateFilter();
-
-    void setDelegate(MethodDelegate methodDelegate, MethodMask methodMask);
+    // protected/interior methods
+    void beginFilterChange();
+    void endFilterChange(Directions directions = Both);
 }
 
-Delegated createDelegated();
+Delegated createDelegated(DelegatedMethods methods, DelegatedMethodMask mask, Object.Handle parent = null);

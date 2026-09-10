@@ -183,69 +183,59 @@ namespace SortFilterProxyModel
 #define DELEGATED_THIS (reinterpret_cast<Delegated*>(_this))
 
     class Delegated : public QSortFilterProxyModel {
-    private:
-        Flags<MethodMask> methodMask;
-        std::shared_ptr<MethodDelegate> methodDelegate;
+        std::shared_ptr<DelegatedMethods> methods;
+        Flags<DelegatedMethodMask> mask;
     public:
-        void setDelegate(const std::shared_ptr<MethodDelegate> &methodDelegate, Flags<MethodMask> methodMask) {
-            this->methodDelegate = methodDelegate;
-            this->methodMask = methodMask;
-        }
+        Delegated(QObject* parent, const std::shared_ptr<DelegatedMethods> &methodDelegate, Flags<DelegatedMethodMask> methodMask)
+            : QSortFilterProxyModel(parent),
+                methods(methodDelegate),
+                mask(methodMask) {}
     protected:
         [[nodiscard]]
         bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override {
-            if (methodMask & MethodMask::FilterAcceptsRow) {
+            if (mask & DelegatedMethodMask::FilterAcceptsRow) {
                 QModelIndex source2(source_parent);
-                return methodDelegate->filterAcceptsRow(source_row, reinterpret_cast<ModelIndex::HandleRef>(&source2));
+                return methods->dm_filterAcceptsRow(source_row, reinterpret_cast<ModelIndex::HandleRef>(&source2));
             } else {
                 return QSortFilterProxyModel::filterAcceptsRow(source_row, source_parent);
             }
         }
         [[nodiscard]]
         bool filterAcceptsColumn(int source_column, const QModelIndex &source_parent) const override {
-            if (methodMask & MethodMask::FilterAcceptsColumn) {
+            if (mask & DelegatedMethodMask::FilterAcceptsColumn) {
                 QModelIndex source2(source_parent);
-                return methodDelegate->filterAcceptsColumn(source_column, reinterpret_cast<ModelIndex::HandleRef>(&source2));
+                return methods->dm_filterAcceptsColumn(source_column, reinterpret_cast<ModelIndex::HandleRef>(&source2));
             } else {
                 return QSortFilterProxyModel::filterAcceptsColumn(source_column, source_parent);
             }
         }
         [[nodiscard]]
         bool lessThan(const QModelIndex &source_left, const QModelIndex &source_right) const override {
-            if (methodMask & MethodMask::LessThan) {
+            if (mask & DelegatedMethodMask::LessThan) {
                 QModelIndex left2(source_left), right2(source_right);
-                return methodDelegate->lessThan(reinterpret_cast<ModelIndex::HandleRef>(&left2), reinterpret_cast<ModelIndex::HandleRef>(&right2));
+                return methods->dm_lessThan(reinterpret_cast<ModelIndex::HandleRef>(&left2), reinterpret_cast<ModelIndex::HandleRef>(&right2));
             } else {
                 return QSortFilterProxyModel::lessThan(source_left, source_right);
             }
         }
     public:
-        friend void Delegated_invalidateColumnsFilter(DelegatedRef _this);
-        friend void Delegated_invalidateRowsFilter(DelegatedRef _this);
-        friend void Delegated_invalidateFilter(DelegatedRef _this);
+        friend void Delegated_beginFilterChange(DelegatedRef _this);
+        friend void Delegated_endFilterChange(DelegatedRef _this, Flags<SortFilterProxyModel::Directions> directions);
     };
 
-    void Delegated_invalidateColumnsFilter(DelegatedRef _this) {
-        DELEGATED_THIS->invalidateColumnsFilter();
+    void Delegated_beginFilterChange(DelegatedRef _this) {
+        DELEGATED_THIS->beginFilterChange();
     }
 
-    void Delegated_invalidateRowsFilter(DelegatedRef _this) {
-        DELEGATED_THIS->invalidateRowsFilter();
-    }
-
-    void Delegated_invalidateFilter(DelegatedRef _this) {
-        DELEGATED_THIS->invalidateFilter();
-    }
-
-    void Delegated_setDelegate(DelegatedRef _this, const std::shared_ptr<MethodDelegate>& methodDelegate, Flags<MethodMask> methodMask) {
-        DELEGATED_THIS->setDelegate(methodDelegate, methodMask);
+    void Delegated_endFilterChange(DelegatedRef _this, Flags<Directions> directions /* Directions::Both */) {
+        DELEGATED_THIS->endFilterChange(QSortFilterProxyModel::Directions::fromInt(directions.value()));
     }
 
     void Delegated_dispose(DelegatedRef _this) {
         delete DELEGATED_THIS;
     }
 
-    DelegatedRef createDelegated() {
-        return reinterpret_cast<DelegatedRef>(new Delegated());
+    DelegatedRef createDelegated(const std::shared_ptr<DelegatedMethods>& methods, Flags<DelegatedMethodMask> mask, Object::HandleRef parent /* nullptr */) {
+        return reinterpret_cast<DelegatedRef>(new Delegated(AS_QOBJECT_PTR(parent), methods, mask));
     }
 }
