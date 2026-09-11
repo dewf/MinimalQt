@@ -14,7 +14,6 @@ using namespace ::Enums;
 using namespace ::ModelIndex;
 
 #define THIS (reinterpret_cast<QStandardItemModel*>(_this))
-#define AS_ITEM(x) (reinterpret_cast<QStandardItem*>(x))
 
 namespace StandardItemModel
 {
@@ -27,7 +26,7 @@ namespace StandardItemModel
     }
 
     void Handle_appendRow(HandleRef _this, StandardItem::HandleRef item) {
-        THIS->appendRow(AS_ITEM(item));
+        THIS->appendRow(AS_QSTANDARDITEM_PTR(item));
     }
 
     void Handle_clear(HandleRef _this) {
@@ -43,7 +42,7 @@ namespace StandardItemModel
     }
 
     ModelIndex::OwnedRef Handle_indexFromItem(HandleRef _this, StandardItem::HandleRef item) {
-        return MODELINDEX_HEAP_NEW(THIS->indexFromItem(AS_ITEM(item)));
+        return MODELINDEX_HEAP_NEW(THIS->indexFromItem(AS_QSTANDARDITEM_PTR(item)));
     }
 
     void Handle_insertColumn(HandleRef _this, int32_t column, const std::vector<StandardItem::HandleRef>& items) {
@@ -63,7 +62,7 @@ namespace StandardItemModel
     }
 
     void Handle_insertRow(HandleRef _this, int32_t row, StandardItem::HandleRef item) {
-        THIS->insertRow(row, AS_ITEM(item));
+        THIS->insertRow(row, AS_QSTANDARDITEM_PTR(item));
     }
 
     StandardItem::HandleRef Handle_invisibleRootItem(HandleRef _this) {
@@ -78,10 +77,9 @@ namespace StandardItemModel
         return reinterpret_cast<StandardItem::HandleRef>(THIS->itemFromIndex(QMODELINDEX_VALUE(index)));
     }
 
-    StandardItem::HandleRef Handle_itemPrototype(HandleRef _this) {
-        // const trouble! can't clone either because then it will leak (unlike value types, where we auto-dispose Owned handles)
+    StandardItem::ConstHandleRef Handle_itemPrototype(HandleRef _this) {
         auto ret = const_cast<QStandardItem*>(THIS->itemPrototype());
-        return reinterpret_cast<StandardItem::HandleRef>(ret);
+        return reinterpret_cast<StandardItem::ConstHandleRef>(ret);
     }
 
     void Handle_setColumnCount(HandleRef _this, int32_t columns) {
@@ -89,7 +87,7 @@ namespace StandardItemModel
     }
 
     void Handle_setHorizontalHeaderItem(HandleRef _this, int32_t column, StandardItem::HandleRef item) {
-        THIS->setHorizontalHeaderItem(column, AS_ITEM(item));
+        THIS->setHorizontalHeaderItem(column, AS_QSTANDARDITEM_PTR(item));
     }
 
     void Handle_setHorizontalHeaderLabels(HandleRef _this, const std::vector<std::string>& labels) {
@@ -97,15 +95,15 @@ namespace StandardItemModel
     }
 
     void Handle_setItem(HandleRef _this, int32_t row, int32_t column, StandardItem::HandleRef item) {
-        THIS->setItem(row, column, AS_ITEM(item));
+        THIS->setItem(row, column, AS_QSTANDARDITEM_PTR(item));
     }
 
     void Handle_setItem(HandleRef _this, int32_t row, StandardItem::HandleRef item) {
-        THIS->setItem(row, AS_ITEM(item));
+        THIS->setItem(row, AS_QSTANDARDITEM_PTR(item));
     }
 
     void Handle_setItemPrototype(HandleRef _this, StandardItem::HandleRef item) {
-        THIS->setItemPrototype(AS_ITEM(item));
+        THIS->setItemPrototype(AS_QSTANDARDITEM_PTR(item));
     }
 
     void Handle_setItemRoleNames(HandleRef _this, const std::map<int32_t,std::vector<uint8_t>>& roleNames) {
@@ -125,7 +123,7 @@ namespace StandardItemModel
     }
 
     void Handle_setVerticalHeaderItem(HandleRef _this, int32_t row, StandardItem::HandleRef item) {
-        THIS->setVerticalHeaderItem(row, AS_ITEM(item));
+        THIS->setVerticalHeaderItem(row, AS_QSTANDARDITEM_PTR(item));
     }
 
     void Handle_setVerticalHeaderLabels(HandleRef _this, const std::vector<std::string>& labels) {

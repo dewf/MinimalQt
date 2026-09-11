@@ -36,7 +36,9 @@ opaque Handle extends AbstractItemModel.Handle {
     StandardItem.Handle invisibleRootItem();
     StandardItem.Handle item(int row, int column = 0);
     StandardItem.Handle itemFromIndex(ModelIndex.Handle index);
-    StandardItem.Handle itemPrototype(); // note, const!
+
+    StandardItem.ConstHandle itemPrototype(); // note, const!
+
     void setColumnCount(int columns);
     void setHorizontalHeaderItem(int column, StandardItem.Handle item);
     void setHorizontalHeaderLabels(Array<string> labels);

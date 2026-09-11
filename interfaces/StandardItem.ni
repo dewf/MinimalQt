@@ -10,33 +10,23 @@ import Size;
 
 enum ItemType { Type = 0, UserType = 1000 }
 
-opaque Handle {
+@nodispose
+opaque ConstHandle {
     string accessibleDescription();
     string accessibleText();
-    void appendColumn(Array<Handle> items);
-    void appendRow(Array<Handle> items);
-    void appendRow(Handle item);
-    void appendRows(Array<Handle> items);
     Brush.Owned background();
     CheckState checkState();
     Handle child(int row, int column = 0);
-    void clearData();
     Handle clone();
     int column();
     int columnCount();
-    Variant.Owned data(ItemDataRole role);  // int role = Qt::UserRole + 1 // our current const stuff isn't smart enough to handle this (we need to emit an int cast on our enum-class ItemDataRole)
+    Variant.Owned data(int role = cast<int>(ItemDataRole.UserRole) + 1);
     ItemFlags getFlags();
     Font.Owned font();
     Brush.Owned foreground();
     bool hasChildren();
     Icon.Owned icon();
     ModelIndex.Owned index();
-    void insertColumn(int column, Array<Handle> items);
-    void insertColumns(int column, int count);
-    void insertRow(int row, Array<Handle> items);
-    void insertRow(int row, Handle item);
-    void insertRows(int row, Array<Handle> items);
-    void insertRows(int row, int count);
     bool isAutoTristate();
     bool isCheckable();
     bool isDragEnabled();
@@ -52,15 +42,37 @@ opaque Handle {
     // (since 6.0) virtual void multiData(QModelRoleDataSpan roleDataSpan) const
 
     Handle parent();
+    int row();
+    int rowCount();
+    Size.Owned sizeHint();
+    string statusTip();
+    string text();
+    Alignment textAlignment();
+    string toolTip();
+    int type();
+    string whatsThis();
+}
 
-    // virtual void read(QDataStream &in)
+opaque Handle extends ConstHandle {
+    void appendColumn(Array<Handle> items);
+    void appendRow(Array<Handle> items);
+    void appendRow(Handle item);
+    void appendRows(Array<Handle> items);
+    void clearData();
+    void insertColumn(int column, Array<Handle> items);
+    void insertColumns(int column, int count);
+    void insertRow(int row, Array<Handle> items);
+    void insertRow(int row, Handle item);
+    void insertRows(int row, Array<Handle> items);
+    void insertRows(int row, int count);
+
+    // // virtual void	read(QDataStream &in)
 
     void removeColumn(int column);
     void removeColumns(int column, int count);
     void removeRow(int row);
     void removeRows(int row, int count);
-    int row();
-    int rowCount();
+
     void setAccessibleDescription(string accessibleDescription);
     void setAccessibleText(string accessibleText);
     void setAutoTristate(bool tristate);
@@ -70,7 +82,7 @@ opaque Handle {
     void setChild(int row, int column, Handle item);
     void setChild(int row, Handle item);
     void setColumnCount(int columns);
-    void setData(Variant.Handle value, ItemDataRole role); // int role = Qt::UserRole + 1 - see note above on data()
+    void setData(Variant.Handle value, int role = cast<int>(ItemDataRole.UserRole) + 1);
     void setDragEnabled(bool dragEnabled);
     void setDropEnabled(bool dropEnabled);
     void setEditable(bool editable);
@@ -88,17 +100,11 @@ opaque Handle {
     void setToolTip(string toolTip);
     void setUserTristate(bool tristate);
     void setWhatsThis(string whatsThis);
-    Size.Owned sizeHint();
+
     void sortChildren(int column, SortOrder order = AscendingOrder);
-    string statusTip();
     Handle takeChild(int row, int column = 0);
     Array<Handle> takeColumn(int column);
     Array<Handle> takeRow(int row);
-    string text();
-    Alignment textAlignment();
-    string toolTip();
-    int type();
-    string whatsThis();
 }
 
 Handle create();
