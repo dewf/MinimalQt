@@ -20,7 +20,7 @@ Handle create(Object.Handle parent = null);
 
 // subclass stuff ===============
 
-namedbits MethodMask {
+namedbits DelegatedMethodMask {
     // just supporting a few for now
     CreateEditor,
     SetEditorData,
@@ -30,6 +30,7 @@ namedbits MethodMask {
     // others: TODO
 }
 
+@methodprefix("dm_")
 interface DelegatedMethods {
     Widget.Handle createEditor(Widget.Handle parent, StyleOption.ViewItem.Handle option, ModelIndex.Handle index);
     void setEditorData(Widget.Handle editor, ModelIndex.Handle index);
@@ -41,4 +42,4 @@ interface DelegatedMethods {
 opaque Delegated extends Handle;
 // no 'interior' methods yet
 
-Delegated createDelegated(DelegatedMethods methods, MethodMask mask, Object.Handle parent = null);
+Delegated createDelegated(DelegatedMethods methods, DelegatedMethodMask mask, Object.Handle parent = null);
