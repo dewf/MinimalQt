@@ -94,6 +94,7 @@ opaque Handle extends AbstractScrollArea.Handle {
     AbstractItemDelegate.Handle itemDelegateForIndex(ModelIndex.Handle index);
     AbstractItemDelegate.Handle itemDelegateForRow(int row);
     void keyboardSearch(string search);
+    MatchFlags keyboardSearchFlags();
     AbstractItemModel.Handle model();
     void openPersistentEditor(ModelIndex.Handle index);
     void resetHorizontalScrollMode();
@@ -118,12 +119,14 @@ opaque Handle extends AbstractScrollArea.Handle {
     void setItemDelegate(AbstractItemDelegate.Handle delegate_);
     void setItemDelegateForColumn(int column, AbstractItemDelegate.Handle delegate_);
     void setItemDelegateForRow(int row, AbstractItemDelegate.Handle delegate_);
+    void setKeyboardSearchFlags(MatchFlags searchFlags);
     void setModel(AbstractItemModel.Handle model);
     void setSelectionBehavior(SelectionBehavior behavior);
     void setSelectionMode(SelectionMode mode);
     void setSelectionModel(ItemSelectionModel.Handle selectionModel);
     void setTabKeyNavigation(bool enable);
     void setTextElideMode(TextElideMode mode);
+    void setUpdateThreshold(int threshold);
     void setVerticalScrollMode(ScrollMode mode);
     bool showDropIndicator();
     int sizeHintForColumn(int column);
@@ -131,6 +134,7 @@ opaque Handle extends AbstractScrollArea.Handle {
     int sizeHintForRow(int row);
     bool tabKeyNavigation();
     TextElideMode textElideMode();
+    int updateThreshold();
     ScrollMode verticalScrollMode();
     Rect.Owned visualRect(ModelIndex.Handle index);
 

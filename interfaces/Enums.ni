@@ -479,7 +479,8 @@ enum GlobalColor {
     transparent
 }
 
-flags MatchFlags {
+@withflags(MatchFlags)
+enum MatchFlag {
     MatchExactly = 0,
     MatchContains = 1,
     MatchStartsWith = 2,

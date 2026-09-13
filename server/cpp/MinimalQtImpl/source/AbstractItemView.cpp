@@ -115,6 +115,10 @@ namespace AbstractItemView
         THIS->keyboardSearch(QString::fromStdString(search));
     }
 
+    Flags<MatchFlags> Handle_keyboardSearchFlags(HandleRef _this) {
+        return Flags<MatchFlags>(THIS->keyboardSearchFlags());
+    }
+
     AbstractItemModel::HandleRef Handle_model(HandleRef _this) {
         return reinterpret_cast<AbstractItemModel::HandleRef>(THIS->model());
     }
@@ -211,6 +215,10 @@ namespace AbstractItemView
         THIS->setItemDelegateForRow(row, reinterpret_cast<QAbstractItemDelegate*>(itemDelegate));
     }
 
+    void Handle_setKeyboardSearchFlags(HandleRef _this, Flags<MatchFlags> searchFlags) {
+        THIS->setKeyboardSearchFlags(Qt::MatchFlags::fromInt(searchFlags.value()));
+    }
+
     void Handle_setModel(HandleRef _this, AbstractItemModel::HandleRef model) {
         THIS->setModel(reinterpret_cast<QAbstractItemModel*>(model));
     }
@@ -233,6 +241,10 @@ namespace AbstractItemView
 
     void Handle_setTextElideMode(HandleRef _this, TextElideMode mode) {
         THIS->setTextElideMode(static_cast<Qt::TextElideMode>(mode));
+    }
+
+    void Handle_setUpdateThreshold(HandleRef _this, int32_t threshold) {
+        THIS->setUpdateThreshold(threshold);
     }
 
     void Handle_setVerticalScrollMode(HandleRef _this, ScrollMode mode) {
@@ -261,6 +273,10 @@ namespace AbstractItemView
 
     TextElideMode Handle_textElideMode(HandleRef _this) {
         return static_cast<TextElideMode>(THIS->textElideMode());
+    }
+
+    int32_t Handle_updateThreshold(HandleRef _this) {
+        return THIS->updateThreshold();
     }
 
     ScrollMode Handle_verticalScrollMode(HandleRef _this) {
