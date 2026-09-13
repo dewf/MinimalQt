@@ -49,8 +49,8 @@ namespace AbstractItemModel
         return THIS->columnCount(QMODELINDEX_VALUE(parent));
     }
 
-    Variant::OwnedRef ConstHandle_data(ConstHandleRef _this, ModelIndex::HandleRef index, const std::optional<int32_t>& role) {
-        return VARIANT_HEAP_NEW(THIS->data(QMODELINDEX_VALUE(index), role.value_or(Qt::DisplayRole)));
+    Variant::OwnedRef ConstHandle_data(ConstHandleRef _this, ModelIndex::HandleRef index, int32_t role /* static_cast<int32_t>(ItemDataRole::DisplayRole) */) {
+        return VARIANT_HEAP_NEW(THIS->data(QMODELINDEX_VALUE(index), role));
     }
 
     Flags<ItemFlags> ConstHandle_flags_(ConstHandleRef _this, ModelIndex::HandleRef index) {
@@ -65,8 +65,8 @@ namespace AbstractItemModel
         return THIS->hasIndex(row, column, QMODELINDEX_VALUE(parent));
     }
 
-    Variant::OwnedRef ConstHandle_headerData(ConstHandleRef _this, int32_t section, Orientation orientation, const std::optional<int32_t>& role) {
-        return VARIANT_HEAP_NEW(THIS->headerData(section, static_cast<Qt::Orientation>(orientation), role.value_or(Qt::DisplayRole)));
+    Variant::OwnedRef ConstHandle_headerData(ConstHandleRef _this, int32_t section, Orientation orientation, int32_t role /* static_cast<int32_t>(ItemDataRole::DisplayRole) */) {
+        return VARIANT_HEAP_NEW(THIS->headerData(section, static_cast<Qt::Orientation>(orientation), role));
     }
 
     ModelIndex::OwnedRef ConstHandle_index(ConstHandleRef _this, int32_t row, int32_t column, ::ModelIndex::HandleRef parent) {
@@ -334,12 +334,12 @@ namespace AbstractItemModel
         return THIS->removeRows(row, count, QMODELINDEX_VALUE(parent));
     }
 
-    bool Handle_setData(HandleRef _this, ModelIndex::HandleRef index, Variant::HandleRef value, const std::optional<int32_t>& role) {
-        return THIS->setData(QMODELINDEX_VALUE(index), QVARIANT_VALUE(value), role.value_or(Qt::EditRole));
+    bool Handle_setData(HandleRef _this, ModelIndex::HandleRef index, Variant::HandleRef value, int32_t role /* static_cast<int32_t>(ItemDataRole::EditRole) */) {
+        return THIS->setData(QMODELINDEX_VALUE(index), QVARIANT_VALUE(value), role);
     }
 
-    bool Handle_setHeaderData(HandleRef _this, int32_t section, Orientation orientation, Variant::HandleRef value, const std::optional<int32_t>& role) {
-        return THIS->setHeaderData(section, static_cast<Qt::Orientation>(orientation), QVARIANT_VALUE(value), role.value_or(Qt::EditRole));
+    bool Handle_setHeaderData(HandleRef _this, int32_t section, Orientation orientation, Variant::HandleRef value, int32_t role /* static_cast<int32_t>(ItemDataRole::EditRole) */) {
+        return THIS->setHeaderData(section, static_cast<Qt::Orientation>(orientation), QVARIANT_VALUE(value), role);
     }
 
     bool Handle_setItemData(HandleRef _this, ModelIndex::HandleRef index, const std::map<int32_t,Variant::HandleRef>& roles) {
@@ -350,9 +350,8 @@ namespace AbstractItemModel
         return THIS->setItemData(QMODELINDEX_VALUE(index), qRoles);
     }
 
-    void Handle_sort(HandleRef _this, int32_t column, const std::optional<SortOrder>& order) {
-        const auto order2 = order.value_or(SortOrder::AscendingOrder);
-        THIS->sort(column, static_cast<Qt::SortOrder>(order2));
+    void Handle_sort(HandleRef _this, int32_t column, SortOrder order /* SortOrder::AscendingOrder */) {
+        THIS->sort(column, static_cast<Qt::SortOrder>(order));
     }
 
     void Handle_revert(HandleRef _this) {
@@ -367,9 +366,9 @@ namespace AbstractItemModel
     class Implementation : public QAbstractItemModel {
     private:
         std::shared_ptr<ImplementationMethods> methodDelegate;
-        Flags<ImplementationMask> methodMask;
+        Flags<ImplementationMethodMask> methodMask;
     public:
-        Implementation(const std::shared_ptr<ImplementationMethods> &methods, Flags<ImplementationMask> methodMask)
+        Implementation(const std::shared_ptr<ImplementationMethods> &methods, Flags<ImplementationMethodMask> methodMask)
             : methodDelegate(methods), methodMask(methodMask) {}
 
         // ===== must-implement abstract methods ================================
@@ -377,7 +376,7 @@ namespace AbstractItemModel
         QModelIndex index(int row, int column, const QModelIndex &parent) const override {
             QModelIndex parent2(parent);
             __ModelIndexReturn safeRet;
-            methodDelegate->index(row, column, reinterpret_cast<ModelIndex::HandleRef>(&parent2), &safeRet);
+            methodDelegate->im_index(row, column, reinterpret_cast<ModelIndex::HandleRef>(&parent2), &safeRet);
             return safeRet.result;
         }
 
@@ -385,46 +384,46 @@ namespace AbstractItemModel
         QModelIndex parent(const QModelIndex &child) const override {
             QModelIndex child2(child);
             __ModelIndexReturn safeRet;
-            methodDelegate->parent(reinterpret_cast<ModelIndex::HandleRef>(&child2), &safeRet);
+            methodDelegate->im_parent(reinterpret_cast<ModelIndex::HandleRef>(&child2), &safeRet);
             return safeRet.result;
         }
 
         [[nodiscard]]
         int rowCount(const QModelIndex &parent) const override {
             QModelIndex parent2(parent);
-            return methodDelegate->rowCount(reinterpret_cast<ModelIndex::HandleRef>(&parent2));
+            return methodDelegate->im_rowCount(reinterpret_cast<ModelIndex::HandleRef>(&parent2));
         }
 
         [[nodiscard]]
         int columnCount(const QModelIndex &parent) const override {
             QModelIndex parent2(parent);
-            return methodDelegate->columnCount(reinterpret_cast<ModelIndex::HandleRef>(&parent2));
+            return methodDelegate->im_columnCount(reinterpret_cast<ModelIndex::HandleRef>(&parent2));
         }
 
         [[nodiscard]]
         QVariant data(const QModelIndex &index, int role) const override {
             QModelIndex index2(index);
             __VariantReturn safeRet;
-            methodDelegate->data(reinterpret_cast<ModelIndex::HandleRef>(&index2), role, &safeRet);
+            methodDelegate->im_data(reinterpret_cast<ModelIndex::HandleRef>(&index2), role, &safeRet);
             return safeRet.result;
         }
 
         // ===== optional methods ==================================================
         [[nodiscard]]
         bool hasChildren(const QModelIndex &parent) const override {
-            if (methodMask & ImplementationMask::HasChildren) {
+            if (methodMask & ImplementationMethodMask::HasChildren) {
                 QModelIndex parent2(parent);
-                return methodDelegate->hasChildren(reinterpret_cast<ModelIndex::HandleRef>(&parent2));
+                return methodDelegate->im_hasChildren(reinterpret_cast<ModelIndex::HandleRef>(&parent2));
             } else {
                 return QAbstractItemModel::hasChildren(parent);
             }
         }
 
         bool setData(const QModelIndex &index, const QVariant &value, int role) override {
-            if (methodMask & ImplementationMask::SetData) {
+            if (methodMask & ImplementationMethodMask::SetData) {
                 QModelIndex index2(index);
                 QVariant value2(value); // non-const, until we figure out "proxies" or whatever
-                return methodDelegate->setData(reinterpret_cast<ModelIndex::HandleRef>(&index2), reinterpret_cast<Variant::HandleRef>(&value2), role);
+                return methodDelegate->im_setData(reinterpret_cast<ModelIndex::HandleRef>(&index2), reinterpret_cast<Variant::HandleRef>(&value2), role);
             } else {
                 return QAbstractItemModel::setData(index, value, role);
             }
@@ -433,9 +432,9 @@ namespace AbstractItemModel
         [[nodiscard]]
         Qt::ItemFlags flags(const QModelIndex &index) const override {
             auto baseFlags = QAbstractItemModel::flags(index);
-            if (methodMask & ImplementationMask::Flags) {
+            if (methodMask & ImplementationMethodMask::Flags) {
                 QModelIndex index2(index);
-                const auto result = methodDelegate->getFlags(reinterpret_cast<ModelIndex::HandleRef>(&index2), static_cast<Flags<ItemFlags>>(baseFlags)); // ItemFlags(baseFlags)
+                const auto result = methodDelegate->im_getFlags(reinterpret_cast<ModelIndex::HandleRef>(&index2), static_cast<Flags<ItemFlags>>(baseFlags)); // ItemFlags(baseFlags)
                 return static_cast<Qt::ItemFlags>(result.value());
             } else {
                 return baseFlags;
@@ -444,9 +443,9 @@ namespace AbstractItemModel
 
         [[nodiscard]]
         QVariant headerData(int section, Qt::Orientation orientation, int role) const override {
-            if (methodMask & ImplementationMask::HeaderData) {
+            if (methodMask & ImplementationMethodMask::HeaderData) {
                 __VariantReturn safeRet;
-                methodDelegate->headerData(section, static_cast<Orientation>(orientation), role, &safeRet);
+                methodDelegate->im_headerData(section, static_cast<Orientation>(orientation), role, &safeRet);
                 return safeRet.result;
             } else {
                 return QAbstractItemModel::headerData(section, orientation, role);
@@ -454,17 +453,17 @@ namespace AbstractItemModel
         }
 
         bool setHeaderData(int section, Qt::Orientation orientation, const QVariant &value, int role) override {
-            if (methodMask & ImplementationMask::HeaderData) {
+            if (methodMask & ImplementationMethodMask::HeaderData) {
                 QVariant value2(value); // non-const, until we figure out "proxies" or whatever
-                return methodDelegate->setHeaderData(section, static_cast<Orientation>(orientation), reinterpret_cast<Variant::HandleRef>(&value2), role);
+                return methodDelegate->im_setHeaderData(section, static_cast<Orientation>(orientation), reinterpret_cast<Variant::HandleRef>(&value2), role);
             } else {
                 return QAbstractItemModel::setHeaderData(section, orientation, value, role);
             }
         }
 
         void sort(int column, Qt::SortOrder order) override {
-            if (methodMask & ImplementationMask::Sort) {
-                return methodDelegate->sort(column, static_cast<SortOrder>(order));
+            if (methodMask & ImplementationMethodMask::Sort) {
+                return methodDelegate->im_sort(column, static_cast<SortOrder>(order));
             } else {
                 return QAbstractItemModel::sort(column, order);
             }
@@ -534,7 +533,7 @@ namespace AbstractItemModel
         delete SUBCLASSED_THIS;
     }
 
-    InteriorRef createImplementation(const std::shared_ptr<ImplementationMethods>& methods, Flags<ImplementationMask> mask) {
+    InteriorRef createImplementation(const std::shared_ptr<ImplementationMethods>& methods, Flags<ImplementationMethodMask> mask) {
         return reinterpret_cast<InteriorRef>(new Implementation(methods, mask));
     }
 

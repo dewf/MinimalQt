@@ -16,7 +16,8 @@ enum LayoutChangeHint
     HorizontalSortHint
 }
 
-flags CheckIndexOptions {
+@withflags(CheckIndexOptions)
+enum CheckIndexOption {
     NoOption         = 0x0000,
     IndexIsValid     = 0x0001,
     DoNotUseParent   = 0x0002,
@@ -52,11 +53,11 @@ opaque ConstHandle extends Object.Handle {
     bool canFetchMore(ModelIndex.Handle parent);
     bool checkIndex(ModelIndex.Handle index, CheckIndexOptions options_ = CheckIndexOptions.NoOption);
     int columnCount(ModelIndex.Handle parent = null);
-    Variant.Owned data(ModelIndex.Handle index, Option<int> role);
+    Variant.Owned data(ModelIndex.Handle index, int role = cast<int>(ItemDataRole.DisplayRole));
     ItemFlags flags_(ModelIndex.Handle index);
     bool hasChildren(ModelIndex.Handle parent = null);
     bool hasIndex(int row, int column, ModelIndex.Handle parent = null);
-    Variant.Owned headerData(int section, Orientation orientation, Option<int> role);
+    Variant.Owned headerData(int section, Orientation orientation, int role = cast<int>(ItemDataRole.DisplayRole));
     ModelIndex.Owned index(int row, int column, ModelIndex.Handle parent = null);
     Map<int, Variant.Owned> itemData(ModelIndex.Handle index);
     Array<ModelIndex.Owned> match(ModelIndex.Handle start, int role, Variant.Handle value, int hits = 1, MatchFlags flags_ = MatchStartsWith | MatchWrap);
@@ -117,10 +118,10 @@ opaque Handle extends ConstHandle {
     bool removeColumns(int column, int count, ModelIndex.Handle parent = null);
     bool removeRow(int row, ModelIndex.Handle parent = null);
     bool removeRows(int row, int count, ModelIndex.Handle parent = null);
-    bool setData(ModelIndex.Handle index, Variant.Handle value, Option<int> role);
-    bool setHeaderData(int section, Orientation orientation, Variant.Handle value, Option<int> role);
+    bool setData(ModelIndex.Handle index, Variant.Handle value, int role = cast<int>(ItemDataRole.EditRole));
+    bool setHeaderData(int section, Orientation orientation, Variant.Handle value, int role = cast<int>(ItemDataRole.EditRole));
     bool setItemData(ModelIndex.Handle index, Map<int, Variant.Handle> roles);
-    void sort(int column, Option<SortOrder> order);
+    void sort(int column, SortOrder order = AscendingOrder);
     // slots ==============================
     void revert();
     void submit();
@@ -128,7 +129,7 @@ opaque Handle extends ConstHandle {
 
 // subclass (implementation) stuff ================================================================================
 
-namedbits ImplementationMask {
+namedbits ImplementationMethodMask {
     // required, so not in mask:
     // index, parent, rowCount, columnCount, data
 
@@ -141,6 +142,7 @@ namedbits ImplementationMask {
     Sort
 }
 
+@methodprefix("im_")
 interface ImplementationMethods {
     // required:
     void index(int row, int column, ModelIndex.Handle parent, ModelIndexReturn ret);
@@ -178,7 +180,7 @@ opaque Interior extends Handle {
     ModelIndex.Owned createIndex(int row, int column, size_t ptr);
 }
 
-Interior createImplementation(ImplementationMethods methods, ImplementationMask mask);
+Interior createImplementation(ImplementationMethods methods, ImplementationMethodMask mask);
 
 // extension methods to break circular dependencies ==============
 
