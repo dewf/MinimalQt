@@ -16,6 +16,10 @@ namespace DockWidget
         return static_cast<Flags<DockWidgetAreas>>(THIS->allowedAreas());
     }
 
+    DockWidgetArea Handle_dockLocation(HandleRef _this) {
+        return static_cast<DockWidgetArea>(THIS->dockLocation());
+    }
+
     Flags<DockWidgetFeatures> Handle_features(HandleRef _this) {
         return static_cast<Flags<DockWidgetFeatures>>(THIS->features());
     }
@@ -30,6 +34,10 @@ namespace DockWidget
 
     void Handle_setAllowedAreas(HandleRef _this, Flags<DockWidgetAreas> areas) {
         THIS->setAllowedAreas(static_cast<Qt::DockWidgetAreas>(areas.value()));
+    }
+
+    void Handle_setDockLocation(HandleRef _this, DockWidgetArea area) {
+        THIS->setDockLocation(static_cast<Qt::DockWidgetArea>(area));
     }
 
     void Handle_setFeatures(HandleRef _this, Flags<DockWidgetFeatures> features) {

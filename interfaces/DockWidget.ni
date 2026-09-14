@@ -30,10 +30,12 @@ interface SignalHandler extends Widget.SignalHandler {
 @nodispose
 opaque Handle extends Widget.Handle {
     DockWidgetAreas allowedAreas();
+    DockWidgetArea dockLocation();
     DockWidgetFeatures features();
     bool isAreaAllowed(DockWidgetArea area);
     bool isFloating();
     void setAllowedAreas(DockWidgetAreas areas);
+    void setDockLocation(DockWidgetArea area);
     void setFeatures(DockWidgetFeatures features);
     void setFloating(bool floating);
     void setTitleBarWidget(Widget.Handle widget);

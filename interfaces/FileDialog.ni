@@ -72,7 +72,10 @@ opaque Handle extends Dialog.Handle {
     Array<string> nameFilters();
 
     // void open(QObject *receiver, const char *member)
-    // hmmm
+    // since we don't use slots, this method becomes kind of silly. we coudl wrap it with some complex plumbing
+    //   to emulate the behavior, but it seems like overkill.
+    // just connect to the appropriate signal (based on fileMode property - either filesSelected() or fileSelected()),
+    // and call exec/open (Dialog methods)
 
     Options getOptions();
     AbstractProxyModel.Handle proxyModel();
