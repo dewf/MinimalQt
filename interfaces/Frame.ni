@@ -25,6 +25,11 @@ enum Shadow {
     Sunken = 0x30
 }
 
+enum StyleMask {
+    Shadow_Mask = 0x00f0, // mask for the shadow
+    Shape_Mask = 0x000f // mask for the shape
+}
+
 // enum Style
 // Qt's frame style is just a bitwise-OR between shape and shadow
 
