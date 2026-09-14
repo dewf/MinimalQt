@@ -535,6 +535,11 @@ target_sources(MinimalQtImpl
         source/generated/BoxLayout_wrappers.h
         source/generated/BoxLayout_wrappers.cpp
         source/BoxLayout.cpp
+        # module Bitmap
+        source/generated/Bitmap.h
+        source/generated/Bitmap_wrappers.h
+        source/generated/Bitmap_wrappers.cpp
+        source/Bitmap.cpp
         # module Application
         source/generated/Application.h
         source/generated/Application_wrappers.h

@@ -40,6 +40,7 @@ inputs = [
 
     # GUI
     "Action",
+    "Bitmap",
     "Brush",
     "Color",
     "Cursor",

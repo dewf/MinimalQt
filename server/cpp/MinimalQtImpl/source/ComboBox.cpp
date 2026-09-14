@@ -49,8 +49,8 @@ namespace ComboBox
         return THIS->count();
     }
 
-    Variant::OwnedRef Handle_currentData(HandleRef _this, ItemDataRole role /* ItemDataRole::UserRole */) {
-        return VARIANT_HEAP_NEW(THIS->currentData(static_cast<int>(role)));
+    Variant::OwnedRef Handle_currentData(HandleRef _this, int32_t role /* static_cast<int32_t>(ItemDataRole::UserRole) */) {
+        return VARIANT_HEAP_NEW(THIS->currentData(role));
     }
 
     int32_t Handle_currentIndex(HandleRef _this) {
@@ -65,8 +65,8 @@ namespace ComboBox
         return THIS->duplicatesEnabled();
     }
 
-    int32_t Handle_findData(HandleRef _this, Variant::HandleRef data, ItemDataRole role /* ItemDataRole::UserRole */, Flags<MatchFlags> flags_ /* MatchFlags::MatchExactly | MatchFlags::MatchCaseSensitive */) {
-        return THIS->findData(QVARIANT_VALUE(data), static_cast<int>(role), static_cast<Qt::MatchFlags>(flags_.value()));
+    int32_t Handle_findData(HandleRef _this, Variant::HandleRef data, int32_t role /* static_cast<int32_t>(ItemDataRole::UserRole) */, Flags<MatchFlags> flags_ /* MatchFlags::MatchExactly | MatchFlags::MatchCaseSensitive */) {
+        return THIS->findData(QVARIANT_VALUE(data), role, Qt::MatchFlags::fromInt(flags_.value()));
     }
 
     int32_t Handle_findText(HandleRef _this, const std::string& text, Flags<MatchFlags> flags_ /* MatchFlags::MatchExactly | MatchFlags::MatchCaseSensitive */) {
@@ -109,8 +109,8 @@ namespace ComboBox
         return THIS->isEditable();
     }
 
-    Variant::OwnedRef Handle_itemData(HandleRef _this, int32_t index, ItemDataRole role /* ItemDataRole::UserRole */) {
-        return VARIANT_HEAP_NEW(THIS->itemData(index, static_cast<int>(role)));
+    Variant::OwnedRef Handle_itemData(HandleRef _this, int32_t index, int32_t role /* static_cast<int32_t>(ItemDataRole::UserRole) */) {
+        return VARIANT_HEAP_NEW(THIS->itemData(index, role));
     }
 
     AbstractItemDelegate::HandleRef Handle_itemDelegate(HandleRef _this) {
@@ -123,6 +123,10 @@ namespace ComboBox
 
     std::string Handle_itemText(HandleRef _this, int32_t index) {
         return THIS->itemText(index).toStdString();
+    }
+
+    LabelDrawingMode Handle_getLabelDrawingMode(HandleRef _this) {
+        return static_cast<LabelDrawingMode>(THIS->labelDrawingMode());
     }
 
     LineEdit::HandleRef Handle_lineEdit(HandleRef _this) {
@@ -185,8 +189,8 @@ namespace ComboBox
         THIS->setInsertPolicy(static_cast<QComboBox::InsertPolicy>(policy));
     }
 
-    void Handle_setItemData(HandleRef _this, int32_t index, Variant::HandleRef value, ItemDataRole role /* ItemDataRole::UserRole */) {
-        THIS->setItemData(index, QVARIANT_VALUE(value), static_cast<int>(role));
+    void Handle_setItemData(HandleRef _this, int32_t index, Variant::HandleRef value, int32_t role /* static_cast<int32_t>(ItemDataRole::UserRole) */) {
+        THIS->setItemData(index, QVARIANT_VALUE(value), role);
     }
 
     void Handle_setItemDelegate(HandleRef _this, AbstractItemDelegate::HandleRef delegate_) {
@@ -199,6 +203,10 @@ namespace ComboBox
 
     void Handle_setItemText(HandleRef _this, int32_t index, const std::string& text) {
         THIS->setItemText(index, QString::fromStdString(text));
+    }
+
+    void Handle_setLabelDrawingMode(HandleRef _this, LabelDrawingMode labelDrawing) {
+        THIS->setLabelDrawingMode(static_cast<QComboBox::LabelDrawingMode>(labelDrawing));
     }
 
     void Handle_setLineEdit(HandleRef _this, LineEdit::HandleRef edit) {

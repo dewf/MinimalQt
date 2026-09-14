@@ -41,17 +41,22 @@ enum SizeAdjustPolicy {
     AdjustToMinimumContentsLengthWithIcon
 }
 
+enum LabelDrawingMode {
+    UseStyle,
+    UseDelegate,
+}
+
 opaque Handle extends Widget.Handle {
     void addItem(string text, Variant.Handle userData = null);
     void addItem(Icon.Handle icon, string text, Variant.Handle userData = null);
     void addItems(Array<string> texts);
     Completer.Handle completer();
     int count();
-    Variant.Owned currentData(ItemDataRole role = UserRole); // // should be int, but our const-expression stuff doesn't support casts right now
+    Variant.Owned currentData(int role = cast<int>(ItemDataRole.UserRole));
     int currentIndex();
     string currentText();
     bool duplicatesEnabled();
-    int findData(Variant.Handle data, ItemDataRole role = UserRole, MatchFlags flags_ = MatchExactly | MatchCaseSensitive);
+    int findData(Variant.Handle data, int role = cast<int>(ItemDataRole.UserRole), MatchFlags flags_ = MatchExactly | MatchCaseSensitive);
     int findText(string text, MatchFlags flags_ = MatchExactly | MatchCaseSensitive);
     bool hasFrame();
     void hidePopup();
@@ -62,10 +67,11 @@ opaque Handle extends Widget.Handle {
     InsertPolicy getInsertPolicy();
     void insertSeparator(int index);
     bool isEditable();
-    Variant.Owned itemData(int index, ItemDataRole role = UserRole); // should be int
+    Variant.Owned itemData(int index, int role = cast<int>(ItemDataRole.UserRole));
     AbstractItemDelegate.Handle itemDelegate();
     Icon.Owned itemIcon(int index);
     string itemText(int index);
+    LabelDrawingMode getLabelDrawingMode();
     LineEdit.Handle lineEdit();
     int maxCount();
     int maxVisibleItems();
@@ -81,10 +87,11 @@ opaque Handle extends Widget.Handle {
     void setFrame(bool hasFrame);
     void setIconSize(Size.Handle size);
     void setInsertPolicy(InsertPolicy policy);
-    void setItemData(int index, Variant.Handle value, ItemDataRole role = UserRole); // should be int
+    void setItemData(int index, Variant.Handle value, int role = cast<int>(ItemDataRole.UserRole));
     void setItemDelegate(AbstractItemDelegate.Handle delegate_);
     void setItemIcon(int index, Icon.Handle icon);
     void setItemText(int index, string text);
+    void setLabelDrawingMode(LabelDrawingMode labelDrawing);
     void setLineEdit(LineEdit.Handle edit);
     void setMaxCount(int max);
     void setMaxVisibleItems(int maxItems);

@@ -1,6 +1,7 @@
 #include "generated/Cursor.h"
 #include "CursorInternal.h"
 
+#include "BitmapInternal.h"
 #include "PixmapInternal.h"
 #include "PointInternal.h"
 #include "ScreenInternal.h"
@@ -14,8 +15,16 @@ using namespace ::Point;
 
 namespace Cursor
 {
+    Bitmap::OwnedRef Handle_bitmap(HandleRef _this) {
+        return BITMAP_HEAP_NEW(THIS->bitmap());
+    }
+
     Point::OwnedRef Handle_hotSpot(HandleRef _this) {
         return POINT_HEAP_NEW(THIS->hotSpot());
+    }
+
+    Bitmap::OwnedRef Handle_mask(HandleRef _this) {
+        return BITMAP_HEAP_NEW(THIS->mask());
     }
 
     Pixmap::OwnedRef Handle_pixmap(HandleRef _this) {
@@ -45,6 +54,10 @@ namespace Cursor
 
     OwnedRef create(Pixmap::HandleRef pixmap, int32_t hotX /* -1 */, int32_t hotY /* -1 */) {
         return CURSOR_HEAP_NEW(QPIXMAP_VALUE(pixmap), hotX, hotY);
+    }
+
+    OwnedRef create(Bitmap::HandleRef bitmap, Bitmap::HandleRef mask, int32_t hotX /* -1 */, int32_t hotY /* -1 */) {
+        return CURSOR_HEAP_NEW(QBITMAP_VALUE(bitmap), QBITMAP_VALUE(mask), hotX, hotY);
     }
 
     OwnedRef create(HandleRef other) {

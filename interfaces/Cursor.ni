@@ -1,5 +1,6 @@
 module Cursor;
 
+import Bitmap;
 import Pixmap;
 import Enums;
 import Screen;
@@ -7,13 +8,9 @@ import Point;
 
 @nodispose
 opaque Handle {
-
-    // QBitmap bitmap() const
-
+    Bitmap.Owned bitmap();
     Point.Owned hotSpot();
-
-    // QBitmap mask() const
-
+    Bitmap.Owned mask();
     Pixmap.Owned pixmap();
     void setShape(CursorShape shape);
     CursorShape shape();
@@ -25,9 +22,7 @@ opaque Owned extends Handle;
 Owned create();
 Owned create(CursorShape shape);
 Owned create(Pixmap.Handle pixmap, int hotX = -1, int hotY = -1);
-
-// QCursor(const QBitmap &bitmap, const QBitmap &mask, int hotX = -1, int hotY = -1)
-
+Owned create(Bitmap.Handle bitmap, Bitmap.Handle mask, int hotX = -1, int hotY = -1);
 Owned create(Handle other);
 
 // static methods ==============
