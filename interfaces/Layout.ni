@@ -34,6 +34,7 @@ opaque Handle extends Object.Handle {
     Rect.Owned contentsRect();
     int count();
     Tuple<int,int,int,int> getContentsMargins(); // getter for 4-argument setter below
+    SizeConstraint horizontalSizeConstraint();
     int indexOf(LayoutItem.Handle layoutItem);
     int indexOf(Widget.Handle widget);
     bool isEnabled();
@@ -48,14 +49,17 @@ opaque Handle extends Object.Handle {
     void setContentsMargins(Margins.Handle margins);
     void setContentsMargins(int left, int top, int right, int bottom);
     void setEnabled(bool enable);
+    void setHorizontalSizeConstraint(SizeConstraint constraint);
     void setMenuBar(Widget.Handle widget);
     void setSizeConstraint(SizeConstraint sizeConstraint);
     void setSpacing(int spacing);
+    void setVerticalSizeConstraint(SizeConstraint constraint);
     SizeConstraint getSizeConstraint();
     int spacing();
     LayoutItem.Handle takeAt(int index);
     void unsetContentsMargins();
     void update();
+    SizeConstraint verticalSizeConstraint();
 }
 
 // no create because abstract

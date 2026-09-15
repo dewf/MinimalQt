@@ -137,7 +137,7 @@ opaque Handle {
     bool reinterpretAsFormat(Format format);
     void rgbSwap();
     Owned rgbSwapped();
-    bool save(string fileName, Option<string> format, int quality = -1);
+    bool save(string fileName, Option<string> format = none, int quality = -1);
 
     // bool save(QIODevice *device, const char *format = nullptr, int quality = -1) const
 

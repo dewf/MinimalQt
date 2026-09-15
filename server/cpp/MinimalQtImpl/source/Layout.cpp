@@ -55,6 +55,10 @@ namespace Layout
         return std::tuple{ left, top, right, bottom };
     }
 
+    SizeConstraint Handle_horizontalSizeConstraint(HandleRef _this) {
+        return static_cast<SizeConstraint>(THIS->horizontalSizeConstraint());
+    }
+
     int32_t Handle_indexOf(HandleRef _this, LayoutItem::HandleRef layoutItem) {
         return THIS->indexOf(AS_QLAYOUTITEM_PTR(layoutItem));
     }
@@ -111,6 +115,10 @@ namespace Layout
         THIS->setEnabled(enabled);
     }
 
+    void Handle_setHorizontalSizeConstraint(HandleRef _this, SizeConstraint constraint) {
+        THIS->setHorizontalSizeConstraint(static_cast<QLayout::SizeConstraint>(constraint));
+    }
+
     void Handle_setMenuBar(HandleRef _this, Widget::HandleRef widget) {
         THIS->setMenuBar(AS_QWIDGET_PTR(widget));
     }
@@ -121,6 +129,10 @@ namespace Layout
 
     void Handle_setSpacing(HandleRef _this, int32_t spacing) {
         THIS->setSpacing(spacing);
+    }
+
+    void Handle_setVerticalSizeConstraint(HandleRef _this, SizeConstraint constraint) {
+        THIS->setVerticalSizeConstraint(static_cast<QLayout::SizeConstraint>(constraint));
     }
 
     SizeConstraint Handle_getSizeConstraint(HandleRef _this) {
@@ -141,6 +153,10 @@ namespace Layout
 
     void Handle_update(HandleRef _this) {
         THIS->update();
+    }
+
+    SizeConstraint Handle_verticalSizeConstraint(HandleRef _this) {
+        return static_cast<SizeConstraint>(THIS->verticalSizeConstraint());
     }
 
     Size::OwnedRef closestAcceptableSize(Widget::HandleRef widget, Size::HandleRef size) {

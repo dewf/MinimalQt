@@ -79,7 +79,7 @@ namespace Image
         return IMAGE_HEAP_NEW(result);
     }
 
-    OwnedRef Handle_copy(HandleRef _this, ::Rect::HandleRef rectangle) {
+    OwnedRef Handle_copy(HandleRef _this, Rect::HandleRef rectangle /* nullptr */) {
         return IMAGE_HEAP_NEW(THIS->copy(QRECT_VALUE(rectangle)));
     }
 
@@ -221,7 +221,7 @@ namespace Image
         return IMAGE_HEAP_NEW(THIS->rgbSwapped());
     }
 
-    bool Handle_save(HandleRef _this, const std::string& fileName, const std::optional<std::string>& format, int32_t quality /* -1 */) {
+    bool Handle_save(HandleRef _this, const std::string& fileName, const std::optional<std::string>& format /* {} */, int32_t quality /* -1 */) {
         const char *ccFormat = nullptr;
         if (format.has_value()) ccFormat = format.value().c_str();
         return THIS->save(QString::fromStdString(fileName), ccFormat, quality);
