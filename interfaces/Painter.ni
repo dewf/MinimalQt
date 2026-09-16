@@ -208,9 +208,9 @@ opaque Handle {
     void drawText(Point.Handle position, string text);
     void drawText(RectF.Handle rectangle, string text, TextOption.Handle option = null);
     void drawText(int x, int y, string text);
-    void drawText(Rect.Handle rectangle, int flags_, string text, Rect.Handle outPtr_boundingRect = null);        // boundingRect is (optional) OUTPUT parameter!
-    void drawText(RectF.Handle rectangle, int flags_, string text, RectF.Handle outPtr_boundingRect);             // same
-    void drawText(int x, int y, int width, int height, int flags_, string text, Rect.Handle outPtr_boundingRect); // same
+    void drawText(Rect.Handle rectangle, int flags_, string text, Rect.Handle outPtr_boundingRect = null);               // boundingRect is (optional) OUTPUT parameter!
+    void drawText(RectF.Handle rectangle, int flags_, string text, RectF.Handle outPtr_boundingRect = null);             // same
+    void drawText(int x, int y, int width, int height, int flags_, string text, Rect.Handle outPtr_boundingRect = null); // same
     void drawTiledPixmap(RectF.Handle rectangle, Pixmap.Handle pixmap, PointF.Handle position = null);
     void drawTiledPixmap(Rect.Handle rectangle, Pixmap.Handle pixmap, Point.Handle position = null);
     void drawTiledPixmap(int x, int y, int width, int height, Pixmap.Handle pixmap, int sx = 0, int sy = 0);
@@ -269,7 +269,7 @@ opaque Handle {
     void setClipping(bool enable);
     void setCompositionMode(CompositionMode mode);
     void setFont(Font.Handle font);
-    void setLayoutDiretion(LayoutDirection direction);
+    void setLayoutDirection(LayoutDirection direction);
     void setOpacity(double opacity);
     void setPen(Pen.Handle pen);
     void setPen(PenStyle style);

@@ -79,7 +79,7 @@ namespace Painter
         return RECT_HEAP_NEW(THIS->boundingRect(QRECT_VALUE(rectangle), flags_, QString::fromStdString(text)));
     }
 
-    RectF::OwnedRef Handle_boundingRect(HandleRef _this, RectF::HandleRef rectangle, const std::string& text, ::TextOption::HandleRef option) {
+    RectF::OwnedRef Handle_boundingRect(HandleRef _this, RectF::HandleRef rectangle, const std::string& text, TextOption::HandleRef option /* nullptr */) {
         return RECTF_HEAP_NEW(THIS->boundingRect(QRECTF_VALUE(rectangle), QString::fromStdString(text), QTEXTOPTION_VALUE(option)));
     }
 
@@ -426,15 +426,15 @@ namespace Painter
         THIS->drawText(x, y, QString::fromStdString(text));
     }
 
-    void Handle_drawText(HandleRef _this, Rect::HandleRef rectangle, int32_t flags_, const std::string& text, ::Rect::HandleRef outPtr_boundingRect) {
+    void Handle_drawText(HandleRef _this, Rect::HandleRef rectangle, int32_t flags_, const std::string& text, Rect::HandleRef outPtr_boundingRect /* nullptr */) {
         THIS->drawText(QRECT_VALUE(rectangle), flags_, QString::fromStdString(text), AS_QRECT_PTR(outPtr_boundingRect));
     }
 
-    void Handle_drawText(HandleRef _this, RectF::HandleRef rectangle, int32_t flags_, const std::string& text, ::RectF::HandleRef outPtr_boundingRect) {
+    void Handle_drawText(HandleRef _this, RectF::HandleRef rectangle, int32_t flags_, const std::string& text, RectF::HandleRef outPtr_boundingRect /* nullptr */) {
         THIS->drawText(QRECTF_VALUE(rectangle), flags_, QString::fromStdString(text), AS_QRECTF_PTR(outPtr_boundingRect));
     }
 
-    void Handle_drawText(HandleRef _this, int32_t x, int32_t y, int32_t width, int32_t height, int32_t flags_, const std::string& text, ::Rect::HandleRef outPtr_boundingRect) {
+    void Handle_drawText(HandleRef _this, int32_t x, int32_t y, int32_t width, int32_t height, int32_t flags_, const std::string& text, Rect::HandleRef outPtr_boundingRect /* nullptr */) {
         THIS->drawText(x, y, width, height, flags_, QString::fromStdString(text), AS_QRECT_PTR(outPtr_boundingRect));
     }
 
@@ -642,7 +642,7 @@ namespace Painter
         THIS->setFont(QFONT_VALUE(font));
     }
 
-    void Handle_setLayoutDiretion(HandleRef _this, LayoutDirection direction) {
+    void Handle_setLayoutDirection(HandleRef _this, LayoutDirection direction) {
         THIS->setLayoutDirection(static_cast<Qt::LayoutDirection>(direction));
     }
 
