@@ -8,5 +8,5 @@
 #define COLOR_HEAP_NEW(...) (reinterpret_cast<Color::OwnedRef>(new QColor(__VA_ARGS__)))
 
 namespace Color {
-    QColor fromConstant(Constant name);
+    // QColor fromConstant(Constant name);
 }
