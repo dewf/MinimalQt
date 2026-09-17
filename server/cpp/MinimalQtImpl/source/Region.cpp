@@ -69,6 +69,16 @@ namespace Region
         return REGION_HEAP_NEW(THIS->subtracted(QREGION_VALUE(r)));
     }
 
+    void Handle_swap(HandleRef _this, HandleRef other) {
+        if (other != nullptr)
+        {
+            THIS->swap(*AS_QREGION_PTR(other));
+        } else
+        {
+            *THIS = QRegion();
+        }
+    }
+
     void Handle_translate(HandleRef _this, int32_t dx, int32_t dy) {
         THIS->translate(dx, dy);
     }

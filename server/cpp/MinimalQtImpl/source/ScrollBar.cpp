@@ -2,15 +2,23 @@
 #include "ScrollBarInternal.h"
 
 #include "WidgetInternal.h"
+#include "MenuInternal.h"
+#include "PointInternal.h"
 
 using namespace ::AbstractSlider;
 using namespace ::Widget;
 using namespace ::Enums;
+using namespace ::Menu;
+using namespace ::Point;
 
-#define THIS (reinterpret_cast<QScrollBar*>(_this))
+#define THIS (AS_QSCROLLBAR_PTR(_this))
 
 namespace ScrollBar
 {
+    Menu::HandleRef Handle_createStandardContextMenu(HandleRef _this, Point::HandleRef position) {
+        return reinterpret_cast<Menu::HandleRef>(THIS->createStandardContextMenu(QPOINT_VALUE(position)));
+    }
+
     void Handle_dispose(HandleRef _this) {
         delete THIS;
     }

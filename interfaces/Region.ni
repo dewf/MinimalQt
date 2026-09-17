@@ -22,8 +22,8 @@ opaque Handle {
     Array<Rect.Owned> rects(); // TODO: Rect.OwnedList?
     void setRects(Array<Rect.Handle> rects);
     Owned subtracted(Handle r);
+    void swap(Handle other);
 
-    // void swap(QRegion &other)
     // (since 6.0) HRGN toHRGN() const
 
     void translate(int dx, int dy);
@@ -38,6 +38,8 @@ opaque Owned extends Handle;
 
 Owned create();
 
+// might be difficult to enable this because this triggers some grisly circular dependencies
+// (and not sure if an extension method on Bitmap could be used via `new` in Dlang)
 // QRegion(const QBitmap &bm)
 
 Owned create(Polygon.Handle a, FillRule fillRule = OddEvenFill);
