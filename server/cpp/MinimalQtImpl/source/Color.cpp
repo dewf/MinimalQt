@@ -25,6 +25,12 @@ namespace Color
         THIS->setAlphaF(alpha);
     }
 
+    OwnedRef Handle_util_cloneWithAlpha(HandleRef _this, float alpha) {
+        auto ret = COLOR_HEAP_NEW(QCOLOR_VALUE(_this));
+        AS_QCOLOR_PTR(ret)->setAlphaF(alpha);
+        return ret;
+    }
+
     void Owned_dispose(OwnedRef _this) {
         delete THIS;
     }

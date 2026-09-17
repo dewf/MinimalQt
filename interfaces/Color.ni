@@ -11,6 +11,9 @@ opaque Handle {
     float alphaF();
     void setAlpha(int alpha);
     void setAlphaF(float alpha);
+
+    // util method for testing
+    Owned util_cloneWithAlpha(float alpha);
 }
 opaque Owned extends Handle;
 
