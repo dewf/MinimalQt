@@ -23,6 +23,7 @@ opaque Handle {
 
     // void setPoints(int nPoints, const int *points)
     // void setPoints(int nPoints, int firstx, int firsty, ...)
+    void setPoints(Array<int> points); // used for both the above
     void setPoints(Array<Point.Handle> points);
 
     Owned subtracted(Handle r);

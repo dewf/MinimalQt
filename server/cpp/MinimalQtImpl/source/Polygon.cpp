@@ -68,6 +68,10 @@ namespace Polygon
         THIS->setPoint(index, QPOINT_VALUE(point));
     }
 
+    void Handle_setPoints(HandleRef _this, const std::vector<int32_t>& points) {
+        THIS->setPoints(static_cast<int>(points.size()), points.data());
+    }
+
     void Handle_setPoints(HandleRef _this, const std::vector<Point::HandleRef>& points) {
         const auto vec = pointsToIntVector(points);
         THIS->setPoints(static_cast<int>(points.size()), vec.data());
