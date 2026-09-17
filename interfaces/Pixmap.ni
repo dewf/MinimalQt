@@ -22,9 +22,9 @@ opaque Handle {         // we don't directly inherit from PaintDevice, because t
     Owned copy(Rect.Handle rect = null);
     Owned copy(int x, int y, int width, int height);
 
-    // QBitmap createHeuristicMask(bool clipTight = true) const
-    // QBitmap createMaskFromColor(const QColor &maskColor, Qt::MaskMode mode = Qt::MaskInColor) const
-    // TODO
+    // implemented as extension methods in Bitmap:
+    // Bitmap.Owned createHeuristicMask(bool clipTight = true);
+    // Bitmap.Owned createMaskFromColor(Color.Handle maskColor, MaskMode mode = MaskInColor);
 
     int depth();
     void detach();
@@ -44,8 +44,8 @@ opaque Handle {         // we don't directly inherit from PaintDevice, because t
     bool loadFromData(Buffer<byte> data, Option<string> format = none, ImageConversionFlags flags_ = AutoColor);
     bool loadFromData(Array<byte> data, Option<string> format = none, ImageConversionFlags flags_ = AutoColor);
 
-    // QBitmap mask() const
-    // TODO
+    // implemented as extension method in Bitmap:
+    // Bitmap.Owned mask();
 
     Rect.Owned rect();
     bool save(string fileName, Option<string> format = none, int quality = -1);
@@ -61,8 +61,8 @@ opaque Handle {         // we don't directly inherit from PaintDevice, because t
     void scroll(int dx, int dy, int x, int y, int width, int height, Region.Handle outPtr_exposed = null); // same
     void setDevicePixelRatio(double scaleFactor);
 
-    // void setMask(const QBitmap &mask)
-    // TODO
+    // implemented as extension method in Bitmap:
+    // void setMask(Bitmap.Handle mask);
 
     Size.Owned size();
     void swap(Handle other);

@@ -6,6 +6,7 @@
 #include "SizeInternal.h"
 #include "ImageInternal.h"
 #include "PixmapInternal.h"
+#include "ColorInternal.h"
 
 using namespace ::Pixmap;
 using namespace ::Size;
@@ -13,6 +14,7 @@ using namespace ::Transform;
 using namespace ::Variant;
 using namespace ::Image;
 using namespace ::Enums;
+using namespace ::Color;
 
 #define THIS (AS_QBITMAP_PTR(_this))
 
@@ -75,5 +77,24 @@ namespace Bitmap
     }
     OwnedRef fromPixmap(Pixmap::HandleRef pixmap) {
         return BITMAP_HEAP_NEW(QBitmap::fromPixmap(QPIXMAP_VALUE(pixmap)));
+    }
+
+    // Pixmap extension methods =============================
+#define PIXMAP_THIS (AS_QPIXMAP_PTR(this_))
+
+    OwnedRef ext_Pixmap_createHeuristicMask(Pixmap::HandleRef this_, bool clipTight /* true */) {
+        return BITMAP_HEAP_NEW(PIXMAP_THIS->createHeuristicMask(clipTight));
+    }
+
+    OwnedRef ext_Pixmap_createMaskFromColor(Pixmap::HandleRef this_, Color::HandleRef maskColor, MaskMode mode /* MaskMode::MaskInColor */) {
+        return BITMAP_HEAP_NEW(PIXMAP_THIS->createMaskFromColor(QCOLOR_VALUE(maskColor), static_cast<Qt::MaskMode>(mode)));
+    }
+
+    OwnedRef ext_Pixmap_mask(Pixmap::HandleRef this_) {
+        return BITMAP_HEAP_NEW(PIXMAP_THIS->mask());
+    }
+
+    void ext_Pixmap_setMask(Pixmap::HandleRef this_, HandleRef mask) {
+        PIXMAP_THIS->setMask(QBITMAP_VALUE(mask));
     }
 }
