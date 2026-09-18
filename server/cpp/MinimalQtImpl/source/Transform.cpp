@@ -80,13 +80,9 @@ namespace Transform
         return THIS->dy();
     }
 
-    std::optional<OwnedRef> Handle_inverted(HandleRef _this) {
-        std::optional<OwnedRef> result;
-        bool invertible = false;
-        const auto qTransform = THIS->inverted(&invertible);
-        if (invertible) {
-            result = TRANSFORM_HEAP_NEW(qTransform);
-        }
+    InvertResult Handle_inverted(HandleRef _this) {
+        InvertResult result {};
+        result.transform = TRANSFORM_HEAP_NEW(THIS->inverted(&result.invertible));
         return result;
     }
 
@@ -276,28 +272,16 @@ namespace Transform
         return TRANSFORM_HEAP_NEW(QTransform::fromTranslate(dx, dy));
     }
 
-    std::optional<OwnedRef> quadToQuad(PolygonF::HandleRef one, PolygonF::HandleRef two) {
-        std::optional<OwnedRef> ret;
-        if (QTransform result; QTransform::quadToQuad(QPOLYGONF_VALUE(one), QPOLYGONF_VALUE(two), result)) {
-            ret = TRANSFORM_HEAP_NEW(result);
-        }
-        return ret;
+    bool quadToQuad(PolygonF::HandleRef one, PolygonF::HandleRef two, HandleRef trans) {
+        return QTransform::quadToQuad(QPOLYGONF_VALUE(one), QPOLYGONF_VALUE(two), *AS_QTRANSFORM_PTR(trans));
     }
 
-    std::optional<OwnedRef> quadToSquare(PolygonF::HandleRef quad) {
-        std::optional<OwnedRef> ret;
-        if (QTransform result; QTransform::quadToSquare(QPOLYGONF_VALUE(quad), result)) {
-            ret = TRANSFORM_HEAP_NEW(result);
-        }
-        return ret;
+    bool quadToSquare(PolygonF::HandleRef quad, HandleRef trans) {
+        return QTransform::quadToSquare(QPOLYGONF_VALUE(quad), *AS_QTRANSFORM_PTR(trans));
     }
 
-    std::optional<OwnedRef> squareToQuad(PolygonF::HandleRef quad) {
-        std::optional<OwnedRef> ret;
-        if (QTransform result; QTransform::squareToQuad(QPOLYGONF_VALUE(quad), result)) {
-            ret = TRANSFORM_HEAP_NEW(result);
-        }
-        return ret;
+    bool squareToQuad(PolygonF::HandleRef quad, HandleRef trans) {
+        return QTransform::squareToQuad(QPOLYGONF_VALUE(quad), *AS_QTRANSFORM_PTR(trans));
     }
 
     bool fuzzyCompare(HandleRef t1, HandleRef t2) {

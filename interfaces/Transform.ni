@@ -18,6 +18,11 @@ enum TransformationType {
     TxProject   = 0x10
 }
 
+struct InvertResult {
+    Owned transform;
+    bool invertible;
+}
+
 @nodispose
 opaque Handle {
 
@@ -36,7 +41,13 @@ opaque Handle {
     double determinant();
     double dx();
     double dy();
-    Option<Owned> inverted();
+
+    // QTransform QTransform::inverted(bool *invertible = nullptr) const
+    // actual signature takes an 'out' parameter bool, but internally we'll always ask for that and return it as part of the result
+    // then the idiomatic wrapper can make it match the C++ API
+    // (since we still don't support out/ref parameters in NativeImpl)
+    InvertResult inverted();
+
     bool isAffine();
     bool isIdentity();
     bool isInvertible();
@@ -98,9 +109,9 @@ Owned create(double m11, double m12, double m13, double m21, double m22, double 
 
 Owned fromScale(double sx, double sy);
 Owned fromTranslate(double dx, double dy);
-Option<Owned> quadToQuad(PolygonF.Handle one, PolygonF.Handle two);
-Option<Owned> quadToSquare(PolygonF.Handle quad);
-Option<Owned> squareToQuad(PolygonF.Handle quad);
+bool quadToQuad(PolygonF.Handle one, PolygonF.Handle two, Transform.Handle trans);
+bool quadToSquare(PolygonF.Handle quad, Transform.Handle trans);
+bool squareToQuad(PolygonF.Handle quad, Transform.Handle trans);
 
 bool fuzzyCompare(Handle t1, Handle t2);
 
