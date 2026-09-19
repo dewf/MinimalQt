@@ -62,31 +62,65 @@ namespace Variant
         return CheckState::Unchecked;
     }
 
-    Icon::OwnedRef Handle_toIcon(HandleRef _this) { // throws VariantConversionFailure
-        if (THIS->isValid() && THIS->canConvert<QIcon>()) {
+    Icon::OwnedRef Handle_toIcon(HandleRef _this) {
+        if (THIS->isValid() && THIS->canConvert<QIcon>())
+        {
             const auto icon = THIS->value<QIcon>();
             return ICON_HEAP_NEW(icon);
         }
-        // else
-        throw VariantConversionFailure();
+        return nullptr;
     }
 
     Color::OwnedRef Handle_toColor(HandleRef _this) {
-        if (THIS->isValid() && THIS->canConvert<QColor>()) {
+        if (THIS->isValid() && THIS->canConvert<QColor>())
+        {
             const auto color = THIS->value<QColor>();
             return COLOR_HEAP_NEW(color);
         }
-        // else
-        throw VariantConversionFailure();
+        return nullptr;
     }
 
-    Transform::OwnedRef Handle_toTransform(HandleRef _this) { // throws VariantConversionFailure
-        if (THIS->isValid() && THIS->canConvert<QTransform>()) {
-            const auto matrix = THIS->value<QTransform>();
-            return TRANSFORM_HEAP_NEW(matrix);
+    Transform::OwnedRef Handle_toTransform(HandleRef _this) {
+        if (THIS->isValid() && THIS->canConvert<QTransform>())
+        {
+            const auto transform = THIS->value<QTransform>();
+            return TRANSFORM_HEAP_NEW(transform);
         }
-        // else
-        throw VariantConversionFailure();
+        return nullptr;
+    }
+
+    bool Handle_canConvert(HandleRef _this, KnownType t) {
+        switch (t)
+        {
+        case KnownType::Bool:
+            return THIS->canConvert<bool>();
+        case KnownType::String:
+            return THIS->canConvert<QString>();
+        case KnownType::Int:
+            return THIS->canConvert<int>();
+        case KnownType::DateTime:
+            return THIS->canConvert<QDateTime>();
+        case KnownType::Size:
+            return THIS->canConvert<QSize>();
+        case KnownType::Icon:
+            return THIS->canConvert<QIcon>();
+        case KnownType::Color:
+            return THIS->canConvert<QColor>();
+        case KnownType::Alignment:
+            return THIS->canConvert<Qt::Alignment>();
+        case KnownType::Url:
+            return THIS->canConvert<QUrl>();
+        // convenience types =================================
+        case KnownType::CheckState:
+            {
+                bool ok;
+                const auto value = THIS->toInt(&ok);
+                return ok && value >= Qt::Unchecked && value <= Qt::PartiallyChecked;
+            }
+        case KnownType::Transform:
+            return THIS->canConvert<QTransform>();
+        }
+        return false;
     }
 
     void Owned_dispose(OwnedRef _this) {
@@ -118,10 +152,6 @@ namespace Variant
         return VARIANT_HEAP_NEW(QDATETIME_VALUE(value));
     }
 
-    OwnedRef create(CheckState value) {
-        return VARIANT_HEAP_NEW(static_cast<int>(value));
-    }
-
     OwnedRef create(Size::HandleRef size) {
         return VARIANT_HEAP_NEW(QSIZE_VALUE(size));
     }
@@ -144,6 +174,9 @@ namespace Variant
     }
 
     // convenience constructors ============================
+    OwnedRef create(CheckState value) {
+        return VARIANT_HEAP_NEW(static_cast<int>(value));
+    }
     OwnedRef create(Transform::HandleRef transform) {
         const QVariant value = QTRANSFORM_VALUE(transform);
         return VARIANT_HEAP_NEW(value);

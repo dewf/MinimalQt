@@ -71,6 +71,10 @@ namespace Widget
         return THIS->accessibleDescription().toStdString();
     }
 
+    std::string Handle_accessibleIdentifier(HandleRef _this) {
+        return THIS->accessibleIdentifier().toStdString();
+    }
+
     std::string Handle_accessibleName(HandleRef _this) {
         return THIS->accessibleName().toStdString();
     }
@@ -530,6 +534,10 @@ namespace Widget
 
     void Handle_setAccessibleDescription(HandleRef _this, const std::string& description) {
         THIS->setAccessibleDescription(QString::fromStdString(description));
+    }
+
+    void Handle_setAccessibleIdentifier(HandleRef _this, const std::string& identifier) {
+        THIS->setAccessibleIdentifier(QString::fromStdString(identifier));
     }
 
     void Handle_setAccessibleName(HandleRef _this, const std::string& name) {

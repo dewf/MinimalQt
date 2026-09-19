@@ -49,6 +49,7 @@ opaque Handle extends Object.Handle {
     // methods:
     bool acceptDrops();
     string accessibleDescription();
+    string accessibleIdentifier();
     string accessibleName();
     Array<Action.Handle> actions();
     void activateWindow();
@@ -197,6 +198,7 @@ opaque Handle extends Object.Handle {
     void scroll(int dx, int dy, Rect.Handle r);
     void setAcceptDrops(bool on);
     void setAccessibleDescription(string description);
+    void setAccessibleIdentifier(string identifier);
     void setAccessibleName(string name);
     void setAttribute(WidgetAttribute attribute, bool on = true);
     void setAutoFillBackground(bool enabled);
