@@ -43,3 +43,6 @@ opaque Handle extends Layout.Handle {
 }
 
 Handle create(Direction dir, Widget.Handle parent = null);
+
+// for HBox/VBox layouts, I think we can just do that entirely in the client - they don't seem to add anything of substance
+// (just thin shells around QBoxLayout, which provide the Direction parameter)
