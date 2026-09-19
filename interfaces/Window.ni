@@ -50,7 +50,7 @@ interface SignalHandler extends Object.SignalHandler {
 }
 
 @dlang_withoverloads(Object.Handle, setParent) // D-specific hack :(
-opaque Handle extends Object.Handle {
+opaque Handle extends Object.Handle { // TODO: QSurface interface
     Size.Owned baseSize();
     ScreenOrientation contentOrientation();
     void create();
