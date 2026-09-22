@@ -13,6 +13,10 @@ enum WrapMode {
 @nodispose
 opaque Handle {
     Alignment alignment();
+    void setAlignment(Alignment alignment);
 }
-
 opaque Owned extends Handle;
+
+Owned create();
+Owned create(Alignment alignment);
+Owned create(Handle other);
