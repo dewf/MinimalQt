@@ -144,4 +144,15 @@ namespace AbstractSpinBox
         return new __SignalConnection { connection };
     }
 
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto absSpinBox = AS_QABSTRACTSPINBOX_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(absSpinBox);
+        case Handle_CastTarget::Widget_Handle:
+            return static_cast<QWidget*>(absSpinBox);
+        }
+        std::unreachable();
+    }
 }

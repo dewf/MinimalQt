@@ -102,6 +102,20 @@ namespace SpinBox
         delete THIS;
     }
 
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto spin = AS_QSPINBOX_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(spin);
+        case Handle_CastTarget::Widget_Handle:
+            return static_cast<QWidget*>(spin);
+        case Handle_CastTarget::AbstractSpinBox_Handle:
+            return static_cast<QAbstractSpinBox*>(spin);
+        }
+        std::unreachable();
+    }
+
     HandleRef create(Widget::HandleRef parent /* nullptr */) {
         return reinterpret_cast<HandleRef>(new QSpinBox(AS_QWIDGET_PTR(parent)));
     }

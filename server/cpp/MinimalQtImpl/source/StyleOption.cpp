@@ -31,6 +31,16 @@ namespace StyleOption
 #define VIEWITEM_THIS (AS_QSTYLEOPTIONVIEWITEM_PTR(_this))
 
     namespace ViewItem {
+        void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+            auto viewitem = AS_QSTYLEOPTIONVIEWITEM_PTR(obj);
+            switch (target)
+            {
+            case Handle_CastTarget::StyleOption_Handle:
+                return static_cast<QStyleOption*>(viewitem);
+            }
+            std::unreachable();
+        }
+
         void Owned_dispose(OwnedRef _this) {
             delete VIEWITEM_THIS;
         }

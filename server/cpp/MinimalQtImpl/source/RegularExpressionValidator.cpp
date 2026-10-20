@@ -32,6 +32,19 @@ namespace RegularExpressionValidator
         delete THIS;
     }
 
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto regex_validator = AS_QREGEX_VALIDATOR_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(regex_validator);
+        case Handle_CastTarget::Validator_ConstHandle:
+        case Handle_CastTarget::Validator_Handle:
+            return static_cast<QValidator*>(regex_validator);
+        }
+        std::unreachable();
+    }
+
     HandleRef create(Object::HandleRef parent /* nullptr */) {
         return reinterpret_cast<HandleRef>(new QRegularExpressionValidator(AS_QOBJECT_PTR(parent)));
     }

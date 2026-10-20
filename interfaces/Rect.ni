@@ -90,6 +90,7 @@ opaque Handle {
 
     Handle operator_uniteWith(Handle rectangle); // returns 'this'
 }
+@useparenttype
 opaque Owned extends Handle;
 
 Owned create();

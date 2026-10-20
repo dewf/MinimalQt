@@ -78,6 +78,7 @@ enum CompositionMode {
 group PixmapFragment {
     @nodispose
     opaque Handle;
+    @useparenttype
     opaque Owned extends Handle;
 
     enum Hint {
@@ -297,7 +298,7 @@ opaque Handle {
     bool worldMatrixEnabled();
     Transform.Owned worldTransform();
 }
-
+@useparenttype
 opaque Owned extends Handle;
 
 Owned create();

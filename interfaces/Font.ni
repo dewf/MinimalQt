@@ -85,7 +85,7 @@ enum Weight {
 group Tag {
     @nodispose
     opaque Handle;
-
+    @useparenttype
     opaque Owned extends Handle;
 }
 
@@ -157,7 +157,7 @@ opaque Handle {
     Weight weight();
     double wordSpacing();
 }
-
+@useparenttype
 opaque Owned extends Handle;
 
 Owned create();

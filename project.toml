@@ -1,5 +1,8 @@
 [project]
-front_langs = ["csharp", "dlang"]
+front_langs = [
+    # "csharp",
+    "dlang"
+]
 back_lang = "cpp"
 
 library_name = "MinimalQt"

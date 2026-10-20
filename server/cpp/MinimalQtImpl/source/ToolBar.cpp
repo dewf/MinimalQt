@@ -172,6 +172,18 @@ namespace ToolBar
         delete THIS;
     }
 
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto toolbar = AS_QTOOLBAR_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(toolbar);
+        case Handle_CastTarget::Widget_Handle:
+            return static_cast<QWidget*>(toolbar);
+        }
+        std::unreachable();
+    }
+
     HandleRef create(Widget::HandleRef parent /* nullptr */) {
         return reinterpret_cast<HandleRef>(new QToolBar(AS_QWIDGET_PTR(parent)));
     }

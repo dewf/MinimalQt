@@ -19,6 +19,18 @@ namespace StyledItemDelegate
         delete THIS;
     }
 
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto sid = AS_QSTYLEDITEMDELEGATE_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(sid);
+        case Handle_CastTarget::AbstractItemDelegate_Handle:
+            return static_cast<QAbstractItemDelegate*>(sid);
+        }
+        std::unreachable();
+    }
+
     HandleRef create(Object::HandleRef parent /* nullptr */) {
         return reinterpret_cast<HandleRef>(new QStyledItemDelegate(AS_QOBJECT_PTR(parent)));
     }
@@ -89,6 +101,20 @@ namespace StyledItemDelegate
 
     void Delegated_dispose(DelegatedRef _this) {
         delete DELEGATED_THIS;
+    }
+
+    void* Delegated_staticCast(DelegatedRef obj, Delegated_CastTarget target) {
+        auto delegated = reinterpret_cast<Delegated*>(obj);
+        switch (target)
+        {
+        case Delegated_CastTarget::Object_Handle:
+            return static_cast<QObject*>(delegated);
+        case Delegated_CastTarget::AbstractItemDelegate_Handle:
+            return static_cast<QAbstractItemDelegate*>(delegated);
+        case Delegated_CastTarget::Handle:
+            return static_cast<QStyledItemDelegate*>(delegated);
+        }
+        std::unreachable();
     }
 
     DelegatedRef createDelegated(const std::shared_ptr<DelegatedMethods>& methods, Flags<DelegatedMethodMask> mask, Object::HandleRef parent /* nullptr */) {

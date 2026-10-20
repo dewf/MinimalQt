@@ -111,3 +111,5 @@ Handle create();
 Handle create(string text);
 Handle create(Icon.Handle icon, string text);
 Handle create(int rows, int columns = 1);
+
+// why no 'owned' version?

@@ -40,6 +40,20 @@ namespace CheckBox
         delete THIS;
     }
 
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto checkbox = AS_QCHECKBOX_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(checkbox);
+        case Handle_CastTarget::Widget_Handle:
+            return static_cast<QWidget*>(checkbox);
+        case Handle_CastTarget::AbstractButton_Handle:
+            return static_cast<QAbstractButton*>(checkbox);
+        }
+        std::unreachable();
+    }
+
     HandleRef create(Widget::HandleRef parent /* nullptr */) {
         return reinterpret_cast<HandleRef>(new QCheckBox(AS_QWIDGET_PTR(parent)));
     }

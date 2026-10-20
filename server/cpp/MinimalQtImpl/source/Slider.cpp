@@ -32,6 +32,20 @@ namespace Slider
         delete THIS;
     }
 
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto slider = AS_QSLIDER_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(slider);
+        case Handle_CastTarget::Widget_Handle:
+            return static_cast<QWidget*>(slider);
+        case Handle_CastTarget::AbstractSlider_Handle:
+            return static_cast<QAbstractSlider*>(slider);
+        }
+        std::unreachable();
+    }
+
     HandleRef create(Widget::HandleRef parent /* nullptr */) {
         return reinterpret_cast<HandleRef>(new QSlider(AS_QWIDGET_PTR(parent)));
     }

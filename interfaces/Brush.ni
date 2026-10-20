@@ -31,6 +31,7 @@ opaque Handle {
     Transform.Owned transform();
 }
 
+@useparenttype
 opaque Owned extends Handle;
 
 Owned create();

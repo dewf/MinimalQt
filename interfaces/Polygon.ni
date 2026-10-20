@@ -37,6 +37,7 @@ opaque Handle {
     Owned translated(Point.Handle offset);
     Owned united(Handle r);
 }
+@useparenttype
 opaque Owned extends Handle;
 
 Owned create();

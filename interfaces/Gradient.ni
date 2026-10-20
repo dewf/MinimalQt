@@ -222,6 +222,7 @@ opaque Handle {
     Array<GradientStopOutput> stops();
     Type getType2();                        // don't hide C# GetType()
 }
+@useparenttype
 opaque Owned extends Handle;
 
 Owned create(Preset preset);
@@ -237,6 +238,7 @@ group Conical {
         void setCenter(PointF.Handle center);
         void setCenter(double x, double y);
     }
+    @useparenttype
     opaque Owned extends Handle;
 
     Owned create();
@@ -254,6 +256,7 @@ group Linear {
         void setStart(double x, double y);
         PointF.Owned start();
     }
+    @useparenttype
     opaque Owned extends Handle;
 
     Owned create();
@@ -277,6 +280,7 @@ group Radial {
         void setFocalRadius(double radius);
         void setRadius(double radius);
     }
+    @useparenttype
     opaque Owned extends Handle;
 
     Owned create();

@@ -30,6 +30,7 @@ opaque Handle {
     Handle operator_decrementBy(Handle point);
     Handle operator_divideBy(double divisor);
 }
+@useparenttype
 opaque Owned extends Handle;
 
 Owned create();

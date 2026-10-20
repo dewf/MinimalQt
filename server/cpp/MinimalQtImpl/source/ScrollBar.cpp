@@ -23,6 +23,20 @@ namespace ScrollBar
         delete THIS;
     }
 
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto scrollbar = AS_QSCROLLBAR_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(scrollbar);
+        case Handle_CastTarget::Widget_Handle:
+            return static_cast<QWidget*>(scrollbar);
+        case Handle_CastTarget::AbstractSlider_Handle:
+            return static_cast<QAbstractSlider*>(scrollbar);
+        }
+        std::unreachable();
+    }
+
     HandleRef create(Widget::HandleRef parent /* nullptr */) {
         return reinterpret_cast<HandleRef>(new QScrollBar(AS_QWIDGET_PTR(parent)));
     }

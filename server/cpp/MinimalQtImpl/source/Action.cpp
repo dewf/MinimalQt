@@ -281,6 +281,16 @@ namespace Action
         delete THIS;
     }
 
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto action = AS_QACTION_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(action);
+        }
+        std::unreachable();
+    }
+
     HandleRef create(Object::HandleRef parent /* nullptr */) {
         return reinterpret_cast<HandleRef>(new QAction(AS_QOBJECT_PTR(parent)));
     }

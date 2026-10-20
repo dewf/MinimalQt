@@ -127,6 +127,20 @@ namespace Splitter
         delete THIS;
     }
 
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto splitter = AS_QSPLITTER_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(splitter);
+        case Handle_CastTarget::Widget_Handle:
+            return static_cast<QWidget*>(splitter);
+        case Handle_CastTarget::Frame_Handle:
+            return static_cast<QFrame*>(splitter);
+        }
+        std::unreachable();
+    }
+
     HandleRef create(Widget::HandleRef parent /* nullptr */) {
         return reinterpret_cast<HandleRef>(new QSplitter(AS_QWIDGET_PTR(parent)));
     }

@@ -27,6 +27,7 @@ opaque Handle {
     Handle operator_div(int divisor);
     Handle operator_div(double divisor);
 }
+@useparenttype
 opaque Owned extends Handle;
 
 Owned create();

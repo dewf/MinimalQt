@@ -265,6 +265,18 @@ namespace MainWindow
         delete THIS;
     }
 
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto mainwin = AS_QMAINWINDOW_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(mainwin);
+        case Handle_CastTarget::Widget_Handle:
+            return static_cast<QWidget*>(mainwin);
+        }
+        std::unreachable();
+    }
+
     HandleRef create(Widget::HandleRef parent /* nullptr */, Flags<WindowFlags> flags_ /* 0 */) {
         return reinterpret_cast<HandleRef>(new QMainWindow(AS_QWIDGET_PTR(parent), static_cast<Qt::WindowFlags>(flags_.value())));
     }
@@ -316,6 +328,20 @@ namespace MainWindow
 
     void Delegated_dispose(DelegatedRef _this) {
         delete DELEGATED_THIS;
+    }
+
+    void* Delegated_staticCast(DelegatedRef obj, Delegated_CastTarget target) {
+        auto delegated = reinterpret_cast<Delegated*>(obj);
+        switch (target)
+        {
+        case Delegated_CastTarget::Object_Handle:
+            return static_cast<QObject*>(delegated);
+        case Delegated_CastTarget::Widget_Handle:
+            return static_cast<QWidget*>(delegated);
+        case Delegated_CastTarget::Handle:
+            return static_cast<QMainWindow*>(delegated);
+        }
+        std::unreachable();
     }
 
     DelegatedRef createDelegated(const std::shared_ptr<DelegatedMethods>& methods, Flags<DelegatedMethodMask> mask, Widget::HandleRef parent /* nullptr */, Flags<WindowFlags> flags_ /* 0 */) {

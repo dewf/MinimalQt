@@ -368,6 +368,22 @@ namespace PlainTextEdit
         delete THIS;
     }
 
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto edit = AS_QPLAINTEXTEDIT_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(edit);
+        case Handle_CastTarget::Widget_Handle:
+            return static_cast<QWidget*>(edit);
+        case Handle_CastTarget::Frame_Handle:
+            return static_cast<QFrame*>(edit);
+        case Handle_CastTarget::AbstractScrollArea_Handle:
+            return static_cast<QAbstractScrollArea*>(edit);
+        }
+        std::unreachable();
+    }
+
     HandleRef create(Widget::HandleRef parent /* nullptr */) {
         return reinterpret_cast<HandleRef>(new QPlainTextEdit(AS_QWIDGET_PTR(parent)));
     }

@@ -97,6 +97,16 @@ namespace TextDocument
         delete THIS;
     }
 
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto document = AS_QTEXTDOCUMENT_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(document);
+        }
+        std::unreachable();
+    }
+
     HandleRef create(Object::HandleRef parent /* nullptr */) {
         return reinterpret_cast<HandleRef>(new QTextDocument(AS_QOBJECT_PTR(parent)));
     }

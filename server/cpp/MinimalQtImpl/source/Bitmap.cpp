@@ -42,6 +42,16 @@ namespace Bitmap
         return VARIANT_HEAP_NEW(QBITMAP_VALUE(_this));
     }
 
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto bitmap = AS_QBITMAP_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Pixmap_Handle:
+            return static_cast<QPixmap*>(bitmap);
+        }
+        std::unreachable();
+    }
+
     void Owned_dispose(OwnedRef _this) {
         delete THIS;
     }

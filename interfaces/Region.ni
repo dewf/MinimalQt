@@ -34,6 +34,7 @@ opaque Handle {
     Owned united(Handle r);
     Owned xored(Handle r);
 }
+@useparenttype
 opaque Owned extends Handle;
 
 Owned create();

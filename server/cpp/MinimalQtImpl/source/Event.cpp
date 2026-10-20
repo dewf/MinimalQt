@@ -75,8 +75,27 @@ namespace Event
         return SIZE_HEAP_NEW(RESIZE_THIS->size());
     }
 
+    void* ResizeEvent_staticCast(ResizeEventRef obj, ResizeEvent_CastTarget target) {
+        auto resizeEvent = AS_QRESIZEEVENT_PTR(obj);
+        switch (target)
+        {
+        case ResizeEvent_CastTarget::Handle:
+            return static_cast<QEvent*>(resizeEvent);
+        }
+        std::unreachable();
+    }
+
     // help event ==========================================
-    // (nothing)
+
+    void* HelpEvent_staticCast(HelpEventRef obj, HelpEvent_CastTarget target) {
+        auto help = AS_QHELPEVENT_PTR(obj);
+        switch (target)
+        {
+        case HelpEvent_CastTarget::Handle:
+            return static_cast<QEvent*>(help);
+        }
+        std::unreachable();
+    }
 
     // drop event ==========================================
 #define DROPEVENT_THIS (reinterpret_cast<QDropEvent*>(_this))
@@ -135,6 +154,16 @@ namespace Event
         }
     }
 
+    void* DropEvent_staticCast(DropEventRef obj, DropEvent_CastTarget target) {
+        auto drop = AS_QDROPEVENT_PTR(obj);
+        switch (target)
+        {
+        case DropEvent_CastTarget::Handle:
+            return static_cast<QEvent*>(drop);
+        }
+        std::unreachable();
+    }
+
     // input event =========================================
 #define INPUTEVENT_THIS (reinterpret_cast<QInputEvent*>(_this))
 
@@ -144,6 +173,16 @@ namespace Event
 
     uint64_t InputEvent_timestamp(InputEventRef _this) {
         return INPUTEVENT_THIS->timestamp();
+    }
+
+    void* InputEvent_staticCast(InputEventRef obj, InputEvent_CastTarget target) {
+        auto input = AS_QINPUTEVENT_PTR(obj);
+        switch (target)
+        {
+        case InputEvent_CastTarget::Handle:
+            return static_cast<QEvent*>(input);
+        }
+        std::unreachable();
     }
 
     // focus event =========================================
@@ -161,8 +200,27 @@ namespace Event
         return static_cast<FocusReason>(FOCUSEVENT_THIS->reason());
     }
 
+    void* FocusEvent_staticCast(FocusEventRef obj, FocusEvent_CastTarget target) {
+        auto focus = AS_QFOCUSEVENT_PTR(obj);
+        switch (target)
+        {
+        case FocusEvent_CastTarget::Handle:
+            return static_cast<QEvent*>(focus);
+        }
+        std::unreachable();
+    }
+
     // show event ==========================================
-    // (nothing)
+
+    void* ShowEvent_staticCast(ShowEventRef obj, ShowEvent_CastTarget target) {
+        auto show = AS_QSHOWEVENT_PTR(obj);
+        switch (target)
+        {
+        case ShowEvent_CastTarget::Handle:
+            return static_cast<QEvent*>(show);
+        }
+        std::unreachable();
+    }
 
     // paint event =========================================
 #define PAINTEVENT_THIS (reinterpret_cast<QPaintEvent*>(_this))
@@ -175,8 +233,27 @@ namespace Event
         return REGION_HEAP_NEW(PAINTEVENT_THIS->region());
     }
 
+    void* PaintEvent_staticCast(PaintEventRef obj, PaintEvent_CastTarget target) {
+        auto paint = AS_QPAINTEVENT_PTR(obj);
+        switch (target)
+        {
+        case PaintEvent_CastTarget::Handle:
+            return static_cast<QEvent*>(paint);
+        }
+        std::unreachable();
+    }
+
     // dragleave event =====================================
-    // (nothing)
+
+    void* DragLeaveEvent_staticCast(DragLeaveEventRef obj, DragLeaveEvent_CastTarget target) {
+        auto dragleave = AS_QDRAGLEAVEEVENT_PTR(obj);
+        switch (target)
+        {
+        case DragLeaveEvent_CastTarget::Handle:
+            return static_cast<QEvent*>(dragleave);
+        }
+        std::unreachable();
+    }
 
     // contextmenu event ===================================
 #define CONTEXTMENU_THIS (reinterpret_cast<QContextMenuEvent*>(_this))
@@ -209,6 +286,18 @@ namespace Event
         return CONTEXTMENU_THIS->y();
     }
 
+    void* ContextMenuEvent_staticCast(ContextMenuEventRef obj, ContextMenuEvent_CastTarget target) {
+        auto cme = AS_QCONTEXTMENUEVENT_PTR(obj);
+        switch (target)
+        {
+        case ContextMenuEvent_CastTarget::Handle:
+            return static_cast<QEvent*>(cme);
+        case ContextMenuEvent_CastTarget::InputEvent:
+            return static_cast<QInputEvent*>(cme);
+        }
+        std::unreachable();
+    }
+
     // dragmove event ======================================
 #define DRAGMOVE_THIS (reinterpret_cast<QDragMoveEvent*>(_this))
 
@@ -230,6 +319,18 @@ namespace Event
 
     void DragMoveEvent_ignore(DragMoveEventRef _this) {
         DRAGMOVE_THIS->ignore();
+    }
+
+    void* DragMoveEvent_staticCast(DragMoveEventRef obj, DragMoveEvent_CastTarget target) {
+        auto dragmove = AS_QDRAGMOVEEVENT_PTR(obj);
+        switch (target)
+        {
+        case DragMoveEvent_CastTarget::Handle:
+            return static_cast<QEvent*>(dragmove);
+        case DragMoveEvent_CastTarget::DropEvent:
+            return static_cast<QDropEvent*>(dragmove);
+        }
+        std::unreachable();
     }
 
     // key event ===========================================
@@ -271,14 +372,47 @@ namespace Event
         return KEYEVENT_THIS->text().toStdString();
     }
 
-    // dragmove event ======================================
-    // (nothing)
+    void* KeyEvent_staticCast(KeyEventRef obj, KeyEvent_CastTarget target) {
+        auto key = AS_QKEYEVENT_PTR(obj);
+        switch (target)
+        {
+        case KeyEvent_CastTarget::Handle:
+            return static_cast<QEvent*>(key);
+        case KeyEvent_CastTarget::InputEvent:
+            return static_cast<QInputEvent*>(key);
+        }
+        std::unreachable();
+    }
 
     // pointer event =======================================
-    // TODO
+
+    void* PointerEvent_staticCast(PointerEventRef obj, PointerEvent_CastTarget target) {
+        auto pointer = AS_QPOINTEREVENT_PTR(obj);
+        switch (target)
+        {
+        case PointerEvent_CastTarget::Handle:
+            return static_cast<QEvent*>(pointer);
+        case PointerEvent_CastTarget::InputEvent:
+            return static_cast<QInputEvent*>(pointer);
+        }
+        std::unreachable();
+    }
 
     // dragenter event =====================================
-    // (nothing)
+
+    void* DragEnterEvent_staticCast(DragEnterEventRef obj, DragEnterEvent_CastTarget target) {
+        auto dragenter = AS_QDRAGENTEREVENT_PTR(obj);
+        switch (target)
+        {
+        case DragEnterEvent_CastTarget::Handle:
+            return static_cast<QEvent*>(dragenter);
+        case DragEnterEvent_CastTarget::DropEvent:
+            return static_cast<QDropEvent*>(dragenter);
+        case DragEnterEvent_CastTarget::DragMoveEvent:
+            return static_cast<QDragMoveEvent*>(dragenter);
+        }
+        std::unreachable();
+    }
 
     // single point event ==================================
 #define SINGLEPOINT_THIS (reinterpret_cast<QSinglePointEvent*>(_this))
@@ -311,14 +445,59 @@ namespace Event
         SINGLEPOINT_THIS->setExclusivePointGrabber(AS_QOBJECT_PTR(exclusiveGrabber));
     }
 
+    void* SinglePointEvent_staticCast(SinglePointEventRef obj, SinglePointEvent_CastTarget target) {
+        auto single = AS_QSINGLEPOINTEVENT_PTR(obj);
+        switch (target)
+        {
+        case SinglePointEvent_CastTarget::Handle:
+            return static_cast<QEvent*>(single);
+        case SinglePointEvent_CastTarget::InputEvent:
+            return static_cast<QInputEvent*>(single);
+        case SinglePointEvent_CastTarget::PointerEvent:
+            return static_cast<QPointerEvent*>(single);
+        }
+        std::unreachable();
+    }
+
     // enter event =========================================
-    // (nothing)
+
+    void* EnterEvent_staticCast(EnterEventRef obj, EnterEvent_CastTarget target) {
+        auto enter = AS_QENTEREVENT_PTR(obj);
+        switch (target)
+        {
+        case EnterEvent_CastTarget::Handle:
+            return static_cast<QEvent*>(enter);
+        case EnterEvent_CastTarget::InputEvent:
+            return static_cast<QInputEvent*>(enter);
+        case EnterEvent_CastTarget::PointerEvent:
+            return static_cast<QPointerEvent*>(enter);
+        case EnterEvent_CastTarget::SinglePointEvent:
+            return static_cast<QSinglePointEvent*>(enter);
+        }
+        std::unreachable();
+    }
 
     // mouse event =========================================
 #define MOUSEEVENT_THIS (reinterpret_cast<QMouseEvent*>(_this))
 
     Flags<MouseEventFlags> MouseEvent_flags_(MouseEventRef _this) {
         return static_cast<Flags<MouseEventFlags>>(MOUSEEVENT_THIS->flags());
+    }
+
+    void* MouseEvent_staticCast(MouseEventRef obj, MouseEvent_CastTarget target) {
+        auto mouse = AS_QMOUSEEVENT_PTR(obj);
+        switch (target)
+        {
+        case MouseEvent_CastTarget::Handle:
+            return static_cast<QEvent*>(mouse);
+        case MouseEvent_CastTarget::InputEvent:
+            return static_cast<QInputEvent*>(mouse);
+        case MouseEvent_CastTarget::PointerEvent:
+            return static_cast<QPointerEvent*>(mouse);
+        case MouseEvent_CastTarget::SinglePointEvent:
+            return static_cast<QSinglePointEvent*>(mouse);
+        }
+        std::unreachable();
     }
 
     // wheel event =========================================
@@ -338,5 +517,21 @@ namespace Event
 
     Point::OwnedRef WheelEvent_pixelDelta(WheelEventRef _this) {
         return POINT_HEAP_NEW(WHEELEVENT_THIS->pixelDelta());
+    }
+
+    void* WheelEvent_staticCast(WheelEventRef obj, WheelEvent_CastTarget target) {
+        auto wheel = AS_QWHEELEVENT_PTR(obj);
+        switch (target)
+        {
+        case WheelEvent_CastTarget::Handle:
+            return static_cast<QEvent*>(wheel);
+        case WheelEvent_CastTarget::InputEvent:
+            return static_cast<QInputEvent*>(wheel);
+        case WheelEvent_CastTarget::PointerEvent:
+            return static_cast<QPointerEvent*>(wheel);
+        case WheelEvent_CastTarget::SinglePointEvent:
+            return static_cast<QSinglePointEvent*>(wheel);
+        }
+        std::unreachable();
     }
 }

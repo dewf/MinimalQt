@@ -115,6 +115,18 @@ namespace MenuBar
         delete THIS;
     }
 
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto menubar = AS_QMENUBAR_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(menubar);
+        case Handle_CastTarget::Widget_Handle:
+            return static_cast<QWidget*>(menubar);
+        }
+        std::unreachable();
+    }
+
     HandleRef create(Widget::HandleRef parent /* nullptr */) {
         return reinterpret_cast<HandleRef>(new QMenuBar(AS_QWIDGET_PTR(parent)));
     }

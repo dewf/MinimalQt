@@ -572,6 +572,16 @@ namespace Window
         delete THIS;
     }
 
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto window = AS_QWINDOW_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(window);
+        }
+        std::unreachable();
+    }
+
     HandleRef create(Screen::HandleRef targetScreen /* nullptr */) {
         return reinterpret_cast<HandleRef>(new QWindow(reinterpret_cast<QScreen*>(targetScreen)));
     }

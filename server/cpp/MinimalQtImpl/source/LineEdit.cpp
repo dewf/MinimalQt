@@ -336,6 +336,18 @@ namespace LineEdit
         delete THIS;
     }
 
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto edit = AS_QLINEEDIT_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(edit);
+        case Handle_CastTarget::Widget_Handle:
+            return static_cast<QWidget*>(edit);
+        }
+        std::unreachable();
+    }
+
     HandleRef create(Widget::HandleRef parent /* nullptr */) {
         return reinterpret_cast<HandleRef>(new QLineEdit(AS_QWIDGET_PTR(parent)));
     }

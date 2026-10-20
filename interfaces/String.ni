@@ -6,6 +6,7 @@ module String;
 opaque List {
     Array<string> getValues();
 }
+@useparenttype
 opaque OwnedList extends List;
 
 OwnedList createFromStrings(Array<string> values);

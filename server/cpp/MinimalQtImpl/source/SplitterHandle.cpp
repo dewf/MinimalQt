@@ -24,4 +24,16 @@ namespace SplitterHandle
     void Handle_dispose(HandleRef _this) {
         delete THIS;
     }
+
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto handle = AS_QSPLITTERHANDLE_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(handle);
+        case Handle_CastTarget::Widget_Handle:
+            return static_cast<QWidget*>(handle);
+        }
+        std::unreachable();
+    }
 }

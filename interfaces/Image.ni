@@ -180,7 +180,7 @@ opaque Handle {
     bool valid(int x, int y);
     int width();
 }
-
+@useparenttype
 opaque Owned extends Handle;
 
 // ctors:

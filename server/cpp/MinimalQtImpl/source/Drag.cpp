@@ -93,6 +93,16 @@ namespace Drag
         delete THIS;
     }
 
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto drag = AS_QDRAG_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(drag);
+        }
+        std::unreachable();
+    }
+
     HandleRef create(Object::HandleRef dragSource) {
         return reinterpret_cast<HandleRef>(new QDrag(AS_QOBJECT_PTR(dragSource)));
     }

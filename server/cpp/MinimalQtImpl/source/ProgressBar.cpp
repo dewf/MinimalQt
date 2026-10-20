@@ -114,6 +114,18 @@ namespace ProgressBar
         delete THIS;
     }
 
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto prog = AS_QPROGRESSBAR_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(prog);
+        case Handle_CastTarget::Widget_Handle:
+            return static_cast<QWidget*>(prog);
+        }
+        std::unreachable();
+    }
+
     HandleRef create(Widget::HandleRef parent /* nullptr */) {
         return reinterpret_cast<HandleRef>(new QProgressBar(AS_QWIDGET_PTR(parent)));
     }

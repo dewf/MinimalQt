@@ -141,6 +141,16 @@ namespace ItemSelectionModel
         delete THIS;
     }
 
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto model = AS_QITEMSELECTIONMODEL_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(model);
+        }
+        std::unreachable();
+    }
+
     HandleRef create(AbstractItemModel::HandleRef model /* nullptr */) {
         return reinterpret_cast<HandleRef>(new QItemSelectionModel(reinterpret_cast<QAbstractItemModel*>(model)));
     }

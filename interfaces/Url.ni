@@ -145,6 +145,7 @@ opaque Handle {
     // deprecated:
     string util_toAbsoluteInternal();
 }
+@useparenttype
 opaque Owned extends Handle;
 
 Owned create();
@@ -192,6 +193,7 @@ opaque List {
     // deprecated:
     Array<string> util_itemsAbsolute();
 }
+@useparenttype
 opaque OwnedList extends List;
 
 OwnedList util_createFromArray(Array<Handle> urls);

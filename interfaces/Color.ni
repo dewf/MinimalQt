@@ -15,6 +15,7 @@ opaque Handle {
     // util method for testing
     Owned util_cloneWithAlpha(float alpha);
 }
+@useparenttype
 opaque Owned extends Handle;
 
 Owned create();

@@ -99,6 +99,7 @@ opaque Handle {
     Handle operator_assign(Handle matrix); // returns 'this'
     bool operator_equal(Handle matrix);
 }
+@useparenttype
 opaque Owned extends Handle;
 
 Owned create();

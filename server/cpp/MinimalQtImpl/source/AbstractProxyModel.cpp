@@ -16,7 +16,6 @@ using namespace ::ItemSelectionModel;
 
 namespace AbstractProxyModel
 {
-
     ModelIndex::OwnedRef Handle_mapFromSource(HandleRef _this, ModelIndex::HandleRef sourceIndex) {
         return MODELINDEX_HEAP_NEW(THIS->mapFromSource(QMODELINDEX_VALUE(sourceIndex)));
     }
@@ -48,5 +47,18 @@ namespace AbstractProxyModel
             handler->sig_sourceModelChanged();
         });
         return new __SignalConnection { connection };
+    }
+
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto absProxyModel = AS_QABSTRACTPROXYMODEL_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(absProxyModel);
+        case Handle_CastTarget::AbstractItemModel_ConstHandle:
+        case Handle_CastTarget::AbstractItemModel_Handle:
+            return static_cast<QAbstractItemModel*>(absProxyModel);
+        }
+        std::unreachable();
     }
 }

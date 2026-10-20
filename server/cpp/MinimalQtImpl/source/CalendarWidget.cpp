@@ -221,6 +221,18 @@ namespace CalendarWidget
         delete THIS;
     }
 
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto cal = AS_QCALENDARWIDGET_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(cal);
+        case Handle_CastTarget::Widget_Handle:
+            return static_cast<QWidget*>(cal);
+        }
+        std::unreachable();
+    }
+
     HandleRef create(Widget::HandleRef parent /* nullptr */) {
         return reinterpret_cast<HandleRef>(new QCalendarWidget(AS_QWIDGET_PTR(parent)));
     }

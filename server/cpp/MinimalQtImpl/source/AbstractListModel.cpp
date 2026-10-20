@@ -106,6 +106,20 @@ namespace AbstractListModel
         friend void Interior_endResetModel(InteriorRef _this);
     };
 
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto absListModel = AS_QABSTRACTLISTMODEL_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(absListModel);
+        case Handle_CastTarget::AbstractItemModel_ConstHandle:
+        case Handle_CastTarget::AbstractItemModel_Handle:
+            // consthandle is no different on this side
+            return static_cast<QAbstractItemModel*>(absListModel);
+        }
+        std::unreachable();
+    }
+
     void Interior_emitDataChanged(InteriorRef _this, ModelIndex::HandleRef topLeft, ModelIndex::HandleRef bottomRight, const std::vector<ItemDataRole>& roles) {
         QList<int> qRoles;
         for (auto role : roles) {
@@ -144,6 +158,22 @@ namespace AbstractListModel
 
     void Interior_dispose(InteriorRef _this) {
         delete SUBCLASSED_THIS;
+    }
+
+    void* Interior_staticCast(InteriorRef obj, Interior_CastTarget target) {
+        auto implementation = reinterpret_cast<Implementation*>(obj);
+        switch (target)
+        {
+        case Interior_CastTarget::Object_Handle:
+            return static_cast<QObject*>(implementation);
+        case Interior_CastTarget::AbstractItemModel_ConstHandle:
+        case Interior_CastTarget::AbstractItemModel_Handle:
+            // const same as normal on the C++ side
+            return static_cast<QAbstractItemModel*>(implementation);
+        case Interior_CastTarget::Handle:
+            return static_cast<QAbstractListModel*>(implementation);
+        }
+        std::unreachable();
     }
 
     InteriorRef createImplementation(const std::shared_ptr<ImplementationMethods>& methods, Flags<ImplementedMethodMask> mask) {

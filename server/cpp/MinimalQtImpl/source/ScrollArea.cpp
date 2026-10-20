@@ -52,6 +52,22 @@ namespace ScrollArea
         delete THIS;
     }
 
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto area = AS_QSCROLLAREA_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(area);
+        case Handle_CastTarget::Widget_Handle:
+            return static_cast<QWidget*>(area);
+        case Handle_CastTarget::Frame_Handle:
+            return static_cast<QFrame*>(area);
+        case Handle_CastTarget::AbstractScrollArea_Handle:
+            return static_cast<QAbstractScrollArea*>(area);
+        }
+        std::unreachable();
+    }
+
     HandleRef create(Widget::HandleRef parent /* nullptr */) {
         return reinterpret_cast<HandleRef>(new QScrollArea(AS_QWIDGET_PTR(parent)));
     }

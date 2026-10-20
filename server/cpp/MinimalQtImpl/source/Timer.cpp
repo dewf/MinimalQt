@@ -73,6 +73,16 @@ namespace Timer
         delete THIS;
     }
 
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto timer = AS_QTIMER_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(timer);
+        }
+        std::unreachable();
+    }
+
     HandleRef create(Object::HandleRef parent /* nullptr */) {
         return reinterpret_cast<HandleRef>(new QTimer(AS_QOBJECT_PTR(parent)));
     }

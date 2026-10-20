@@ -78,4 +78,14 @@ namespace AbstractItemDelegate
         });
         return new __SignalConnection { connection };
     }
+
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto absItemDelegate = AS_QABSTRACTITEMDELEGATE_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(absItemDelegate);
+        }
+        std::unreachable();
+    }
 }

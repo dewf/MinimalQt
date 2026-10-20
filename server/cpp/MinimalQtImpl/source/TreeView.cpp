@@ -242,6 +242,24 @@ namespace TreeView
         delete THIS;
     }
 
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto treeview = AS_QTREEVIEW_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(treeview);
+        case Handle_CastTarget::Widget_Handle:
+            return static_cast<QWidget*>(treeview);
+        case Handle_CastTarget::Frame_Handle:
+            return static_cast<QFrame*>(treeview);
+        case Handle_CastTarget::AbstractScrollArea_Handle:
+            return static_cast<QAbstractScrollArea*>(treeview);
+        case Handle_CastTarget::AbstractItemView_Handle:
+            return static_cast<QAbstractItemView*>(treeview);
+        }
+        std::unreachable();
+    }
+
     HandleRef create(Widget::HandleRef parent /* nullptr */) {
         return reinterpret_cast<HandleRef>(new QTreeView(AS_QWIDGET_PTR(parent)));
     }

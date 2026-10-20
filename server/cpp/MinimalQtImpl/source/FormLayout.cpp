@@ -216,6 +216,18 @@ namespace FormLayout
         delete THIS;
     }
 
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto formLayout = AS_QFORMLAYOUT_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(formLayout);
+        case Handle_CastTarget::Layout_Handle:
+            return static_cast<QLayout*>(formLayout);
+        }
+        std::unreachable();
+    }
+
     HandleRef create(Widget::HandleRef parent /* nullptr */) {
         return reinterpret_cast<HandleRef>(new QFormLayout(AS_QWIDGET_PTR(parent)));
     }

@@ -192,6 +192,20 @@ namespace MessageBox
         delete THIS;
     }
 
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto mb = AS_QMESSAGEBOX_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(mb);
+        case Handle_CastTarget::Widget_Handle:
+            return static_cast<QWidget*>(mb);
+        case Handle_CastTarget::Dialog_Handle:
+            return static_cast<QDialog*>(mb);
+        }
+        std::unreachable();
+    }
+
     HandleRef create(Widget::HandleRef parent /* nullptr */) {
         return reinterpret_cast<HandleRef>(new QMessageBox(AS_QWIDGET_PTR(parent)));
     }

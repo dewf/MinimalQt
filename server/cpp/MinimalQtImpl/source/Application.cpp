@@ -27,6 +27,20 @@ namespace Application
         delete THIS;
     }
 
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto app = AS_QAPPLICATION_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(app);
+        case Handle_CastTarget::CoreApplication_Handle:
+            return static_cast<QCoreApplication*>(app);
+        case Handle_CastTarget::GuiApplication_Handle:
+            return static_cast<QGuiApplication*>(app);
+        }
+        std::unreachable();
+    }
+
     // we have to store these long-term, because QApplication takes its sweet time to read them! (on Linux, anyway)
     static int _argc = -1;
     static char** _argv = nullptr;

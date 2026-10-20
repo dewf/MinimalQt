@@ -20,6 +20,7 @@ opaque Handle {
     Owned translated(double dx, double dy);
     Owned united(Handle r);
 }
+@useparenttype
 opaque Owned extends Handle;
 
 Owned create();

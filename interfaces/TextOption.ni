@@ -15,6 +15,7 @@ opaque Handle {
     Alignment alignment();
     void setAlignment(Alignment alignment);
 }
+@useparenttype
 opaque Owned extends Handle;
 
 Owned create();

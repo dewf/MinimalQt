@@ -44,6 +44,7 @@ opaque Handle {
 
     bool canConvert(KnownType t);
 }
+@useparenttype
 opaque Owned extends Handle;
 
 Owned create();

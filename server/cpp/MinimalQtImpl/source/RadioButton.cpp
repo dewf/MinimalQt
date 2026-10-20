@@ -15,6 +15,21 @@ namespace RadioButton
         delete THIS;
     }
 
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto radio = AS_QRADIOBUTTON_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(radio);
+        case Handle_CastTarget::Widget_Handle:
+            return static_cast<QWidget*>(radio);
+        case Handle_CastTarget::AbstractButton_Handle:
+            return static_cast<QAbstractButton*>(radio);
+            break;
+        }
+        std::unreachable();
+    }
+
     HandleRef create(Widget::HandleRef parent /* nullptr */) {
         return reinterpret_cast<HandleRef>(new QRadioButton(AS_QWIDGET_PTR(parent)));
     }

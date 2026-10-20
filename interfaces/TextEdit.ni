@@ -37,6 +37,7 @@ group ExtraSelection {
         TextCursor.Owned cursor();      // hmm, since Handle is a struct pointer (either ours or elsewhere), I don't think these would need to be owned - but then how could we convey that they are temporary values and can't be saved etc?
         TextCharFormat.Owned format();
     }
+    @useparenttype
     opaque Owned extends Handle;
 
     Owned create(TextCursor.Handle cursor, TextCharFormat.Handle format);

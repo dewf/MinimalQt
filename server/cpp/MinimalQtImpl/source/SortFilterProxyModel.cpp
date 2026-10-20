@@ -174,6 +174,21 @@ namespace SortFilterProxyModel
         delete THIS;
     }
 
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto model = AS_QSORTFILTERPROXYMODEL_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(model);
+        case Handle_CastTarget::AbstractItemModel_ConstHandle:
+        case Handle_CastTarget::AbstractItemModel_Handle:
+            return static_cast<QAbstractItemModel*>(model);
+        case Handle_CastTarget::AbstractProxyModel_Handle:
+            return static_cast<QAbstractProxyModel*>(model);
+        }
+        std::unreachable();
+    }
+
     HandleRef create(Object::HandleRef parent /* nullptr */) {
         return reinterpret_cast<HandleRef>(new QSortFilterProxyModel(AS_QOBJECT_PTR(parent)));
     }
@@ -233,6 +248,23 @@ namespace SortFilterProxyModel
 
     void Delegated_dispose(DelegatedRef _this) {
         delete DELEGATED_THIS;
+    }
+
+    void* Delegated_staticCast(DelegatedRef obj, Delegated_CastTarget target) {
+        auto delegated = reinterpret_cast<Delegated*>(obj);
+        switch (target)
+        {
+        case Delegated_CastTarget::Object_Handle:
+            return static_cast<QObject*>(delegated);
+        case Delegated_CastTarget::AbstractItemModel_ConstHandle:
+        case Delegated_CastTarget::AbstractItemModel_Handle:
+            return static_cast<QAbstractItemModel*>(delegated);
+        case Delegated_CastTarget::AbstractProxyModel_Handle:
+            return static_cast<QAbstractProxyModel*>(delegated);
+        case Delegated_CastTarget::Handle:
+            return static_cast<QSortFilterProxyModel*>(delegated);
+        }
+        std::unreachable();
     }
 
     DelegatedRef createDelegated(const std::shared_ptr<DelegatedMethods>& methods, Flags<DelegatedMethodMask> mask, Object::HandleRef parent /* nullptr */) {

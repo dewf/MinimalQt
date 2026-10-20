@@ -28,6 +28,7 @@ group ItemSelection {
         void merge(Handle other, SelectionFlags command);
         void select(ModelIndex.Handle topLeft, ModelIndex.Handle bottomRight);
     }
+    @useparenttype
     opaque Owned extends Handle;
 
     Owned create();

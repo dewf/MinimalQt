@@ -378,6 +378,22 @@ namespace AbstractItemView
         return new __SignalConnection { connection };
     }
 
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto absItemView = AS_QABSTRACTITEMVIEW_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(absItemView);
+        case Handle_CastTarget::Widget_Handle:
+            return static_cast<QWidget*>(absItemView);
+        case Handle_CastTarget::Frame_Handle:
+            return static_cast<QFrame*>(absItemView);
+        case Handle_CastTarget::AbstractScrollArea_Handle:
+            return static_cast<QAbstractScrollArea*>(absItemView);
+        }
+        std::unreachable();
+    }
+
     // ext methods block for: AbstractItemDelegate::HandleRef ====
     bool ext_AbstractItemDelegate_helpEvent(AbstractItemDelegate::HandleRef del, HelpEventRef event_, HandleRef view, StyleOption::ViewItem::HandleRef option, ModelIndex::HandleRef index) {
         return AS_QABSTRACTITEMDELEGATE_PTR(del)->helpEvent(

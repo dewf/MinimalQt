@@ -147,4 +147,16 @@ namespace AbstractButton
         });
         return new __SignalConnection { connection };
     }
+
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto button = AS_QABSTRACTBUTTON_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(button);
+        case Handle_CastTarget::Widget_Handle:
+            return static_cast<QWidget*>(button);
+        }
+        std::unreachable();
+    }
 }

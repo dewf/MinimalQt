@@ -118,6 +118,18 @@ namespace GridLayout {
         delete THIS;
     }
 
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto gridLayout = AS_QGRIDLAYOUT_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(gridLayout);
+        case Handle_CastTarget::Layout_Handle:
+            return static_cast<QLayout*>(gridLayout);
+        }
+        std::unreachable();
+    }
+
     HandleRef create(Widget::HandleRef parent /* nullptr */) {
         return reinterpret_cast<HandleRef>(new QGridLayout(AS_QWIDGET_PTR(parent)));
     }

@@ -48,6 +48,7 @@ enum SortFlag { Name        = 0x00,
 opaque Handle {
     string toAbsoluteInternal();
 }
+@useparenttype
 opaque Owned extends Handle;
 
 Owned createFromAbsolute(string absoluteDir);

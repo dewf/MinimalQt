@@ -30,7 +30,7 @@ opaque Handle {
     int width();
     double widthF();
 }
-
+@useparenttype
 opaque Owned extends Handle;
 
 Owned create();

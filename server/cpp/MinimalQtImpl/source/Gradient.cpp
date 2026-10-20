@@ -85,6 +85,16 @@ namespace Gradient
             CONICAL_THIS->setCenter(x, y);
         }
 
+        void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+            auto conical = AS_QCONICALGRADIENT_PTR(obj);
+            switch (target)
+            {
+            case Handle_CastTarget::Gradient_Handle:
+                return static_cast<QGradient*>(conical);
+            }
+            std::unreachable();
+        }
+
         void Owned_dispose(OwnedRef _this) {
             delete CONICAL_THIS;
         }
@@ -127,6 +137,16 @@ namespace Gradient
 
         PointF::OwnedRef Handle_start(HandleRef _this) {
             return POINTF_HEAP_NEW(LINEAR_THIS->start());
+        }
+
+        void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+            auto linear = AS_QLINEARGRADIENT_PTR(obj);
+            switch (target)
+            {
+            case Handle_CastTarget::Gradient_Handle:
+                return static_cast<QGradient*>(linear);
+            }
+            std::unreachable();
         }
 
         void Owned_dispose(OwnedRef _this) {
@@ -195,6 +215,16 @@ namespace Gradient
 
         void Handle_setRadius(HandleRef _this, double radius) {
             RADIAL_THIS->setRadius(radius);
+        }
+
+        void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+            auto radial = AS_QRADIALGRADIENT_PTR(obj);
+            switch (target)
+            {
+            case Handle_CastTarget::Gradient_Handle:
+                return static_cast<QGradient*>(radial);
+            }
+            std::unreachable();
         }
 
         void Owned_dispose(OwnedRef _this) {

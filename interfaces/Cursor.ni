@@ -15,6 +15,7 @@ opaque Handle {
     void setShape(CursorShape shape);
     CursorShape shape();
 }
+@useparenttype
 opaque Owned extends Handle;
 
 // ctors =======================

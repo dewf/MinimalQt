@@ -98,6 +98,18 @@ namespace GuiApplication
         return new __SignalConnection { connection };
     }
 
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto gui = AS_QGUIAPPLICATION_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(gui);
+        case Handle_CastTarget::CoreApplication_Handle:
+            return static_cast<QCoreApplication*>(gui);
+        }
+        std::unreachable();
+    }
+
     void setQuitOnLastWindowClosed(bool state) {
         QGuiApplication::setQuitOnLastWindowClosed(state);
     }

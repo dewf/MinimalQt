@@ -19,6 +19,7 @@ opaque Handle extends Pixmap.Handle {
     Variant.Owned operator_QVariant(); // lolwut
 }
 
+@useparenttype
 opaque Owned extends Handle;
 
 Owned create();

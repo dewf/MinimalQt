@@ -24,6 +24,7 @@ opaque Handle {
     Owned siblingAtColumn(int column);
     Owned siblingAtRow(int row);
 }
+@useparenttype
 opaque Owned extends Handle;
 
 Owned create(); // empty/invalid
@@ -42,4 +43,5 @@ opaque List {
     Owned itemAt(int index);
     Array<Owned> items();
 }
+@useparenttype
 opaque OwnedList extends List;

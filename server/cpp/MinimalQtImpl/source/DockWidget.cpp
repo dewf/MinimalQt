@@ -103,6 +103,18 @@ namespace DockWidget
         return new __SignalConnection { connection };
     }
 
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto dockwidget = AS_QDOCKWIDGET_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(dockwidget);
+        case Handle_CastTarget::Widget_Handle:
+            return static_cast<QWidget*>(dockwidget);
+        }
+        std::unreachable();
+    }
+
     HandleRef create(Widget::HandleRef parent /* nullptr */, Flags<WindowFlags> flags_ /* 0 */) {
         auto intFlags = std::bit_cast<int>(flags_.value());
         return reinterpret_cast<HandleRef>(new QDockWidget(AS_QWIDGET_PTR(parent), static_cast<Qt::WindowFlags>(intFlags)));

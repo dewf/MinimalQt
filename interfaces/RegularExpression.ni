@@ -41,6 +41,7 @@ group Match {
     opaque Handle {
         // TODO
     }
+    @useparenttype
     opaque Owned extends Handle;
     // ctors/static: TODO
 }
@@ -64,6 +65,7 @@ group MatchIterator {
         // QRegularExpressionMatchIterator &	operator=(QRegularExpressionMatchIterator &&iterator)
         // QRegularExpressionMatchIterator &	operator=(const QRegularExpressionMatchIterator &iterator)
     }
+    @useparenttype
     opaque Owned extends Handle;
 
     Owned create();
@@ -93,6 +95,7 @@ opaque Handle {
     // QRegularExpression &	operator=(QRegularExpression &&re)
     // QRegularExpression &	operator=(const QRegularExpression &re)
 }
+@useparenttype
 opaque Owned extends Handle;
 
 Owned create();

@@ -95,6 +95,7 @@ opaque Handle {
     void swap(Handle other);
     string toString2(SequenceFormat format = PortableText);
 }
+@useparenttype
 opaque Owned extends Handle;
 
 // ctors ======================

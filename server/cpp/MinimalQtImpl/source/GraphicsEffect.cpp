@@ -37,4 +37,14 @@ namespace GraphicsEffect
         });
         return new __SignalConnection { connection };
     }
+
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto effect = AS_QGRAPHICSEFFECT_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(effect);
+        }
+        std::unreachable();
+    }
 }

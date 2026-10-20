@@ -219,4 +219,14 @@ namespace Screen
         });
         return new __SignalConnection { connection };
     }
+
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto screen = AS_QSCREEN_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(screen);
+        }
+        std::unreachable();
+    }
 }

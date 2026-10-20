@@ -5,5 +5,7 @@
 
 #include <QFileDialog>
 
+#define AS_QFILEDIALOG_PTR(x) (reinterpret_cast<QFileDialog*>(x))
+
 namespace FileDialog {
 }

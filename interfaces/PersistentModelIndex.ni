@@ -32,6 +32,7 @@ opaque Handle {
     Handle operator_assign(Handle other);
     Handle operator_assign(ModelIndex.Handle other);
 }
+@useparenttype
 opaque Owned extends Handle;
 
 Owned create(ModelIndex.Handle index);
@@ -56,4 +57,5 @@ opaque List {
     Owned itemAt(int index);
     Array<Owned> items();
 }
+@useparenttype
 opaque OwnedList extends List;

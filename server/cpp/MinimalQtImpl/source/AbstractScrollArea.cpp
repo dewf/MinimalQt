@@ -90,4 +90,18 @@ namespace AbstractScrollArea
     Widget::HandleRef Handle_viewport(HandleRef _this) {
         return reinterpret_cast<Widget::HandleRef>(THIS->viewport());
     }
+
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto absScrollArea = AS_QABSTRACTSCROLLAREA_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(absScrollArea);
+        case Handle_CastTarget::Widget_Handle:
+            return static_cast<QWidget*>(absScrollArea);
+        case Handle_CastTarget::Frame_Handle:
+            return static_cast<QFrame*>(absScrollArea);
+        }
+        std::unreachable();
+    }
 }

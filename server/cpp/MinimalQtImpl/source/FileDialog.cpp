@@ -279,6 +279,20 @@ namespace FileDialog
         delete THIS;
     }
 
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto fileDialog = AS_QFILEDIALOG_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(fileDialog);
+        case Handle_CastTarget::Widget_Handle:
+            return static_cast<QWidget*>(fileDialog);
+        case Handle_CastTarget::Dialog_Handle:
+            return static_cast<QDialog*>(fileDialog);
+        }
+        std::unreachable();
+    }
+
     HandleRef create(Widget::HandleRef parent, Flags<WindowFlags> flags_) {
         auto intFlags = std::bit_cast<int>(flags_.value()); // Qt flags silliness
         return reinterpret_cast<HandleRef>(new QFileDialog(reinterpret_cast<QWidget*>(parent), static_cast<Qt::WindowFlags>(intFlags)));

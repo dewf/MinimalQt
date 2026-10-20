@@ -349,6 +349,18 @@ namespace StandardItem
         delete THIS;
     }
 
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto item = AS_QSTANDARDITEM_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::ConstHandle:
+            // same
+            // also, uh ... no 'owned' version?
+            return item;
+        }
+        std::unreachable();
+    }
+
     HandleRef create() {
         return reinterpret_cast<HandleRef>(new QStandardItem());
     }

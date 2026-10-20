@@ -71,6 +71,18 @@ namespace Frame
         delete THIS;
     }
 
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto frame = AS_QFRAME_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(frame);
+        case Handle_CastTarget::Widget_Handle:
+            return static_cast<QWidget*>(frame);
+        }
+        std::unreachable();
+    }
+
     HandleRef create(Widget::HandleRef parent /* nullptr */, Flags<WindowFlags> f /* 0 */) {
         auto intFlags = std::bit_cast<int>(f.value()); // Qt flags silliness
         return reinterpret_cast<HandleRef>(new QFrame(AS_QWIDGET_PTR(parent), static_cast<Qt::WindowFlags>(intFlags)));

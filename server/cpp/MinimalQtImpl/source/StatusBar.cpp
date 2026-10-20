@@ -62,6 +62,18 @@ namespace StatusBar
         delete THIS;
     }
 
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto statusbar = AS_QSTATUSBAR_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(statusbar);
+        case Handle_CastTarget::Widget_Handle:
+            return static_cast<QWidget*>(statusbar);
+        }
+        std::unreachable();
+    }
+
     HandleRef create(Widget::HandleRef parent /* nullptr */) {
         return reinterpret_cast<HandleRef>(AS_QWIDGET_PTR(parent));
     }

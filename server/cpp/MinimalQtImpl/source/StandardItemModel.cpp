@@ -169,6 +169,19 @@ namespace StandardItemModel
         delete THIS;
     }
 
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto model = AS_QSTANDARDITEMMODEL_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(model);
+        case Handle_CastTarget::AbstractItemModel_ConstHandle:
+        case Handle_CastTarget::AbstractItemModel_Handle:
+            return static_cast<QAbstractItemModel*>(model);
+        }
+        std::unreachable();
+    }
+
     HandleRef create(Object::HandleRef parent /* nullptr */) {
         return reinterpret_cast<HandleRef>(new QStandardItemModel(AS_QOBJECT_PTR(parent)));
     }

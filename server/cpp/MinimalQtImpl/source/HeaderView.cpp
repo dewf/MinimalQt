@@ -358,6 +358,24 @@ namespace HeaderView
         delete THIS;
     }
 
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto header = AS_QHEADERVIEW_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(header);
+        case Handle_CastTarget::Widget_Handle:
+            return static_cast<QWidget*>(header);
+        case Handle_CastTarget::Frame_Handle:
+            return static_cast<QFrame*>(header);
+        case Handle_CastTarget::AbstractScrollArea_Handle:
+            return static_cast<QAbstractScrollArea*>(header);
+        case Handle_CastTarget::AbstractItemView_Handle:
+            return static_cast<QAbstractItemView*>(header);
+        }
+        std::unreachable();
+    }
+
     HandleRef create(Orientation orientation, Widget::HandleRef parent /* nullptr */) {
         return reinterpret_cast<HandleRef>(new QHeaderView(static_cast<Qt::Orientation>(orientation), AS_QWIDGET_PTR(parent)));
     }

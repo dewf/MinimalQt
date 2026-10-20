@@ -40,6 +40,7 @@ opaque Handle {
     Handle operator_decrementBy(Handle size);
     Handle operator_divideBy(double divisor);
 }
+@useparenttype
 opaque Owned extends Handle;
 
 // ctors =================

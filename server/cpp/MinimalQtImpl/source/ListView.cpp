@@ -157,6 +157,24 @@ namespace ListView
         delete THIS;
     }
 
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto listview = AS_QLISTVIEW_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(listview);
+        case Handle_CastTarget::Widget_Handle:
+            return static_cast<QWidget*>(listview);
+        case Handle_CastTarget::Frame_Handle:
+            return static_cast<QFrame*>(listview);
+        case Handle_CastTarget::AbstractScrollArea_Handle:
+            return static_cast<QAbstractScrollArea*>(listview);
+        case Handle_CastTarget::AbstractItemView_Handle:
+            return static_cast<QAbstractItemView*>(listview);
+        }
+        std::unreachable();
+    }
+
     HandleRef create(Widget::HandleRef parent /* nullptr */) {
         return reinterpret_cast<HandleRef>(new QListView(AS_QWIDGET_PTR(parent)));
     }

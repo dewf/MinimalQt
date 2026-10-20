@@ -185,7 +185,7 @@ opaque Handle {
     void setIsMask(bool isMask);
     void swap(Handle other);
 }
-
+@useparenttype
 opaque Owned extends Handle;
 
 // constructors:

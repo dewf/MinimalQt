@@ -1020,6 +1020,16 @@ namespace Widget
         delete THIS;
     }
 
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto widget = AS_QWIDGET_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(widget);
+        }
+        std::unreachable();
+    }
+
     HandleRef create(HandleRef parent /* nullptr */, Flags<WindowFlags> flags_ /* 0 */) {
         auto intFlags = std::bit_cast<int>(flags_.value()); // Qt flags silliness
         return reinterpret_cast<HandleRef>(new QWidget(AS_QWIDGET_PTR(parent), static_cast<Qt::WindowFlags>(intFlags)));
@@ -1232,6 +1242,18 @@ namespace Widget
 
     void Delegated_dispose(DelegatedRef _this) {
         delete DELEGATED_THIS;
+    }
+
+    void* Delegated_staticCast(DelegatedRef obj, Delegated_CastTarget target) {
+        auto delegated = reinterpret_cast<Delegated*>(obj);
+        switch (target)
+        {
+        case Delegated_CastTarget::Object_Handle:
+            return static_cast<QObject*>(delegated);
+        case Delegated_CastTarget::Handle:
+            return static_cast<QWidget*>(delegated);
+        }
+        std::unreachable();
     }
 
     DelegatedRef createDelegated(const std::shared_ptr<DelegatedMethods>& methods, Flags<DelegatedMethodMask> methodMask, HandleRef parent /* nullptr */, Flags<WindowFlags> flags_ /* 0 */) {

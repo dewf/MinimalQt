@@ -61,7 +61,7 @@ opaque Handle {
     Policy verticalPolicy();
     int verticalStretch();
 }
-
+@useparenttype
 opaque Owned extends Handle;
 
 Owned create();

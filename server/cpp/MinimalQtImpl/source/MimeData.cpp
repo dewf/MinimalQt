@@ -75,6 +75,16 @@ namespace MimeData
         return URL_LIST_HEAP_NEW(CONST_THIS->urls());
     }
 
+    void* ConstHandle_staticCast(ConstHandleRef obj, ConstHandle_CastTarget target) {
+        auto mimedata = AS_QMIMEDATA_PTR(obj);
+        switch (target)
+        {
+        case ConstHandle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(mimedata);
+        }
+        std::unreachable();
+    }
+
     // non-const methods ==========================================================================================
 
     void Handle_clear(HandleRef _this) {
@@ -114,6 +124,19 @@ namespace MimeData
 
     void Handle_dispose(HandleRef _this) {
         delete MUTABLE_THIS;
+    }
+
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto mimedata = AS_QMIMEDATA_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(mimedata);
+        case Handle_CastTarget::ConstHandle:
+            // same as mutable for backend purposes
+            return mimedata;
+        }
+        std::unreachable();
     }
 
     HandleRef create() {

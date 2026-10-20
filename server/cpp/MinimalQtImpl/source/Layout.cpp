@@ -159,6 +159,16 @@ namespace Layout
         return static_cast<SizeConstraint>(THIS->verticalSizeConstraint());
     }
 
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto layout = AS_QLAYOUT_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(layout);
+        }
+        std::unreachable();
+    }
+
     Size::OwnedRef closestAcceptableSize(Widget::HandleRef widget, Size::HandleRef size) {
         return SIZE_HEAP_NEW(QLayout::closestAcceptableSize(AS_QWIDGET_PTR(widget), QSIZE_VALUE(size)));
     }

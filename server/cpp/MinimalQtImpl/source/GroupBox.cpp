@@ -71,6 +71,18 @@ namespace GroupBox
         delete THIS;
     }
 
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto groupBox = AS_QGROUPBOX_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(groupBox);
+        case Handle_CastTarget::Widget_Handle:
+            return static_cast<QWidget*>(groupBox);
+        }
+        std::unreachable();
+    }
+
     HandleRef create(Widget::HandleRef parent /* nullptr */) {
         return reinterpret_cast<HandleRef>(new QGroupBox(AS_QWIDGET_PTR(parent)));
     }

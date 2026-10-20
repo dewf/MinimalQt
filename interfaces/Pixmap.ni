@@ -70,7 +70,7 @@ opaque Handle {         // we don't directly inherit from PaintDevice, because t
     Owned transformed(Transform.Handle transform, TransformationMode mode = FastTransformation);
     int width();
 }
-
+@useparenttype
 opaque Owned extends Handle;
 
 Owned create(Array<byte> xpm);

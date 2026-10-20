@@ -201,6 +201,18 @@ namespace Menu
         delete THIS;
     }
 
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto menu = AS_QMENU_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(menu);
+        case Handle_CastTarget::Widget_Handle:
+            return static_cast<QWidget*>(menu);
+        }
+        std::unreachable();
+    }
+
     HandleRef create(Widget::HandleRef parent /* nullptr */) {
         return reinterpret_cast<HandleRef>(new QMenu(AS_QWIDGET_PTR(parent)));
     }

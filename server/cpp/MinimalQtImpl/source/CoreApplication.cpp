@@ -51,4 +51,14 @@ namespace CoreApplication
         });
         return new __SignalConnection { connection };
     }
+
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto core = AS_QCOREAPPLICATION_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(core);
+        }
+        std::unreachable();
+    }
 }

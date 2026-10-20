@@ -72,4 +72,14 @@ namespace SessionManager
     void Handle_setRestartHint(HandleRef _this, RestartHint hint) {
         THIS->setRestartHint(static_cast<QSessionManager::RestartHint>(hint));
     }
+
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto manager = AS_QSESSIONMANAGER_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(manager);
+        }
+        std::unreachable();
+    }
 }

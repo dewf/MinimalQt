@@ -82,6 +82,18 @@ namespace Dialog
         delete THIS;
     }
 
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto dialog = AS_QDIALOG_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(dialog);
+        case Handle_CastTarget::Widget_Handle:
+            return static_cast<QWidget*>(dialog);
+        }
+        std::unreachable();
+    }
+
     HandleRef create(Widget::HandleRef parent /* nullptr */, Flags<WindowFlags> f /* 0 */) {
         auto intFlags = std::bit_cast<int>(f.value()); // Qt flags silliness
         return reinterpret_cast<HandleRef>(new QDialog(AS_QWIDGET_PTR(parent), static_cast<Qt::WindowFlags>(intFlags)));

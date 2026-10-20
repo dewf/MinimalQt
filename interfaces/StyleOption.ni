@@ -33,6 +33,7 @@ opaque Handle {
     // int	type
     // int	version
 }
+@useparenttype
 opaque Owned extends Handle;
 
 Owned create(int version = cast<int>(StyleOptionVersion.Version), int type_ = cast<int>(OptionType.SO_Default));
@@ -78,6 +79,7 @@ group ViewItem {
         // QStyleOptionViewItem::ViewItemPosition	viewItemPosition
         // const QWidget *	widget
     }
+    @useparenttype
     opaque Owned extends Handle;
 
     Owned create();

@@ -148,4 +148,16 @@ namespace AbstractSlider
         });
         return new __SignalConnection { connection };
     }
+
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto absSlider = AS_QABSTRACTSLIDER_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(absSlider);
+        case Handle_CastTarget::Widget_Handle:
+            return static_cast<QWidget*>(absSlider);
+        }
+        std::unreachable();
+    }
 }

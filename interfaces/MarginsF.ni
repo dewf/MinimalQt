@@ -23,6 +23,7 @@ opaque Handle {
     Handle operator_sub(double subtrahend);
     Handle operator_div(double divisor);
 }
+@useparenttype
 opaque Owned extends Handle;
 
 Owned create();

@@ -5,16 +5,19 @@ using namespace ::TextFormat;
 
 namespace TextCharFormat
 {
-    struct __Handle {
-        // your content here
-        // (or delete this and cast your own opaque ptr to 'HandleRef' in the stubs below)
-    };
+#define THIS (reinterpret_cast<QTextCharFormat*>(_this))
 
-    struct __Owned {
-        // your content here
-        // (or delete this and cast your own opaque ptr to 'OwnedRef' in the stubs below)
-    };
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto tcf = AS_QTEXTCHARFORMAT_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::TextFormat_Handle:
+            return static_cast<QTextFormat*>(tcf);
+        }
+        std::unreachable();
+    }
 
     void Owned_dispose(OwnedRef _this) {
+        delete THIS;
     }
 }

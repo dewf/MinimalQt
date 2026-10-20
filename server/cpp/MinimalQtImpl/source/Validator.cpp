@@ -29,6 +29,28 @@ namespace Validator
         return new __SignalConnection { connection };
     }
 
+    void* ConstHandle_staticCast(ConstHandleRef obj, ConstHandle_CastTarget target) {
+        auto validator = AS_QVALIDATOR_PTR(obj);
+        switch (target)
+        {
+        case ConstHandle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(validator);
+        }
+        std::unreachable();
+    }
+
     // normal non-const methods =========================
-    // TODO:
+
+    void* Handle_staticCast(HandleRef obj, Handle_CastTarget target) {
+        auto validator = AS_QVALIDATOR_PTR(obj);
+        switch (target)
+        {
+        case Handle_CastTarget::Object_Handle:
+            return static_cast<QObject*>(validator);
+        case Handle_CastTarget::ConstHandle:
+            // same
+            return validator;
+        }
+        std::unreachable();
+    }
 }
