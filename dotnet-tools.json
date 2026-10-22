@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "isRoot": true,
+  "tools": {
+    "nativeimpl": {
+      "version": "0.5.2",
+      "commands": [
+        "nativeimpl"
+      ],
+      "rollForward": false
+    }
+  }
+}
