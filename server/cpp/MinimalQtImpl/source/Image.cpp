@@ -131,6 +131,14 @@ namespace Image
         return THIS->fill(QCOLOR_VALUE(color));
     }
 
+    void Handle_flip(HandleRef _this, Flags<Orientations> orient /* Orientations::Vertical */) {
+        return THIS->flip(Qt::Orientations::fromInt(orient.value()));
+    }
+
+    OwnedRef Handle_flipped(HandleRef _this, Flags<Orientations> orient /* Orientations::Vertical */) {
+        return IMAGE_HEAP_NEW(THIS->flipped(Qt::Orientations::fromInt(orient.value())));
+    }
+
     Format Handle_format(HandleRef _this) {
         return static_cast<Format>(THIS->format());
     }
@@ -167,14 +175,6 @@ namespace Image
         size_t length;
         const uchar *buf = data->getSpan(&length);
         return THIS->loadFromData(buf, static_cast<int>(length), ccFormat);
-    }
-
-    void Handle_mirror(HandleRef _this, bool horizontal /* false */, bool vertical /* true */) {
-        THIS->mirror(horizontal, vertical);
-    }
-
-    OwnedRef Handle_mirrored(HandleRef _this, bool horizontal /* false */, bool vertical /* true */) {
-        return IMAGE_HEAP_NEW(THIS->mirrored(horizontal, vertical));
     }
 
     Point::OwnedRef Handle_offset(HandleRef _this) {

@@ -110,6 +110,8 @@ opaque Handle {
     void fill(uint32 pixelValue);
     void fill(GlobalColor color);
     void fill(Color.Handle color);
+    void flip(Orientations orient = Vertical);
+    Owned flipped(Orientations orient = Vertical);
     Format format();
     bool hasAlphaChannel();
     int height();
@@ -121,8 +123,6 @@ opaque Handle {
     // bool load(QIODevice *device, const char *format)
 
     bool loadFromData(Buffer<byte> data, Option<string> format);
-    void mirror(bool horizontal = false, bool vertical = true);
-    Owned mirrored(bool horizontal = false, bool vertical = true);
     Point.Owned offset();
     Rgb pixel(Point.Handle position);
     Rgb pixel(int x, int y);
