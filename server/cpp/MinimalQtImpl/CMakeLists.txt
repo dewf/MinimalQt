@@ -23,7 +23,6 @@ target_sources(MinimalQtImpl
         source/support/CoreStuff.h
         source/support/NativeImplServer.h
         source/support/NativeImplServer.cpp
-        source/support/result.h
 
         # util
         source/util/convert.h
