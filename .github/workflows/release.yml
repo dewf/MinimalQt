@@ -67,20 +67,27 @@ jobs:
       - name: Build CMake target
         run: cmake --build build --config Release --parallel
 
+      - name: Package release archive
+        shell: pwsh
+        run: |
+          $tag = "${{ github.ref_name }}"
+          $qtVer = "${{ env.QT_VERSION }}" -replace '\.\*$', ''
+          $zipName = "MinimalQtServer-$tag-Qt$qtVer-Windows-x64.zip"
+          $zipPath = "build/$zipName"
+          Compress-Archive -Path "build/MinimalQtServer.dll", "build/MinimalQtServer.lib" -DestinationPath $zipPath -Force
+          "ZIP_NAME=$zipName" | Out-File -FilePath $env:GITHUB_ENV -Append
+          "ZIP_PATH=$zipPath" | Out-File -FilePath $env:GITHUB_ENV -Append
+
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: MinimalQt-win-x64
-          path: |
-            build/MinimalQtServer.dll
-            build/MinimalQtServer.lib
+          name: MinimalQtServer-Windows-x64
+          path: ${{ env.ZIP_PATH }}
           if-no-files-found: error
 
       - name: Publish GitHub Release
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
-          files: |
-            build/MinimalQtServer.dll
-            build/MinimalQtServer.lib
+          files: ${{ env.ZIP_PATH }}
           generate_release_notes: true
