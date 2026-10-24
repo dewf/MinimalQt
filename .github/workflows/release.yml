@@ -58,6 +58,7 @@ jobs:
           host: windows
           target: desktop
           arch: win64_msvc2022_64
+          aqtsource: 'git+https://github.com/miurahr/aqtinstall.git'
           cache: true
 
       - name: Configure CMake
