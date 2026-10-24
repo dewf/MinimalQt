@@ -85,9 +85,94 @@ jobs:
           path: ${{ env.ZIP_PATH }}
           if-no-files-found: error
 
+  build-linux-x64:
+    name: Build (Linux x64)
+    # Pinned to ubuntu-24.04 (glibc 2.39, GCC 13), which is the exact baseline OS
+    # that Qt 6.12's official prebuilt binaries (Qt Online Installer / aqtinstall)
+    # are compiled against.
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Linux build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            ninja-build \
+            libgl1-mesa-dev \
+            libvulkan-dev \
+            libxkbcommon-dev \
+            zip
+
+      - name: Set up CMake
+        uses: jwlawson/actions-setup-cmake@v2
+        with:
+          cmake-version: ${{ env.CMAKE_VERSION }}
+
+      - name: Set up .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Restore .NET tools
+        run: dotnet tool restore
+
+      - name: Run nativeimpl code generation
+        run: dotnet nativeimpl --force-write project.toml
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: ${{ env.QT_VERSION }}
+          host: linux
+          target: desktop
+          arch: linux_gcc_64
+          aqtsource: 'git+https://github.com/miurahr/aqtinstall.git'
+          cache: true
+
+      - name: Configure CMake
+        run: cmake -S server/cpp/_dllproject -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build CMake target
+        run: cmake --build build --config Release --parallel
+
+      - name: Package release archive
+        shell: pwsh
+        run: |
+          $tag = "${{ github.ref_name }}"
+          $qtVer = "${{ env.QT_VERSION }}" -replace '\.\*$', ''
+          $zipName = "MinimalQtServer-$tag-Qt$qtVer-Linux-x64.zip"
+          $zipPath = "build/$zipName"
+          Compress-Archive -Path "build/libMinimalQtServer.so" -DestinationPath $zipPath -Force
+          "ZIP_NAME=$zipName" | Out-File -FilePath $env:GITHUB_ENV -Append
+          "ZIP_PATH=$zipPath" | Out-File -FilePath $env:GITHUB_ENV -Append
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: MinimalQtServer-Linux-x64
+          path: ${{ env.ZIP_PATH }}
+          if-no-files-found: error
+
+  publish-release:
+    name: Publish GitHub Release
+    needs:
+      - build-windows-x64
+      - build-linux-x64
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Download all build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: release-assets
+          merge-multiple: true
+
       - name: Publish GitHub Release
-        if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
-          files: ${{ env.ZIP_PATH }}
+          files: release-assets/*.zip
           generate_release_notes: true
