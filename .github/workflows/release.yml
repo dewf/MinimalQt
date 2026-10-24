@@ -1,0 +1,85 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - '*'
+  workflow_dispatch:
+    inputs:
+      qt_version:
+        description: 'Qt version override (e.g. 6.12.* or 6.12.0)'
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+
+env:
+  # Qt version can be configured here, overridden via a GitHub Actions repository
+  # variable named QT_VERSION, or provided when triggering workflow_dispatch manually.
+  QT_VERSION: ${{ inputs.qt_version || vars.QT_VERSION || '6.12.*' }}
+  CMAKE_VERSION: '>=4.2.0'
+  DOTNET_VERSION: '10.0.x'
+
+jobs:
+  build-windows-x64:
+    name: Build (Windows x64)
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up MSVC x64 environment
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
+
+      - name: Set up CMake
+        uses: jwlawson/actions-setup-cmake@v2
+        with:
+          cmake-version: ${{ env.CMAKE_VERSION }}
+
+      - name: Set up .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Restore .NET tools
+        run: dotnet tool restore
+
+      - name: Run nativeimpl code generation
+        run: dotnet nativeimpl --force-write project.toml
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v4
+        with:
+          version: ${{ env.QT_VERSION }}
+          host: windows
+          target: desktop
+          arch: win64_msvc2022_64
+          cache: true
+
+      - name: Configure CMake
+        run: cmake -S server/cpp/_dllproject -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build CMake target
+        run: cmake --build build --config Release --parallel
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: MinimalQt-win-x64
+          path: |
+            build/MinimalQtServer.dll
+            build/MinimalQtServer.lib
+          if-no-files-found: error
+
+      - name: Publish GitHub Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            build/MinimalQtServer.dll
+            build/MinimalQtServer.lib
+          generate_release_notes: true
