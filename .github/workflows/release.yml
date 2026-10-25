@@ -28,7 +28,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up MSVC x64 environment
         uses: ilammy/msvc-dev-cmd@v1
@@ -41,7 +41,7 @@ jobs:
           cmake-version: ${{ env.CMAKE_VERSION }}
 
       - name: Set up .NET 10
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
@@ -79,7 +79,7 @@ jobs:
           "ZIP_PATH=$zipPath" | Out-File -FilePath $env:GITHUB_ENV -Append
 
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: MinimalQtServer-Windows-x86_64
           path: ${{ env.ZIP_PATH }}
@@ -91,7 +91,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up MSVC arm64 environment
         uses: ilammy/msvc-dev-cmd@v1
@@ -104,7 +104,7 @@ jobs:
           cmake-version: ${{ env.CMAKE_VERSION }}
 
       - name: Set up .NET 10
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
@@ -142,7 +142,7 @@ jobs:
           "ZIP_PATH=$zipPath" | Out-File -FilePath $env:GITHUB_ENV -Append
 
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: MinimalQtServer-Windows-arm64
           path: ${{ env.ZIP_PATH }}
@@ -157,7 +157,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install Linux build dependencies
         run: |
@@ -175,7 +175,7 @@ jobs:
           cmake-version: ${{ env.CMAKE_VERSION }}
 
       - name: Set up .NET 10
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
@@ -213,7 +213,7 @@ jobs:
           "ZIP_PATH=$zipPath" | Out-File -FilePath $env:GITHUB_ENV -Append
 
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: MinimalQtServer-Linux-x86_64
           path: ${{ env.ZIP_PATH }}
@@ -227,7 +227,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install Linux build dependencies
         run: |
@@ -245,7 +245,7 @@ jobs:
           cmake-version: ${{ env.CMAKE_VERSION }}
 
       - name: Set up .NET 10
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
@@ -283,7 +283,7 @@ jobs:
           "ZIP_PATH=$zipPath" | Out-File -FilePath $env:GITHUB_ENV -Append
 
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: MinimalQtServer-Linux-arm64
           path: ${{ env.ZIP_PATH }}
@@ -296,7 +296,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up CMake
         uses: jwlawson/actions-setup-cmake@v2
@@ -304,7 +304,7 @@ jobs:
           cmake-version: ${{ env.CMAKE_VERSION }}
 
       - name: Set up .NET 10
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
@@ -346,7 +346,7 @@ jobs:
           "ZIP_PATH=$zipPath" | Out-File -FilePath $env:GITHUB_ENV -Append
 
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: MinimalQtServer-macOS-universal
           path: ${{ env.ZIP_PATH }}
@@ -365,13 +365,13 @@ jobs:
 
     steps:
       - name: Download all build artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           path: release-assets
           merge-multiple: true
 
       - name: Publish GitHub Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           files: release-assets/*.zip
           generate_release_notes: true
