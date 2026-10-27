@@ -206,7 +206,7 @@ jobs:
           cache: true
 
       - name: Configure CMake
-        run: cmake -S server/cpp/_dllproject -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+        run: cmake -S server/cpp/_dllproject -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DQT_LINK_RELATIVE=ON
 
       - name: Build CMake target
         run: cmake --build build --config Release --parallel
@@ -276,7 +276,7 @@ jobs:
           cache: true
 
       - name: Configure CMake
-        run: cmake -S server/cpp/_dllproject -B build -G Ninja -DCMAKE_BUILD_TYPE=Release
+        run: cmake -S server/cpp/_dllproject -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DQT_LINK_RELATIVE=ON
 
       - name: Build CMake target
         run: cmake --build build --config Release --parallel

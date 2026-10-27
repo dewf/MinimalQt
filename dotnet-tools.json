@@ -3,7 +3,7 @@
   "isRoot": true,
   "tools": {
     "nativeimpl": {
-      "version": "0.5.3",
+      "version": "0.5.4",
       "commands": [
         "nativeimpl"
       ],
