@@ -23,9 +23,15 @@ endif()
 add_library(MinimalQtServer SHARED ${SOURCES})
 
 if (QT_LINK_RELATIVE AND UNIX AND NOT APPLE)
+    find_package(Qt6 REQUIRED COMPONENTS Widgets)
+    if (CMAKE_SYSTEM_PROCESSOR MATCHES "^(aarch64|arm64)$")
+        set(QT_ARCH_DIR "gcc_arm64")
+    else()
+        set(QT_ARCH_DIR "gcc_64")
+    endif()
     set_target_properties(MinimalQtServer PROPERTIES
         BUILD_WITH_INSTALL_RPATH TRUE
-        INSTALL_RPATH "$ORIGIN/qt"
+        INSTALL_RPATH "$ORIGIN/${Qt6_VERSION}/${QT_ARCH_DIR}/lib/"
     )
 endif()
 
