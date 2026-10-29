@@ -340,6 +340,7 @@ jobs:
           -DCMAKE_BUILD_TYPE=Release
           "-DCMAKE_OSX_ARCHITECTURES=x86_64;x86_64h;arm64"
           -DCMAKE_OSX_DEPLOYMENT_TARGET=14.4
+          -DQT_LINK_RELATIVE=ON
 
       - name: Build CMake target
         run: cmake --build build --config Release --parallel

@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 4.2)
 project(MinimalQtServer)
 
-option(QT_LINK_RELATIVE "Link Qt libraries using a relative RPATH ($ORIGIN/qt on Linux)" OFF)
+option(QT_LINK_RELATIVE "Link Qt libraries using a relative RPATH ($ORIGIN or @loader_path)" OFF)
 
 set(CMAKE_CXX_STANDARD 23)
 
@@ -22,16 +22,21 @@ endif()
 
 add_library(MinimalQtServer SHARED ${SOURCES})
 
-if (QT_LINK_RELATIVE AND UNIX AND NOT APPLE)
+if (QT_LINK_RELATIVE AND UNIX)
     find_package(Qt6 REQUIRED COMPONENTS Widgets)
-    if (CMAKE_SYSTEM_PROCESSOR MATCHES "^(aarch64|arm64)$")
+    if (APPLE)
+        set(QT_RPATH_ORIGIN "@loader_path")
+        set(QT_ARCH_DIR "macos")
+    elseif (CMAKE_SYSTEM_PROCESSOR MATCHES "^(aarch64|arm64)$")
+        set(QT_RPATH_ORIGIN "$ORIGIN")
         set(QT_ARCH_DIR "gcc_arm64")
     else()
+        set(QT_RPATH_ORIGIN "$ORIGIN")
         set(QT_ARCH_DIR "gcc_64")
     endif()
     set_target_properties(MinimalQtServer PROPERTIES
         BUILD_WITH_INSTALL_RPATH TRUE
-        INSTALL_RPATH "$ORIGIN/${Qt6_VERSION}/${QT_ARCH_DIR}/lib/"
+        INSTALL_RPATH "${QT_RPATH_ORIGIN}/${Qt6_VERSION}/${QT_ARCH_DIR}/lib/"
     )
 endif()
 
