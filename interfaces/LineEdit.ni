@@ -10,6 +10,7 @@ import Action;
 import Menu;
 import Completer;
 import Validator;
+import Event;
 
 @methodprefix("sig_")
 interface SignalHandler extends Widget.SignalHandler {
@@ -108,3 +109,19 @@ opaque Handle extends Widget.Handle {
 
 Handle create(Widget.Handle parent = null);
 Handle create(string contents, Widget.Handle parent = null);
+
+// delegated =================================================
+
+namedbits DelegatedMethodMask {
+    WheelEvent
+}
+
+@methodprefix("dm_")
+interface DelegatedMethods {
+    void wheelEvent(WheelEvent ev);
+}
+
+opaque Delegated extends Handle;
+// no protected/interior methods yet
+
+Delegated createDelegated(DelegatedMethods methods, DelegatedMethodMask mask, Option<string> contents = none, Widget.Handle parent = null);

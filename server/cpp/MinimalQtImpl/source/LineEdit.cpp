@@ -4,6 +4,7 @@
 #include "ObjectInternal.h"
 #include "WidgetInternal.h"
 #include "ActionInternal.h"
+#include "EventInternal.h"
 #include "IconInternal.h"
 #include "PointInternal.h"
 #include "ValidatorInternal.h"
@@ -354,5 +355,54 @@ namespace LineEdit
 
     HandleRef create(const std::string& contents, Widget::HandleRef parent /* nullptr */) {
         return reinterpret_cast<HandleRef>(new QLineEdit(QString::fromStdString(contents), AS_QWIDGET_PTR(parent)));
+    }
+
+    // delegated ======================================================
+#define DELEGATED_THIS (reinterpret_cast<Delegated*>(_this))
+
+    class Delegated : public QLineEdit
+    {
+        std::shared_ptr<DelegatedMethods> methods;
+        Flags<DelegatedMethodMask> mask = 0;
+    public:
+        Delegated(const std::string& contents, QWidget *parent, const std::shared_ptr<DelegatedMethods> &methods, Flags<DelegatedMethodMask> mask)
+            : QLineEdit(QString::fromStdString(contents), parent), methods(methods), mask(mask) {}
+        Delegated(QWidget *parent, const std::shared_ptr<DelegatedMethods> &methods, Flags<DelegatedMethodMask> mask)
+            : QLineEdit(parent), methods(methods), mask(mask) {}
+    protected:
+        void wheelEvent(QWheelEvent* event) override {
+            if (mask & DelegatedMethodMask::WheelEvent) {
+                methods->dm_wheelEvent(reinterpret_cast<Event::WheelEventRef>(event));
+                event->accept();
+            } else {
+                QLineEdit::wheelEvent(event);
+            }
+        }
+    };
+
+    void Delegated_dispose(DelegatedRef _this) {
+        delete DELEGATED_THIS;
+    }
+
+    void* Delegated_staticCast(DelegatedRef obj, Delegated_CastTarget target) {
+        auto delegated = reinterpret_cast<Delegated*>(obj);
+        switch (target)
+        {
+        case Delegated_CastTarget::Object_Handle:
+            return static_cast<QObject*>(delegated);
+        case Delegated_CastTarget::Widget_Handle:
+            return static_cast<QWidget*>(delegated);
+        case Delegated_CastTarget::Handle:
+            return static_cast<QLineEdit*>(delegated);
+        }
+        std::unreachable();
+    }
+
+    DelegatedRef createDelegated(const std::shared_ptr<DelegatedMethods>& methods, Flags<DelegatedMethodMask> mask, const std::optional<std::string>& contents /* {} */, Widget::HandleRef parent /* nullptr */) {
+        if (contents.has_value()) {
+            return reinterpret_cast<DelegatedRef>(new Delegated(contents.value(), AS_QWIDGET_PTR(parent), methods, mask));
+        } else {
+            return reinterpret_cast<DelegatedRef>(new Delegated(AS_QWIDGET_PTR(parent), methods, mask));
+        }
     }
 }
