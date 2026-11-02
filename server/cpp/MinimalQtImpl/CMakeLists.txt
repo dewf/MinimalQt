@@ -359,6 +359,16 @@ target_sources(MinimalQtImpl
         source/generated/ListView_wrappers.h
         source/generated/ListView_wrappers.cpp
         source/ListView.cpp
+        # module ListWidgetItem
+        source/generated/ListWidgetItem.h
+        source/generated/ListWidgetItem_wrappers.h
+        source/generated/ListWidgetItem_wrappers.cpp
+        source/ListWidgetItem.cpp
+        # module ListWidget
+        source/generated/ListWidget.h
+        source/generated/ListWidget_wrappers.h
+        source/generated/ListWidget_wrappers.cpp
+        source/ListWidget.cpp
         # module LineEdit
         source/generated/LineEdit.h
         source/generated/LineEdit_wrappers.h

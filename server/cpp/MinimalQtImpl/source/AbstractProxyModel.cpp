@@ -31,7 +31,7 @@ namespace AbstractProxyModel
     }
 
     ModelIndex::OwnedRef Handle_mapToSource(HandleRef _this, ModelIndex::HandleRef proxyIndex) {
-        return MODELINDEX_HEAP_NEW(THIS->mapFromSource(QMODELINDEX_VALUE(proxyIndex)));
+        return MODELINDEX_HEAP_NEW(THIS->mapToSource(QMODELINDEX_VALUE(proxyIndex)));
     }
 
     void Handle_setSourceModel(HandleRef _this, AbstractItemModel::HandleRef sourceModel) {

@@ -103,6 +103,8 @@ inputs = [
     "LayoutItem",
     "LineEdit",
     "ListView",
+    "ListWidget",
+    "ListWidgetItem",
     "MainWindow",
     "Menu",
     "MenuBar",
