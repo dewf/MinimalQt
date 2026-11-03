@@ -184,6 +184,11 @@ target_sources(MinimalQtImpl
         source/generated/Size_wrappers.h
         source/generated/Size_wrappers.cpp
         source/Size.cpp
+        # module SignalBlocker
+        source/generated/SignalBlocker.h
+        source/generated/SignalBlocker_wrappers.h
+        source/generated/SignalBlocker_wrappers.cpp
+        source/SignalBlocker.cpp
         # module SessionManager
         source/generated/SessionManager.h
         source/generated/SessionManager_wrappers.h

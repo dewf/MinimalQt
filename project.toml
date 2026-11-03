@@ -33,6 +33,7 @@ inputs = [
     "Rect",
     "RectF",
     "RegularExpression",
+    "SignalBlocker",
     "Size",
     "SizeF",
     "SortFilterProxyModel",
