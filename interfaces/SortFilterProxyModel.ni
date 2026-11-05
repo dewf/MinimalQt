@@ -15,6 +15,14 @@ enum Direction {
     Both        = Rows | Columns,
 }
 
+@withflags(DataChangeRelevanceFlags)
+enum DataChangeRelevanceFlag {
+    NotRelevant = 0x00,
+    RelevantForFiltering = 0x01,
+    RelevantForSorting = 0x02,
+    RelevantForFilteringAndSorting = RelevantForFiltering | RelevantForSorting,
+}
+
 @methodprefix("sig_")
 interface SignalHandler extends AbstractProxyModel.SignalHandler {
     void autoAcceptChildRowsChanged(bool autoAcceptChildRows);
@@ -82,6 +90,7 @@ Handle create(Object.Handle parent = null);
 // subclassing ==============================================
 
 namedbits DelegatedMethodMask {
+    DataChangeRelevanceFlags,
     FilterAcceptsColumn,
     FilterAcceptsRow,
     LessThan
@@ -89,6 +98,7 @@ namedbits DelegatedMethodMask {
 
 @methodprefix("dm_")
 interface DelegatedMethods {
+    DataChangeRelevanceFlags dataChangeRelevanceFlags(ModelIndex.Handle sourceTopLeft, ModelIndex.Handle sourceBottomRight, Array<int> roles);
     bool filterAcceptsColumn(int sourceColumn, ModelIndex.Handle sourceParent);
     bool filterAcceptsRow(int sourceRow, ModelIndex.Handle sourceParent);
     bool lessThan(ModelIndex.Handle sourceLeft, ModelIndex.Handle sourceRight);

@@ -5,6 +5,9 @@
 #include "RegularExpressionInternal.h"
 #include "ModelIndexInternal.h"
 
+#include <functional>
+#include "util/convert.h"
+
 using namespace ::Object;
 using namespace ::Enums;
 using namespace ::AbstractItemModel;
@@ -205,6 +208,25 @@ namespace SortFilterProxyModel
             : QSortFilterProxyModel(parent),
                 methods(methodDelegate),
                 mask(methodMask) {}
+    protected slots:
+        // pseudo-virtual until Qt7 (must be slot or Q_INVOKABLE)
+        [[nodiscard]] DataChangeRelevanceFlags
+        dataChangeRelevanceFlags(const QModelIndex &sourceTopLeft, const QModelIndex &sourceBottomRight, const QList<int> &roles) const
+        {
+            if (mask & DelegatedMethodMask::DataChangeRelevanceFlags) {
+                QModelIndex topLeft2(sourceTopLeft);
+                QModelIndex bottomRight2(sourceBottomRight);
+                auto roles2 = fromQList<int,int>(roles, std::identity {});
+                auto result =
+                    methods->dm_dataChangeRelevanceFlags(
+                        reinterpret_cast<ModelIndex::HandleRef>(&topLeft2),
+                        reinterpret_cast<ModelIndex::HandleRef>(&bottomRight2),
+                        roles2);
+                return DataChangeRelevanceFlags::fromInt(result.value());
+            } else {
+                return QSortFilterProxyModel::dataChangeRelevanceFlags(sourceTopLeft, sourceBottomRight, roles);
+            }
+        }
     protected:
         [[nodiscard]]
         bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override {
