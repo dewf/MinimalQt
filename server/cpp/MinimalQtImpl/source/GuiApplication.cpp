@@ -9,6 +9,7 @@ using namespace ::Enums;
 using namespace ::SessionManager;
 using namespace ::Screen;
 using namespace ::Window;
+using namespace ::StyleHints;
 
 #define THIS (reinterpret_cast<QGuiApplication*>(_this))
 
@@ -112,5 +113,9 @@ namespace GuiApplication
 
     void setQuitOnLastWindowClosed(bool state) {
         QGuiApplication::setQuitOnLastWindowClosed(state);
+    }
+
+    StyleHints::HandleRef styleHints() {
+        return reinterpret_cast<StyleHints::HandleRef>(QGuiApplication::styleHints());
     }
 }

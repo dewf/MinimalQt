@@ -6,6 +6,7 @@ import Enums;
 import SessionManager;
 import Screen;
 import Window;
+import StyleHints;
 
 @methodprefix("sig_")
 interface SignalHandler extends CoreApplication.SignalHandler {
@@ -42,3 +43,4 @@ opaque Handle extends CoreApplication.Handle {
 }
 
 void setQuitOnLastWindowClosed(bool state);
+StyleHints.Handle styleHints();

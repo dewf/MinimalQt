@@ -3,6 +3,12 @@ module Enums;
 alias WIN_ID = size_t; // because Qt already calls it WId
 alias Rgb = uint32;
 
+enum ColorScheme {
+    Unknown,
+    Light,
+    Dark
+}
+
 @withflags(WindowFlags)
 enum WindowType : uint32 {
     Widget = 0x00000000,

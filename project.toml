@@ -68,6 +68,7 @@ inputs = [
     "SessionManager",
     "StandardItem",
     "StandardItemModel",
+    "StyleHints",
     "TextCharFormat",
     "TextCursor",
     "TextDocument",

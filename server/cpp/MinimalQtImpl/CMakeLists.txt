@@ -124,6 +124,11 @@ target_sources(MinimalQtImpl
         source/generated/StyleOption_wrappers.h
         source/generated/StyleOption_wrappers.cpp
         source/StyleOption.cpp
+        # module StyleHints
+        source/generated/StyleHints.h
+        source/generated/StyleHints_wrappers.h
+        source/generated/StyleHints_wrappers.cpp
+        source/StyleHints.cpp
         # module String
         source/generated/String.h
         source/generated/String_wrappers.h
