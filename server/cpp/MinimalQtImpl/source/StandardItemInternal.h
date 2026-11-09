@@ -4,6 +4,7 @@
 #include <QStandardItem>
 
 #define AS_QSTANDARDITEM_PTR(x) (reinterpret_cast<QStandardItem*>(x))
+#define AS_QSTANDARDITEM_CONST_PTR(x) (reinterpret_cast<const QStandardItem*>(x))
 
 namespace StandardItem {
     inline QList<QStandardItem*> arrayToList(const std::vector<HandleRef>& input) {

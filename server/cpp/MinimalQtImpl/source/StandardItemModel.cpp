@@ -191,8 +191,8 @@ namespace StandardItemModel
     }
 
     // ext methods block for: StandardItem::HandleRef ====
-    HandleRef ext_StandardItem_model(StandardItem::HandleRef this_) {
-        return reinterpret_cast<HandleRef>(AS_QSTANDARDITEM_PTR(this_)->model());
+    HandleRef ext_StandardItem_model(StandardItem::ConstHandleRef this_) {
+        return reinterpret_cast<HandleRef>(AS_QSTANDARDITEM_CONST_PTR(this_)->model());
     }
     // ==============================
 }

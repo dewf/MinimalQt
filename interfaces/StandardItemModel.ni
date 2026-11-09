@@ -66,4 +66,4 @@ Handle create(Object.Handle parent = null);
 Handle create(int rows, int columns, Object.Handle parent = null);
 
 // to break circular dependency:
-Handle ext_StandardItem_model(StandardItem.Handle this_);
+Handle ext_StandardItem_model(StandardItem.ConstHandle this_);
