@@ -64,6 +64,40 @@ namespace Event
         return static_cast<Type>(EVENT_THIS->type());
     }
 
+    // action event ========================================
+#define ACTION_THIS (reinterpret_cast<QActionEvent*>(_this))
+
+    Action::HandleRef ActionEvent_action(ActionEventRef _this) {
+        return reinterpret_cast<Action::HandleRef>(ACTION_THIS->action());
+    }
+
+    Action::HandleRef ActionEvent_before(ActionEventRef _this) {
+        return reinterpret_cast<Action::HandleRef>(ACTION_THIS->before());
+    }
+
+    void* ActionEvent_staticCast(ActionEventRef obj, ActionEvent_CastTarget target) {
+        auto actionEvent = AS_QACTIONEVENT_PTR(obj);
+        switch (target)
+        {
+        case ActionEvent_CastTarget::Handle:
+            return static_cast<QEvent*>(actionEvent);
+        }
+        std::unreachable();
+    }
+
+    // close event =========================================
+#define CLOSE_THIS (reinterpret_cast<QCloseEvent*>(_this))
+
+    void* CloseEvent_staticCast(CloseEventRef obj, CloseEvent_CastTarget target) {
+        auto closeEvent = AS_QCLOSEEVENT_PTR(obj);
+        switch (target)
+        {
+        case CloseEvent_CastTarget::Handle:
+            return static_cast<QEvent*>(closeEvent);
+        }
+        std::unreachable();
+    }
+
     // resize event ========================================
 #define RESIZE_THIS (reinterpret_cast<QResizeEvent*>(_this))
 

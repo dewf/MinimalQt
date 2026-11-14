@@ -9,6 +9,7 @@ import Enums;
 import KeySequence;
 import Region;
 import MimeData;
+import Action;
 
 enum Type {
     None = 0,                               // invalid event
@@ -256,6 +257,8 @@ enum Type {
     MaxUser = 65535                         // last user event id
 }
 
+// root Event ===================================================================================================
+
 @nodispose
 opaque Handle {
     void accept();
@@ -274,6 +277,17 @@ opaque Handle {
 }
 
 // Tier 1 events (inherit from QEvent) ==========================================================================
+
+@nodispose
+opaque ActionEvent extends Handle {
+    Action.Handle action();
+    Action.Handle before();
+}
+
+@nodispose
+opaque CloseEvent extends Handle {
+    // no methods, just use accept() or ignore()
+}
 
 @nodispose
 opaque ResizeEvent extends Handle {

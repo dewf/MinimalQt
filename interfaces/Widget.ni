@@ -323,6 +323,7 @@ opaque Handle extends Object.Handle {
     int x();
     int y();
 
+    // slots ========================================
     bool close();
     void hide();
     void lower();
@@ -355,6 +356,9 @@ Handle create(Handle parent = null, WindowFlags flags_ = 0);
 
 namedbits DelegatedMethodMask {
     SizeHint,
+    ActionEvent,
+    ChangeEvent,
+    CloseEvent,
     ContextMenuEvent,
     DragEnterEvent,
     DragLeaveEvent,
@@ -384,10 +388,9 @@ interface DelegatedMethods {
 
     // protected ========================================
 
-    // virtual void actionEvent(QActionEvent *event)
-    // virtual void changeEvent(QEvent *event)
-    // virtual void closeEvent(QCloseEvent *event)
-
+    void actionEvent(Event.ActionEvent ev);
+    void changeEvent(Event.Handle ev);
+    void closeEvent(CloseEvent ev);
     void contextMenuEvent(ContextMenuEvent ev);
 
     // void create(WId window = 0, bool initializeWindow = true, bool destroyOldWindow = true)

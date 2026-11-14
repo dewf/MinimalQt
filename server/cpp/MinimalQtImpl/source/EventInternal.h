@@ -9,6 +9,10 @@
 
 #define AS_QEVENT_PTR(x) (reinterpret_cast<QEvent*>(x))
 
+#define AS_QACTIONEVENT_PTR(x) (reinterpret_cast<QActionEvent*>(x))
+
+#define AS_QCLOSEEVENT_PTR(x) (reinterpret_cast<QCloseEvent*>(x))
+
 #define AS_QRESIZEEVENT_PTR(x) (reinterpret_cast<QResizeEvent*>(x))
 
 #define AS_QHELPEVENT_PTR(x) (reinterpret_cast<QHelpEvent*>(x))
