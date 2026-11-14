@@ -432,7 +432,51 @@ interface DelegatedMethods {
     void wheelEvent(WheelEvent ev);
 }
 
-opaque Delegated extends Handle;
-// no interior/protected methods yet
+opaque Delegated extends Handle {
+    // base Widget protected methods, in case we want to delegate to them in specific cases
+
+    void base_actionEvent(Event.ActionEvent ev);
+    void base_changeEvent(Event.Handle ev);
+    void base_closeEvent(CloseEvent ev);
+    void base_contextMenuEvent(ContextMenuEvent ev);
+
+    // void create(WId window = 0, bool initializeWindow = true, bool destroyOldWindow = true)
+    // void destroy(bool destroyWindow = true, bool destroySubWindows = true)
+
+    void base_dragEnterEvent(DragEnterEvent ev);
+    void base_dragLeaveEvent(DragLeaveEvent ev);
+    void base_dragMoveEvent(DragMoveEvent ev);
+    void base_dropEvent(DropEvent ev);
+    void base_enterEvent(EnterEvent ev);
+    void base_focusInEvent(FocusEvent ev);
+
+    // bool focusNextChild()
+    // virtual bool focusNextPrevChild(bool next)
+
+    void base_focusOutEvent(FocusEvent ev);
+
+    // bool focusPreviousChild()
+    // virtual void hideEvent(QHideEvent *event)
+    // virtual void inputMethodEvent(QInputMethodEvent *event)
+
+    void base_keyPressEvent(KeyEvent ev);
+    void base_keyReleaseEvent(KeyEvent ev);
+    void base_leaveEvent(Event.Handle ev);
+    void base_mouseDoubleClickEvent(MouseEvent ev);
+    void base_mouseMoveEvent(MouseEvent ev);
+    void base_mousePressEvent(MouseEvent ev);
+    void base_mouseReleaseEvent(MouseEvent ev);
+
+    // virtual void moveEvent(QMoveEvent *event)
+    // virtual bool nativeEvent(const QByteArray &eventType, void *message, qintptr *result)
+
+    void base_paintEvent(PaintEvent ev);
+    void base_resizeEvent(ResizeEvent ev);
+    void base_showEvent(ShowEvent ev);
+
+    // virtual void tabletEvent(QTabletEvent *event)
+
+    void base_wheelEvent(WheelEvent ev);
+}
 
 Delegated createDelegated(DelegatedMethods methods, DelegatedMethodMask methodMask, Handle parent = null, WindowFlags flags_ = 0);

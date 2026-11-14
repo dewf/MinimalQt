@@ -24,6 +24,7 @@
 
 #include <QPaintEvent>
 
+#include "EventInternal.h"
 #include "LayoutItemInternal.h"
 #include "util/convert.h"
 
@@ -1235,7 +1236,119 @@ namespace Widget
                 QWidget::wheelEvent(event);
             }
         }
+
+        // grant interior access to these opaque methods:
+        friend void Delegated_base_actionEvent(DelegatedRef _this, ::Event::ActionEventRef ev);
+        friend void Delegated_base_changeEvent(DelegatedRef _this, ::Event::HandleRef ev);
+        friend void Delegated_base_closeEvent(DelegatedRef _this, ::Event::CloseEventRef ev);
+        friend void Delegated_base_contextMenuEvent(DelegatedRef _this, ::Event::ContextMenuEventRef ev);
+        friend void Delegated_base_dragEnterEvent(DelegatedRef _this, ::Event::DragEnterEventRef ev);
+        friend void Delegated_base_dragLeaveEvent(DelegatedRef _this, ::Event::DragLeaveEventRef ev);
+        friend void Delegated_base_dragMoveEvent(DelegatedRef _this, ::Event::DragMoveEventRef ev);
+        friend void Delegated_base_dropEvent(DelegatedRef _this, ::Event::DropEventRef ev);
+        friend void Delegated_base_enterEvent(DelegatedRef _this, ::Event::EnterEventRef ev);
+        friend void Delegated_base_focusInEvent(DelegatedRef _this, ::Event::FocusEventRef ev);
+        friend void Delegated_base_focusOutEvent(DelegatedRef _this, ::Event::FocusEventRef ev);
+        friend void Delegated_base_keyPressEvent(DelegatedRef _this, ::Event::KeyEventRef ev);
+        friend void Delegated_base_keyReleaseEvent(DelegatedRef _this, ::Event::KeyEventRef ev);
+        friend void Delegated_base_leaveEvent(DelegatedRef _this, ::Event::HandleRef ev);
+        friend void Delegated_base_mouseDoubleClickEvent(DelegatedRef _this, ::Event::MouseEventRef ev);
+        friend void Delegated_base_mouseMoveEvent(DelegatedRef _this, ::Event::MouseEventRef ev);
+        friend void Delegated_base_mousePressEvent(DelegatedRef _this, ::Event::MouseEventRef ev);
+        friend void Delegated_base_mouseReleaseEvent(DelegatedRef _this, ::Event::MouseEventRef ev);
+        friend void Delegated_base_paintEvent(DelegatedRef _this, ::Event::PaintEventRef ev);
+        friend void Delegated_base_resizeEvent(DelegatedRef _this, ::Event::ResizeEventRef ev);
+        friend void Delegated_base_showEvent(DelegatedRef _this, ::Event::ShowEventRef ev);
+        friend void Delegated_base_wheelEvent(DelegatedRef _this, ::Event::WheelEventRef ev);
     };
+
+    void Delegated_base_actionEvent(DelegatedRef _this, Event::ActionEventRef ev) {
+        DELEGATED_THIS->actionEvent(AS_QACTIONEVENT_PTR(ev));
+    }
+
+    void Delegated_base_changeEvent(DelegatedRef _this, Event::HandleRef ev) {
+        DELEGATED_THIS->changeEvent(AS_QEVENT_PTR(ev));
+    }
+
+    void Delegated_base_closeEvent(DelegatedRef _this, CloseEventRef ev) {
+        DELEGATED_THIS->closeEvent(AS_QCLOSEEVENT_PTR(ev));
+    }
+
+    void Delegated_base_contextMenuEvent(DelegatedRef _this, ContextMenuEventRef ev) {
+        DELEGATED_THIS->contextMenuEvent(AS_QCONTEXTMENUEVENT_PTR(ev));
+    }
+
+    void Delegated_base_dragEnterEvent(DelegatedRef _this, DragEnterEventRef ev) {
+        DELEGATED_THIS->dragEnterEvent(AS_QDRAGENTEREVENT_PTR(ev));
+    }
+
+    void Delegated_base_dragLeaveEvent(DelegatedRef _this, DragLeaveEventRef ev) {
+        DELEGATED_THIS->dragLeaveEvent(AS_QDRAGLEAVEEVENT_PTR(ev));
+    }
+
+    void Delegated_base_dragMoveEvent(DelegatedRef _this, DragMoveEventRef ev) {
+        DELEGATED_THIS->dragMoveEvent(AS_QDRAGMOVEEVENT_PTR(ev));
+    }
+
+    void Delegated_base_dropEvent(DelegatedRef _this, DropEventRef ev) {
+        DELEGATED_THIS->dropEvent(AS_QDROPEVENT_PTR(ev));
+    }
+
+    void Delegated_base_enterEvent(DelegatedRef _this, EnterEventRef ev) {
+        DELEGATED_THIS->enterEvent(AS_QENTEREVENT_PTR(ev));
+    }
+
+    void Delegated_base_focusInEvent(DelegatedRef _this, FocusEventRef ev) {
+        DELEGATED_THIS->focusInEvent(AS_QFOCUSEVENT_PTR(ev));
+    }
+
+    void Delegated_base_focusOutEvent(DelegatedRef _this, FocusEventRef ev) {
+        DELEGATED_THIS->focusOutEvent(AS_QFOCUSEVENT_PTR(ev));
+    }
+
+    void Delegated_base_keyPressEvent(DelegatedRef _this, KeyEventRef ev) {
+        DELEGATED_THIS->keyPressEvent(AS_QKEYEVENT_PTR(ev));
+    }
+
+    void Delegated_base_keyReleaseEvent(DelegatedRef _this, KeyEventRef ev) {
+        DELEGATED_THIS->keyReleaseEvent(AS_QKEYEVENT_PTR(ev));
+    }
+
+    void Delegated_base_leaveEvent(DelegatedRef _this, Event::HandleRef ev) {
+        DELEGATED_THIS->leaveEvent(AS_QEVENT_PTR(ev));
+    }
+
+    void Delegated_base_mouseDoubleClickEvent(DelegatedRef _this, MouseEventRef ev) {
+        DELEGATED_THIS->mouseDoubleClickEvent(AS_QMOUSEEVENT_PTR(ev));
+    }
+
+    void Delegated_base_mouseMoveEvent(DelegatedRef _this, MouseEventRef ev) {
+        DELEGATED_THIS->mouseMoveEvent(AS_QMOUSEEVENT_PTR(ev));
+    }
+
+    void Delegated_base_mousePressEvent(DelegatedRef _this, MouseEventRef ev) {
+        DELEGATED_THIS->mousePressEvent(AS_QMOUSEEVENT_PTR(ev));
+    }
+
+    void Delegated_base_mouseReleaseEvent(DelegatedRef _this, MouseEventRef ev) {
+        DELEGATED_THIS->mouseReleaseEvent(AS_QMOUSEEVENT_PTR(ev));
+    }
+
+    void Delegated_base_paintEvent(DelegatedRef _this, PaintEventRef ev) {
+        DELEGATED_THIS->paintEvent(AS_QPAINTEVENT_PTR(ev));
+    }
+
+    void Delegated_base_resizeEvent(DelegatedRef _this, ResizeEventRef ev) {
+        DELEGATED_THIS->resizeEvent(AS_QRESIZEEVENT_PTR(ev));
+    }
+
+    void Delegated_base_showEvent(DelegatedRef _this, ShowEventRef ev) {
+        DELEGATED_THIS->showEvent(AS_QSHOWEVENT_PTR(ev));
+    }
+
+    void Delegated_base_wheelEvent(DelegatedRef _this, WheelEventRef ev) {
+        DELEGATED_THIS->wheelEvent(AS_QWHEELEVENT_PTR(ev));
+    }
 
     void Delegated_dispose(DelegatedRef _this) {
         delete DELEGATED_THIS;
